@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "nodemon",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/nodemon",
+            "program": "${workspaceRoot}/dist/server/app.bundle.js",
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "ng serve",
+            "url": "http://localhost:4200/#",
+            "webRoot": "${workspaceRoot}/src/client"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+<md-card>
+  <md-card-subtitle>Page will be refreshed when you change the language</md-card-subtitle>
+  <md-radio-group class="radio-group-vertical" [value]="activeLanguage">
+    <md-radio-button class="radio-button-vertical" *ngFor="let language of languages" [value]="language.code" (click)="chooseLanguage(language)">{{language.title}}</md-radio-button>
+  </md-radio-group>
+</md-card>

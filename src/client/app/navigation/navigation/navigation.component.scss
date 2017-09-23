@@ -1,0 +1,31 @@
+nav {
+    background-color: white;   
+}
+
+.logo {
+    max-height: 44px; 
+    margin-left: 5%;
+    outline: none;
+    cursor: pointer;
+
+    @media(max-width: 480px) {
+        display: none;
+    }
+}
+
+.console-logs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    overflow-y: auto;
+
+    .close-button {
+        color: red;
+        float: right;
+        cursor: pointer;
+    }
+}

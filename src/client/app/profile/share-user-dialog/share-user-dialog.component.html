@@ -1,0 +1,15 @@
+<md-dialog-content>
+  <button md-button md-dialog-close style="float: right;">
+    <md-icon>close</md-icon>
+  </button>
+
+  <h2 md-dialog-title style="float: left;">Share link</h2>
+
+  <div style="clear: both;"></div>
+
+  <a [href]="link" (click)="onLinkClick()">{{link}}</a>
+</md-dialog-content>
+
+<md-dialog-actions>
+  <button md-raised-button ngxClipboard [cbContent]="link" (cbOnSuccess)="openSnackBar()">COPY</button>
+</md-dialog-actions>

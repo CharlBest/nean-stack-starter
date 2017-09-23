@@ -1,0 +1,24 @@
+<md-card *ngIf="!isProcessing">
+  <md-card-subtitle>
+    Email us some feedback
+  </md-card-subtitle>
+  <md-card-content>
+    <md-form-field style="display: block;">
+      <textarea mdInput
+        #inputArea
+        rows="10"
+        placeholder="type here..."
+        style="width: 100%;"></textarea>
+    </md-form-field>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button
+      (click)="send(inputArea.value)">Send</button>
+  </md-card-actions>
+</md-card>
+
+<md-card *ngIf="isProcessing">
+  <md-card-content>
+    <md-spinner class="preloader"></md-spinner>
+  </md-card-content>
+</md-card>

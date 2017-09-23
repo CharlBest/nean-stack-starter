@@ -1,0 +1,30 @@
+<md-card *ngIf="!isProcessing && user">
+  <md-card-content>
+    <div>Username: {{user.username}}</div>
+    <div>Email: {{user.email}}</div>
+    <div>Email verified: {{user.emailVerified}}</div>
+    <div>Bio: {{user.bio}}</div>
+    <div>dateCreated: {{user.dateCreated | date}}</div>
+    <img md-card-image
+      [src]="user.avatarUrl"
+      *ngIf="user.avatarUrl"
+      alt="avatar"
+      class="avatar">
+    <div>views: {{user.views}}</div>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button
+      color="primary"
+      (click)="goToEdit()">Edit</button>
+    <button md-raised-button
+      (click)="openShareDialog()">Share</button>
+    <button md-raised-button
+      (click)="openReportDialog()">Report</button>
+  </md-card-actions>
+</md-card>
+
+<md-card *ngIf="isProcessing">
+  <md-card-content>
+    <md-spinner class="preloader"></md-spinner>
+  </md-card-content>
+</md-card>

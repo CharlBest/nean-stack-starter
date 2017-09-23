@@ -1,0 +1,16 @@
+<button md-icon-button (click)="myPanel.expanded = !myPanel.expanded">
+  <md-icon>tag_faces</md-icon>
+</button>
+
+<md-expansion-panel #myPanel class="panel">
+    <md-tab-group (selectChange)="onTabSelectChange($event)">
+        <md-tab *ngFor="let category of emojiCategories">
+          <ng-template mdTabLabel>
+              <md-icon>{{category.tabLabelIcon}}</md-icon>
+          </ng-template>
+          <div [innerHTML]="category.tabHTMLContent"></div>
+          <div style="clear: both;"></div>
+          powered by EmojiOne       
+        </md-tab>
+      </md-tab-group>
+</md-expansion-panel>

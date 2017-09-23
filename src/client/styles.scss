@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('~https://fonts.googleapis.com/icon?family=Material+Icons');
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    margin: 0;
+    background-color:#f3f3f3;
+}
+
+.validation-message {
+    color: red;
+}
+
+.center {
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+md-card {
+    margin-bottom: 10px;
+}
+
+.card-item {
+    cursor: pointer;
+    outline: none;
+}
+
+.radio-group-vertical {
+    display: inline-flex;
+    flex-direction: column;
+
+    .radio-button-vertical {
+        margin: 5px;
+    }
+}
+
+.preloader {
+    margin: 0 auto;
+    max-width: 25px;
+    max-height: 25px;
+}
+
+//Overide md-card styles
+md-card[hidden] { 
+    display: none; 
+}
+
+//TODO: bad don't use important. fix!
+.inline-preloader {
+    width: 24px !important; 
+    height: 24px !important; 
+    display: inline-block !important;
+}
