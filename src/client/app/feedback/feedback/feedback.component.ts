@@ -12,7 +12,7 @@ import { FormService } from '../../shared/form.service';
 })
 export class FeedbackComponent {
 
-  serverErrors
+  serverErrors;
   isProcessing = false;
 
   constructor(private feedbackService: FeedbackService,

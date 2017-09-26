@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClipboardModule } from 'ngx-clipboard';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile.service';
 import { ProfileRoutingModule } from './profile-routing.module';
-import { ReportUserDialogComponent } from './report-user-dialog/report-user-dialog.component';
-import { ShareUserDialogComponent } from './share-user-dialog/share-user-dialog.component';
-import { ClipboardModule } from 'ngx-clipboard';
+import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
+import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
 import {
   MdButtonModule,
   MdCardModule,
@@ -21,27 +21,20 @@ import {
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    ClipboardModule,
     MdButtonModule,
     MdCardModule,
     MdProgressSpinnerModule,
     MdIconModule,
-    MdDialogModule,
-    MdMenuModule,
     MdSnackBarModule,
-    MdTooltipModule
+    MdTooltipModule,
+    ShareDialogModule,
+    ReportDialogModule
   ],
   declarations: [
-    ProfileComponent,
-    ReportUserDialogComponent,
-    ShareUserDialogComponent
+    ProfileComponent
   ],
   providers: [
     ProfileService
-  ],
-  entryComponents: [
-    ReportUserDialogComponent,
-    ShareUserDialogComponent
-  ],
+  ]
 })
 export class ProfileModule { }

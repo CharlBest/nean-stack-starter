@@ -29,13 +29,13 @@ export class Database {
         // Register a callback to know if driver creation was successful:
         (<any>driver).onCompleted = () => {
             // proceed with using the driver, it was successfully instantiated
-        }
+        };
 
         // Register a callback to know if driver creation failed.
         // This could happen due to wrong credentials or database unavailability:
         (<any>driver).onError = (error) => {
             console.log('Neo4j driver instantiation failed', error);
-        }
+        };
 
         return driver;
     }

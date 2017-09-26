@@ -14,8 +14,4 @@ export class ProfileService {
   public getUser(): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser.constructRootUrl()}`);
   }
-
-  public reportUser(viewModel: ReportUserViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report.constructRootUrl()}`, viewModel);
-  }
 }

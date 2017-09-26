@@ -33,7 +33,7 @@ export class PaymentService {
   openCheckout(productName: string, amount: number, tokenCallback) {
     // TODO: using window any removes type checking
     const handler = (<any>window).StripeCheckout.configure({
-      key: environment.stripePublishableKey,
+      // key: environment.stripePublishableKey,
       locale: 'auto',
       token: tokenCallback
     });

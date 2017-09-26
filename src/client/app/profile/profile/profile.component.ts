@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { ProfileService } from '../profile.service';
-import { ShareUserDialogComponent } from '../share-user-dialog/share-user-dialog.component';
-import { ReportUserDialogComponent } from '../report-user-dialog/report-user-dialog.component';
 import { environment } from '../../../environments/environment';
+import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
+import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
 import * as emojione from 'emojione';
 
 @Component({
@@ -19,8 +19,8 @@ export class ProfileComponent implements OnInit {
   isProcessing = true;
 
   constructor(private profileService: ProfileService,
-    private router: Router,
-    public dialog: MdDialog) { }
+    private shareDialogService: ShareDialogService,
+    private reportDialogService: ReportDialogService) { }
 
   ngOnInit() {
     this.getUser();
@@ -49,14 +49,11 @@ export class ProfileComponent implements OnInit {
   }
 
   openShareDialog() {
-    const dialogRef = this.dialog.open(ShareUserDialogComponent);
-
     const link = ['/user', this.user.uId];
-    dialogRef.componentInstance.link = environment.hostUrlForSharingToWeb + this.router.createUrlTree(link).toString();
+    this.shareDialogService.share(link);
   }
 
   openReportDialog() {
-    const dialogRef = this.dialog.open(ReportUserDialogComponent);
-    dialogRef.componentInstance.uId = this.user.uId;
+    this.reportDialogService.report(this.user.uId);
   }
 }

@@ -16,7 +16,7 @@ export class Emailer {
                 username: username,
                 emailverifycode: emailVerifyCode
             }
-        }
+        };
 
         Emailer.send(data);
     }
@@ -30,7 +30,7 @@ export class Emailer {
             substitutions: {
                 forgotpasswordcode: forgotPasswordCode
             }
-        }
+        };
 
         Emailer.send(data);
     }
@@ -41,7 +41,7 @@ export class Emailer {
                 sandboxMode: {
                     enable: true
                 }
-            }
+            };
         }
 
         sgMail.send(data, null, (err, res) => {
