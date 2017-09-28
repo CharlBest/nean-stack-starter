@@ -1,6 +1,6 @@
 export const environment = {
     production: getEnvironmentVariable('NODE_ENV', 'development'),
-    appPort: getEnvironmentVariable('APP_PORT', 3000),
+    port: getEnvironmentVariable('PORT', 3000),
     appHost: getEnvironmentVariable('APP_HOST', ''),
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),

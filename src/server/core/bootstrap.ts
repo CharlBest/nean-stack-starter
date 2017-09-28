@@ -22,7 +22,7 @@ export class Bootstrap {
 
     public defineExpressApp(app: express.Application) {
         app.set('host', environment.appHost);
-        app.set('port', Server.normalizePort(environment.appPort));
+        app.set('port', Server.normalizePort(environment.port));
     }
 
     public startServer(app: express.Application): http.Server {
