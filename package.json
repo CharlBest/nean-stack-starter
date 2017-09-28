@@ -19,8 +19,9 @@
   "scripts": {
     "ng": "ng",
     "dev": "concurrently \"ng build --watch\" \"webpack --watch\" \"nodemon dist/server/app.bundle.js\"",
-    "start": "ng build --prod && webpack && node dist/server/app.bundle.js",
-    "build": "ng build && webpack",
+    "start": "node dist/server/app.bundle.js",
+    "build": "ng build --prod && webpack",
+    "postinstall":  "ng build --prod && webpack",    
     "test": "echo \"Error: no test... minimal project\" && exit 1",
     "lint": "echo \"Error: no lint... minimal project\" && exit 1",
     "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
@@ -44,6 +45,9 @@
     "@angular/router": "^4.3.6",
     "@angular/cli": "^1.4.3",
     "@angular/compiler-cli": "^4.3.6",
+    "typescript": "^2.4.0",
+    "dotenv-webpack": "^1.5.4",
+    "ts-loader": "^2.3.7",
     "@sendgrid/mail": "^6.1.4",
     "body-parser": "^1.18.2",
     "compression": "^1.7.0",
@@ -75,10 +79,7 @@
     "@types/stripe-checkout": "^1.0.1",
     "@types/webpack": "^3.0.12",
     "codelyzer": "^3.2.0",
-    "dotenv-webpack": "^1.5.4",
     "nodemon": "^1.12.1",
-    "ts-loader": "^2.3.7",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "tslint": "^5.7.0"
   }
 }
