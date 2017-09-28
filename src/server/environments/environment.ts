@@ -1,27 +1,41 @@
 export const environment = {
-    production: process.env.NODE_ENV,
-    appPort: process.env.APP_PORT,
-    appHost: process.env.APP_HOST,
+    production: getEnvironmentVariable('NODE_ENV', 'development'),
+    appPort: getEnvironmentVariable('APP_PORT', 3000),
+    appHost: getEnvironmentVariable('APP_HOST', ''),
     database: {
-        uri: process.env.DATABASE_URI,
-        username: process.env.DATABASE_USERNAME,
-        password: process.env.DATABASE_PASSWORD
+        uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
+        username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),
+        password: getEnvironmentVariable('DATABASE_PASSWORD', 'demouser')
     },
     azureBlobStorage: {
-        blobServiceEndpoint: process.env.STORAGE_ENDPOINT,
-        accountKey: process.env.STORAGE_KEY
+        blobServiceEndpoint: getEnvironmentVariable('STORAGE_ENDPOINT', 'https://devstorage.blob.core.windows.net'),
+        accountKey: getEnvironmentVariable('STORAGE_KEY', '***')
     },
     stripe: {
-        secretKey: process.env.STRIPE_KEY
+        secretKey: getEnvironmentVariable('STRIPE_KEY', '***')
     },
     sendGrid: {
-        apiKey: process.env.SENDGRID_API_KEY,
+        apiKey: getEnvironmentVariable('SENDGRID_API_KEY', '***'),
         templates: {
-            welcome: process.env.SENDGRID_TEMPLATE_WELCOME,
-            forgotPassword: process.env.SENDGRID_TEMPLATE_FORGOT_PASSWORD
+            welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
+            forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', '746786b0-9car-4c4c-a186-636d0ef62d1a')
         }
     },
     authentication: {
-        privateKey: process.env.AUTHENTICATION_KEY
+        privateKey: getEnvironmentVariable('AUTHENTICATION_KEY', '37LvDSm4XvjYOh9Y')
     }
 };
+
+function getEnvironmentVariable(key: string, defaultValue: any) {
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (!isProduction) {
+        return defaultValue;
+    } else {
+        const value = process.env[key];
+        if (value === undefined) {
+            throw new Error(`Environment variable with key ${key} does not exist`);
+        }
+
+        return value;
+    }
+}
