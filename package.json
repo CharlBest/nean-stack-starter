@@ -1,12 +1,26 @@
 {
   "name": "app",
   "version": "0.0.4",
+  "description": "A sample Angular, Node.js and Neo4j app",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CharlBest/nean-stack-starter"
+  },
+  "keywords": [
+    "angular",
+    "node",
+    "neo4j",
+    "heroku"
+  ],
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
-    "server": "nodemon dist/server/app.bundle.js",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "dev": "concurrently \"ng build --watch\" \"webpack --watch\" \"nodemon dist/server/app.bundle.js\"",
+    "start": "ng build --prod && webpack && node dist/server/app.bundle.js",
+    "build": "ng build && webpack",
     "test": "echo \"Error: no test... minimal project\" && exit 1",
     "lint": "echo \"Error: no lint... minimal project\" && exit 1",
     "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",
@@ -33,6 +47,7 @@
     "compression": "^1.7.0",
     "core-js": "^2.4.1",
     "cors": "^2.8.1",
+    "concurrently": "^3.5.0",
     "emojione": "^3.1.2",
     "express": "^4.15.5",
     "hammerjs": "^2.0.8",
@@ -60,6 +75,7 @@
     "@types/stripe-checkout": "^1.0.1",
     "@types/webpack": "^3.0.12",
     "codelyzer": "^3.2.0",
+    "dotenv-webpack": "^1.5.4",
     "nodemon": "^1.12.1",
     "ts-loader": "^2.3.7",
     "tslint": "^5.7.0",

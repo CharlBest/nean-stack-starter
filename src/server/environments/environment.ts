@@ -1,26 +1,27 @@
 export const environment = {
-    production: false,
+    production: process.env.NODE_ENV,
+    appPort: process.env.APP_PORT,
+    appHost: process.env.APP_HOST,
     database: {
-        uri: 'bolt://localhost',
-        username: 'neo4j',
-        password: 'demouser'
+        uri: process.env.DATABASE_URI,
+        username: process.env.DATABASE_USERNAME,
+        password: process.env.DATABASE_PASSWORD
     },
     azureBlobStorage: {
-        blobServiceEndpoint: 'https://devstorage.blob.core.windows.net',
-        accountName: 'devstorage',
-        accountKey: '***'
+        blobServiceEndpoint: process.env.STORAGE_ENDPOINT,
+        accountKey: process.env.STORAGE_KEY
     },
     stripe: {
-        secretKey: '***'
+        secretKey: process.env.STRIPE_KEY
     },
     sendGrid: {
-        apiKey: '***',
+        apiKey: process.env.SENDGRID_API_KEY,
         templates: {
-            welcome: '746786b0-9car-4c4c-a186-636d0ef62d1a',
-            forgotPassword: '746786v0-acde-4c4c-09nh-636d0ef62d1b'
+            welcome: process.env.SENDGRID_TEMPLATE_WELCOME,
+            forgotPassword: process.env.SENDGRID_TEMPLATE_FORGOT_PASSWORD
         }
     },
     authentication: {
-        privateKey: '37LvDSm4XvjYOh9Y'
+        privateKey: process.env.AUTHENTICATION_KEY
     }
 };

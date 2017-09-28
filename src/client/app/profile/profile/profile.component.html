@@ -1,4 +1,4 @@
-<md-card *ngIf="!isProcessing && user">
+<md-card *ngIf="!isProcessing && user !== null">
   <md-card-content>
     <div>Username: {{user.username}}</div>
     <div>Email: {{user.email}}</div>

@@ -29,7 +29,7 @@ export class AppConfig {
             .use(bodyParser.json())
             .use(bodyParser.urlencoded({
                 extended: true
-            }))
+            }));
 
             // HTTP request logger middleware for node.js
             // .use(morgan('dev'));

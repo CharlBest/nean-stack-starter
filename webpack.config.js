@@ -1,18 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 // const DashboardPlugin = require("webpack-dashboard/plugin");
-const nodeEnv = process.env.NODE_ENV || "development";
 
 const config = {
-  devtool: nodeEnv === "production" ? "source-map" : "cheap-module-eval-source-map",
+  devtool: process.env.NODE_ENV === "production" ? "source-map" : "cheap-module-eval-source-map",
   context: path.resolve("./src/server"),
   entry: {
     app: "./main.ts",
     vendor: "./vendor.ts"
   },
   target: 'node',
-  watch: true,
   output: {
     path: path.resolve("./dist/server"),
     filename: "[name].bundle.js",
@@ -38,11 +37,12 @@ const config = {
     extensions: ['.ts', '.js']
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(nodeEnv)
-      }
-    })
+    new Dotenv()
+    // new webpack.DefinePlugin({
+    //   "process.env": {
+    //     NODE_ENV: JSON.stringify(nodeEnv)
+    //   }
+    // })
 
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: "vendor",

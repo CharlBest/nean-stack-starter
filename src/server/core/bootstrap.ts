@@ -13,6 +13,7 @@ import { UsersRoutes } from '../app/users/users.routes';
 // import typeDefs from '../schemas/schema';
 // import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
+import { environment } from '../environments/environment';
 // import { exceptionHandler } from './api/exceptionHandler';
 // import { extendExpressResponse } from './api/extendExpressResponse';
 const root = './';
@@ -20,8 +21,8 @@ const root = './';
 export class Bootstrap {
 
     public defineExpressApp(app: express.Application) {
-        app.set('host', process.env.APP_HOST);
-        app.set('port', Server.normalizePort(process.env.PORT || process.env.APP_PORT || 3000));
+        app.set('host', environment.appHost);
+        app.set('port', Server.normalizePort(environment.appPort));
     }
 
     public startServer(app: express.Application): http.Server {
@@ -34,7 +35,7 @@ export class Bootstrap {
     }
 
     public setupRoutes(app: express.Application): void {
-        app.use(express.static(path.join(root, 'dist')));
+        app.use(express.static(path.join(root, 'dist/client-web')));
 
         // Auth
         app.use(Authentication.setAuthUser);
@@ -47,16 +48,19 @@ export class Bootstrap {
         // TODO: not sure if this is the best way of doing it
         // This is to serve web app sub routes
         app.get('*', (req, res) => {
+            const webClientUrl = 'dist/client-web';
             if (app.get('env') === 'development') {
-                res.sendfile('dist/index.html', { root });
+                res.sendFile(`${webClientUrl}/index.html`, { root });
             }
 
             if (app.get('env') !== 'development') {
                 const lang = req.headers['lang'];
                 if (lang === 'af-ZA') {
-                    res.sendfile('dist/af-ZA/index.html', { root });
+                    res.sendFile(`${webClientUrl}/af-ZA/index.html`, { root });
+                } else if (lang === 'en-US') {
+                    res.sendFile(`${webClientUrl}/en-US/index.html`, { root });
                 } else {
-                    res.sendfile('dist/en-US/index.html', { root });
+                    res.sendFile(`${webClientUrl}/index.html`, { root });
                 }
             }
         });

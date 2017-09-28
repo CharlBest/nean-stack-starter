@@ -1,5 +1,11 @@
 # Nean (Neo4j, Express, Angular, Node) Stack Starter
 
+A basic app that has all the features that all platfroms have like authentication, validation, error handling and more.
+
+## [DEMO](http://nean.io/)
+
+Similar to the MEAN stack just with Neo4j rather than Mongo.
+
 * Angular (client), Node (API), Neo4j (database)
 * Nodejs in Typescript
 * Basic Webpack build for Node (API)
@@ -38,16 +44,29 @@ Client pages
 * Cordova IOS build output
 * Unit + integration tests (Karma + Protractor)
 
-## Development
-### Prerequisites
-* Node 7+
-* Neo4j 3.2+
-* Angular CLI
+## Running Locally
 
-### Open 3 consoles and run
+Make sure you have [Node.js](http://nodejs.org/), [Neo4j](https://neo4j.com/) and [Angular CLI](https://cli.angular.io/) installed.
 
-Console 1 - ng serve
+```sh
+$ git clone git@github.com:CharlBest/nean-stack-starter.git
+$ cd nean-stack-starter
+$ npm install
+$ npm start
+```
 
-Console 2 - webpack
+Your app should now be running on [localhost:3000](http://localhost:3000/)
 
-Console 3 - npm run server
+## Watch (hot reload)
+```sh
+$ npm run dev
+```
+
+## Profile
+This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if your are not using Heroku
+
+## Environment variables
+### Client
+In the environments folder there are 2 files. one for dev and one for production. The angular CLI switches them at build time.
+### Server
+In the root there is a .env file. At development webpack includes these at build time in your output
