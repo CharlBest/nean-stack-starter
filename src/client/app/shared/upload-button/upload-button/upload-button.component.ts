@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { app, storage } from 'firebase/app';
+import 'firebase/storage';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-upload-button',
@@ -6,30 +9,49 @@ import { Component, OnInit, Input } from '@angular/core';
     styleUrls: ['./upload-button.component.scss']
 })
 export class UploadButtonComponent implements OnInit {
-    // TODO: this could potentially be a directive
     previewImgUrl: string;
+    progressPercentage: number;
+    @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
 
     ngOnInit() {
     }
 
-    handleChange(event) {
-        const file = event.target.files[0];
+    handleChange(event: Event) {
+        // Reset
+        this.progressPercentage = 0;
+        this.previewImgUrl = null;
+
+        const file = (<HTMLInputElement>event.target).files[0];
 
         // User cancelled
         if (!file) {
             return;
         }
 
-        this.generatePreviewImgUrl(file, previewImgUrl => {
-            this.previewImgUrl = previewImgUrl;
-        });
-    }
+        // CONTINUE show preloader imediatly!
 
-    generatePreviewImgUrl(file, callback) {
-        const reader = new FileReader()
-        const url = reader.readAsDataURL(file)
-        reader.onloadend = e => callback(reader.result)
+        // Create a storage ref
+        const storageRef = app(environment.firebase.projectId).storage().ref(`avatars/${file.name}`);
+
+        // Upload file
+        const task = storageRef.put(file);
+
+        // Update progress bar
+        task.on('state_changed', (snapshot: any) => {
+            this.progressPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        }, (err) => {
+            // TODO show error when file upload fails
+            console.log(err);
+        }, () => {
+            this.onUploadComplete.emit(task.snapshot.downloadURL);
+
+            const reader = new FileReader();
+            const url = reader.readAsDataURL(file);
+            reader.onloadend = (progressEvent) => {
+                this.previewImgUrl = reader.result;
+            };
+        });
     }
 }

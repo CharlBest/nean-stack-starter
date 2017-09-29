@@ -1,26 +1,75 @@
-<md-card *ngIf="!isProcessing && user !== null">
+<div *ngIf="!isProcessing && user !== null">
+  <md-card>
+    <md-card-content>
+      <div>{{user.username}}</div>
+      <div>{{user.email}}</div>
+      <br>
+      <div>Email verified: {{user.emailVerified}}</div>
+      <div>Signup date: {{user.dateCreated | date}}</div>
+      <div>Profile views: {{user.views}}</div>
+    </md-card-content>
+    <md-card-actions>
+      <button md-raised-button
+        (click)="openShareDialog()">Share</button>
+      <button md-raised-button
+        (click)="openReportDialog()">Report</button>
+      <button md-raised-button>Send verify email</button>
+      <button md-raised-button>Take tour</button>
+      <button md-raised-button>Deactivate account</button>
+      <button md-raised-button
+        color="warn">Delete</button>
+    </md-card-actions>
+  </md-card>
+
+  <md-card>
+    <md-card-content>
+      <h3>Avatar</h3>
+      <app-upload-button (onUploadComplete)="profilePictureUploadComplete($event)"></app-upload-button>
+      <img md-card-image
+        [src]="user.avatarUrl"
+        *ngIf="user.avatarUrl"
+        alt="avatar"
+        class="avatar">
+    </md-card-content>
+  </md-card>
+
+  <md-card>
+    <md-card-content>
+      <h3>Bio</h3>
+      <button md-raised-button>Edit</button>      
+      <div>{{user.bio}}</div>
+    </md-card-content>
+  </md-card>
+
+  <md-card>
+    <md-card-content>
+      <h3>Password</h3>
+      <md-form-field>
+          <input mdInput
+              type="password"
+              placeholder="current password"
+              required>
+              <br><br>
+              <input mdInput
+              type="password"
+              placeholder="new password"
+              required>
+              <br>
+              <input mdInput
+              type="password"
+              placeholder="confirm password"
+              required>
+              <br>
+              <button md-raised-button>Update password</button>   
+      </md-form-field>
+    </md-card-content>
+  </md-card>
+</div>
+
+<md-card *ngIf="!isProcessing && user === null">
   <md-card-content>
-    <div>Username: {{user.username}}</div>
-    <div>Email: {{user.email}}</div>
-    <div>Email verified: {{user.emailVerified}}</div>
-    <div>Bio: {{user.bio}}</div>
-    <div>dateCreated: {{user.dateCreated | date}}</div>
-    <img md-card-image
-      [src]="user.avatarUrl"
-      *ngIf="user.avatarUrl"
-      alt="avatar"
-      class="avatar">
-    <div>views: {{user.views}}</div>
+    An error occurred
   </md-card-content>
-  <md-card-actions align="end">
-    <button md-raised-button
-      color="primary"
-      (click)="goToEdit()">Edit</button>
-    <button md-raised-button
-      (click)="openShareDialog()">Share</button>
-    <button md-raised-button
-      (click)="openReportDialog()">Report</button>
-  </md-card-actions>
 </md-card>
 
 <md-card *ngIf="isProcessing">

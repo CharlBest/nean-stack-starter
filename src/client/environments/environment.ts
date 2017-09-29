@@ -7,9 +7,17 @@ export const environment = {
   production: false,
   apiUrlEndpoint: 'http://localhost:3000',
   googleAnalytics: {
-    web: 'UA-102909242-5',
+    web: 'UA-107304143-1',
     ios: 'UA-102909242-6',
     chromeExtension: 'UA-102909242-7'
   },
-  hostUrlForSharingToWeb: 'http://localhost:3000'
+  hostUrlForSharingToWeb: 'http://localhost:3000',
+  firebase: {
+    apiKey: '***',
+    authDomain: 'nean-dev.firebaseapp.com',
+    databaseURL: 'https://nean-dev.firebaseio.com',
+    projectId: 'nean-dev',
+    storageBucket: 'gs://nean-dev.appspot.com/',
+    messagingSenderId: '***'
+  }
 };

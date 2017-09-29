@@ -10,6 +10,7 @@ export class UserRoutes {
     public static changeForgottenPassword = new BaseRoute(1, UserRoutes.rootRoute, 'changeForgottenPassword');
     public static login = new BaseRoute(1, UserRoutes.rootRoute, 'login');
     public static getUser = new BaseRoute(1, UserRoutes.rootRoute, 'getUser');
+    public static updateAvatar = new BaseRoute(1, UserRoutes.rootRoute, 'updateAvatar');
     public static report = new BaseRoute(1, UserRoutes.rootRoute, 'report');
     public static createNewsletterMember = new BaseRoute(1, UserRoutes.rootRoute, 'createNewsletterMember');
     public static deleteNewsletterMember = new BaseRoute(1, UserRoutes.rootRoute, 'deleteNewsletterMember');

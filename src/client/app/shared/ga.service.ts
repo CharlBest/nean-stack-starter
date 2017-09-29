@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { LoggerService } from './logger.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable()
 export class GaService {
@@ -11,7 +12,8 @@ export class GaService {
   private previousUrl: string;
   private ga: (...rest: any[]) => void;
 
-  constructor(private logger: LoggerService) {
+  constructor(private logger: LoggerService,
+    private router: Router) {
     this.initializeGa();
 
     if (window['appType'] === 'web') {
@@ -21,6 +23,8 @@ export class GaService {
     } else if (window['appType'] === 'chromeextension') {
       this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
     }
+
+    this.trackRouterNavigation();
   }
 
   locationChanged(url: string) {
@@ -66,6 +70,15 @@ export class GaService {
       eventLabel: eventLabel,
       eventAction: eventAction,
       eventValue: eventValue
+    });
+  }
+
+  private trackRouterNavigation() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        console.log(event.urlAfterRedirects);
+        this.locationChanged(event.urlAfterRedirects);
+      }
     });
   }
 }

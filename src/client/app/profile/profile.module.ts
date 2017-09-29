@@ -6,6 +6,7 @@ import { ProfileService } from './profile.service';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
+import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import {
   MdButtonModule,
   MdCardModule,
@@ -28,7 +29,8 @@ import {
     MdSnackBarModule,
     MdTooltipModule,
     ShareDialogModule,
-    ReportDialogModule
+    ReportDialogModule,
+    UploadButtonModule
   ],
   declarations: [
     ProfileComponent

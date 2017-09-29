@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
 import { HomeService } from '../home.service';
+import { environment } from '../../../environments/environment';
+import * as marked from 'marked';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +13,28 @@ import { HomeService } from '../home.service';
 export class HomeComponent implements OnInit {
 
   isProcessing = true;
-  error = false;
-  model: any;
-  skip = 0;
+  readmeText: string;
 
-  constructor(private searchService: HomeService) { }
+  constructor(private homeService: HomeService) { }
 
   ngOnInit() {
+    if (environment.production) {
+      this.getRepoReadme();
+    } else {
+      this.isProcessing = false;
+      this.readmeText = 'IN DEVELOPMENT MODE';
+    }
   }
 
-  reload() {
-    location.reload();
+  getRepoReadme() {
+    const oReq = new XMLHttpRequest();
+    oReq.addEventListener('load', (event) => {
+      const content = (<XMLHttpRequest>event.target).responseText;
+      this.readmeText = marked(content);
+      this.isProcessing = false;
+    });
+
+    oReq.open('GET', 'https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/README.md');
+    oReq.send();
   }
 }

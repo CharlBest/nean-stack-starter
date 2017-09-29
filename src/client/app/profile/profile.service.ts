@@ -14,4 +14,20 @@ export class ProfileService {
   public getUser(): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser.constructRootUrl()}`);
   }
+
+  public updateAvatar(imageUrl: string): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  }
+
+  public deleteUser(imageUrl: string): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  }
+
+  public deactivateUser(imageUrl: string): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  }
+
+  public resendVerifyEmail(imageUrl: string): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  }
 }

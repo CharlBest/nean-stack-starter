@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
-import { Router, NavigationEnd } from '@angular/router';
-import { GaService } from './shared/ga.service';
+import { initializeApp } from 'firebase/app';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,13 @@ import { GaService } from './shared/ga.service';
 })
 export class AppComponent {
 
-  constructor(public router: Router,
-    public gaService: GaService) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.gaService.locationChanged(event.urlAfterRedirects);
-      }
-    });
+  constructor() {
+    // Firebase
+    initializeApp({
+      apiKey: environment.firebase.apiKey,
+      authDomain: environment.firebase.authDomain,
+      databaseURL: environment.firebase.databaseURL,
+      storageBucket: environment.firebase.storageBucket
+    }, environment.firebase.projectId);
   }
 }

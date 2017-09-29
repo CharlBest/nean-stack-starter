@@ -7,7 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NavigationModule } from './navigation/navigation.module';
+import { NavigationModule } from './shared/navigation/navigation.module';
 import { AuthService } from './shared/auth.service';
 import { FormService } from './shared/form.service';
 import { TutorialService } from './tutorial/tutorial.service';
@@ -15,6 +15,7 @@ import { GaService } from './shared/ga.service';
 import { LoggerService } from './shared/logger.service';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
+import { FooterModule } from './shared/footer/footer.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    NavigationModule
+    NavigationModule,
+    FooterModule
   ],
   providers: [
     Title,

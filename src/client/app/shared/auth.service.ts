@@ -43,7 +43,7 @@ export class AuthService implements CanActivate {
             console.error('problem with token parsing');
             return null;
         }
-    };
+    }
 
     public updateloggedInUserId(value) {
         this.loggedInUserId.next(value);

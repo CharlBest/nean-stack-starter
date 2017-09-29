@@ -1,0 +1,38 @@
+nav {
+    background-color: white;   
+}
+
+.logo {
+    height: 48px; 
+}
+
+.github-link {
+    float: right; 
+    margin-top: 6px;
+
+    img {
+        height: 26px;
+    }
+}
+
+.tab-nav-bar-small {
+    display: none;
+}
+
+@media(max-width: 720px) {
+    .tab-nav-bar-hide-small {
+        display: none;
+    }
+
+    .tab-nav-bar-show-small {
+        display: block;
+    }
+
+    .tab-nav-bar-large ::ng-deep .mat-tab-links {
+        display: flex;
+    }
+    
+    .mat-tab-link {
+        flex: 1;
+    }
+}

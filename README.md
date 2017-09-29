@@ -62,7 +62,7 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
 $ npm run dev
 ```
 
-## Profile
+## Procfile
 This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if your are not using Heroku
 
 ## Environment variables

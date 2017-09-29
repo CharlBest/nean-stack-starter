@@ -15,7 +15,7 @@ import * as emojione from 'emojione';
 })
 export class ProfileComponent implements OnInit {
 
-  user: UserModel;
+  user: UserModel = null;
   isProcessing = true;
 
   constructor(private profileService: ProfileService,
@@ -55,5 +55,24 @@ export class ProfileComponent implements OnInit {
 
   openReportDialog() {
     this.reportDialogService.report(this.user.uId);
+  }
+
+  profilePictureUploadComplete(downloadURL: string) {
+    this.profileService.updateAvatar(downloadURL).subscribe(data => {
+      this.user.avatarUrl = null;
+    }, error => {
+    });
+  }
+
+  resendVerifyEmail() {
+
+  }
+
+  openDeactivateAccountDialog() {
+
+  }
+
+  openDeleteAccountDialog() {
+
   }
 }
