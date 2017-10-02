@@ -5,4 +5,9 @@
 .app-container {
     margin: 0 auto;
     max-width: 650px;
+    min-height: calc(100vh - 110px);
+    
+    @media(max-width: 720px) {
+      min-height: calc(100vh - 160px);
+    }
 }

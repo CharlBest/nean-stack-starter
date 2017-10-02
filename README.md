@@ -22,21 +22,23 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Shared strongly typed API endpoints
 * Google analytics - automatic page tracking
 * Client share actions
+* Lazy load routes with preloaded parts 
+* Image uploader to Firebase storage
 
 Client pages
 
     * sign up
     * login
     * forgot password/reset password
-    * header navigation
+    * header navigation/footer
     * newsletter sign up
     * email feedback
     * profile
     * tutorials
     * verify email
+    * terms and conditions, pricacy policy and help
 
 ## In-progress or comming soon
-* Media (blob) storage upload (Azure)
 * Progressive Web App (PWA)
 * Stripe Payment integrations
 * Angular localization

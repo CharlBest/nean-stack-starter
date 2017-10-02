@@ -12,6 +12,8 @@
     avatarUrl: string;
     emailCode: string;
     emailVerified: boolean;
+    emailVerifiedDateCreated: number;
+    forgotPasswordCodes: string[];
 
     // TODO: user role/permission
 }

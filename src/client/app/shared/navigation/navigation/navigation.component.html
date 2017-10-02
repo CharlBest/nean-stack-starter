@@ -4,9 +4,8 @@
     <a md-button
       routerLink="/">
         <img class="logo"
-             src="../../../assets/logo.png"
+             src="../../../assets/logo.svg"
              alt="logo">
-        <span>App</span>
     </a>
 
     <button md-icon-button
@@ -33,9 +32,8 @@
       routerLink="/"
       class="tab-nav-bar-hide-small">
         <img class="logo"
-             src="../../../assets/logo.png"
+             src="../../../assets/logo.svg"
              alt="logo">
-        <span>App</span>
     </a>
 
     <a mdTabLink
@@ -99,6 +97,7 @@
       routerLink="/newsletter"
       i18n="top right context menu|Link to the newsletter signup page@@layoutNavigationHeaderLink10">Newsletter</button>
     <button md-menu-item
+      routerLink="/legal/help"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink11">Help</button>
     <button md-menu-item
       *ngIf="loggedInUserId"

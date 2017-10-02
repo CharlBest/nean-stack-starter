@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   serverErrors;
   isProcessing = false;
-  returnUrl = '/';
+  returnUrl = '/profile';
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
     this.route.queryParamMap.subscribe(params => {
       if (params.has('returnUrl')) {
-        this.returnUrl = params.get('returnUrl') || '/';
+        this.returnUrl = params.get('returnUrl') || '/profile';
       }
     });
   }
