@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { ProfileService } from '../profile.service';
 import { environment } from '../../../environments/environment';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
+import { UpdateAvatarViewModel } from '../../../../server/view-models/profile/update-avatar.view-model';
+import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 import * as emojione from 'emojione';
 
 @Component({
@@ -20,7 +22,9 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
-    private reportDialogService: ReportDialogService) { }
+    private reportDialogService: ReportDialogService,
+    public snackBar: MdSnackBar,
+    private dialog: MdDialog) { }
 
   ngOnInit() {
     this.getUser();
@@ -40,8 +44,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  goToEdit() { }
-
   loadEmoji() {
     (<any>emojione).ascii = true;
     const output = emojione.toImage(this.user.bio);
@@ -57,22 +59,36 @@ export class ProfileComponent implements OnInit {
     this.reportDialogService.report(this.user.uId);
   }
 
-  profilePictureUploadComplete(downloadURL: string) {
-    this.profileService.updateAvatar(downloadURL).subscribe(data => {
+  updateAvatar(downloadURL: string) {
+    const viewModel = new UpdateAvatarViewModel;
+    viewModel.avatarUrl = downloadURL;
+
+    this.profileService.updateAvatar(viewModel).subscribe(data => {
       this.user.avatarUrl = null;
     }, error => {
     });
   }
 
-  resendVerifyEmail() {
-
+  removeAvatar() {
+    this.updateAvatar('');
   }
 
-  openDeactivateAccountDialog() {
+  resendEmailVerificationLink() {
+    this.snackBar.open('Sending...', '', {
+      duration: 10000,
+    });
 
+    this.profileService.resendEmailVerificationLink().subscribe(data => {
+      this.snackBar.dismiss();
+      this.snackBar.open('Sent', '', {
+        duration: 2000,
+      });
+    }, error => {
+    });
   }
 
   openDeleteAccountDialog() {
-
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent);
+    dialogRef.componentInstance.username = this.user.username;
   }
 }

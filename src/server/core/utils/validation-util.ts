@@ -7,13 +7,13 @@ export class ValidationUtil {
                     message: message
                 }
             }
-        }
+        };
     }
 
     static createValidationErrors(errors: any) {
         return {
             status: 400,
             error: errors
-        }
+        };
     }
 }

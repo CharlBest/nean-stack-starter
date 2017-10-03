@@ -35,6 +35,34 @@ export class Emailer {
         Emailer.send(data);
     }
 
+    static feedbackEmail(content: string) {
+        const data: MailData = {
+            to: 'admin@test.com',
+            from: 'info@test.com',
+            subject: 'Feedback',
+            templateId: environment.sendGrid.templates.feedback,
+            substitutions: {
+                feedbackContent: content
+            }
+        };
+
+        Emailer.send(data);
+    }
+
+    static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
+        const data: MailData = {
+            to: 'admin@test.com',
+            from: 'info@test.com',
+            subject: 'Email verification',
+            templateId: environment.sendGrid.templates.resendEmailVerificationLink,
+            substitutions: {
+                emailverifycode: emailVerifyCode
+            }
+        };
+
+        Emailer.send(data);
+    }
+
     static send(data: MailData) {
         if (!environment.production) {
             data.mailSettings = {

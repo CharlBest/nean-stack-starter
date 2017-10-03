@@ -11,7 +11,7 @@ export class BaseController {
     protected getUserId(req: Request): number {
         const user = (<any>req).user;
         if (user !== null && user !== undefined) {
-            return user.id;
+            return +user.id;
         } else {
             return null;
         }

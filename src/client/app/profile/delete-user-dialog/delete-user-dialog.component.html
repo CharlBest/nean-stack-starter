@@ -1,0 +1,29 @@
+<md-dialog-content>
+    <button md-button
+        [md-dialog-close]="true"
+        style="float: right;">
+      <md-icon>close</md-icon>
+    </button>
+
+    <h2 md-dialog-title
+        style="float: left;">Delete account</h2>
+
+    <div style="clear: both;"></div>
+
+    <p>
+        We are sad to see you go. All information on user
+        <strong>{{username}}</strong> will be deleted and can't be recovered after proceeding. Please enter your username.
+    </p>
+    <md-form-field>
+        <input mdInput
+            #usernameInput
+            type="text"
+            placeholder="username"
+            required>
+    </md-form-field>
+</md-dialog-content>
+<md-dialog-actions align="end">
+    <button md-raised-button
+        color="warn"
+        (click)="delete(usernameInput.value)">Delete</button>
+</md-dialog-actions>

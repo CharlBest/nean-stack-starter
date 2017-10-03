@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from '../shared/base-route';
 import { UsersController } from './users.controller';
 import { UserRoutes } from '../../routes/user.routes';
+import { Authentication } from '../../core/middleware/authentication';
 
 export class UsersRoutes extends BaseRoute {
     usersController: UsersController;
@@ -18,10 +19,17 @@ export class UsersRoutes extends BaseRoute {
         this.router.post(UserRoutes.forgotPassword.constructEndpointUrl(), (req, res, next) => this.usersController.forgotPassword(req, res, next));
         this.router.post(UserRoutes.changeForgottenPassword.constructEndpointUrl(), (req, res, next) => this.usersController.changeForgottenPassword(req, res, next));
         this.router.post(UserRoutes.login.constructEndpointUrl(), (req, res, next) => this.usersController.login(req, res, next));
-        this.router.get(UserRoutes.getUser.constructEndpointUrl(), (req, res, next) => this.usersController.getUser(req, res, next));
         this.router.get(UserRoutes.report.constructEndpointUrl(), (req, res, next) => this.usersController.report(req, res, next));
         this.router.post(UserRoutes.createNewsletterMember.constructEndpointUrl(), (req, res, next) => this.usersController.createNewsletterMember(req, res, next));
         this.router.post(UserRoutes.deleteNewsletterMember.constructEndpointUrl(), (req, res, next) => this.usersController.deleteNewsletterMember(req, res, next));
-        this.router.post(UserRoutes.verifyEmail.constructEndpointUrl(), (req, res, next) => this.usersController.verifyEmail(req, res, next));
+        this.router.post(UserRoutes.sendFeedback.constructEndpointUrl(), (req, res, next) => this.usersController.sendFeedback(req, res, next));
+
+        this.router.get(UserRoutes.getUser.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.getUser(req, res, next));
+        this.router.post(UserRoutes.verifyEmail.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.verifyEmail(req, res, next));
+        this.router.post(UserRoutes.updateAvatar.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.updateAvatar(req, res, next));
+        this.router.post(UserRoutes.updateBio.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.updateBio(req, res, next));
+        this.router.post(UserRoutes.updatePassword.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.updatePassword(req, res, next));
+        this.router.post(UserRoutes.resendEmailVerificationLink.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.resendEmailVerificationLink(req, res, next));
+        this.router.post(UserRoutes.deleteUser.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.deleteUser(req, res, next));
     }
 }

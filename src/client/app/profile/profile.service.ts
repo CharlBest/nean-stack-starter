@@ -5,6 +5,9 @@ import { environment } from '../../environments/environment';
 import { UserRoutes } from '../../../server/routes/user.routes';
 import { UserModel } from '../../../server/models/user/user.model';
 import { ReportUserViewModel } from '../../../server/view-models/profile/report-user.view-model';
+import { UpdatePasswordViewModel } from '../../../server/view-models/profile/update-password.view-model';
+import { UpdateAvatarViewModel } from '../../../server/view-models/profile/update-avatar.view-model';
+import { UpdateBioViewModel } from '../../../server/view-models/profile/update-bio.view-model';
 
 @Injectable()
 export class ProfileService {
@@ -15,19 +18,23 @@ export class ProfileService {
     return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser.constructRootUrl()}`);
   }
 
-  public updateAvatar(imageUrl: string): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  public updateAvatar(viewModel: UpdateAvatarViewModel): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, viewModel);
   }
 
-  public deleteUser(imageUrl: string): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  public updateBio(viewModel: UpdateBioViewModel): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio.constructRootUrl()}`, viewModel);
   }
 
-  public deactivateUser(imageUrl: string): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  public updatePassword(viewModel: UpdatePasswordViewModel): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword.constructRootUrl()}`, viewModel);
   }
 
-  public resendVerifyEmail(imageUrl: string): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, { imageUrl });
+  public deleteUser(): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser.constructRootUrl()}`, null);
+  }
+
+  public resendEmailVerificationLink(): Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink.constructRootUrl()}`, null);
   }
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Database } from './../database'
+import { Database } from './../database';
 import { verify } from 'jsonwebtoken';
 import { environment } from '../../environments/environment';
 
@@ -8,8 +8,9 @@ export class Authentication {
         if ((<any>req).user === null) {
             res.status(401).send({ detail: 'Unauthorized user' });
         }
+
         next();
-    };
+    }
 
     static setAuthUser(req: Request | any, res: Response, next: NextFunction): void {
         const token = Authentication.getTokenInHeader(req);
@@ -23,9 +24,11 @@ export class Authentication {
                     (<any>req).user = null;
                     return res.status(401).json({ message: 'Unauthorized user' });
                 }
+
                 if (decode['data'] !== null || decode['data'] !== undefined) {
                     (<any>req).user = decode['data'];
                 }
+
                 next();
             });
         }

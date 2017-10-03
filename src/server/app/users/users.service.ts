@@ -40,7 +40,7 @@ export class UsersService extends BaseService implements IUsersService {
             return true;
         } else {
             return false;
-        };
+        }
     }
 
     // #endregion
@@ -81,7 +81,8 @@ export class UsersService extends BaseService implements IUsersService {
         const tokenData = {
             id: user.id,
             username: user.username
-        }
+        };
+
         // TODO: TTL on token! '1h'
         viewModel.token = sign({
             exp: Math.floor(Date.now() / 1000) + (60 * 60),
@@ -129,5 +130,36 @@ export class UsersService extends BaseService implements IUsersService {
 
     public async verifyEmail(session: neo4j.Session, userId: number, code: string): Promise<boolean> {
         return await this.usersRepository.verifyEmail(session, userId, code);
+    }
+
+    public async updateAvatar(session: neo4j.Session, userId: number, avatarUrl: string): Promise<UserModel> {
+        return await this.usersRepository.updateAvatar(session, userId, avatarUrl);
+    }
+
+    public async updateBio(session: neo4j.Session, userId: number, bio: string): Promise<UserModel> {
+        return await this.usersRepository.updateBio(session, userId, bio);
+    }
+
+    public async updatePassword(session: neo4j.Session, userId: number, password: string, newPassword: string): Promise<UserModel> {
+        const user = await this.usersRepository.getUserById(session, userId);
+
+        if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
+            throw ValidationUtil.createValidationErrorMessage('password', 'Invalid password');
+        }
+
+        const salt = await this.generateSalt();
+        const hashedPassword = await this.hashPassword(newPassword, salt);
+
+        const updatedUser = await this.usersRepository.updatePassword(session, userId, hashedPassword, salt);
+
+        if (updatedUser === null) {
+            throw ValidationUtil.createValidationErrorMessage('password', 'Error occurred');
+        }
+
+        return updatedUser;
+    }
+
+    public async deleteUser(session: neo4j.Session, userId: number): Promise<boolean> {
+        return await this.usersRepository.deleteUser(session, userId);
     }
 }

@@ -2,7 +2,8 @@ export enum ErrorMessageType {
     email,
     required,
     minLength,
-    maxLength
+    maxLength,
+    compare
 }
 
 export class Validators {
@@ -13,13 +14,14 @@ export class Validators {
         [ErrorMessageType[ErrorMessageType.email]]: () => 'Email is invalid',
         [ErrorMessageType[ErrorMessageType.minLength]]: (minLength) => 'The min number of characters is ' + minLength,
         [ErrorMessageType[ErrorMessageType.maxLength]]: (maxLength) => 'The max allowed number of characters is ' + maxLength,
+        [ErrorMessageType[ErrorMessageType.compare]]: () => 'Passwords are not the same',
         // 'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,
         // 'years': (params) => params.message,
         // 'countryCity': (params) => params.message,
         // 'uniqueName': (params) => params.message,
         // 'telephoneNumbers': (params) => params.message,
         // 'telephoneNumber': (params) => params.message
-    }
+    };
 
     public static getMessage(type: string, params: any) {
         return Validators.errorMessages[type](params);
@@ -30,7 +32,7 @@ export class Validators {
             [ErrorMessageType[type]]: {
                 message: Validators.getMessage(ErrorMessageType[type], params)
             }
-        }
+        };
     }
 
     static email(control: AbstractControl): ValidationErrors {
@@ -39,33 +41,34 @@ export class Validators {
     }
 
     static required(control: AbstractControl): ValidationErrors {
-        // TODO: check html whitespace
-        const valueWithoutWhitespace = control.value.replace(/\s+/g, '');
-        if (valueWithoutWhitespace !== null && valueWithoutWhitespace !== undefined && valueWithoutWhitespace !== '') {
-            return null;
-        } else {
-            return Validators.getServerErrorMessage(ErrorMessageType.required, null)
+        if (control.value !== null && control.value !== undefined) {
+            const valueWithoutWhitespace = control.value.replace(/\s+/g, '');
+            if (valueWithoutWhitespace !== '') {
+                return null;
+            }
         }
+
+        return Validators.getServerErrorMessage(ErrorMessageType.required, null);
     }
 
     static minLength(minLength: number): ValidatorFn {
         return (control: AbstractControl): ValidationErrors => {
-            if (control.value.length >= minLength) {
+            if (control.value !== null && control.value !== undefined && control.value.length >= minLength) {
                 return null;
             } else {
-                return Validators.getServerErrorMessage(ErrorMessageType.minLength, minLength)
+                return Validators.getServerErrorMessage(ErrorMessageType.minLength, minLength);
             }
-        }
+        };
     }
 
     static maxLength(maxLength: number): ValidatorFn {
         return (control: AbstractControl): ValidationErrors => {
-            if (control.value.length < maxLength) {
+            if (control.value !== null && control.value !== undefined && control.value.length < maxLength) {
                 return null;
             } else {
-                return Validators.getServerErrorMessage(ErrorMessageType.maxLength, maxLength)
+                return Validators.getServerErrorMessage(ErrorMessageType.maxLength, maxLength);
             }
-        }
+        };
     }
 }
 

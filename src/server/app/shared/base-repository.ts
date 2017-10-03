@@ -41,4 +41,8 @@ export enum Users {
     GetUser,
     GetUserById,
     VerifyEmail,
+    UpdateAvatar,
+    UpdateBio,
+    UpdatePassword,
+    DeleteUser
 }
