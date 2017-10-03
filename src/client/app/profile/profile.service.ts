@@ -31,7 +31,7 @@ export class ProfileService {
   }
 
   public deleteUser(): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser.constructRootUrl()}`, null);
+    return this.http.delete<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser.constructRootUrl()}`);
   }
 
   public resendEmailVerificationLink(): Observable<UserModel> {
