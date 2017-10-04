@@ -20,7 +20,7 @@ export const environment = {
             welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
             forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
             feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
-            resendEmailVerificationLink: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', '746786b0-9car-4c4c-a186-636d0ef62d1a')
+            resendEmailVerificationLink: getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', '746786b0-9car-4c4c-a186-636d0ef62d1a')
         }
     },
     authentication: {
