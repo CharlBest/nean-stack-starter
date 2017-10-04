@@ -5,9 +5,10 @@ import { MdDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Observable } from 'rxjs/Observable';
-import { TutorialService, TutorialArea } from '../../../tutorial/tutorial.service';
 import { environment } from '../../../../environments/environment';
 import 'rxjs/add/operator/map';
+import { TutorialType } from '../../../shared/tutorial/tutorial-type.enum';
+import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 
 @Component({
   selector: 'app-navigation',
@@ -21,13 +22,14 @@ export class NavigationComponent implements OnInit {
   navigationTypes = Navigation;
   navigationBackTitle = '';
   backRouterPath: string;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private titleService: Title,
     private location: Location,
-    private tutorial: TutorialService) { }
+    private tutorialService: TutorialService) { }
 
   ngOnInit() {
     this.authService.loggedInUserId$.subscribe(id => {
@@ -64,9 +66,9 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-    if (!this.tutorial.hasDoneTutorial(TutorialArea.firstTimeUser)) {
-      this.router.navigate(['/tutorial', TutorialArea.firstTimeUser]);
-    }
+    // if (!this.tutorial.hasDoneTutorial(TutorialArea.firstTimeUser)) {
+    //   this.router.navigate(['/tutorial', TutorialArea.firstTimeUser]);
+    // }
   }
 
   logout() {
@@ -80,6 +82,10 @@ export class NavigationComponent implements OnInit {
       // TODO: check if there is a back otherwise redirect to home/discover page
       this.location.back();
     }
+  }
+
+  takeTour() {
+    this.tutorialService.activateTutorial(TutorialType.ContextMenu);
   }
 }
 

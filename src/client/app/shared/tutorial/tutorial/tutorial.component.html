@@ -1,0 +1,33 @@
+<div class="tutorial-overlay" *ngIf="active">
+
+  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ContextMenu"
+    id="tutorial-ContextMenu"
+    class="tutorial-box">
+    <span>Click here for more info</span>
+    <button md-raised-button
+      (click)="exitTutorial()">Skip</button>
+    <button md-raised-button
+      (click)="goToTutorial(tutorialTypeEnum.ForgotPassword)">Next</button>
+  </div>
+
+  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ForgotPassword"
+    id="tutorial-ForgotPassword"
+    class="tutorial-box">
+    <span>If you forget your password click here</span>
+    <button md-raised-button
+      (click)="exitTutorial()">Skip</button>
+    <button md-raised-button
+      (click)="goToTutorial(tutorialTypeEnum.SignUp)">Next</button>
+  </div>
+
+  <div *ngIf="tutorialInUrl == tutorialTypeEnum.SignUp"
+    id="tutorial-SignUp"
+    class="tutorial-box">
+    <span>Sign up</span>
+    <button md-raised-button
+      (click)="exitTutorial()">Skip</button>
+    <button md-raised-button
+      (click)="exitTutorial()">Done</button>
+  </div>
+
+</div>

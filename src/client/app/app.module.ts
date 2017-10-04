@@ -10,12 +10,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavigationModule } from './shared/navigation/navigation.module';
 import { AuthService } from './shared/auth.service';
 import { FormService } from './shared/form.service';
-import { TutorialService } from './tutorial/tutorial.service';
 import { GaService } from './shared/ga.service';
 import { LoggerService } from './shared/logger.service';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { FooterModule } from './shared/footer/footer.module';
+import { TutorialModule } from './shared/tutorial/tutorial.module';
+import { TutorialService } from './shared/tutorial/tutorial.service';
 
 @NgModule({
   declarations: [
@@ -27,14 +28,15 @@ import { FooterModule } from './shared/footer/footer.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     NavigationModule,
-    FooterModule
+    FooterModule,
+    TutorialModule
   ],
   providers: [
     Title,
     AuthService,
     FormService,
-    TutorialService,
     GaService,
+    TutorialService,
     LoggerService,
     {
       provide: HTTP_INTERCEPTORS,

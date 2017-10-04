@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
+import { TutorialModule } from '../../shared/tutorial/tutorial.module';
 import {
   MdTabsModule,
   MdInputModule,
@@ -20,7 +21,8 @@ import {
     MdMenuModule,
     MdButtonModule,
     MdTabsModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    TutorialModule
   ],
   exports: [
     NavigationComponent

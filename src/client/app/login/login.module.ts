@@ -6,6 +6,7 @@ import { LoginRoutingModule } from '../login/login-routing.module';
 import { LoginService } from './login.service';
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { FormService } from '../shared/form.service';
+import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import {
   MdButtonModule,
   MdCardModule,
@@ -22,7 +23,8 @@ import {
     MdInputModule,
     MdProgressSpinnerModule,
     ReactiveFormsModule,
-    ShowErrorsModule
+    ShowErrorsModule,
+    TutorialModule
   ],
   declarations: [
     LoginComponent

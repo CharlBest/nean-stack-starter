@@ -6,6 +6,7 @@ import { MediaTypeModule } from '../shared/media-type/media-type.module';
 import { HomeService } from './home.service';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
+import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import {
   MdInputModule,
   MdChipsModule,
@@ -28,7 +29,8 @@ import {
     MdProgressSpinnerModule,
     MdIconModule,
     MdButtonModule,
-    MediaTypeModule
+    MediaTypeModule,
+    TutorialModule
   ],
   declarations: [
     HomeComponent,

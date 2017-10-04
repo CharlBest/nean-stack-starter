@@ -7,6 +7,7 @@ import { FormService } from '../../shared/form.service';
 import { LoginService } from '../../login/login.service';
 import { Validators } from '../../../../server/validation/validators';
 import { LoginViewModel } from '../../../../server/view-models/create-user/login.view-model';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   serverErrors;
   isProcessing = false;
   returnUrl = '/profile';
+  tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,

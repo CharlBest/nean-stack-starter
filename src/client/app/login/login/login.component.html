@@ -1,7 +1,10 @@
 <form [formGroup]="form">
     <md-card *ngIf="!isProcessing">
         <md-card-content>
-            Don't have an account please <button md-raised-button
+            Don't have an account please
+            <button md-raised-button
+                [appTutorial]="tutorialTypeEnum.SignUp"
+                tutorialBackgroundColor="none"
                 color="accent"
                 type="button"
                 routerLink="/create-user">Sign up</button>

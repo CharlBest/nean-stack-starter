@@ -10,6 +10,7 @@
 
     <button md-icon-button
       [mdMenuTriggerFor]="menu"
+      [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;">
     <md-icon>more_vert</md-icon>
     </button>
@@ -40,8 +41,7 @@
       routerLink="/"
       routerLinkActive
       #rla1="routerLinkActive"
-      [active]="rla1.isActive"
-      [routerLinkActiveOptions]="{exact: true}">
+      [active]="rla1.isActive">
       <md-icon>home</md-icon> <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
     </a>
 
@@ -50,8 +50,7 @@
       routerLink="/login"
       routerLinkActive
       #rla2="routerLinkActive"
-      [active]="rla2.isActive"
-      [routerLinkActiveOptions]="{exact: true}">
+      [active]="rla2.isActive">
       <md-icon>lock</md-icon>
       <span i18n="site navigation header|Link to the login page@@layoutNavigationHeaderLink3">&nbsp;Login</span>
     </a>
@@ -61,14 +60,14 @@
       routerLink="/profile"
       routerLinkActive
       #rla3="routerLinkActive"
-      [active]="rla3.isActive"
-      [routerLinkActiveOptions]="{exact: true}">
+      [active]="rla3.isActive">
       <md-icon>account_circle</md-icon>
       <span i18n="site navigation header|Link to the user's profile page@@layoutNavigationHeaderLink5">&nbsp;Profile</span>
     </a>
 
     <button md-icon-button
       [mdMenuTriggerFor]="menu"
+      [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;"
       class="tab-nav-bar-hide-small">
     <md-icon>more_vert</md-icon>
@@ -99,6 +98,9 @@
     <button md-menu-item
       routerLink="/legal/help"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink11">Help</button>
+    <button md-menu-item
+      (click)="takeTour()"
+      i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink12">Take tour</button>
     <button md-menu-item
       *ngIf="loggedInUserId"
       (click)="logout()"
