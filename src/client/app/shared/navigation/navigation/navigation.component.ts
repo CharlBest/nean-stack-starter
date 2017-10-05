@@ -80,9 +80,9 @@ export class NavigationComponent implements OnInit, OnChanges {
     for (const propName in changes) {
       if (propName === 'swipeEvent') {
         if (this.swipeEvent !== undefined) {
-          if (this.swipeEvent.type === 'swipeleft') {
+          if (this.swipeEvent.type === 'swiperight') {
             this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
-          } else if (this.swipeEvent.type === 'swiperight') {
+          } else if (this.swipeEvent.type === 'swipeleft') {
             if (this.loggedInUserId) {
               this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
             } else {
