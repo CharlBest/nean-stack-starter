@@ -41,7 +41,8 @@
       routerLink="/"
       routerLinkActive
       #rla1="routerLinkActive"
-      [active]="rla1.isActive">
+      [active]="rla1.isActive"
+      [routerLinkActiveOptions]="{exact: true}">
       <md-icon>home</md-icon> <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
     </a>
 
