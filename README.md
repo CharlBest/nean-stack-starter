@@ -27,16 +27,16 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 
 Client pages
 
-    * sign up
-    * login
-    * forgot password/reset password
-    * header navigation/footer
-    * newsletter sign up
-    * email feedback
-    * profile
-    * tutorials
-    * verify email
-    * terms and conditions, pricacy policy and help
+* sign up
+* login
+* forgot password/reset password
+* header navigation/footer
+* newsletter sign up
+* email feedback
+* profile
+* tutorials
+* verify email
+* terms and conditions, pricacy policy and help
 
 ## In-progress or comming soon
 * Progressive Web App (PWA)
