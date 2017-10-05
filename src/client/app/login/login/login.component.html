@@ -44,6 +44,7 @@
                 [disabled]="!form.valid"
                 (click)="onSubmit()">Log in</button>
             <button md-raised-button
+                [appTutorial]="tutorialTypeEnum.ForgotPassword"
                 type="button"
                 routerLink="/forgot-password">Forgot password</button>
         </md-card-actions>

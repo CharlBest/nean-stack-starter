@@ -75,7 +75,7 @@ export class CreateUserComponent implements OnInit {
         if (data !== null && data.token !== null) {
           this.authService.setToken(data.token, data.userId);
 
-          this.router.navigate(['/']);
+          this.router.navigate(['/profile']);
         } else {
           // TODO: show material dialog (shared auth failed dialog)
           alert('Authentication failed');

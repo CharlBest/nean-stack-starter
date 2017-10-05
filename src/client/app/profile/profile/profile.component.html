@@ -28,11 +28,11 @@
   <md-card>
     <md-card-content>
       <h3>Avatar</h3>
-      <app-upload-button (onUploadComplete)="updateAvatar($event)"></app-upload-button>
       <button md-raised-button
-        color="warn"
-        (click)="removeAvatar()"
-        *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
+      color="warn"
+      (click)="removeAvatar()"
+      *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
+      <app-upload-button (onUploadComplete)="updateAvatar($event)" [showPreview]="false"></app-upload-button>
       <img md-card-image
         [src]="user.avatarUrl"
         *ngIf="user.avatarUrl"

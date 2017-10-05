@@ -18,7 +18,7 @@ export class TutorialService {
         const navigateUrl = [];
         switch (tutorialType) {
             case TutorialType.ForgotPassword:
-                navigateUrl.push('/');
+                navigateUrl.push('/login');
                 break;
 
             case TutorialType.SignUp:

@@ -20,6 +20,7 @@
     "ng": "ng",
     "dev": "concurrently \"ng build --watch\" \"webpack --watch\" \"nodemon dist/server/app.bundle.js\"",
     "start": "node dist/server/app.bundle.js",
+    "start-watch": "nodemon dist/server/app.bundle.js",
     "start-prod": "set NODE_ENV=production&&node dist/server/app.bundle.js",
     "build": "ng build --prod && webpack",
     "postinstall": "ng build --prod && webpack",

@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit {
     viewModel.avatarUrl = downloadURL;
 
     this.profileService.updateAvatar(viewModel).subscribe(data => {
-      this.user.avatarUrl = null;
+      this.user.avatarUrl = viewModel.avatarUrl;
     }, error => {
     });
   }

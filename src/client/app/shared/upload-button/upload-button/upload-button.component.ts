@@ -11,6 +11,8 @@ import { environment } from '../../../../environments/environment';
 export class UploadButtonComponent implements OnInit {
     previewImgUrl: string;
     progressPercentage: number;
+
+    @Input() showPreview = true;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
