@@ -8,6 +8,7 @@ import { initializeApp } from 'firebase/app';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  swipeEvent: PointerEvent;
 
   constructor() {
     // Firebase

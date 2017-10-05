@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { MdDialog } from '@angular/material';
@@ -15,7 +15,12 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnChanges {
+
+  @Input() swipeEvent: PointerEvent;
+  @ViewChild('tabLinkHome') tabLinkHome: ElementRef;
+  @ViewChild('tabLinkLogin') tabLinkLogin: ElementRef;
+  @ViewChild('tabLinkProfile') tabLinkProfile: ElementRef;
 
   loggedInUserId: number = this.authService.getloggedInUserId();
   activeNavigation = Navigation.Primary;
@@ -69,6 +74,24 @@ export class NavigationComponent implements OnInit {
     // if (!this.tutorial.hasDoneTutorial(TutorialArea.firstTimeUser)) {
     //   this.router.navigate(['/tutorial', TutorialArea.firstTimeUser]);
     // }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (propName === 'swipeEvent') {
+        if (this.swipeEvent !== undefined) {
+          if (this.swipeEvent.type === 'swipeleft') {
+            this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
+          } else if (this.swipeEvent.type === 'swiperight') {
+            if (this.loggedInUserId) {
+              this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
+            } else {
+              this.router.navigate([(<HTMLAnchorElement>this.tabLinkLogin.nativeElement).pathname]);
+            }
+          }
+        }
+      }
+    }
   }
 
   logout() {

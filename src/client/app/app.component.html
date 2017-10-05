@@ -1,6 +1,6 @@
-<app-navigation></app-navigation>
+<app-navigation [swipeEvent]="swipeEvent"></app-navigation>
 
-<div class="app-container">
+<div class="app-container" (swipeleft)="swipeEvent = $event" (swiperight)="swipeEvent = $event">
     <router-outlet></router-outlet>
 </div>
 
