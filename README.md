@@ -24,6 +24,8 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Client share actions
 * Lazy load routes with preloaded parts 
 * Image uploader to Firebase storage
+* Swipe events
+* Tutorial/on-boading framework
 
 Client pages
 
@@ -50,6 +52,8 @@ Client pages
 
 Make sure you have [Node.js](http://nodejs.org/), [Neo4j](https://neo4j.com/) and [Angular CLI](https://cli.angular.io/) installed.
 
+Neo4j note: create a local database with with username: neo4j and password: neo4j 
+
 ```sh
 $ git clone git@github.com:CharlBest/nean-stack-starter.git
 $ cd nean-stack-starter
@@ -64,6 +68,9 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
 $ npm run dev
 ```
 
+## Why Heroku, GrapheneDB and Firebase for demo app hosting
+Its free ;)
+
 ## Procfile
 This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if your are not using Heroku
 
@@ -71,4 +78,4 @@ This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean de
 ### Client
 In the environments folder there are 2 files. one for dev and one for production. The angular CLI switches them at build time.
 ### Server
-In the root there is a .env file. At development webpack includes these at build time in your output
+In the environments folder there is 1 file. In development default values are used. In production your hosting service should set process.env with the appropriate variables

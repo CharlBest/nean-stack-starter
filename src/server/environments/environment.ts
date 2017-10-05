@@ -5,7 +5,7 @@ export const environment = {
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
         username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),
-        password: getEnvironmentVariable('DATABASE_PASSWORD', 'demouser')
+        password: getEnvironmentVariable('DATABASE_PASSWORD', 'neo4j')
     },
     azureBlobStorage: {
         blobServiceEndpoint: getEnvironmentVariable('STORAGE_ENDPOINT', 'https://devstorage.blob.core.windows.net'),
