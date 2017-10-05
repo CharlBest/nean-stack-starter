@@ -2,6 +2,12 @@ nav {
     background-color: white;   
 }
 
+.back-button-navigation {
+    display: inline-block; 
+    cursor: pointer;
+    user-select: none;
+}
+
 .logo {
     height: 48px; 
 }
