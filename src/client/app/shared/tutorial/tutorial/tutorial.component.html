@@ -3,7 +3,7 @@
   <div *ngIf="tutorialInUrl == tutorialTypeEnum.ContextMenu"
     id="tutorial-ContextMenu"
     class="tutorial-box">
-    <span>Click here for more info</span>
+    <div>Click here for more info</div>
     <button md-raised-button
       (click)="exitTutorial()">Skip</button>
     <button md-raised-button
@@ -13,7 +13,7 @@
   <div *ngIf="tutorialInUrl == tutorialTypeEnum.ForgotPassword"
     id="tutorial-ForgotPassword"
     class="tutorial-box">
-    <span>If you forget your password click here</span>
+    <div>If you forget your password click here</div>
     <button md-raised-button
       (click)="exitTutorial()">Skip</button>
     <button md-raised-button
@@ -23,7 +23,7 @@
   <div *ngIf="tutorialInUrl == tutorialTypeEnum.SignUp"
     id="tutorial-SignUp"
     class="tutorial-box">
-    <span>Sign up</span>
+    <div>Sign up</div>
     <button md-raised-button
       (click)="exitTutorial()">Skip</button>
     <button md-raised-button
