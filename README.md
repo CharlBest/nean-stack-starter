@@ -1,4 +1,4 @@
-# Nean (Neo4j, Express, Angular, Node) Stack Starter
+# NEAN (Neo4j, Express, Angular, Node) Stack Starter
 
 A basic app that has all the features that all platfroms have like authentication, validation, error handling and more.
 
