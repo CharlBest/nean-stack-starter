@@ -17,12 +17,28 @@ export class TutorialService {
     activateTutorial(tutorialType: TutorialType) {
         const navigateUrl = [];
         switch (tutorialType) {
-            case TutorialType.ForgotPassword:
+            case TutorialType.SignUp:
                 navigateUrl.push('/login');
                 break;
 
-            case TutorialType.SignUp:
-                navigateUrl.push('/login');
+            case TutorialType.ForgotPassword:
+                navigateUrl.push('/forgot-password');
+                break;
+
+            case TutorialType.Newsletter:
+                navigateUrl.push('/newsletter');
+                break;
+
+            case TutorialType.Feedback:
+                navigateUrl.push('/feedback');
+                break;
+
+            case TutorialType.ProfileShare:
+            case TutorialType.ProfileReport:
+            case TutorialType.DeleteUser:
+            case TutorialType.AvatarUpload:
+            case TutorialType.UpdatePassword:
+                navigateUrl.push('/profile');
                 break;
 
             default:
@@ -33,8 +49,8 @@ export class TutorialService {
         this.router.navigate(navigateUrl, { queryParams: queryParams });
     }
 
-    deactivateTutorial() {
+    deactivateTutorial(url: string) {
         const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: undefined });
-        this.router.navigate([], { queryParams: queryParams });
+        this.router.navigate([url], { queryParams: queryParams });
     }
 }

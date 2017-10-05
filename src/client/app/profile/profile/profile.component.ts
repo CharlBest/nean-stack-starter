@@ -9,6 +9,8 @@ import { ReportDialogService } from '../../shared/report-dialog/report-dialog.se
 import { UpdateAvatarViewModel } from '../../../../server/view-models/profile/update-avatar.view-model';
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 import * as emojione from 'emojione';
+import { TutorialService } from '../../shared/tutorial/tutorial.service';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-profile',
@@ -19,12 +21,14 @@ export class ProfileComponent implements OnInit {
 
   user: UserModel = null;
   isProcessing = true;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
     private reportDialogService: ReportDialogService,
     public snackBar: MdSnackBar,
-    private dialog: MdDialog) { }
+    private dialog: MdDialog,
+    private tutorialService: TutorialService) { }
 
   ngOnInit() {
     this.getUser();
@@ -90,5 +94,9 @@ export class ProfileComponent implements OnInit {
   openDeleteAccountDialog() {
     const dialogRef = this.dialog.open(DeleteUserDialogComponent);
     dialogRef.componentInstance.username = this.user.username;
+  }
+
+  profileTour() {
+    this.tutorialService.activateTutorial(TutorialType.ProfileShare);
   }
 }

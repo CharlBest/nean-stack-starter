@@ -12,6 +12,7 @@ export class TutorialComponent implements OnInit {
   tutorialTypeEnum = TutorialType;
   tutorialInUrl: TutorialType;
   active: boolean;
+  returnUrl: string;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -22,6 +23,7 @@ export class TutorialComponent implements OnInit {
       if (params.has('tut')) {
         this.tutorialInUrl = +params.get('tut');
         this.active = true;
+        this.returnUrl = document.referrer || '/';
       } else {
         this.tutorialInUrl = null;
         this.active = false;
@@ -30,7 +32,7 @@ export class TutorialComponent implements OnInit {
   }
 
   exitTutorial() {
-    this.tutorialService.deactivateTutorial();
+    this.tutorialService.deactivateTutorial(this.returnUrl);
   }
 
   goToTutorial(tutorialType: TutorialType) {
