@@ -1,8 +1,8 @@
 ﻿{
     "manifest_version": 2,
-    "name": "App",
-    "short_name": "App",
-    "description": "App extension fro chrome",
+    "name": "NEAN",
+    "short_name": "NEAN",
+    "description": "App extension for chrome",
     "version": "0.0.5",
     "browser_action": {
         "default_icon": "assets/logo.png",
