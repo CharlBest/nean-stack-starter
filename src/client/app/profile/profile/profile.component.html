@@ -30,8 +30,8 @@
     </md-card-actions>
   </md-card>
 
-  <md-card>
-    <md-card-content [appTutorial]="tutorialTypeEnum.AvatarUpload">
+  <md-card [appTutorial]="tutorialTypeEnum.AvatarUpload">
+    <md-card-content>
       <h3>Avatar</h3>
       <button md-raised-button
         color="warn"
@@ -49,7 +49,7 @@
 
   <app-update-bio [content]="user.bio"></app-update-bio>
 
-  <app-update-password [appTutorial]="tutorialTypeEnum.UpdatePassword"></app-update-password>
+  <app-update-password></app-update-password>
 
   <md-card *ngIf="!isProcessing && user === null">
     <md-card-content>

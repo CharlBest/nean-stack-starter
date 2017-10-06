@@ -1,4 +1,5 @@
 export enum TutorialType {
+    None = 0,
     ContextMenu = 1,
     SignUp = 2,
     ForgotPassword = 3,

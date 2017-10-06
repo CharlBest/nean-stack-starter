@@ -41,10 +41,12 @@ export class TutorialDirective implements OnInit {
 
             if (this.tutorialInUrl === this.appTutorial) {
                 element.style.zIndex = '11';
+                window.scroll(null, element.offsetTop);
             }
         }
     }
 
+    // TODO: not working
     @HostListener('click', ['$event']) onMouseClick(event: Event) {
         event.preventDefault();
         event.stopPropagation();

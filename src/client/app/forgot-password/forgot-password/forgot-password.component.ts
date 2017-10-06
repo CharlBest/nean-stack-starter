@@ -5,6 +5,7 @@ import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 import { ForgotPasswordViewModel } from '../../../../server/view-models/forgot-password/forgot-password.view-model';
 import { Validators } from '../../../../server/validation/validators';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,6 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   serverErrors;
   isProcessing = false;
   emailSent = false;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
     private forgotPasswordService: ForgotPasswordService,

@@ -7,6 +7,7 @@ import { ForgotPasswordRoutingModule } from '../forgot-password/forgot-password-
 import { ForgotPasswordService } from './forgot-password.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
+import { TutorialModule } from '../shared/tutorial/tutorial.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
     MdInputModule,
     MdProgressSpinnerModule,
     MdCardModule,
-    ShowErrorsModule
+    ShowErrorsModule,
+    TutorialModule
   ],
   declarations: [
     ForgotPasswordComponent,

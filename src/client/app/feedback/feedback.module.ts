@@ -4,6 +4,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { FeedbackRoutingModule } from '../feedback/feedback-routing.module';
 import { FeedbackService } from './feedback.service';
+import { TutorialModule } from '../shared/tutorial/tutorial.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { FeedbackService } from './feedback.service';
     MdButtonModule,
     MdCardModule,
     MdInputModule,
-    MdProgressSpinnerModule
+    MdProgressSpinnerModule,
+    TutorialModule
   ],
   declarations: [
     FeedbackComponent

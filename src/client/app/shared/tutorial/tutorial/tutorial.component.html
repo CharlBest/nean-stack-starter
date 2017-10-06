@@ -1,104 +1,22 @@
 <div class="tutorial-overlay"
-  *ngIf="active">
+  *ngIf="active"></div>
 
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ContextMenu"
-    id="tutorial-ContextMenu"
+<div *ngFor="let tut of tuts">
+  <div *ngIf="tutorialInUrl == tut.tutorialType"
     class="tutorial-box">
-    <div>Click here for more info</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.SignUp)">Next</button>
-  </div>
+    <div>{{tut.text}}</div>
 
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.SignUp"
-    id="tutorial-SignUp"
-    class="tutorial-box">
-    <div>Sign up</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.ForgotPassword)">Next</button>
-  </div>
+    <br>
 
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ForgotPassword"
-    id="tutorial-ForgotPassword"
-    class="tutorial-box">
-    <div>Forgot password feature</div>
     <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
+      (click)="back()">Previous</button>
     <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.Newsletter)">Next</button>
-  </div>
+      (click)="goToTutorial(tut.nextTutorial)">Next</button>
 
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.Newsletter"
-    id="tutorial-Newsletter"
-    class="tutorial-box">
-    <div>Anonymous user newsletter signup</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.Feedback)">Next</button>
-  </div>
+    <br>
+    <br>
 
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.Feedback"
-    id="tutorial-Newsletter"
-    class="tutorial-box">
-    <div>Email team some feedback</div>
     <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="exitTutorial()">Done</button>
+      (click)="goToTutorial(tutorialTypeEnum.None)">Skip</button>
   </div>
-
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ProfileShare"
-    id="tutorial-ProfileShare"
-    class="tutorial-box">
-    <div>Share button to share info</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.ProfileReport)">Next</button>
-  </div>
-
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.ProfileReport"
-    id="tutorial-ProfileReport"
-    class="tutorial-box">
-    <div>Report button to report a user</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.DeleteUser)">Next</button>
-  </div>
-
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.DeleteUser"
-    id="tutorial-DeleteUser"
-    class="tutorial-box">
-    <div>Delete user option</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.AvatarUpload)">Next</button>
-  </div>
-
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.AvatarUpload"
-    id="tutorial-AvatarUpload"
-    class="tutorial-box">
-    <div>Upload media (Firebase) with preloader</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="goToTutorial(tutorialTypeEnum.UpdatePassword)">Next</button>
-  </div>
-
-  <div *ngIf="tutorialInUrl == tutorialTypeEnum.UpdatePassword"
-    id="tutorial-UpdatePassword"
-    class="tutorial-box">
-    <div>Update password feature</div>
-    <button md-raised-button
-      (click)="exitTutorial()">Skip</button>
-    <button md-raised-button
-      (click)="exitTutorial()">Done</button>
-  </div>
-
 </div>

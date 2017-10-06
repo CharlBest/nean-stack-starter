@@ -7,6 +7,7 @@ import { FormService } from '../../shared/form.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '../../../../server/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../server/view-models/profile/update-password.view-model';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-update-password',
@@ -18,6 +19,7 @@ export class UpdatePasswordComponent implements OnInit {
   form: FormGroup;
   serverErrors;
   isProcessing = false;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
     private formService: FormService,

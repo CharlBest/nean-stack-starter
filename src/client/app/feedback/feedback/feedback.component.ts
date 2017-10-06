@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackViewModel } from '../../../../server/view-models/feedback/feedback.view-model';
 import { FormService } from '../../shared/form.service';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-feedback',
@@ -14,6 +15,7 @@ export class FeedbackComponent {
 
   serverErrors;
   isProcessing = false;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private feedbackService: FeedbackService,
     private router: Router,

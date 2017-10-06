@@ -14,9 +14,13 @@ export class TutorialService {
     constructor(private route: ActivatedRoute,
         private router: Router) { }
 
-    activateTutorial(tutorialType: TutorialType) {
+    activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
         const navigateUrl = [];
         switch (tutorialType) {
+            case TutorialType.None:
+                navigateUrl.push(returnUrl);
+                break;
+
             case TutorialType.SignUp:
                 navigateUrl.push('/login');
                 break;
@@ -45,12 +49,7 @@ export class TutorialService {
                 break;
         }
 
-        const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: tutorialType });
+        const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: tutorialType === TutorialType.None ? undefined : tutorialType });
         this.router.navigate(navigateUrl, { queryParams: queryParams });
-    }
-
-    deactivateTutorial(url: string) {
-        const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: undefined });
-        this.router.navigate([url], { queryParams: queryParams });
     }
 }

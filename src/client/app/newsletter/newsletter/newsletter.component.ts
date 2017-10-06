@@ -3,6 +3,7 @@ import { MdSnackBar, MdDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsletterService } from '../newsletter.service';
 import { NewsletterMemberViewModel } from '../../../../server/view-models/newsletter/newsletter-member.view-model';
+import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-feedback',
@@ -14,6 +15,7 @@ export class NewsletterComponent implements OnInit {
   isProcessing = false;
   removingEmail = false;
   message = false;
+  tutorialTypeEnum = TutorialType;
 
   constructor(private newsletterService: NewsletterService,
     private route: ActivatedRoute) { }
