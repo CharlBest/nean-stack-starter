@@ -22,4 +22,5 @@ export class UserRoutes {
     public static search = new BaseRoute(1, UserRoutes.rootRoute, 'search');
     public static searchUserStartWith = new BaseRoute(1, UserRoutes.rootRoute, 'searchUserStartWith');
     public static sendFeedback = new BaseRoute(1, UserRoutes.rootRoute, 'sendFeedback');
+    public static completedTutorial = new BaseRoute(1, UserRoutes.rootRoute, 'completedTutorial');
 }

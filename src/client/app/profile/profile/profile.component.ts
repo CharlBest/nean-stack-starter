@@ -10,7 +10,7 @@ import { UpdateAvatarViewModel } from '../../../../server/view-models/profile/up
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 import * as emojione from 'emojione';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
-import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-profile',

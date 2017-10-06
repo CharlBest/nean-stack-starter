@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TutorialService } from '../tutorial.service';
-import { TutorialType } from '../tutorial-type.enum';
+import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
 import { Location } from '@angular/common';
 
 @Component({

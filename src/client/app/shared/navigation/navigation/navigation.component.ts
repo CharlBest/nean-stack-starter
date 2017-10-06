@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../../environments/environment';
 import 'rxjs/add/operator/map';
-import { TutorialType } from '../../../shared/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 
 @Component({
@@ -34,7 +34,10 @@ export class NavigationComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private titleService: Title,
     private location: Location,
-    private tutorialService: TutorialService) { }
+    private tutorialService: TutorialService,
+    public snackBar: MdSnackBar) {
+    this.checkHasVisited();
+  }
 
   ngOnInit() {
     this.authService.loggedInUserId$.subscribe(id => {
@@ -109,6 +112,22 @@ export class NavigationComponent implements OnInit, OnChanges {
 
   takeTour() {
     this.tutorialService.activateTutorial(TutorialType.ContextMenu);
+  }
+
+  checkHasVisited() {
+    const hasVisitedStorageKey = 'has_user_visited';
+    const hasUserVisited = localStorage.getItem(hasVisitedStorageKey) === 'true';
+
+    if (!hasUserVisited) {
+      localStorage.setItem(hasVisitedStorageKey, 'true');
+
+      this.snackBar.open('Take the tour', 'Go', {
+        duration: 10000,
+      }).onAction().subscribe(() => {
+        this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
+      });
+
+    }
   }
 }
 

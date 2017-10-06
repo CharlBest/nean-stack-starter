@@ -15,6 +15,7 @@ import { UpdateAvatarViewModel } from '../../view-models/profile/update-avatar.v
 import { UpdateBioViewModel } from '../../view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../view-models/profile/update-password.view-model';
 import { FeedbackViewModel } from '../../view-models/feedback/feedback.view-model';
+import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -270,6 +271,23 @@ export class UsersController extends BaseController {
     public async deleteUser(req: Request, res: Response, next: NextFunction) {
         try {
             const response = await this.usersService.deleteUser(Database.getSession(req), this.getUserId(req));
+            res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
+
+    public async completedTutorial(req: Request, res: Response, next: NextFunction) {
+        try {
+            const tutorialType = req.body.tutorialType as TutorialType;
+            const valid = Validators.required({ value: tutorialType }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), tutorialType);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

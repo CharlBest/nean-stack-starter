@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Input, HostListener, OnInit, HostBinding } from '@angular/core';
 import { TutorialService } from './tutorial.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TutorialType } from './tutorial-type.enum';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 
 @Directive({
     selector: '[appTutorial]'

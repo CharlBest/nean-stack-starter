@@ -4,6 +4,7 @@ import { BaseRepository, Folder, Posts, Users } from '../shared/base-repository'
 import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
 import { UserModel } from '../../models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
+import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 
 export class UsersRepository extends BaseRepository {
 
@@ -156,6 +157,17 @@ export class UsersRepository extends BaseRepository {
     public async deleteUser(session: neo4j.Session, userId: number): Promise<boolean> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.DeleteUser)}`);
         const result = await session.run(query.data, { userId });
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public async completedTutorial(session: neo4j.Session, userId: number, tutorialType: TutorialType): Promise<boolean> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.CompletedTutorial)}`);
+        const result = await session.run(query.data, { userId, tutorialType });
 
         if (result.records) {
             return true;

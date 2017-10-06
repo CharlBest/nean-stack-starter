@@ -7,7 +7,7 @@ import { FormService } from '../../shared/form.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '../../../../server/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../server/view-models/profile/update-password.view-model';
-import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-update-password',

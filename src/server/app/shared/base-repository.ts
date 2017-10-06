@@ -44,5 +44,6 @@ export enum Users {
     UpdateAvatar,
     UpdateBio,
     UpdatePassword,
-    DeleteUser
+    DeleteUser,
+    CompletedTutorial
 }

@@ -3,7 +3,7 @@ import { MdSnackBar, MdDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsletterService } from '../newsletter.service';
 import { NewsletterMemberViewModel } from '../../../../server/view-models/newsletter/newsletter-member.view-model';
-import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-feedback',

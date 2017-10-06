@@ -8,6 +8,7 @@ import { LoginViewModel } from '../../../../server/view-models/create-user/login
 import { LoginService } from '../../login/login.service';
 import { Validators } from '../../../../server/validation/validators';
 import { FormService } from '../../shared/form.service';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-create-user',
@@ -75,7 +76,7 @@ export class CreateUserComponent implements OnInit {
         if (data !== null && data.token !== null) {
           this.authService.setToken(data.token, data.userId);
 
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });
         } else {
           // TODO: show material dialog (shared auth failed dialog)
           alert('Authentication failed');

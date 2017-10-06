@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 import { UserModel } from '../../models/user/user.model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
+import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 
 export class UsersService extends BaseService implements IUsersService {
 
@@ -161,5 +162,9 @@ export class UsersService extends BaseService implements IUsersService {
 
     public async deleteUser(session: neo4j.Session, userId: number): Promise<boolean> {
         return await this.usersRepository.deleteUser(session, userId);
+    }
+
+    public async completedTutorial(session: neo4j.Session, userId: number, tutorialType: TutorialType): Promise<boolean> {
+        return await this.usersRepository.completedTutorial(session, userId, tutorialType);
     }
 }

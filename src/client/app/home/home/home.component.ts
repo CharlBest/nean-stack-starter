@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
 import { HomeService } from '../home.service';
 import { environment } from '../../../environments/environment';
-import { TutorialType } from '../../shared/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 import * as marked from 'marked';
 
 @Component({
