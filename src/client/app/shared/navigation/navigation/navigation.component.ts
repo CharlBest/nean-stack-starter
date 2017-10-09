@@ -122,7 +122,7 @@ export class NavigationComponent implements OnInit, OnChanges {
       localStorage.setItem(hasVisitedStorageKey, 'true');
 
       this.snackBar.open('Take the tour', 'Go', {
-        duration: 10000,
+        duration: 20000,
       }).onAction().subscribe(() => {
         this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
       });
