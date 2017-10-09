@@ -76,7 +76,6 @@ export class GaService {
   private trackRouterNavigation() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log(event.urlAfterRedirects);
         this.locationChanged(event.urlAfterRedirects);
       }
     });

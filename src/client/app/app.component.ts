@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
+import { GaService } from './shared/ga.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { initializeApp } from 'firebase/app';
 export class AppComponent {
   swipeEvent: PointerEvent;
 
-  constructor() {
+  constructor(private gaService: GaService) {
     // Firebase
     initializeApp({
       apiKey: environment.firebase.apiKey,
