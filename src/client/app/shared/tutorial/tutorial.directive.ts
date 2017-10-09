@@ -45,11 +45,4 @@ export class TutorialDirective implements OnInit {
             }
         }
     }
-
-    // TODO: not working
-    @HostListener('click', ['$event']) onMouseClick(event: Event) {
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
-    }
 }

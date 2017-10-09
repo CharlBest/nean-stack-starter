@@ -1,6 +1,9 @@
 <div class="tutorial-overlay"
   *ngIf="active"></div>
 
+<div class="tutorial-overlay-transparent"
+  *ngIf="active" (click)="preventClick($event)"></div>
+
 <div *ngFor="let tut of tuts">
   <div *ngIf="tutorialInUrl == tut.tutorialType"
     class="tutorial-box">

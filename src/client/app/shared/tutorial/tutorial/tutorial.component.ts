@@ -61,6 +61,12 @@ export class TutorialComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+  preventClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
 }
 
 class Tutorial {

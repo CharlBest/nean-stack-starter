@@ -9,9 +9,15 @@
     z-index: 10;
 }
 
+.tutorial-overlay-transparent {
+    @extend .tutorial-overlay;
+    background: none;
+    z-index: 12;
+}
+
 .tutorial-box {
     position: fixed;
-    z-index: 12;
+    z-index: 13;
     width: 100%;
     bottom: 20px;
     text-align: center;
