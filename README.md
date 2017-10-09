@@ -75,7 +75,10 @@ Its free ;)
 This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if your are not using Heroku
 
 ## Environment variables
+Change to yours.
 ### Client
 In the environments folder there are 2 files. one for dev and one for production. The angular CLI switches them at build time.
 ### Server
 In the environments folder there is 1 file. In development default values are used. In production your hosting service should set process.env with the appropriate variables
+
+Note: firebase storage has authentication on their buckets. Whitelist your url or something
