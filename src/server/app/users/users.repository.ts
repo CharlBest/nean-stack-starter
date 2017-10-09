@@ -5,6 +5,7 @@ import { NewsletterMemberViewModel } from '../../view-models/newsletter/newslett
 import { UserModel } from '../../models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
+import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 
 export class UsersRepository extends BaseRepository {
 
@@ -165,9 +166,9 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async completedTutorial(session: neo4j.Session, userId: number, tutorialType: TutorialType): Promise<boolean> {
+    public async completedTutorial(session: neo4j.Session, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.CompletedTutorial)}`);
-        const result = await session.run(query.data, { userId, tutorialType });
+        const result = await session.run(query.data, { userId, tutorialType: viewModel.tutorialType, didSkip: viewModel.didSkip });
 
         if (result.records) {
             return true;

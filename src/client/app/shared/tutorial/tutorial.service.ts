@@ -6,22 +6,14 @@ import { HttpClient } from '@angular/common/http';
 import { ReportUserViewModel } from '../../../../server/view-models/profile/report-user.view-model';
 import { Observable } from 'rxjs/Observable';
 import { UserRoutes } from '../../../../server/routes/user.routes';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
-import { AuthService } from '../auth.service';
+import { CompletedTutorial } from '../../../../server/view-models/tutorial/completed-tutorial.view-model';
 
 @Injectable()
 export class TutorialService {
-    private loggedInUserId: number = this.authService.getloggedInUserId();
-
     constructor(private route: ActivatedRoute,
         private router: Router,
-        private authService: AuthService,
-        private http: HttpClient) {
-        this.authService.loggedInUserId$.subscribe(id => {
-            this.loggedInUserId = id;
-        });
-    }
+        private http: HttpClient) { }
 
     activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
         const navigateUrl = [];
@@ -58,15 +50,11 @@ export class TutorialService {
                 break;
         }
 
-        if (this.loggedInUserId) {
-            // this.completedTutorial(tutorialType).subscribe();
-        }
-
         const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: tutorialType === TutorialType.None ? undefined : tutorialType });
         this.router.navigate(navigateUrl, { queryParams: queryParams });
     }
 
-    public completedTutorial(tutorialType: TutorialType): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial.constructRootUrl()}`, { tutorialType });
+    public completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial.constructRootUrl()}`, viewModel);
     }
 }

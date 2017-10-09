@@ -16,6 +16,7 @@ import { UpdateBioViewModel } from '../../view-models/profile/update-bio.view-mo
 import { UpdatePasswordViewModel } from '../../view-models/profile/update-password.view-model';
 import { FeedbackViewModel } from '../../view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
+import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -279,15 +280,15 @@ export class UsersController extends BaseController {
 
     public async completedTutorial(req: Request, res: Response, next: NextFunction) {
         try {
-            const tutorialType = req.body.tutorialType as TutorialType;
-            const valid = Validators.required({ value: tutorialType }) ||
+            const viewModel = req.body as CompletedTutorial;
+            const valid = Validators.required({ value: viewModel.tutorialType }) ||
                 null;
 
             if (valid !== null) {
                 throw ValidationUtil.createValidationErrors(valid);
             }
 
-            const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), tutorialType);
+            const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), viewModel);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

@@ -42,6 +42,10 @@ export class Validators {
 
     static required(control: AbstractControl): ValidationErrors {
         if (control.value !== null && control.value !== undefined) {
+            if (typeof control.value === 'number') {
+                return null;
+            }
+
             const valueWithoutWhitespace = control.value.replace(/\s+/g, '');
             if (valueWithoutWhitespace !== '') {
                 return null;
