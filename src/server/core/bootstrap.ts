@@ -95,9 +95,10 @@ export class Bootstrap {
 
     public setupCors(app: express.Application): void {
         app.use((req: Request | any, res: Response, next: NextFunction) => {
+            // TODO: don't think this is working
             const allowedOrigins = app.get('env') === 'development'
                 ? ['http://localhost:4200' /*Dev web client*/, 'http://localhost:3000' /*Web client*/, 'http://localhost:8000' /*IOS client*/, 'http://10.0.0.10:3000' /*Phone client*/]
-                : ['https://nean-starter.azurewebsites.net'];
+                : ['https://nean.io'];
             const origin = req.headers.origin;
             if (allowedOrigins.indexOf(origin) > -1) {
                 res.setHeader('Access-Control-Allow-Origin', origin);
