@@ -14,7 +14,7 @@
         "128": "icons/android-icon-128x128.png"
     },
     "permissions": [
-        "https://nean-starter.azurewebsites.net/"
+        "https://nean.io/"
     ],
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://checkout.stripe.com; object-src 'self'",
     "web_accessible_resources": [
