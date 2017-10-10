@@ -2,11 +2,11 @@ export class BaseRoute {
 
     constructor(public version: number, public rootRoute: string, public route: string) { }
 
-    constructEndpointUrl(): string {
-        return `/v${this.version}/${this.rootRoute}/${this.route}`;
+    constructEndpointUrl(append: string = ''): string {
+        return `/v${this.version}/${this.rootRoute}/${this.route}${append}`;
     }
 
-    constructRootUrl(): string {
-        return `/api/v${this.version}/${this.rootRoute}/${this.route}`;
+    constructRootUrl(append: string = ''): string {
+        return `/api/v${this.version}/${this.rootRoute}/${this.route}${append}`;
     }
 }
