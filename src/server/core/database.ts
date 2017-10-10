@@ -66,6 +66,10 @@ export class Database {
         }
     }
 
+    public static createNodeObjectArray(nodes: any[]): any {
+        return nodes.map(x => Database.createNodeObject(x));
+    }
+
     public static createNumber(int: any): any {
         // TODO: potentially strongly type return type
         if (int !== null && int !== undefined) {
