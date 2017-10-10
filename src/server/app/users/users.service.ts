@@ -3,7 +3,6 @@ import { v4 as nodeUUId } from 'node-uuid';
 import { randomBytes, pbkdf2Sync } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { UsersRepository } from './users.repository';
-import { IUsersService } from './iusers.service';
 import { BaseService } from '../shared/base-service';
 import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
 import { TokenViewModel } from '../../view-models/create-user/token.view-model';
@@ -14,7 +13,7 @@ import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-us
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 
-export class UsersService extends BaseService implements IUsersService {
+export class UsersService extends BaseService {
 
     private usersRepository: UsersRepository;
 
