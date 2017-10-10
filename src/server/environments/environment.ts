@@ -7,10 +7,6 @@ export const environment = {
         username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),
         password: getEnvironmentVariable('DATABASE_PASSWORD', 'neo4j')
     },
-    azureBlobStorage: {
-        blobServiceEndpoint: getEnvironmentVariable('STORAGE_ENDPOINT', 'https://devstorage.blob.core.windows.net'),
-        accountKey: getEnvironmentVariable('STORAGE_KEY', '***')
-    },
     stripe: {
         secretKey: getEnvironmentVariable('STRIPE_KEY', '***')
     },
