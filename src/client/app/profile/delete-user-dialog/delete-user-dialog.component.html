@@ -1,11 +1,11 @@
-<md-dialog-content>
-    <button md-button
-        [md-dialog-close]="true"
+<mat-dialog-content>
+    <button mat-button
+        [matDialogClose]="true"
         style="float: right;">
-      <md-icon>close</md-icon>
+      <mat-icon>close</mat-icon>
     </button>
 
-    <h2 md-dialog-title
+    <h2 matDialogTitle
         style="float: left;">Delete account</h2>
 
     <div style="clear: both;"></div>
@@ -14,16 +14,16 @@
         We are sad to see you go. All information on user
         <strong>{{username}}</strong> will be deleted and can't be recovered after proceeding. Please enter your username.
     </p>
-    <md-form-field>
-        <input mdInput
+    <mat-form-field>
+        <input matInput
             #usernameInput
             type="text"
             placeholder="username"
             required>
-    </md-form-field>
-</md-dialog-content>
-<md-dialog-actions align="end">
-    <button md-raised-button
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button
         color="warn"
         (click)="delete(usernameInput.value)">Delete</button>
-</md-dialog-actions>
+</mat-dialog-actions>

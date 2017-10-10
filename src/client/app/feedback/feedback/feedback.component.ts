@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar, MdDialogRef } from '@angular/material';
+import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackViewModel } from '../../../../server/view-models/feedback/feedback.view-model';

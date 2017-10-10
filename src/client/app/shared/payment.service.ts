@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { environment } from '../../environments/environment';
 
 @Injectable()
 export class PaymentService {
 
   // NB: needs to provide the payments controller in module this service is being used
-  constructor(public snackBar: MdSnackBar) { }
+  constructor(public snackBar: MatSnackBar) { }
 
   takePayment(productName: string, amount: number, token: any) {
 

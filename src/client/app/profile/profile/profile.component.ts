@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MdSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { ProfileService } from '../profile.service';
 import { environment } from '../../../environments/environment';
@@ -26,8 +26,8 @@ export class ProfileComponent implements OnInit {
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
     private reportDialogService: ReportDialogService,
-    public snackBar: MdSnackBar,
-    private dialog: MdDialog,
+    public snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private tutorialService: TutorialService) { }
 
   ngOnInit() {

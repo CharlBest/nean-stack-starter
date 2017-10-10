@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { MdDialog, MdSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +35,7 @@ export class NavigationComponent implements OnInit, OnChanges {
     private titleService: Title,
     private location: Location,
     private tutorialService: TutorialService,
-    public snackBar: MdSnackBar) {
+    public snackBar: MatSnackBar) {
     this.checkHasVisited();
   }
 

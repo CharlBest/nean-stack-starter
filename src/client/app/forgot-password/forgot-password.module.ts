@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { MdProgressSpinnerModule, MdInputModule, MdButtonModule, MdCardModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatInputModule, MatButtonModule, MatCardModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordRoutingModule } from '../forgot-password/forgot-password-routing.module';
 import { ForgotPasswordService } from './forgot-password.service';
@@ -14,10 +14,10 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
     CommonModule,
     ForgotPasswordRoutingModule,
     ReactiveFormsModule,
-    MdButtonModule,
-    MdInputModule,
-    MdProgressSpinnerModule,
-    MdCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
     ShowErrorsModule,
     TutorialModule
   ],

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { UserRoutes } from '../../../../server/routes/user.routes';
 @Injectable()
 export class ReportDialogService {
 
-    constructor(private dialog: MdDialog) { }
+    constructor(private dialog: MatDialog) { }
 
     report(uId: string) {
         const dialogRef = this.dialog.open(ReportDialogComponent, {

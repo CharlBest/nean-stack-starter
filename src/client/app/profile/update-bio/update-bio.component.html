@@ -1,43 +1,43 @@
 <form [formGroup]="form">
-  <md-card *ngIf="!isProcessing">
-    <md-card-title>Bio</md-card-title>
-    <md-card-content>
+  <mat-card *ngIf="!isProcessing">
+    <mat-card-title>Bio</mat-card-title>
+    <mat-card-content>
 
-      <md-form-field style="display: block;">
-        <textarea mdInput
+      <mat-form-field style="display: block;">
+        <textarea matInput
           formControlName="content"
           rows="5"
           placeholder="type here..."
           style="width: 100%;"
           [value]="content">
         </textarea>
-      </md-form-field>
+      </mat-form-field>
 
-      <!-- <md-form-field>
-        <input mdInput
+      <!-- <mat-form-field>
+        <input matInput
           formControlName="content"
           type="text"
           placeholder="bio"
           required
           [value]="content">
-      </md-form-field> -->
+      </mat-form-field> -->
 
       <div *ngIf="serverErrors?.password"
         class="validation-message">{{ serverErrors.password.message }}</div>
       <app-show-errors [control]="form.controls['password']"></app-show-errors>
 
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-raised-button
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button
         type="submit"
         [disabled]="!form.valid"
         (click)="onSubmit()">Update bio</button>
-    </md-card-actions>
-  </md-card>
+    </mat-card-actions>
+  </mat-card>
 </form>
 
-<md-card *ngIf="isProcessing">
-  <md-card-content>
-    <md-spinner class="preloader"></md-spinner>
-  </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+  <mat-card-content>
+    <mat-spinner class="preloader"></mat-spinner>
+  </mat-card-content>
+</mat-card>

@@ -1,22 +1,22 @@
-<md-card *ngIf="verifyResult !== undefined && !isProcessing">
-  <md-card-content>
+<mat-card *ngIf="verifyResult !== undefined && !isProcessing">
+  <mat-card-content>
     <div *ngIf="verifyResult">
-      <md-icon>done</md-icon>
+      <mat-icon>done</mat-icon>
       <span>Email verification successful</span>
     </div>
     <div *ngIf="!verifyResult">
-      <md-icon>error_outline</md-icon>
+      <mat-icon>error_outline</mat-icon>
       <span>Email verification error</span>
     </div>
-  </md-card-content>
-  <md-card-actions align="end">
-    <button md-raised-button
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button
       routerLink="/">Home</button>
-  </md-card-actions>
-</md-card>
+  </mat-card-actions>
+</mat-card>
 
-<md-card *ngIf="isProcessing">
-  <md-card-content>
-    <md-spinner class="preloader"></md-spinner>
-  </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+  <mat-card-content>
+    <mat-spinner class="preloader"></mat-spinner>
+  </mat-card-content>
+</mat-card>

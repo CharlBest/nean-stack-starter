@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-share-dialog',
@@ -10,7 +10,7 @@ export class ShareDialogComponent {
 
     link: string;
 
-    constructor(public snackBar: MdSnackBar) { }
+    constructor(public snackBar: MatSnackBar) { }
 
     onLinkClick() {
         return false;

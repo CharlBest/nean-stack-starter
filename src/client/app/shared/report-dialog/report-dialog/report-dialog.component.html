@@ -1,11 +1,11 @@
-<md-dialog-content>
-    <button md-button
-        [md-dialog-close]="true"
+<mat-dialog-content>
+    <button mat-button
+        [matDialogClose]="true"
         style="float: right;">
-      <md-icon>close</md-icon>
+      <mat-icon>close</mat-icon>
     </button>
 
-    <h2 md-dialog-title
+    <h2 matDialogTitle
         style="float: left;">Report</h2>
 
     <div style="clear: both;"></div>
@@ -13,9 +13,9 @@
     <p>
         This post is either spam, abusive, harmful or you think it doesn't belong on here.
     </p>
-</md-dialog-content>
-<md-dialog-actions align="end">
-    <button md-raised-button
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button
         color="warn"
         (click)="report()">Send report</button>
-</md-dialog-actions>
+</mat-dialog-actions>

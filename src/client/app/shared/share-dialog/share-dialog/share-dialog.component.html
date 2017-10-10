@@ -1,11 +1,11 @@
-<md-dialog-content>
-    <button md-button
-        [md-dialog-close]="true"
+<mat-dialog-content>
+    <button mat-button
+        [matDialogClose]="true"
         style="float: right;">
-      <md-icon>close</md-icon>
+      <mat-icon>close</mat-icon>
     </button>
 
-    <h2 md-dialog-title
+    <h2 matDialogTitle
         style="float: left;">Share</h2>
 
     <div style="clear: both;"></div>
@@ -15,11 +15,11 @@
         ngxClipboard
         [cbContent]="link"
         (cbOnSuccess)="openSnackBar()">{{link}}</a>
-</md-dialog-content>
+</mat-dialog-content>
 
-<md-dialog-actions>
-    <button md-raised-button
+<mat-dialog-actions>
+    <button mat-raised-button
         ngxClipboard
         [cbContent]="link"
         (cbOnSuccess)="openSnackBar()">COPY</button>
-</md-dialog-actions>
+</mat-dialog-actions>

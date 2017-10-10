@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar, MdDialogRef } from '@angular/material';
+import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsletterService } from '../newsletter.service';
 import { NewsletterMemberViewModel } from '../../../../server/view-models/newsletter/newsletter-member.view-model';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MdSnackBar, MdDialog } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ProfileService } from '../profile.service';
 import { AuthService } from '../../shared/auth.service';
 
@@ -12,8 +12,8 @@ export class DeleteUserDialogComponent {
 
     @Input() username: string;
 
-    constructor(public snackBar: MdSnackBar,
-        public dialog: MdDialog,
+    constructor(public snackBar: MatSnackBar,
+        public dialog: MatDialog,
         private profileService: ProfileService,
         private authService: AuthService) { }
 

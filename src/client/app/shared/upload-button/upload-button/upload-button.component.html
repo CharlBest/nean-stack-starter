@@ -4,9 +4,9 @@
 <label for="upload-button-file-input"
     class="mat-raised-button">Upload file</label>
 
-<md-progress-bar *ngIf="progressPercentage >= 0"
+<mat-progress-bar *ngIf="progressPercentage >= 0"
     [value]="progressPercentage"
-    mdTooltip="{{progressPercentage}}%"></md-progress-bar>
+    matTooltip="{{progressPercentage}}%"></mat-progress-bar>
 
 <img width="100%"
     *ngIf="showPreview"

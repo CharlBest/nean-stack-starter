@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA, MdSnackBar, MdDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ReportUserViewModel } from '../../../../../server/view-models/profile/report-user.view-model';
@@ -16,8 +16,8 @@ export class ReportDialogComponent {
 
     uId: string;
 
-    constructor(public snackBar: MdSnackBar,
-        public dialog: MdDialog,
+    constructor(public snackBar: MatSnackBar,
+        public dialog: MatDialog,
         private http: HttpClient) { }
 
     report() {

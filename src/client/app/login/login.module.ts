@@ -8,20 +8,20 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { FormService } from '../shared/form.service';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdInputModule,
-  MdProgressSpinnerModule
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     LoginRoutingModule,
-    MdButtonModule,
-    MdCardModule,
-    MdInputModule,
-    MdProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     ShowErrorsModule,
     TutorialModule

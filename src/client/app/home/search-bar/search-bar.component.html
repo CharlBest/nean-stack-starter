@@ -1,39 +1,39 @@
 <form [formGroup]="form">
-    <md-form-field style="width: 100%;">
-        <input mdInput
+    <mat-form-field style="width: 100%;">
+        <input matInput
             placeholder="search"
             formControlName="term">
-    </md-form-field>
+    </mat-form-field>
     <div *ngIf="formErrors?.search"
         class="validation-message">{{ formErrors.search }}</div>
 </form>
 
 <div *ngIf="showNothingFoundMessage">
-    <md-card>
-        <md-card-content>
-            <md-icon>do_not_disturb</md-icon>
+    <mat-card>
+        <mat-card-content>
+            <mat-icon>do_not_disturb</mat-icon>
             <span>Nothing found</span>
-        </md-card-content>
-    </md-card>
+        </mat-card-content>
+    </mat-card>
     <br>
 </div>
 
 <h4 *ngIf="searchResults?.length > 0">Search results</h4>
 
-<md-card *ngIf="isProcessing">
-    <md-card-content>
-        <md-spinner class="preloader"></md-spinner>
-    </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card>
 
-<md-card *ngFor="let result of searchResults"
+<mat-card *ngFor="let result of searchResults"
     routerLink="/result/{{result.id}}"
     class="card-item">
-    <md-card-header>
-        <app-media-type mdCardAvatar
+    <mat-card-header>
+        <app-media-type matCardAvatar
             [url]="result?.media ? result?.media[0] : ''"
             [thumbnail]="true"></app-media-type>
-        <md-card-title>{{result.title}}</md-card-title>
-        <md-card-subtitle>{{result.likes}} likes</md-card-subtitle>
-    </md-card-header>
-</md-card>
+        <mat-card-title>{{result.title}}</mat-card-title>
+        <mat-card-subtitle>{{result.likes}} likes</mat-card-subtitle>
+    </mat-card-header>
+</mat-card>

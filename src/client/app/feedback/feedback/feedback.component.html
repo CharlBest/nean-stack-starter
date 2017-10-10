@@ -1,25 +1,25 @@
-<md-card *ngIf="!isProcessing"
+<mat-card *ngIf="!isProcessing"
   [appTutorial]="tutorialTypeEnum.Feedback">
-  <md-card-subtitle>
+  <mat-card-subtitle>
     Email us some feedback
-  </md-card-subtitle>
-  <md-card-content>
-    <md-form-field style="display: block;">
-      <textarea mdInput
+  </mat-card-subtitle>
+  <mat-card-content>
+    <mat-form-field style="display: block;">
+      <textarea matInput
         #inputArea
         rows="10"
         placeholder="type here..."
         style="width: 100%;"></textarea>
-    </md-form-field>
-  </md-card-content>
-  <md-card-actions align="end">
-    <button md-raised-button
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button
       (click)="send(inputArea.value)">Send</button>
-  </md-card-actions>
-</md-card>
+  </mat-card-actions>
+</mat-card>
 
-<md-card *ngIf="isProcessing">
-  <md-card-content>
-    <md-spinner class="preloader"></md-spinner>
-  </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+  <mat-card-content>
+    <mat-spinner class="preloader"></mat-spinner>
+  </mat-card-content>
+</mat-card>

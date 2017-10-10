@@ -12,10 +12,10 @@
 
     <br>
 
-    <button md-raised-button
+    <button mat-raised-button
       (click)="back()"
       *ngIf="!tut.isFirst">Previous</button>
-    <button md-raised-button
+    <button mat-raised-button
       (click)="goToTutorial(tut)">
       <span *ngIf="!tut.isLast">Next</span>
       <span *ngIf="tut.isLast">Done</span>
@@ -24,7 +24,7 @@
     <br>
     <br>
 
-    <button md-raised-button
+    <button mat-raised-button
       (click)="skip(tut)">Skip</button>
   </div>
 </div>

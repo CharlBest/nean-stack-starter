@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdDialogModule, MdButtonModule, MdIconModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ShareDialogService } from './share-dialog.service';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
@@ -9,9 +9,9 @@ import { ShareDialogComponent } from './share-dialog/share-dialog.component';
     imports: [
         CommonModule,
         ClipboardModule,
-        MdDialogModule,
-        MdButtonModule,
-        MdIconModule
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule
     ],
     declarations: [
         ShareDialogComponent

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MdSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { ProfileService } from '../profile.service';
 import { FormService } from '../../shared/form.service';
@@ -24,7 +24,7 @@ export class UpdatePasswordComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private formService: FormService,
     private profileService: ProfileService,
-    public snackBar: MdSnackBar) { }
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.buildForm();

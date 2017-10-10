@@ -4,19 +4,19 @@ import { MediaTypeComponent } from '../../shared/media-type/media-type/media-typ
 import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { UploadButtonService } from './upload-button.service';
 import {
-  MdDialogModule,
-  MdButtonModule,
-  MdProgressBarModule,
-  MdTooltipModule
+  MatDialogModule,
+  MatButtonModule,
+  MatProgressBarModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MdDialogModule,
-    MdButtonModule,
-    MdProgressBarModule,
-    MdTooltipModule
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatTooltipModule
   ],
   declarations: [
     UploadButtonComponent

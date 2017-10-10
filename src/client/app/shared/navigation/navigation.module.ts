@@ -4,24 +4,24 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { TutorialModule } from '../../shared/tutorial/tutorial.module';
 import {
-  MdTabsModule,
-  MdInputModule,
-  MdIconModule,
-  MdMenuModule,
-  MdButtonModule,
-  MdSnackBarModule
+  MatTabsModule,
+  MatInputModule,
+  MatIconModule,
+  MatMenuModule,
+  MatButtonModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MdInputModule,
-    MdIconModule,
-    MdMenuModule,
-    MdButtonModule,
-    MdTabsModule,
-    MdSnackBarModule,
+    MatInputModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatSnackBarModule,
     TutorialModule
   ],
   exports: [

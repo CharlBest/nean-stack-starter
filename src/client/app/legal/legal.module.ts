@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdButtonModule, MdCardModule, MdRadioModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatRadioModule } from '@angular/material';
 import { LegalService } from './legal.service';
 import { LegalRoutingModule } from './legal-routing.module';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
@@ -11,9 +11,9 @@ import { HelpComponent } from './help/help.component';
   imports: [
     CommonModule,
     LegalRoutingModule,
-    MdButtonModule,
-    MdCardModule,
-    MdRadioModule
+    MatButtonModule,
+    MatCardModule,
+    MatRadioModule
   ],
   declarations: [
     HelpComponent,

@@ -16,7 +16,7 @@ body {
     display: block !important;
 }
 
-md-card {
+mat-card {
     margin-bottom: 10px;
 }
 
@@ -40,8 +40,8 @@ md-card {
     max-height: 25px;
 }
 
-//Overide md-card styles
-md-card[hidden] { 
+//Overide mat-card styles
+mat-card[hidden] { 
     display: none; 
 }
 

@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 import {
-  MdMenuModule,
-  MdTabsModule,
-  MdIconModule,
-  MdButtonModule,
-  MdExpansionModule,
-  MdTooltipModule
+  MatMenuModule,
+  MatTabsModule,
+  MatIconModule,
+  MatButtonModule,
+  MatExpansionModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MdMenuModule,
-    MdTabsModule,
-    MdIconModule,
-    MdButtonModule,
-    MdExpansionModule,
-    MdTooltipModule
+    MatMenuModule,
+    MatTabsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatTooltipModule
   ],
   declarations: [
     EmojiPanelComponent

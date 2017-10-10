@@ -1,21 +1,21 @@
 <div *ngIf="navigationTypes.Primary == activeNavigation">
-  <nav md-tab-nav-bar
+  <nav mat-tab-nav-bar
     class="tab-nav-bar-show-small tab-nav-bar-small">
-    <a md-button
+    <a mat-button
       routerLink="/">
         <img class="logo"
              src="../../../assets/logo.svg"
              alt="logo">
     </a>
 
-    <button md-icon-button
-      [mdMenuTriggerFor]="menu"
+    <button mat-icon-button
+      [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;">
-    <md-icon>more_vert</md-icon>
+    <mat-icon>more_vert</mat-icon>
     </button>
 
-    <a md-icon-button
+    <a mat-icon-button
       class="github-link"
       href="https://github.com/CharlBest/nean-stack-starter"
       style="margin: 0;">
@@ -27,9 +27,9 @@
     <div style="clear: both;"></div>
   </nav>
 
-  <nav md-tab-nav-bar 
+  <nav mat-tab-nav-bar 
     class="tab-nav-bar-large">
-    <a md-button
+    <a mat-button
       routerLink="/"
       class="tab-nav-bar-hide-small">
         <img class="logo"
@@ -37,47 +37,47 @@
              alt="logo">
     </a>
 
-    <a md-tab-link
+    <a mat-tab-link
       routerLink="/"
       #tabLinkHome
       routerLinkActive
       #rla1="routerLinkActive"
       [active]="rla1.isActive"
       [routerLinkActiveOptions]="{exact: true}">
-      <md-icon>home</md-icon> <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
+      <mat-icon>home</mat-icon> <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
     </a>
 
-    <a md-tab-link
+    <a mat-tab-link
       *ngIf="!loggedInUserId"
       routerLink="/login"
       #tabLinkLogin
       routerLinkActive
       #rla2="routerLinkActive"
       [active]="rla2.isActive">
-      <md-icon>lock</md-icon>
+      <mat-icon>lock</mat-icon>
       <span i18n="site navigation header|Link to the login page@@layoutNavigationHeaderLink3">&nbsp;Login</span>
     </a>
 
-    <a md-tab-link
+    <a mat-tab-link
       *ngIf="loggedInUserId"
       routerLink="/profile"
       #tabLinkProfile
       routerLinkActive
       #rla3="routerLinkActive"
       [active]="rla3.isActive">
-      <md-icon>account_circle</md-icon>
+      <mat-icon>account_circle</mat-icon>
       <span i18n="site navigation header|Link to the user's profile page@@layoutNavigationHeaderLink5">&nbsp;Profile</span>
     </a>
 
-    <button md-icon-button
-      [mdMenuTriggerFor]="menu"
+    <button mat-icon-button
+      [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;"
       class="tab-nav-bar-hide-small">
-    <md-icon>more_vert</md-icon>
+    <mat-icon>more_vert</mat-icon>
     </button>
 
-    <a md-button
+    <a mat-button
       class="tab-nav-bar-hide-small github-link"
       href="https://github.com/CharlBest/nean-stack-starter">
         <img
@@ -89,35 +89,35 @@
     <div style="clear: both;"></div>
   </nav>
 
-  <md-menu #menu="mdMenu">
-    <button md-menu-item
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item
       routerLink="/settings"
       i18n="top right context menu|Link to the settings page@@layoutNavigationHeaderLink8">Settings</button>
-    <button md-menu-item
+    <button mat-menu-item
       routerLink="/feedback"
       i18n="top right context menu|Link to the feedback page@@layoutNavigationHeaderLink9">Feedback</button>
-    <button md-menu-item
+    <button mat-menu-item
       routerLink="/newsletter"
       i18n="top right context menu|Link to the newsletter signup page@@layoutNavigationHeaderLink10">Newsletter</button>
-    <button md-menu-item
+    <button mat-menu-item
       routerLink="/legal/help"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink11">Help</button>
-    <button md-menu-item
+    <button mat-menu-item
       (click)="takeTour()"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink12">Take tour</button>
-    <button md-menu-item
+    <button mat-menu-item
       *ngIf="loggedInUserId"
       (click)="logout()"
       i18n="top right context menu|Link to logout@@layoutNavigationHeaderLink12">Logout</button>
-  </md-menu>
+  </mat-menu>
 </div>
 
 <div *ngIf="navigationTypes.Back == activeNavigation">
-  <nav md-tab-nav-bar>
+  <nav mat-tab-nav-bar>
     <div (click)="back()"
       class="back-button-navigation">
-      <button md-icon-button>
-        <md-icon>arrow_back</md-icon>
+      <button mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
       </button>
       <span style="font-weight: bold;">{{navigationBackTitle}}</span>
     </div>

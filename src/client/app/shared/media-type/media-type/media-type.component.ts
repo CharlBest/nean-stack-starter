@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class MediaTypeComponent implements OnChanges {
   safeUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer,
-    public dialog: MdDialog) { }
+    public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {

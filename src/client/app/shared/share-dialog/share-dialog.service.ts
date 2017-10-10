@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ShareDialogService {
 
-    constructor(private dialog: MdDialog,
+    constructor(private dialog: MatDialog,
         private router: Router) { }
 
     share(link: any[]) {

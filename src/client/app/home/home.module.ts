@@ -8,13 +8,13 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import {
-  MdInputModule,
-  MdChipsModule,
-  MdListModule,
-  MdCardModule,
-  MdProgressSpinnerModule,
-  MdIconModule,
-  MdButtonModule
+  MatInputModule,
+  MatChipsModule,
+  MatListModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatIconModule,
+  MatButtonModule
 } from '@angular/material';
 
 @NgModule({
@@ -22,13 +22,13 @@ import {
     CommonModule,
     HomeRoutingModule,
     ReactiveFormsModule,
-    MdInputModule,
-    MdChipsModule,
-    MdListModule,
-    MdCardModule,
-    MdProgressSpinnerModule,
-    MdIconModule,
-    MdButtonModule,
+    MatInputModule,
+    MatChipsModule,
+    MatListModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatButtonModule,
     MediaTypeModule,
     TutorialModule
   ],

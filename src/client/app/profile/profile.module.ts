@@ -14,15 +14,15 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdProgressSpinnerModule,
-  MdIconModule,
-  MdDialogModule,
-  MdMenuModule,
-  MdSnackBarModule,
-  MdTooltipModule,
-  MdInputModule
+  MatButtonModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatIconModule,
+  MatDialogModule,
+  MatMenuModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatInputModule
 } from '@angular/material';
 
 @NgModule({
@@ -30,14 +30,14 @@ import {
     CommonModule,
     ProfileRoutingModule,
     ReactiveFormsModule,
-    MdButtonModule,
-    MdCardModule,
-    MdProgressSpinnerModule,
-    MdDialogModule,
-    MdIconModule,
-    MdSnackBarModule,
-    MdTooltipModule,
-    MdInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatInputModule,
     ShareDialogModule,
     ReportDialogModule,
     UploadButtonModule,
