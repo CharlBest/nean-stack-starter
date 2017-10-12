@@ -16,7 +16,6 @@ export class TutorialDirective implements OnInit {
     zIndex: string;
 
     constructor(private elementRef: ElementRef,
-        private tutorialService: TutorialService,
         private route: ActivatedRoute) { }
 
     ngOnInit() {

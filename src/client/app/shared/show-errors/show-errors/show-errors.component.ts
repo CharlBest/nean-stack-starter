@@ -11,6 +11,8 @@ export class ShowErrorsComponent {
 
   @Input() private control: AbstractControlDirective | AbstractControl;
 
+  constructor() { }
+
   shouldShowErrors(): boolean {
     return this.control &&
       this.control.errors &&

@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   readmeText: string;
   tutorialTypeEnum = TutorialType;
 
-  constructor(private homeService: HomeService) { }
+  constructor() { }
 
   ngOnInit() {
     if (environment.production) {

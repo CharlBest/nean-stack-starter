@@ -36,7 +36,6 @@ export class TutorialComponent implements OnInit {
   returnUrl: string = null;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private authService: AuthService,
     private tutorialService: TutorialService) { }

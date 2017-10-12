@@ -73,10 +73,6 @@ export class NavigationComponent implements OnInit, OnChanges {
           }
         }
       });
-
-    // if (!this.tutorial.hasDoneTutorial(TutorialArea.firstTimeUser)) {
-    //   this.router.navigate(['/tutorial', TutorialArea.firstTimeUser]);
-    // }
   }
 
   ngOnChanges(changes: SimpleChanges) {

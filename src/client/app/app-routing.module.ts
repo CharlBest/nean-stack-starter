@@ -11,7 +11,6 @@ import { CustomPreloading } from './shared/custom-preloading';
       { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
       // TODO: add updates consumtion page back in
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
-      { path: 'tutorial', loadChildren: './tutorial/tutorial.module#TutorialModule' },
       { path: 'login', loadChildren: './login/login.module#LoginModule', data: { preload: true } },
       { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
       { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
