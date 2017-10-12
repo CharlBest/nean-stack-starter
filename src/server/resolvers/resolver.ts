@@ -5,13 +5,13 @@ export default {
     Query: {
         movies(_, params) {
             const session = driver.session();
-            const query = 'MATCH (movie:Movie) WHERE movie.title CONTAINS $subString RETURN movie LIMIT $limit;'
+            const query = 'MATCH (movie:Movie) WHERE movie.title CONTAINS $subString RETURN movie LIMIT $limit;';
             return session.run(query, params)
                 .then(result => {
                     return result.records.map(record => {
                         return record.get('movie').properties;
-                    })
-                })
+                    });
+                });
         },
     },
     Movie: {
@@ -23,13 +23,13 @@ export default {
               MATCH (m)-[:IN_GENRE]->(g:Genre)<-[:IN_GENRE]-(movie:Movie)
               WITH movie, COUNT(*) AS score
               RETURN movie ORDER BY score DESC LIMIT 3
-            `
+            `;
             return session.run(query, params)
                 .then(result => {
                     return result.records.map(record => {
                         return record.get('movie').properties;
-                    })
-                })
+                    });
+                });
         },
         genres(movie) {
             const session = driver.session(),
@@ -38,13 +38,13 @@ export default {
                         MATCH (m:Movie)-[:IN_GENRE]->(g:Genre)
                         WHERE m.movieId = $movieId
                         RETURN g.name AS genre;
-                        `
+                        `;
             return session.run(query, params)
                 .then(result => {
                     return result.records.map(record => {
-                        return record.get('genre')
+                        return record.get('genre');
                     });
-                })
+                });
         }
     },
 };
@@ -56,9 +56,9 @@ let driver;
 
 export async function context(headers, secrets) {
     if (!driver) {
-        driver = await neo4j.driver(secrets.NEO4J_URI, neo4j.auth.basic(secrets.NEO4J_USER, secrets.NEO4J_PASSWORD))
+        driver = await neo4j.driver(secrets.NEO4J_URI, neo4j.auth.basic(secrets.NEO4J_USER, secrets.NEO4J_PASSWORD));
     }
     return {
         driver
-    }
+    };
 }
