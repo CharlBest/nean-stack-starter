@@ -1,16 +1,24 @@
-<button mat-icon-button (click)="myPanel.expanded = !myPanel.expanded">
+<button type="button"
+  mat-icon-button
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (click)="isOpen = !isOpen">
   <mat-icon>tag_faces</mat-icon>
 </button>
 
-<mat-expansion-panel #myPanel class="panel">
-    <mat-tab-group (selectChange)="onTabSelectChange($event)">
-        <mat-tab *ngFor="let category of emojiCategories">
-          <ng-template matTabLabel>
-              <mat-icon>{{category.tabLabelIcon}}</mat-icon>
-          </ng-template>
-          <div [innerHTML]="category.tabHTMLContent"></div>
-          <div style="clear: both;"></div>
-          powered by EmojiOne       
-        </mat-tab>
-      </mat-tab-group>
-</mat-expansion-panel>
+<ng-template cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen">
+
+  <mat-tab-group (selectChange)="onTabSelectChange($event)">
+    <mat-tab *ngFor="let category of emojiCategories">
+      <ng-template matTabLabel>
+        <mat-icon>{{category.tabLabelIcon}}</mat-icon>
+      </ng-template>
+      <div [innerHTML]="category.tabHTMLContent"></div>
+      <div style="clear: both;"></div>
+      powered by EmojiOne
+    </mat-tab>
+  </mat-tab-group>
+
+</ng-template>

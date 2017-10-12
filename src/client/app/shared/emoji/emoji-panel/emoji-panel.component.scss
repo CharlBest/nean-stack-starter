@@ -1,8 +1,25 @@
-.panel ::ng-deep .emojione {
-    float: left;
-    cursor: pointer;
-}
+@import '~@angular/cdk/overlay-prebuilt.css';
+@import '~@angular/cdk/a11y-prebuilt.css';
 
-.panel ::ng-deep .mat-tab-label {
-    min-width: 55px;
+mat-tab-group {
+    max-width: 225px;
+    max-height: 225px;
+    background-color: white;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+
+    ::ng-deep .emojione {
+        float: left;
+        cursor: pointer;
+        border: 1px solid transparent;
+
+        &:hover {
+            border-color: lightgray;
+            border-radius: 4px;
+        }
+    }
+
+    ::ng-deep .mat-tab-label {
+        min-width: 26px;
+        padding: 0;
+    }
 }
