@@ -2,7 +2,7 @@
 
 A basic app that has all the features that all platfroms have like authentication, validation, error handling and more.
 
-## [DEMO](http://nean.io/)
+## [DEMO](https://nean.io/)
 
 Similar to the MEAN stack just with Neo4j rather than Mongo.
 
@@ -26,6 +26,9 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Image uploader to Firebase storage
 * Swipe events
 * Tutorial/on-boading framework
+* Emoji picker (Material CDK)
+* Media (Image, YouTube, Vimeo) display component
+* Web share API
 
 Client pages
 
