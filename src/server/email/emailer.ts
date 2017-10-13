@@ -9,7 +9,7 @@ export class Emailer {
     static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
         const data: MailData = {
             to: email,
-            from: 'info@test.com',
+            from: 'info@nean.com',
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
             substitutions: {
@@ -24,7 +24,7 @@ export class Emailer {
     static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
         const data: MailData = {
             to: email,
-            from: 'info@test.com',
+            from: 'info@nean.com',
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
@@ -37,8 +37,8 @@ export class Emailer {
 
     static feedbackEmail(content: string) {
         const data: MailData = {
-            to: 'admin@test.com',
-            from: 'info@test.com',
+            to: 'admin@nean.com',
+            from: 'info@nean.com',
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
             substitutions: {
@@ -51,8 +51,8 @@ export class Emailer {
 
     static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: 'admin@test.com',
-            from: 'info@test.com',
+            to: email,
+            from: 'info@nean.com',
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
             substitutions: {
