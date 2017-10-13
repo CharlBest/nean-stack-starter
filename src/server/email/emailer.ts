@@ -19,8 +19,8 @@ export class Emailer {
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
             substitutions: {
-                username: username,
-                emailverifycode: emailVerifyCode
+                username,
+                emailVerifyCode
             }
         };
 
@@ -37,14 +37,14 @@ export class Emailer {
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
-                forgotpasswordcode: forgotPasswordCode
+                forgotPasswordCode
             }
         };
 
         Emailer.send(data);
     }
 
-    static feedbackEmail(content: string) {
+    static feedbackEmail(feedbackContent: string) {
         const data: MailData = {
             to: {
                 email: 'admin@nean.io',
@@ -54,7 +54,7 @@ export class Emailer {
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
             substitutions: {
-                feedbackContent: content
+                feedbackContent
             }
         };
 
@@ -71,7 +71,7 @@ export class Emailer {
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
             substitutions: {
-                emailverifycode: emailVerifyCode
+                emailVerifyCode
             }
         };
 
