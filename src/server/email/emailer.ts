@@ -37,6 +37,7 @@ export class Emailer {
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
+                email,
                 forgotPasswordCode
             }
         };
