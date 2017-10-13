@@ -8,6 +8,5 @@
     [value]="progressPercentage"
     matTooltip="{{progressPercentage}}%"></mat-progress-bar>
 
-<img width="100%"
-    *ngIf="showPreview"
-    src={{previewImgUrl}} />
+<app-media [src]="previewImgUrl"
+    *ngIf="showPreview"></app-media>

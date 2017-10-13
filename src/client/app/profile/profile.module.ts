@@ -14,6 +14,7 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { EmojiModule } from '../shared/emoji/emoji.module';
+import { MediaModule } from '../shared/media/media.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -44,7 +45,8 @@ import {
     UploadButtonModule,
     ShowErrorsModule,
     TutorialModule,
-    EmojiModule
+    EmojiModule,
+    MediaModule
   ],
   declarations: [
     ProfileComponent,

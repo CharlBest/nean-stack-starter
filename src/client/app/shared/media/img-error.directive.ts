@@ -7,9 +7,9 @@ export class ImgErrorDirective {
 
   defaultImage = '/assets/default-image.png';
 
-  constructor(private el: ElementRef) { }
+  constructor(private element: ElementRef) { }
 
   @HostListener('error') onError() {
-    this.el.nativeElement.src = this.defaultImage;
+    this.element.nativeElement.src = this.defaultImage;
   }
 }

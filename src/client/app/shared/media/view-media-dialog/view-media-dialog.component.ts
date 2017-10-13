@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ViewMediaDialogComponent implements OnInit {
 
-  @Input() url: string;
+  @Input() src: string;
 
   constructor() { }
 

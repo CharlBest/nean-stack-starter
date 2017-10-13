@@ -4,25 +4,25 @@ import { MatDialog } from '@angular/material';
 import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog.component';
 
 @Component({
-  selector: 'app-media-type',
-  templateUrl: './media-type.component.html',
-  styleUrls: ['./media-type.component.scss']
+  selector: 'app-media',
+  templateUrl: './media.component.html',
+  styleUrls: ['./media.component.scss']
 })
-export class MediaTypeComponent implements OnChanges {
+export class MediaComponent implements OnChanges {
 
-  @Input() url: string;
-  @Input() thumbnail: boolean;
+  @Input() src = null;
+  @Input() thumbnail = false;
   mediaType: MediaType;
   mediaTypeEnum = MediaType;
-  safeUrl: SafeResourceUrl;
+  safeSrc: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer,
     public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
-      if (propName === 'url') {
-        if (this.url !== null && this.url !== undefined) {
+      if (propName === 'src') {
+        if (this.src !== null && this.src !== undefined) {
           this.processMediaType();
         }
       }
@@ -30,43 +30,42 @@ export class MediaTypeComponent implements OnChanges {
   }
 
   processMediaType() {
-    if (this.url.substr(0, 25).indexOf('youtube.com') > -1) {
+    if (this.src.substr(0, 25).indexOf('youtube.com') > -1) {
       if (this.thumbnail) {
-
         let token = '';
-        const keyStartIndex = this.url.indexOf('?v=') + 3;
-        const keyEndIndex = this.url.indexOf('&', keyStartIndex + 3);
+        const keyStartIndex = this.src.indexOf('?v=') + 3;
+        const keyEndIndex = this.src.indexOf('&', keyStartIndex + 3);
         if (keyEndIndex > -1) {
-          token = this.url.substring(keyStartIndex, keyEndIndex);
+          token = this.src.substring(keyStartIndex, keyEndIndex);
         } else {
-          token = this.url.substring(keyStartIndex, this.url.length);
+          token = this.src.substring(keyStartIndex, this.src.length);
         }
 
-        this.safeUrl = `http://img.youtube.com/vi/${token}/default.jpg`;
+        this.safeSrc = `http://img.youtube.com/vi/${token}/default.jpg`;
       } else {
         // TODO: rather load image than Iframe and add click to pic to load + play video
-        this.url = this.url.replace('youtube.com/watch?v=', 'youtube.com/embed/');
+        this.src = this.src.replace('youtube.com/watch?v=', 'youtube.com/embed/');
 
         // TODO: this is dangerous and should be looked at again
-        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
       }
 
       this.mediaType = MediaType.YouTube;
-    } else if (this.url.substr(0, 25).indexOf('vimeo.com') > -1) {
-      this.url = this.url.replace('vimeo.com/', 'player.vimeo.com/video/');
+    } else if (this.src.substr(0, 25).indexOf('vimeo.com') > -1) {
+      this.src = this.src.replace('vimeo.com/', 'player.vimeo.com/video/');
       // TODO: this is dangerous and should be looked at again
-      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
       this.mediaType = MediaType.Vimeo;
     } else {
       this.mediaType = MediaType.Image;
-      this.safeUrl = this.url;
+      this.safeSrc = this.src;
     }
   }
 
-  viewMedia() {
+  openViewMediaDialog() {
     if (!this.thumbnail) {
       const dialog = this.dialog.open(ViewMediaDialogComponent);
-      dialog.componentInstance.url = this.url;
+      dialog.componentInstance.src = this.src;
     }
   }
 }

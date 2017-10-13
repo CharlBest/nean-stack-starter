@@ -30,9 +30,9 @@
     routerLink="/result/{{result.id}}"
     class="card-item">
     <mat-card-header>
-        <app-media-type matCardAvatar
-            [url]="result?.media ? result?.media[0] : ''"
-            [thumbnail]="true"></app-media-type>
+        <app-media matCardAvatar
+            [src]="result?.media ? result?.media[0] : ''"
+            [thumbnail]="true"></app-media>
         <mat-card-title>{{result.title}}</mat-card-title>
         <mat-card-subtitle>{{result.likes}} likes</mat-card-subtitle>
     </mat-card-header>
