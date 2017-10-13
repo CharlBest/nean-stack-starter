@@ -6,6 +6,7 @@ sgMail.setApiKey(environment.sendGrid.apiKey);
 sgMail.setSubstitutionWrappers('{{', '}}');
 
 export class Emailer {
+    static fromEmail = 'admin@nean.io';
     static fromName = 'NEAN';
 
     static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
@@ -14,7 +15,7 @@ export class Emailer {
                 email,
                 name: Emailer.fromName
             },
-            from: 'info@nean.io',
+            from: Emailer.fromEmail,
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
             substitutions: {
@@ -32,7 +33,7 @@ export class Emailer {
                 email,
                 name: Emailer.fromName
             },
-            from: 'info@nean.io',
+            from: Emailer.fromEmail,
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
@@ -49,7 +50,7 @@ export class Emailer {
                 email: 'admin@nean.io',
                 name: Emailer.fromName
             },
-            from: 'info@nean.io',
+            from: Emailer.fromEmail,
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
             substitutions: {
@@ -66,7 +67,7 @@ export class Emailer {
                 email,
                 name: Emailer.fromName
             },
-            from: 'info@nean.io',
+            from: Emailer.fromEmail,
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
             substitutions: {
