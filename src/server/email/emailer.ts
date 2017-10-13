@@ -6,10 +6,15 @@ sgMail.setApiKey(environment.sendGrid.apiKey);
 sgMail.setSubstitutionWrappers('{{', '}}');
 
 export class Emailer {
+    static fromName = 'NEAN';
+
     static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: email,
-            from: 'info@nean.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: 'info@nean.io',
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
             substitutions: {
@@ -23,8 +28,11 @@ export class Emailer {
 
     static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
         const data: MailData = {
-            to: email,
-            from: 'info@nean.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: 'info@nean.io',
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
@@ -37,8 +45,11 @@ export class Emailer {
 
     static feedbackEmail(content: string) {
         const data: MailData = {
-            to: 'admin@nean.com',
-            from: 'info@nean.com',
+            to: {
+                email: 'admin@nean.io',
+                name: Emailer.fromName
+            },
+            from: 'info@nean.io',
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
             substitutions: {
@@ -51,8 +62,11 @@ export class Emailer {
 
     static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: email,
-            from: 'info@nean.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: 'info@nean.io',
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
             substitutions: {
