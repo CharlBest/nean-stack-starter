@@ -1,6 +1,6 @@
 import { v1 as neo4j } from 'neo4j-driver';
 import { Database } from '../../core/database';
-import { BaseRepository, Folder, Posts, Users } from '../shared/base-repository';
+import { BaseRepository, Folder, Users } from '../shared/base-repository';
 import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
 import { UserModel } from '../../models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
