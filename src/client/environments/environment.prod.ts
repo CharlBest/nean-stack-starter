@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  webSocketUrlEndpoint: 'ws://nean.io/',
   apiUrlEndpoint: 'https://nean.io',
   googleAnalytics: {
     web: 'UA-107304143-2',

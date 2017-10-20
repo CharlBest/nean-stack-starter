@@ -3,38 +3,37 @@
     class="tab-nav-bar-show-small tab-nav-bar-small">
     <a mat-button
       routerLink="/">
-        <img class="logo"
-             src="../../../assets/logo.svg"
-             alt="logo">
+      <img class="logo"
+        src="../../../assets/logo.svg"
+        alt="logo">
     </a>
 
     <button mat-icon-button
       [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;">
-    <mat-icon>more_vert</mat-icon>
+      <mat-icon>more_vert</mat-icon>
     </button>
 
     <a mat-icon-button
       class="github-link"
       href="https://github.com/CharlBest/nean-stack-starter"
       style="margin: 0;">
-      <img
-      src="../../../assets/github-logo.svg"
-      alt="github logo">
+      <img src="../../../assets/github-logo.svg"
+        alt="github logo">
     </a>
 
     <div style="clear: both;"></div>
   </nav>
 
-  <nav mat-tab-nav-bar 
+  <nav mat-tab-nav-bar
     class="tab-nav-bar-large">
     <a mat-button
       routerLink="/"
       class="tab-nav-bar-hide-small">
-        <img class="logo"
-             src="../../../assets/logo.svg"
-             alt="logo">
+      <img class="logo"
+        src="../../../assets/logo.svg"
+        alt="logo">
     </a>
 
     <a mat-tab-link
@@ -44,7 +43,8 @@
       #rla1="routerLinkActive"
       [active]="rla1.isActive"
       [routerLinkActiveOptions]="{exact: true}">
-      <mat-icon>home</mat-icon> <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
+      <mat-icon>home</mat-icon>
+      <span i18n="site navigation header|Link to the home page@@layoutNavigationHeaderLink1">&nbsp;Home</span>
     </a>
 
     <a mat-tab-link
@@ -74,16 +74,14 @@
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;"
       class="tab-nav-bar-hide-small">
-    <mat-icon>more_vert</mat-icon>
+      <mat-icon>more_vert</mat-icon>
     </button>
 
     <a mat-button
       class="tab-nav-bar-hide-small github-link"
       href="https://github.com/CharlBest/nean-stack-starter">
-        <img
-        src="../../../assets/github-logo.svg"
-        alt="github logo">
-        GitHub
+      <img src="../../../assets/github-logo.svg"
+        alt="github logo"> GitHub
     </a>
 
     <div style="clear: both;"></div>

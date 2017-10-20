@@ -17,6 +17,8 @@ import { UpdatePasswordViewModel } from '../../view-models/profile/update-passwo
 import { FeedbackViewModel } from '../../view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { WebSocketServer } from '../../core/middleware/web-socket-server';
+import * as webSocket from 'ws';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -43,6 +45,14 @@ export class UsersController extends BaseController {
 
             const response = await this.usersService.createUser(Database.getSession(req), viewModel.email, viewModel.username, viewModel.password);
             Emailer.welcomeEmail(response.email, response.username, response.emailCode);
+
+            // Notify everyone there is another sign up
+            const wss = WebSocketServer.getSocketServer();
+            wss.clients.forEach(client => {
+                if (client.readyState === webSocket.OPEN) {
+                    client.send('New sign up just now');
+                }
+            });
 
             res.status(200).json(response);
         } catch (error) {

@@ -17,6 +17,7 @@ import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { FooterModule } from './shared/footer/footer.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 import { TutorialService } from './shared/tutorial/tutorial.service';
+import { WebSocketService } from './shared/websocket.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TutorialService } from './shared/tutorial/tutorial.service';
     FormService,
     GaService,
     TutorialService,
+    WebSocketService,
     LoggerService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -37,6 +37,10 @@ export class App {
         // TODO: add logger (maybe morgan (http)) or custom
 
         const activeServer = this.bootstrapApp.startServer(this.express);
+
+        // Setup web sockets
+        this.bootstrapApp.setupWebSockets(activeServer);
+
         const server = new Server(activeServer);
         server.use(this.express);
     }

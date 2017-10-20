@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  webSocketUrlEndpoint: 'ws://localhost:3000/',
   apiUrlEndpoint: 'http://localhost:3000',
   googleAnalytics: {
     web: 'UA-107304143-1',

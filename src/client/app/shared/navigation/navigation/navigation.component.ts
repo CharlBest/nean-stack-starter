@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 import 'rxjs/add/operator/map';
 import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
+import { WebSocketService } from '../../../shared/websocket.service';
 
 @Component({
   selector: 'app-navigation',
@@ -35,7 +36,8 @@ export class NavigationComponent implements OnInit, OnChanges {
     private titleService: Title,
     private location: Location,
     private tutorialService: TutorialService,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    private webSocketService: WebSocketService) {
     this.checkHasVisited();
   }
 
@@ -73,6 +75,10 @@ export class NavigationComponent implements OnInit, OnChanges {
           }
         }
       });
+
+    this.webSocketService.messages.subscribe((data) => {
+      console.log(data);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -122,7 +128,6 @@ export class NavigationComponent implements OnInit, OnChanges {
       }).onAction().subscribe(() => {
         this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
       });
-
     }
   }
 }

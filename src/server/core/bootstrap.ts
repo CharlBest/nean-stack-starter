@@ -2,6 +2,7 @@ import * as http from 'http';
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as webSocket from 'ws';
 // import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 // import { makeExecutableSchema } from 'graphql-tools';
 import { Request, Response, NextFunction } from 'express';
@@ -14,6 +15,7 @@ import { UsersRoutes } from '../app/users/users.routes';
 // import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
 import { environment } from '../environments/environment';
+import { WebSocketServer } from './middleware/web-socket-server';
 // import { exceptionHandler } from './api/exceptionHandler';
 // import { extendExpressResponse } from './api/extendExpressResponse';
 const root = './';
@@ -64,6 +66,46 @@ export class Bootstrap {
                 }
             }
         });
+    }
+
+    public setupWebSockets(server: http.Server): void {
+        const wss = WebSocketServer.getSocketServer(server);
+
+        wss.on('connection', (ws, req) => {
+            // const location = url.parse(req.url, true);
+            // You might use location.query.access_token to authenticate or share sessions
+            // or req.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
+
+            ws.on('message', data => {
+                wss.clients.forEach(client => {
+                    if (client !== ws && client.readyState === webSocket.OPEN) {
+                        client.send(data);
+                    }
+                });
+            });
+
+            (<any>ws).isAlive = true;
+            ws.on('pong', () => {
+                (<any>ws).isAlive = true;
+            });
+
+            // ws.send('something');
+        });
+
+        //#region heartbeat
+
+        // const interval = setInterval(function ping() {
+        //     wss.clients.forEach((client: any) => {
+        //         if (client.isAlive === false) {
+        //             return client.terminate();
+        //         }
+
+        //         client.isAlive = false;
+        //         client.ping('', false, true);
+        //     });
+        // }, 30000);
+
+        //#endregion
     }
 
     public setupGraphQL(app: express.Application): void {

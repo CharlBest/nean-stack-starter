@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from '../../shared/websocket.service';
 
 @Component({
   selector: 'app-webhooks',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WebhooksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit() {
   }
 
+  manualWebSocketBroadcast() {
+    this.webSocketService.messages.next('hallo from somewhere');
+  }
 }
