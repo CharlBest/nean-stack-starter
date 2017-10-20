@@ -29,6 +29,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Emoji picker (Material CDK)
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
+* Basic web socket connection
 
 Client pages
 
