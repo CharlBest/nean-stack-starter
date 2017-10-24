@@ -16,11 +16,8 @@ export class UserRoutes {
     public static deleteUser = new BaseRoute(1, UserRoutes.rootRoute, 'deleteUser');
     public static resendEmailVerificationLink = new BaseRoute(1, UserRoutes.rootRoute, 'resendEmailVerificationLink');
     public static report = new BaseRoute(1, UserRoutes.rootRoute, 'report');
-    public static createNewsletterMember = new BaseRoute(1, UserRoutes.rootRoute, 'createNewsletterMember');
-    public static deleteNewsletterMember = new BaseRoute(1, UserRoutes.rootRoute, 'deleteNewsletterMember');
     public static verifyEmail = new BaseRoute(1, UserRoutes.rootRoute, 'verifyEmail');
     public static search = new BaseRoute(1, UserRoutes.rootRoute, 'search');
     public static searchUserStartWith = new BaseRoute(1, UserRoutes.rootRoute, 'searchUserStartWith');
-    public static sendFeedback = new BaseRoute(1, UserRoutes.rootRoute, 'sendFeedback');
     public static completedTutorial = new BaseRoute(1, UserRoutes.rootRoute, 'completedTutorial');
 }

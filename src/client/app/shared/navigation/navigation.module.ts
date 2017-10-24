@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { TutorialModule } from '../../shared/tutorial/tutorial.module';
+import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
 import {
   MatTabsModule,
   MatInputModule,
@@ -22,7 +23,8 @@ import {
     MatButtonModule,
     MatTabsModule,
     MatSnackBarModule,
-    TutorialModule
+    TutorialModule,
+    PaymentDialogModule
   ],
   exports: [
     NavigationComponent

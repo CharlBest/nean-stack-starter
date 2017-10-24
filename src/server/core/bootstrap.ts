@@ -11,6 +11,7 @@ import { ApiError } from './middleware/api-error';
 import { Neo4j } from './middleware/neo4j';
 import { Database } from './database';
 import { UsersRoutes } from '../app/users/users.routes';
+import { GeneralRoutes } from '../app/general/general.routes';
 // import typeDefs from '../schemas/schema';
 // import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
@@ -43,8 +44,10 @@ export class Bootstrap {
         app.use(Authentication.setAuthUser);
 
         // serving api routes
+        const generalRouter = new GeneralRoutes().router;
         const usersRouter = new UsersRoutes().router;
 
+        app.use('/api', generalRouter);
         app.use('/api', usersRouter);
 
         // TODO: not sure if this is the best way of doing it

@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
+import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
 
 @Component({
   selector: 'app-navigation',
@@ -37,6 +38,7 @@ export class NavigationComponent implements OnInit, OnChanges {
     private location: Location,
     private tutorialService: TutorialService,
     public snackBar: MatSnackBar,
+    private paymentDialogService: PaymentDialogService,
     private webSocketService: WebSocketService) {
     this.checkHasVisited();
   }
@@ -129,6 +131,10 @@ export class NavigationComponent implements OnInit, OnChanges {
         this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
       });
     }
+  }
+
+  openPaymentDialog() {
+    this.paymentDialogService.open();
   }
 }
 

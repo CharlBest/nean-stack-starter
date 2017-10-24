@@ -86,28 +86,6 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async createNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.CreateNewsletterMember)}`);
-        const result = await session.run(query.data, { email: viewModel.email });
-
-        if (result.records) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public async deleteNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.DeleteNewsletterMember)}`);
-        const result = await session.run(query.data, { email: viewModel.email });
-
-        if (result.records) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public async verifyEmail(session: neo4j.Session, userId: number, code: string): Promise<boolean> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.VerifyEmail)}`);
         const result = await session.run(query.data, { userId, code });

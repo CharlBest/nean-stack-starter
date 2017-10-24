@@ -1,5 +1,4 @@
 export class PaymentRequestViewModel {
-    tokenId: string;
-    productName: string;
+    token: string;
     amount: number;
 }

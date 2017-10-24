@@ -1,0 +1,51 @@
+<div [hidden]="isProcessing">
+    <form [formGroup]="form"
+        style="min-width: 370px;">
+        <mat-dialog-content>
+            <button mat-button
+                [matDialogClose]="true"
+                style="float: right;">
+                <mat-icon>close</mat-icon>
+            </button>
+
+            <h2 matDialogTitle
+                style="float: left;">Donate</h2>
+
+            <div style="clear: both;"></div>
+
+
+            <div class="form-row">
+                <div id="card-element"></div>
+                <div id="card-errors"
+                    role="alert"></div>
+            </div>
+            <br>
+            <div class="StripeElement">
+                $
+                <input formControlName="amount"
+                    type="number"
+                    placeholder="Amount in dollar"
+                    style="outline: none; border: none;" />
+
+                <div *ngIf="serverErrors?.password"
+                    class="validation-message">{{ serverErrors.password.message }}</div>
+                <app-show-errors [control]="form.controls['password']"></app-show-errors>
+            </div>
+
+            <br>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!form.valid"
+                (click)="onSubmit()">Pay</button>
+        </mat-dialog-actions>
+    </form>
+</div>
+
+<mat-dialog-content *ngIf="isProcessing">
+    <br>
+    <mat-spinner class="preloader"></mat-spinner>
+    <br>
+</mat-dialog-content>

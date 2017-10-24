@@ -121,14 +121,6 @@ export class UsersService extends BaseService {
         return user;
     }
 
-    public async createNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        return await this.usersRepository.createNewsletterMember(session, viewModel);
-    }
-
-    public async deleteNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        return await this.usersRepository.deleteNewsletterMember(session, viewModel);
-    }
-
     public async verifyEmail(session: neo4j.Session, userId: number, code: string): Promise<boolean> {
         return await this.usersRepository.verifyEmail(session, userId, code);
     }

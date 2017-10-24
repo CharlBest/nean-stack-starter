@@ -4,11 +4,11 @@ export class BaseRepository {
 
     constructor() { }
 
-    protected getQueryPath(folder: Folder, file: Posts | Users): string {
+    protected getQueryPath(folder: Folder, file: General | Users): string {
         let fileName;
         switch (folder) {
-            case Folder.Posts:
-                fileName = Posts[file];
+            case Folder.General:
+                fileName = General[file];
                 break;
 
             case Folder.Users:
@@ -23,19 +23,20 @@ export class BaseRepository {
 }
 
 export enum Folder {
-    Posts,
+    General,
     Users
 }
 
-export enum Posts {
+export enum General {
+    CreateNewsletterMember,
+    DeleteNewsletterMember,
+    PaymentRequest
 }
 
 export enum Users {
     AddForgottenPasswordCode,
     ChangeForgottenPassword,
-    CreateNewsletterMember,
     CreateUser,
-    DeleteNewsletterMember,
     DoesUserHavePermissions,
     DoesUsernameAndEmailExist,
     GetUser,

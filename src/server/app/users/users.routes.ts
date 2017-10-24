@@ -20,9 +20,6 @@ export class UsersRoutes extends BaseRoute {
         this.router.post(UserRoutes.changeForgottenPassword.constructEndpointUrl(), (req, res, next) => this.usersController.changeForgottenPassword(req, res, next));
         this.router.post(UserRoutes.login.constructEndpointUrl(), (req, res, next) => this.usersController.login(req, res, next));
         this.router.get(UserRoutes.report.constructEndpointUrl(), (req, res, next) => this.usersController.report(req, res, next));
-        this.router.post(UserRoutes.createNewsletterMember.constructEndpointUrl(), (req, res, next) => this.usersController.createNewsletterMember(req, res, next));
-        this.router.post(UserRoutes.deleteNewsletterMember.constructEndpointUrl(), (req, res, next) => this.usersController.deleteNewsletterMember(req, res, next));
-        this.router.post(UserRoutes.sendFeedback.constructEndpointUrl(), (req, res, next) => this.usersController.sendFeedback(req, res, next));
 
         this.router.get(UserRoutes.getUser.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.getUser(req, res, next));
         this.router.post(UserRoutes.verifyEmail.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.verifyEmail(req, res, next));

@@ -172,42 +172,6 @@ export class UsersController extends BaseController {
         }
     }
 
-    public async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as NewsletterMemberViewModel;
-
-            const valid = Validators.required({ value: viewModel.email }) ||
-                null;
-
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.createNewsletterMember(Database.getSession(req), req.body);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
-    }
-
-    public async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as NewsletterMemberViewModel;
-
-            const valid = Validators.required({ value: viewModel.email }) ||
-                null;
-
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.deleteNewsletterMember(Database.getSession(req), req.body);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
-    }
-
     public async updateAvatar(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as UpdateAvatarViewModel;
@@ -256,24 +220,6 @@ export class UsersController extends BaseController {
             Emailer.resendEmailVerificationLinkEmail(response.email, response.emailCode);
 
             res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
-    }
-
-    public async sendFeedback(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as FeedbackViewModel;
-
-            const valid = Validators.required({ value: viewModel.content }) ||
-                null;
-
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            Emailer.feedbackEmail(viewModel.content);
-            res.status(200).json();
         } catch (error) {
             this.returnError(res, error);
         }

@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ReportDialogService } from './report-dialog.service';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
+import {
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
