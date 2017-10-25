@@ -20,5 +20,8 @@ export const environment = {
     projectId: 'nean-dev',
     storageBucket: 'gs://nean-dev.appspot.com/',
     messagingSenderId: '***'
+  },
+  stripe: {
+    publishableKey: 'pk_test_LjqROoizWX5XWMeFFFDPC4ST'
   }
 };

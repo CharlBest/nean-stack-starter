@@ -1,5 +1,8 @@
 export const data = `
-MATCH (news:Newsletter)
-WHERE EXISTS(news.emails)
-SET news.emails = FILTER(x IN news.emails WHERE x <> {email})
+OPTIONAL MATCH (user:User { id: {userId} })
+CREATE (payment:Payment { token: {token}, amount: {amount}, dateCreated: timestamp() })
+
+FOREACH (o IN CASE WHEN user IS NOT NULL THEN [1] ELSE [] END |
+    MERGE (user)-[rel:PAYED]->(payment)
+)
 `

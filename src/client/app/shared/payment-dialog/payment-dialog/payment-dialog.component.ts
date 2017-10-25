@@ -5,6 +5,7 @@ import { Validators } from '../../../../../server/validation/validators';
 import { PaymentRequestViewModel } from '../../../../../server/view-models/payment/payment-request.view-model';
 import { PaymentService } from '../payment.service';
 import { FormService } from '../../form.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-payment-dialog',
@@ -32,7 +33,7 @@ export class PaymentDialogComponent implements OnInit {
 
     buildStripe() {
         // Create a Stripe client
-        this.stripe = window['Stripe']('pk_test_0Opnf68xnyT0RVyCQjqw0ScB');
+        this.stripe = window['Stripe'](environment.stripe.publishableKey);
 
         // Create an instance of Elements
         const elements = this.stripe.elements();
@@ -91,8 +92,7 @@ export class PaymentDialogComponent implements OnInit {
                 errorElement.textContent = result.error.message;
             } else {
                 // Send the token to your server
-                console.log(result.token);
-                this.sendPaymentToServer(result.token);
+                this.sendPaymentToServer(result.token.id);
             }
         });
     }
