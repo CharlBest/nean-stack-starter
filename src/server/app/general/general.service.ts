@@ -36,7 +36,7 @@ export class GeneralService extends BaseService {
         // Charge the user's card:
         stripe.charges.create({
             amount: viewModel.amount * 100,
-            currency: 'ZAR',
+            currency: 'EUR',
             description: 'Example charge',
             source: viewModel.token,
         }, (err, charge) => {

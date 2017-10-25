@@ -20,11 +20,13 @@ export class PaymentDialogComponent implements OnInit {
 
     stripe = null;
     stripeCard = null;
+    paymentSuccess = false;
 
     constructor(public snackBar: MatSnackBar,
         private fb: FormBuilder,
         private paymentService: PaymentService,
-        private formService: FormService) { }
+        private formService: FormService,
+        public dialogRef: MatDialogRef<PaymentDialogComponent>) { }
 
     ngOnInit() {
         this.buildStripe();
@@ -105,6 +107,7 @@ export class PaymentDialogComponent implements OnInit {
         this.paymentService.processPaymentRequest(viewModel).subscribe(
             data => {
                 this.isProcessing = false;
+                this.paymentSuccess = true;
             }, error => {
                 this.isProcessing = false;
                 this.serverErrors = this.formService.getServerErrors(error);
@@ -115,5 +118,9 @@ export class PaymentDialogComponent implements OnInit {
         this.snackBar.open('Copied', '', {
             duration: 2000,
         });
+    }
+
+    closeDialog() {
+        this.dialogRef.close();
     }
 }

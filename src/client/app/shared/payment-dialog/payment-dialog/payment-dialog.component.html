@@ -1,4 +1,4 @@
-<div [hidden]="isProcessing">
+<div [hidden]="isProcessing || paymentSuccess">
     <form [formGroup]="form"
         style="min-width: 370px;">
         <mat-dialog-content>
@@ -21,10 +21,11 @@
             </div>
             <br>
             <div class="StripeElement">
-                ZAR
+                &#8364;
                 <input formControlName="amount"
                     type="number"
-                    placeholder="Amount in rands"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    placeholder="Amount in euros"
                     style="outline: none; border: none;" />
 
                 <div *ngIf="serverErrors?.password"
@@ -48,4 +49,15 @@
     <br>
     <mat-spinner class="preloader"></mat-spinner>
     <br>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
+    (click)="closeDialog()">
+    <div style="text-align: center;">
+        <mat-icon style="color: green; font-size: 3rem; width: 100%;">
+            check_circle
+        </mat-icon>
+        <br>
+        <p>Payment successful</p>
+    </div>
 </mat-dialog-content>

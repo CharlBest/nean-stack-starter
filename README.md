@@ -30,6 +30,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
 * Basic web socket connection
+* Stripe Payment integration
 
 Client pages
 
@@ -46,7 +47,6 @@ Client pages
 
 ## In-progress or comming soon
 * Progressive Web App (PWA)
-* Stripe Payment integrations
 * Angular localization
 * GraphQL integration (Apollo)
 * Cordova IOS build output

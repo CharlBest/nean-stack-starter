@@ -8,7 +8,7 @@ export const environment = {
         password: getEnvironmentVariable('DATABASE_PASSWORD', 'neo4j')
     },
     stripe: {
-        secretKey: getEnvironmentVariable('STRIPE_KEY', '***')
+        secretKey: getEnvironmentVariable('STRIPE_KEY', 'sk_test_mYEuuYpdSU1EwnxafQQr1zTi')
     },
     sendGrid: {
         apiKey: getEnvironmentVariable('SENDGRID_API_KEY', '***'),
