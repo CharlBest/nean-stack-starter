@@ -9,7 +9,8 @@ import {
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -20,7 +21,8 @@ import {
         MatIconModule,
         MatProgressSpinnerModule,
         ReactiveFormsModule,
-        ShowErrorsModule
+        ShowErrorsModule,
+        MatTooltipModule
     ],
     declarations: [
         PaymentDialogComponent

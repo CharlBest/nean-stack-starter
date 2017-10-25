@@ -23,3 +23,7 @@
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
 }
+
+::ng-deep .info-tooltip {
+  white-space: pre-line;
+}
