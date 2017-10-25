@@ -37,7 +37,7 @@ export class GeneralService extends BaseService {
         stripe.charges.create({
             amount: viewModel.amount * 100,
             currency: 'EUR',
-            description: 'Example charge',
+            description: 'NEAN donation',
             source: viewModel.token,
         }, (err, charge) => {
             // asynchronously called
