@@ -79,7 +79,11 @@ export class NavigationComponent implements OnInit, OnChanges {
       });
 
     this.webSocketService.messages.subscribe((data) => {
-      console.log(data);
+      this.snackBar.open(data, 'Say hallo back', {
+        duration: 5000,
+      }).onAction().subscribe(() => {
+        this.webSocketService.messages.next('Hallo to you too');
+      });
     });
   }
 
