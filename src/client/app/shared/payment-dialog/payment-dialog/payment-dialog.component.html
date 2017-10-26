@@ -1,6 +1,7 @@
-<div [hidden]="isProcessing || paymentSuccess">
-    <form [formGroup]="form"
-        style="min-width: 370px;">
+<div [hidden]="isProcessing || paymentSuccess"
+    style="min-width: 270px; max-width: 370px;">
+    <div style="width: 370px;"></div>
+    <form [formGroup]="form">
         <mat-dialog-content>
             <button mat-button
                 [matDialogClose]="true"
