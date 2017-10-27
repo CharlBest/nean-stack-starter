@@ -82,7 +82,7 @@
     "@types/marked": "0.3.0",
     "@types/node": "^8.0.34",
     "@types/node-uuid": "^0.0.28",
-    "@types/stripe-checkout": "^1.0.1",
+    "@types/stripe": "^4.7.0",
     "@types/webpack": "^3.0.13",
     "@types/ws": "^3.2.0",
     "codelyzer": "^3.2.1",
