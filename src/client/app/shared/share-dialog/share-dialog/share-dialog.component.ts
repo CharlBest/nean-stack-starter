@@ -26,7 +26,7 @@ export class ShareDialogComponent {
 
     webShare() {
         if (this.hasWebShareApi()) {
-            (<any>navigator).share({ title: 'Referral link', text: this.link, url: this.link, });
+            (<any>navigator).share({ title: 'Referral link', text: '', url: this.link, });
         }
     }
 
