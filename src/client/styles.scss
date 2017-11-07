@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('~https://fonts.googleapis.com/icon?family=Material+Icons');
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming';
+@import '~app-theme-definition.scss';
 
 body {
     margin: 0;
@@ -56,3 +57,7 @@ mat-card[hidden] {
     height: 24px !important; 
     display: inline-block !important;
 }
+
+// a:visited {
+//     color: mat-color($app-primary);
+// }
