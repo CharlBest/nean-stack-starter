@@ -35,45 +35,47 @@ export class PaymentDialogComponent implements OnInit {
 
     buildStripe() {
         // Create a Stripe client
-        this.stripe = window['Stripe'](environment.stripe.publishableKey);
+        if (window['Stripe']) {
+            this.stripe = window['Stripe'](environment.stripe.publishableKey);
 
-        // Create an instance of Elements
-        const elements = this.stripe.elements();
+            // Create an instance of Elements
+            const elements = this.stripe.elements();
 
-        // Custom styling can be passed to options when creating an Element.
-        // (Note that this demo uses a wider set of styles than the guide below.)
-        const style = {
-            base: {
-                color: '#32325d',
-                lineHeight: '24px',
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                    color: '#aab7c4'
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            const style = {
+                base: {
+                    color: '#32325d',
+                    lineHeight: '24px',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
                 }
-            },
-            invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-            }
-        };
+            };
 
-        // Create an instance of the card Element
-        this.stripeCard = elements.create('card', { style: style });
+            // Create an instance of the card Element
+            this.stripeCard = elements.create('card', { style: style });
 
-        // Add an instance of the card Element into the `card-element` <div>
-        this.stripeCard.mount('#card-element');
+            // Add an instance of the card Element into the `card-element` <div>
+            this.stripeCard.mount('#card-element');
 
-        // Handle real-time validation errors from the card Element.
-        this.stripeCard.addEventListener('change', function (event) {
-            const displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
+            // Handle real-time validation errors from the card Element.
+            this.stripeCard.addEventListener('change', function (event) {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+        }
     }
 
     buildForm() {

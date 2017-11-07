@@ -13,7 +13,7 @@ import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-us
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
-const stripe = require('stripe')(environment.stripe.secretKey);
+import * as stripe from 'stripe';
 
 export class GeneralService extends BaseService {
 
@@ -33,8 +33,9 @@ export class GeneralService extends BaseService {
     }
 
     public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
         // Charge the user's card:
-        stripe.charges.create({
+        await stripeAccount.charges.create({
             amount: viewModel.amount * 100,
             currency: 'EUR',
             description: 'NEAN donation',
