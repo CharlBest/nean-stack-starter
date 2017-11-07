@@ -14,7 +14,7 @@
     "heroku"
   ],
   "engines": {
-    "node": "6.11.1"
+    "node": "8.9.x"
   },
   "scripts": {
     "ng": "ng",
