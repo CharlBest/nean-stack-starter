@@ -3,10 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from '../../shared/form.service';
 import { HomeService } from '../home.service';
 // import { SearchViewModel } from '../../../../server/view-models/search/SearchViewModel';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+// import { debounceTime, switchMap, filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar',

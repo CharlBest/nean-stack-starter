@@ -6,11 +6,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../../environments/environment';
-import 'rxjs/add/operator/map';
 import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',
@@ -49,13 +49,15 @@ export class NavigationComponent implements OnInit, OnChanges {
     });
 
     this.router.events
-      .map(() => this.route)
-      .map(route => {
+      .pipe(
+      map(() => this.route),
+      map(route => {
         while (route.firstChild) {
           route = route.firstChild;
         }
         return route;
       })
+      )
       .subscribe((event) => {
         if (event.snapshot.data) {
           const title = event.snapshot.data['title'];

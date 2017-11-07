@@ -10,7 +10,7 @@
   [cdkConnectedOverlayOrigin]="trigger"
   [cdkConnectedOverlayOpen]="isOpen">
 
-  <mat-tab-group (selectChange)="onTabSelectChange($event)">
+  <mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
     <mat-tab *ngFor="let category of emojiCategories">
       <ng-template matTabLabel>
         <mat-icon>{{category.tabLabelIcon}}</mat-icon>

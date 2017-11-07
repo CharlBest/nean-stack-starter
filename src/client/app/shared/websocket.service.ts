@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -11,7 +12,9 @@ export class WebSocketService {
 
     constructor() {
         this.messages = <Subject<string>>this.connect(this.messages)
-            .map((response): string => response.data);
+            .pipe(
+            map((response): string => response.data)
+            );
     }
 
     public connect(subject: Subject<any>): Subject<MessageEvent> {
