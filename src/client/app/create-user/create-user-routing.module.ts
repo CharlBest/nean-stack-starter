@@ -6,7 +6,7 @@ import { Navigation } from '../shared/navigation/navigation/navigation.component
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: CreateUserComponent, pathMatch: 'full', data: { title: 'Create profile', nav: Navigation.Back } }
+            { path: '', component: CreateUserComponent, pathMatch: 'full', data: { title: 'Create account', nav: Navigation.Back } }
         ])
     ],
     exports: [RouterModule]

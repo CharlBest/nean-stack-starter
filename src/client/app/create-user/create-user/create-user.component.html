@@ -1,6 +1,14 @@
 <form [formGroup]="form">
     <mat-card *ngIf="!isProcessing">
+        <mat-card-title>Sign Up</mat-card-title>
         <mat-card-content>
+            Have an account
+            <button mat-raised-button
+                color="accent"
+                type="button"
+                routerLink="/login">Login</button>
+
+            <br>
 
             <mat-form-field>
                 <input matInput
