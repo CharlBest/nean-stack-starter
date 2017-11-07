@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -17,12 +17,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit, OnChanges {
-
-  @Input() swipeEvent: PointerEvent;
-  @ViewChild('tabLinkHome') tabLinkHome: ElementRef;
-  @ViewChild('tabLinkLogin') tabLinkLogin: ElementRef;
-  @ViewChild('tabLinkProfile') tabLinkProfile: ElementRef;
+export class NavigationComponent implements OnInit {
 
   loggedInUserId: number = this.authService.getloggedInUserId();
   activeNavigation = Navigation.Primary;
@@ -87,24 +82,6 @@ export class NavigationComponent implements OnInit, OnChanges {
         this.webSocketService.messages.next('Hallo to you too');
       });
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      if (propName === 'swipeEvent') {
-        if (this.swipeEvent !== undefined) {
-          if (this.swipeEvent.type === 'swiperight') {
-            this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
-          } else if (this.swipeEvent.type === 'swipeleft') {
-            if (this.loggedInUserId) {
-              this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
-            } else {
-              this.router.navigate([(<HTMLAnchorElement>this.tabLinkLogin.nativeElement).pathname]);
-            }
-          }
-        }
-      }
-    }
   }
 
   logout() {

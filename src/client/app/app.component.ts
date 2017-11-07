@@ -9,8 +9,6 @@ import { GaService } from './shared/ga.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  swipeEvent: PointerEvent;
-
   constructor(private gaService: GaService) {
     // Firebase
     initializeApp({
