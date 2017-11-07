@@ -24,13 +24,13 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Client share actions
 * Lazy load routes with preloaded parts 
 * Image uploader to Firebase storage
-* Swipe events
 * Tutorial/on-boading framework
 * Emoji picker (Material CDK)
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
 * Basic web socket connection
 * Stripe Payment integration
+* Custom Material theme
 
 Client pages
 
