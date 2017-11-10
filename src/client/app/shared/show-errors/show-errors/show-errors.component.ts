@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControlDirective, AbstractControl } from '@angular/forms';
-import { Validators } from '../../../../../server/validation/validators';
+import { Validators } from '../../../../../shared/validation/validators';
 
 @Component({
   selector: 'app-show-errors',

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsletterService } from '../newsletter.service';
-import { NewsletterMemberViewModel } from '../../../../server/view-models/newsletter/newsletter-member.view-model';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-feedback',

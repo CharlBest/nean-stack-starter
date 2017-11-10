@@ -4,15 +4,10 @@ import { randomBytes, pbkdf2Sync } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { GeneralRepository } from './general.repository';
 import { BaseService } from '../shared/base-service';
-import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
-import { TokenViewModel } from '../../view-models/create-user/token.view-model';
 import { environment } from '../../environments/environment';
-import { UserModel } from '../../models/user/user.model';
 import { ValidationUtil } from '../../core/utils/validation-util';
-import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
-import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
-import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
-import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
+import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
 import * as stripe from 'stripe';
 
 export class GeneralService extends BaseService {

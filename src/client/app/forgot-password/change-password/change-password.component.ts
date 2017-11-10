@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
-import { ChangeForgottenPasswordViewModel } from '../../../../server/view-models/forgot-password/change-forgotten-password.view-model';
-import { Validators } from '../../../../server/validation/validators';
+import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
+import { Validators } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'app-change-password',

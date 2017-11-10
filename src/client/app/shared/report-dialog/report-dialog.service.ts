@@ -4,9 +4,9 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ReportUserViewModel } from '../../../../server/view-models/profile/report-user.view-model';
+import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
 import { Observable } from 'rxjs/Observable';
-import { UserRoutes } from '../../../../server/routes/user.routes';
+import { UserRoutes } from '../../../../shared/routes/user.routes';
 
 @Injectable()
 export class ReportDialogService {

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
-import { GeneralRoutes } from '../../../server/routes/general.routes';
-import { NewsletterMemberViewModel } from '../../../server/view-models/newsletter/newsletter-member.view-model';
+import { GeneralRoutes } from '../../../shared/routes/general.routes';
+import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 
 @Injectable()
 export class NewsletterService {

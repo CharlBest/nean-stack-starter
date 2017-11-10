@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../../environments/environment';
-import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';

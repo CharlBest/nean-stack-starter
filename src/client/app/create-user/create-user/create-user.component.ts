@@ -3,12 +3,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CreateUserService } from '../create-user.service';
-import { CreateUserViewModel } from '../../../../server/view-models/create-user/create-user.view-model';
-import { LoginViewModel } from '../../../../server/view-models/create-user/login.view-model';
+import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
+import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { LoginService } from '../../login/login.service';
-import { Validators } from '../../../../server/validation/validators';
+import { Validators } from '../../../../shared/validation/validators';
 import { FormService } from '../../shared/form.service';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-create-user',

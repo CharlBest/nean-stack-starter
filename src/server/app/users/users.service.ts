@@ -4,14 +4,12 @@ import { randomBytes, pbkdf2Sync } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { UsersRepository } from './users.repository';
 import { BaseService } from '../shared/base-service';
-import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
-import { TokenViewModel } from '../../view-models/create-user/token.view-model';
-import { environment } from '../../environments/environment';
-import { UserModel } from '../../models/user/user.model';
 import { ValidationUtil } from '../../core/utils/validation-util';
-import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
-import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
-import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
+import { environment } from '../../environments/environment';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
+import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 
 export class UsersService extends BaseService {
 

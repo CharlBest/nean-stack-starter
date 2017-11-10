@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from '../shared/base-route';
 import { GeneralController } from './general.controller';
-import { GeneralRoutes as GeneralStaticRoutes } from '../../routes/general.routes';
+import { GeneralRoutes as GeneralStaticRoutes } from '../../../shared/routes/general.routes';
 import { Authentication } from '../../core/middleware/authentication';
 
 export class GeneralRoutes extends BaseRoute {

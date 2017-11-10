@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from '../shared/base-route';
 import { UsersController } from './users.controller';
-import { UserRoutes } from '../../routes/user.routes';
+import { UserRoutes } from '../../../shared/routes/user.routes';
 import { Authentication } from '../../core/middleware/authentication';
 
 export class UsersRoutes extends BaseRoute {

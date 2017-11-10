@@ -1,11 +1,9 @@
 import { v1 as neo4j } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { BaseRepository, Folder, Users } from '../shared/base-repository';
-import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
-import { UserModel } from '../../models/user/user.model';
-import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
-import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
-import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
+import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 
 export class UsersRepository extends BaseRepository {
 

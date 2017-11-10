@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { UserModel } from '../../../../server/models/user/user.model';
+import { UserModel } from '../../../../shared/models/user/user.model';
 import { ProfileService } from '../profile.service';
 import { environment } from '../../../environments/environment';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
-import { UpdateAvatarViewModel } from '../../../../server/view-models/profile/update-avatar.view-model';
+import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 import * as emojione from 'emojione';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-profile',

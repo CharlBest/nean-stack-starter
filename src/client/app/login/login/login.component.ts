@@ -5,9 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import { FormService } from '../../shared/form.service';
 import { LoginService } from '../../login/login.service';
-import { Validators } from '../../../../server/validation/validators';
-import { LoginViewModel } from '../../../../server/view-models/create-user/login.view-model';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { Validators } from '../../../../shared/validation/validators';
+import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-login',

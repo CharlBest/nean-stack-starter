@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TutorialService } from '../tutorial.service';
-import { TutorialType } from '../../../../../server/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { Location } from '@angular/common';
 import { AuthService } from '../../auth.service';
-import { CompletedTutorial } from '../../../../../server/view-models/tutorial/completed-tutorial.view-model';
+import { CompletedTutorial } from '../../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 
 @Component({
   selector: 'app-tutorial',

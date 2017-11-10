@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../feedback.service';
-import { FeedbackViewModel } from '../../../../server/view-models/feedback/feedback.view-model';
+import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { FormService } from '../../shared/form.service';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-feedback',

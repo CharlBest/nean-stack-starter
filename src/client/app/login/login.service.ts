@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
-import { UserRoutes } from '../../../server/routes/user.routes';
-import { LoginViewModel } from '../../../server/view-models/create-user/login.view-model';
-import { TokenViewModel } from '../../../server/view-models/create-user/token.view-model';
+import { UserRoutes } from '../../../shared/routes/user.routes';
+import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
+import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 
 @Injectable()
 export class LoginService {

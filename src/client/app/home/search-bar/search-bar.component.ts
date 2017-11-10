@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from '../../shared/form.service';
 import { HomeService } from '../home.service';
-// import { SearchViewModel } from '../../../../server/view-models/search/SearchViewModel';
+// import { SearchViewModel } from '../../../../shared/view-models/search/SearchViewModel';
 // import { debounceTime, switchMap, filter, map } from 'rxjs/operators';
 
 @Component({

@@ -1,8 +1,8 @@
 import { v1 as neo4j } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { BaseRepository, Folder, General } from '../shared/base-repository';
-import { NewsletterMemberViewModel } from '../../view-models/newsletter/newsletter-member.view-model';
-import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
+import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
 
 export class GeneralRepository extends BaseRepository {
 

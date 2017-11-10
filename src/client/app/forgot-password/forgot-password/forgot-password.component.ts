@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
-import { ForgotPasswordViewModel } from '../../../../server/view-models/forgot-password/forgot-password.view-model';
-import { Validators } from '../../../../server/validation/validators';
-import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
+import { Validators } from '../../../../shared/validation/validators';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-forgot-password',
