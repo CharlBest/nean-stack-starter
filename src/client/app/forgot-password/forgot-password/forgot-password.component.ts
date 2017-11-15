@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
-import { Validators } from '../../../../shared/validation/validators';
+import { Validators, trimString } from '../../../../shared/validation/validators';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new ForgotPasswordViewModel();
-    viewModel.email = this.form.get('email').value;
+    viewModel.email = trimString(this.form.get('email').value);
 
     this.forgotPasswordService.forgotPassword(viewModel).subscribe(
       data => {

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NewsletterService } from '../newsletter.service';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { trimString } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'app-feedback',
@@ -34,7 +35,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = email;
+    viewModel.email = trimString(email);
 
     this.newsletterService.createNewsletterMember(viewModel).subscribe(data => {
       this.isProcessing = false;
@@ -46,7 +47,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = email;
+    viewModel.email = trimString(email);
 
     this.newsletterService.deleteNewsletterMember(viewModel).subscribe(data => {
       this.isProcessing = false;

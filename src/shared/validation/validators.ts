@@ -85,3 +85,12 @@ type ValidatorFn = (c: AbstractControl) => ValidationErrors | null;
 interface ValidationErrors {
     [key: string]: any;
 }
+
+export function trimString(string: string): string {
+    if (string !== null && string !== undefined) {
+        string = string.replace(/^\s+|\s+$/g, '');
+        return string.replace(/^(&nbsp;)+|(&nbsp;)+$/g, '');
+    } else {
+        return string;
+    }
+}

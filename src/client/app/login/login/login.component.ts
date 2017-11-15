@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import { FormService } from '../../shared/form.service';
 import { LoginService } from '../../login/login.service';
-import { Validators } from '../../../../shared/validation/validators';
+import { Validators, trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new LoginViewModel();
-    viewModel.emailOrUsername = this.form.get('emailOrUsername').value;
+    viewModel.emailOrUsername = trimString(this.form.get('emailOrUsername').value);
     viewModel.password = this.form.get('password').value;
 
     this.loginService.login(viewModel).subscribe(

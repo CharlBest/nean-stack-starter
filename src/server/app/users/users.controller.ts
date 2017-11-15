@@ -5,7 +5,7 @@ import { Database } from '../../core/database';
 import { BaseController } from '../shared/base-controller';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
-import { Validators } from '../../../shared/validation/validators';
+import { Validators, trimString } from '../../../shared/validation/validators';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
@@ -28,6 +28,10 @@ export class UsersController extends BaseController {
     public async createUser(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as CreateUserViewModel;
+
+            // Trim inputs
+            viewModel.username = trimString(viewModel.username);
+            viewModel.email = trimString(viewModel.email);
 
             const valid = Validators.required({ value: viewModel.username }) ||
                 Validators.required({ value: viewModel.email }) ||
@@ -60,6 +64,9 @@ export class UsersController extends BaseController {
     public async login(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as LoginViewModel;
+
+            // Trim inputs
+            viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
 
             const valid = Validators.required({ value: viewModel.emailOrUsername }) ||
                 Validators.required({ value: viewModel.password }) ||
@@ -111,6 +118,9 @@ export class UsersController extends BaseController {
         try {
             const viewModel = req.body as ForgotPasswordViewModel;
 
+            // Trim inputs
+            viewModel.email = trimString(viewModel.email);
+
             const valid = Validators.required({ value: viewModel.email }) ||
                 Validators.email({ value: viewModel.email }) ||
                 null;
@@ -133,6 +143,9 @@ export class UsersController extends BaseController {
     public async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as ChangeForgottenPasswordViewModel;
+
+            // Trim inputs
+            viewModel.email = trimString(viewModel.email);
 
             const valid = Validators.required({ value: viewModel.email }) ||
                 Validators.email({ value: viewModel.email }) ||

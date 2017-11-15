@@ -5,7 +5,7 @@ import { Database } from '../../core/database';
 import { BaseController } from '../shared/base-controller';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
-import { Validators } from '../../../shared/validation/validators';
+import { Validators, trimString } from '../../../shared/validation/validators';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
@@ -21,6 +21,9 @@ export class GeneralController extends BaseController {
     public async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as NewsletterMemberViewModel;
+
+            // Trim inputs
+            viewModel.email = trimString(viewModel.email);
 
             const valid = Validators.required({ value: viewModel.email }) ||
                 null;
@@ -39,6 +42,9 @@ export class GeneralController extends BaseController {
     public async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
         try {
             const viewModel = req.body as NewsletterMemberViewModel;
+
+            // Trim inputs
+            viewModel.email = trimString(viewModel.email);
 
             const valid = Validators.required({ value: viewModel.email }) ||
                 null;

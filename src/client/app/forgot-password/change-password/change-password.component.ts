@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
-import { Validators } from '../../../../shared/validation/validators';
+import { Validators, trimString } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'app-change-password',
@@ -51,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new ChangeForgottenPasswordViewModel;
-    viewModel.email = this.email;
+    viewModel.email = trimString(this.email);
     viewModel.code = this.code;
     viewModel.password = this.form.get('password').value;
 

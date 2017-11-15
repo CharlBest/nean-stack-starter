@@ -6,7 +6,7 @@ import { CreateUserService } from '../create-user.service';
 import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { LoginService } from '../../login/login.service';
-import { Validators } from '../../../../shared/validation/validators';
+import { Validators, trimString } from '../../../../shared/validation/validators';
 import { FormService } from '../../shared/form.service';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
@@ -53,8 +53,8 @@ export class CreateUserComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
-    viewModel.email = this.form.get('email').value;
-    viewModel.username = this.form.get('username').value;
+    viewModel.email = trimString(this.form.get('email').value);
+    viewModel.username = trimString(this.form.get('username').value);
     viewModel.password = this.form.get('password').value;
 
     this.createUserService.createUser(viewModel).subscribe(
