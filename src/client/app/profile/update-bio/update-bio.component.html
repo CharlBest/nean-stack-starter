@@ -1,41 +1,21 @@
-<form [formGroup]="form">
-  <mat-card *ngIf="!isProcessing">
-    <mat-card-title>Bio</mat-card-title>
-    <mat-card-content>
+<mat-card *ngIf="!isProcessing">
+  <mat-card-title>Bio</mat-card-title>
+  <mat-card-content>
 
-      <mat-form-field style="display: block;">
-        <textarea matInput
-          formControlName="content"
-          rows="5"
-          placeholder="type here..."
-          style="width: 100%;"
-          [value]="content">
-        </textarea>
-      </mat-form-field>
+    <app-html-editor [htmlContent]="content"
+      [(editorDomElement)]="inputElement"></app-html-editor>
 
-      <!-- <mat-form-field>
-        <input matInput
-          formControlName="content"
-          type="text"
-          placeholder="bio"
-          required
-          [value]="content">
-      </mat-form-field> -->
+    <div *ngIf="serverErrors?.content"
+      class="validation-message">{{ serverErrors.content.message }}</div>
 
-      <div *ngIf="serverErrors?.password"
-        class="validation-message">{{ serverErrors.password.message }}</div>
-      <app-show-errors [control]="form.controls['password']"></app-show-errors>
-
-      <app-emoji-panel></app-emoji-panel>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button
-        type="submit"
-        [disabled]="!form.valid"
-        (click)="onSubmit()">Update bio</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+    <app-emoji-panel></app-emoji-panel>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      type="submit"
+      (click)="onSubmit()">Update bio</button>
+  </mat-card-actions>
+</mat-card>
 
 <mat-card *ngIf="isProcessing">
   <mat-card-content>

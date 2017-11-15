@@ -15,6 +15,7 @@ import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dial
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { EmojiModule } from '../shared/emoji/emoji.module';
 import { MediaModule } from '../shared/media/media.module';
+import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -46,7 +47,8 @@ import {
     ShowErrorsModule,
     TutorialModule,
     EmojiModule,
-    MediaModule
+    MediaModule,
+    HTMLEditorModule
   ],
   declarations: [
     ProfileComponent,

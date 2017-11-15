@@ -15,10 +15,10 @@ import { UpdateBioViewModel } from '../../../../shared/view-models/profile/updat
 })
 export class UpdateBioComponent implements OnInit {
 
-  form: FormGroup;
   serverErrors;
   isProcessing = false;
   @Input() content = '';
+  inputElement: HTMLDivElement;
 
   constructor(private fb: FormBuilder,
     private formService: FormService,
@@ -26,41 +26,36 @@ export class UpdateBioComponent implements OnInit {
     public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.buildForm();
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      content: [this.content]
-    });
   }
 
   onSubmit() {
-    const viewModel = new UpdateBioViewModel();
-    viewModel.content = this.form.get('content').value;
+    console.log(this.inputElement.innerHTML);
 
-    if (this.content !== viewModel.content) {
-      this.isProcessing = true;
+    // const viewModel = new UpdateBioViewModel();
+    // viewModel.content = this.inputElement.innerHTML;
 
-      this.snackBar.open('Updating bio...', '', {
-        duration: 10000,
-      });
+    // if (this.content !== viewModel.content) {
+    //   this.isProcessing = true;
 
-      this.profileService.updateBio(viewModel).subscribe(
-        data => {
-          this.isProcessing = false;
-          this.content = viewModel.content;
+    //   this.snackBar.open('Updating bio...', '', {
+    //     duration: 10000,
+    //   });
 
-          this.snackBar.dismiss();
-          this.snackBar.open('Updated bio', '', {
-            duration: 2000,
-          });
-        }, error => {
-          this.isProcessing = false;
-          this.serverErrors = this.formService.getServerErrors(error);
+    //   this.profileService.updateBio(viewModel).subscribe(
+    //     data => {
+    //       this.isProcessing = false;
+    //       this.content = viewModel.content;
 
-          this.snackBar.dismiss();
-        });
-    }
+    //       this.snackBar.dismiss();
+    //       this.snackBar.open('Updated bio', '', {
+    //         duration: 2000,
+    //       });
+    //     }, error => {
+    //       this.isProcessing = false;
+    //       this.serverErrors = this.formService.getServerErrors(error);
+
+    //       this.snackBar.dismiss();
+    //     });
+    // }
   }
 }
