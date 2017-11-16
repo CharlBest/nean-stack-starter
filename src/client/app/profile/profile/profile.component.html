@@ -1,15 +1,17 @@
 <div *ngIf="!isProcessing && user !== null">
   <mat-card>
     <mat-card-content>
-      <div>{{user.username}}</div>
+      <h3>{{user.username}}</h3>
       <div>{{user.email}}</div>
       <br>
       <div>Email verified:
-        <mat-icon *ngIf="user.emailVerified">done</mat-icon>
-        <mat-icon *ngIf="!user.emailVerified">close</mat-icon>
+        <mat-icon *ngIf="user.emailVerified"
+          style="font-size: 1rem; color: green;">done</mat-icon>
+        <mat-icon *ngIf="!user.emailVerified"
+          style="font-size: 1rem; color: red;">close</mat-icon>
       </div>
       <div>Signup date: {{user.dateCreated | date}}</div>
-      <div>Profile views: {{user.views}}</div>
+      <!-- <div>Profile views: {{user.views}}</div> -->
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button
@@ -19,7 +21,8 @@
         (click)="openReportDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileReport">Report</button>
       <button mat-raised-button
-        (click)="resendEmailVerificationLink()">Resend email verification link</button>
+        (click)="resendEmailVerificationLink()"
+        *ngIf="!user.emailVerified">Resend email verification link</button>
       <button mat-raised-button
         (click)="profileTour()">Profile tour</button>
       <button mat-raised-button
