@@ -1,16 +1,15 @@
 <div *ngIf="!isProcessing && user !== null">
   <mat-card>
+    <mat-card-title>{{user.username}}</mat-card-title>
+    <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     <mat-card-content>
-      <h3>{{user.username}}</h3>
-      <div>{{user.email}}</div>
-      <br>
       <div>Email verified:
         <mat-icon *ngIf="user.emailVerified"
           style="font-size: 1rem; color: green;">done</mat-icon>
         <mat-icon *ngIf="!user.emailVerified"
           style="font-size: 1rem; color: red;">close</mat-icon>
       </div>
-      <div>Signup date: {{user.dateCreated | date}}</div>
+      <div>Sign-up date: {{user.dateCreated | date}}</div>
       <!-- <div>Profile views: {{user.views}}</div> -->
     </mat-card-content>
     <mat-card-actions>
@@ -34,8 +33,8 @@
   </mat-card>
 
   <mat-card [appTutorial]="tutorialTypeEnum.AvatarUpload">
+    <mat-card-title>Avatar</mat-card-title>
     <mat-card-content>
-      <h3>Avatar</h3>
       <button mat-raised-button
         color="warn"
         (click)="removeAvatar()"
