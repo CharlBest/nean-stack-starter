@@ -29,33 +29,31 @@ export class UpdateBioComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.inputElement.innerHTML);
+    const viewModel = new UpdateBioViewModel();
+    viewModel.content = this.inputElement.innerHTML;
 
-    // const viewModel = new UpdateBioViewModel();
-    // viewModel.content = this.inputElement.innerHTML;
+    if (this.content !== viewModel.content) {
+      this.isProcessing = true;
 
-    // if (this.content !== viewModel.content) {
-    //   this.isProcessing = true;
+      this.snackBar.open('Updating bio...', '', {
+        duration: 10000,
+      });
 
-    //   this.snackBar.open('Updating bio...', '', {
-    //     duration: 10000,
-    //   });
+      this.profileService.updateBio(viewModel).subscribe(
+        data => {
+          this.isProcessing = false;
+          this.content = viewModel.content;
 
-    //   this.profileService.updateBio(viewModel).subscribe(
-    //     data => {
-    //       this.isProcessing = false;
-    //       this.content = viewModel.content;
+          this.snackBar.dismiss();
+          this.snackBar.open('Updated bio', '', {
+            duration: 2000,
+          });
+        }, error => {
+          this.isProcessing = false;
+          this.serverErrors = this.formService.getServerErrors(error);
 
-    //       this.snackBar.dismiss();
-    //       this.snackBar.open('Updated bio', '', {
-    //         duration: 2000,
-    //       });
-    //     }, error => {
-    //       this.isProcessing = false;
-    //       this.serverErrors = this.formService.getServerErrors(error);
-
-    //       this.snackBar.dismiss();
-    //     });
-    // }
+          this.snackBar.dismiss();
+        });
+    }
   }
 }

@@ -13,8 +13,8 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     @Input() htmlContent: string;
     @Input() placeholder = 'type here...';
 
-    @Input() editorDomElement: HTMLDivElement;
-    @Output() editorDomElementChange: EventEmitter<HTMLDivElement> = new EventEmitter<HTMLDivElement>();
+    @Input() editorDomElement: HTMLDivElement = null;
+    @Output() editorDomElementChange: EventEmitter<HTMLDivElement> = new EventEmitter<HTMLDivElement>(true);
 
     editor: Quill;
     imageUploadProgressPercentage: number;
@@ -43,7 +43,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
         });
 
         this.editorDomElement = this.editor.root;
-        this.editorDomElementChange.emit(this.editor.root);
+        this.editorDomElementChange.emit(this.editorDomElement);
 
         if (this.htmlContent !== null && this.htmlContent !== undefined) {
             this.editor.pasteHTML(this.htmlContent);
