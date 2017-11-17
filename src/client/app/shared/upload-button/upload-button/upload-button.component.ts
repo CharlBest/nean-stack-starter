@@ -15,6 +15,7 @@ export class UploadButtonComponent implements OnInit {
     @Input() buttonText = 'Upload file';
     @Input() folderName = 'images';
     @Input() showPreview = false;
+    @Input() hideProgressBarAfterUpload = true;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
