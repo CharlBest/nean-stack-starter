@@ -12,6 +12,8 @@ export class UploadButtonComponent implements OnInit {
     previewImgUrl: string;
     progressPercentage: number;
 
+    @Input() buttonText = 'Upload file';
+    @Input() folderName = 'images';
     @Input() showPreview = false;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
@@ -35,7 +37,7 @@ export class UploadButtonComponent implements OnInit {
         // CONTINUE show preloader imediatly!
 
         // Create a storage ref
-        const storageRef = app(environment.firebase.projectId).storage().ref(`avatars/${file.name}`);
+        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.folderName}/${file.name}`);
 
         // Upload file
         const task = storageRef.put(file);

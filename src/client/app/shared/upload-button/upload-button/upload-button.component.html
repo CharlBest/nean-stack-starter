@@ -1,10 +1,12 @@
 <input type="file"
-    id="upload-button-file-input"
+    #fileInput
     (change)="handleChange($event)" />
-<label for="upload-button-file-input"
-    class="mat-raised-button">Upload file</label>
 
-<mat-progress-bar *ngIf="progressPercentage >= 0"
+<button mat-raised-button
+    type="button"
+    (click)="fileInput.click()">{{buttonText}}</button>
+
+<mat-progress-bar *ngIf="progressPercentage >= 0 && progressPercentage < 100 || !hideProgressBarAfterUpload && progressPercentage <= 100"
     [value]="progressPercentage"
     matTooltip="{{progressPercentage}}%"></mat-progress-bar>
 

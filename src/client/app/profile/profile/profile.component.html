@@ -39,7 +39,8 @@
         color="warn"
         (click)="removeAvatar()"
         *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
-      <app-upload-button (onUploadComplete)="updateAvatar($event)"></app-upload-button>
+      <app-upload-button (onUploadComplete)="updateAvatar($event)"
+        [folderName]="'avatars'"></app-upload-button>
 
       <app-media [src]="user.avatarUrl"
         *ngIf="user.avatarUrl"
