@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@
 import Quill from 'quill';
 import { app, storage } from 'firebase/app';
 import { environment } from '../../../../environments/environment';
+import { v4 as nodeUUId } from 'node-uuid';
 
 @Component({
     selector: 'app-html-editor',
@@ -18,6 +19,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
 
     editor: Quill;
     imageUploadProgressPercentage: number;
+    editorId = nodeUUId().replace('-', '');
 
     constructor() { }
 
@@ -29,7 +31,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     }
 
     initQuillEditor() {
-        this.editor = new Quill('#editor', {
+        this.editor = new Quill(`#${this.editorId}`, {
             modules: {
                 toolbar: [
                     ['bold', 'italic'],
