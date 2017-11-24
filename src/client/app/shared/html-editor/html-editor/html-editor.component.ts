@@ -12,6 +12,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
 
     @Input() htmlContent: string;
     @Input() placeholder = 'type here...';
+    @Input() imageBucketName = 'html-editor';
 
     @Input() editorDomElement: HTMLDivElement = null;
     @Output() editorDomElementChange: EventEmitter<HTMLDivElement> = new EventEmitter<HTMLDivElement>(true);
@@ -74,7 +75,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     }
 
     saveToServer(file: File) {
-        const storageRef = app(environment.firebase.projectId).storage().ref(`avatars/${file.name}`);
+        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.imageBucketName}/${file.name}`);
 
         // Upload file
         const task = storageRef.put(file);
