@@ -32,4 +32,4 @@ import {
     EmojiPanelComponent
   ]
 })
-export class EmojiModule { }
+export class EmojiPanelModule { }

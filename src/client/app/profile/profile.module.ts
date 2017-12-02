@@ -13,7 +13,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
-import { EmojiModule } from '../shared/emoji/emoji.module';
+import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { MediaModule } from '../shared/media/media.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import {
@@ -46,7 +46,7 @@ import {
     UploadButtonModule,
     ShowErrorsModule,
     TutorialModule,
-    EmojiModule,
+    EmojiPanelModule,
     MediaModule,
     HTMLEditorModule
   ],
