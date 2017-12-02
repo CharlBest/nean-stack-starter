@@ -8,7 +8,10 @@
     <div *ngIf="serverErrors?.content"
       class="validation-message">{{ serverErrors.content.message }}</div>
 
-    <app-emoji-panel></app-emoji-panel>
+    <!-- <span [appEmojiPanel]="emojiPanel"
+      [placeholder]="'Add a reply...'"
+      #input></span> -->
+    <app-emoji-panel #emojiPanel></app-emoji-panel>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
