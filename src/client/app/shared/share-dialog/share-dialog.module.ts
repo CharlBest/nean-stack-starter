@@ -6,7 +6,8 @@ import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import {
     MatDialogModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -15,7 +16,8 @@ import {
         ClipboardModule,
         MatDialogModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatSnackBarModule
     ],
     declarations: [
         ShareDialogComponent
