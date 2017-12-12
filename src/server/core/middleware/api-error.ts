@@ -1,7 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
-// TODO: not working
 export class ApiError {
+    static wrapAsync = (fn) => {
+        return function(req, res, next) {
+            // Wrap async functions in this function so that any errors are caught and
+            // passed along to the error handler middleware.
+            // http://thecodebarbarian.com/80-20-guide-to-express-error-handling.html
+            fn(req, res, next).catch(next);
+        };
+    }
+
     // catch 404 and forward to error handler
     static NotFoundError(req: Request, res: Response, next: NextFunction) {
         const err: any = new Error('Not Found');
