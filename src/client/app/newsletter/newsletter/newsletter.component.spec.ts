@@ -1,36 +1,36 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { RouterTestingModule } from '@angular/router/testing';
 
-import { NewsletterComponent } from './newsletter.component';
-import { MatCardModule } from '@angular/material';
+// import { NewsletterComponent } from './newsletter.component';
+// import { MatCardModule } from '@angular/material';
 
-describe('NewsletterComponent', () => {
-    let component: NewsletterComponent;
-    let fixture: ComponentFixture<NewsletterComponent>;
+// describe('NewsletterComponent', () => {
+//     let component: NewsletterComponent;
+//     let fixture: ComponentFixture<NewsletterComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [NewsletterComponent],
-            imports: [
-                RouterTestingModule,
-                MatCardModule
-            ]
-        }).compileComponents();
-    }));
+//     beforeEach(async(() => {
+//         TestBed.configureTestingModule({
+//             declarations: [NewsletterComponent],
+//             imports: [
+//                 RouterTestingModule,
+//                 MatCardModule
+//             ]
+//         }).compileComponents();
+//     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(NewsletterComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+//     beforeEach(() => {
+//         fixture = TestBed.createComponent(NewsletterComponent);
+//         component = fixture.componentInstance;
+//         fixture.detectChanges();
+//     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+//     it('should create', () => {
+//         expect(component).toBeTruthy();
+//     });
 
-    it('has page title', async(() => {
-        fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('mat-card-title').textContent).toContain('About us');
-    }));
-});
+//     it('has page title', async(() => {
+//         fixture.detectChanges();
+//         const compiled = fixture.debugElement.nativeElement;
+//         expect(compiled.querySelector('mat-card-title').textContent).toContain('About us');
+//     }));
+// });
