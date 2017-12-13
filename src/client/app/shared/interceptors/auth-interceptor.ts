@@ -21,9 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
 
                 if (err instanceof HttpErrorResponse) {
-                    if (!environment.production) {
-                        console.error(err);
-                    }
+                    console.error(err);
 
                     if (err.status === 401) {
                         // This will redirect to the login page
