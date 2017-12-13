@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 // const DashboardPlugin = require("webpack-dashboard/plugin");
 const isProduction = process.env.NODE_ENV === "production"
@@ -12,6 +13,7 @@ const config = {
     vendor: "./vendor.ts"
   },
   target: 'node',
+  externals: [nodeExternals()],
   output: {
     path: path.resolve("./dist/server"),
     filename: "[name].bundle.js",

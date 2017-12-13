@@ -89,6 +89,7 @@
     "@types/ws": "^3.2.0",
     "codelyzer": "^4.0.1",
     "nodemon": "^1.12.1",
-    "tslint": "^5.8.0"
+    "tslint": "^5.8.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }
