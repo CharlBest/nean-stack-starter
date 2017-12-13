@@ -1,13 +1,13 @@
 # NEAN (Neo4j, Express, Angular, Node) Stack Starter
 
-A basic app that has all the features that all platfroms have like authentication, validation, error handling and more.
+A basic app that has all the features that all platforms have like authentication, validation, error handling and more.
 
 ## [DEMO](https://nean.io/)
 
 Similar to the MEAN stack just with Neo4j rather than Mongo.
 
 * Angular (client), Node (API), Neo4j (database)
-* Nodejs in Typescript
+* NodeJS in Typescript
 * Basic Webpack build for Node (API)
 * Angular CLI
 * Chrome extension build output
@@ -16,7 +16,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * SendGrid Email integration
 * Angular Material
 * Neo4j query integration
-* API arcitecture (route -> controller -> service -> repository)
+* API architecture (route -> controller -> service -> repository)
 * Shared validation between Angular and Node (Error handling)
 * Shared strongly typed view models
 * Shared strongly typed API endpoints
@@ -43,9 +43,9 @@ Client pages
 * profile
 * tutorials
 * verify email
-* terms and conditions, pricacy policy and help
+* terms and conditions, privacy policy and help
 
-## In-progress or comming soon
+## In-progress or coming soon
 * Progressive Web App (PWA)
 * Angular localization
 * GraphQL integration (Apollo)
@@ -72,11 +72,15 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
 $ npm run dev
 ```
 
+Your app should now be running on [localhost:4200](http://localhost:4200/)
+
 ## Why Heroku, GrapheneDB and Firebase for demo app hosting
 Its free ;)
 
-## Procfile
-This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if your are not using Heroku
+## Procfile & Heroku
+This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if you're not using Heroku.
+
+You will also notice in the package.json file there is a "heroku-prebuild" script. This is for the continuous build and deployment specific for Heroku. This can be replaced with npm's preinstall script if you want something standard.
 
 ## Environment variables
 Change to yours.
