@@ -25,7 +25,7 @@ export class Authentication {
                     return res.status(401).json({ message: 'Unauthorized user' });
                 }
 
-                if (decode['data'] !== null || decode['data'] !== undefined) {
+                if (decode['data'] !== null && decode['data'] !== undefined) {
                     (<any>req).user = decode['data'];
                 }
 
