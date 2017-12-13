@@ -80,7 +80,7 @@ Its free ;)
 ## Procfile & Heroku
 This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if you're not using Heroku.
 
-You will also notice in the package.json file there is a "heroku-prebuild" script. This is for the continuous build and deployment specific for Heroku. This can be replaced with npm's preinstall script if you want something standard.
+You will also notice in the package.json file there is a "heroku-postbuild" script. This is for the continuous build and deployment specific for Heroku. This can be replaced with npm's preinstall script if you want something standard.
 
 ## Environment variables
 Change to yours.

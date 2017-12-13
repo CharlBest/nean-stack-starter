@@ -21,7 +21,7 @@
     "build": "ng build --prod && webpack",
     "start": "node dist/server/app.bundle.js",
     "start-watch": "nodemon dist/server/app.bundle.js",
-    "heroku-prebuild": "npm run build",
+    "heroku-postbuild": "npm run build",
     "ng": "ng",
     "test": "echo \"Error: no test... minimal project\" && exit 1",
     "lint": "echo \"Error: no lint... minimal project\" && exit 1",
