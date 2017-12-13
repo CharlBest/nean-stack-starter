@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-var nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals');
 
 // const DashboardPlugin = require("webpack-dashboard/plugin");
 const isProduction = process.env.NODE_ENV === "production"

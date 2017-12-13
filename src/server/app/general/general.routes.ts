@@ -15,10 +15,10 @@ export class GeneralRoutes extends BaseRoute {
     }
 
     initRoutes() {
-        this.router.post(GeneralStaticRoutes.createNewsletterMember.constructEndpointUrl(), ApiError.wrapAsync((req, res, next) => this.generalController.createNewsletterMember(req, res, next)));
-        this.router.post(GeneralStaticRoutes.deleteNewsletterMember.constructEndpointUrl(), ApiError.wrapAsync((req, res, next) => this.generalController.deleteNewsletterMember(req, res, next)));
-        this.router.post(GeneralStaticRoutes.sendFeedback.constructEndpointUrl(), ApiError.wrapAsync((req, res, next) => this.generalController.sendFeedback(req, res, next)));
+        this.router.post(GeneralStaticRoutes.createNewsletterMember.constructEndpointUrl(), (req, res, next) => this.generalController.createNewsletterMember(req, res, next).catch(next));
+        this.router.post(GeneralStaticRoutes.deleteNewsletterMember.constructEndpointUrl(), (req, res, next) => this.generalController.deleteNewsletterMember(req, res, next).catch(next));
+        this.router.post(GeneralStaticRoutes.sendFeedback.constructEndpointUrl(), (req, res, next) => this.generalController.sendFeedback(req, res, next).catch(next));
 
-        this.router.post(GeneralStaticRoutes.paymentRequest.constructEndpointUrl(), ApiError.wrapAsync((req, res, next) => this.generalController.paymentRequest(req, res, next)));
+        this.router.post(GeneralStaticRoutes.paymentRequest.constructEndpointUrl(), (req, res, next) => this.generalController.paymentRequest(req, res, next).catch(next));
     }
 }

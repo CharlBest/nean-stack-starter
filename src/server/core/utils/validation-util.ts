@@ -2,7 +2,7 @@ export class ValidationUtil {
     static createValidationErrorMessage(key: string, message: string) {
         return {
             status: 400,
-            error: {
+            validation: {
                 [key]: {
                     message: message
                 }
@@ -13,7 +13,7 @@ export class ValidationUtil {
     static createValidationErrors(errors: any) {
         return {
             status: 400,
-            error: errors
+            validation: errors
         };
     }
 }

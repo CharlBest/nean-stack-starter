@@ -26,238 +26,182 @@ export class UsersController extends BaseController {
     }
 
     public async createUser(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as CreateUserViewModel;
+        const viewModel = req.body as CreateUserViewModel;
 
-            // Trim inputs
-            viewModel.username = trimString(viewModel.username);
-            viewModel.email = trimString(viewModel.email);
+        // Trim inputs
+        viewModel.username = trimString(viewModel.username);
+        viewModel.email = trimString(viewModel.email);
 
-            const valid = Validators.required({ value: viewModel.username }) ||
-                Validators.required({ value: viewModel.email }) ||
-                Validators.required({ value: viewModel.password }) ||
-                Validators.minLength(6)({ value: viewModel.password }) ||
-                Validators.email({ value: viewModel.email }) ||
-                null;
+        const valid = Validators.required({ value: viewModel.username }) ||
+            Validators.required({ value: viewModel.email }) ||
+            Validators.required({ value: viewModel.password }) ||
+            Validators.minLength(6)({ value: viewModel.password }) ||
+            Validators.email({ value: viewModel.email }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.createUser(Database.getSession(req), viewModel.email, viewModel.username, viewModel.password);
-            Emailer.welcomeEmail(response.email, response.username, response.emailCode);
-
-            // Notify everyone there is another sign up
-            const wss = WebSocketServer.getSocketServer();
-            wss.clients.forEach(client => {
-                if (client.readyState === webSocket.OPEN) {
-                    client.send('New sign up just now');
-                }
-            });
-
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.createUser(Database.getSession(req), viewModel.email, viewModel.username, viewModel.password);
+        Emailer.welcomeEmail(response.email, response.username, response.emailCode);
+
+        // Notify everyone there is another sign up
+        const wss = WebSocketServer.getSocketServer();
+        wss.clients.forEach(client => {
+            if (client.readyState === webSocket.OPEN) {
+                client.send('New sign up just now');
+            }
+        });
+
+        res.status(200).json(response);
     }
 
     public async login(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as LoginViewModel;
+        const viewModel = req.body as LoginViewModel;
 
-            // Trim inputs
-            viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
+        // Trim inputs
+        viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
 
-            const valid = Validators.required({ value: viewModel.emailOrUsername }) ||
-                Validators.required({ value: viewModel.password }) ||
-                Validators.minLength(6)({ value: viewModel.password }) ||
-                null;
+        const valid = Validators.required({ value: viewModel.emailOrUsername }) ||
+            Validators.required({ value: viewModel.password }) ||
+            Validators.minLength(6)({ value: viewModel.password }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.login(Database.getSession(req), viewModel.emailOrUsername, viewModel.password);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.login(Database.getSession(req), viewModel.emailOrUsername, viewModel.password);
+        res.status(200).json(response);
     }
 
     public async getUser(req: Request, res: Response, next: NextFunction) {
-        try {
-            const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
+        res.status(200).json(response);
     }
 
     public async report(req: Request, res: Response, next: NextFunction) {
-        try {
-            // TODO: do something
-            res.status(200).json({});
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        // TODO: do something
+        res.status(200).json({});
     }
 
     // TODO: not in use
     public async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as CreateUserViewModel;
+        const viewModel = req.body as CreateUserViewModel;
 
-            const response = await this.usersService.doesUsernameAndEmailExist(Database.getSession(req), viewModel.email, viewModel.username);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        const response = await this.usersService.doesUsernameAndEmailExist(Database.getSession(req), viewModel.email, viewModel.username);
+        res.status(200).json(response);
     }
 
     public async forgotPassword(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as ForgotPasswordViewModel;
+        const viewModel = req.body as ForgotPasswordViewModel;
 
-            // Trim inputs
-            viewModel.email = trimString(viewModel.email);
+        // Trim inputs
+        viewModel.email = trimString(viewModel.email);
 
-            const valid = Validators.required({ value: viewModel.email }) ||
-                Validators.email({ value: viewModel.email }) ||
-                null;
+        const valid = Validators.required({ value: viewModel.email }) ||
+            Validators.email({ value: viewModel.email }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const code = nodeUUId();
-
-            const response = await this.usersService.forgotPassword(Database.getSession(req), viewModel.email, code);
-            Emailer.forgotPasswordEmail(response.email, code);
-
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const code = nodeUUId();
+
+        const response = await this.usersService.forgotPassword(Database.getSession(req), viewModel.email, code);
+        Emailer.forgotPasswordEmail(response.email, code);
+
+        res.status(200).json(response);
     }
 
     public async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as ChangeForgottenPasswordViewModel;
+        const viewModel = req.body as ChangeForgottenPasswordViewModel;
 
-            // Trim inputs
-            viewModel.email = trimString(viewModel.email);
+        // Trim inputs
+        viewModel.email = trimString(viewModel.email);
 
-            const valid = Validators.required({ value: viewModel.email }) ||
-                Validators.email({ value: viewModel.email }) ||
-                Validators.required({ value: viewModel.code }) ||
-                Validators.required({ value: viewModel.password }) ||
-                Validators.minLength(6)({ value: viewModel.password }) ||
-                null;
+        const valid = Validators.required({ value: viewModel.email }) ||
+            Validators.email({ value: viewModel.email }) ||
+            Validators.required({ value: viewModel.code }) ||
+            Validators.required({ value: viewModel.password }) ||
+            Validators.minLength(6)({ value: viewModel.password }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.changeForgottenPassword(Database.getSession(req), viewModel.email, viewModel.code, viewModel.password);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.changeForgottenPassword(Database.getSession(req), viewModel.email, viewModel.code, viewModel.password);
+        res.status(200).json(response);
     }
 
     public async verifyEmail(req: Request, res: Response, next: NextFunction) {
-        try {
-            const code = req.body.code;
-            const valid = Validators.required({ value: code }) ||
-                null;
+        const code = req.body.code;
+        const valid = Validators.required({ value: code }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.verifyEmail(Database.getSession(req), this.getUserId(req), code);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.verifyEmail(Database.getSession(req), this.getUserId(req), code);
+        res.status(200).json(response);
     }
 
     public async updateAvatar(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as UpdateAvatarViewModel;
+        const viewModel = req.body as UpdateAvatarViewModel;
 
-            const response = await this.usersService.updateAvatar(Database.getSession(req), this.getUserId(req), viewModel.avatarUrl);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        const response = await this.usersService.updateAvatar(Database.getSession(req), this.getUserId(req), viewModel.avatarUrl);
+        res.status(200).json(response);
     }
 
     public async updateBio(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as UpdateBioViewModel;
+        const viewModel = req.body as UpdateBioViewModel;
 
-            const response = await this.usersService.updateBio(Database.getSession(req), this.getUserId(req), viewModel.content);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        const response = await this.usersService.updateBio(Database.getSession(req), this.getUserId(req), viewModel.content);
+        res.status(200).json(response);
     }
 
     public async updatePassword(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as UpdatePasswordViewModel;
+        const viewModel = req.body as UpdatePasswordViewModel;
 
-            const valid = Validators.required({ value: viewModel.password }) ||
-                Validators.required({ value: viewModel.newPassword }) ||
-                Validators.minLength(6)({ value: viewModel.newPassword }) ||
-                null;
+        const valid = Validators.required({ value: viewModel.password }) ||
+            Validators.required({ value: viewModel.newPassword }) ||
+            Validators.minLength(6)({ value: viewModel.newPassword }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.updatePassword(Database.getSession(req), this.getUserId(req), viewModel.password, viewModel.newPassword);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.updatePassword(Database.getSession(req), this.getUserId(req), viewModel.password, viewModel.newPassword);
+        res.status(200).json(response);
     }
 
     public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
-        try {
-            const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
-            Emailer.resendEmailVerificationLinkEmail(response.email, response.emailCode);
+        const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
+        Emailer.resendEmailVerificationLinkEmail(response.email, response.emailCode);
 
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        res.status(200).json(response);
     }
 
     public async deleteUser(req: Request, res: Response, next: NextFunction) {
-        try {
-            const response = await this.usersService.deleteUser(Database.getSession(req), this.getUserId(req));
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
-        }
+        const response = await this.usersService.deleteUser(Database.getSession(req), this.getUserId(req));
+        res.status(200).json(response);
     }
 
     public async completedTutorial(req: Request, res: Response, next: NextFunction) {
-        try {
-            const viewModel = req.body as CompletedTutorial;
-            const valid = Validators.required({ value: viewModel.tutorialType }) ||
-                null;
+        const viewModel = req.body as CompletedTutorial;
+        const valid = Validators.required({ value: viewModel.tutorialType }) ||
+            null;
 
-            if (valid !== null) {
-                throw ValidationUtil.createValidationErrors(valid);
-            }
-
-            const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), viewModel);
-            res.status(200).json(response);
-        } catch (error) {
-            this.returnError(res, error);
+        if (valid !== null) {
+            throw ValidationUtil.createValidationErrors(valid);
         }
+
+        const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), viewModel);
+        res.status(200).json(response);
     }
 }

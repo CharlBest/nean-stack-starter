@@ -17,13 +17,12 @@
     "node": "8.9.x"
   },
   "scripts": {
-    "ng": "ng",
-    "dev": "concurrently \"ng build --watch\" \"webpack --watch\" \"nodemon dist/server/app.bundle.js\"",
+    "dev": "concurrently \"ng serve --aot\" \"webpack --watch\" \"npm run start-watch\"",
+    "build": "ng build --prod && webpack",
     "start": "node dist/server/app.bundle.js",
     "start-watch": "nodemon dist/server/app.bundle.js",
-    "start-prod": "set NODE_ENV=production&&node dist/server/app.bundle.js",
-    "build": "ng build --prod && webpack",
-    "heroku-prebuild": "ng build --prod && webpack",
+    "heroku-prebuild": "npm run build",
+    "ng": "ng",
     "test": "echo \"Error: no test... minimal project\" && exit 1",
     "lint": "echo \"Error: no lint... minimal project\" && exit 1",
     "e2e": "echo \"Error: no e2e... minimal project\" && exit 1",

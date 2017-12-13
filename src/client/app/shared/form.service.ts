@@ -8,14 +8,10 @@ export class FormService {
 
   public getServerErrors(errorResponse: HttpErrorResponse): Object {
     if (errorResponse.status === 400) {
-      const errors = errorResponse.error;
+      const errors = errorResponse.error.validation;
 
       if (errors !== null && errors !== undefined) {
-        try {
-          return JSON.parse(errors);
-        } catch (err) {
-          return null;
-        }
+        return errors;
       }
 
       return null;
