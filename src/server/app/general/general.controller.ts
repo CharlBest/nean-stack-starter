@@ -31,7 +31,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.createNewsletterMember(Database.getSession(req), req.body);
+        const response = await this.generalService.createNewsletterMember(Database.getSession(req), viewModel);
         res.status(200).json(response);
     }
 
@@ -48,7 +48,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.deleteNewsletterMember(Database.getSession(req), req.body);
+        const response = await this.generalService.deleteNewsletterMember(Database.getSession(req), viewModel);
         res.status(200).json(response);
     }
 
