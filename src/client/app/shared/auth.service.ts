@@ -45,7 +45,7 @@ export class AuthService implements CanActivate {
         }
     }
 
-    public updateloggedInUserId(value) {
+    public updateLoggedInUserId(value) {
         this.loggedInUserId.next(value);
     }
 
@@ -55,12 +55,12 @@ export class AuthService implements CanActivate {
 
     public setToken(accessToken: string, id: number) {
         sessionStorage.setItem(this.tokeyKey, accessToken);
-        this.updateloggedInUserId(id);
+        this.updateLoggedInUserId(id);
     }
 
     public removeToken() {
         sessionStorage.clear();
-        this.updateloggedInUserId(null);
+        this.updateLoggedInUserId(null);
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }});
     }
 
