@@ -19,7 +19,7 @@ import { map } from 'rxjs/operators';
 })
 export class NavigationComponent implements OnInit {
 
-  loggedInUserId: number = this.authService.getloggedInUserId();
+  loggedInUserId: number = this.authService.getLoggedInUserId();
   activeNavigation = Navigation.Primary;
   navigationTypes = Navigation;
   navigationBackTitle = '';

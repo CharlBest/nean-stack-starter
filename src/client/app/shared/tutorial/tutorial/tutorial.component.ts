@@ -29,7 +29,7 @@ export class TutorialComponent implements OnInit {
     new Tutorial(TutorialType.UpdatePassword, 'Update password feature', TutorialType.None, undefined, true)
   ];
 
-  private loggedInUserId: number = this.authService.getloggedInUserId();
+  private loggedInUserId: number = this.authService.getLoggedInUserId();
   tutorialTypeEnum = TutorialType;
   tutorialInUrl: TutorialType;
   active: boolean;

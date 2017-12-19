@@ -49,7 +49,7 @@ export class AuthService implements CanActivate {
         this.loggedInUserId.next(value);
     }
 
-    public getloggedInUserId(): number {
+    public getLoggedInUserId(): number {
         return this.loggedInUserId.getValue();
     }
 
