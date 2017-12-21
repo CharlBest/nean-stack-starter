@@ -26,11 +26,16 @@ export class UsersRepository extends BaseRepository {
     public async doesUsernameAndEmailExist(session: neo4j.Session, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.DoesUsernameAndEmailExist)}`);
         const result = await session.run(query.data, { email, username });
-        if (result.records.length > 0) {
-            const viewModel = new DoesUsernameAndEmailExist();
-            viewModel.emailExist = result.records[0].get('emailExist');
-            viewModel.usernameExist = result.records[0].get('usernameExist');
-            return viewModel;
+
+        const model = result.records.map(x => {
+            const localModel = new DoesUsernameAndEmailExist();
+            localModel.emailExist = x.get('emailExist');
+            localModel.usernameExist = x.get('usernameExist');
+            return localModel;
+        });
+
+        if (model !== null && model.length > 0) {
+            return model[0];
         } else {
             return null;
         }
