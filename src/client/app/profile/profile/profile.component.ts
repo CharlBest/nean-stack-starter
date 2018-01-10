@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
       this.user = data;
       this.isProcessing = false;
 
-      if (this.user !== null && this.user.bio !== null && this.user.bio !== '') {
+      if (this.user !== null && this.user.bio !== null && this.user.bio !== undefined && this.user.bio !== '') {
         this.loadEmoji();
       }
     }, error => {
