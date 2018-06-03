@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -17,7 +16,7 @@ export class AuthService implements CanActivate {
         if (this.checkLogin()) {
             return true;
         } else {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url }});
+            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
     }
@@ -61,7 +60,7 @@ export class AuthService implements CanActivate {
     public removeToken() {
         sessionStorage.clear();
         this.updateLoggedInUserId(null);
-        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }});
+        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
     }
 
     public checkLogin(): boolean {

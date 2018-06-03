@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';

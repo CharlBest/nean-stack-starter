@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';

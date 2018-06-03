@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { HomeService } from '../home.service';
 import { environment } from '../../../environments/environment';

@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
 
 @Injectable()
