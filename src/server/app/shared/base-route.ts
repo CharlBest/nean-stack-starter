@@ -1,6 +1,5 @@
 import * as express from 'express';
-import { NextFunction, Request, Response, Router } from 'express';
-import { verify } from 'jsonwebtoken';
+import { Router } from 'express';
 
 export abstract class BaseRoute {
 

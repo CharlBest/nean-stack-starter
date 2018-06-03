@@ -1,14 +1,10 @@
 import { v1 as neo4j } from 'neo4j-driver';
-import { v4 as nodeUUId } from 'node-uuid';
-import { randomBytes, pbkdf2Sync } from 'crypto';
-import { sign } from 'jsonwebtoken';
-import { GeneralRepository } from './general.repository';
-import { BaseService } from '../shared/base-service';
-import { environment } from '../../environments/environment';
-import { ValidationUtil } from '../../core/utils/validation-util';
+import * as stripe from 'stripe';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
-import * as stripe from 'stripe';
+import { environment } from '../../environments/environment';
+import { BaseService } from '../shared/base-service';
+import { GeneralRepository } from './general.repository';
 
 export class GeneralService extends BaseService {
 

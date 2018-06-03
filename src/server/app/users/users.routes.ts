@@ -1,9 +1,7 @@
-import { ApiError } from '../../core/middleware/api-error';
-import { NextFunction, Request, Response, Router } from 'express';
-import { BaseRoute } from '../shared/base-route';
-import { UsersController } from './users.controller';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { Authentication } from '../../core/middleware/authentication';
+import { BaseRoute } from '../shared/base-route';
+import { UsersController } from './users.controller';
 
 export class UsersRoutes extends BaseRoute {
     usersController: UsersController;

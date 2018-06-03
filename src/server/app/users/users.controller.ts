@@ -1,21 +1,21 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import { v4 as nodeUUId } from 'node-uuid';
-import { UsersService } from './users.service';
-import { Database } from '../../core/database';
-import { BaseController } from '../shared/base-controller';
-import { ValidationUtil } from '../../core/utils/validation-util';
-import { Emailer } from '../../email/emailer';
+import { NextFunction, Request, Response } from 'express';
+import { v4 as nodeUUId } from 'uuid';
+import * as webSocket from 'ws';
 import { Validators, trimString } from '../../../shared/validation/validators';
-import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
-import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
+import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
+import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { Database } from '../../core/database';
 import { WebSocketServer } from '../../core/middleware/web-socket-server';
-import * as webSocket from 'ws';
+import { ValidationUtil } from '../../core/utils/validation-util';
+import { Emailer } from '../../email/emailer';
+import { BaseController } from '../shared/base-controller';
+import { UsersService } from './users.service';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;

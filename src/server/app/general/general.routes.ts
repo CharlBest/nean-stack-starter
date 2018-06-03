@@ -1,9 +1,6 @@
-import { ApiError } from '../../core/middleware/api-error';
-import { NextFunction, Request, Response, Router } from 'express';
+import { GeneralRoutes as GeneralStaticRoutes } from '../../../shared/routes/general.routes';
 import { BaseRoute } from '../shared/base-route';
 import { GeneralController } from './general.controller';
-import { GeneralRoutes as GeneralStaticRoutes } from '../../../shared/routes/general.routes';
-import { Authentication } from '../../core/middleware/authentication';
 
 export class GeneralRoutes extends BaseRoute {
     generalController: GeneralController;

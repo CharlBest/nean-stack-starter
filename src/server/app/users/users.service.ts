@@ -1,15 +1,15 @@
-import { v1 as neo4j } from 'neo4j-driver';
-import { v4 as nodeUUId } from 'node-uuid';
-import { randomBytes, pbkdf2Sync } from 'crypto';
+import { pbkdf2Sync, randomBytes } from 'crypto';
 import { sign } from 'jsonwebtoken';
-import { UsersRepository } from './users.repository';
-import { BaseService } from '../shared/base-service';
-import { ValidationUtil } from '../../core/utils/validation-util';
-import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
-import { environment } from '../../environments/environment';
+import { v1 as neo4j } from 'neo4j-driver';
+import { v4 as nodeUUId } from 'uuid';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
+import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { ValidationUtil } from '../../core/utils/validation-util';
+import { environment } from '../../environments/environment';
+import { BaseService } from '../shared/base-service';
+import { UsersRepository } from './users.repository';
 
 export class UsersService extends BaseService {
 
