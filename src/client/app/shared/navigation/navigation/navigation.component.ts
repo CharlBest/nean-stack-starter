@@ -25,6 +25,7 @@ export class NavigationComponent implements OnInit {
   navigationBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
+  isWeb = true;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -45,13 +46,13 @@ export class NavigationComponent implements OnInit {
 
     this.router.events
       .pipe(
-      map(() => this.route),
-      map(route => {
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        return route;
-      })
+        map(() => this.route),
+        map(route => {
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        })
       )
       .subscribe((event) => {
         if (event.snapshot.data) {

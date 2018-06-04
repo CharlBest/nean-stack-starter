@@ -1,17 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatIconModule, MatInputModule, MatMenuModule, MatSnackBarModule, MatTabsModule, MatToolbarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { TutorialModule } from '../../shared/tutorial/tutorial.module';
 import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
-import {
-  MatTabsModule,
-  MatInputModule,
-  MatIconModule,
-  MatMenuModule,
-  MatButtonModule,
-  MatSnackBarModule
-} from '@angular/material';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   imports: [
@@ -24,7 +17,8 @@ import {
     MatTabsModule,
     MatSnackBarModule,
     TutorialModule,
-    PaymentDialogModule
+    PaymentDialogModule,
+    MatToolbarModule
   ],
   exports: [
     NavigationComponent
