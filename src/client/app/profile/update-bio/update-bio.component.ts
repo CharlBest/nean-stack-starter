@@ -1,12 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { UserModel } from '../../../../shared/models/user/user.model';
-import { ProfileService } from '../profile.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormService } from '../../shared/form.service';
-import { Validators } from '../../../../shared/validation/validators';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
+import { FormService } from '../../shared/form.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-update-bio',

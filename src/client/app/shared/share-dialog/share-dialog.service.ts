@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ShareDialogComponent } from './share-dialog/share-dialog.component';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
 @Injectable()
 export class ShareDialogService {

@@ -1,14 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UploadButtonComponent } from './upload-button/upload-button.component';
-import { UploadButtonService } from './upload-button.service';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatDialogModule, MatProgressBarModule, MatTooltipModule } from '@angular/material';
 import { MediaModule } from '../media/media.module';
-import {
-  MatDialogModule,
-  MatButtonModule,
-  MatProgressBarModule,
-  MatTooltipModule
-} from '@angular/material';
+import { UploadButtonService } from './upload-button.service';
+import { UploadButtonComponent } from './upload-button/upload-button.component';
 
 @NgModule({
   imports: [

@@ -1,6 +1,5 @@
-import { Directive, ElementRef, Input, HostListener, OnInit, HostBinding } from '@angular/core';
-import { TutorialService } from './tutorial.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Directive, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Directive({

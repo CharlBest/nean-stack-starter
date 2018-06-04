@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CreateUserComponent } from './create-user/create-user.component';
 import { Navigation } from '../shared/navigation/navigation/navigation.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
     imports: [

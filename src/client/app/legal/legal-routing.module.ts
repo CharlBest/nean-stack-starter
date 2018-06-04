@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Navigation } from '../shared/navigation/navigation/navigation.component';
+import { HelpComponent } from './help/help.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { HelpComponent } from './help/help.component';
 
 @NgModule({
     imports: [

@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from '../login/login/login.component';
-import { Navigation } from '../shared/navigation/navigation/navigation.component';
 import { NewsletterComponent } from '../newsletter/newsletter/newsletter.component';
+import { Navigation } from '../shared/navigation/navigation/navigation.component';
 
 @NgModule({
     imports: [

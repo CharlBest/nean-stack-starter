@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Validators } from '../../../../../shared/validation/validators';
 import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
-import { PaymentService } from '../payment.service';
-import { FormService } from '../../form.service';
 import { environment } from '../../../../environments/environment';
+import { FormService } from '../../form.service';
+import { PaymentService } from '../payment.service';
 
 @Component({
     selector: 'app-payment-dialog',

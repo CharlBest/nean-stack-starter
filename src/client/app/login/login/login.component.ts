@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../../shared/auth.service';
-import { FormService } from '../../shared/form.service';
-import { LoginService } from '../../login/login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { LoginService } from '../../login/login.service';
+import { AuthService } from '../../shared/auth.service';
+import { FormService } from '../../shared/form.service';
 
 @Component({
   selector: 'app-login',

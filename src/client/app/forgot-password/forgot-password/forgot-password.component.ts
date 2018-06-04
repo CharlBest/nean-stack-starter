@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, trimString } from '../../../../shared/validation/validators';
+import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
-import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
-import { Validators, trimString } from '../../../../shared/validation/validators';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
 @Component({
   selector: 'app-forgot-password',

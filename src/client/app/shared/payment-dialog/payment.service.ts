@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GeneralRoutes } from '../../../../shared/routes/general.routes';
-import { UserModel } from '../../../../shared/models/user/user.model';
 import { PaymentRequestViewModel } from '../../../../shared/view-models/payment/payment-request.view-model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class PaymentService {

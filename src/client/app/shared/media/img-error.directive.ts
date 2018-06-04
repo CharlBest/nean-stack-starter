@@ -1,4 +1,4 @@
-import { Directive, HostListener, HostBinding, Input, ElementRef } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: 'img[appImgError]'

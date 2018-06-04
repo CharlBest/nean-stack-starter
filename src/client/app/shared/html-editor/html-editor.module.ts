@@ -1,12 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatIconModule, MatProgressBarModule, MatTooltipModule } from '@angular/material';
 import { HTMLEditorComponent } from './html-editor/html-editor.component';
-import {
-  MatIconModule,
-  MatButtonModule,
-  MatTooltipModule,
-  MatProgressBarModule
-} from '@angular/material';
 
 @NgModule({
   imports: [

@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../auth.service';
-import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
+import { AuthService } from '../../auth.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',

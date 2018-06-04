@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormService } from '../../shared/form.service';
 import { HomeService } from '../home.service';
 // import { SearchViewModel } from '../../../../shared/view-models/search/SearchViewModel';

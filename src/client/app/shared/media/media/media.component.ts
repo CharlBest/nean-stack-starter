@@ -1,6 +1,6 @@
-import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog.component';
 
 @Component({

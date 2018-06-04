@@ -1,6 +1,8 @@
+<!-- Main nav -->
 <ng-container *ngIf="navigationTypes.Primary == activeNavigation">
 
   <mat-toolbar color="primary">
+    <!-- Left -->
     <a mat-button
       routerLink="/">
       <img class="logo"
@@ -11,6 +13,7 @@
 
     <span class="spacer"></span>
 
+    <!-- Right -->
     <a mat-button
       (click)="openPaymentDialog()">
       <mat-icon>credit_card</mat-icon>
@@ -53,9 +56,10 @@
   </mat-menu>
 </ng-container>
 
+<!-- Back nav -->
 <ng-container *ngIf="navigationTypes.Back == activeNavigation">
 
-  <mat-toolbar>
+  <mat-toolbar class="back-toolbar">
     <button mat-icon-button
       (click)="back()">
       <mat-icon>arrow_back</mat-icon>
@@ -66,6 +70,7 @@
 
 </ng-container>
 
+<!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
     routerLink="/">

@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { UserRoutes } from '../../../shared/routes/user.routes';
 import { UserModel } from '../../../shared/models/user/user.model';
-import { ReportUserViewModel } from '../../../shared/view-models/profile/report-user.view-model';
-import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
+import { UserRoutes } from '../../../shared/routes/user.routes';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
+import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ProfileService {

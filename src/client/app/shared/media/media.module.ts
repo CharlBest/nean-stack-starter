@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { MediaComponent } from '../../shared/media/media/media.component';
-import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';
-import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { ImgErrorDirective } from './img-error.directive';
+import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';
 
 @NgModule({
   imports: [

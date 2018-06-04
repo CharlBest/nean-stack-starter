@@ -1,18 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { LoginRoutingModule } from '../login/login-routing.module';
-import { LoginService } from './login.service';
-import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { FormService } from '../shared/form.service';
+import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatInputModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
+import { LoginService } from './login.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [

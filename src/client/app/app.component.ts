@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
+import { environment } from '../environments/environment';
 import { GaService } from './shared/ga.service';
 
 @Component({

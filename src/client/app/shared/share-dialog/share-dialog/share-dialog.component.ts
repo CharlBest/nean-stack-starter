@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-share-dialog',

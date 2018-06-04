@@ -1,11 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
-import { ReportUserViewModel } from '../../../../../shared/view-models/profile/report-user.view-model';
-import { ReportDialogService } from '../report-dialog.service';
-import { environment } from '../../../../environments/environment';
 import { UserRoutes } from '../../../../../shared/routes/user.routes';
+import { ReportUserViewModel } from '../../../../../shared/view-models/profile/report-user.view-model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-report-dialog',

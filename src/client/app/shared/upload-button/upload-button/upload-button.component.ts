@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { app, storage } from 'firebase/app';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { app } from 'firebase/app';
 import 'firebase/storage';
 import { environment } from '../../../../environments/environment';
 

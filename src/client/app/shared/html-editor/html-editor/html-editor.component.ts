@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { app } from 'firebase/app';
 import Quill from 'quill';
-import { app, storage } from 'firebase/app';
 import { environment } from '../../../../environments/environment';
 
 @Component({

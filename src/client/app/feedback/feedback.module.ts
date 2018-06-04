@@ -1,15 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeedbackComponent } from './feedback/feedback.component';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { FeedbackRoutingModule } from '../feedback/feedback-routing.module';
-import { FeedbackService } from './feedback.service';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatInputModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
+import { FeedbackService } from './feedback.service';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   imports: [

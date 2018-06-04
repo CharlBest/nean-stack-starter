@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { MatSnackBar, MatDialog } from '@angular/material';
-import { ProfileService } from '../profile.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../shared/auth.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
     selector: 'app-delete-user-dialog',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { environment } from '../../environments/environment';
 
 @Injectable()
 export class PaymentService {

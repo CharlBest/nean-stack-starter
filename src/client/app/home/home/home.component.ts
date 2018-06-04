@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Location } from '@angular/common';
-import { HomeService } from '../home.service';
-import { environment } from '../../../environments/environment';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import * as marked from 'marked';
+import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',

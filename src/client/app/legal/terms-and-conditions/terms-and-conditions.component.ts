@@ -1,5 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-terms-and-conditions',

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { UserModel } from '../../../../shared/models/user/user.model';
-import { ProfileService } from '../profile.service';
-import { FormService } from '../../shared/form.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Validators } from '../../../../shared/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { FormService } from '../../shared/form.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-update-password',

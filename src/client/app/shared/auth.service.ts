@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Headers } from '@angular/http';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService implements CanActivate {

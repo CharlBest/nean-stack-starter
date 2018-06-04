@@ -1,20 +1,17 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NavigationModule } from './shared/navigation/navigation.module';
+import { AppComponent } from './app.component';
 import { AuthService } from './shared/auth.service';
+import { FooterModule } from './shared/footer/footer.module';
 import { FormService } from './shared/form.service';
 import { GaService } from './shared/ga.service';
-import { LoggerService } from './shared/logger.service';
-import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
-import { FooterModule } from './shared/footer/footer.module';
+import { TokenInterceptor } from './shared/interceptors/token-interceptor';
+import { LoggerService } from './shared/logger.service';
+import { NavigationModule } from './shared/navigation/navigation.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 import { TutorialService } from './shared/tutorial/tutorial.service';
 import { WebSocketService } from './shared/websocket.service';

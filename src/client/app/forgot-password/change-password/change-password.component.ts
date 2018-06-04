@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, trimString } from '../../../../shared/validation/validators';
+import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
-import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
-import { Validators, trimString } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'app-change-password',
