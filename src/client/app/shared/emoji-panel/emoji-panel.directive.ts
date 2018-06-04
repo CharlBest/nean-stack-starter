@@ -1,6 +1,6 @@
-import { Directive, OnInit, HostListener, HostBinding, ElementRef, Sanitizer, SecurityContext, Renderer2, Input } from '@angular/core';
-import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2, Sanitizer, SecurityContext } from '@angular/core';
 import * as emojione from 'emojione';
+import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
 @Directive({
     selector: '*[appEmojiPanel]'

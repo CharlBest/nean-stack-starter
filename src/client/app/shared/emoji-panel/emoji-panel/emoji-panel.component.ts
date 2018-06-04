@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import * as emojione from 'emojione';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
+import * as emojione from 'emojione';
 
 @Component({
   selector: 'app-emoji-panel',

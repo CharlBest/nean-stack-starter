@@ -6,7 +6,7 @@
     "types": []
   },
   "exclude": [
-    "src/client/test.ts",
+    "test.ts",
     "**/*.spec.ts"
   ]
 }

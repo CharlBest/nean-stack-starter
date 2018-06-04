@@ -1,14 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { EmojiPanelDirective } from './emoji-panel.directive';
-import {
-  MatTabsModule,
-  MatIconModule,
-  MatButtonModule,
-} from '@angular/material';
+import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
 @NgModule({
   imports: [

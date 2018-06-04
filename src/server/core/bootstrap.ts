@@ -104,7 +104,7 @@ export class Bootstrap {
         //         }
 
         //         client.isAlive = false;
-        //         client.ping('', false, true);
+        //         client.ping('', false);
         //     });
         // }, 30000);
 
