@@ -15,7 +15,7 @@
 
   <mat-tab-group (selectedTabChange)="onTabSelectChange($event)">
     <mat-tab *ngFor="let category of emojiCategories">
-      <ng-template matTabLabel>
+      <ng-template mat-tab-label>
         <mat-icon>{{category.tabLabelIcon}}</mat-icon>
       </ng-template>
       <div [innerHTML]="category.tabHTMLContent"></div>

@@ -1,15 +1,5 @@
+<h2 mat-dialog-title>Share</h2>
 <mat-dialog-content>
-    <button mat-button
-        [matDialogClose]="true"
-        style="float: right;">
-        <mat-icon>close</mat-icon>
-    </button>
-
-    <h2 matDialogTitle
-        style="float: left;">Share</h2>
-
-    <div style="clear: both;"></div>
-
     <a [href]="link"
         (click)="onLinkClick()"
         ngxClipboard
@@ -27,4 +17,6 @@
         (click)="webShare()">
         <mat-icon>share</mat-icon>
     </button>
+    <button mat-raised-button
+        mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

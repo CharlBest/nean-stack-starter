@@ -1,15 +1,5 @@
+<h2 mat-dialog-title>Delete account</h2>
 <mat-dialog-content>
-    <button mat-button
-        [matDialogClose]="true"
-        style="float: right;">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <h2 matDialogTitle
-        style="float: left;">Delete account</h2>
-
-    <div style="clear: both;"></div>
-
     <p>
         We are sad to see you go. All information on user
         <strong>{{username}}</strong> will be deleted and can't be recovered after proceeding. Please enter your username.
@@ -26,4 +16,6 @@
     <button mat-raised-button
         color="warn"
         (click)="delete(usernameInput.value)">Delete</button>
+    <button mat-raised-button
+        mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

@@ -1,25 +1,18 @@
+<h2 mat-dialog-title>
+    Donate
+    <mat-icon matTooltipClass="info-tooltip"
+        matTooltip="Demo:
+Card number: 4242 4242 4242 4242
+Expire date: Any future date 
+CVC: Any 3 degit number
+Zip: Any 5 degit number">info_outline</mat-icon>
+</h2>
+
 <div [hidden]="isProcessing || paymentSuccess"
     style="min-width: 270px; max-width: 370px;">
     <div style="width: 370px;"></div>
     <form [formGroup]="form">
         <mat-dialog-content>
-            <button mat-button
-                [matDialogClose]="true"
-                style="float: right;">
-                <mat-icon>close</mat-icon>
-            </button>
-
-            <h2 matDialogTitle
-                style="float: left;">Donate
-                <mat-icon matTooltipClass="info-tooltip"
-                    matTooltip="Demo:
-                Card number: 4242 4242 4242 4242
-                Expire date: Any future date 
-                CVC: Any 3 degit number
-                Zip: Any 5 degit number">info_outline</mat-icon>
-            </h2>
-
-            <div style="clear: both;"></div>
 
             <div>
                 <div id="card-element"></div>
@@ -48,6 +41,8 @@
                 type="submit"
                 [disabled]="!form.valid"
                 (click)="onSubmit()">Pay</button>
+            <button mat-raised-button
+                mat-dialog-close>Cancel</button>
         </mat-dialog-actions>
     </form>
 </div>

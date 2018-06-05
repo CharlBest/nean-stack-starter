@@ -1,15 +1,5 @@
+<h2 mat-dialog-title>Report</h2>
 <mat-dialog-content>
-    <button mat-button
-        [matDialogClose]="true"
-        style="float: right;">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <h2 matDialogTitle
-        style="float: left;">Report</h2>
-
-    <div style="clear: both;"></div>
-
     <p>
         This post is either spam, abusive, harmful or you think it doesn't belong on here.
     </p>
@@ -18,4 +8,6 @@
     <button mat-raised-button
         color="warn"
         (click)="report()">Send report</button>
+    <button mat-raised-button
+        mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
