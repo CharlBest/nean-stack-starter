@@ -25,10 +25,10 @@ export class UpdatePasswordComponent implements OnInit {
     public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.buildForm();
+    this.formOnInit();
   }
 
-  buildForm() {
+  formOnInit() {
     this.form = this.fb.group({
       password: ['', [
         Validators.required,

@@ -26,7 +26,7 @@ export class ChangePasswordComponent implements OnInit {
     private formService: FormService) { }
 
   ngOnInit() {
-    this.buildForm();
+    this.formOnInit();
 
     this.route.queryParamMap.subscribe(params => {
       if (params.has('code')) {
@@ -38,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
     });
   }
 
-  buildForm() {
+  formOnInit() {
     this.form = this.fb.group({
       password: ['', [
         Validators.required,

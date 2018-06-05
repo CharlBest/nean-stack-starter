@@ -30,7 +30,7 @@ export class PaymentDialogComponent implements OnInit {
 
     ngOnInit() {
         this.buildStripe();
-        this.buildForm();
+        this.formOnInit();
     }
 
     buildStripe() {
@@ -78,7 +78,7 @@ export class PaymentDialogComponent implements OnInit {
         }
     }
 
-    buildForm() {
+    formOnInit() {
         this.form = this.fb.group({
             amount: ['', [
                 Validators.required

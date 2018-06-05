@@ -23,10 +23,10 @@ export class SearchBarComponent implements OnInit {
     private formService: FormService) { }
 
   ngOnInit() {
-    // this.buildForm();
+    // this.formOnInit();
   }
 
-  // buildForm() {
+  // formOnInit() {
   //   // TODO: maybe form is overkill just for one field. Consider using ngModel (only template driven forms?)
   //   this.form = this.fb.group({
   //     term: ['']

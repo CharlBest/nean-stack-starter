@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    this.buildForm();
+    this.formOnInit();
 
     this.route.queryParamMap.subscribe(params => {
       if (params.has('returnUrl')) {
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  buildForm() {
+  formOnInit() {
     this.form = this.fb.group({
       emailOrUsername: ['', [
         Validators.required
