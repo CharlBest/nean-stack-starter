@@ -94,7 +94,7 @@
 <!-- Context menu links -->
 <ng-template #contextMenu
   let-data>
-  <mat-nav-list>
+  <mat-nav-list (click)="bottomSheet.dismiss()">
 
     <mat-list-item routerLink="/settings">
       <span mat-line>Settings</span>
