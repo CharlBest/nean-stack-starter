@@ -4,58 +4,58 @@
 @import 'app-theme-definition.scss';
 
 body {
-    margin: 0;
-    background-color:#f3f3f3;
+	margin: 0;
+	background-color: #f3f3f3;
 }
 
 .validation-message {
-    color: red;
+	color: red;
 }
 
 .center {
-    margin: 0 auto !important;
-    display: block !important;
+	margin: 0 auto !important;
+	display: block !important;
 }
 
 mat-card {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .card-item {
-    cursor: pointer;
-    outline: none;
+	cursor: pointer;
+	outline: none;
 }
 
 .radio-group-vertical {
-    display: inline-flex;
-    flex-direction: column;
+	display: inline-flex;
+	flex-direction: column;
 
-    .radio-button-vertical {
-        margin: 5px;
-    }
+	.radio-button-vertical {
+		margin: 5px;
+	}
 }
 
 .preloader {
-    margin: 0 auto;
-    max-width: 25px;
-    max-height: 25px;
+	margin: 0 auto;
+	max-width: 25px;
+	max-height: 25px;
 
-    svg {
-        max-width: 25px;
-        max-height: 25px;
-    }
+	svg {
+		max-width: 25px;
+		max-height: 25px;
+	}
 }
 
 //Overide mat-card styles
-mat-card[hidden] { 
-    display: none; 
+mat-card[hidden] {
+	display: none;
 }
 
 //TODO: bad don't use important. fix!
 .inline-preloader {
-    width: 24px !important; 
-    height: 24px !important; 
-    display: inline-block !important;
+	width: 24px !important;
+	height: 24px !important;
+	display: inline-block !important;
 }
 
 // a:visited {
@@ -63,30 +63,30 @@ mat-card[hidden] {
 // }
 
 .emoji-input {
-    height: 20px;
-    display: inline-block;
-    width: 170px;
-    padding: 2px 5px 2px 0;
-    border-bottom: 1px solid gray;
-    outline: none;
-    white-space: nowrap;
-    overflow: hidden;
-    
-    * {
-      display: inline;
-      white-space: nowrap;
-    }
-  
-    br {
-      display:none;
-    }
-  
-    img {
-      width: 1rem;
-    }
-  }
-  
-  [contentEditable=true]:empty:not(:focus):before{
-    content: attr(data-text);
-    color: grey;
-  }
+	height: 20px;
+	display: inline-block;
+	width: 170px;
+	padding: 2px 5px 2px 0;
+	border-bottom: 1px solid gray;
+	outline: none;
+	white-space: nowrap;
+	overflow: hidden;
+
+	* {
+		display: inline;
+		white-space: nowrap;
+	}
+
+	br {
+		display: none;
+	}
+
+	img {
+		width: 1rem;
+	}
+}
+
+[contentEditable=true]:empty:not(:focus):before {
+	content: attr(data-text);
+	color: grey;
+}

@@ -1,5 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatProgressSpinnerDefaultOptions } from '@angular/material';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -46,7 +47,9 @@ import { WebSocketService } from './shared/websocket.service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    // TODO: This breaks the progress spinner's animation
+    // { provide: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, useValue: <MatProgressSpinnerDefaultOptions>{ diameter: 16, strokeWidth: 2 } },
   ],
   bootstrap: [
     AppComponent
