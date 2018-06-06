@@ -47,7 +47,9 @@
 </ng-container>
 
 <mat-menu #menu="matMenu">
-  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+  <ng-template matMenuContent>
+    <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+  </ng-template>
 </mat-menu>
 
 <ng-template #bottomSheetContextMenu>
