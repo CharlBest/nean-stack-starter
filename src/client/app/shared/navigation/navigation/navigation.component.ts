@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatBottomSheet } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -35,7 +35,8 @@ export class NavigationComponent implements OnInit {
     public snackBar: MatSnackBar,
     private paymentDialogService: PaymentDialogService,
     private webSocketService: WebSocketService,
-    private mqm: BreakpointObserver) {
+    private mqm: BreakpointObserver,
+    public bottomSheet: MatBottomSheet) {
     this.checkHasVisited();
   }
 

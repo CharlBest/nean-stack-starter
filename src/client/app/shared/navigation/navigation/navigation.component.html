@@ -30,7 +30,13 @@
 
     <!-- TODO: [appTutorial]="tutorialTypeEnum.ContextMenu" -->
     <button mat-icon-button
+      *ngIf="isWeb"
       [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <button mat-icon-button
+      *ngIf="!isWeb"
+      (click)="bottomSheet.open(bottomSheetContextMenu)">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-toolbar>
@@ -38,23 +44,15 @@
   <!-- <mat-toolbar color="primary">
     <ng-container *ngTemplateOutlet="navLinks"></ng-container>
   </mat-toolbar> -->
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item
-      routerLink="/settings">Settings</button>
-    <button mat-menu-item
-      routerLink="/feedback">Feedback</button>
-    <button mat-menu-item
-      routerLink="/newsletter">Newsletter</button>
-    <button mat-menu-item
-      routerLink="/legal/help">Help</button>
-    <button mat-menu-item
-      (click)="takeTour()">Take tour</button>
-    <button mat-menu-item
-      *ngIf="loggedInUserId"
-      (click)="logout()">Logout</button>
-  </mat-menu>
 </ng-container>
+
+<mat-menu #menu="matMenu">
+  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+</mat-menu>
+
+<ng-template #bottomSheetContextMenu>
+  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+</ng-template>
 
 <!-- Back nav -->
 <ng-container *ngIf="navigationTypes.Back == activeNavigation">
@@ -91,4 +89,38 @@
     <mat-icon *ngIf="isWeb">account_circle</mat-icon>
     <span>&nbsp;Profile</span>
   </a>
+</ng-template>
+
+<!-- Context menu links -->
+<ng-template #contextMenu
+  let-data>
+  <mat-nav-list>
+
+    <mat-list-item routerLink="/settings">
+      <span mat-line>Settings</span>
+      <mat-icon mat-list-icon>settings</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/feedback">
+      <mat-icon mat-list-icon>feedback</mat-icon>
+      <span mat-line>Feedback</span>
+    </mat-list-item>
+    <mat-list-item routerLink="/newsletter">
+      <mat-icon mat-list-icon>mail</mat-icon>
+      <span mat-line>Newsletter</span>
+    </mat-list-item>
+    <mat-list-item routerLink="/legal/help">
+      <mat-icon mat-list-icon>help</mat-icon>
+      <span mat-line>Help</span>
+    </mat-list-item>
+    <mat-list-item (click)="takeTour()">
+      <mat-icon mat-list-icon>live_help</mat-icon>
+      <span mat-line>Take tour</span>
+    </mat-list-item>
+    <mat-list-item *ngIf="loggedInUserId"
+      (click)="logout()">
+      <mat-icon mat-list-icon>exit_to_app</mat-icon>
+      <span mat-line>Logout</span>
+    </mat-list-item>
+
+  </mat-nav-list>
 </ng-template>
