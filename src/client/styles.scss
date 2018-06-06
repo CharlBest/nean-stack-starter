@@ -89,3 +89,8 @@ mat-card[hidden] {
 	content: attr(data-text);
 	color: grey;
 }
+
+// Remove Chrome yellow autofill background color
+input:webkit-autofill {
+	-webkit-box-shadow: 0 0 0 30px #fff inset;
+}
