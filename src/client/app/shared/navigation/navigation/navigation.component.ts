@@ -9,6 +9,7 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
 import { AuthService } from '../../auth.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navigation',
@@ -33,7 +34,8 @@ export class NavigationComponent implements OnInit {
     private tutorialService: TutorialService,
     public snackBar: MatSnackBar,
     private paymentDialogService: PaymentDialogService,
-    private webSocketService: WebSocketService) {
+    private webSocketService: WebSocketService,
+    private mqm: BreakpointObserver) {
     this.checkHasVisited();
   }
 
@@ -80,6 +82,12 @@ export class NavigationComponent implements OnInit {
       }).onAction().subscribe(() => {
         this.webSocketService.messages.next('Hallo to you too');
       });
+    });
+
+    this.mqm.observe([Breakpoints.Web, Breakpoints.WebPortrait]).subscribe(data => {
+      if (this.isWeb !== data.matches) {
+        this.isWeb = data.matches;
+      }
     });
   }
 
