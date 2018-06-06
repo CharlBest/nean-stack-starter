@@ -58,18 +58,19 @@
     "hammerjs": "^2.0.8",
     "jsonwebtoken": "^8.2.2",
     "marked": "^0.4.0",
+    "material-design-icons": "^3.0.1",
     "neo4j-driver": "^1.6.1",
     "ngx-clipboard": "^11.1.0",
-    "uuid": "^3.2.1",
     "quill": "^1.3.6",
     "rxjs": "^6.2.0",
     "stripe": "^6.1.0",
     "ts-loader": "^4.3.1",
     "typescript": "~2.7.0",
+    "uuid": "^3.2.1",
+    "webpack-cli": "^3.0.1",
     "webpack-node-externals": "^1.7.2",
     "ws": "^5.2.0",
-    "zone.js": "^0.8.26",
-    "webpack-cli": "^3.0.1"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/language-service": "^6.0.3",
