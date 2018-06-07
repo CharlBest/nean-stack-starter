@@ -5,7 +5,7 @@
     "description": "App extension for chrome",
     "version": "0.0.5",
     "browser_action": {
-        "default_icon": "assets/logo.png",
+        "default_icon": "assets/logo-color.png",
         "default_popup": "index.extension.html"
     },
     "icons": {
