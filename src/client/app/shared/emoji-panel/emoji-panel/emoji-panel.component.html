@@ -7,11 +7,11 @@
 </button>
 
 <ng-template cdkConnectedOverlay
-  (backdropClick)="isOpen = false"
-  hasBackdrop
-  backdropClass="'emoji-panel-bakdrop'"
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="isOpen">
+  [cdkConnectedOverlayOpen]="isOpen"
+  (backdropClick)="isOpen = false">
 
   <mat-tab-group (selectedTabChange)="onTabSelectChange($event)"
     mat-stretch-tabs>
