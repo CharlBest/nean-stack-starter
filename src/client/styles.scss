@@ -2,22 +2,30 @@
 @import '~@angular/material/theming';
 @import 'app-theme-definition.scss';
 
+// Body rule
 body {
 	margin: 0;
 	background-color: #f3f3f3;
 }
 
+// Validation
 .validation-message {
 	color: red;
 }
 
+// Center
 .center {
 	margin: 0 auto !important;
 	display: block !important;
 }
 
+// Material Card
 mat-card {
 	margin-bottom: 10px;
+
+	&[hidden] {
+		display: none;
+	}
 }
 
 .card-item {
@@ -25,6 +33,7 @@ mat-card {
 	outline: none;
 }
 
+// Vertical radioo button layout
 .radio-group-vertical {
 	display: inline-flex;
 	flex-direction: column;
@@ -34,6 +43,7 @@ mat-card {
 	}
 }
 
+// Custom preloader with Material progress spinner
 .preloader {
 	margin: 0 auto;
 	max-width: 25px;
@@ -45,11 +55,6 @@ mat-card {
 	}
 }
 
-//Overide mat-card styles
-mat-card[hidden] {
-	display: none;
-}
-
 //TODO: bad don't use important. fix!
 .inline-preloader {
 	width: 24px !important;
@@ -57,10 +62,12 @@ mat-card[hidden] {
 	display: inline-block !important;
 }
 
+// Change color of visited links to primary theme color
 // a:visited {
 //     color: mat-color($app-primary);
 // }
 
+// Styling for any injected emoji
 .emoji-input {
 	height: 20px;
 	display: inline-block;
@@ -85,6 +92,7 @@ mat-card[hidden] {
 	}
 }
 
+// Placeholder text via 'data-text' attribute
 [contentEditable=true]:empty:not(:focus):before {
 	content: attr(data-text);
 	color: grey;
