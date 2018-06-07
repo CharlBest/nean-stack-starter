@@ -25,7 +25,8 @@ export class NavigationComponent implements OnInit {
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   isWeb = true;
-  isDarkTheme = false;
+  isDarkTheme: boolean;
+  isDarkThemeStorageKey = 'is_dark_theme';
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -42,6 +43,8 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.themeOnInit();
+
     this.authService.loggedInUserId$.subscribe(id => {
       this.loggedInUserId = id;
     });
@@ -139,6 +142,18 @@ export class NavigationComponent implements OnInit {
     } else {
       document.querySelector('app-root').classList.remove(darkThemeClass);
     }
+
+    this.updateStoredTheme();
+  }
+
+  themeOnInit() {
+    this.isDarkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
+    this.isDarkTheme = !this.isDarkTheme;
+    this.toggleTheme();
+  }
+
+  updateStoredTheme() {
+    localStorage.setItem(this.isDarkThemeStorageKey, `${this.isDarkTheme}`);
   }
 }
 

@@ -14,12 +14,6 @@
 
     <span class="spacer"></span>
 
-    <a mat-button
-      (click)="toggleTheme()">
-      <mat-icon>format_color_fill</mat-icon>
-      <span *ngIf="isWeb">&nbsp;{{isDarkTheme ? 'Light' : 'Dark'}} theme</span>
-    </a>
-
     <!-- Right -->
     <a mat-button
       (click)="openPaymentDialog()">
@@ -130,6 +124,11 @@
       (click)="logout()">
       <mat-icon mat-list-icon>exit_to_app</mat-icon>
       <span mat-line>Logout</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item (click)="toggleTheme()">
+      <mat-icon mat-list-icon>format_color_fill</mat-icon>
+      <span mat-line>Night mode</span>
     </mat-list-item>
 
   </mat-nav-list>
