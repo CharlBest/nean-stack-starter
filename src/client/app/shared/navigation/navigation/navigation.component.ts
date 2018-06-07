@@ -1,6 +1,7 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar, MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -9,7 +10,6 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
 import { AuthService } from '../../auth.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navigation',
@@ -25,6 +25,7 @@ export class NavigationComponent implements OnInit {
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   isWeb = true;
+  isDarkTheme = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -126,6 +127,18 @@ export class NavigationComponent implements OnInit {
 
   openPaymentDialog() {
     this.paymentDialogService.open();
+  }
+
+  toggleTheme() {
+    const darkThemeClass = 'dark-theme';
+
+    this.isDarkTheme = !this.isDarkTheme;
+
+    if (this.isDarkTheme) {
+      document.querySelector('app-root').classList.add(darkThemeClass);
+    } else {
+      document.querySelector('app-root').classList.remove(darkThemeClass);
+    }
   }
 }
 

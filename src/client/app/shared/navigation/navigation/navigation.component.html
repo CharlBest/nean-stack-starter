@@ -14,6 +14,12 @@
 
     <span class="spacer"></span>
 
+    <a mat-button
+      (click)="toggleTheme()">
+      <mat-icon>format_color_fill</mat-icon>
+      <span *ngIf="isWeb">&nbsp;{{isDarkTheme ? 'Light' : 'Dark'}} theme</span>
+    </a>
+
     <!-- Right -->
     <a mat-button
       (click)="openPaymentDialog()">
