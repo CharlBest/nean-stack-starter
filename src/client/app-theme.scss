@@ -18,3 +18,7 @@
 .dark-theme {
 	@include angular-material-theme($dark-theme);
 }
+
+// Override font-family
+$custom-typography: mat-typography-config($font-family: 'Open Sans, Arial, sans-serif');
+@include angular-material-typography($custom-typography);
