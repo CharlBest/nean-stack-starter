@@ -14,7 +14,7 @@ import { PaymentService } from '../payment.service';
 })
 export class PaymentDialogComponent implements OnInit {
 
-    isProcessing = false;
+    isProcessing = true;
     form: FormGroup;
     serverErrors;
 
@@ -29,7 +29,22 @@ export class PaymentDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<PaymentDialogComponent>) { }
 
     ngOnInit() {
-        this.buildStripe();
+        const elementId = 'stripe-client-script';
+        var script = document.getElementById(elementId);
+
+        if (script === undefined || script === null) {
+            let node = document.createElement('script');
+            node.src = 'https://js.stripe.com/v3/';
+            node.type = 'text/javascript';
+            node.async = false;
+            node.id = elementId;
+            node.charset = 'utf-8';
+            node.onload = () => { this.buildStripe() };
+            document.getElementsByTagName('head')[0].appendChild(node);
+        } else {
+            this.buildStripe();
+        }
+
         this.formOnInit();
     }
 
@@ -75,6 +90,8 @@ export class PaymentDialogComponent implements OnInit {
                     displayError.textContent = '';
                 }
             });
+
+            this.isProcessing = false;
         }
     }
 
