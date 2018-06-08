@@ -30,15 +30,16 @@
       <span *ngIf="isWeb">&nbsp;GitHub</span>
     </a>
 
-    <!-- TODO: [appTutorial]="tutorialTypeEnum.ContextMenu" -->
     <button mat-icon-button
       *ngIf="isWeb"
-      [matMenuTriggerFor]="menu">
+      [matMenuTriggerFor]="menu"
+      [appTutorial]="tutorialTypeEnum.ContextMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <button mat-icon-button
       *ngIf="!isWeb"
-      (click)="bottomSheet.open(bottomSheetContextMenu)">
+      (click)="bottomSheet.open(bottomSheetContextMenu)"
+      [appTutorial]="tutorialTypeEnum.ContextMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-toolbar>
@@ -61,13 +62,17 @@
 <!-- Back nav -->
 <ng-container *ngIf="navigationTypes.Back == activeNavigation">
 
-  <mat-toolbar class="back-toolbar">
-    <button mat-icon-button
-      (click)="back()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+  <mat-toolbar color="primary">
+    <div (click)="back()">
+      <button mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
 
-    <span>{{navigationBackTitle}}</span>
+      <a mat-button
+        style="text-align: left;">
+        {{navigationBackTitle}}
+      </a>
+    </div>
   </mat-toolbar>
 
 </ng-container>

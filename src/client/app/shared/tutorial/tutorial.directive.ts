@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 
@@ -7,40 +7,50 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 })
 export class TutorialDirective implements OnInit {
     @Input('appTutorial') appTutorial: TutorialType;
-
-    @HostBinding('style.background-color')
     @Input() tutorialBackgroundColor = 'white';
 
-    tutorialInUrl: TutorialType;
-    zIndex: string;
+    private tutorialInUrl: TutorialType;
+    private zIndex: string;
+    private backgroundColor: string;
 
     constructor(private elementRef: ElementRef,
         private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.zIndex = (<HTMLElement>this.elementRef.nativeElement).style.zIndex;
+        const elementStyle = (<HTMLElement>this.elementRef.nativeElement).style;
+        this.zIndex = elementStyle.zIndex;
+        this.backgroundColor = elementStyle.backgroundColor;
+
+
         this.route.queryParamMap.subscribe(params => {
             if (params.has('tut')) {
                 this.tutorialInUrl = +params.get('tut');
-                this.process(true);
+                this.process();
             } else {
-                this.process(false);
+                this.reset();
             }
         });
     }
 
-    process(active: boolean) {
-        if (active) {
-            const element = (<HTMLElement>this.elementRef.nativeElement);
+    process() {
+        const element = (<HTMLElement>this.elementRef.nativeElement);
 
-            if (this.tutorialInUrl !== this.appTutorial) {
-                element.style.zIndex = this.zIndex;
-            }
-
-            if (this.tutorialInUrl === this.appTutorial) {
-                element.style.zIndex = '11';
-                window.scroll(null, element.offsetTop);
-            }
+        // Hidden tutorial item
+        if (this.tutorialInUrl !== this.appTutorial) {
+            this.reset();
         }
+
+        // Shown tutorial item
+        if (this.tutorialInUrl === this.appTutorial) {
+            element.style.zIndex = '11';
+            element.style.backgroundColor = this.tutorialBackgroundColor;
+            window.scroll(null, element.offsetTop);
+        }
+    }
+
+    reset() {
+        const element = (<HTMLElement>this.elementRef.nativeElement);
+        element.style.zIndex = this.zIndex;
+        element.style.backgroundColor = this.backgroundColor;
     }
 }
