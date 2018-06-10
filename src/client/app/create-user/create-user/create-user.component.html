@@ -11,10 +11,10 @@
             <br>
 
             <mat-form-field>
+                <mat-label>email</mat-label>
                 <input matInput
                     formControlName="email"
                     type="text"
-                    placeholder="email"
                     autocomplete="email"
                     required>
             </mat-form-field>
@@ -25,10 +25,10 @@
             <br>
 
             <mat-form-field>
+                <mat-label>username</mat-label>
                 <input matInput
                     formControlName="username"
                     type="text"
-                    placeholder="username"
                     required>
             </mat-form-field>
             <div *ngIf="serverErrors?.username"
@@ -38,10 +38,10 @@
             <br>
 
             <mat-form-field>
+                <mat-label>password</mat-label>
                 <input matInput
                     formControlName="password"
                     type="password"
-                    placeholder="password"
                     required>
             </mat-form-field>
             <div *ngIf="serverErrors?.password"

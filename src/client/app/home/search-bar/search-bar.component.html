@@ -1,7 +1,7 @@
 <form [formGroup]="form">
     <mat-form-field style="width: 100%;">
+        <mat-label>search</mat-label>
         <input matInput
-            placeholder="search"
             formControlName="term">
     </mat-form-field>
     <div *ngIf="formErrors?.search"
