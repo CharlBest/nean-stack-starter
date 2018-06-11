@@ -1,13 +1,13 @@
 .example-spacer {
-  flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
 .app-container {
-    margin: 0 auto;
-    max-width: 650px;
-    min-height: calc(100vh - 110px);
-    
-    @media(max-width: 720px) {
-      min-height: calc(100vh - 160px);
-    }
+	margin: 0 auto;
+	max-width: 650px;
+	min-height: calc(100vh - 125px);
+
+	@media (max-width: 720px) {
+		min-height: calc(100vh - 134px);
+	}
 }
