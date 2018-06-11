@@ -10,7 +10,10 @@
         alt="logo"
         width="55px">
     </a>
-    <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+
+    <ng-container *ngIf="isWeb">
+      <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+    </ng-container>
 
     <span class="spacer"></span>
 
@@ -30,6 +33,12 @@
       <span *ngIf="isWeb">&nbsp;GitHub</span>
     </a>
 
+    <a mat-icon-button>
+      <mat-icon matBadge="15"
+        matBadgeColor="warn"
+        [matBadgeHidden]="false">notifications</mat-icon>
+    </a>
+
     <button mat-icon-button
       *ngIf="isWeb"
       [matMenuTriggerFor]="menu"
@@ -46,9 +55,11 @@
     </button>
   </mat-toolbar>
 
-  <!-- <mat-toolbar color="primary">
+  <mat-toolbar *ngIf="!isWeb"
+    color="primary"
+    class="mobile-toolbar">
     <ng-container *ngTemplateOutlet="navLinks"></ng-container>
-  </mat-toolbar> -->
+  </mat-toolbar>
 </ng-container>
 
 <mat-menu #menu="matMenu">
