@@ -13,18 +13,21 @@
   [cdkConnectedOverlayOpen]="isOpen"
   (backdropClick)="isOpen = false">
 
-  <mat-tab-group (selectedTabChange)="onTabSelectChange($event)"
-    mat-stretch-tabs>
-    <mat-tab *ngFor="let category of emojiCategories">
-      <ng-template mat-tab-label>
-        <mat-icon>{{category.tabLabelIcon}}</mat-icon>
-      </ng-template>
-      <ng-template matTabContent>
-        <div [innerHTML]="category.tabHTMLContent"></div>
-        <div style="clear: both;"></div>
-        powered by EmojiOne
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="mat-elevation-z2">
+    <mat-tab-group (selectedTabChange)="onTabSelectChange($event)"
+      mat-stretch-tabs>
+      <mat-tab *ngFor="let category of emojiCategories">
+        <ng-template mat-tab-label>
+          <mat-icon>{{category.tabLabelIcon}}</mat-icon>
+        </ng-template>
+        <ng-template matTabContent>
+          <div class="emoji-container"
+            [innerHTML]="category.tabHTMLContent"></div>
+          <div style="clear: both;"></div>
+          powered by EmojiOne
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 
 </ng-template>
