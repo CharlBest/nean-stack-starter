@@ -14,7 +14,8 @@
 
     <button mat-raised-button
       (click)="back()"
-      *ngIf="!tut.isFirst">Previous</button>
+      *ngIf="!tut.isFirst"
+      style="margin-right: 20px;">Previous</button>
     <button mat-raised-button
       (click)="goToTutorial(tut)">
       <span *ngIf="!tut.isLast">Next</span>

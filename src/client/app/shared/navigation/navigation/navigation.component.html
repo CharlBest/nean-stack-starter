@@ -33,13 +33,15 @@
     <button mat-icon-button
       *ngIf="isWeb"
       [matMenuTriggerFor]="menu"
-      [appTutorial]="tutorialTypeEnum.ContextMenu">
+      [appTutorial]="tutorialTypeEnum.ContextMenu"
+      tutorialBackgroundColor="none">
       <mat-icon>more_vert</mat-icon>
     </button>
     <button mat-icon-button
       *ngIf="!isWeb"
       (click)="bottomSheet.open(bottomSheetContextMenu)"
-      [appTutorial]="tutorialTypeEnum.ContextMenu">
+      [appTutorial]="tutorialTypeEnum.ContextMenu"
+      tutorialBackgroundColor="none">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-toolbar>
