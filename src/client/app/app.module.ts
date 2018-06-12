@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './shared/auth.service';
+import { BreakpointService } from './shared/breakpoint.service';
 import { FooterModule } from './shared/footer/footer.module';
 import { FormService } from './shared/form.service';
 import { GaService } from './shared/ga.service';
@@ -38,6 +39,7 @@ import { WebSocketService } from './shared/websocket.service';
     TutorialService,
     WebSocketService,
     LoggerService,
+    BreakpointService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
