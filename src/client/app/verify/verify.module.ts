@@ -5,14 +5,18 @@ import { VerifyRoutingModule } from '../verify/verify-routing.module';
 import { VerifyService } from './verify.service';
 import { VerifyComponent } from './verify/verify.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatIconModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     VerifyRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatIconModule
+    ...materialModules
   ],
   declarations: [
     VerifyComponent

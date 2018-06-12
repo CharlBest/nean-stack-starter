@@ -6,15 +6,19 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { NewsletterService } from './newsletter.service';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     NewsletterRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    TutorialModule
+    TutorialModule,
+    ...materialModules
   ],
   declarations: [
     NewsletterComponent

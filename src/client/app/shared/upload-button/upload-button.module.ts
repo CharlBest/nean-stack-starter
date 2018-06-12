@@ -5,14 +5,18 @@ import { MediaModule } from '../media/media.module';
 import { UploadButtonService } from './upload-button.service';
 import { UploadButtonComponent } from './upload-button/upload-button.component';
 
+const materialModules = [
+  MatDialogModule,
+  MatButtonModule,
+  MatProgressBarModule,
+  MatTooltipModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatTooltipModule,
-    MediaModule
+    MediaModule,
+    ...materialModules
   ],
   declarations: [
     UploadButtonComponent

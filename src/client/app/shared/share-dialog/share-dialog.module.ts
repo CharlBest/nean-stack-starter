@@ -5,14 +5,18 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ShareDialogService } from './share-dialog.service';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
+const materialModules = [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule
+];
+
 @NgModule({
     imports: [
         CommonModule,
         ClipboardModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSnackBarModule
+        ...materialModules
     ],
     declarations: [
         ShareDialogComponent

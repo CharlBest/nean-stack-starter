@@ -9,20 +9,24 @@ import { HomeService } from './home.service';
 import { HomeComponent } from './home/home.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 
+const materialModules = [
+  MatInputModule,
+  MatChipsModule,
+  MatListModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatIconModule,
+  MatButtonModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     HomeRoutingModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatChipsModule,
-    MatListModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatButtonModule,
     MediaModule,
-    TutorialModule
+    TutorialModule,
+    ...materialModules
   ],
   declarations: [
     HomeComponent,

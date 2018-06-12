@@ -9,13 +9,17 @@ import { SettingsService } from './settings.service';
 import { SettingsComponent } from './settings/settings.component';
 import { WebhooksComponent } from './webhooks/webhooks.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatRadioModule
+];
+
 @NgModule({
   imports: [
     CommonModule,
     SettingsRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatRadioModule
+    ...materialModules
   ],
   declarations: [
     SettingsComponent,

@@ -17,19 +17,22 @@ import { ProfileComponent } from './profile/profile.component';
 import { UpdateBioComponent } from './update-bio/update-bio.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
+  MatIconModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatInputModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     ProfileRoutingModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatInputModule,
     ShareDialogModule,
     ReportDialogModule,
     UploadButtonModule,
@@ -37,7 +40,8 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     TutorialModule,
     EmojiPanelModule,
     MediaModule,
-    HTMLEditorModule
+    HTMLEditorModule,
+    ...materialModules
   ],
   declarations: [
     ProfileComponent,

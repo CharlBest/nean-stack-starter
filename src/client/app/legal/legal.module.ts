@@ -7,13 +7,17 @@ import { LegalService } from './legal.service';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatRadioModule
+];
+
 @NgModule({
   imports: [
     CommonModule,
     LegalRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatRadioModule
+    ...materialModules
   ],
   declarations: [
     HelpComponent,

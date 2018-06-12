@@ -4,12 +4,16 @@ import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/materi
 import { TutorialDirective } from './tutorial.directive';
 import { TutorialComponent } from './tutorial/tutorial.component';
 
+const materialModules = [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
+];
+
 @NgModule({
     imports: [
         CommonModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatIconModule
+        ...materialModules
     ],
     declarations: [
         TutorialComponent,

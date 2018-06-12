@@ -9,17 +9,21 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ForgotPasswordService } from './forgot-password.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     ForgotPasswordRoutingModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
     ShowErrorsModule,
-    TutorialModule
+    TutorialModule,
+    ...materialModules
   ],
   declarations: [
     ForgotPasswordComponent,

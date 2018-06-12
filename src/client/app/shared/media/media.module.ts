@@ -5,11 +5,15 @@ import { MediaComponent } from '../../shared/media/media/media.component';
 import { ImgErrorDirective } from './img-error.directive';
 import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';
 
+const materialModules = [
+  MatDialogModule,
+  MatButtonModule
+];
+
 @NgModule({
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatButtonModule
+    ...materialModules
   ],
   declarations: [
     MediaComponent,

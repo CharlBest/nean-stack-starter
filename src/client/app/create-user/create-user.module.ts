@@ -8,16 +8,20 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { CreateUserRoutingModule } from './create-user-routing.module';
 import { CreateUserComponent } from './create-user/create-user.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     CreateUserRoutingModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    ShowErrorsModule
+    ShowErrorsModule,
+    ...materialModules
   ],
   declarations: [
     CreateUserComponent

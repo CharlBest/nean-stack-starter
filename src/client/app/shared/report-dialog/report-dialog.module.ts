@@ -5,13 +5,17 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ReportDialogService } from './report-dialog.service';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
+const materialModules = [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
+];
+
 @NgModule({
     imports: [
         CommonModule,
         ClipboardModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatIconModule
+        ...materialModules
     ],
     declarations: [
         ReportDialogComponent

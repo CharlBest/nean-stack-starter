@@ -6,15 +6,19 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { FeedbackService } from './feedback.service';
 import { FeedbackComponent } from './feedback/feedback.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     FeedbackRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    TutorialModule
+    TutorialModule,
+    ...materialModules
   ],
   declarations: [
     FeedbackComponent

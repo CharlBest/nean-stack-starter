@@ -7,16 +7,20 @@ import { PaymentDialogService } from './payment-dialog.service';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 import { PaymentService } from './payment.service';
 
+const materialModules = [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule
+];
+
 @NgModule({
     imports: [
         CommonModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
         ReactiveFormsModule,
         ShowErrorsModule,
-        MatTooltipModule
+        ...materialModules
     ],
     declarations: [
         PaymentDialogComponent

@@ -3,11 +3,15 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
 
+const materialModules = [
+  MatIconModule,
+  MatButtonModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule
+    ...materialModules
   ],
   declarations: [
     ShowErrorsComponent

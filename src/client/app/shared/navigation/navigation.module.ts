@@ -6,21 +6,25 @@ import { TutorialModule } from '../../shared/tutorial/tutorial.module';
 import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
 import { NavigationComponent } from './navigation/navigation.component';
 
+const materialModules = [
+  MatInputModule,
+  MatIconModule,
+  MatMenuModule,
+  MatButtonModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatListModule,
+  MatBottomSheetModule,
+  MatBadgeModule
+];
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MatInputModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatSnackBarModule,
     TutorialModule,
     PaymentDialogModule,
-    MatToolbarModule,
-    MatListModule,
-    MatBottomSheetModule,
-    MatBadgeModule
+    ...materialModules
   ],
   exports: [
     NavigationComponent

@@ -6,14 +6,18 @@ import { MatButtonModule, MatIconModule, MatTabsModule } from '@angular/material
 import { EmojiPanelDirective } from './emoji-panel.directive';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
+const materialModules = [
+  MatTabsModule,
+  MatIconModule,
+  MatButtonModule
+];
+
 @NgModule({
   imports: [
     CommonModule,
-    MatTabsModule,
-    MatIconModule,
-    MatButtonModule,
     OverlayModule,
-    A11yModule
+    A11yModule,
+    ...materialModules
   ],
   declarations: [
     EmojiPanelComponent,

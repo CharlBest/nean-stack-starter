@@ -9,17 +9,21 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { LoginService } from './login.service';
 import { LoginComponent } from './login/login.component';
 
+const materialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
     LoginRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
     ShowErrorsModule,
-    TutorialModule
+    TutorialModule,
+    ...materialModules
   ],
   declarations: [
     LoginComponent
