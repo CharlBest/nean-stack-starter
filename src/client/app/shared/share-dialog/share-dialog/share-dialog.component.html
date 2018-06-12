@@ -14,7 +14,8 @@
         (cbOnSuccess)="openSnackBar()">COPY</button>
     <button mat-icon-button
         *ngIf="hasWebShareApi()"
-        (click)="webShare()">
+        (click)="webShare()"
+        matTooltip="Share">
         <mat-icon>share</mat-icon>
     </button>
     <button mat-raised-button

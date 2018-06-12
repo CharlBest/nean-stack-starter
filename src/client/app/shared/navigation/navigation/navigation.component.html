@@ -36,21 +36,24 @@
     <a mat-icon-button>
       <mat-icon matBadge="15"
         matBadgeColor="warn"
-        [matBadgeHidden]="false">notifications</mat-icon>
+        [matBadgeHidden]="false"
+        matTooltip="Notifications">notifications</mat-icon>
     </a>
 
     <button mat-icon-button
       *ngIf="isWeb"
       [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
-      tutorialBackgroundColor="none">
+      tutorialBackgroundColor="none"
+      matTooltip="Menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <button mat-icon-button
       *ngIf="!isWeb"
       (click)="bottomSheet.open(bottomSheetContextMenu)"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
-      tutorialBackgroundColor="none">
+      tutorialBackgroundColor="none"
+      matTooltip="Menu">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-toolbar>
@@ -77,7 +80,8 @@
 
   <mat-toolbar color="primary">
     <div (click)="back()">
-      <button mat-icon-button>
+      <button mat-icon-button
+        matTooltip="Back">
         <mat-icon>arrow_back</mat-icon>
       </button>
 

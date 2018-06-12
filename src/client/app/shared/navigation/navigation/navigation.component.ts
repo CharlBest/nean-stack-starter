@@ -25,8 +25,8 @@ export class NavigationComponent implements OnInit {
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   isWeb = true;
-  isDarkTheme: boolean;
-  isDarkThemeStorageKey = 'is_dark_theme';
+  private _isDarkTheme: boolean;
+  private _isDarkThemeStorageKey = 'is_dark_theme';
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -135,9 +135,9 @@ export class NavigationComponent implements OnInit {
   toggleTheme() {
     const darkThemeClass = 'dark-theme';
 
-    this.isDarkTheme = !this.isDarkTheme;
+    this._isDarkTheme = !this._isDarkTheme;
 
-    if (this.isDarkTheme) {
+    if (this._isDarkTheme) {
       document.querySelector('app-root').classList.add(darkThemeClass);
     } else {
       document.querySelector('app-root').classList.remove(darkThemeClass);
@@ -147,13 +147,13 @@ export class NavigationComponent implements OnInit {
   }
 
   themeOnInit() {
-    this.isDarkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
-    this.isDarkTheme = !this.isDarkTheme;
+    this._isDarkTheme = localStorage.getItem(this._isDarkThemeStorageKey) === 'true';
+    this._isDarkTheme = !this._isDarkTheme;
     this.toggleTheme();
   }
 
   updateStoredTheme() {
-    localStorage.setItem(this.isDarkThemeStorageKey, `${this.isDarkTheme}`);
+    localStorage.setItem(this._isDarkThemeStorageKey, `${this._isDarkTheme}`);
   }
 }
 
