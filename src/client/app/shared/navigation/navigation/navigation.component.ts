@@ -1,4 +1,3 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatSnackBar } from '@angular/material';
@@ -9,6 +8,7 @@ import { TutorialType } from '../../../../../shared/view-models/tutorial/tutoria
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { WebSocketService } from '../../../shared/websocket.service';
 import { AuthService } from '../../auth.service';
+import { BreakpointService } from '../../breakpoint.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
 
 @Component({
@@ -24,7 +24,6 @@ export class NavigationComponent implements OnInit {
   navigationBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
-  isWeb = true;
   private _isDarkTheme: boolean;
   private _isDarkThemeStorageKey = 'is_dark_theme';
 
@@ -37,8 +36,8 @@ export class NavigationComponent implements OnInit {
     public snackBar: MatSnackBar,
     private paymentDialogService: PaymentDialogService,
     private webSocketService: WebSocketService,
-    private mqm: BreakpointObserver,
-    public bottomSheet: MatBottomSheet) {
+    public bottomSheet: MatBottomSheet,
+    public bpService: BreakpointService) {
     this.checkHasVisited();
   }
 
@@ -84,15 +83,11 @@ export class NavigationComponent implements OnInit {
     this.webSocketService.messages.subscribe((data) => {
       this.snackBar.open(data, 'Say hallo back', {
         duration: 5000,
+        verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
+        horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
       }).onAction().subscribe(() => {
         this.webSocketService.messages.next('Hallo to you too');
       });
-    });
-
-    this.mqm.observe([Breakpoints.Web, Breakpoints.WebPortrait]).subscribe(data => {
-      if (this.isWeb !== data.matches) {
-        this.isWeb = data.matches;
-      }
     });
   }
 

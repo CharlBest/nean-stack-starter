@@ -11,7 +11,7 @@
         width="55px">
     </a>
 
-    <ng-container *ngIf="isWeb">
+    <ng-container *ngIf="bpService.isWeb">
       <ng-container *ngTemplateOutlet="navLinks"></ng-container>
     </ng-container>
 
@@ -21,7 +21,7 @@
     <a mat-button
       (click)="openPaymentDialog()">
       <mat-icon>credit_card</mat-icon>
-      <span *ngIf="isWeb">&nbsp;Donate</span>
+      <span *ngIf="bpService.isWeb">&nbsp;Donate</span>
     </a>
 
     <a mat-button
@@ -30,7 +30,7 @@
       <img src="assets/github-logo-white.svg"
         alt="github logo"
         width="22px">
-      <span *ngIf="isWeb">&nbsp;GitHub</span>
+      <span *ngIf="bpService.isWeb">&nbsp;GitHub</span>
     </a>
 
     <a mat-icon-button>
@@ -41,7 +41,7 @@
     </a>
 
     <button mat-icon-button
-      *ngIf="isWeb"
+      *ngIf="bpService.isWeb"
       [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       tutorialBackgroundColor="none"
@@ -49,7 +49,7 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <button mat-icon-button
-      *ngIf="!isWeb"
+      *ngIf="!bpService.isWeb"
       (click)="bottomSheet.open(bottomSheetContextMenu)"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       tutorialBackgroundColor="none"
@@ -58,7 +58,7 @@
     </button>
   </mat-toolbar>
 
-  <mat-toolbar *ngIf="!isWeb"
+  <mat-toolbar *ngIf="!bpService.isWeb"
     color="primary"
     class="mobile-toolbar">
     <ng-container *ngTemplateOutlet="navLinks"></ng-container>
@@ -98,21 +98,21 @@
 <ng-template #navLinks>
   <a mat-button
     routerLink="/">
-    <mat-icon *ngIf="isWeb">home</mat-icon>
+    <mat-icon *ngIf="bpService.isWeb">home</mat-icon>
     <span>&nbsp;Home</span>
   </a>
 
   <a mat-button
     *ngIf="!loggedInUserId"
     routerLink="/login">
-    <mat-icon *ngIf="isWeb">lock</mat-icon>
+    <mat-icon *ngIf="bpService.isWeb">lock</mat-icon>
     <span>&nbsp;Login</span>
   </a>
 
   <a mat-button
     *ngIf="loggedInUserId"
     routerLink="/profile">
-    <mat-icon *ngIf="isWeb">account_circle</mat-icon>
+    <mat-icon *ngIf="bpService.isWeb">account_circle</mat-icon>
     <span>&nbsp;Profile</span>
   </a>
 </ng-template>

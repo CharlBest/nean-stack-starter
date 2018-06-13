@@ -12,14 +12,16 @@ export class BreakpointService implements OnDestroy {
         Breakpoints.TabletLandscape,
         Breakpoints.TabletPortrait
     ];
-    private _isWebSnapshot = this._breakpointObserver.isMatched(this._isWebMediaQueries);
-    private _isWebSubject = new BehaviorSubject<boolean>(this._isWebSnapshot);
+    private _isWebSubject = new BehaviorSubject<boolean>(this._breakpointObserver.isMatched(this._isWebMediaQueries));
+    get isWeb(): boolean {
+        return this._isWebSubject.value;
+    }
     isWeb$ = this._isWebSubject.asObservable().pipe(share());
 
     constructor(private _breakpointObserver: BreakpointObserver) {
         this._breakpointObserver.observe(this._isWebMediaQueries).subscribe(data => {
-            if (this._isWebSnapshot !== data.matches) {
-                this._isWebSubject.next(this._isWebSnapshot = data.matches);
+            if (this._isWebSubject.value !== data.matches) {
+                this._isWebSubject.next(data.matches);
             }
         })
     }

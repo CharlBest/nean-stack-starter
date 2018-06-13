@@ -1,6 +1,7 @@
 <app-navigation></app-navigation>
 
-<div class="app-container">
+<div class="app-container"
+    [class.mobile]="!bpService.isWeb">
     <router-outlet></router-outlet>
 </div>
 
