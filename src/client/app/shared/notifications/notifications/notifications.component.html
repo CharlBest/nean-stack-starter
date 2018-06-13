@@ -1,0 +1,26 @@
+<button type="button"
+  mat-icon-button
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (click)="isOpen = !isOpen"
+  matTooltip="Notifications">
+  <mat-icon>notifications</mat-icon>
+</button>
+
+<ng-template cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (backdropClick)="isOpen = false">
+
+  <div class="mat-elevation-z2">
+    <ng-container *ngIf="messages.length > 0">
+      <div *ngFor="let message of messages">{{message}}</div>
+    </ng-container>
+    <ng-container *ngIf="messages.length <= 0">
+      No messages
+    </ng-container>
+  </div>
+
+</ng-template>
