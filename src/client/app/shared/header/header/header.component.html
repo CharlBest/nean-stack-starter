@@ -33,12 +33,7 @@
       <span *ngIf="bpService.isWeb">&nbsp;GitHub</span>
     </a>
 
-    <a mat-icon-button>
-      <mat-icon matBadge="15"
-        matBadgeColor="warn"
-        [matBadgeHidden]="false"
-        matTooltip="Notifications">notifications</mat-icon>
-    </a>
+    <app-notifications></app-notifications>
 
     <button mat-icon-button
       *ngIf="bpService.isWeb"

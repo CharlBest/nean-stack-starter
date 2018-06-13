@@ -1,11 +1,13 @@
-<button type="button"
-  mat-icon-button
+<a mat-icon-button
+  type="button"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
   (click)="isOpen = !isOpen"
   matTooltip="Notifications">
-  <mat-icon>notifications</mat-icon>
-</button>
+  <mat-icon matBadge="{{messages?.length}}"
+    matBadgeColor="warn"
+    [matBadgeHidden]="messages?.length <= 0">notifications</mat-icon>
+</a>
 
 <ng-template cdkConnectedOverlay
   cdkConnectedOverlayHasBackdrop
@@ -14,12 +16,28 @@
   [cdkConnectedOverlayOpen]="isOpen"
   (backdropClick)="isOpen = false">
 
-  <div class="mat-elevation-z2">
+  <div class="panel-container mat-elevation-z2">
+    <div style="text-align: right">
+      <button mat-icon-button
+        (click)="isOpen = false">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <ng-container *ngIf="messages.length > 0">
-      <div *ngFor="let message of messages">{{message}}</div>
+      <mat-list>
+        <mat-list-item *ngFor="let message of messages; let i = index">
+          <span mat-line>{{message}}</span>
+          <button mat-icon-button
+            (click)="remove(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
     </ng-container>
     <ng-container *ngIf="messages.length <= 0">
-      No messages
+      <mat-list>
+        <mat-list-item>No Messages</mat-list-item>
+      </mat-list>
     </ng-container>
   </div>
 

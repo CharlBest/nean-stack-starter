@@ -19,18 +19,22 @@ export class NotificationsComponent implements OnInit {
   ngOnInit() {
     // SnackBar
     this.webSocketService.messages.subscribe((data) => {
+      // Add messages to queue
+      this.messages.push(data);
+
+      // Show notification popup
       this.snackBar.open(data, 'Say hallo back', {
         duration: 5000,
         verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
         horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
       }).onAction().subscribe(() => {
+        // Send message back
         this.webSocketService.messages.next('Hallo to you too');
       });
     });
+  }
 
-    // Panel
-    this.webSocketService.messages.subscribe((data) => {
-      this.messages.push(data);
-    });
+  remove(index: number) {
+    this.messages.splice(index, 1);
   }
 }
