@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
-import { BreakpointService } from './shared/breakpoint.service';
 import { GaService } from './shared/ga.service';
 
 @Component({
@@ -10,8 +9,7 @@ import { GaService } from './shared/ga.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private gaService: GaService,
-    public bpService: BreakpointService) {
+  constructor(private gaService: GaService) {
     // Firebase
     initializeApp({
       apiKey: environment.firebase.apiKey,
