@@ -14,7 +14,7 @@
   [cdkConnectedOverlayOpen]="isOpen"
   (backdropClick)="isOpen = false">
 
-  <div class="mat-elevation-z2">
+  <mat-card style="padding: 0;">
     <mat-tab-group (selectedTabChange)="onTabSelectChange($event)"
       mat-stretch-tabs>
       <mat-tab *ngFor="let category of emojiCategories">
@@ -29,6 +29,6 @@
         </ng-template>
       </mat-tab>
     </mat-tab-group>
-  </div>
+  </mat-card>
 
 </ng-template>

@@ -1,10 +1,6 @@
-@import '~@angular/cdk/overlay-prebuilt.css';
-@import '~@angular/cdk/a11y-prebuilt.css';
-
 mat-tab-group {
 	width: 272px;
 	height: 272px;
-	background-color: #fff;
 
 	.emoji-container {
 		display: grid;

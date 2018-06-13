@@ -2,7 +2,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatIconModule, MatListModule, MatTabsModule, MatTooltipModule } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatTabsModule, MatTooltipModule } from '@angular/material';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 const materialModules = [
@@ -11,7 +11,8 @@ const materialModules = [
   MatButtonModule,
   MatTooltipModule,
   MatBadgeModule,
-  MatListModule
+  MatListModule,
+  MatCardModule
 ];
 
 @NgModule({

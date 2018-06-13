@@ -16,7 +16,7 @@
   [cdkConnectedOverlayOpen]="isOpen"
   (backdropClick)="isOpen = false">
 
-  <div class="panel-container mat-elevation-z2">
+  <mat-card style="padding: 0; overflow-y: auto;">
     <div style="text-align: right">
       <button mat-icon-button
         (click)="isOpen = false">
@@ -39,6 +39,6 @@
         <mat-list-item>No Messages</mat-list-item>
       </mat-list>
     </ng-container>
-  </div>
+  </mat-card>
 
 </ng-template>

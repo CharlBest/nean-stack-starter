@@ -122,9 +122,9 @@ export class HeaderComponent implements OnInit {
     this._isDarkTheme = !this._isDarkTheme;
 
     if (this._isDarkTheme) {
-      document.querySelector('app-root').classList.add(darkThemeClass);
+      document.querySelector('body').classList.add(darkThemeClass);
     } else {
-      document.querySelector('app-root').classList.remove(darkThemeClass);
+      document.querySelector('body').classList.remove(darkThemeClass);
     }
 
     this.updateStoredTheme();
