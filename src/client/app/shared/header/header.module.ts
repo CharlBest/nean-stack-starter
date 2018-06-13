@@ -4,7 +4,7 @@ import { MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatIconModule, M
 import { RouterModule } from '@angular/router';
 import { TutorialModule } from '../../shared/tutorial/tutorial.module';
 import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
-import { NavigationComponent } from './navigation/navigation.component';
+import { HeaderComponent } from './header/header.component';
 
 const materialModules = [
   MatInputModule,
@@ -28,10 +28,10 @@ const materialModules = [
     ...materialModules
   ],
   exports: [
-    NavigationComponent
+    HeaderComponent
   ],
   declarations: [
-    NavigationComponent
+    HeaderComponent
   ]
 })
-export class NavigationModule { }
+export class HeaderModule { }

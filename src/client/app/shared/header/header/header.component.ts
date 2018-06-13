@@ -6,22 +6,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
-import { WebSocketService } from '../../../shared/websocket.service';
 import { AuthService } from '../../auth.service';
 import { BreakpointService } from '../../breakpoint.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
+import { HeaderType } from "./header-type.enum";
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
-export class NavigationComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
-  activeNavigation = Navigation.Primary;
-  navigationTypes = Navigation;
-  navigationBackTitle = '';
+  activeHeader = HeaderType.Primary;
+  headerTypes = HeaderType;
+  headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   private _isDarkTheme: boolean;
@@ -35,7 +35,6 @@ export class NavigationComponent implements OnInit {
     private tutorialService: TutorialService,
     public snackBar: MatSnackBar,
     private paymentDialogService: PaymentDialogService,
-    private webSocketService: WebSocketService,
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService) {
     this.checkHasVisited();
@@ -63,12 +62,12 @@ export class NavigationComponent implements OnInit {
           const title = event.snapshot.data['title'];
           if (title !== null) {
             this.titleService.setTitle(title);
-            this.navigationBackTitle = title;
+            this.headerBackTitle = title;
           }
 
-          const nav = event.snapshot.data['nav'] as Navigation;
+          const nav = event.snapshot.data['nav'] as HeaderType;
           if (nav !== null) {
-            this.activeNavigation = nav;
+            this.activeHeader = nav;
           }
 
           const backRouterPath = event.snapshot.data['backRouterPath'] as string;
@@ -79,16 +78,6 @@ export class NavigationComponent implements OnInit {
           }
         }
       });
-
-    this.webSocketService.messages.subscribe((data) => {
-      this.snackBar.open(data, 'Say hallo back', {
-        duration: 5000,
-        verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
-        horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
-      }).onAction().subscribe(() => {
-        this.webSocketService.messages.next('Hallo to you too');
-      });
-    });
   }
 
   logout() {
@@ -150,10 +139,4 @@ export class NavigationComponent implements OnInit {
   updateStoredTheme() {
     localStorage.setItem(this._isDarkThemeStorageKey, `${this._isDarkTheme}`);
   }
-}
-
-// TODO: move this to another file
-export enum Navigation {
-  Primary = 1,
-  Back = 2
 }

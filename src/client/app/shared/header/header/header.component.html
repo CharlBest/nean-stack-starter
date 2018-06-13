@@ -1,5 +1,5 @@
 <!-- Main nav -->
-<ng-container *ngIf="navigationTypes.Primary == activeNavigation">
+<header *ngIf="headerTypes.Primary == activeHeader">
 
   <mat-toolbar color="primary">
     <!-- Left -->
@@ -63,21 +63,10 @@
     class="mobile-toolbar">
     <ng-container *ngTemplateOutlet="navLinks"></ng-container>
   </mat-toolbar>
-</ng-container>
-
-<mat-menu #menu="matMenu">
-  <ng-template matMenuContent>
-    <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
-  </ng-template>
-</mat-menu>
-
-<ng-template #bottomSheetContextMenu>
-  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
-</ng-template>
+</header>
 
 <!-- Back nav -->
-<ng-container *ngIf="navigationTypes.Back == activeNavigation">
-
+<header *ngIf="headerTypes.Back == activeHeader">
   <mat-toolbar color="primary">
     <div (click)="back()">
       <button mat-icon-button
@@ -87,12 +76,22 @@
 
       <a mat-button
         style="text-align: left;">
-        {{navigationBackTitle}}
+        {{headerBackTitle}}
       </a>
     </div>
   </mat-toolbar>
+</header>
 
-</ng-container>
+<!-- Context menu -->
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent>
+    <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+  </ng-template>
+</mat-menu>
+
+<ng-template #bottomSheetContextMenu>
+  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+</ng-template>
 
 <!-- Nav links -->
 <ng-template #navLinks>

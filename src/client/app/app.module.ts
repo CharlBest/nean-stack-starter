@@ -10,10 +10,10 @@ import { BreakpointService } from './shared/breakpoint.service';
 import { FooterModule } from './shared/footer/footer.module';
 import { FormService } from './shared/form.service';
 import { GaService } from './shared/ga.service';
+import { HeaderModule } from './shared/header/header.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { LoggerService } from './shared/logger.service';
-import { NavigationModule } from './shared/navigation/navigation.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 import { TutorialService } from './shared/tutorial/tutorial.service';
 import { WebSocketService } from './shared/websocket.service';
@@ -27,7 +27,7 @@ import { WebSocketService } from './shared/websocket.service';
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    NavigationModule,
+    HeaderModule,
     FooterModule,
     TutorialModule
   ],

@@ -5,16 +5,16 @@ import { NotificationsComponent } from '../settings/notifications/notifications.
 import { PaymentsComponent } from '../settings/payments/payments.component';
 import { SettingsComponent } from '../settings/settings/settings.component';
 import { WebhooksComponent } from '../settings/webhooks/webhooks.component';
-import { Navigation } from '../shared/navigation/navigation/navigation.component';
+import { HeaderType } from '../shared/header/header/header-type.enum';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: SettingsComponent, pathMatch: 'full', data: { title: 'Settings', nav: Navigation.Back } },
-            { path: 'notifications', component: NotificationsComponent, pathMatch: 'full', data: { title: 'Notifications', nav: Navigation.Back } },
-            { path: 'payments', component: PaymentsComponent, pathMatch: 'full', data: { title: 'Payments', nav: Navigation.Back } },
-            { path: 'webhooks', component: WebhooksComponent, pathMatch: 'full', data: { title: 'Webhooks', nav: Navigation.Back } },
-            { path: 'language', component: LanguageComponent, pathMatch: 'full', data: { title: 'Language', nav: Navigation.Back } },
+            { path: '', component: SettingsComponent, pathMatch: 'full', data: { title: 'Settings', nav: HeaderType.Back } },
+            { path: 'notifications', component: NotificationsComponent, pathMatch: 'full', data: { title: 'Notifications', nav: HeaderType.Back } },
+            { path: 'payments', component: PaymentsComponent, pathMatch: 'full', data: { title: 'Payments', nav: HeaderType.Back } },
+            { path: 'webhooks', component: WebhooksComponent, pathMatch: 'full', data: { title: 'Webhooks', nav: HeaderType.Back } },
+            { path: 'language', component: LanguageComponent, pathMatch: 'full', data: { title: 'Language', nav: HeaderType.Back } },
         ])
     ],
     exports: [RouterModule]
