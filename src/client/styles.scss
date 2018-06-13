@@ -2,6 +2,24 @@
 @import '~@angular/material/theming';
 @import 'app-theme-definition.scss';
 
+// Open Sans font - https://google-webfonts-helper.herokuapp.com/fonts/open-sans
+/* open-sans-regular - latin */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: fallback;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'), url('assets/open-sans-v15-latin-regular.woff2') format('woff2'), url('assets/open-sans-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* open-sans-700 - latin */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: fallback;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'), url('assets/open-sans-v15-latin-700.woff2') format('woff2'), url('assets/open-sans-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 // Body rule
 body {
 	margin: 0;
@@ -112,24 +130,6 @@ body {
 		// Remove Chrome yellow autofill background color
 		input:webkit-autofill {
 			-webkit-box-shadow: 0 0 0 30px #fff inset;
-		}
-
-		// Open Sans font - https://google-webfonts-helper.herokuapp.com/fonts/open-sans
-		/* open-sans-regular - latin */
-		@font-face {
-			font-family: 'Open Sans';
-			font-style: normal;
-			font-weight: 400;
-			font-display: fallback;
-			src: local('Open Sans Regular'), local('OpenSans-Regular'), url('assets/open-sans-v15-latin-regular.woff2') format('woff2'), url('assets/open-sans-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-		}
-		/* open-sans-700 - latin */
-		@font-face {
-			font-family: 'Open Sans';
-			font-style: normal;
-			font-weight: 700;
-			font-display: fallback;
-			src: local('Open Sans Bold'), local('OpenSans-Bold'), url('assets/open-sans-v15-latin-700.woff2') format('woff2'), url('assets/open-sans-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 		}
 	}
 }

@@ -1,22 +1,20 @@
-import * as http from 'http';
-import * as path from 'path';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as webSocket from 'ws';
 // import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 // import { makeExecutableSchema } from 'graphql-tools';
-import { Request, Response, NextFunction } from 'express';
-import { Server } from './server';
-import { ApiError } from './middleware/api-error';
-import { Neo4j } from './middleware/neo4j';
-import { Database } from './database';
-import { UsersRoutes } from '../app/users/users.routes';
+import { NextFunction, Request, Response } from 'express';
+import * as http from 'http';
+import * as path from 'path';
+import * as webSocket from 'ws';
 import { GeneralRoutes } from '../app/general/general.routes';
+import { UsersRoutes } from '../app/users/users.routes';
+import { environment } from '../environments/environment';
+import { ApiError } from './middleware/api-error';
 // import typeDefs from '../schemas/schema';
 // import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
-import { environment } from '../environments/environment';
+import { Neo4j } from './middleware/neo4j';
 import { WebSocketServer } from './middleware/web-socket-server';
+import { Server } from './server';
 // import { exceptionHandler } from './api/exceptionHandler';
 // import { extendExpressResponse } from './api/extendExpressResponse';
 const root = './';
@@ -38,7 +36,7 @@ export class Bootstrap {
     }
 
     public setupRoutes(app: express.Application): void {
-        app.use(express.static(path.join(root, 'dist/client-web')));
+        app.use(express.static(path.join(root, 'dist/nean-stack-starter')));
 
         // Auth
         app.use(Authentication.setAuthUser);
@@ -53,7 +51,7 @@ export class Bootstrap {
         // TODO: not sure if this is the best way of doing it
         // This is to serve web app sub routes
         app.get('*', (req, res) => {
-            const webClientUrl = 'dist/client-web';
+            const webClientUrl = 'dist/nean-stack-starter';
             if (app.get('env') === 'development') {
                 res.sendFile(`${webClientUrl}/index.html`, { root });
             }

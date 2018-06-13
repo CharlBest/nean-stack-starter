@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "A sample Angular, Node.js and Neo4j app",
   "license": "MIT",
   "repository": {
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "concurrently \"ng serve --aot\" \"webpack --watch\" \"npm run start-watch\"",
-    "build": "ng build --prod && webpack",
+    "build": "ng build --prod && webpack --mode=none",
     "start": "node dist/server/app.bundle.js",
     "start-watch": "nodemon dist/server/app.bundle.js",
     "heroku-postbuild": "npm run build",
