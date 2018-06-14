@@ -24,6 +24,7 @@
             "tsConfig": "src/client/tsconfig.app.json",
             "assets": [
               "src/client/favicon.ico",
+              "src/client/manifest.json",
               "src/client/assets",
               "src/client/icons"
             ],
