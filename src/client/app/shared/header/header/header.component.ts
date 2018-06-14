@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
-  private _isDarkTheme: boolean;
-  private _isDarkThemeStorageKey = 'is_dark_theme';
+  private isDarkTheme: boolean;
+  private isDarkThemeStorageKey = 'is_dark_theme';
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -119,9 +119,9 @@ export class HeaderComponent implements OnInit {
   toggleTheme() {
     const darkThemeClass = 'dark-theme';
 
-    this._isDarkTheme = !this._isDarkTheme;
+    this.isDarkTheme = !this.isDarkTheme;
 
-    if (this._isDarkTheme) {
+    if (this.isDarkTheme) {
       document.querySelector('body').classList.add(darkThemeClass);
     } else {
       document.querySelector('body').classList.remove(darkThemeClass);
@@ -131,12 +131,12 @@ export class HeaderComponent implements OnInit {
   }
 
   themeOnInit() {
-    this._isDarkTheme = localStorage.getItem(this._isDarkThemeStorageKey) === 'true';
-    this._isDarkTheme = !this._isDarkTheme;
+    this.isDarkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
+    this.isDarkTheme = !this.isDarkTheme;
     this.toggleTheme();
   }
 
   updateStoredTheme() {
-    localStorage.setItem(this._isDarkThemeStorageKey, `${this._isDarkTheme}`);
+    localStorage.setItem(this.isDarkThemeStorageKey, `${this.isDarkTheme}`);
   }
 }
