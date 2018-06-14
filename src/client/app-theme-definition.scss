@@ -17,3 +17,14 @@ $dark-primary: mat-palette($mat-deep-purple);
 $dark-accent: mat-palette($mat-amber, A200, A100, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// Custom styles
+body {
+	background-color: mat-color(map-get($app-theme, background), card);
+	color: mat-color(map-get($app-theme, foreground), text);
+
+	&.dark-theme {
+		background-color: mat-color(map-get($dark-theme, background), card);
+		color: mat-color(map-get($dark-theme, foreground), text);
+	}
+}
