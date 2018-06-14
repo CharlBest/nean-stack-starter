@@ -19,7 +19,8 @@
   <mat-card style="padding: 0; overflow-y: auto;">
     <div style="text-align: right">
       <button mat-icon-button
-        (click)="isOpen = false">
+        (click)="isOpen = false"
+        matTooltip="Exit Notifications">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -28,7 +29,8 @@
         <mat-list-item *ngFor="let message of messages; let i = index">
           <span mat-line>{{message}}</span>
           <button mat-icon-button
-            (click)="remove(i)">
+            (click)="remove(i)"
+            matTooltip="Mark As Read">
             <mat-icon>close</mat-icon>
           </button>
         </mat-list-item>
