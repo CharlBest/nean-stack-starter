@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { BreakpointService } from '../../breakpoint.service';
 import { WebSocketService } from '../../websocket.service';
@@ -9,6 +10,7 @@ import { WebSocketService } from '../../websocket.service';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
+  @ViewChild('panel') panel: CdkConnectedOverlay;
   isOpen = false;
   messages = [];
 
@@ -32,9 +34,17 @@ export class NotificationsComponent implements OnInit {
         this.webSocketService.messages.next('Hallo to you too');
       });
     });
+
+    this.panel.attach.subscribe(() => {
+      if (this.bpService.isWeb) {
+        this.panel.overlayRef.overlayElement.classList.remove('fullscreen');
+      } else {
+        this.panel.overlayRef.overlayElement.classList.add('fullscreen');
+      }
+    });
   }
 
-  remove(index: number) {
+  removeMessage(index: number) {
     this.messages.splice(index, 1);
   }
 }

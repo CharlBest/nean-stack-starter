@@ -9,7 +9,8 @@
     [matBadgeHidden]="messages?.length <= 0">notifications</mat-icon>
 </a>
 
-<ng-template cdkConnectedOverlay
+<ng-template #panel="cdkConnectedOverlay"
+  cdkConnectedOverlay
   cdkConnectedOverlayHasBackdrop
   cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayOrigin]="trigger"
@@ -30,7 +31,7 @@
         <mat-list-item *ngFor="let message of messages; let i = index">
           <span mat-line>{{message}}</span>
           <button mat-icon-button
-            (click)="remove(i)"
+            (click)="removeMessage(i)"
             matTooltip="Mark As Read">
             <mat-icon>close</mat-icon>
           </button>

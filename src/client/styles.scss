@@ -131,4 +131,17 @@ body {
 			-webkit-box-shadow: 0 0 0 30px #fff inset;
 		}
 	}
+
+	// Material CDK Connected Overlay fullscreen
+	.cdk-overlay-pane.fullscreen {
+		top: 0 !important;
+		right: 0 !important;
+		bottom: 0 !important;
+		left: 0 !important;
+
+		> * {
+			width: 100vw;
+			height: 100vh;
+		}
+	}
 }
