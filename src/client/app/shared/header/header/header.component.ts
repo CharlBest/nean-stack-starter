@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet, MatSnackBar } from '@angular/material';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -17,6 +17,8 @@ import { HeaderType } from "./header-type.enum";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
+  @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
   activeHeader = HeaderType.Primary;
@@ -138,5 +140,14 @@ export class HeaderComponent implements OnInit {
 
   updateStoredTheme() {
     localStorage.setItem(this.isDarkThemeStorageKey, `${this.isDarkTheme}`);
+  }
+
+  openContextMenu() {
+    if (this.bpService.isWeb) {
+      this.contextMenuTrigger.openMenu();
+    } else {
+      this.contextMenuTrigger.closeMenu();
+      this.bottomSheet.open(this.bottomSheetContextMenu);
+    }
   }
 }

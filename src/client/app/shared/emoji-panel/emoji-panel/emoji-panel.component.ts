@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { MatBottomSheet, MatTabChangeEvent } from '@angular/material';
 import * as emojione from 'emojione';
+import { BreakpointService } from '../../breakpoint.service';
 
 @Component({
   selector: 'app-emoji-panel',
@@ -8,10 +9,10 @@ import * as emojione from 'emojione';
   styleUrls: ['./emoji-panel.component.scss']
 })
 export class EmojiPanelComponent implements OnInit {
-  isOpen = false;
   @Input() closeOnInsert = false;
-
   @Output() inserted: EventEmitter<string> = new EventEmitter();
+  @ViewChild('bottomSheet') bottomSheetRef: TemplateRef<any>;
+  isPanelForWebOpen = false;
   visibleEmoji: string;
   emojiList;
   emojiCategories = [
@@ -25,7 +26,8 @@ export class EmojiPanelComponent implements OnInit {
     new EmojiCategory('flags', 'Flags', 'flag')
   ];
 
-  constructor() { }
+  constructor(public bottomSheet: MatBottomSheet,
+    public bpService: BreakpointService) { }
 
   ngOnInit() {
     this.loadCategory(0);
@@ -38,7 +40,7 @@ export class EmojiPanelComponent implements OnInit {
         this.inserted.emit(img.title);
 
         if (this.closeOnInsert) {
-          this.isOpen = !this.isOpen;
+          this.isPanelForWebOpen = !this.isPanelForWebOpen;
         }
       }
     });
@@ -58,6 +60,17 @@ export class EmojiPanelComponent implements OnInit {
       }
       this.emojiCategories[categoryIndex].tabHTMLContent = emojione.toImage(shortname);
       this.emojiCategories[categoryIndex].hasViewed = true;
+    }
+  }
+
+  openPanel() {
+    if (this.bpService.isWeb) {
+      this.isPanelForWebOpen = true;
+    } else {
+      this.bottomSheet.open(this.bottomSheetRef, {
+        backdropClass: 'cdk-overlay-transparent-backdrop',
+        panelClass: 'emoji-panel'
+      });
     }
   }
 }

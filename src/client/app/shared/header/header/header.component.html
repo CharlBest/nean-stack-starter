@@ -36,16 +36,9 @@
     <app-notifications></app-notifications>
 
     <button mat-icon-button
-      *ngIf="bpService.isWeb"
       [matMenuTriggerFor]="menu"
-      [appTutorial]="tutorialTypeEnum.ContextMenu"
-      tutorialBackgroundColor="none"
-      matTooltip="Menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <button mat-icon-button
-      *ngIf="!bpService.isWeb"
-      (click)="bottomSheet.open(bottomSheetContextMenu)"
+      #contextMenuTrigger="matMenuTrigger"
+      (click)="openContextMenu()"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       tutorialBackgroundColor="none"
       matTooltip="Menu">
