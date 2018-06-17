@@ -1,24 +1,28 @@
-mat-tab-group {
-	width: 272px;
-	height: 272px;
+mat-card {
+	padding: 0;
 
-	.emoji-container {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, 36px);
+	mat-tab-group {
+		width: 272px;
+		height: 272px;
 
-		::ng-deep .emojione {
-			cursor: pointer;
-			border: 1px solid transparent;
+		.emoji-container {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, 36px);
 
-			&:hover {
-				border-color: lightgray;
-				border-radius: 4px;
+			::ng-deep .emojione {
+				cursor: pointer;
+				border: 1px solid transparent;
+
+				&:hover {
+					border-color: lightgray;
+					border-radius: 4px;
+				}
 			}
 		}
-	}
 
-	::ng-deep .mat-tab-label {
-		min-width: 34px;
-		padding: 0;
+		::ng-deep .mat-tab-label {
+			min-width: 34px;
+			padding: 0;
+		}
 	}
 }

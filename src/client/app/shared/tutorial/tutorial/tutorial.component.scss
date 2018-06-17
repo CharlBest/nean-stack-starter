@@ -1,28 +1,32 @@
 .tutorial-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
+	background: rgba(0, 0, 0, 0.5);
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
 }
 
 .tutorial-overlay-transparent {
-    @extend .tutorial-overlay;
-    background: none;
-    z-index: 12;
+	@extend .tutorial-overlay;
+	background: none;
+	z-index: 12;
 }
 
 .tutorial-box {
-    position: fixed;
-    z-index: 13;
-    width: 100%;
-    bottom: 20px;
-    text-align: center;
+	position: fixed;
+	z-index: 13;
+	width: 100%;
+	bottom: 20px;
+	text-align: center;
 
-    div {
-        color: white;
-    }
+	.tutorial-text {
+		color: white;
+	}
+
+	.previous-button {
+		margin-right: 20px;
+	}
 }

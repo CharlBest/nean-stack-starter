@@ -5,9 +5,9 @@
     <mat-card-content>
       <div>Email verified:
         <mat-icon *ngIf="user.emailVerified"
-          style="font-size: 1rem; color: green;">done</mat-icon>
+          class="email-verified">done</mat-icon>
         <mat-icon *ngIf="!user.emailVerified"
-          style="font-size: 1rem; color: red;">close</mat-icon>
+          class="email-not-verified">close</mat-icon>
       </div>
       <div>Sign-up date: {{user.dateCreated | date}}</div>
       <!-- <div>Profile views: {{user.views}}</div> -->

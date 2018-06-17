@@ -17,9 +17,9 @@
     </mat-form-field>
 
     <div *ngIf="message && !removingEmail"
-      style="color: green;">We added you</div>
+      class="message-success">We added you</div>
     <div *ngIf="message && removingEmail"
-      style="color: red;">We removed you</div>
+      class="message-error">We removed you</div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button

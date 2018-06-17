@@ -8,14 +8,14 @@
 <div *ngFor="let tut of tuts">
   <div *ngIf="tutorialInUrl == tut.tutorialType"
     class="tutorial-box">
-    <div>{{tut.text}}</div>
+    <div class="tutorial-text">{{tut.text}}</div>
 
     <br>
 
     <button mat-raised-button
       (click)="back()"
       *ngIf="!tut.isFirst"
-      style="margin-right: 20px;">Previous</button>
+      class="previous-button">Previous</button>
     <button mat-raised-button
       (click)="goToTutorial(tut)">
       <span *ngIf="!tut.isLast">Next</span>

@@ -9,8 +9,8 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 </h2>
 
 <div [hidden]="isProcessing || paymentSuccess"
-    style="min-width: 270px; max-width: 370px;">
-    <div style="width: 370px;"></div>
+    class="payment-container">
+    <div class="width-enforcer"></div>
     <form [formGroup]="form">
         <mat-dialog-content>
 
@@ -25,8 +25,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 <input formControlName="amount"
                     type="number"
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                    placeholder="Amount in euros"
-                    style="outline: none; border: none;" />
+                    placeholder="Amount in euros" />
 
                 <div *ngIf="serverErrors?.password"
                     class="validation-message">{{ serverErrors.password.message }}</div>
@@ -55,10 +54,8 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 
 <mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
     (click)="closeDialog()">
-    <div style="text-align: center;">
-        <mat-icon style="color: green; font-size: 3rem; width: 100%;">
-            check_circle
-        </mat-icon>
+    <div class="payment-successful-container">
+        <mat-icon>check_circle</mat-icon>
         <br>
         <p>Payment successful</p>
     </div>
