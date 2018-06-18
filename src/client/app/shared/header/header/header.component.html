@@ -18,25 +18,22 @@
     <span class="spacer"></span>
 
     <!-- Right -->
-    <a mat-icon-button
-      (click)="openPaymentDialog()">
-      <mat-icon>credit_card</mat-icon>
-    </a>
     <a mat-button
-      *ngIf="bpService.isWeb"
-      (click)="openPaymentDialog()">
-      Donate
+      (click)="openPaymentDialog()"
+      [class.mat-icon-button]="!bpService.isWeb"
+      matTooltip="Donate">
+      <mat-icon>credit_card</mat-icon>
+      <span *ngIf="bpService.isWeb">&nbsp;Donate</span>
     </a>
 
-    <a mat-icon-button
-      href="https://github.com/CharlBest/nean-stack-starter"
-      target="_blank">
-      <img src="assets/github-logo-white.svg">
-    </a>
     <a mat-button
-      *ngIf="bpService.isWeb"
       href="https://github.com/CharlBest/nean-stack-starter"
-      target="_blank">GitHub</a>
+      target="_blank"
+      [class.mat-icon-button]="!bpService.isWeb"
+      matTooltip="GitHub">
+      <img src="assets/github-logo-white.svg">
+      <span *ngIf="bpService.isWeb">&nbsp;GitHub</span>
+    </a>
 
     <app-notifications></app-notifications>
 
