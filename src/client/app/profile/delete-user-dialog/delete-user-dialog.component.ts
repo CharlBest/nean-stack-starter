@@ -21,6 +21,8 @@ export class DeleteUserDialogComponent {
 
     delete(username: string) {
         if (username === this.username) {
+            this.isProcessing = true;
+
             this.snackBar.open('Deleting', '', {
                 duration: 10000,
             });

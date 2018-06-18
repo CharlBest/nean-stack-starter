@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { VerifyService } from '../verify.service';
 
 @Component({
@@ -25,16 +26,15 @@ export class VerifyComponent implements OnInit {
 
           if (this.code !== undefined && this.code !== '') {
             this.verifyService.verifyEmail(this.code)
+              .pipe(finalize(() => this.isProcessing = false))
               .subscribe(data => {
                 if (data === true) {
                   this.verifyResult = true;
                 } else {
                   this.verifyResult = false;
                 }
-                this.isProcessing = false;
               }, error => {
                 this.verifyResult = false;
-                this.isProcessing = false;
               });
           }
         }
