@@ -18,25 +18,27 @@ export class VerifyComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      if (params.has('code')) {
-        this.code = params.get('code');
+    this.route.paramMap
+      .subscribe(params => {
+        if (params.has('code')) {
+          this.code = params.get('code');
 
-        if (this.code !== undefined && this.code !== '') {
-          this.verifyService.verifyEmail(this.code).subscribe(data => {
-            if (data === true) {
-              this.verifyResult = true;
-            } else {
-              this.verifyResult = false;
-            }
-            this.isProcessing = false;
-          }, error => {
-            this.verifyResult = false;
-            this.isProcessing = false;
-          });
+          if (this.code !== undefined && this.code !== '') {
+            this.verifyService.verifyEmail(this.code)
+              .subscribe(data => {
+                if (data === true) {
+                  this.verifyResult = true;
+                } else {
+                  this.verifyResult = false;
+                }
+                this.isProcessing = false;
+              }, error => {
+                this.verifyResult = false;
+                this.isProcessing = false;
+              });
+          }
         }
-      }
-    });
+      });
   }
 
   goToHome() {

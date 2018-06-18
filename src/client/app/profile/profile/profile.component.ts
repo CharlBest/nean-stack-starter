@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import * as emojione from 'emojione';
+import { finalize } from 'rxjs/operators';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -33,17 +34,18 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser() {
-    this.profileService.getUser().subscribe(data => {
-      this.user = data;
-      this.isProcessing = false;
+    this.profileService.getUser()
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(data => {
+        this.user = data;
 
-      if (this.user !== null && this.user.bio !== null && this.user.bio !== undefined && this.user.bio !== '') {
-        this.loadEmoji();
-      }
-    }, error => {
-      this.isProcessing = false;
-      // this.serverErrors = this.formService.getServerErrors(error);
-    });
+        if (this.user !== null && this.user.bio !== null && this.user.bio !== undefined && this.user.bio !== '') {
+          this.loadEmoji();
+        }
+      }, error => {
+        // TODO: apply error handeling
+        // this.serverErrors = this.formService.getServerErrors(error);
+      });
   }
 
   loadEmoji() {
@@ -65,10 +67,13 @@ export class ProfileComponent implements OnInit {
     const viewModel = new UpdateAvatarViewModel;
     viewModel.avatarUrl = downloadURL;
 
-    this.profileService.updateAvatar(viewModel).subscribe(data => {
-      this.user.avatarUrl = viewModel.avatarUrl;
-    }, error => {
-    });
+    // TODO: apply preloader
+    this.profileService.updateAvatar(viewModel)
+      .subscribe(() => {
+        this.user.avatarUrl = viewModel.avatarUrl;
+      }, error => {
+        // TODO: apply error handeling
+      });
   }
 
   removeAvatar() {
@@ -80,13 +85,15 @@ export class ProfileComponent implements OnInit {
       duration: 10000,
     });
 
-    this.profileService.resendEmailVerificationLink().subscribe(data => {
-      this.snackBar.dismiss();
-      this.snackBar.open('Sent', '', {
-        duration: 2000,
+    this.profileService.resendEmailVerificationLink()
+      .subscribe(() => {
+        this.snackBar.dismiss();
+        this.snackBar.open('Sent', '', {
+          duration: 2000,
+        });
+      }, error => {
+        // TODO: error handeling
       });
-    }, error => {
-    });
   }
 
   openDeleteAccountDialog() {

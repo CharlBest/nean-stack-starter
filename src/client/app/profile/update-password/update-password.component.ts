@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 import { Validators } from '../../../../shared/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -63,9 +64,9 @@ export class UpdatePasswordComponent implements OnInit {
     viewModel.password = this.form.get('password').value;
     viewModel.newPassword = this.form.get('newPassword').value;
 
-    this.profileService.updatePassword(viewModel).subscribe(
-      data => {
-        this.isProcessing = false;
+    this.profileService.updatePassword(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
         this.form.reset();
 
         this.snackBar.dismiss();
@@ -73,9 +74,7 @@ export class UpdatePasswordComponent implements OnInit {
           duration: 2000,
         });
       }, error => {
-        this.isProcessing = false;
         this.serverErrors = this.formService.getServerErrors(error);
-
         this.snackBar.dismiss();
       });
   }

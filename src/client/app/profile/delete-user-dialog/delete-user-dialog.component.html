@@ -19,3 +19,10 @@
     <button mat-raised-button
         mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
+
+<!-- TODO: check how this preloader looks -->
+<mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card>

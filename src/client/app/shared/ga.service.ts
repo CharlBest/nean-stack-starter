@@ -74,10 +74,11 @@ export class GaService {
   }
 
   private trackRouterNavigation() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.locationChanged(event.urlAfterRedirects);
-      }
-    });
+    this.router.events
+      .subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.locationChanged(event.urlAfterRedirects);
+        }
+      });
   }
 }

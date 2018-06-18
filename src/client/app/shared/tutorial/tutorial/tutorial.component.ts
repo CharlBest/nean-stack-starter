@@ -41,24 +41,26 @@ export class TutorialComponent implements OnInit {
     private tutorialService: TutorialService) { }
 
   ngOnInit() {
-    this.authService.loggedInUserId$.subscribe(id => {
-      this.loggedInUserId = id;
-    });
+    this.authService.loggedInUserId$
+      .subscribe(id => {
+        this.loggedInUserId = id;
+      });
 
-    this.route.queryParamMap.subscribe(params => {
-      if (params.has('tut')) {
-        this.tutorialInUrl = +params.get('tut');
-        this.active = true;
+    this.route.queryParamMap
+      .subscribe(params => {
+        if (params.has('tut')) {
+          this.tutorialInUrl = +params.get('tut');
+          this.active = true;
 
-        if (this.returnUrl === null) {
-          this.returnUrl = location.pathname || '/';
+          if (this.returnUrl === null) {
+            this.returnUrl = location.pathname || '/';
+          }
+        } else {
+          this.tutorialInUrl = null;
+          this.active = false;
+          this.returnUrl = null;
         }
-      } else {
-        this.tutorialInUrl = null;
-        this.active = false;
-        this.returnUrl = null;
-      }
-    });
+      });
   }
 
   goToTutorial(tutorial: Tutorial) {

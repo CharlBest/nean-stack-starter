@@ -20,28 +20,31 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() {
     // SnackBar
-    this.webSocketService.messages.subscribe((data) => {
-      // Add messages to queue
-      this.messages.push(data);
+    this.webSocketService.messages
+      .subscribe((data) => {
+        // Add messages to queue
+        this.messages.push(data);
 
-      // Show notification popup
-      this.snackBar.open(data, 'Say hallo back', {
-        duration: 5000,
-        verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
-        horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
-      }).onAction().subscribe(() => {
-        // Send message back
-        this.webSocketService.messages.next('Hallo to you too');
+        // Show notification popup
+        this.snackBar.open(data, 'Say hallo back', {
+          duration: 5000,
+          verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
+          horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
+        }).onAction()
+          .subscribe(() => {
+            // Send message back
+            this.webSocketService.messages.next('Hallo to you too');
+          });
       });
-    });
 
-    this.panel.attach.subscribe(() => {
-      if (this.bpService.isWeb) {
-        this.panel.overlayRef.overlayElement.classList.remove('fullscreen');
-      } else {
-        this.panel.overlayRef.overlayElement.classList.add('fullscreen');
-      }
-    });
+    this.panel.attach
+      .subscribe(() => {
+        if (this.bpService.isWeb) {
+          this.panel.overlayRef.overlayElement.classList.remove('fullscreen');
+        } else {
+          this.panel.overlayRef.overlayElement.classList.add('fullscreen');
+        }
+      });
   }
 
   removeMessage(index: number) {

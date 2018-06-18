@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 import { Validators } from '../../../../../shared/validation/validators';
 import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
 import { environment } from '../../../../environments/environment';
@@ -123,12 +124,11 @@ export class PaymentDialogComponent implements OnInit {
         viewModel.token = token;
         viewModel.amount = +this.form.get('amount').value;
 
-        this.paymentService.processPaymentRequest(viewModel).subscribe(
-            data => {
-                this.isProcessing = false;
+        this.paymentService.processPaymentRequest(viewModel)
+            .pipe(finalize(() => this.isProcessing = false))
+            .subscribe(() => {
                 this.paymentSuccess = true;
             }, error => {
-                this.isProcessing = false;
                 this.serverErrors = this.formService.getServerErrors(error);
             });
     }

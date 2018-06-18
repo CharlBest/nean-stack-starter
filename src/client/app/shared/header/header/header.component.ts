@@ -45,9 +45,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.themeOnInit();
 
-    this.authService.loggedInUserId$.subscribe(id => {
-      this.loggedInUserId = id;
-    });
+    this.authService.loggedInUserId$
+      .subscribe(id => {
+        this.loggedInUserId = id;
+      });
 
     this.router.events
       .pipe(
@@ -108,9 +109,10 @@ export class HeaderComponent implements OnInit {
 
       this.snackBar.open('Take the tour', 'Go', {
         duration: 20000,
-      }).onAction().subscribe(() => {
-        this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
-      });
+      }).onAction()
+        .subscribe(() => {
+          this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
+        });
     }
   }
 

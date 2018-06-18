@@ -30,13 +30,14 @@ export class EmojiPanelDirective implements OnInit {
     }
 
     emojiPanel() {
-        this.appEmojiPanel.inserted.subscribe(data => {
-            (<any>emojione).ascii = true;
-            const output = emojione.toImage(data);
+        this.appEmojiPanel.inserted
+            .subscribe(data => {
+                (<any>emojione).ascii = true;
+                const output = emojione.toImage(data);
 
-            const element = this.el.nativeElement as HTMLElement;
-            element.innerHTML = element.innerHTML + output;
-        });
+                const element = this.el.nativeElement as HTMLElement;
+                element.innerHTML = element.innerHTML + output;
+            });
     }
 
     private sanitize(content: string): string {

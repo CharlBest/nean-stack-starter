@@ -29,13 +29,14 @@ export class ReportDialogComponent {
             duration: 10000,
         });
 
-        this.sendReport(viewModel).subscribe(data => {
-            this.snackBar.dismiss();
+        this.sendReport(viewModel)
+            .subscribe(() => {
+                this.snackBar.dismiss();
 
-            this.snackBar.open('Sent', '', {
-                duration: 2000,
+                this.snackBar.open('Sent', '', {
+                    duration: 2000,
+                });
             });
-        });
     }
 
     private sendReport(viewModel: ReportUserViewModel): Observable<void> {

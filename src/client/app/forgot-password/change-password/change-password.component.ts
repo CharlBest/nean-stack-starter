@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Validators, trimString } from '../../../../shared/validation/validators';
+import { finalize } from 'rxjs/operators';
+import { trimString, Validators } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
@@ -55,12 +56,12 @@ export class ChangePasswordComponent implements OnInit {
     viewModel.code = this.code;
     viewModel.password = this.form.get('password').value;
 
-    this.forgotPasswordService.changeForgottenPassword(viewModel).subscribe(
-      data => {
+    this.forgotPasswordService.changeForgottenPassword(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
         const link = ['/login'];
         this.router.navigate(link);
       }, error => {
-        this.isProcessing = false;
         this.serverErrors = this.formService.getServerErrors(error);
       });
   }

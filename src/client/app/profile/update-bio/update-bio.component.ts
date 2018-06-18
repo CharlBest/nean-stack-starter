@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
 import { FormService } from '../../shared/form.service';
 import { ProfileService } from '../profile.service';
@@ -36,9 +37,9 @@ export class UpdateBioComponent implements OnInit {
         duration: 10000,
       });
 
-      this.profileService.updateBio(viewModel).subscribe(
-        data => {
-          this.isProcessing = false;
+      this.profileService.updateBio(viewModel)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(() => {
           this.content = viewModel.content;
 
           this.snackBar.dismiss();
@@ -46,9 +47,7 @@ export class UpdateBioComponent implements OnInit {
             duration: 2000,
           });
         }, error => {
-          this.isProcessing = false;
           this.serverErrors = this.formService.getServerErrors(error);
-
           this.snackBar.dismiss();
         });
     }

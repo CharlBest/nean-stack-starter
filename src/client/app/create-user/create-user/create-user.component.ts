@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, trimString } from '../../../../shared/validation/validators';
+import { finalize } from 'rxjs/operators';
+import { trimString, Validators } from '../../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -57,22 +58,25 @@ export class CreateUserComponent implements OnInit {
     viewModel.username = trimString(this.form.get('username').value);
     viewModel.password = this.form.get('password').value;
 
-    this.createUserService.createUser(viewModel).subscribe(
-      data => {
+    this.createUserService.createUser(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
         this.setUserToken();
       }, error => {
-        this.isProcessing = false;
         this.serverErrors = this.formService.getServerErrors(error);
       });
   }
 
   setUserToken() {
+    this.isProcessing = true;
+
     const model = new LoginViewModel();
     model.emailOrUsername = this.form.get('email').value;
     model.password = this.form.get('password').value;
 
-    this.loginService.login(model).subscribe(
-      data => {
+    this.loginService.login(model)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(data => {
         if (data !== null && data.token !== null) {
           this.authService.setToken(data.token, data.userId);
 
@@ -82,7 +86,6 @@ export class CreateUserComponent implements OnInit {
           alert('Authentication failed');
         }
       }, error => {
-        this.isProcessing = false;
         this.serverErrors = this.formService.getServerErrors(error);
       });
   }

@@ -22,14 +22,15 @@ export class TutorialDirective implements OnInit {
         this.backgroundColor = elementStyle.backgroundColor;
 
 
-        this.route.queryParamMap.subscribe(params => {
-            if (params.has('tut')) {
-                this.tutorialInUrl = +params.get('tut');
-                this.process();
-            } else {
-                this.reset();
-            }
-        });
+        this.route.queryParamMap
+            .subscribe(params => {
+                if (params.has('tut')) {
+                    this.tutorialInUrl = +params.get('tut');
+                    this.process();
+                } else {
+                    this.reset();
+                }
+            });
     }
 
     process() {

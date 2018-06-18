@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { trimString } from '../../../../shared/validation/validators';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -36,10 +37,11 @@ export class NewsletterComponent implements OnInit {
     const viewModel = new NewsletterMemberViewModel();
     viewModel.email = trimString(email);
 
-    this.newsletterService.createNewsletterMember(viewModel).subscribe(data => {
-      this.isProcessing = false;
-      this.message = true;
-    });
+    this.newsletterService.createNewsletterMember(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.message = true;
+      });
   }
 
   remove(email: string) {
@@ -48,9 +50,10 @@ export class NewsletterComponent implements OnInit {
     const viewModel = new NewsletterMemberViewModel();
     viewModel.email = trimString(email);
 
-    this.newsletterService.deleteNewsletterMember(viewModel).subscribe(data => {
-      this.isProcessing = false;
-      this.message = true;
-    });
+    this.newsletterService.deleteNewsletterMember(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.message = true;
+      });
   }
 }

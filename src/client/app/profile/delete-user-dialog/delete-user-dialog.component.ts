@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../shared/auth.service';
 import { ProfileService } from '../profile.service';
 
@@ -11,6 +12,7 @@ import { ProfileService } from '../profile.service';
 export class DeleteUserDialogComponent {
 
     @Input() username: string;
+    isProcessing = false;
 
     constructor(public snackBar: MatSnackBar,
         public dialog: MatDialog,
@@ -19,20 +21,23 @@ export class DeleteUserDialogComponent {
 
     delete(username: string) {
         if (username === this.username) {
-            this.dialog.closeAll();
-
             this.snackBar.open('Deleting', '', {
                 duration: 10000,
             });
 
-            this.profileService.deleteUser().subscribe(data => {
-                this.authService.removeToken();
-                this.snackBar.dismiss();
+            this.profileService.deleteUser()
+                .pipe(finalize(() => this.isProcessing = false))
+                .subscribe(() => {
+                    this.dialog.closeAll();
 
-                this.snackBar.open('Deleted', '', {
-                    duration: 2000,
+                    this.authService.removeToken();
+                    this.snackBar.dismiss();
+
+                    this.snackBar.open('Deleted', '', {
+                        duration: 2000,
+                    });
+                }, error => {
                 });
-            });
         }
     }
 }

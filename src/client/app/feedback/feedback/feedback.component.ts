@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormService } from '../../shared/form.service';
@@ -26,11 +27,12 @@ export class FeedbackComponent {
     const viewModel = new FeedbackViewModel();
     viewModel.content = content;
 
-    this.feedbackService.sendFeedback(viewModel).subscribe(data => {
-      this.router.navigate(['/']);
-    }, error => {
-      this.isProcessing = false;
-      this.serverErrors = this.formService.getServerErrors(error);
-    });
+    this.feedbackService.sendFeedback(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.router.navigate(['/']);
+      }, error => {
+        this.serverErrors = this.formService.getServerErrors(error);
+      });
   }
 }

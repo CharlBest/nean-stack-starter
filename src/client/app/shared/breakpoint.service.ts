@@ -19,11 +19,12 @@ export class BreakpointService implements OnDestroy {
     isWeb$ = this.isWebSubject.asObservable().pipe(share());
 
     constructor(private breakpointObserver: BreakpointObserver) {
-        this.breakpointObserver.observe(this.isWebMediaQueries).subscribe(data => {
-            if (this.isWebSubject.value !== data.matches) {
-                this.isWebSubject.next(data.matches);
-            }
-        })
+        this.breakpointObserver.observe(this.isWebMediaQueries)
+            .subscribe(data => {
+                if (this.isWebSubject.value !== data.matches) {
+                    this.isWebSubject.next(data.matches);
+                }
+            })
     }
 
     ngOnDestroy() {
