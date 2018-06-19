@@ -72,22 +72,8 @@ body {
 		}
 
 		// Custom preloader with Material progress spinner
-		.preloader {
+		mat-spinner {
 			margin: 0 auto;
-			max-width: 25px;
-			max-height: 25px;
-
-			svg {
-				max-width: 25px;
-				max-height: 25px;
-			}
-		}
-
-		//TODO: bad don't use important. fix!
-		.inline-preloader {
-			width: 24px !important;
-			height: 24px !important;
-			display: inline-block !important;
 		}
 
 		// Change color of visited links to primary theme color

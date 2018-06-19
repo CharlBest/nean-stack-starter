@@ -21,9 +21,7 @@
 <h4 *ngIf="searchResults?.length > 0">Search results</h4>
 
 <mat-card *ngIf="isProcessing">
-    <mat-card-content>
-        <mat-spinner class="preloader"></mat-spinner>
-    </mat-card-content>
+    <mat-spinner></mat-spinner>
 </mat-card>
 
 <mat-card *ngFor="let result of searchResults"
