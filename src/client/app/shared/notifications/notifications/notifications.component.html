@@ -4,10 +4,9 @@
   #trigger="cdkOverlayOrigin"
   (click)="isOpen = !isOpen"
   matTooltip="Notifications">
-  <mat-icon *ngIf="messages?.length <= 0">notifications</mat-icon>
   <mat-icon matBadge="{{messages?.length}}"
     matBadgeColor="warn"
-    *ngIf="messages?.length > 0">notifications</mat-icon>
+    [matBadgeHidden]="messages?.length <= 0">notifications</mat-icon>
 </a>
 
 <ng-template #panel="cdkConnectedOverlay"
