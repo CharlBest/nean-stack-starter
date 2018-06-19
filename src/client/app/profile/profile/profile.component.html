@@ -51,13 +51,14 @@
   <app-update-bio [content]="user.bio"></app-update-bio>
 
   <app-update-password></app-update-password>
+</div>
 
-  <mat-card *ngIf="!isProcessing && user === null">
-    <mat-card-content>
-      An error occurred
-    </mat-card-content>
-  </mat-card>
+<mat-card *ngIf="!isProcessing && user === null">
+  <mat-card-content>
+    An error occurred
+  </mat-card-content>
+</mat-card>
 
-  <mat-card *ngIf="isProcessing">
-    <mat-spinner></mat-spinner>
-  </mat-card>
+<mat-card *ngIf="isProcessing">
+  <mat-spinner></mat-spinner>
+</mat-card>
