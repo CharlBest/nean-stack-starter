@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "description": "A sample Angular, Node.js and Neo4j app",
   "license": "MIT",
   "repository": {
