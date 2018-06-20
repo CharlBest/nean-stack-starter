@@ -10,8 +10,8 @@
     <mat-form-field>
       <mat-label>email</mat-label>
       <input matInput
-        #input
-        type="text"
+        [formControl]="input"
+        type="email"
         autocomplete="email"
         required>
     </mat-form-field>
@@ -25,11 +25,13 @@
     <button mat-raised-button
       color="primary"
       *ngIf="!removingEmail"
-      (click)="add(input.value)">Join</button>
+      [disabled]="!input.valid"
+      (click)="add()">Join</button>
     <button mat-raised-button
       color="warn"
       *ngIf="removingEmail"
-      (click)="remove(input.value)">Remove</button>
+      [disabled]="!input.valid"
+      (click)="remove()">Remove</button>
   </mat-card-actions>
 </mat-card>
 

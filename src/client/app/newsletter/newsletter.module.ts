@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { NewsletterRoutingModule } from '../newsletter/newsletter-routing.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
@@ -17,6 +18,7 @@ const materialModules = [
   imports: [
     CommonModule,
     NewsletterRoutingModule,
+    ReactiveFormsModule,
     TutorialModule,
     ...materialModules
   ],

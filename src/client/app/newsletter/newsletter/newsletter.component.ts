@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { trimString } from '../../../../shared/validation/validators';
@@ -13,6 +14,7 @@ import { NewsletterService } from '../newsletter.service';
 })
 export class NewsletterComponent implements OnInit {
 
+  input = new FormControl;
   isProcessing = false;
   removingEmail = false;
   message = false;
@@ -31,11 +33,11 @@ export class NewsletterComponent implements OnInit {
     });
   }
 
-  add(email: string) {
+  add() {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = trimString(email);
+    viewModel.email = trimString(this.input.value);
 
     this.newsletterService.createNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -44,11 +46,11 @@ export class NewsletterComponent implements OnInit {
       });
   }
 
-  remove(email: string) {
+  remove() {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = trimString(email);
+    viewModel.email = trimString(this.input.value);
 
     this.newsletterService.deleteNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
