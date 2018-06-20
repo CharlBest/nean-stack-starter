@@ -7,7 +7,7 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 })
 export class TutorialDirective implements OnInit {
     @Input('appTutorial') appTutorial: TutorialType;
-    @Input() tutorialBackgroundColor = 'white';
+    @Input() tutorialBackgroundColor = 'none';
 
     private tutorialInUrl: TutorialType;
     private zIndex: string;
