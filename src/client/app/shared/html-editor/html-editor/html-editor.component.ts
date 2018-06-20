@@ -49,6 +49,10 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
 
         if (this.htmlContent !== null && this.htmlContent !== undefined) {
             this.editor.pasteHTML(this.htmlContent);
+            // Workaround for Quill editor focussing on input after pasteHTML
+            if (document.activeElement) {
+                (<any>document.activeElement).blur();
+            }
         }
 
         this.editor.getModule('toolbar').addHandler('image', () => {
