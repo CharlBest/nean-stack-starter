@@ -1,8 +1,8 @@
 import * as express from 'express';
+import { AppConfig } from '../config/app-config';
+import { Bootstrap } from './bootstrap';
 // import * as dotenv from 'dotenv';
 import { Server } from './server';
-import { Bootstrap } from './bootstrap';
-import { AppConfig } from '../config/app-config';
 
 export class App {
 
@@ -33,6 +33,8 @@ export class App {
         this.bootstrapApp.setupDatabase(this.express);
         // Setup core tools
         this.bootstrapApp.setupCoreTools(this.express);
+        // Setup Heroku ping to prevent free tier sleeping
+        this.bootstrapApp.setupHerokuPing(this.express);
 
         // TODO: add logger (maybe morgan (http)) or custom
 

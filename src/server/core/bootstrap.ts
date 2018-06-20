@@ -153,4 +153,12 @@ export class Bootstrap {
             next();
         });
     }
+
+    public setupHerokuPing(app: express.Application): void {
+        if (app.get('env') === 'development') {
+            setInterval(function () {
+                http.get('http://nean.io');
+            }, 1740000);
+        }
+    }
 }
