@@ -8,9 +8,7 @@ export class ReportDialogService {
     constructor(private dialog: MatDialog) { }
 
     report(uId: string) {
-        const dialogRef = this.dialog.open(ReportDialogComponent, {
-            // width: '300px',
-        });
+        const dialogRef = this.dialog.open(ReportDialogComponent);
 
         dialogRef.componentInstance.uId = uId;
 

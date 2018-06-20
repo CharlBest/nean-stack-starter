@@ -12,9 +12,7 @@ export class ShareDialogService {
 
     share(link: any[]) {
         const newLink = environment.hostUrlForSharingToWeb + this.router.createUrlTree(link).toString();
-        const dialogRef = this.dialog.open(ShareDialogComponent, {
-            // width: '300px',
-        });
+        const dialogRef = this.dialog.open(ShareDialogComponent);
 
         dialogRef.componentInstance.link = newLink;
 

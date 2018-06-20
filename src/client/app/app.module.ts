@@ -1,6 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { MatProgressSpinnerDefaultOptions, MatTooltipDefaultOptions, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material';
+import { MatDialogConfig, MatProgressSpinnerDefaultOptions, MatTooltipDefaultOptions, MAT_DIALOG_DEFAULT_OPTIONS, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +52,7 @@ import { WebSocketService } from './shared/websocket.service';
     },
     { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: <MatTooltipDefaultOptions>{ showDelay: 700 } },
     { provide: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, useValue: <MatProgressSpinnerDefaultOptions>{ diameter: 25, strokeWidth: 2 } },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: <MatDialogConfig>{ autoFocus: false } },
   ],
   bootstrap: [
     AppComponent
