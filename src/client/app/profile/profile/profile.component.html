@@ -12,7 +12,7 @@
       <div>Sign-up date: {{user.dateCreated | date}}</div>
       <!-- <div>Profile views: {{user.views}}</div> -->
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions class="profile-actions">
       <button mat-raised-button
         (click)="openShareDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileShare">Share</button>
