@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
-import { Validators, trimString } from '../../../shared/validation/validators';
+import { trimString, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -54,7 +54,7 @@ export class UsersController extends BaseController {
             }
         });
 
-        res.status(200).json(response);
+        res.status(201).json(response);
     }
 
     public async login(req: Request, res: Response, next: NextFunction) {
@@ -83,7 +83,7 @@ export class UsersController extends BaseController {
 
     public async report(req: Request, res: Response, next: NextFunction) {
         // TODO: do something
-        res.status(200).json({});
+        res.sendStatus(200);
     }
 
     // TODO: not in use

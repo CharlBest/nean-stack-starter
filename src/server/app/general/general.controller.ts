@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Validators, trimString } from '../../../shared/validation/validators';
+import { trimString, Validators } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
@@ -31,7 +31,7 @@ export class GeneralController extends BaseController {
         }
 
         const response = await this.generalService.createNewsletterMember(Database.getSession(req), viewModel);
-        res.status(200).json(response);
+        res.status(201).json(response);
     }
 
     public async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
@@ -63,7 +63,7 @@ export class GeneralController extends BaseController {
 
         // TODO: sending emails should happen is the service layer
         Emailer.feedbackEmail(viewModel.content);
-        res.status(200).json();
+        res.sendStatus(202);
     }
 
     public async paymentRequest(req: Request, res: Response, next: NextFunction) {
