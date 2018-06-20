@@ -8,16 +8,16 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button
-        ngxClipboard
-        [cbContent]="link"
-        (cbOnSuccess)="openSnackBar()">COPY</button>
     <button mat-icon-button
         *ngIf="hasWebShareApi()"
         (click)="webShare()"
         matTooltip="Share">
         <mat-icon>share</mat-icon>
     </button>
+    <button mat-raised-button
+        ngxClipboard
+        [cbContent]="link"
+        (cbOnSuccess)="openSnackBar()">COPY</button>
     <button mat-raised-button
         mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
