@@ -25,7 +25,6 @@ const materialModules = [
   ],
   declarations: [
     LoginComponent
-  ],
-  providers: []
+  ]
 })
 export class LoginModule { }

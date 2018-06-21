@@ -30,7 +30,6 @@ const materialModules = [
   declarations: [
     HomeComponent,
     SearchBarComponent
-  ],
-  providers: []
+  ]
 })
 export class HomeModule { }

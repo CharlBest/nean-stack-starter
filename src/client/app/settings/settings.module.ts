@@ -26,7 +26,6 @@ const materialModules = [
     PaymentsComponent,
     WebhooksComponent,
     LanguageComponent
-  ],
-  providers: []
+  ]
 })
 export class SettingsModule { }

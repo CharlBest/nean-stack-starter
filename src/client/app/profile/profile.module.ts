@@ -48,7 +48,6 @@ const materialModules = [
     UpdatePasswordComponent,
     DeleteUserDialogComponent
   ],
-  providers: [],
   entryComponents: [
     DeleteUserDialogComponent
   ]

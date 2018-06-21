@@ -22,7 +22,6 @@ const materialModules = [
     HelpComponent,
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
-  ],
-  providers: []
+  ]
 })
 export class LegalModule { }

@@ -19,7 +19,6 @@ const materialModules = [
     declarations: [
         ReportDialogComponent
     ],
-    providers: [],
     entryComponents: [
         ReportDialogComponent
     ]

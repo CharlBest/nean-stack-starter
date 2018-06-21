@@ -27,7 +27,6 @@ const materialModules = [
   declarations: [
     ForgotPasswordComponent,
     ChangePasswordComponent,
-  ],
-  providers: []
+  ]
 })
 export class ForgotPasswordModule { }

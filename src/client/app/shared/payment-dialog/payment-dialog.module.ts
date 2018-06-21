@@ -23,7 +23,6 @@ const materialModules = [
     declarations: [
         PaymentDialogComponent
     ],
-    providers: [],
     entryComponents: [
         PaymentDialogComponent
     ]

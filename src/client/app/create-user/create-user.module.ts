@@ -23,7 +23,6 @@ const materialModules = [
   ],
   declarations: [
     CreateUserComponent
-  ],
-  providers: []
+  ]
 })
 export class CreateUserModule { }

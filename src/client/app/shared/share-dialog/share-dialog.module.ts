@@ -21,7 +21,6 @@ const materialModules = [
     declarations: [
         ShareDialogComponent
     ],
-    providers: [],
     entryComponents: [
         ShareDialogComponent
     ]

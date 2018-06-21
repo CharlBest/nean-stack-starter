@@ -23,7 +23,6 @@ const materialModules = [
   ],
   declarations: [
     NewsletterComponent
-  ],
-  providers: []
+  ]
 })
 export class NewsletterModule { }

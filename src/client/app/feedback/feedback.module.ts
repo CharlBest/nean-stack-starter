@@ -21,7 +21,6 @@ const materialModules = [
   ],
   declarations: [
     FeedbackComponent
-  ],
-  providers: []
+  ]
 })
 export class FeedbackModule { }

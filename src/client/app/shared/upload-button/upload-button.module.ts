@@ -20,7 +20,6 @@ const materialModules = [
   declarations: [
     UploadButtonComponent
   ],
-  providers: [],
   exports: [
     UploadButtonComponent
   ]

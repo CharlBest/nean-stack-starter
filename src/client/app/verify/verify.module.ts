@@ -19,7 +19,6 @@ const materialModules = [
   ],
   declarations: [
     VerifyComponent
-  ],
-  providers: []
+  ]
 })
 export class VerifyModule { }
