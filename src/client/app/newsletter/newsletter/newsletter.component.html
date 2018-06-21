@@ -11,9 +11,18 @@
       <mat-label>email</mat-label>
       <input matInput
         [formControl]="input"
+        [email]="true"
         type="email"
         autocomplete="email"
         required>
+      <mat-error>
+        <ng-container *ngIf="input.hasError('email')">
+          Invalid email address
+        </ng-container>
+        <ng-container *ngIf="input.hasError('required')">
+          Email address is required
+        </ng-container>
+      </mat-error>
     </mat-form-field>
 
     <div *ngIf="message && !removingEmail"
