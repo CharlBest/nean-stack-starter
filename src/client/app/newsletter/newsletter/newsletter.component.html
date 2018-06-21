@@ -14,7 +14,8 @@
         [email]="true"
         type="email"
         autocomplete="email"
-        required>
+        required
+        [attr.autofocus]="bpService.isWeb || null">
       <mat-error>
         <ng-container *ngIf="input.hasError('email')">
           Invalid email address

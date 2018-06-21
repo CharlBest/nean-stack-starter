@@ -8,6 +8,7 @@ import { LoginViewModel } from '../../../../shared/view-models/create-user/login
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
+import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormService } from '../../shared/form.service';
 import { CreateUserService } from '../create-user.service';
 
@@ -27,7 +28,8 @@ export class CreateUserComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private authService: AuthService,
-    private formService: FormService) {
+    private formService: FormService,
+    public bpService: BreakpointService) {
   }
 
   ngOnInit() {

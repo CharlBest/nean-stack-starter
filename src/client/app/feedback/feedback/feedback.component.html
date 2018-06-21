@@ -8,7 +8,8 @@
       <mat-label>type here...</mat-label>
       <textarea matInput
         #inputArea
-        rows="10"></textarea>
+        rows="10"
+        [attr.autofocus]="bpService.isWeb || null"></textarea>
       <mat-hint *ngIf="inputArea.value?.length < 10">Minimum of {{inputArea.value?.length}}/10 characters</mat-hint>
     </mat-form-field>
   </mat-card-content>

@@ -17,7 +17,8 @@
                     formControlName="emailOrUsername"
                     type="text"
                     autocomplete="email"
-                    required>
+                    required
+                    [attr.autofocus]="bpService.isWeb || null">
             </mat-form-field>
             <div *ngIf="serverErrors?.emailOrUsername"
                 class="validation-message">{{ serverErrors.emailOrUsername.message }}</div>

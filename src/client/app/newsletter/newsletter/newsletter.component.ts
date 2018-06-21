@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { trimString } from '../../../../shared/validation/validators';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { BreakpointService } from '../../shared/breakpoint.service';
 import { NewsletterService } from '../newsletter.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class NewsletterComponent implements OnInit {
   tutorialTypeEnum = TutorialType;
 
   constructor(private newsletterService: NewsletterService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    public bpService: BreakpointService) { }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {

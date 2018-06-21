@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { trimString, Validators } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
+import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormService } from '../../shared/form.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
@@ -24,7 +25,8 @@ export class ChangePasswordComponent implements OnInit {
     private forgotPasswordService: ForgotPasswordService,
     private fb: FormBuilder,
     private router: Router,
-    private formService: FormService) { }
+    private formService: FormService,
+    public bpService: BreakpointService) { }
 
   ngOnInit() {
     this.formOnInit();

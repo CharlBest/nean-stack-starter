@@ -7,6 +7,7 @@ import { LoginViewModel } from '../../../../shared/view-models/create-user/login
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
+import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormService } from '../../shared/form.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private formService: FormService) {
+    private formService: FormService,
+    public bpService: BreakpointService) {
   }
 
   ngOnInit() {

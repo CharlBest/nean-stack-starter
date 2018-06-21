@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../shared/auth.service';
+import { BreakpointService } from '../../shared/breakpoint.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class DeleteUserDialogComponent {
     constructor(public snackBar: MatSnackBar,
         public dialog: MatDialog,
         private profileService: ProfileService,
-        private authService: AuthService) { }
+        private authService: AuthService,
+        public bpService: BreakpointService) { }
 
     delete(username: string) {
         if (username === this.username) {

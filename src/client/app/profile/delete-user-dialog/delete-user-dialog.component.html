@@ -9,7 +9,8 @@
         <input matInput
             #usernameInput
             type="text"
-            required>
+            required
+            [attr.autofocus]="bpService.isWeb || null">
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
