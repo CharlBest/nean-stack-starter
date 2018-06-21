@@ -15,6 +15,7 @@
   <mat-card-actions>
     <button mat-raised-button
       color="primary"
+      type="button"
       [disabled]="inputArea.value === '' || inputArea.value === undefined || inputArea.value?.length < 10"
       (click)="send(inputArea.value)">Send</button>
   </mat-card-actions>

@@ -14,18 +14,23 @@
     </mat-card-content>
     <mat-card-actions class="profile-actions">
       <button mat-raised-button
+        type="button"
         (click)="openShareDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileShare">Share</button>
       <button mat-raised-button
+        type="button"
         (click)="openReportDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileReport">Report</button>
       <button mat-raised-button
+        type="button"
         (click)="resendEmailVerificationLink()"
         *ngIf="!user.emailVerified">Resend email verification link</button>
       <button mat-raised-button
+        type="button"
         (click)="profileTour()">Profile tour</button>
       <button mat-raised-button
         color="warn"
+        type="button"
         (click)="openDeleteAccountDialog()"
         [appTutorial]="tutorialTypeEnum.DeleteUser">Delete account</button>
     </mat-card-actions>
@@ -36,6 +41,7 @@
     <mat-card-content>
       <button mat-raised-button
         color="warn"
+        type="button"
         (click)="removeAvatar()"
         *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
       <app-upload-button (onUploadComplete)="updateAvatar($event)"

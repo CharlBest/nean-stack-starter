@@ -40,6 +40,7 @@
     <app-notifications></app-notifications>
 
     <button mat-icon-button
+      type="button"
       [matMenuTriggerFor]="menu"
       #contextMenuTrigger="matMenuTrigger"
       (click)="openContextMenu()"
@@ -61,6 +62,7 @@
   <mat-toolbar color="primary">
     <div (click)="back()">
       <button mat-icon-button
+        type="button"
         matTooltip="Back">
         <mat-icon>arrow_back</mat-icon>
       </button>

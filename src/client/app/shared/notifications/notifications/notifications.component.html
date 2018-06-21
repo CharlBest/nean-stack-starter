@@ -21,6 +21,7 @@
     <div class="header">
       <strong class="title">Notifications</strong>
       <button mat-icon-button
+        type="button"
         (click)="isOpen = false"
         matTooltip="Exit Notifications">
         <mat-icon>close</mat-icon>
@@ -31,6 +32,7 @@
         <mat-list-item *ngFor="let message of messages; let i = index">
           <span mat-line>{{message}}</span>
           <button mat-icon-button
+            type="button"
             (click)="removeMessage(i)"
             matTooltip="Mark As Read">
             <mat-icon>close</mat-icon>

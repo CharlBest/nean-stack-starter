@@ -33,11 +33,13 @@
   <mat-card-actions>
     <button mat-raised-button
       color="primary"
+      type="button"
       *ngIf="!removingEmail"
       [disabled]="!input.valid"
       (click)="add()">Join</button>
     <button mat-raised-button
       color="warn"
+      type="button"
       *ngIf="removingEmail"
       [disabled]="!input.valid"
       (click)="remove()">Remove</button>
