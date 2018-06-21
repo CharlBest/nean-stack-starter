@@ -29,8 +29,9 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
 * Basic web socket connection
+* Notifications area/panel
 * Stripe Payment integration
-* Custom Material theme
+* Custom Material theme + font (Night Mode)
 
 Client pages
 
