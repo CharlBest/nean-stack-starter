@@ -84,7 +84,42 @@
 
 <body>
   <app-root>
-    <mat-spinner></mat-spinner>
+    <style>
+      body app-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #673ab7;
+        height: 100vh;
+      }
+
+      div {
+        color: #fff;
+        font-weight: bold;
+        font-size: 30vh;
+        opacity: 0.8;
+      }
+
+      div span {
+        display: inline-block;
+        animation: pulse 0.4s alternate infinite ease-in-out;
+      }
+
+      div span:nth-child(odd) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes pulse {
+        to {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+      }
+    </style>
+    <div>
+      <span>{</span>
+      <span>}</span>
+    </div>
   </app-root>
 
   <noscript>
