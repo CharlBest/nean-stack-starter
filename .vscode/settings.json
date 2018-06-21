@@ -1,0 +1,10 @@
+{
+    "stylefmt.useStylelintConfigOverrides": true,
+    "stylelint.configOverrides": {
+        "indentation": "tab"
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true
+}
