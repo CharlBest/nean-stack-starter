@@ -9,10 +9,13 @@
       <textarea matInput
         #inputArea
         rows="10"></textarea>
+      <mat-hint *ngIf="inputArea.value?.length < 10">Minimum of {{inputArea.value?.length}}/10 characters</mat-hint>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
+      color="primary"
+      [disabled]="inputArea.value === '' || inputArea.value === undefined || inputArea.value?.length < 10"
       (click)="send(inputArea.value)">Send</button>
   </mat-card-actions>
 </mat-card>
