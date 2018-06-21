@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ReportDialogService {
 
     constructor(private dialog: MatDialog) { }

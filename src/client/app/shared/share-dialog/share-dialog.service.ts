@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ShareDialogService {
 
     constructor(private dialog: MatDialog,
