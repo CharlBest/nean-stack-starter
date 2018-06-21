@@ -6,7 +6,9 @@ import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/fo
 import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ForgotPasswordService {
 
     constructor(private http: HttpClient) { }

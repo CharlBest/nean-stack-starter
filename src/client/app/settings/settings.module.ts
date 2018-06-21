@@ -5,7 +5,6 @@ import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { LanguageComponent } from './language/language.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { PaymentsComponent } from './payments/payments.component';
-import { SettingsService } from './settings.service';
 import { SettingsComponent } from './settings/settings.component';
 import { WebhooksComponent } from './webhooks/webhooks.component';
 
@@ -28,8 +27,6 @@ const materialModules = [
     WebhooksComponent,
     LanguageComponent
   ],
-  providers: [
-    SettingsService
-  ]
+  providers: []
 })
 export class SettingsModule { }

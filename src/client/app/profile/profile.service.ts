@@ -8,7 +8,9 @@ import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-b
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProfileService {
 
   constructor(private http: HttpClient) { }

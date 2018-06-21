@@ -3,8 +3,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { LoggerService } from './logger.service';
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GaService {
 
   static initializeDelay = 1000;

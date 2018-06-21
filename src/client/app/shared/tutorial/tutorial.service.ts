@@ -7,7 +7,9 @@ import { CompletedTutorial } from '../../../../shared/view-models/tutorial/compl
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TutorialService {
     constructor(private route: ActivatedRoute,
         private router: Router,

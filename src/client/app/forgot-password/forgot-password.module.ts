@@ -6,7 +6,6 @@ import { ForgotPasswordRoutingModule } from '../forgot-password/forgot-password-
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { ForgotPasswordService } from './forgot-password.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const materialModules = [
@@ -29,8 +28,6 @@ const materialModules = [
     ForgotPasswordComponent,
     ChangePasswordComponent,
   ],
-  providers: [
-    ForgotPasswordService
-  ]
+  providers: []
 })
 export class ForgotPasswordModule { }

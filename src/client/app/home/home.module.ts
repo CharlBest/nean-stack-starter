@@ -5,7 +5,6 @@ import { MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatInput
 import { MediaModule } from '../shared/media/media.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeService } from './home.service';
 import { HomeComponent } from './home/home.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 
@@ -32,8 +31,6 @@ const materialModules = [
     HomeComponent,
     SearchBarComponent
   ],
-  providers: [
-    HomeService
-  ]
+  providers: []
 })
 export class HomeModule { }

@@ -5,7 +5,9 @@ import { GeneralRoutes } from '../../../../shared/routes/general.routes';
 import { PaymentRequestViewModel } from '../../../../shared/view-models/payment/payment-request.view-model';
 import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PaymentService {
 
     constructor(private http: HttpClient) { }

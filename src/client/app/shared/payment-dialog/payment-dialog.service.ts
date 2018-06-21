@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PaymentDialogService {
 
     constructor(private dialog: MatDialog) { }

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 import { VerifyRoutingModule } from '../verify/verify-routing.module';
-import { VerifyService } from './verify.service';
 import { VerifyComponent } from './verify/verify.component';
 
 const materialModules = [
@@ -21,8 +20,6 @@ const materialModules = [
   declarations: [
     VerifyComponent
   ],
-  providers: [
-    VerifyService
-  ]
+  providers: []
 })
 export class VerifyModule { }

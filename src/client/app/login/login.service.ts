@@ -6,7 +6,9 @@ import { LoginViewModel } from '../../../shared/view-models/create-user/login.vi
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LoginService {
 
     constructor(private http: HttpClient) { }

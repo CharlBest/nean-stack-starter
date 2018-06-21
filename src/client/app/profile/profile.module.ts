@@ -12,7 +12,6 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { ProfileRoutingModule } from './profile-routing.module';
-import { ProfileService } from './profile.service';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateBioComponent } from './update-bio/update-bio.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
@@ -49,9 +48,7 @@ const materialModules = [
     UpdatePasswordComponent,
     DeleteUserDialogComponent
   ],
-  providers: [
-    ProfileService
-  ],
+  providers: [],
   entryComponents: [
     DeleteUserDialogComponent
   ]

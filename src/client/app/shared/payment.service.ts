@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PaymentService {
 
   // NB: needs to provide the payments controller in module this service is being used

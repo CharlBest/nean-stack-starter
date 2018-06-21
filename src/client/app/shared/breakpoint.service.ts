@@ -3,7 +3,9 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class BreakpointService implements OnDestroy {
 
     private isWebMediaQueries = [

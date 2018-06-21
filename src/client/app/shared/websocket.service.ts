@@ -3,7 +3,9 @@ import { Observable, Observer, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class WebSocketService {
 
     public messages: Subject<string>;

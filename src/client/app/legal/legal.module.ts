@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatRadioModule } from '@angular/material';
 import { HelpComponent } from './help/help.component';
 import { LegalRoutingModule } from './legal-routing.module';
-import { LegalService } from './legal.service';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 
@@ -24,8 +23,6 @@ const materialModules = [
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
   ],
-  providers: [
-    LegalService
-  ]
+  providers: []
 })
 export class LegalModule { }

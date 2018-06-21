@@ -6,7 +6,9 @@ import { UserRoutes } from '../../../shared/routes/user.routes';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CreateUserService {
 
     constructor(private http: HttpClient) { }

@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class VerifyService {
 
     constructor(private http: HttpClient) { }

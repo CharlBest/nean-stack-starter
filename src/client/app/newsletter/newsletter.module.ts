@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { NewsletterRoutingModule } from '../newsletter/newsletter-routing.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
-import { NewsletterService } from './newsletter.service';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 
 const materialModules = [
@@ -25,8 +24,6 @@ const materialModules = [
   declarations: [
     NewsletterComponent
   ],
-  providers: [
-    NewsletterService
-  ]
+  providers: []
 })
 export class NewsletterModule { }

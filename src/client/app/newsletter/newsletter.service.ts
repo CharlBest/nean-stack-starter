@@ -5,7 +5,9 @@ import { GeneralRoutes } from '../../../shared/routes/general.routes';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NewsletterService {
 
     constructor(private http: HttpClient) { }
