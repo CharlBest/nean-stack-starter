@@ -1,21 +1,22 @@
 {
-    "short_name": "NEAN",
-    "name": "NEAN",
-    "icons": [
-        {
-            "src": "assets/logo-color-194x194.png",
-            "sizes": "194x194 512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "assets/logo-color-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png"
-        }
-    ],
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#673ab7",
-    "description": "NEAN stack starter"
+  "short_name": "NEAN",
+  "name": "NEAN",
+  "icons": [
+    {
+      "src": "assets/logo-color-194x194.png",
+      "sizes": "194x194 512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo-color-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#673ab7",
+  "description": "NEAN stack starter"
 }

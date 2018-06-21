@@ -10,6 +10,8 @@ import { HeaderModule } from './shared/header/header.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     AppRoutingModule,
     HeaderModule,
     FooterModule,
-    TutorialModule
+    TutorialModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     Title,
