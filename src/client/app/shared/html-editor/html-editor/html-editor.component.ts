@@ -31,6 +31,24 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     }
 
     initQuillEditor() {
+        // Override toolbar icons
+        var icons = Quill.import('ui/icons');
+        const openingTag = '<mat-icon class="mat-icon material-icons">';
+        const closingTag = '</mat-icon>';
+
+        icons['bold'] = `${openingTag}format_bold${closingTag}`;
+        icons['italic'] = `${openingTag}format_italic${closingTag}`;
+        icons['header'] = {
+            '2': `${openingTag}title${closingTag}`
+        };
+        icons['list'] = {
+            'ordered': `${openingTag}format_list_numbered${closingTag}`,
+            'bullet': `${openingTag}format_list_bulleted${closingTag}`
+        };
+        icons['link'] = `${openingTag}insert_link${closingTag}`;
+        icons['image'] = `${openingTag}insert_photo${closingTag}`;
+
+        // Initialize
         this.editor = new Quill(`#${this.editorId}`, {
             modules: {
                 toolbar: [
