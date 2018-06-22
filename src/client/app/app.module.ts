@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatDialogConfig, MatProgressSpinnerDefaultOptions, MatTooltipDefaultOptions, MAT_DIALOG_DEFAULT_OPTIONS, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './shared/footer/footer.module';
@@ -10,8 +12,6 @@ import { HeaderModule } from './shared/header/header.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { environment } from '../environments/environment';
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: <MatDialogConfig>{ autoFocus: false }
+      useValue: <MatDialogConfig>{ autoFocus: false, hasBackdrop: true }
     },
   ],
   bootstrap: [
