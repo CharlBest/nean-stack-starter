@@ -23,7 +23,8 @@
       <button mat-icon-button
         type="button"
         (click)="isOpen = false"
-        matTooltip="Exit Notifications">
+        matTooltip="Exit Notifications"
+        aria-label="Exit Notifications">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -34,7 +35,8 @@
           <button mat-icon-button
             type="button"
             (click)="removeMessage(i)"
-            matTooltip="Mark As Read">
+            matTooltip="Mark As Read"
+            aria-label="Mark As Read">
             <mat-icon>close</mat-icon>
           </button>
         </mat-list-item>

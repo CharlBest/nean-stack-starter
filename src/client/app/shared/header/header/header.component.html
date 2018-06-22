@@ -21,7 +21,8 @@
     <a mat-button
       (click)="openPaymentDialog()"
       [class.mat-icon-button]="!bpService.isWeb"
-      matTooltip="Donate">
+      matTooltip="Donate"
+      aria-label="Donate">
       <mat-icon>credit_card</mat-icon>
       <span *ngIf="bpService.isWeb">&nbsp;Donate</span>
     </a>
@@ -31,7 +32,8 @@
       target="_blank"
       rel="noopener"
       [class.mat-icon-button]="!bpService.isWeb"
-      matTooltip="GitHub">
+      matTooltip="GitHub"
+      aria-label="GitHub">
       <img src="assets/github-logo-white.svg"
         alt="GitHub">
       <span *ngIf="bpService.isWeb">&nbsp;GitHub</span>
@@ -45,7 +47,8 @@
       #contextMenuTrigger="matMenuTrigger"
       (click)="openContextMenu()"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
-      matTooltip="Menu">
+      matTooltip="Menu"
+      aria-label="Menu">
       <mat-icon>more_vert</mat-icon>
     </button>
   </mat-toolbar>
@@ -63,7 +66,8 @@
     <div (click)="back()">
       <button mat-icon-button
         type="button"
-        matTooltip="Back">
+        matTooltip="Back"
+        aria-label="Back">
         <mat-icon>arrow_back</mat-icon>
       </button>
 

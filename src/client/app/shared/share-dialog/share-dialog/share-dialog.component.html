@@ -12,7 +12,8 @@
         type="button"
         *ngIf="hasWebShareApi()"
         (click)="webShare()"
-        matTooltip="Share">
+        matTooltip="Share"
+        aria-label="Share">
         <mat-icon>share</mat-icon>
     </button>
     <button mat-raised-button
