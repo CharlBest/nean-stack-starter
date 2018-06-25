@@ -1,6 +1,6 @@
 import * as express from 'express';
-import { AppConfig } from '../config/app-config';
 import { Bootstrap } from './bootstrap';
+import { AppConfig } from './config/app-config';
 // import * as dotenv from 'dotenv';
 import { Server } from './server';
 
