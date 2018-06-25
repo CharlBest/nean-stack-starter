@@ -1,7 +1,6 @@
 export const environment = {
     production: getEnvironmentVariable('NODE_ENV', 'development'),
     port: getEnvironmentVariable('PORT', 3000),
-    appHost: getEnvironmentVariable('APP_HOST', ''),
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
         username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),

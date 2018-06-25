@@ -22,7 +22,6 @@ const root = './';
 export class Bootstrap {
 
     public defineExpressApp(app: express.Application) {
-        app.set('host', environment.appHost);
         app.set('port', process.env.PORT || Server.normalizePort(environment.port));
     }
 
