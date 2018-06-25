@@ -83,7 +83,7 @@ export class PaymentDialogComponent implements OnInit {
             this.stripeCard.mount('#card-element');
 
             // Handle real-time validation errors from the card Element.
-            this.stripeCard.addEventListener('change', function (event) {
+            this.stripeCard.addEventListener('change', (event) => {
                 const displayError = document.getElementById('card-errors');
                 if (event.error) {
                     displayError.textContent = event.error.message;
