@@ -3,7 +3,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { Database } from '../../core/database';
-import { BaseRepository, Schema, Users } from '../shared/base-repository';
+import { BaseRepository } from '../shared/base-repository';
 
 export class UsersRepository extends BaseRepository {
 
@@ -12,8 +12,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async createUser(session: neo4j.Session, uId: string, email: string, username: string, password: string, passwordSalt: string, emailCode: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.CreateUser)}`);
-        const result = await session.run(query.data, { uId, email, username, password, passwordSalt, emailCode });
+        const result = await session.run(this.query.users.createUser, { uId, email, username, password, passwordSalt, emailCode });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -24,8 +23,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async doesUsernameAndEmailExist(session: neo4j.Session, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.DoesUsernameAndEmailExist)}`);
-        const result = await session.run(query.data, { email, username });
+        const result = await session.run(this.query.users.doesUsernameAndEmailExist, { email, username });
 
         const model = result.records.map(x => {
             const localModel = new DoesUsernameAndEmailExist();
@@ -42,8 +40,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async getUser(session: neo4j.Session, emailOrUsername: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.GetUser)}`);
-        const result = await session.run(query.data, { emailOrUsername });
+        const result = await session.run(this.query.users.getUser, { emailOrUsername });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -54,8 +51,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async getUserById(session: neo4j.Session, userId: number): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.GetUserById)}`);
-        const result = await session.run(query.data, { userId });
+        const result = await session.run(this.query.users.getUserById, { userId });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -66,8 +62,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async forgotPassword(session: neo4j.Session, email: string, code: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.AddForgottenPasswordCode)}`);
-        const result = await session.run(query.data, { email, code });
+        const result = await session.run(this.query.users.addForgottenPasswordCode, { email, code });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -78,8 +73,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async changeForgottenPassword(session: neo4j.Session, email: string, code: string, password: string, passwordSalt: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.ChangeForgottenPassword)}`);
-        const result = await session.run(query.data, { email, code, password, passwordSalt });
+        const result = await session.run(this.query.users.changeForgottenPassword, { email, code, password, passwordSalt });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -90,8 +84,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async verifyEmail(session: neo4j.Session, userId: number, code: string): Promise<boolean> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.VerifyEmail)}`);
-        const result = await session.run(query.data, { userId, code });
+        const result = await session.run(this.query.users.verifyEmail, { userId, code });
 
         if (result.records.length > 0) {
             return result.records[0].get('userExist');
@@ -101,8 +94,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async updateAvatar(session: neo4j.Session, userId: number, avatarUrl: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.UpdateAvatar)}`);
-        const result = await session.run(query.data, { userId, avatarUrl });
+        const result = await session.run(this.query.users.updateAvatar, { userId, avatarUrl });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -113,8 +105,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async updateBio(session: neo4j.Session, userId: number, bio: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.UpdateBio)}`);
-        const result = await session.run(query.data, { userId, bio });
+        const result = await session.run(this.query.users.updateBio, { userId, bio });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -125,8 +116,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async updatePassword(session: neo4j.Session, userId: number, password: string, passwordSalt: string): Promise<UserModel> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.UpdatePassword)}`);
-        const result = await session.run(query.data, { userId, password, passwordSalt });
+        const result = await session.run(this.query.users.updatePassword, { userId, password, passwordSalt });
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
         if (model !== null && model.length > 0) {
@@ -137,8 +127,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async deleteUser(session: neo4j.Session, userId: number): Promise<boolean> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.DeleteUser)}`);
-        const result = await session.run(query.data, { userId });
+        const result = await session.run(this.query.users.deleteUser, { userId });
 
         if (result.records) {
             return true;
@@ -148,8 +137,7 @@ export class UsersRepository extends BaseRepository {
     }
 
     public async completedTutorial(session: neo4j.Session, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
-        const query = await import(`../../database/queries/${this.getQueryPath(Schema.Users, Users.CompletedTutorial)}`);
-        const result = await session.run(query.data, { userId, tutorialType: viewModel.tutorialType, didSkip: viewModel.didSkip });
+        const result = await session.run(this.query.users.completedTutorial, { userId, tutorialType: viewModel.tutorialType, didSkip: viewModel.didSkip });
 
         if (result.records) {
             return true;
