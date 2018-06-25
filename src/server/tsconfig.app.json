@@ -1,6 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  // "compileOnSave": true,
   "compilerOptions": {
     "outDir": "",
     "module": "commonjs",
