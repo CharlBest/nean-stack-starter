@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export class BaseController {
+export abstract class BaseController {
     constructor() { }
     // TODO: create convienient responses .notFound()... in base controller
 

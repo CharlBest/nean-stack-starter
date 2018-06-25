@@ -1,3 +1,3 @@
-export class BaseService {
+export abstract class BaseService {
 
 }
