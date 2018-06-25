@@ -3,25 +3,25 @@ export abstract class BaseRepository {
 
     constructor() { }
 
-    protected getQueryPath(folder: Folder, file: General | Users): string {
+    protected getQueryPath(schema: Schema, query: General | Users): string {
         let fileName;
-        switch (folder) {
-            case Folder.General:
-                fileName = General[file];
+        switch (schema) {
+            case Schema.General:
+                fileName = General[query];
                 break;
 
-            case Folder.Users:
-                fileName = Users[file];
+            case Schema.Users:
+                fileName = Users[query];
                 break;
 
             default:
                 throw new Error(`Query file name error`);
         }
-        return `${Folder[folder]}/${fileName}.cyp`;
+        return `${Schema[schema]}/${fileName}.cyp`;
     }
 }
 
-export enum Folder {
+export enum Schema {
     General,
     Users
 }
