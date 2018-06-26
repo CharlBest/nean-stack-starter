@@ -1,4 +1,4 @@
-import { v1 as neo4j } from 'neo4j-driver';
+import { Response } from 'express';
 import * as stripe from 'stripe';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
@@ -15,15 +15,15 @@ export class GeneralService extends BaseService {
         this.generalRepository = new GeneralRepository();
     }
 
-    public async createNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        return await this.generalRepository.createNewsletterMember(session, viewModel);
+    public async createNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+        return await this.generalRepository.createNewsletterMember(res, viewModel);
     }
 
-    public async deleteNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        return await this.generalRepository.deleteNewsletterMember(session, viewModel);
+    public async deleteNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+        return await this.generalRepository.deleteNewsletterMember(res, viewModel);
     }
 
-    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+    public async paymentRequest(res: Response, viewModel: PaymentRequestViewModel): Promise<boolean> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
         // Charge the user's card:
         await stripeAccount.charges.create({
@@ -35,6 +35,6 @@ export class GeneralService extends BaseService {
             // asynchronously called
         });
 
-        return await this.generalRepository.paymentRequest(session, userId, viewModel);
+        return await this.generalRepository.paymentRequest(res, this.getUserId(res), viewModel);
     }
 }

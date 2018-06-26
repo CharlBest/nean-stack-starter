@@ -1,6 +1,6 @@
 import { pbkdf2Sync, randomBytes } from 'crypto';
+import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { v1 as neo4j } from 'neo4j-driver';
 import { v4 as nodeUUId } from 'uuid';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -44,8 +44,8 @@ export class UsersService extends BaseService {
 
     // #endregion
 
-    public async createUser(session: neo4j.Session, email: string, username: string, password: string): Promise<UserModel> {
-        const validation = await this.doesUsernameAndEmailExist(session, email, username);
+    public async createUser(res: Response, email: string, username: string, password: string): Promise<UserModel> {
+        const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (validation === null || validation === undefined) {
             throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
         }
@@ -53,7 +53,7 @@ export class UsersService extends BaseService {
             const salt = await this.generateSalt();
             const hashedPassword = await this.hashPassword(password, salt);
 
-            return await this.usersRepository.createUser(session, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
+            return await this.usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
         } else {
             if (validation.usernameExist) {
                 throw ValidationUtil.createValidationErrorMessage('username', 'Username already exists');
@@ -64,12 +64,12 @@ export class UsersService extends BaseService {
         }
     }
 
-    public async doesUsernameAndEmailExist(session: neo4j.Session, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
-        return await this.usersRepository.doesUsernameAndEmailExist(session, email, username);
+    public async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
+        return await this.usersRepository.doesUsernameAndEmailExist(res, email, username);
     }
 
-    public async login(session: neo4j.Session, emailOrUsername: string, password: string): Promise<TokenViewModel> {
-        const user = await this.usersRepository.getUser(session, emailOrUsername);
+    public async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
+        const user = await this.usersRepository.getUser(res, emailOrUsername);
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             throw ValidationUtil.createValidationErrorMessage('password', 'Invalid username or password');
@@ -91,12 +91,12 @@ export class UsersService extends BaseService {
         return viewModel;
     }
 
-    public async getUserById(session: neo4j.Session, userId: number): Promise<UserModel> {
-        return await this.usersRepository.getUserById(session, userId);
+    public async getUserById(res: Response): Promise<UserModel> {
+        return await this.usersRepository.getUserById(res, this.getUserId(res));
     }
 
-    public async forgotPassword(session: neo4j.Session, email: string, code: string): Promise<UserModel> {
-        const user = await this.usersRepository.forgotPassword(session, email, code);
+    public async forgotPassword(res: Response, email: string, code: string): Promise<UserModel> {
+        const user = await this.usersRepository.forgotPassword(res, email, code);
 
         if (user === null) {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
@@ -106,11 +106,11 @@ export class UsersService extends BaseService {
         return user;
     }
 
-    public async changeForgottenPassword(session: neo4j.Session, email: string, code: string, password: string): Promise<UserModel> {
+    public async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<UserModel> {
         const salt = await this.generateSalt();
         const hashedPassword = await this.hashPassword(password, salt);
 
-        const user = await this.usersRepository.changeForgottenPassword(session, email, code, hashedPassword, salt);
+        const user = await this.usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
 
         if (user === null) {
             throw ValidationUtil.createValidationErrorMessage('password', 'Error occurred');
@@ -119,20 +119,20 @@ export class UsersService extends BaseService {
         return user;
     }
 
-    public async verifyEmail(session: neo4j.Session, userId: number, code: string): Promise<boolean> {
-        return await this.usersRepository.verifyEmail(session, userId, code);
+    public async verifyEmail(res: Response, code: string): Promise<boolean> {
+        return await this.usersRepository.verifyEmail(res, this.getUserId(res), code);
     }
 
-    public async updateAvatar(session: neo4j.Session, userId: number, avatarUrl: string): Promise<UserModel> {
-        return await this.usersRepository.updateAvatar(session, userId, avatarUrl);
+    public async updateAvatar(res: Response, avatarUrl: string): Promise<UserModel> {
+        return await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
     }
 
-    public async updateBio(session: neo4j.Session, userId: number, bio: string): Promise<UserModel> {
-        return await this.usersRepository.updateBio(session, userId, bio);
+    public async updateBio(res: Response, bio: string): Promise<UserModel> {
+        return await this.usersRepository.updateBio(res, this.getUserId(res), bio);
     }
 
-    public async updatePassword(session: neo4j.Session, userId: number, password: string, newPassword: string): Promise<UserModel> {
-        const user = await this.usersRepository.getUserById(session, userId);
+    public async updatePassword(res: Response, password: string, newPassword: string): Promise<UserModel> {
+        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             throw ValidationUtil.createValidationErrorMessage('password', 'Invalid password');
@@ -141,7 +141,7 @@ export class UsersService extends BaseService {
         const salt = await this.generateSalt();
         const hashedPassword = await this.hashPassword(newPassword, salt);
 
-        const updatedUser = await this.usersRepository.updatePassword(session, userId, hashedPassword, salt);
+        const updatedUser = await this.usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
 
         if (updatedUser === null) {
             throw ValidationUtil.createValidationErrorMessage('password', 'Error occurred');
@@ -150,11 +150,11 @@ export class UsersService extends BaseService {
         return updatedUser;
     }
 
-    public async deleteUser(session: neo4j.Session, userId: number): Promise<boolean> {
-        return await this.usersRepository.deleteUser(session, userId);
+    public async deleteUser(res: Response): Promise<boolean> {
+        return await this.usersRepository.deleteUser(res, this.getUserId(res));
     }
 
-    public async completedTutorial(session: neo4j.Session, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
-        return await this.usersRepository.completedTutorial(session, userId, viewModel);
+    public async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
+        return await this.usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 }

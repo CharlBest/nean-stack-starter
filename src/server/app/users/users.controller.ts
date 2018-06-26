@@ -10,7 +10,6 @@ import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/updat
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { Database } from '../../core/database';
 import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
@@ -43,7 +42,7 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.createUser(Database.getSession(req), viewModel.email, viewModel.username, viewModel.password);
+        const response = await this.usersService.createUser(res, viewModel.email, viewModel.username, viewModel.password);
         Emailer.welcomeEmail(response.email, response.username, response.emailCode);
 
         // Notify everyone there is another sign up
@@ -72,12 +71,12 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.login(Database.getSession(req), viewModel.emailOrUsername, viewModel.password);
+        const response = await this.usersService.login(res, viewModel.emailOrUsername, viewModel.password);
         res.status(200).json(response);
     }
 
     public async getUser(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
+        const response = await this.usersService.getUserById(res);
         res.status(200).json(response);
     }
 
@@ -90,7 +89,7 @@ export class UsersController extends BaseController {
     public async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
-        const response = await this.usersService.doesUsernameAndEmailExist(Database.getSession(req), viewModel.email, viewModel.username);
+        const response = await this.usersService.doesUsernameAndEmailExist(res, viewModel.email, viewModel.username);
         res.status(200).json(response);
     }
 
@@ -110,7 +109,7 @@ export class UsersController extends BaseController {
 
         const code = nodeUUId();
 
-        const response = await this.usersService.forgotPassword(Database.getSession(req), viewModel.email, code);
+        const response = await this.usersService.forgotPassword(res, viewModel.email, code);
         Emailer.forgotPasswordEmail(response.email, code);
 
         res.status(200).json(response);
@@ -133,7 +132,7 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.changeForgottenPassword(Database.getSession(req), viewModel.email, viewModel.code, viewModel.password);
+        const response = await this.usersService.changeForgottenPassword(res, viewModel.email, viewModel.code, viewModel.password);
         res.status(200).json(response);
     }
 
@@ -146,21 +145,21 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.verifyEmail(Database.getSession(req), this.getUserId(req), code);
+        const response = await this.usersService.verifyEmail(res, code);
         res.status(200).json(response);
     }
 
     public async updateAvatar(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateAvatarViewModel;
 
-        const response = await this.usersService.updateAvatar(Database.getSession(req), this.getUserId(req), viewModel.avatarUrl);
+        const response = await this.usersService.updateAvatar(res, viewModel.avatarUrl);
         res.status(200).json(response);
     }
 
     public async updateBio(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateBioViewModel;
 
-        const response = await this.usersService.updateBio(Database.getSession(req), this.getUserId(req), viewModel.content);
+        const response = await this.usersService.updateBio(res, viewModel.content);
         res.status(200).json(response);
     }
 
@@ -176,19 +175,19 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.updatePassword(Database.getSession(req), this.getUserId(req), viewModel.password, viewModel.newPassword);
+        const response = await this.usersService.updatePassword(res, viewModel.password, viewModel.newPassword);
         res.status(200).json(response);
     }
 
     public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.getUserById(Database.getSession(req), this.getUserId(req));
+        const response = await this.usersService.getUserById(res);
         Emailer.resendEmailVerificationLinkEmail(response.email, response.emailCode);
 
         res.status(200).json(response);
     }
 
     public async deleteUser(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.deleteUser(Database.getSession(req), this.getUserId(req));
+        const response = await this.usersService.deleteUser(res);
         res.status(200).json(response);
     }
 
@@ -201,7 +200,7 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.completedTutorial(Database.getSession(req), this.getUserId(req), viewModel);
+        const response = await this.usersService.completedTutorial(res, viewModel);
         res.status(200).json(response);
     }
 }

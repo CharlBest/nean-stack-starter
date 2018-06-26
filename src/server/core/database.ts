@@ -6,15 +6,7 @@ export class Database {
 
     static driver;
 
-    static getSession(context: Request | any): any {
-        if (context.neo4jSession) {
-            return context.neo4jSession;
-        } else {
-            return this.createSession();
-        }
-    }
-
-    private static createSession() {
+    public static createSession() {
         if (this.driver) {
             return this.driver.session();
         } else {

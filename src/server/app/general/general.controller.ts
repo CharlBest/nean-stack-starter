@@ -3,7 +3,6 @@ import { trimString, Validators } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
-import { Database } from '../../core/database';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { BaseController } from '../shared/base-controller';
@@ -30,7 +29,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.createNewsletterMember(Database.getSession(req), viewModel);
+        const response = await this.generalService.createNewsletterMember(res, viewModel);
         res.status(201).json(response);
     }
 
@@ -47,7 +46,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.deleteNewsletterMember(Database.getSession(req), viewModel);
+        const response = await this.generalService.deleteNewsletterMember(res, viewModel);
         res.status(200).json(response);
     }
 
@@ -77,7 +76,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.paymentRequest(Database.getSession(req), this.getUserId(req), viewModel);
+        const response = await this.generalService.paymentRequest(res, viewModel);
         res.status(200).json(response);
     }
 }

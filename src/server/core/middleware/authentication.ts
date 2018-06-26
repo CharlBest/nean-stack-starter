@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-import { Database } from './../database';
+import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { environment } from '../../environments/environment';
 
@@ -16,17 +15,17 @@ export class Authentication {
         const token = Authentication.getTokenInHeader(req);
 
         if (token === null) {
-            (<any>req).user = null;
+            res.locals.user = null;
             next();
         } else {
             verify((<string>req.headers.authorization).split(' ')[1], environment.authentication.privateKey, (error, decode) => {
                 if (error) {
-                    (<any>req).user = null;
+                    res.locals.user = null;
                     return res.status(401).json({ message: 'Unauthorized user' });
                 }
 
                 if (decode['data'] !== null && decode['data'] !== undefined) {
-                    (<any>req).user = decode['data'];
+                    res.locals.user = decode['data'];
                 }
 
                 next();

@@ -40,6 +40,9 @@ export class Bootstrap {
         // Auth
         app.use(Authentication.setAuthUser);
 
+        // Neo4j
+        app.use(Neo4j.setNeo4jSession);
+
         // serving api routes
         const generalRouter = new GeneralRoutes().router;
         const usersRouter = new UsersRoutes().router;

@@ -1,4 +1,4 @@
-import { v1 as neo4j } from 'neo4j-driver';
+import { Response } from 'express';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
 import { BaseRepository } from '../shared/base-repository';
@@ -9,8 +9,8 @@ export class GeneralRepository extends BaseRepository {
         super();
     }
 
-    public async createNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const result = await session.run(this.query.general.createNewsletterMember, { email: viewModel.email });
+    public async createNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(this.query.general.createNewsletterMember, { email: viewModel.email });
 
         if (result.records) {
             return true;
@@ -19,8 +19,8 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async deleteNewsletterMember(session: neo4j.Session, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const result = await session.run(this.query.general.deleteNewsletterMember, { email: viewModel.email });
+    public async deleteNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(this.query.general.deleteNewsletterMember, { email: viewModel.email });
 
         if (result.records) {
             return true;
@@ -29,8 +29,8 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
-        const result = await session.run(this.query.general.paymentRequest, { userId, token: viewModel.token, amount: viewModel.amount });
+    public async paymentRequest(res: Response, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(this.query.general.paymentRequest, { userId, token: viewModel.token, amount: viewModel.amount });
 
         if (result.records) {
             return true;
