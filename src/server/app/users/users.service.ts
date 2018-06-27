@@ -7,6 +7,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { Authentication } from '../../core/middleware/authentication';
 import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
@@ -99,10 +100,15 @@ export class UsersService extends BaseService {
         };
 
         // TODO: TTL on token! '1h'
-        viewModel.token = sign({
-            exp: Math.floor(Date.now() / 1000) + (60 * 60),
-            data: tokenData
-        }, environment.authentication.privateKey);
+        viewModel.token = sign(
+            {
+                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                data: tokenData
+            },
+            environment.authentication.privateKey,
+            {
+                issuer: Authentication.issuerName
+            });
 
         return viewModel;
     }

@@ -3,6 +3,8 @@ import { verify } from 'jsonwebtoken';
 import { environment } from '../../environments/environment';
 
 export class Authentication {
+    static issuerName = 'nean-stack-starter';
+
     static loginRequired(req: Request | any, res: Response, next: NextFunction): void {
         if ((<any>req).user === null) {
             res.status(401).send({ detail: 'Unauthorized user' });
@@ -18,7 +20,7 @@ export class Authentication {
             res.locals.user = null;
             next();
         } else {
-            verify((<string>req.headers.authorization).split(' ')[1], environment.authentication.privateKey, (error, decode) => {
+            verify(token, environment.authentication.privateKey, { issuer: Authentication.issuerName }, (error, decode) => {
                 if (error) {
                     res.locals.user = null;
                     return res.status(401).json({ message: 'Unauthorized user' });
@@ -33,7 +35,7 @@ export class Authentication {
         }
     }
 
-    static getTokenInHeader(req: Request) {
+    static getTokenInHeader(req: Request): string {
         let token = null;
         const authorization = req.headers.authorization as string;
 
