@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { FirebaseStorageService } from '../../shared/firebase-storage.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
@@ -27,7 +28,8 @@ export class ProfileComponent implements OnInit {
     private reportDialogService: ReportDialogService,
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private tutorialService: TutorialService) { }
+    private tutorialService: TutorialService,
+    private firebaseStorageService: FirebaseStorageService) { }
 
   ngOnInit() {
     this.getUser();
@@ -77,7 +79,13 @@ export class ProfileComponent implements OnInit {
   }
 
   removeAvatar() {
-    this.updateAvatar('');
+    // https://firebasestorage.googleapis.com/v0/b/nean-dev.appspot.com/o/images%2Fimages-aa9e8379-11b0-4b41-80ca-20f99f0ba300.jpg?alt=media&token=189f1d63-93ed-4195-bb34-774f118032cd
+    // const fileName = this.user.avatarUrl.indexOf()
+    // this.firebaseStorageService.delete().subscribe(data => {
+    //   if (data) {
+    //     this.updateAvatar('');
+    //   }
+    // })
   }
 
   resendEmailVerificationLink() {

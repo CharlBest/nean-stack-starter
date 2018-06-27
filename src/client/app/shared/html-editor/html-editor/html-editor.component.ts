@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { app } from 'firebase/app';
 import Quill from 'quill';
+import { v4 as randomStringGenerator } from 'uuid';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -97,7 +98,9 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     }
 
     saveToServer(file: File) {
-        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.imageBucketName}/${file.name}`);
+        // Create a storage ref
+        const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`
+        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.imageBucketName}/${fileName}`);
 
         // Upload file
         const task = storageRef.put(file);
@@ -109,7 +112,9 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
             // TODO show error when file upload fails
             console.log(err);
         }, () => {
-            this.insertToEditor(task.snapshot.downloadURL);
+            task.snapshot.ref.getDownloadURL().then(downloadUrl => {
+                this.insertToEditor(downloadUrl);
+            });
         });
     }
 

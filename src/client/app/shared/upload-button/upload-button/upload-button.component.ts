@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { app } from 'firebase/app';
 import 'firebase/storage';
-import { environment } from '../../../../environments/environment';
+import { FirebaseStorageService } from '../../firebase-storage.service';
 
 @Component({
     selector: 'app-upload-button',
@@ -18,7 +17,7 @@ export class UploadButtonComponent implements OnInit {
     @Input() hideProgressBarAfterUpload = true;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
-    constructor() { }
+    constructor(private firebaseStorageService: FirebaseStorageService) { }
 
     ngOnInit() {
     }
@@ -35,28 +34,13 @@ export class UploadButtonComponent implements OnInit {
             return;
         }
 
-        // CONTINUE show preloader imediatly!
+        this.firebaseStorageService.upload(file).subscribe(data => {
+            this.onUploadComplete.emit(data);
+            this.previewImgUrl = data;
+        });
 
-        // Create a storage ref
-        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.folderName}/${file.name}`);
-
-        // Upload file
-        const task = storageRef.put(file);
-
-        // Update progress bar
-        task.on('state_changed', (snapshot: any) => {
-            this.progressPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        }, (err) => {
-            // TODO show error when file upload fails
-            console.log(err);
-        }, () => {
-            this.onUploadComplete.emit(task.snapshot.downloadURL);
-
-            const reader = new FileReader();
-            const url = reader.readAsDataURL(file);
-            reader.onloadend = (progressEvent) => {
-                this.previewImgUrl = reader.result;
-            };
+        this.firebaseStorageService.progress$.subscribe(progress => {
+            this.progressPercentage = progress;
         });
     }
 }

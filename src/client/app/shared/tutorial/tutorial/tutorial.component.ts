@@ -25,7 +25,7 @@ export class TutorialComponent implements OnInit {
     new Tutorial(TutorialType.ProfileShare, 'Share button to share info', TutorialType.ProfileReport, true),
     new Tutorial(TutorialType.ProfileReport, 'Report button to report a user', TutorialType.DeleteUser),
     new Tutorial(TutorialType.DeleteUser, 'Delete user option', TutorialType.AvatarUpload),
-    new Tutorial(TutorialType.AvatarUpload, 'Upload media (Firebase) with preloaderk', TutorialType.UpdatePassword),
+    new Tutorial(TutorialType.AvatarUpload, 'Upload media (Firebase) with preloader', TutorialType.UpdatePassword),
     new Tutorial(TutorialType.UpdatePassword, 'Update password feature', TutorialType.None, undefined, true)
   ];
 
