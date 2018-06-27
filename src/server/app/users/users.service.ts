@@ -2,11 +2,14 @@ import { pbkdf2Sync, randomBytes } from 'crypto';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { v4 as nodeUUId } from 'uuid';
+import * as webSocket from 'ws';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
+import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
 import { UsersRepository } from './users.repository';
@@ -53,7 +56,20 @@ export class UsersService extends BaseService {
             const salt = await this.generateSalt();
             const hashedPassword = await this.hashPassword(password, salt);
 
-            return await this.usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
+            const user = await this.usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
+
+            // Send email
+            Emailer.welcomeEmail(user.email, user.username, user.emailCode);
+
+            // Notify everyone there is another sign up
+            const wss = WebSocketServer.getSocketServer();
+            wss.clients.forEach(client => {
+                if (client.readyState === webSocket.OPEN) {
+                    client.send('New sign up just now');
+                }
+            });
+
+            return user;
         } else {
             if (validation.usernameExist) {
                 throw ValidationUtil.createValidationErrorMessage('username', 'Username already exists');
@@ -95,6 +111,10 @@ export class UsersService extends BaseService {
         return await this.usersRepository.getUserById(res, this.getUserId(res));
     }
 
+    public async resendEmailVerificationLink(res: Response, email: string, emailCode: string): Promise<void> {
+        Emailer.resendEmailVerificationLinkEmail(email, emailCode);
+    }
+
     public async forgotPassword(res: Response, email: string, code: string): Promise<UserModel> {
         const user = await this.usersRepository.forgotPassword(res, email, code);
 
@@ -102,6 +122,8 @@ export class UsersService extends BaseService {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
             throw ValidationUtil.createValidationErrorMessage('email', 'Email not found');
         }
+
+        Emailer.forgotPasswordEmail(user.email, code);
 
         return user;
     }

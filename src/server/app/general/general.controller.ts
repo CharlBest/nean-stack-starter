@@ -4,7 +4,6 @@ import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
-import { Emailer } from '../../email/emailer';
 import { BaseController } from '../shared/base-controller';
 import { GeneralService } from './general.service';
 
@@ -29,8 +28,9 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.createNewsletterMember(res, viewModel);
-        res.status(201).json(response);
+        res.status(201).json(
+            await this.generalService.createNewsletterMember(res, viewModel)
+        );
     }
 
     public async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
@@ -46,8 +46,9 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.deleteNewsletterMember(res, viewModel);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.generalService.deleteNewsletterMember(res, viewModel)
+        );
     }
 
     public async sendFeedback(req: Request, res: Response, next: NextFunction) {
@@ -60,8 +61,8 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        // TODO: sending emails should happen is the service layer
-        Emailer.feedbackEmail(viewModel.content);
+        await this.generalService.sendFeedback(res, viewModel);
+
         res.sendStatus(202);
     }
 
@@ -76,7 +77,8 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.generalService.paymentRequest(res, viewModel);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.generalService.paymentRequest(res, viewModel)
+        );
     }
 }

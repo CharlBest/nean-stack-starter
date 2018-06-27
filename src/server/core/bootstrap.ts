@@ -135,6 +135,7 @@ export class Bootstrap {
 
     public setupDatabase(app: express.Application): void {
         // Retrieve all queries
+        // TODO: not sure if .then is wrong because queries is empty until then (should be await)
         Database.retrieveQueries().then(queries => {
             app.locals.dbQueries = queries;
         });

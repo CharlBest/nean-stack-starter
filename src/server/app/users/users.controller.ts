@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import * as webSocket from 'ws';
 import { trimString, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
@@ -10,9 +9,7 @@ import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/updat
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
-import { Emailer } from '../../email/emailer';
 import { BaseController } from '../shared/base-controller';
 import { UsersService } from './users.service';
 
@@ -42,18 +39,9 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.createUser(res, viewModel.email, viewModel.username, viewModel.password);
-        Emailer.welcomeEmail(response.email, response.username, response.emailCode);
-
-        // Notify everyone there is another sign up
-        const wss = WebSocketServer.getSocketServer();
-        wss.clients.forEach(client => {
-            if (client.readyState === webSocket.OPEN) {
-                client.send('New sign up just now');
-            }
-        });
-
-        res.status(201).json(response);
+        res.status(201).json(
+            await this.usersService.createUser(res, viewModel.email, viewModel.username, viewModel.password)
+        );
     }
 
     public async login(req: Request, res: Response, next: NextFunction) {
@@ -71,13 +59,15 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.login(res, viewModel.emailOrUsername, viewModel.password);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.login(res, viewModel.emailOrUsername, viewModel.password)
+        );
     }
 
     public async getUser(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.getUserById(res);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.getUserById(res)
+        );
     }
 
     public async report(req: Request, res: Response, next: NextFunction) {
@@ -89,8 +79,9 @@ export class UsersController extends BaseController {
     public async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
-        const response = await this.usersService.doesUsernameAndEmailExist(res, viewModel.email, viewModel.username);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.doesUsernameAndEmailExist(res, viewModel.email, viewModel.username)
+        );
     }
 
     public async forgotPassword(req: Request, res: Response, next: NextFunction) {
@@ -107,12 +98,9 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const code = nodeUUId();
-
-        const response = await this.usersService.forgotPassword(res, viewModel.email, code);
-        Emailer.forgotPasswordEmail(response.email, code);
-
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.forgotPassword(res, viewModel.email, nodeUUId())
+        );
     }
 
     public async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
@@ -132,8 +120,9 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.changeForgottenPassword(res, viewModel.email, viewModel.code, viewModel.password);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.changeForgottenPassword(res, viewModel.email, viewModel.code, viewModel.password)
+        );
     }
 
     public async verifyEmail(req: Request, res: Response, next: NextFunction) {
@@ -145,22 +134,25 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.verifyEmail(res, code);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.verifyEmail(res, code)
+        );
     }
 
     public async updateAvatar(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateAvatarViewModel;
 
-        const response = await this.usersService.updateAvatar(res, viewModel.avatarUrl);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.updateAvatar(res, viewModel.avatarUrl)
+        );
     }
 
     public async updateBio(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateBioViewModel;
 
-        const response = await this.usersService.updateBio(res, viewModel.content);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.updateBio(res, viewModel.content)
+        );
     }
 
     public async updatePassword(req: Request, res: Response, next: NextFunction) {
@@ -175,20 +167,22 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.updatePassword(res, viewModel.password, viewModel.newPassword);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.updatePassword(res, viewModel.password, viewModel.newPassword)
+        );
     }
 
     public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
         const response = await this.usersService.getUserById(res);
-        Emailer.resendEmailVerificationLinkEmail(response.email, response.emailCode);
+        await this.usersService.resendEmailVerificationLink(res, response.email, response.emailCode);
 
         res.status(200).json(response);
     }
 
     public async deleteUser(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.deleteUser(res);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.deleteUser(res)
+        );
     }
 
     public async completedTutorial(req: Request, res: Response, next: NextFunction) {
@@ -200,7 +194,8 @@ export class UsersController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        const response = await this.usersService.completedTutorial(res, viewModel);
-        res.status(200).json(response);
+        res.status(200).json(
+            await this.usersService.completedTutorial(res, viewModel)
+        );
     }
 }
