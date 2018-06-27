@@ -10,7 +10,11 @@ export class GeneralRepository extends BaseRepository {
     }
 
     public async createNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(this.query.general.createNewsletterMember, { email: viewModel.email });
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.createNewsletterMember,
+            {
+                email: viewModel.email
+            }
+        );
 
         if (result.records) {
             return true;
@@ -20,7 +24,11 @@ export class GeneralRepository extends BaseRepository {
     }
 
     public async deleteNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(this.query.general.deleteNewsletterMember, { email: viewModel.email });
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.deleteNewsletterMember,
+            {
+                email: viewModel.email
+            }
+        );
 
         if (result.records) {
             return true;
@@ -30,7 +38,12 @@ export class GeneralRepository extends BaseRepository {
     }
 
     public async paymentRequest(res: Response, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(this.query.general.paymentRequest, { userId, token: viewModel.token, amount: viewModel.amount });
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.paymentRequest,
+            {
+                userId, token: viewModel.token,
+                amount: viewModel.amount
+            }
+        );
 
         if (result.records) {
             return true;

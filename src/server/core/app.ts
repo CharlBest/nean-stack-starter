@@ -25,12 +25,14 @@ export class App {
         this.bootstrapApp.setupCors(this.express);
         // Setup GraphQL
         // this.bootstrapApp.setupGraphQL(this.express);
+        // Auth
+        this.bootstrapApp.setupAuthentication(this.express);
+        // Setup DB
+        this.bootstrapApp.setupDatabase(this.express);
         // Setup routes
         this.bootstrapApp.setupRoutes(this.express);
         // Setup errors
         this.bootstrapApp.setupErrors(this.express);
-        // Setup DB
-        this.bootstrapApp.setupDatabase(this.express);
         // Setup core tools
         this.bootstrapApp.setupCoreTools(this.express);
         // Setup Heroku ping to prevent free tier sleeping

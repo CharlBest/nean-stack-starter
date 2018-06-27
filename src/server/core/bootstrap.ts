@@ -8,6 +8,7 @@ import * as webSocket from 'ws';
 import { GeneralRoutes } from '../app/general/general.routes';
 import { UsersRoutes } from '../app/users/users.routes';
 import { environment } from '../environments/environment';
+import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 // import typeDefs from '../schemas/schema';
 // import resolvers from '../resolvers/resolver';
@@ -34,14 +35,12 @@ export class Bootstrap {
         // swaggerUI.setup(app);
     }
 
+    public setupAuthentication(app: express.Application): void {
+        app.use(Authentication.setAuthUser);
+    }
+
     public setupRoutes(app: express.Application): void {
         app.use(express.static(path.join(root, 'dist/nean-stack-starter')));
-
-        // Auth
-        app.use(Authentication.setAuthUser);
-
-        // Neo4j
-        app.use(Neo4j.setNeo4jSession);
 
         // serving api routes
         const generalRouter = new GeneralRoutes().router;
@@ -135,6 +134,13 @@ export class Bootstrap {
     }
 
     public setupDatabase(app: express.Application): void {
+        // Retrieve all queries
+        Database.retrieveQueries().then(queries => {
+            app.locals.dbQueries = queries;
+        });
+
+        app.use(Neo4j.setNeo4jSession);
+
         app.use(Neo4j.sessionCleanup);
     }
 

@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 export class Database {
 
     static driver;
+    static fileExtension = 'cyp';
 
     public static createSession() {
         if (this.driver) {
@@ -73,5 +74,30 @@ export class Database {
         } else {
             return null;
         }
+    }
+
+    public static async retrieveQueries() {
+        return {
+            general: {
+                createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
+                deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
+                paymentRequest: (await import(`../database/general/paymentRequest.${Database.fileExtension}`)).data
+            },
+            users: {
+                addForgottenPasswordCode: (await import(`../database/users/addForgottenPasswordCode.${Database.fileExtension}`)).data,
+                changeForgottenPassword: (await import(`../database/users/changeForgottenPassword.${Database.fileExtension}`)).data,
+                createUser: (await import(`../database/users/createUser.${Database.fileExtension}`)).data,
+                doesUserHavePermissions: (await import(`../database/users/doesUserHavePermissions.${Database.fileExtension}`)).data,
+                doesUsernameAndEmailExist: (await import(`../database/users/doesUsernameAndEmailExist.${Database.fileExtension}`)).data,
+                getUser: (await import(`../database/users/getUser.${Database.fileExtension}`)).data,
+                getUserById: (await import(`../database/users/getUserById.${Database.fileExtension}`)).data,
+                verifyEmail: (await import(`../database/users/verifyEmail.${Database.fileExtension}`)).data,
+                updateAvatar: (await import(`../database/users/updateAvatar.${Database.fileExtension}`)).data,
+                updateBio: (await import(`../database/users/updateBio.${Database.fileExtension}`)).data,
+                updatePassword: (await import(`../database/users/updatePassword.${Database.fileExtension}`)).data,
+                deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
+                completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data
+            }
+        };
     }
 }
