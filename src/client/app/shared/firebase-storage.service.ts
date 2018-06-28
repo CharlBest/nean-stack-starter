@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { app } from 'firebase/app';
+import { app, storage } from 'firebase/app';
 import 'firebase/storage';
 import { Observable, Subject } from 'rxjs';
 import { v4 as randomStringGenerator } from 'uuid';
@@ -15,45 +15,40 @@ export class FirebaseStorageService implements OnDestroy {
     public progress$: Observable<number> = this.progress.asObservable();
     private onUpload = new Subject<string>();
     private onUpload$: Observable<string> = this.onUpload.asObservable();
-    private onDelete = new Subject<string>();
-    private onDelete$: Observable<string> = this.onDelete.asObservable();
+    private onDelete = new Subject<boolean>();
+    private onDelete$: Observable<boolean> = this.onDelete.asObservable();
 
     constructor() { }
 
     upload(file: File, folderName?: string) {
+        this.progress.next(0);
+
         // Create a storage ref
-        const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`
+        let fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
         const storageRef = app(environment.firebase.projectId).storage().ref(`${folderName || this.folderName}/${fileName}`);
 
         // Upload file
-        const task = storageRef.put(file);
+        const task: storage.UploadTask = storageRef.put(file);
 
-        // Update progress bar
-        task.on('state_changed' /*firebase.storage.TaskEvent.STATE_CHANGED*/, (snapshot: any) => {
+        task.on(storage.TaskEvent.STATE_CHANGED, (snapshot: storage.UploadTaskSnapshot) => {
             this.progress.next(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
 
-            // switch (snapshot.state) {
-            //     case firebase.storage.TaskState.PAUSED: // or 'paused'
-            //         console.log('Upload is paused');
-            //         break;
-            //     case firebase.storage.TaskState.RUNNING: // or 'running'
-            //         console.log('Upload is running');
-            //         break;
-            // }
+            switch (snapshot.state) {
+                case storage.TaskState.PAUSED:
+                    break;
+                case storage.TaskState.RUNNING:
+                    break;
+            }
         }, (error) => {
-            // A full list of error codes is available at
             // https://firebase.google.com/docs/storage/web/handle-errors
             switch ((<any>error).code) {
                 case 'storage/unauthorized':
-                    // User doesn't have permission to access the object
                     break;
 
                 case 'storage/canceled':
-                    // User canceled the upload
                     break;
 
                 case 'storage/unknown':
-                    // Unknown error occurred, inspect error.serverResponse
                     break;
             }
             console.log(error);
@@ -66,17 +61,12 @@ export class FirebaseStorageService implements OnDestroy {
         return this.onUpload$;
     }
 
-    delete(fileName: string, folderName?: string) {
-        // Create a storage reference from our storage service
-        const storageRef = app(environment.firebase.projectId).storage().ref();
+    delete(url: string) {
+        const imageRef = app(environment.firebase.projectId).storage().refFromURL(url);
 
-        // Create a reference to the file to delete
-        const imageRef = storageRef.child(`${folderName || this.folderName}/${fileName}`);
-
-        // Delete the file
-        imageRef.delete().then(function () {
+        imageRef.delete().then(() => {
             this.onDelete.next(true);
-        }).catch(function (error) {
+        }).catch((error) => {
             this.onDelete.next(false);
             console.log(error);
         });

@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { app } from 'firebase/app';
 import Quill from 'quill';
-import { v4 as randomStringGenerator } from 'uuid';
-import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { FirebaseStorageService } from '../../firebase-storage.service';
 
 @Component({
     selector: 'app-html-editor',
@@ -19,10 +18,10 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     @Output() editorDomElementChange: EventEmitter<HTMLDivElement> = new EventEmitter<HTMLDivElement>(true);
 
     editor: Quill;
-    imageUploadProgressPercentage: number;
+    imageUploadProgressPercentage: Observable<number>;
     editorId = `id${Math.random().toString().replace('.', '')}`;
 
-    constructor() { }
+    constructor(private firebaseStorageService: FirebaseStorageService) { }
 
     ngOnInit() {
     }
@@ -98,24 +97,11 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
     }
 
     saveToServer(file: File) {
-        // Create a storage ref
-        const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`
-        const storageRef = app(environment.firebase.projectId).storage().ref(`${this.imageBucketName}/${fileName}`);
-
-        // Upload file
-        const task = storageRef.put(file);
-
-        // Update progress bar
-        task.on('state_changed', (snapshot: any) => {
-            this.imageUploadProgressPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        }, (err) => {
-            // TODO show error when file upload fails
-            console.log(err);
-        }, () => {
-            task.snapshot.ref.getDownloadURL().then(downloadUrl => {
-                this.insertToEditor(downloadUrl);
-            });
+        this.firebaseStorageService.upload(file).subscribe(data => {
+            this.insertToEditor(data);
         });
+
+        this.imageUploadProgressPercentage = this.firebaseStorageService.progress$;
     }
 
     insertToEditor(url: string) {

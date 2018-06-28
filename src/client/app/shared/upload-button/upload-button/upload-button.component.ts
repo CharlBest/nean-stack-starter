@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import 'firebase/storage';
+import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { FirebaseStorageService } from '../../firebase-storage.service';
 })
 export class UploadButtonComponent implements OnInit {
     previewImgUrl: string;
-    progressPercentage: number;
+    progressPercentage: Observable<number>;
 
     @Input() buttonText = 'Upload file';
     @Input() folderName = 'images';
@@ -24,7 +25,6 @@ export class UploadButtonComponent implements OnInit {
 
     handleChange(event: Event) {
         // Reset
-        this.progressPercentage = 0;
         this.previewImgUrl = null;
 
         const file = (<HTMLInputElement>event.target).files[0];
@@ -39,8 +39,6 @@ export class UploadButtonComponent implements OnInit {
             this.previewImgUrl = data;
         });
 
-        this.firebaseStorageService.progress$.subscribe(progress => {
-            this.progressPercentage = progress;
-        });
+        this.progressPercentage = this.firebaseStorageService.progress$;
     }
 }
