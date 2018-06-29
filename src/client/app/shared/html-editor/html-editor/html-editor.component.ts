@@ -67,9 +67,10 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
 
         if (this.htmlContent !== null && this.htmlContent !== undefined) {
             this.editor.pasteHTML(this.htmlContent);
-            // Workaround for Quill editor focussing on input after pasteHTML
+            // Workaround for Quill editor focussing on input after pasteHTML (HACK)
             if (document.activeElement) {
                 (<any>document.activeElement).blur();
+                window.scrollTo(0, 0);
             }
         }
 
