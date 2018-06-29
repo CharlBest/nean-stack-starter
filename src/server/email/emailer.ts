@@ -1,9 +1,9 @@
-import sgMail = require('@sendgrid/mail');
 import { MailData } from '@sendgrid/helpers/classes/mail';
+import * as sendGridMail from '@sendgrid/mail';
 import { environment } from '../environments/environment';
 
-sgMail.setApiKey(environment.sendGrid.apiKey);
-sgMail.setSubstitutionWrappers('{{', '}}');
+sendGridMail.setApiKey(environment.sendGrid.apiKey);
+sendGridMail.setSubstitutionWrappers('{{', '}}');
 
 export class Emailer {
     static fromEmail = 'admin@nean.io';
@@ -88,7 +88,7 @@ export class Emailer {
             };
         }
 
-        sgMail.send(data, null, (err, res) => {
+        sendGridMail.send(data, null, (err, res) => {
             if (err) {
                 // TODO: save against profile that email failed to send (maybe)
             }
