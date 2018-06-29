@@ -29,7 +29,7 @@ export class GeneralController extends BaseController {
         }
 
         res.status(201).json(
-            await this.generalService.createNewsletterMember(res, viewModel)
+            await this.generalService.createNewsletterMember(res, viewModel.email)
         );
     }
 
@@ -47,7 +47,7 @@ export class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await this.generalService.deleteNewsletterMember(res, viewModel)
+            await this.generalService.deleteNewsletterMember(res, viewModel.email)
         );
     }
 
@@ -61,7 +61,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.createValidationErrors(valid);
         }
 
-        await this.generalService.sendFeedback(res, viewModel);
+        await this.generalService.sendFeedback(res, viewModel.content);
 
         res.sendStatus(202);
     }
@@ -78,7 +78,7 @@ export class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await this.generalService.paymentRequest(res, viewModel)
+            await this.generalService.paymentRequest(res, viewModel.token, viewModel.amount)
         );
     }
 }

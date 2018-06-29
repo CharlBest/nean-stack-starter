@@ -1,6 +1,4 @@
 import { Response } from 'express';
-import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
-import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
 import { BaseRepository } from '../shared/base-repository';
 
 export class GeneralRepository extends BaseRepository {
@@ -9,10 +7,10 @@ export class GeneralRepository extends BaseRepository {
         super();
     }
 
-    public async createNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+    public async createNewsletterMember(res: Response, email: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.createNewsletterMember,
             {
-                email: viewModel.email
+                email
             }
         );
 
@@ -23,10 +21,10 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async deleteNewsletterMember(res: Response, viewModel: NewsletterMemberViewModel): Promise<boolean> {
+    public async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.deleteNewsletterMember,
             {
-                email: viewModel.email
+                email
             }
         );
 
@@ -37,11 +35,12 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async paymentRequest(res: Response, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+    public async paymentRequest(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.paymentRequest,
             {
-                userId, token: viewModel.token,
-                amount: viewModel.amount
+                userId,
+                token,
+                amount
             }
         );
 

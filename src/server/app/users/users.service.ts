@@ -49,6 +49,9 @@ export class UsersService extends BaseService {
     // #endregion
 
     public async createUser(res: Response, email: string, username: string, password: string): Promise<UserModel> {
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (validation === null || validation === undefined) {
             throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
@@ -82,10 +85,15 @@ export class UsersService extends BaseService {
     }
 
     public async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
+        email = email.toLowerCase();
+        username = username.toLowerCase();
+
         return await this.usersRepository.doesUsernameAndEmailExist(res, email, username);
     }
 
     public async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
+        emailOrUsername = emailOrUsername.toLowerCase();
+
         const user = await this.usersRepository.getUser(res, emailOrUsername);
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
@@ -122,6 +130,8 @@ export class UsersService extends BaseService {
     }
 
     public async forgotPassword(res: Response, email: string, code: string): Promise<UserModel> {
+        email = email.toLowerCase();
+
         const user = await this.usersRepository.forgotPassword(res, email, code);
 
         if (user === null) {
@@ -135,6 +145,8 @@ export class UsersService extends BaseService {
     }
 
     public async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<UserModel> {
+        email = email.toLowerCase();
+
         const salt = await this.generateSalt();
         const hashedPassword = await this.hashPassword(password, salt);
 
