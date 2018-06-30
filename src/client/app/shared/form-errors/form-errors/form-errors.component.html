@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup">
+
+    {{formGroup.get('email').errors|json}}
+
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput
+            name="email"
+            formControlName="email" />
+        <mat-error>
+            <app-form-errors [errorFormControl]="formGroup.get('email')"></app-form-errors>
+        </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Age</mat-label>
+        <input matInput
+            formControlName="age" />
+        <mat-error>
+            <app-form-errors [errorFormControl]="formGroup.get('age')"></app-form-errors>
+            <ng-container *ngIf="formGroup.get('age').hasError('is4')">
+                IS 4
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <div class="mat-error"
+        *ngIf="formGroup['globalErrors']?.hasError('usernameIsTaken')">
+        Username is taken. Sorry!
+    </div>
+    <div class="mat-error"
+        *ngIf="formGroup['globalErrors']?.hasError('appDbError')">
+        Database create = {{formGroup['globalErrors']?.appDbError.create}}
+    </div>
+</form>
+
+<br>
+
+<button (click)="addCustomError()">Add custom error</button>
