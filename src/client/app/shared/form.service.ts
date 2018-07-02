@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MyValidators } from '../../../shared/validation/new-validators';
+import { GLOBAL_ERROR_KEY } from '../../../shared/validation/new-validators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +29,11 @@ export class FormService {
       if (errors !== null && errors !== undefined) {
         for (const key in form.controls) {
           if (form.controls.hasOwnProperty(key)) {
-            form.get(key).setErrors(errors);
+            form.get(key).setErrors(errors.find(x => x.field === key).errors);
           }
         }
 
-        form[MyValidators.globalErrorKey] = errors.globalErros;
+        form[GLOBAL_ERROR_KEY] = errors.globalErros;
       }
     }
   }

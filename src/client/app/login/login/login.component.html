@@ -1,16 +1,16 @@
-<form [formGroup]="formGroup">
-    <mat-card *ngIf="!isProcessing">
-        <mat-card-title>Login</mat-card-title>
-        <mat-card-content>
-            Don't have an account please
-            <button mat-raised-button
-                [appTutorial]="tutorialTypeEnum.SignUp"
-                color="accent"
-                type="button"
-                routerLink="/create-user">Sign up</button>
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+        Don't have an account please
+        <button mat-raised-button
+            [appTutorial]="tutorialTypeEnum.SignUp"
+            color="accent"
+            type="button"
+            routerLink="/create-user">Sign up</button>
 
-            <br>
+        <br>
 
+        <form [formGroup]="formGroup">
             <mat-form-field>
                 <mat-label>email or username</mat-label>
                 <input matInput
@@ -18,11 +18,12 @@
                     type="email"
                     autocomplete="email"
                     required
-                    [attr.autofocus]="bpService.isWeb || null">
+                    [attr.autofocus]="bpService.isWeb || null"
+                    [disabled]="isProcessing">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('emailOrUsername')"></app-form-errors>
+                </mat-error>
             </mat-form-field>
-            <mat-error>
-                <app-form-errors [control]="formGroup.get('emailOrUsername')"></app-form-errors>
-            </mat-error>
 
             <!-- <div *ngIf="serverErrors?.emailOrUsername"
                 class="validation-message">{{ serverErrors.emailOrUsername.message }}</div>
@@ -35,36 +36,32 @@
                 <input matInput
                     formControlName="password"
                     type="password"
-                    required>
+                    required
+                    [disabled]="isProcessing">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
+                </mat-error>
             </mat-form-field>
-            <mat-error>
-                <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
-            </mat-error>
+        </form>
 
-            <!-- <div *ngIf="serverErrors?.password"
+        <!-- <div *ngIf="serverErrors?.password"
                 class="validation-message">{{ serverErrors.password.message }}</div>
             <app-show-errors [control]="formGroup.controls['password']"></app-show-errors> -->
 
-            <div *ngFor="let error of formGroup['globalErrors']"
-                class="mat-error">
-                {{error}}
-            </div>
-
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="!formGroup.valid"
-                (click)="onSubmit()">Log in</button>
-            <button mat-raised-button
-                [appTutorial]="tutorialTypeEnum.ForgotPassword"
-                type="button"
-                routerLink="/forgot-password">Forgot password</button>
-        </mat-card-actions>
-    </mat-card>
-</form>
-
-<mat-card *ngIf="isProcessing">
-    <mat-spinner></mat-spinner>
+        <div *ngFor="let error of formGroup['globalErrors']"
+            class="mat-error">
+            {{error}}
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!formGroup.valid"
+            (click)="onSubmit()">Log in</button>
+        <button mat-raised-button
+            [appTutorial]="tutorialTypeEnum.ForgotPassword"
+            type="button"
+            routerLink="/forgot-password">Forgot password</button>
+    </mat-card-actions>
 </mat-card>

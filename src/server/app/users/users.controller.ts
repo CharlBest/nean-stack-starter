@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
+import { BuildFormGroup, ServerValidator } from '../../../shared/validation/new-validators';
 import { trimString, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
@@ -50,13 +51,11 @@ export class UsersController extends BaseController {
         // Trim inputs
         viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
 
-        const valid = Validators.required({ value: viewModel.emailOrUsername }) ||
-            Validators.required({ value: viewModel.password }) ||
-            Validators.minLength(6)({ value: viewModel.password }) ||
-            null;
+        const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
+        const errors = ServerValidator.getErrors(formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (errors !== null) {
+            throw ValidationUtil.createValidationErrors(errors);
         }
 
         res.status(200).json(

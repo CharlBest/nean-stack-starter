@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { MyValidators } from '../../../../shared/validation/new-validators';
+import { BuildFormGroup } from '../../../../shared/validation/new-validators';
 import { trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -19,7 +19,6 @@ import { FormService } from '../../shared/form.service';
 export class LoginComponent implements OnInit {
 
   formGroup: FormGroup;
-  serverErrors;
   isProcessing = false;
   returnUrl = '/profile';
   tutorialTypeEnum = TutorialType;
@@ -48,15 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group({
-      emailOrUsername: ['', [
-        MyValidators.required
-      ]],
-      password: ['', [
-        MyValidators.required,
-        MyValidators.minLength(6)
-      ]]
-    });
+    this.formGroup = this.fb.group(BuildFormGroup.login());
   }
 
   onSubmit() {
@@ -76,8 +67,7 @@ export class LoginComponent implements OnInit {
         } else {
           alert('Authentication failed');
         }
-      }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+      }, (error) => {
         this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
