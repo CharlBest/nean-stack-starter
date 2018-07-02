@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { trimString, Validators } from '../../../../shared/validation/validators';
+import { MyValidators } from '../../../../shared/validation/new-validators';
+import { trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
@@ -17,7 +18,7 @@ import { FormService } from '../../shared/form.service';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
+  formGroup: FormGroup;
   serverErrors;
   isProcessing = false;
   returnUrl = '/profile';
@@ -47,13 +48,13 @@ export class LoginComponent implements OnInit {
   }
 
   formOnInit() {
-    this.form = this.fb.group({
+    this.formGroup = this.fb.group({
       emailOrUsername: ['', [
-        Validators.required
+        MyValidators.required
       ]],
       password: ['', [
-        Validators.required,
-        Validators.minLength(6)
+        MyValidators.required,
+        MyValidators.minLength(6)
       ]]
     });
   }
@@ -62,8 +63,8 @@ export class LoginComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new LoginViewModel();
-    viewModel.emailOrUsername = trimString(this.form.get('emailOrUsername').value);
-    viewModel.password = this.form.get('password').value;
+    viewModel.emailOrUsername = trimString(this.formGroup.get('emailOrUsername').value);
+    viewModel.password = this.formGroup.get('password').value;
 
     this.loginService.login(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -77,6 +78,7 @@ export class LoginComponent implements OnInit {
         }
       }, error => {
         this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 }

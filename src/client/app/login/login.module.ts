@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { LoginRoutingModule } from '../login/login-routing.module';
+import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +22,7 @@ const materialModules = [
     ReactiveFormsModule,
     ShowErrorsModule,
     TutorialModule,
+    FormErrorsModule,
     ...materialModules
   ],
   declarations: [

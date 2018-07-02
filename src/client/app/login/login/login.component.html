@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="formGroup">
     <mat-card *ngIf="!isProcessing">
         <mat-card-title>Login</mat-card-title>
         <mat-card-content>
@@ -20,9 +20,13 @@
                     required
                     [attr.autofocus]="bpService.isWeb || null">
             </mat-form-field>
-            <div *ngIf="serverErrors?.emailOrUsername"
+            <mat-error>
+                <app-form-errors [control]="formGroup.get('emailOrUsername')"></app-form-errors>
+            </mat-error>
+
+            <!-- <div *ngIf="serverErrors?.emailOrUsername"
                 class="validation-message">{{ serverErrors.emailOrUsername.message }}</div>
-            <app-show-errors [control]="form.controls['emailOrUsername']"></app-show-errors>
+            <app-show-errors [control]="formGroup.controls['emailOrUsername']"></app-show-errors> -->
 
             <br>
 
@@ -33,17 +37,25 @@
                     type="password"
                     required>
             </mat-form-field>
-            <div *ngIf="serverErrors?.password"
-                class="validation-message">{{ serverErrors.password.message }}</div>
-            <app-show-errors [control]="form.controls['password']"></app-show-errors>
+            <mat-error>
+                <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
+            </mat-error>
 
+            <!-- <div *ngIf="serverErrors?.password"
+                class="validation-message">{{ serverErrors.password.message }}</div>
+            <app-show-errors [control]="formGroup.controls['password']"></app-show-errors> -->
+
+            <div *ngFor="let error of formGroup['globalErrors']"
+                class="mat-error">
+                {{error}}
+            </div>
 
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!form.valid"
+                [disabled]="!formGroup.valid"
                 (click)="onSubmit()">Log in</button>
             <button mat-raised-button
                 [appTutorial]="tutorialTypeEnum.ForgotPassword"
