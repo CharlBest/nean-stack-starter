@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { trimString, Validators } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/new-validators';
+import { trimString } from '../../../../shared/validation/validators';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/breakpoint.service';
@@ -15,8 +16,7 @@ import { ForgotPasswordService } from '../forgot-password.service';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  form: FormGroup;
-  serverErrors;
+  formGroup: FormGroup;
   isProcessing = false;
   emailSent = false;
   tutorialTypeEnum = TutorialType;
@@ -32,26 +32,21 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.form = this.fb.group({
-      email: ['', [
-        Validators.required,
-        Validators.email
-      ]]
-    });
+    this.formGroup = this.fb.group(BuildFormGroup.forgotPassword());
   }
 
   onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new ForgotPasswordViewModel();
-    viewModel.email = trimString(this.form.get('email').value);
+    viewModel.email = trimString(this.formGroup.get('email').value);
 
     this.forgotPasswordService.forgotPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.emailSent = true;
       }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 }

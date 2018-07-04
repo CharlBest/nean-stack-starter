@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
+import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
@@ -36,6 +37,7 @@ const materialModules = [
     ReportDialogModule,
     UploadButtonModule,
     ShowErrorsModule,
+    FormErrorsModule,
     TutorialModule,
     EmojiPanelModule,
     MediaModule,

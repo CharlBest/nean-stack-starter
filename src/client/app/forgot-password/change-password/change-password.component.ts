@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { trimString, Validators } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/new-validators';
+import { trimString } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormService } from '../../shared/form.service';
@@ -15,8 +16,7 @@ import { ForgotPasswordService } from '../forgot-password.service';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  form: FormGroup;
-  serverErrors;
+  formGroup: FormGroup;
   code: string;
   email: string;
   isProcessing = false;
@@ -42,12 +42,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.form = this.fb.group({
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]]
-    });
+    this.formGroup = this.fb.group(BuildFormGroup.changePassword());
   }
 
   onSubmit() {
@@ -56,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
     const viewModel = new ChangeForgottenPasswordViewModel;
     viewModel.email = trimString(this.email);
     viewModel.code = this.code;
-    viewModel.password = this.form.get('password').value;
+    viewModel.password = this.formGroup.get('password').value;
 
     this.forgotPasswordService.changeForgottenPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -64,7 +59,7 @@ export class ChangePasswordComponent implements OnInit {
         const link = ['/login'];
         this.router.navigate(link);
       }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 }

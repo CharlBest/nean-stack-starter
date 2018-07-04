@@ -1,24 +1,28 @@
-<mat-card *ngIf="!isProcessing"
-  [appTutorial]="tutorialTypeEnum.Feedback">
+<mat-card [appTutorial]="tutorialTypeEnum.Feedback">
   <mat-card-subtitle>
     Email us some feedback
   </mat-card-subtitle>
   <mat-card-content>
-    <mat-form-field>
-      <mat-label>type here...</mat-label>
-      <textarea matInput
-        #inputArea
-        rows="10"
-        [attr.autofocus]="bpService.isWeb || null"></textarea>
-      <mat-hint *ngIf="inputArea.value?.length < 10">Minimum of {{inputArea.value?.length}}/10 characters</mat-hint>
-    </mat-form-field>
+    <form [formGroup]="formGroup">
+      <mat-form-field>
+        <mat-label>type here...</mat-label>
+        <textarea matInput
+          formControlName="content"
+          rows="10"
+          [attr.autofocus]="bpService.isWeb || null"></textarea>
+        <mat-hint *ngIf="formGroup.get('content').value?.length < 10">Minimum of {{formGroup.get('content').value?.length}}/10 characters</mat-hint>
+        <mat-error>
+          <app-form-errors [control]="formGroup.get('content')"></app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </form>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
       color="primary"
       type="button"
-      [disabled]="inputArea.value === '' || inputArea.value === undefined || inputArea.value?.length < 10"
-      (click)="send(inputArea.value)">Send</button>
+      [disabled]="!formGroup.valid"
+      (click)="onSubmit()">Send</button>
   </mat-card-actions>
 </mat-card>
 

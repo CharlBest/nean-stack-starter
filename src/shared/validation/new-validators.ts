@@ -44,6 +44,16 @@ export class BuildFormGroup {
             ]]
         };
     }
+
+    static feedback(content: string = null): FormValidator {
+        return {
+            content: [content, [
+                ClientValidators.required,
+                ClientValidators.minLength(10)
+            ]]
+        };
+    }
+
     static login(emailOrUsername: string = null, password: string = null): FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
@@ -52,6 +62,49 @@ export class BuildFormGroup {
             password: [password, [
                 ClientValidators.required,
                 ClientValidators.minLength(6)
+            ]]
+        };
+    }
+
+    static changePassword(password: string = null): FormValidator {
+        return {
+            password: [password, [
+                Validators.required,
+                Validators.minLength(6)
+            ]]
+        };
+    }
+
+    static forgotPassword(email: string = null): FormValidator {
+        return {
+            email: [email, [
+                Validators.required,
+                Validators.email
+            ]]
+        };
+    }
+
+    static updatePassword(password: string = null, newPassword: string = null, confirmPassword: string = null): FormValidator {
+        return {
+            password: [password, [
+                Validators.required,
+                Validators.minLength(6)
+            ]],
+            newPassword: [newPassword, [
+                Validators.required,
+                Validators.minLength(6)
+            ]],
+            confirmPassword: [confirmPassword, [
+                Validators.required,
+                Validators.minLength(6)
+            ]]
+        };
+    }
+
+    static payment(amount: string = null): FormValidator {
+        return {
+            amount: [amount, [
+                Validators.required
             ]]
         };
     }

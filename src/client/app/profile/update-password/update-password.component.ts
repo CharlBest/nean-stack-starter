@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { Validators } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/new-validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormService } from '../../shared/form.service';
@@ -15,8 +15,7 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdatePasswordComponent implements OnInit {
 
-  form: FormGroup;
-  serverErrors;
+  formGroup: FormGroup;
   isProcessing = false;
   tutorialTypeEnum = TutorialType;
 
@@ -30,27 +29,14 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.form = this.fb.group({
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]],
-      newPassword: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]],
-      confirmPassword: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]]
-    });
+    this.formGroup = this.fb.group(BuildFormGroup.updatePassword());
   }
 
   onSubmit() {
     this.isProcessing = true;
 
-    if (this.form.get('newPassword').value !== this.form.get('confirmPassword').value) {
-      this.form.get('confirmPassword').setErrors([{ message: 'passwords don\'t match' }]);
+    if (this.formGroup.get('newPassword').value !== this.formGroup.get('confirmPassword').value) {
+      this.formGroup.get('confirmPassword').setErrors([{ message: 'passwords don\'t match' }]);
 
       this.isProcessing = false;
       return;
@@ -61,20 +47,20 @@ export class UpdatePasswordComponent implements OnInit {
     });
 
     const viewModel = new UpdatePasswordViewModel();
-    viewModel.password = this.form.get('password').value;
-    viewModel.newPassword = this.form.get('newPassword').value;
+    viewModel.password = this.formGroup.get('password').value;
+    viewModel.newPassword = this.formGroup.get('newPassword').value;
 
     this.profileService.updatePassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.form.reset();
+        this.formGroup.reset();
 
         this.snackBar.dismiss();
         this.snackBar.open('Updated password', '', {
           duration: 2000,
         });
       }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
         this.snackBar.dismiss();
       });
   }

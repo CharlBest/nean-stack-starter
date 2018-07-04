@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { Validators } from '../../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../../shared/validation/new-validators';
 import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
 import { environment } from '../../../../environments/environment';
 import { FormService } from '../../form.service';
@@ -16,8 +16,7 @@ import { PaymentService } from '../payment.service';
 export class PaymentDialogComponent implements OnInit {
 
     isProcessing = true;
-    form: FormGroup;
-    serverErrors;
+    formGroup: FormGroup;
 
     stripe = null;
     stripeCard = null;
@@ -97,11 +96,7 @@ export class PaymentDialogComponent implements OnInit {
     }
 
     formOnInit() {
-        this.form = this.fb.group({
-            amount: ['', [
-                Validators.required
-            ]]
-        });
+        this.formGroup = this.fb.group(BuildFormGroup.payment());
     }
 
     onSubmit() {
@@ -122,14 +117,14 @@ export class PaymentDialogComponent implements OnInit {
     sendPaymentToServer(token: string) {
         const viewModel = new PaymentRequestViewModel();
         viewModel.token = token;
-        viewModel.amount = +this.form.get('amount').value;
+        viewModel.amount = +this.formGroup.get('amount').value;
 
         this.paymentService.processPaymentRequest(viewModel)
             .pipe(finalize(() => this.isProcessing = false))
             .subscribe(() => {
                 this.paymentSuccess = true;
             }, error => {
-                this.serverErrors = this.formService.getServerErrors(error);
+                this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
             });
     }
 
