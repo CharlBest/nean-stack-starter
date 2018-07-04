@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { trimString, Validators } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/new-validators';
+import { trimString } from '../../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -19,8 +20,7 @@ import { CreateUserService } from '../create-user.service';
 })
 export class CreateUserComponent implements OnInit {
 
-  form: FormGroup;
-  serverErrors;
+  formGroup: FormGroup;
   isProcessing = false;
 
   constructor(private fb: FormBuilder,
@@ -37,35 +37,23 @@ export class CreateUserComponent implements OnInit {
   }
 
   formOnInit() {
-    this.form = this.fb.group({
-      email: ['', [
-        Validators.required,
-        Validators.email
-      ]],
-      username: ['', [
-        Validators.required
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]]
-    });
+    this.formGroup = this.fb.group(BuildFormGroup.createUser());
   }
 
   onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
-    viewModel.email = trimString(this.form.get('email').value);
-    viewModel.username = trimString(this.form.get('username').value);
-    viewModel.password = this.form.get('password').value;
+    viewModel.email = trimString(this.formGroup.get('email').value);
+    viewModel.username = trimString(this.formGroup.get('username').value);
+    viewModel.password = this.formGroup.get('password').value;
 
     this.createUserService.createUser(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.setUserToken();
       }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 
@@ -73,8 +61,8 @@ export class CreateUserComponent implements OnInit {
     this.isProcessing = true;
 
     const model = new LoginViewModel();
-    model.emailOrUsername = this.form.get('email').value;
-    model.password = this.form.get('password').value;
+    model.emailOrUsername = this.formGroup.get('email').value;
+    model.password = this.formGroup.get('password').value;
 
     this.loginService.login(model)
       .pipe(finalize(() => this.isProcessing = false))
@@ -88,7 +76,7 @@ export class CreateUserComponent implements OnInit {
           alert('Authentication failed');
         }
       }, error => {
-        this.serverErrors = this.formService.getServerErrors(error);
+        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 }

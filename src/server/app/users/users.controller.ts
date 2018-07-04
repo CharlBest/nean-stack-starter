@@ -29,15 +29,11 @@ export class UsersController extends BaseController {
         viewModel.username = trimString(viewModel.username);
         viewModel.email = trimString(viewModel.email);
 
-        const valid = Validators.required({ value: viewModel.username }) ||
-            Validators.required({ value: viewModel.email }) ||
-            Validators.required({ value: viewModel.password }) ||
-            Validators.minLength(6)({ value: viewModel.password }) ||
-            Validators.email({ value: viewModel.email }) ||
-            null;
+        const formGroup = BuildFormGroup.createUser(viewModel.email, viewModel.username, viewModel.password);
+        const hasErrors = ServerValidator.getErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(201).json(
@@ -52,10 +48,10 @@ export class UsersController extends BaseController {
         viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
 
         const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
-        const errors = ServerValidator.getErrors(formGroup);
+        const hasErrors = ServerValidator.getErrorsAndSave(res, formGroup);
 
-        if (errors !== null) {
-            throw ValidationUtil.createValidationErrors(errors);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(

@@ -19,18 +19,6 @@ export class ValidationUtil {
         };
     }
 
-    static addFormError(res: Response, key: string, error: Object) {
-        Object.assign(res.locals.error.formErrors, {
-            [key]: error
-        });
-    }
-
-    static addGlobalError(res: Response, key: string, error: Object) {
-        Object.assign(res.locals.error.globalErrors, {
-            [key]: error
-        });
-    }
-
     static errorResponse(res: Response) {
         return {
             status: 400,

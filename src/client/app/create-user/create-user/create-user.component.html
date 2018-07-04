@@ -1,15 +1,15 @@
-<form [formGroup]="form">
-    <mat-card *ngIf="!isProcessing">
-        <mat-card-title>Sign Up</mat-card-title>
-        <mat-card-content>
-            Have an account
-            <button mat-raised-button
-                color="accent"
-                type="button"
-                routerLink="/login">Login</button>
+<mat-card>
+    <mat-card-title>Sign Up</mat-card-title>
+    <mat-card-content>
+        Have an account
+        <button mat-raised-button
+            color="accent"
+            type="button"
+            routerLink="/login">Login</button>
 
-            <br>
+        <br>
 
+        <form [formGroup]="formGroup">
             <mat-form-field>
                 <mat-label>email</mat-label>
                 <input matInput
@@ -18,10 +18,13 @@
                     autocomplete="email"
                     required
                     [attr.autofocus]="bpService.isWeb || null">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
+                    <div *ngIf="formGroup.get('email').hasError('exists')">
+                        Email already exists
+                    </div>
+                </mat-error>
             </mat-form-field>
-            <div *ngIf="serverErrors?.email"
-                class="validation-message">{{ serverErrors.email.message }}</div>
-            <app-show-errors [control]="form.controls['email']"></app-show-errors>
 
             <br>
 
@@ -31,10 +34,13 @@
                     formControlName="username"
                     type="text"
                     required>
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('username')"></app-form-errors>
+                    <div *ngIf="formGroup.get('username').hasError('exists')">
+                        Username already exists
+                    </div>
+                </mat-error>
             </mat-form-field>
-            <div *ngIf="serverErrors?.username"
-                class="validation-message">{{ serverErrors.username.message }}</div>
-            <app-show-errors [control]="form.controls['username']"></app-show-errors>
 
             <br>
 
@@ -44,26 +50,31 @@
                     formControlName="password"
                     type="password"
                     required>
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
+                </mat-error>
             </mat-form-field>
-            <div *ngIf="serverErrors?.password"
-                class="validation-message">{{ serverErrors.password.message }}</div>
-            <app-show-errors [control]="form.controls['password']"></app-show-errors>
 
             <div class="sign-up-info">
                 By signing up, you agree to our
                 <a routerLink="/legal/termsandconditions">Terms</a> and
                 <a routerLink="/legal/privacypolicy">Privacy Policy</a>
             </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="!form.valid"
-                (click)="onSubmit()">Sign up</button>
-        </mat-card-actions>
-    </mat-card>
-</form>
+
+            <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('validationFailed')"
+                class="mat-error">
+                Validation failed for some reason
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!formGroup.valid"
+            (click)="onSubmit()">Sign up</button>
+    </mat-card-actions>
+</mat-card>
 
 <mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>

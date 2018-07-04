@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
 import { UserModel } from '../../../shared/models/user/user.model';
+import { ServerValidator } from '../../../shared/validation/new-validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
@@ -54,7 +55,8 @@ export class UsersService extends BaseService {
 
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (validation === null || validation === undefined) {
-            throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
+            ServerValidator.addGlobalError(res, 'validationFailed', true);
+            throw ValidationUtil.errorResponse(res);
         }
         if (!validation.emailExist && !validation.usernameExist) {
             const salt = await this.generateSalt();
@@ -76,10 +78,14 @@ export class UsersService extends BaseService {
             return user;
         } else {
             if (validation.usernameExist) {
-                throw ValidationUtil.createValidationErrorMessage('username', 'Username already exists');
+                ServerValidator.addFormError(res, 'username', { exists: true });
             }
             if (validation.emailExist) {
-                throw ValidationUtil.createValidationErrorMessage('email', 'Email already exists');
+                ServerValidator.addFormError(res, 'email', { exists: true });
+            }
+
+            if (validation.usernameExist || validation.emailExist) {
+                throw ValidationUtil.errorResponse(res);
             }
         }
     }
@@ -97,7 +103,8 @@ export class UsersService extends BaseService {
         const user = await this.usersRepository.getUser(res, emailOrUsername);
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
-            throw ValidationUtil.createValidationErrorMessage('password', 'Invalid username or password');
+            ServerValidator.addGlobalError(res, 'invalidCredentials', true);
+            throw ValidationUtil.errorResponse(res);
         }
 
         const viewModel = new TokenViewModel();

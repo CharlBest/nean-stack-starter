@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export class ApiError {
     // catch 404 and forward to error handler
@@ -15,7 +15,6 @@ export class ApiError {
         res.status(err.status || 500);
         res.send({
             message: err.message,
-            validation: err.validation,
             error: err
         });
     }
@@ -24,7 +23,6 @@ export class ApiError {
         res.status(err.status || 500);
         res.send({
             message: err.message,
-            validation: err.validation,
             error: {}
         });
     }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { CreateUserRoutingModule } from './create-user-routing.module';
 import { CreateUserComponent } from './create-user/create-user.component';
@@ -19,6 +20,7 @@ const materialModules = [
     CreateUserRoutingModule,
     ReactiveFormsModule,
     ShowErrorsModule,
+    FormErrorsModule,
     ...materialModules
   ],
   declarations: [

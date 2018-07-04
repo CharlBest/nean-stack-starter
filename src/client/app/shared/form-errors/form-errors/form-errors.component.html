@@ -1,11 +1,11 @@
-<div *ngIf="control.hasError('email')">
+<div *ngIf="control?.hasError('email')">
     Invalid email address
 </div>
 
-<div *ngIf="control.hasError('required')">
+<div *ngIf="control?.hasError('required')">
     Required
 </div>
 
-<div *ngIf="control.hasError('minlength')">
+<div *ngIf="control?.hasError('minlength')">
     {{control.errors['minlength'].actualLength}} but needs to be {{control.errors['minlength'].requiredLength}}
 </div>

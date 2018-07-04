@@ -18,16 +18,11 @@
                     type="email"
                     autocomplete="email"
                     required
-                    [attr.autofocus]="bpService.isWeb || null"
-                    [disabled]="isProcessing">
+                    [attr.autofocus]="bpService.isWeb || null">
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('emailOrUsername')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
-
-            <!-- <div *ngIf="serverErrors?.emailOrUsername"
-                class="validation-message">{{ serverErrors.emailOrUsername.message }}</div>
-            <app-show-errors [control]="formGroup.controls['emailOrUsername']"></app-show-errors> -->
 
             <br>
 
@@ -36,21 +31,16 @@
                 <input matInput
                     formControlName="password"
                     type="password"
-                    required
-                    [disabled]="isProcessing">
+                    required>
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
         </form>
 
-        <!-- <div *ngIf="serverErrors?.password"
-                class="validation-message">{{ serverErrors.password.message }}</div>
-            <app-show-errors [control]="formGroup.controls['password']"></app-show-errors> -->
-
-        <div *ngFor="let error of formGroup['globalErrors']"
+        <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('invalidCredentials')"
             class="mat-error">
-            {{error}}
+            Invalid username or password
         </div>
     </mat-card-content>
     <mat-card-actions>

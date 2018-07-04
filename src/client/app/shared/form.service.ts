@@ -24,17 +24,21 @@ export class FormService {
 
   applyServerErrorValidationOnForm(errorResponse: HttpErrorResponse, form: FormGroup) {
     if (errorResponse.status === 400) {
-      const errors = errorResponse.error.validation;
 
-      if (errors !== null && errors !== undefined) {
+      const errors = errorResponse.error.error.validation;
+
+      if (errors !== null && errors !== undefined && errors.formErrors !== undefined) {
         for (const key in form.controls) {
           if (form.controls.hasOwnProperty(key)) {
-            form.get(key).setErrors(errors.find(x => x.field === key).errors);
+            const fieldError = errors.formErrors.find(x => x.field === key);
+            if (fieldError !== undefined) {
+              form.get(key).setErrors(fieldError.errors);
+            }
           }
         }
-
-        form[GLOBAL_ERROR_KEY] = errors.globalErros;
       }
+
+      form[GLOBAL_ERROR_KEY] = errors.globalErrors;
     }
   }
 }

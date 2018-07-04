@@ -1,4 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Response } from 'express';
 
 export const GLOBAL_ERROR_KEY = 'globalErrors';
 
@@ -28,10 +29,25 @@ class ClientValidators {
 }
 
 export class BuildFormGroup {
+    static createUser(email: string = null, username: string = null, password: string = null): FormValidator {
+        return {
+            email: [email, [
+                ClientValidators.required,
+                ClientValidators.email
+            ]],
+            username: [username, [
+                ClientValidators.required
+            ]],
+            password: [password, [
+                ClientValidators.required,
+                ClientValidators.minLength(6)
+            ]]
+        };
+    }
     static login(emailOrUsername: string = null, password: string = null): FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
-                ClientValidators.required,
+                ClientValidators.required
             ]],
             password: [password, [
                 ClientValidators.required,
@@ -42,7 +58,7 @@ export class BuildFormGroup {
 }
 
 export class ServerValidator {
-    static getErrors(form: FormValidator) {
+    static getErrorsAndSave(res: Response, form: FormValidator) {
         const validationErrors = [];
         for (const field in form) {
             if (form.hasOwnProperty(field)) {
@@ -64,7 +80,56 @@ export class ServerValidator {
                 }
             }
         }
-        return validationErrors.length > 0 ? validationErrors : null;
+        validationErrors.forEach((error) => {
+            if (res.locals.error === undefined) {
+                res.locals.error = {};
+            }
+            if (res.locals.error.formErrors === undefined) {
+                res.locals.error.formErrors = [];
+            }
+            const savedError = res.locals.error.formErrors.find(x => x.field === error.field);
+            if (savedError !== undefined) {
+                Object.assign(savedError.errors, error.errors);
+            } else {
+                res.locals.error.formErrors.push(error);
+            }
+        });
+
+        return validationErrors.length > 0 ? true : false;
+    }
+
+    static addFormError(res: Response, field: string, error: Object) {
+        if (res.locals.error === undefined) {
+            res.locals.error = {};
+        }
+        if (res.locals.error.formErrors === undefined) {
+            res.locals.error.formErrors = [];
+        }
+        const savedError = res.locals.error.formErrors.find(x => x.field === field);
+        if (savedError !== undefined) {
+            Object.assign(savedError.errors, error);
+        } else {
+            res.locals.error.formErrors.push({
+                field,
+                errors: error
+            });
+        }
+    }
+
+    static addGlobalError(res: Response, field: string, error: Object) {
+        if (res.locals.error === undefined) {
+            res.locals.error = {};
+        }
+        if (res.locals.error.globalErrors === undefined) {
+            res.locals.error.globalErrors = {};
+        }
+        if (res.locals.error.globalErrors.hasOwnProperty(field)) {
+            Object.assign(res.locals.error.globalErrors[field], error);
+        } else {
+            Object.assign(res.locals.error.globalErrors, {
+                [field]: error
+            });
+        }
     }
 }
 
