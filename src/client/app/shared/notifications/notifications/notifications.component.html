@@ -18,35 +18,37 @@
   (backdropClick)="isOpen = false">
 
   <mat-card>
-    <div class="header">
-      <strong class="title">Notifications</strong>
-      <button mat-icon-button
-        type="button"
-        (click)="isOpen = false"
-        matTooltip="Exit Notifications"
-        aria-label="Exit Notifications">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-    <ng-container *ngIf="messages.length > 0">
-      <mat-list>
-        <mat-list-item *ngFor="let message of messages; let i = index">
-          <span mat-line>{{message}}</span>
-          <button mat-icon-button
-            type="button"
-            (click)="removeMessage(i)"
-            matTooltip="Mark As Read"
-            aria-label="Mark As Read">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
-    </ng-container>
-    <ng-container *ngIf="messages.length <= 0">
-      <mat-list>
-        <mat-list-item>No Messages</mat-list-item>
-      </mat-list>
-    </ng-container>
+    <mat-card-content>
+      <div class="header">
+        <strong class="title">Notifications</strong>
+        <button mat-icon-button
+          type="button"
+          (click)="isOpen = false"
+          matTooltip="Exit Notifications"
+          aria-label="Exit Notifications">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <ng-container *ngIf="messages.length > 0">
+        <mat-list>
+          <mat-list-item *ngFor="let message of messages; let i = index">
+            <span mat-line>{{message}}</span>
+            <button mat-icon-button
+              type="button"
+              (click)="removeMessage(i)"
+              matTooltip="Mark As Read"
+              aria-label="Mark As Read">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+      <ng-container *ngIf="messages.length <= 0">
+        <mat-list>
+          <mat-list-item>No Messages</mat-list-item>
+        </mat-list>
+      </ng-container>
+    </mat-card-content>
   </mat-card>
 
 </ng-template>
