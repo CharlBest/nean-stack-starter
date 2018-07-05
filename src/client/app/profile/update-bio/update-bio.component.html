@@ -1,12 +1,9 @@
-<mat-card *ngIf="!isProcessing">
+<mat-card>
   <mat-card-title>Bio</mat-card-title>
   <mat-card-content>
 
     <app-html-editor [htmlContent]="content"
       [(editorDomElement)]="inputElement"></app-html-editor>
-
-    <div *ngIf="serverErrors?.content"
-      class="validation-message">{{ serverErrors.content.message }}</div>
 
     <!-- <span [appEmojiPanel]="emojiPanel"
       [placeholder]="'Add a reply...'"

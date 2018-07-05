@@ -1,89 +1,202 @@
-export enum ErrorMessageType {
-    email,
-    required,
-    minLength,
-    maxLength,
-    compare
-}
+import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { Response } from 'express';
 
-export class Validators {
+export const GLOBAL_ERROR_KEY = 'globalErrors';
 
-    // TODO: max, maxLength, pattern
-    private static readonly errorMessages = {
-        [ErrorMessageType[ErrorMessageType.required]]: () => 'This field is required',
-        [ErrorMessageType[ErrorMessageType.email]]: () => 'Email is invalid',
-        [ErrorMessageType[ErrorMessageType.minLength]]: (minLength) => 'The min number of characters is ' + minLength,
-        [ErrorMessageType[ErrorMessageType.maxLength]]: (maxLength) => 'The max allowed number of characters is ' + maxLength,
-        [ErrorMessageType[ErrorMessageType.compare]]: () => 'Passwords are not the same',
-        // 'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,
-        // 'years': (params) => params.message,
-        // 'countryCity': (params) => params.message,
-        // 'uniqueName': (params) => params.message,
-        // 'telephoneNumbers': (params) => params.message,
-        // 'telephoneNumber': (params) => params.message
-    };
+export class CustomValidators {
 
-    public static getMessage(type: string, params: any) {
-        return Validators.errorMessages[type](params);
+    private static wrapControl(control: AbstractControl | string | number): AbstractControl {
+        return control instanceof AbstractControl ? control : <any>{ value: control };
     }
 
-    private static getServerErrorMessage(type: ErrorMessageType, params: any) {
-        return {
-            [ErrorMessageType[type]]: {
-                message: Validators.getMessage(ErrorMessageType[type], params)
-            }
+    static required(control: AbstractControl | string | number): ValidationErrors | null {
+        return Validators.required(CustomValidators.wrapControl(control));
+    }
+
+    static email(control: AbstractControl | string | number): ValidationErrors | null {
+        return Validators.email(CustomValidators.wrapControl(control));
+    }
+
+    static minLength(length: number): ValidatorFn {
+        return (control: AbstractControl | string | number): ValidationErrors | null => {
+            return Validators.minLength(length).call(this, CustomValidators.wrapControl(control));
         };
     }
 
-    static email(control: AbstractControl): ValidationErrors {
-        const isValidEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(control.value);
-        return isValidEmail ? null : Validators.getServerErrorMessage(ErrorMessageType.email, null);
+    static is4(control: AbstractControl | string | number): ValidationErrors | null {
+        return CustomValidators.wrapControl(control).value === '4' ? { is4: true } : null;
+    }
+}
+
+export class BuildFormGroup {
+    static createUser(email: string = null, username: string = null, password: string = null): FormValidator {
+        return {
+            email: [email, [
+                CustomValidators.required,
+                CustomValidators.email
+            ]],
+            username: [username, [
+                CustomValidators.required
+            ]],
+            password: [password, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]]
+        };
     }
 
-    static required(control: AbstractControl): ValidationErrors {
-        if (control.value !== null && control.value !== undefined) {
-            if (typeof control.value === 'number') {
-                return null;
-            }
+    static feedback(content: string = null): FormValidator {
+        return {
+            content: [content, [
+                CustomValidators.required,
+                CustomValidators.minLength(10)
+            ]]
+        };
+    }
 
-            const valueWithoutWhitespace = control.value.replace(/\s+/g, '');
-            if (valueWithoutWhitespace !== '') {
-                return null;
+    static login(emailOrUsername: string = null, password: string = null): FormValidator {
+        return {
+            emailOrUsername: [emailOrUsername, [
+                CustomValidators.required
+            ]],
+            password: [password, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]]
+        };
+    }
+
+    static changeForgottenPassword(password: string = null): FormValidator {
+        return {
+            password: [password, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]]
+        };
+    }
+
+    static forgotPassword(email: string = null): FormValidator {
+        return {
+            email: [email, [
+                CustomValidators.required,
+                CustomValidators.email
+            ]]
+        };
+    }
+
+    static updatePassword(password: string = null, newPassword: string = null, confirmPassword: string = null): FormValidator {
+        return {
+            password: [password, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]],
+            newPassword: [newPassword, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]],
+            confirmPassword: [confirmPassword, [
+                CustomValidators.required,
+                CustomValidators.minLength(6)
+            ]]
+        };
+    }
+
+    static payment(amount: number = null): FormValidator {
+        return {
+            amount: [amount, [
+                CustomValidators.required
+            ]]
+        };
+    }
+
+    static newsletter(email: string = null): FormValidator {
+        return {
+            email: [email, [
+                CustomValidators.required,
+                CustomValidators.email
+            ]]
+        };
+    }
+}
+
+export class ServerValidator {
+    static setErrorsAndSave(res: Response, form: FormValidator) {
+        const validationErrors = [];
+        for (const field in form) {
+            if (form.hasOwnProperty(field)) {
+                if (form[field] !== undefined && form[field] !== null && form[field].length > 1) {
+                    const errors = {};
+                    for (let i = 0; i < form[field][1].length; i++) {
+                        const error = form[field][1][i](form[field][0]);
+                        if (error !== null) {
+                            Object.assign(errors, error);
+                        }
+                    }
+
+                    if (Object.keys(errors).length > 0) {
+                        validationErrors.push({
+                            field,
+                            errors
+                        });
+                    }
+                }
             }
         }
-
-        return Validators.getServerErrorMessage(ErrorMessageType.required, null);
-    }
-
-    static minLength(minLength: number): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors => {
-            if (control.value !== null && control.value !== undefined && control.value.length >= minLength) {
-                return null;
-            } else {
-                return Validators.getServerErrorMessage(ErrorMessageType.minLength, minLength);
+        validationErrors.forEach((error) => {
+            if (res.locals.error === undefined) {
+                res.locals.error = {};
             }
-        };
-    }
-
-    static maxLength(maxLength: number): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors => {
-            if (control.value !== null && control.value !== undefined && control.value.length < maxLength) {
-                return null;
-            } else {
-                return Validators.getServerErrorMessage(ErrorMessageType.maxLength, maxLength);
+            if (res.locals.error.formErrors === undefined) {
+                res.locals.error.formErrors = [];
             }
-        };
+            const savedError = res.locals.error.formErrors.find(x => x.field === error.field);
+            if (savedError !== undefined) {
+                Object.assign(savedError.errors, error.errors);
+            } else {
+                res.locals.error.formErrors.push(error);
+            }
+        });
+
+        return validationErrors.length > 0 ? true : false;
     }
-}
 
-interface AbstractControl {
-    value: any;
-}
+    static addFormError(res: Response, field: string, error: Object) {
+        if (res.locals.error === undefined) {
+            res.locals.error = {};
+        }
+        if (res.locals.error.formErrors === undefined) {
+            res.locals.error.formErrors = [];
+        }
+        const savedError = res.locals.error.formErrors.find(x => x.field === field);
+        if (savedError !== undefined) {
+            Object.assign(savedError.errors, error);
+        } else {
+            res.locals.error.formErrors.push({
+                field,
+                errors: error
+            });
+        }
 
-type ValidatorFn = (c: AbstractControl) => ValidationErrors | null;
+        return error ? true : false;
+    }
 
-interface ValidationErrors {
-    [key: string]: any;
+    static addGlobalError(res: Response, field: string, error: Object) {
+        if (res.locals.error === undefined) {
+            res.locals.error = {};
+        }
+        if (res.locals.error.globalErrors === undefined) {
+            res.locals.error.globalErrors = {};
+        }
+        if (res.locals.error.globalErrors.hasOwnProperty(field)) {
+            Object.assign(res.locals.error.globalErrors[field], error);
+        } else {
+            Object.assign(res.locals.error.globalErrors, {
+                [field]: error
+            });
+        }
+
+        return error ? true : false;
+    }
 }
 
 export function trimString(string: string): string {
@@ -94,3 +207,9 @@ export function trimString(string: string): string {
         return string;
     }
 }
+
+interface FormValidator {
+    [key: string]: [string | number, Array<Function>];
+}
+
+type ValidatorFn = (c: AbstractControl | string | number) => ValidationErrors | null;

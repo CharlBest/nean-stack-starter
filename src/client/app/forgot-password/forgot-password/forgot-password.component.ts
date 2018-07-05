@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/new-validators';
-import { trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({
@@ -46,7 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
       .subscribe(() => {
         this.emailSent = true;
       }, error => {
-        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formService.updateFormValidity(error, this.formGroup);
       });
   }
 }

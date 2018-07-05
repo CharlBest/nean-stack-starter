@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../../shared/validation/new-validators';
+import { BuildFormGroup } from '../../../../../shared/validation/validators';
 import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
 import { environment } from '../../../../environments/environment';
-import { FormService } from '../../form.service';
+import { FormService } from '../../form-errors/form-errors.service';
 import { PaymentService } from '../payment.service';
 
 @Component({
@@ -124,7 +124,7 @@ export class PaymentDialogComponent implements OnInit {
             .subscribe(() => {
                 this.paymentSuccess = true;
             }, error => {
-                this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+                this.formService.updateFormValidity(error, this.formGroup);
             });
     }
 

@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/new-validators';
-import { trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 
 @Component({
   selector: 'app-login',
@@ -68,7 +67,7 @@ export class LoginComponent implements OnInit {
           alert('Authentication failed');
         }
       }, (error) => {
-        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formService.updateFormValidity(error, this.formGroup);
       });
   }
 }

@@ -4,7 +4,7 @@ import { sign } from 'jsonwebtoken';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
 import { UserModel } from '../../../shared/models/user/user.model';
-import { ServerValidator } from '../../../shared/validation/new-validators';
+import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
@@ -143,7 +143,8 @@ export class UsersService extends BaseService {
 
         if (user === null) {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
-            throw ValidationUtil.createValidationErrorMessage('email', 'Email not found');
+            ServerValidator.addGlobalError(res, 'email', { notFound: true });
+            throw ValidationUtil.errorResponse(res);
         }
 
         Emailer.forgotPasswordEmail(user.email, code);
@@ -160,7 +161,8 @@ export class UsersService extends BaseService {
         const user = await this.usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
 
         if (user === null) {
-            throw ValidationUtil.createValidationErrorMessage('password', 'Error occurred');
+            ServerValidator.addGlobalError(res, 'password', { error: true });
+            throw ValidationUtil.errorResponse(res);
         }
 
         return user;
@@ -182,7 +184,8 @@ export class UsersService extends BaseService {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
-            throw ValidationUtil.createValidationErrorMessage('password', 'Invalid password');
+            ServerValidator.addGlobalError(res, 'password', { invalid: true });
+            throw ValidationUtil.errorResponse(res);
         }
 
         const salt = await this.generateSalt();
@@ -191,7 +194,8 @@ export class UsersService extends BaseService {
         const updatedUser = await this.usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
 
         if (updatedUser === null) {
-            throw ValidationUtil.createValidationErrorMessage('password', 'Error occurred');
+            ServerValidator.addGlobalError(res, 'password', { error: true });
+            throw ValidationUtil.errorResponse(res);
         }
 
         return updatedUser;

@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/new-validators';
-import { trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({
@@ -42,7 +41,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.changePassword());
+    this.formGroup = this.fb.group(BuildFormGroup.changeForgottenPassword());
   }
 
   onSubmit() {
@@ -59,7 +58,7 @@ export class ChangePasswordComponent implements OnInit {
         const link = ['/login'];
         this.router.navigate(link);
       }, error => {
-        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formService.updateFormValidity(error, this.formGroup);
       });
   }
 }

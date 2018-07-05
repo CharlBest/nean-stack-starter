@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/new-validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -60,7 +60,7 @@ export class UpdatePasswordComponent implements OnInit {
           duration: 2000,
         });
       }, error => {
-        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formService.updateFormValidity(error, this.formGroup);
         this.snackBar.dismiss();
       });
   }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { trimString, Validators } from '../../../shared/validation/validators';
+import { BuildFormGroup, CustomValidators, ServerValidator, trimString } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { PaymentRequestViewModel } from '../../../shared/view-models/payment/payment-request.view-model';
@@ -21,11 +21,11 @@ export class GeneralController extends BaseController {
         // Trim inputs
         viewModel.email = trimString(viewModel.email);
 
-        const valid = Validators.required({ value: viewModel.email }) ||
-            null;
+        const formGroup = BuildFormGroup.newsletter(viewModel.email);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(201).json(
@@ -39,11 +39,11 @@ export class GeneralController extends BaseController {
         // Trim inputs
         viewModel.email = trimString(viewModel.email);
 
-        const valid = Validators.required({ value: viewModel.email }) ||
-            null;
+        const formGroup = BuildFormGroup.newsletter(viewModel.email);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(
@@ -54,11 +54,11 @@ export class GeneralController extends BaseController {
     public async sendFeedback(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as FeedbackViewModel;
 
-        const valid = Validators.required({ value: viewModel.content }) ||
-            null;
+        const formGroup = BuildFormGroup.feedback(viewModel.content);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         await this.generalService.sendFeedback(res, viewModel.content);
@@ -69,12 +69,13 @@ export class GeneralController extends BaseController {
     public async paymentRequest(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as PaymentRequestViewModel;
 
-        const valid = Validators.required({ value: viewModel.token }) ||
-            Validators.required({ value: viewModel.amount }) ||
-            null;
+        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(

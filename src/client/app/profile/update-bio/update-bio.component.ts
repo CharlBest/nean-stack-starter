@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdateBioComponent implements OnInit {
 
-  serverErrors;
+  formGroup: FormGroup;
   isProcessing = false;
   @Input() content = '';
   inputElement: HTMLDivElement;
@@ -47,7 +47,7 @@ export class UpdateBioComponent implements OnInit {
             duration: 2000,
           });
         }, error => {
-          this.serverErrors = this.formService.getServerErrors(error);
+          this.formService.updateFormValidity(error, this.formGroup);
           this.snackBar.dismiss();
         });
     }

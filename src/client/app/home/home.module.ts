@@ -6,7 +6,6 @@ import { MediaModule } from '../shared/media/media.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
 
 const materialModules = [
   MatInputModule,
@@ -28,8 +27,7 @@ const materialModules = [
     ...materialModules
   ],
   declarations: [
-    HomeComponent,
-    SearchBarComponent
+    HomeComponent
   ]
 })
 export class HomeModule { }

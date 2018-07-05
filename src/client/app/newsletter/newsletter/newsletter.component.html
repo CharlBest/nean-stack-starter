@@ -1,5 +1,4 @@
-<mat-card *ngIf="!isProcessing"
-  [appTutorial]="tutorialTypeEnum.Newsletter">
+<mat-card [appTutorial]="tutorialTypeEnum.Newsletter">
   <mat-card-subtitle *ngIf="!removingEmail">
     Sign up for our newsletter
   </mat-card-subtitle>
@@ -7,24 +6,20 @@
     We are sad to see you go 🙁
   </mat-card-subtitle>
   <mat-card-content>
-    <mat-form-field>
-      <mat-label>email</mat-label>
-      <input matInput
-        [formControl]="input"
-        [email]="true"
-        type="email"
-        autocomplete="email"
-        required
-        [attr.autofocus]="bpService.isWeb || null">
-      <mat-error>
-        <ng-container *ngIf="input.hasError('email')">
-          Invalid email address
-        </ng-container>
-        <ng-container *ngIf="input.hasError('required')">
-          Email address is required
-        </ng-container>
-      </mat-error>
-    </mat-form-field>
+    <form [formGroup]="formGroup">
+      <mat-form-field>
+        <mat-label>email</mat-label>
+        <input matInput
+          formControlName="email"
+          type="text"
+          autocomplete="email"
+          required
+          [attr.autofocus]="bpService.isWeb || null">
+        <mat-error>
+          <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </form>
 
     <div *ngIf="message && !removingEmail"
       class="message-success">We added you</div>
@@ -36,13 +31,13 @@
       color="primary"
       type="button"
       *ngIf="!removingEmail"
-      [disabled]="!input.valid"
+      [disabled]="!formGroup.valid"
       (click)="add()">Join</button>
     <button mat-raised-button
       color="warn"
       type="button"
       *ngIf="removingEmail"
-      [disabled]="!input.valid"
+      [disabled]="!formGroup.valid"
       (click)="remove()">Remove</button>
   </mat-card-actions>
 </mat-card>

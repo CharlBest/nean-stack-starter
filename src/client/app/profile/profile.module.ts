@@ -8,7 +8,6 @@ import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
-import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
@@ -36,7 +35,6 @@ const materialModules = [
     ShareDialogModule,
     ReportDialogModule,
     UploadButtonModule,
-    ShowErrorsModule,
     FormErrorsModule,
     TutorialModule,
     EmojiPanelModule,

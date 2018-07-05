@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { BuildFormGroup, ServerValidator } from '../../../shared/validation/new-validators';
-import { trimString, Validators } from '../../../shared/validation/validators';
+import { BuildFormGroup, CustomValidators, ServerValidator, trimString } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -30,7 +29,7 @@ export class UsersController extends BaseController {
         viewModel.email = trimString(viewModel.email);
 
         const formGroup = BuildFormGroup.createUser(viewModel.email, viewModel.username, viewModel.password);
-        const hasErrors = ServerValidator.getErrorsAndSave(res, formGroup);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
@@ -48,7 +47,7 @@ export class UsersController extends BaseController {
         viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
 
         const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
-        const hasErrors = ServerValidator.getErrorsAndSave(res, formGroup);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
@@ -85,12 +84,11 @@ export class UsersController extends BaseController {
         // Trim inputs
         viewModel.email = trimString(viewModel.email);
 
-        const valid = Validators.required({ value: viewModel.email }) ||
-            Validators.email({ value: viewModel.email }) ||
-            null;
+        const formGroup = BuildFormGroup.forgotPassword(viewModel.email);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(
@@ -104,15 +102,15 @@ export class UsersController extends BaseController {
         // Trim inputs
         viewModel.email = trimString(viewModel.email);
 
-        const valid = Validators.required({ value: viewModel.email }) ||
-            Validators.email({ value: viewModel.email }) ||
-            Validators.required({ value: viewModel.code }) ||
-            Validators.required({ value: viewModel.password }) ||
-            Validators.minLength(6)({ value: viewModel.password }) ||
-            null;
+        const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.email);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'code', CustomValidators.required(viewModel.code));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'password', CustomValidators.required(viewModel.password));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'password', CustomValidators.minLength(6)(viewModel.password));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(
@@ -122,11 +120,11 @@ export class UsersController extends BaseController {
 
     public async verifyEmail(req: Request, res: Response, next: NextFunction) {
         const code = req.body.code;
-        const valid = Validators.required({ value: code }) ||
-            null;
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        const hasErrors = ServerValidator.addGlobalError(res, 'code', CustomValidators.required(code));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(
@@ -153,13 +151,11 @@ export class UsersController extends BaseController {
     public async updatePassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdatePasswordViewModel;
 
-        const valid = Validators.required({ value: viewModel.password }) ||
-            Validators.required({ value: viewModel.newPassword }) ||
-            Validators.minLength(6)({ value: viewModel.newPassword }) ||
-            null;
+        const formGroup = BuildFormGroup.updatePassword(viewModel.password, viewModel.newPassword, viewModel.newPassword);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(
@@ -182,11 +178,11 @@ export class UsersController extends BaseController {
 
     public async completedTutorial(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CompletedTutorial;
-        const valid = Validators.required({ value: viewModel.tutorialType }) ||
-            null;
 
-        if (valid !== null) {
-            throw ValidationUtil.createValidationErrors(valid);
+        const hasErrors = ServerValidator.addGlobalError(res, 'tutorialType', CustomValidators.required(viewModel.tutorialType));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
         }
 
         res.status(200).json(

@@ -1,4 +1,4 @@
-<div *ngIf="!isProcessing && user !== null">
+<div *ngIf="user !== null">
   <mat-card>
     <mat-card-title>{{user.username}}</mat-card-title>
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
@@ -58,7 +58,7 @@
   <app-update-password></app-update-password>
 </div>
 
-<mat-card *ngIf="!isProcessing && user === null">
+<mat-card *ngIf="user === null">
   <mat-card-content>
     An error occurred
   </mat-card-content>

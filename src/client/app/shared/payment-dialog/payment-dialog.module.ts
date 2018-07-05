@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { FormErrorsModule } from '../form-errors/form-errors.module';
-import { ShowErrorsModule } from '../show-errors/show-errors.module';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 
 const materialModules = [
@@ -11,14 +10,14 @@ const materialModules = [
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatInputModule
 ];
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        ShowErrorsModule,
         FormErrorsModule,
         ...materialModules
     ],

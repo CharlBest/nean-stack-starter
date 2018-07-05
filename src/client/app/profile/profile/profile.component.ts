@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
         }
       }, error => {
         // TODO: apply error handeling
-        // this.serverErrors = this.formService.getServerErrors(error);
+        // this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
       });
   }
 

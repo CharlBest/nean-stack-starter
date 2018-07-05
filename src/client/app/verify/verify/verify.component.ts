@@ -34,6 +34,7 @@ export class VerifyComponent implements OnInit {
                   this.verifyResult = false;
                 }
               }, error => {
+                // TODO: error handling
                 this.verifyResult = false;
               });
           }

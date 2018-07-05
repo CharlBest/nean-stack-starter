@@ -8,7 +8,7 @@ CVC: Any 3 degit number
 Zip: Any 5 degit number">info_outline</mat-icon>
 </h2>
 
-<div [hidden]="isProcessing || paymentSuccess"
+<div [hidden]="paymentSuccess"
     class="payment-container">
     <div class="width-enforcer"></div>
     <mat-dialog-content>
@@ -20,20 +20,22 @@ Zip: Any 5 degit number">info_outline</mat-icon>
         </div>
         <br>
         <form [formGroup]="formGroup">
-            <div class="StripeElement">
-                &#8364;
-                <input formControlName="amount"
-                    required
-                    [required]="true"
+            <mat-form-field appearance="outline">
+                <input matInput
+                    formControlName="amount"
                     type="number"
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                    placeholder="Amount in euros" />
-            </div>
+                    placeholder="Amount in euros"
+                    required>
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('amount')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
         </form>
 
-        <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('paymentFailed')"
+        <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('token')"
             class="mat-error">
-            Payment failed
+            Token was invalid
         </div>
 
         <br>
@@ -42,7 +44,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
         <button mat-raised-button
             color="primary"
             type="submit"
-            [disabled]="!form.valid"
+            [disabled]="!formGroup.valid"
             (click)="onSubmit()">Pay</button>
         <button mat-raised-button
             type="button"
@@ -56,7 +58,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
     <br>
 </mat-dialog-content>
 
-<mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
+<mat-dialog-content *ngIf="paymentSuccess"
     (click)="closeDialog()">
     <div class="payment-successful-container">
         <mat-icon>check_circle</mat-icon>

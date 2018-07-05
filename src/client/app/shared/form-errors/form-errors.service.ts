@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { GLOBAL_ERROR_KEY } from '../../../shared/validation/new-validators';
+import { GLOBAL_ERROR_KEY } from '../../../../shared/validation/validators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,7 @@ export class FormService {
 
   constructor() { }
 
-  public getServerErrors(errorResponse: HttpErrorResponse): Object {
-    if (errorResponse.status === 400) {
-      const errors = errorResponse.error.validation;
-
-      if (errors !== null && errors !== undefined) {
-        return errors;
-      }
-
-      return null;
-    }
-  }
-
-  applyServerErrorValidationOnForm(errorResponse: HttpErrorResponse, form: FormGroup) {
+  updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup) {
     if (errorResponse.status === 400) {
 
       const errors = errorResponse.error.error.validation;

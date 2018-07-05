@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/new-validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form.service';
+import { FormService } from '../../shared/form-errors/form-errors.service';
 import { FeedbackService } from '../feedback.service';
 
 @Component({
@@ -45,7 +45,7 @@ export class FeedbackComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate(['/']);
       }, error => {
-        this.formService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formService.updateFormValidity(error, this.formGroup);
       });
   }
 }
