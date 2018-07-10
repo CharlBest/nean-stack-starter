@@ -1,0 +1,20 @@
+<mat-card style="padding: 0;">
+    <div style="text-align: right;">
+        <mat-icon>arrow_upward</mat-icon>
+    </div>
+    <mat-card-content style="padding: 0 24px 24px 24px; text-align: center;">
+        <ng-container [ngSwitch]="activeHelperTextSection">
+            <ng-container *ngSwitchCase="helperTextSection.ANDROID_MOBILE_CHROME">
+                Click above
+                <mat-icon inline="true">more_vert</mat-icon> and then choose
+                <br>"Add to Home Screen"
+            </ng-container>
+            <ng-container *ngSwitchCase="helperTextSection.DESKTOP_CHROME">
+                Click above
+                <mat-icon inline="true">more_vert</mat-icon> and go to
+                <br>"More Tools" and then
+                <br>"Create shortcut..."
+            </ng-container>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
