@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './shared/footer/footer.module';
 import { HeaderModule } from './shared/header/header.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
-import { TokenInterceptor } from './shared/interceptors/token-interceptor';
+import { ErrorInterceptor } from './shared/interceptors/error-interceptor';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     Title,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: ErrorInterceptor,
       multi: true
     },
     {
