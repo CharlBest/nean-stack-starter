@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import 'firebase/storage';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 
@@ -8,7 +7,7 @@ import { FirebaseStorageService } from '../../firebase-storage.service';
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss']
 })
-export class UploadButtonComponent implements OnInit {
+export class UploadButtonComponent {
     previewImgUrl: string;
     progressPercentage: Observable<number>;
 
@@ -19,9 +18,6 @@ export class UploadButtonComponent implements OnInit {
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
-
-    ngOnInit() {
-    }
 
     handleChange(event: Event) {
         // Reset
