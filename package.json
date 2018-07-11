@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.118",
+  "version": "0.0.121",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -19,10 +19,10 @@
   "scripts": {
     "dev": "concurrently \"ng serve --aot\" \"webpack --watch\" \"npm run start-watch\"",
     "build": "ng build --prod && webpack --mode=production",
-    "build-dev-server": "webpack --mode=development",
-    "watch-dev-server": "webpack --mode=development --watch",
+    "build:server": "webpack --mode=development",
+    "build:server:watch": "webpack --mode=development --watch",
     "start": "node dist/server/app.bundle.js",
-    "start-watch": "nodemon dist/server/app.bundle.js",
+    "start:server:watch": "nodemon dist/server/app.bundle.js",
     "heroku-postbuild": "npm run build",
     "ng": "ng",
     "test": "echo \"Error: no test... minimal project\" && exit 1",
