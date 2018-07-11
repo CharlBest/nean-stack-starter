@@ -3,7 +3,7 @@
         profile pictures and more.</mat-card-subtitle>
 </mat-card>
 
-<mat-card>
+<mat-card [hidden]="isProcessing">
     <mat-card-content [innerHTML]="readmeText"
         class="github-readme-container"></mat-card-content>
 </mat-card>

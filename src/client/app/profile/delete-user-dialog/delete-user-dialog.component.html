@@ -1,28 +1,32 @@
-<h2 mat-dialog-title>Delete account</h2>
-<mat-dialog-content>
-    <p>
-        We are sad to see you go. All information on user
-        <strong>{{username}}</strong> will be deleted and can't be recovered after proceeding. Please enter your username.
-    </p>
-    <mat-form-field>
-        <mat-label>username</mat-label>
-        <input matInput
-            #usernameInput
-            type="text"
-            required
-            [attr.autofocus]="bpService.isWeb || null">
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-raised-button
-        color="warn"
-        type="button"
-        (click)="delete(usernameInput.value)">Delete</button>
-    <button mat-raised-button
-        type="button"
-        mat-dialog-close>Cancel</button>
-</mat-dialog-actions>
+<div [hidden]="isProcessing">
+    <h2 mat-dialog-title>Delete account</h2>
+    <mat-dialog-content>
+        <p>
+            We are sad to see you go. All information on user
+            <strong>{{username}}</strong> will be deleted and can't be recovered after proceeding. Please enter your username.
+        </p>
+        <mat-form-field>
+            <mat-label>username</mat-label>
+            <input matInput
+                #usernameInput
+                type="text"
+                required
+                [attr.autofocus]="bpService.isWeb || null">
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button
+            color="warn"
+            type="button"
+            (click)="delete(usernameInput.value)">Delete</button>
+        <button mat-raised-button
+            type="button"
+            mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</div>
 
-<mat-card *ngIf="isProcessing">
+<mat-dialog-content *ngIf="isProcessing">
+    <br>
     <mat-spinner></mat-spinner>
-</mat-card>
+    <br>
+</mat-dialog-content>

@@ -1,4 +1,5 @@
-<mat-card *ngIf="verifyResult !== undefined && !isProcessing">
+<mat-card [hidden]="isProcessing"
+  *ngIf="verifyResult !== undefined">
   <mat-card-content>
     <div *ngIf="verifyResult">
       <mat-icon>done</mat-icon>

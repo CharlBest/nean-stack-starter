@@ -1,4 +1,5 @@
-<form [formGroup]="formGroup">
+<form [hidden]="isProcessing"
+    [formGroup]="formGroup">
     <mat-card>
         <mat-card-title>Login</mat-card-title>
         <mat-card-content>
@@ -55,3 +56,7 @@
         </mat-card-actions>
     </mat-card>
 </form>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
+</mat-card>

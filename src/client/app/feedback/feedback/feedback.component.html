@@ -1,4 +1,5 @@
-<form [formGroup]="formGroup">
+<form [hidden]="isProcessing"
+  [formGroup]="formGroup">
   <mat-card [appTutorial]="tutorialTypeEnum.Feedback">
     <mat-card-subtitle>
       Email us some feedback

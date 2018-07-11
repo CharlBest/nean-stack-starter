@@ -8,7 +8,7 @@ CVC: Any 3 degit number
 Zip: Any 5 degit number">info_outline</mat-icon>
 </h2>
 
-<div [hidden]="paymentSuccess"
+<div [hidden]="isProcessing && paymentSuccess"
     class="payment-container">
     <div class="width-enforcer"></div>
     <form [formGroup]="formGroup">
@@ -58,7 +58,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
     <br>
 </mat-dialog-content>
 
-<mat-dialog-content *ngIf="paymentSuccess"
+<mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
     (click)="closeDialog()">
     <div class="payment-successful-container">
         <mat-icon>check_circle</mat-icon>

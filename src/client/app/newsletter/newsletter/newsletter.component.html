@@ -1,4 +1,5 @@
-<form [formGroup]="formGroup">
+<form [hidden]="isProcessing"
+  [formGroup]="formGroup">
   <mat-card [appTutorial]="tutorialTypeEnum.Newsletter">
     <mat-card-subtitle *ngIf="!removingEmail">
       Sign up for our newsletter
