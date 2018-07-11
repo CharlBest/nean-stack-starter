@@ -5,7 +5,7 @@ import { BuildFormGroup, trimString } from '../../../../shared/validation/valida
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private forgotPasswordService: ForgotPasswordService,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) {
   }
 
@@ -45,7 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
       .subscribe(() => {
         this.emailSent = true;
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 }

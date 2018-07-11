@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class UpdateBioComponent implements OnInit {
   inputElement: HTMLDivElement;
 
   constructor(private fb: FormBuilder,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
     public snackBar: MatSnackBar) { }
 
@@ -47,7 +47,7 @@ export class UpdateBioComponent implements OnInit {
             duration: 2000,
           });
         }, error => {
-          this.formService.updateFormValidity(error, this.formGroup);
+          this.formErrorsService.updateFormValidity(error, this.formGroup);
           this.snackBar.dismiss();
         });
     }

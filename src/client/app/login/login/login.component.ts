@@ -8,7 +8,7 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) {
   }
 
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           alert('Authentication failed');
         }
       }, (error) => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 }

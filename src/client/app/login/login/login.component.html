@@ -38,7 +38,7 @@
             </mat-form-field>
         </form>
 
-        <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('invalidCredentials')"
+        <div *ngIf="formErrorsService.formErrors?.hasOwnProperty('invalidCredentials')"
             class="mat-error">
             Invalid username or password
         </div>

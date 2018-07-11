@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
     private forgotPasswordService: ForgotPasswordService,
     private fb: FormBuilder,
     private router: Router,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) { }
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class ChangePasswordComponent implements OnInit {
         const link = ['/login'];
         this.router.navigate(link);
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 }

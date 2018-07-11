@@ -33,7 +33,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
             </mat-form-field>
         </form>
 
-        <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('token')"
+        <div *ngIf="formErrorsService.formErrors?.hasOwnProperty('token')"
             class="mat-error">
             Token was invalid
         </div>

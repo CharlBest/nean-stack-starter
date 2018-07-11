@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { GLOBAL_ERROR_KEY } from '../../../../shared/validation/validators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormService {
+export class FormErrorsService {
+
+  formErrors: any;
 
   constructor() { }
 
@@ -26,7 +27,7 @@ export class FormService {
         }
       }
 
-      form[GLOBAL_ERROR_KEY] = errors.globalErrors;
+      this.formErrors = errors.globalErrors;
     }
   }
 }

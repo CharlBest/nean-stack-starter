@@ -6,7 +6,7 @@ import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { FeedbackService } from '../feedback.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class FeedbackComponent implements OnInit {
 
   constructor(private feedbackService: FeedbackService,
     private router: Router,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
     private fb: FormBuilder) { }
 
@@ -45,7 +45,7 @@ export class FeedbackComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate(['/']);
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 }

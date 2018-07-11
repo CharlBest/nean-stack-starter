@@ -9,7 +9,7 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
 import { BreakpointService } from '../../shared/breakpoint.service';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateUserService } from '../create-user.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class CreateUserComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private authService: AuthService,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) {
   }
 
@@ -52,7 +52,7 @@ export class CreateUserComponent implements OnInit {
       .subscribe(() => {
         this.setUserToken();
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 
@@ -75,7 +75,7 @@ export class CreateUserComponent implements OnInit {
           alert('Authentication failed');
         }
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 }

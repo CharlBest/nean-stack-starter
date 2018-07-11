@@ -61,7 +61,7 @@
                 <a routerLink="/legal/privacypolicy">Privacy Policy</a>
             </div>
 
-            <div *ngIf="formGroup['globalErrors']?.hasOwnProperty('validationFailed')"
+            <div *ngIf="formErrorsService.formErrors?.hasOwnProperty('validationFailed')"
                 class="mat-error">
                 Validation failed for some reason
             </div>

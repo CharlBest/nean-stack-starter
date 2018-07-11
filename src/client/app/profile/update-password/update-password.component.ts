@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { FormService } from '../../shared/form-errors/form-errors.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class UpdatePasswordComponent implements OnInit {
   tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
-    private formService: FormService,
+    public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
     public snackBar: MatSnackBar) { }
 
@@ -60,7 +60,7 @@ export class UpdatePasswordComponent implements OnInit {
           duration: 2000,
         });
       }, error => {
-        this.formService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
         this.snackBar.dismiss();
       });
   }

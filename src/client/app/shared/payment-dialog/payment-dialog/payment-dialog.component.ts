@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
 import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
 import { environment } from '../../../../environments/environment';
-import { FormService } from '../../form-errors/form-errors.service';
+import { FormErrorsService } from '../../form-errors/form-errors.service';
 import { PaymentService } from '../payment.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class PaymentDialogComponent implements OnInit {
     constructor(public snackBar: MatSnackBar,
         private fb: FormBuilder,
         private paymentService: PaymentService,
-        private formService: FormService,
+        public formErrorsService: FormErrorsService,
         public dialogRef: MatDialogRef<PaymentDialogComponent>) { }
 
     ngOnInit() {
@@ -124,7 +124,7 @@ export class PaymentDialogComponent implements OnInit {
             .subscribe(() => {
                 this.paymentSuccess = true;
             }, error => {
-                this.formService.updateFormValidity(error, this.formGroup);
+                this.formErrorsService.updateFormValidity(error, this.formGroup);
             });
     }
 

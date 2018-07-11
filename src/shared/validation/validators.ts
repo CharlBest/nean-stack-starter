@@ -1,8 +1,6 @@
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Response } from 'express';
 
-export const GLOBAL_ERROR_KEY = 'globalErrors';
-
 export class CustomValidators {
 
     private static wrapControl(control: AbstractControl | string | number): AbstractControl {
