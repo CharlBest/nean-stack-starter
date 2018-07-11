@@ -19,13 +19,13 @@ export class PaymentService {
     // this.paymentController.processPayment(viewModel).subscribe((data) => {
     //   if (data.status === 'succeeded') {
     //     // TODO: make this more rewarding for the user by showing full page and saying thank you!
-    //     this.snackBar.open('Payment successful', '', {
+    //     this.snackBar.open('Payment successful', null, {
     //       duration: 10000,
     //     });
     //   }
     // }, error => {
     //   // TODO: crucial. handel payment error!
-    //   this.snackBar.open('Payment error', '', {
+    //   this.snackBar.open('Payment error', null, {
     //     duration: 10000,
     //   });
     // });

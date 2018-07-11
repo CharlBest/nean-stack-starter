@@ -32,7 +32,7 @@ export class UpdateBioComponent implements OnInit {
     if (this.content !== viewModel.content) {
       this.isProcessing = true;
 
-      this.snackBar.open('Updating bio...', '', {
+      this.snackBar.open('Updating bio...', null, {
         duration: 10000,
       });
 
@@ -42,7 +42,7 @@ export class UpdateBioComponent implements OnInit {
           this.content = viewModel.content;
 
           this.snackBar.dismiss();
-          this.snackBar.open('Updated bio', '', {
+          this.snackBar.open('Updated bio', null, {
             duration: 2000,
           });
         }, error => {

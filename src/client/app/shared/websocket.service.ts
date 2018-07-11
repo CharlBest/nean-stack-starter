@@ -35,9 +35,8 @@ export class WebSocketService {
             return ws.close.bind(ws);
         });
 
-        //TODO: check data type for sending socket data
         const observer = {
-            next: (data: Object) => {
+            next: (data: string) => {
                 if (ws.readyState === WebSocket.OPEN) {
                     ws.send(data);
                 }

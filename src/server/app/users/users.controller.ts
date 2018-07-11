@@ -121,7 +121,6 @@ export class UsersController extends BaseController {
     public async verifyEmail(req: Request, res: Response, next: NextFunction) {
         const code = req.body.code;
 
-        // TODO: no UI element for this error
         const hasErrors = ServerValidator.addGlobalError(res, 'code', CustomValidators.required(code));
 
         if (hasErrors) {

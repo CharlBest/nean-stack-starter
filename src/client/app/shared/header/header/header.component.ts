@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit {
     if (this.backRouterPath !== null && this.backRouterPath !== undefined) {
       this.router.navigate([this.backRouterPath]);
     } else {
-      // TODO: check if there is a back otherwise redirect to home/discover page
+      // TODO: check if there is a back otherwise redirect to home/discover page. High priority
       this.location.back();
     }
   }

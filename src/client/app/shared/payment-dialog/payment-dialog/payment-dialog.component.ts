@@ -129,7 +129,7 @@ export class PaymentDialogComponent implements OnInit {
     }
 
     openSnackBar() {
-        this.snackBar.open('Copied', '', {
+        this.snackBar.open('Copied', null, {
             duration: 2000,
         });
     }

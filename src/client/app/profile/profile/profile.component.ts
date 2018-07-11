@@ -87,14 +87,14 @@ export class ProfileComponent implements OnInit {
   }
 
   resendEmailVerificationLink() {
-    this.snackBar.open('Sending...', '', {
+    this.snackBar.open('Sending...', null, {
       duration: 10000,
     });
 
     this.profileService.resendEmailVerificationLink()
       .subscribe(() => {
         this.snackBar.dismiss();
-        this.snackBar.open('Sent', '', {
+        this.snackBar.open('Sent', null, {
           duration: 2000,
         });
       }, error => {

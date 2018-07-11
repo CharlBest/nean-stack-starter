@@ -42,7 +42,7 @@ export class UpdatePasswordComponent implements OnInit {
       return;
     }
 
-    this.snackBar.open('Updating password...', '', {
+    this.snackBar.open('Updating password...', null, {
       duration: 10000,
     });
 
@@ -56,7 +56,7 @@ export class UpdatePasswordComponent implements OnInit {
         this.formGroup.reset();
 
         this.snackBar.dismiss();
-        this.snackBar.open('Updated password', '', {
+        this.snackBar.open('Updated password', null, {
           duration: 2000,
         });
       }, error => {

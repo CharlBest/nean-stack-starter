@@ -25,7 +25,7 @@ export class DeleteUserDialogComponent {
         if (username === this.username) {
             this.isProcessing = true;
 
-            this.snackBar.open('Deleting', '', {
+            this.snackBar.open('Deleting', null, {
                 duration: 10000,
             });
 
@@ -37,7 +37,7 @@ export class DeleteUserDialogComponent {
                     this.authService.removeToken();
                     this.snackBar.dismiss();
 
-                    this.snackBar.open('Deleted', '', {
+                    this.snackBar.open('Deleted', null, {
                         duration: 2000,
                     });
                 }, error => {
