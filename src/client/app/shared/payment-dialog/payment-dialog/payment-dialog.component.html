@@ -11,15 +11,15 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 <div [hidden]="paymentSuccess"
     class="payment-container">
     <div class="width-enforcer"></div>
-    <mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <mat-dialog-content>
 
-        <div>
-            <div id="card-element"></div>
-            <div id="card-errors"
-                role="alert"></div>
-        </div>
-        <br>
-        <form [formGroup]="formGroup">
+            <div>
+                <div id="card-element"></div>
+                <div id="card-errors"
+                    role="alert"></div>
+            </div>
+            <br>
             <mat-form-field appearance="outline">
                 <input matInput
                     formControlName="amount"
@@ -31,25 +31,25 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                     <app-form-errors [control]="formGroup.get('amount')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
-        </form>
 
-        <div *ngIf="formErrorsService.formErrors?.token?.required"
-            class="mat-error">
-            Token is required
-        </div>
+            <div *ngIf="formErrorsService.formErrors?.token?.required"
+                class="mat-error">
+                Token is required
+            </div>
 
-        <br>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!formGroup.valid"
-            (click)="onSubmit()">Pay</button>
-        <button mat-raised-button
-            type="button"
-            mat-dialog-close>Cancel</button>
-    </mat-dialog-actions>
+            <br>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!formGroup.valid"
+                (click)="onSubmit()">Pay</button>
+            <button mat-raised-button
+                type="button"
+                mat-dialog-close>Cancel</button>
+        </mat-dialog-actions>
+    </form>
 </div>
 
 <mat-dialog-content *ngIf="isProcessing">

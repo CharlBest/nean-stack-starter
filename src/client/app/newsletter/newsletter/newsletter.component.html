@@ -1,12 +1,12 @@
-<mat-card [appTutorial]="tutorialTypeEnum.Newsletter">
-  <mat-card-subtitle *ngIf="!removingEmail">
-    Sign up for our newsletter
-  </mat-card-subtitle>
-  <mat-card-subtitle *ngIf="removingEmail">
-    We are sad to see you go 🙁
-  </mat-card-subtitle>
-  <mat-card-content>
-    <form [formGroup]="formGroup">
+<form [formGroup]="formGroup">
+  <mat-card [appTutorial]="tutorialTypeEnum.Newsletter">
+    <mat-card-subtitle *ngIf="!removingEmail">
+      Sign up for our newsletter
+    </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="removingEmail">
+      We are sad to see you go 🙁
+    </mat-card-subtitle>
+    <mat-card-content>
       <mat-form-field>
         <mat-label>email</mat-label>
         <input matInput
@@ -19,28 +19,28 @@
           <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
         </mat-error>
       </mat-form-field>
-    </form>
 
-    <div *ngIf="message && !removingEmail"
-      class="message-success">We added you</div>
-    <div *ngIf="message && removingEmail"
-      class="message-error">We removed you</div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button
-      color="primary"
-      type="button"
-      *ngIf="!removingEmail"
-      [disabled]="!formGroup.valid"
-      (click)="add()">Join</button>
-    <button mat-raised-button
-      color="warn"
-      type="button"
-      *ngIf="removingEmail"
-      [disabled]="!formGroup.valid"
-      (click)="remove()">Remove</button>
-  </mat-card-actions>
-</mat-card>
+      <div *ngIf="message && !removingEmail"
+        class="message-success">We added you</div>
+      <div *ngIf="message && removingEmail"
+        class="message-error">We removed you</div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button
+        color="primary"
+        type="submit"
+        *ngIf="!removingEmail"
+        [disabled]="!formGroup.valid"
+        (click)="add()">Join</button>
+      <button mat-raised-button
+        color="warn"
+        type="submit"
+        *ngIf="removingEmail"
+        [disabled]="!formGroup.valid"
+        (click)="remove()">Remove</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
 
 <mat-card *ngIf="isProcessing">
   <mat-spinner></mat-spinner>

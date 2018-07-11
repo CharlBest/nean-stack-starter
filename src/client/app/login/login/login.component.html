@@ -1,16 +1,16 @@
-<mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-        Don't have an account please
-        <button mat-raised-button
-            [appTutorial]="tutorialTypeEnum.SignUp"
-            color="accent"
-            type="button"
-            routerLink="/create-user">Sign up</button>
+<form [formGroup]="formGroup">
+    <mat-card>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            Don't have an account please
+            <button mat-raised-button
+                [appTutorial]="tutorialTypeEnum.SignUp"
+                color="accent"
+                type="button"
+                routerLink="/create-user">Sign up</button>
 
-        <br>
+            <br>
 
-        <form [formGroup]="formGroup">
             <mat-form-field>
                 <mat-label>email or username</mat-label>
                 <input matInput
@@ -36,22 +36,22 @@
                     <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
-        </form>
 
-        <div *ngIf="formErrorsService.formErrors?.invalidCredentials"
-            class="mat-error">
-            Invalid username or password
-        </div>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!formGroup.valid"
-            (click)="onSubmit()">Log in</button>
-        <button mat-raised-button
-            [appTutorial]="tutorialTypeEnum.ForgotPassword"
-            type="button"
-            routerLink="/forgot-password">Forgot password</button>
-    </mat-card-actions>
-</mat-card>
+            <div *ngIf="formErrorsService.formErrors?.invalidCredentials"
+                class="mat-error">
+                Invalid username or password
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!formGroup.valid"
+                (click)="onSubmit()">Log in</button>
+            <button mat-raised-button
+                [appTutorial]="tutorialTypeEnum.ForgotPassword"
+                type="button"
+                routerLink="/forgot-password">Forgot password</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

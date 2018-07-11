@@ -1,15 +1,15 @@
-<mat-card>
-    <mat-card-title>Sign Up</mat-card-title>
-    <mat-card-content>
-        Have an account
-        <button mat-raised-button
-            color="accent"
-            type="button"
-            routerLink="/login">Login</button>
+<form [formGroup]="formGroup">
+    <mat-card>
+        <mat-card-title>Sign Up</mat-card-title>
+        <mat-card-content>
+            Have an account
+            <button mat-raised-button
+                color="accent"
+                type="button"
+                routerLink="/login">Login</button>
 
-        <br>
+            <br>
 
-        <form [formGroup]="formGroup">
             <mat-form-field>
                 <mat-label>email</mat-label>
                 <input matInput
@@ -65,16 +65,16 @@
                 class="mat-error">
                 Validation failed for some reason
             </div>
-        </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!formGroup.valid"
-            (click)="onSubmit()">Sign up</button>
-    </mat-card-actions>
-</mat-card>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!formGroup.valid"
+                (click)="onSubmit()">Sign up</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
 
 <mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>
