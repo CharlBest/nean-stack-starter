@@ -33,9 +33,9 @@ Zip: Any 5 degit number">info_outline</mat-icon>
             </mat-form-field>
         </form>
 
-        <div *ngIf="formErrorsService.formErrors?.hasOwnProperty('token')"
+        <div *ngIf="formErrorsService.formErrors?.token?.required"
             class="mat-error">
-            Token was invalid
+            Token is required
         </div>
 
         <br>

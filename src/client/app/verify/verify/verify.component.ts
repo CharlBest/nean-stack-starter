@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { VerifyService } from '../verify.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class VerifyComponent implements OnInit {
 
   constructor(private verifyService: VerifyService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    public formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
     this.route.paramMap

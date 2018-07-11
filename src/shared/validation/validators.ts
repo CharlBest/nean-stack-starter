@@ -159,38 +159,42 @@ export class ServerValidator {
     }
 
     static addFormError(res: Response, field: string, error: Object) {
-        if (res.locals.error === undefined) {
-            res.locals.error = {};
-        }
-        if (res.locals.error.formErrors === undefined) {
-            res.locals.error.formErrors = [];
-        }
-        const savedError = res.locals.error.formErrors.find(x => x.field === field);
-        if (savedError !== undefined) {
-            Object.assign(savedError.errors, error);
-        } else {
-            res.locals.error.formErrors.push({
-                field,
-                errors: error
-            });
+        if (error !== undefined && error !== null) {
+            if (res.locals.error === undefined) {
+                res.locals.error = {};
+            }
+            if (res.locals.error.formErrors === undefined) {
+                res.locals.error.formErrors = [];
+            }
+            const savedError = res.locals.error.formErrors.find(x => x.field === field);
+            if (savedError !== undefined) {
+                Object.assign(savedError.errors, error);
+            } else {
+                res.locals.error.formErrors.push({
+                    field,
+                    errors: error
+                });
+            }
         }
 
         return error ? true : false;
     }
 
     static addGlobalError(res: Response, field: string, error: Object) {
-        if (res.locals.error === undefined) {
-            res.locals.error = {};
-        }
-        if (res.locals.error.globalErrors === undefined) {
-            res.locals.error.globalErrors = {};
-        }
-        if (res.locals.error.globalErrors.hasOwnProperty(field)) {
-            Object.assign(res.locals.error.globalErrors[field], error);
-        } else {
-            Object.assign(res.locals.error.globalErrors, {
-                [field]: error
-            });
+        if (error !== undefined && error !== null) {
+            if (res.locals.error === undefined) {
+                res.locals.error = {};
+            }
+            if (res.locals.error.globalErrors === undefined) {
+                res.locals.error.globalErrors = {};
+            }
+            if (res.locals.error.globalErrors.hasOwnProperty(field)) {
+                Object.assign(res.locals.error.globalErrors[field], error);
+            } else {
+                Object.assign(res.locals.error.globalErrors, {
+                    [field]: error
+                });
+            }
         }
 
         return error ? true : false;

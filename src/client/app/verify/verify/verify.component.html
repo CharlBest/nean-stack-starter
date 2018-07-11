@@ -8,6 +8,11 @@
       <mat-icon>error_outline</mat-icon>
       <span>Email verification error</span>
     </div>
+
+    <div *ngIf="formErrorsService.formErrors?.code?.required"
+      class="mat-error">
+      Reset code is required
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button

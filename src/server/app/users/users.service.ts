@@ -55,7 +55,7 @@ export class UsersService extends BaseService {
 
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (validation === null || validation === undefined) {
-            ServerValidator.addGlobalError(res, 'validationFailed', true);
+            ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
         }
         if (!validation.emailExist && !validation.usernameExist) {
