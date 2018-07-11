@@ -11,12 +11,13 @@ export class FormErrorsService {
 
   constructor() { }
 
-  updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup) {
+  updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup = null) {
     if (errorResponse.status === 400) {
 
       const errors = errorResponse.error.error.validation;
 
-      if (errors !== null && errors !== undefined && errors.formErrors !== undefined) {
+      if (errors !== null && errors !== undefined && errors.formErrors !== undefined
+        && form !== undefined && form !== null) {
         for (const key in form.controls) {
           if (form.controls.hasOwnProperty(key)) {
             const fieldError = errors.formErrors.find(x => x.field === key);

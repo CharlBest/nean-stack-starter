@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
@@ -13,7 +13,6 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdateBioComponent implements OnInit {
 
-  formGroup: FormGroup;
   isProcessing = false;
   @Input() content = '';
   inputElement: HTMLDivElement;
@@ -47,7 +46,7 @@ export class UpdateBioComponent implements OnInit {
             duration: 2000,
           });
         }, error => {
-          this.formErrorsService.updateFormValidity(error, this.formGroup);
+          this.formErrorsService.updateFormValidity(error);
           this.snackBar.dismiss();
         });
     }
