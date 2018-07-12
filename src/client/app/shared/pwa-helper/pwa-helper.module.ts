@@ -1,4 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { DeviceDetectorModule } from 'ngx-device-detector';
@@ -13,6 +14,7 @@ const materialModules = [
 
 @NgModule({
     imports: [
+        CommonModule,
         DeviceDetectorModule.forRoot(),
         ...materialModules
     ],
