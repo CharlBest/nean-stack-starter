@@ -128,9 +128,9 @@ export class Bootstrap {
 
         if (app.get('env') === 'development') {
             app.use(ApiError.InternalServerErrorDev);
+        } else if (app.get('env') === 'production') {
+            app.use(ApiError.InternalServerErrorProd);
         }
-
-        app.use(ApiError.InternalServerErrorProd);
     }
 
     public setupDatabase(app: express.Application): void {
