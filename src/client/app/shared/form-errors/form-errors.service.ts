@@ -16,19 +16,21 @@ export class FormErrorsService {
 
       const errors = errorResponse.error.error.validation;
 
-      if (errors !== null && errors !== undefined && errors.formErrors !== undefined
-        && form !== undefined && form !== null) {
-        for (const key in form.controls) {
-          if (form.controls.hasOwnProperty(key)) {
-            const fieldError = errors.formErrors.find(x => x.field === key);
-            if (fieldError !== undefined) {
-              form.get(key).setErrors(fieldError.errors);
+      if (errors !== null && errors !== undefined) {
+        if (errors.formErrors !== undefined && form !== undefined && form !== null) {
+          for (const key in form.controls) {
+            if (form.controls.hasOwnProperty(key)) {
+              const fieldError = errors.formErrors.find(x => x.field === key);
+              if (fieldError !== undefined) {
+                form.get(key).setErrors(fieldError.errors);
+              }
             }
           }
         }
+
+        this.formErrors = errors.globalErrors;
       }
 
-      this.formErrors = errors.globalErrors;
     }
   }
 }
