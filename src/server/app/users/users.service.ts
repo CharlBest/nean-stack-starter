@@ -33,7 +33,6 @@ export class UsersService extends BaseService {
     }
 
     private async hashPassword(password: string, salt: string): Promise<string> {
-        // TODO: change to async
         const hashedPassword = pbkdf2Sync(password, salt, 10000, 32, 'sha512');
         return hashedPassword.toString('hex');
     }
