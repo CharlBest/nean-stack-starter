@@ -40,18 +40,19 @@
   <mat-card [appTutorial]="tutorialTypeEnum.AvatarUpload">
     <mat-card-title>Avatar</mat-card-title>
     <mat-card-content>
+      <app-media [src]="user.avatarUrl"
+        *ngIf="user.avatarUrl"
+        mat-card-image></app-media>
+    </mat-card-content>
+    <mat-card-actions>
+      <app-upload-button (onUploadComplete)="updateAvatar($event)"
+        [folderName]="'avatars'"></app-upload-button>
       <button mat-raised-button
         color="warn"
         type="button"
         (click)="removeAvatar()"
         *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
-      <app-upload-button (onUploadComplete)="updateAvatar($event)"
-        [folderName]="'avatars'"></app-upload-button>
-
-      <app-media [src]="user.avatarUrl"
-        *ngIf="user.avatarUrl"
-        mat-card-image></app-media>
-    </mat-card-content>
+    </mat-card-actions>
   </mat-card>
 
   <app-update-bio [content]="user.bio"></app-update-bio>
