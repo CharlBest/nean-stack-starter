@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   isProcessing = false;
   returnUrl = '/profile';
   tutorialTypeEnum = TutorialType;
+  @ViewChild('authenticationFailedDialog') authenticationFailedDialog: TemplateRef<ElementRef>;
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     public formErrorsService: FormErrorsService,
-    public bpService: BreakpointService) {
+    public bpService: BreakpointService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class LoginComponent implements OnInit {
 
           this.router.navigateByUrl(this.returnUrl);
         } else {
-          alert('Authentication failed');
+          this.dialog.open(this.authenticationFailedDialog);
         }
       }, (error) => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
