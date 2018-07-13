@@ -1,6 +1,4 @@
 import * as express from 'express';
-// import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-// import { makeExecutableSchema } from 'graphql-tools';
 import { NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as path from 'path';
@@ -10,14 +8,11 @@ import { UsersRoutes } from '../app/users/users.routes';
 import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
-// import typeDefs from '../schemas/schema';
-// import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
 import { Neo4j } from './middleware/neo4j';
 import { WebSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
-// import { exceptionHandler } from './api/exceptionHandler';
-// import { extendExpressResponse } from './api/extendExpressResponse';
+
 const root = './';
 
 export class Bootstrap {
@@ -49,7 +44,7 @@ export class Bootstrap {
         app.use('/api', generalRouter);
         app.use('/api', usersRouter);
 
-        // TODO: not sure if this is the best way of doing it
+        // Not sure if this is the best way of doing it
         // This is to serve web app sub routes
         app.get('*', (req, res) => {
             const webClientUrl = 'dist/nean-stack-starter';
@@ -115,9 +110,7 @@ export class Bootstrap {
         //     typeDefs,
         //     resolvers
         // });
-
         // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
-
         // app.use('/graphiql', graphiqlExpress({
         //     endpointURL: '/graphql',
         // }));
