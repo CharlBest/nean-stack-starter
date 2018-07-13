@@ -104,7 +104,7 @@ export class ProfileComponent implements OnInit {
 
   openDeleteAccountDialog() {
     const dialogRef = this.dialog.open(DeleteUserDialogComponent);
-    dialogRef.componentInstance.username = this.user.username;
+    dialogRef.componentInstance.email = this.user.email;
   }
 
   profileTour() {

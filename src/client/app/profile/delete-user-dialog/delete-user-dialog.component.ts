@@ -12,7 +12,7 @@ import { ProfileService } from '../profile.service';
 })
 export class DeleteUserDialogComponent {
 
-    @Input() username: string;
+    @Input() email: string;
     isProcessing = false;
 
     constructor(public snackBar: MatSnackBar,
@@ -21,8 +21,8 @@ export class DeleteUserDialogComponent {
         private authService: AuthService,
         public bpService: BreakpointService) { }
 
-    delete(username: string) {
-        if (username === this.username) {
+    delete(email: string) {
+        if (email === this.email) {
             this.isProcessing = true;
 
             this.snackBar.open('Deleting', null, {
