@@ -40,8 +40,7 @@ export class Database {
         }
     }
 
-    public static createNodeObject(node): any {
-        // TODO: potentially strongly type return type
+    public static createNodeObject<T>(node): T {
         if (node !== null && node !== undefined) {
             const object = {};
             _.assign(object, node.properties);
@@ -53,7 +52,7 @@ export class Database {
                 }
             }
 
-            return object;
+            return <T>object;
         } else {
             return null;
         }
@@ -63,8 +62,7 @@ export class Database {
         return nodes.map(x => Database.createNodeObject(x));
     }
 
-    public static createNumber(int: any): any {
-        // TODO: potentially strongly type return type
+    public static createNumber(int: any): number {
         if (int !== null && int !== undefined) {
             if (neo4j.isInt(int)) {
                 return neo4j.integer.toNumber(int);
