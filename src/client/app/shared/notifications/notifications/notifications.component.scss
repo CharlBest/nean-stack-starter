@@ -1,13 +1,7 @@
 mat-card {
 	padding: 0;
-	overflow-y: auto;
+}
 
-	.header {
-		display: flex;
-		justify-content: space-between;
-
-		.title {
-			padding: 10px 0 0 16px;
-		}
-	}
+.spacer {
+	flex: 1 1 auto;
 }
