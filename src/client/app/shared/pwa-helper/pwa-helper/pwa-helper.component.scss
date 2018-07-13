@@ -1,5 +1,13 @@
 mat-card {
 	margin-bottom: 0;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding: 0;
+
+	.pointer {
+		text-align: right;
+	}
+
+	mat-card-content {
+		padding: 0 24px 24px 24px;
+		text-align: center;
+	}
 }
