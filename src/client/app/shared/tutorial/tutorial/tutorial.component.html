@@ -8,28 +8,30 @@
 <div *ngFor="let tut of tuts">
   <div *ngIf="tutorialInUrl == tut.tutorialType"
     class="tutorial-box">
-    <div class="tutorial-text">{{tut.text}}</div>
+    <div class="tutorial-container mat-elevation-z4">
+      <div class="tutorial-text">{{tut.text}}</div>
 
-    <br>
+      <br>
 
-    <button mat-raised-button
-      type="button"
-      (click)="back()"
-      *ngIf="!tut.isFirst"
-      class="previous-button">Previous</button>
-    <button mat-raised-button
-      type="button"
-      (click)="goToTutorial(tut)">
-      <span *ngIf="!tut.isLast">Next</span>
-      <span *ngIf="tut.isLast">Done</span>
-    </button>
+      <button mat-raised-button
+        type="button"
+        (click)="back()"
+        *ngIf="!tut.isFirst"
+        class="previous-button">Previous</button>
+      <button mat-raised-button
+        type="button"
+        (click)="goToTutorial(tut)">
+        <span *ngIf="!tut.isLast">Next</span>
+        <span *ngIf="tut.isLast">Done</span>
+      </button>
 
-    <br>
-    <br>
+      <br>
+      <br>
 
-    <button *ngIf="!tut.isLast"
-      mat-raised-button
-      type="button"
-      (click)="skip(tut)">Skip</button>
+      <button *ngIf="!tut.isLast"
+        mat-raised-button
+        type="button"
+        (click)="skip(tut)">Skip</button>
+    </div>
   </div>
 </div>

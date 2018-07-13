@@ -22,11 +22,19 @@
 	bottom: 20px;
 	text-align: center;
 
-	.tutorial-text {
-		color: white;
-	}
+	.tutorial-container {
+		max-width: 400px;
+		padding: 20px;
+		border-radius: 20px;
+		background: rgba(0, 0, 0, 0.4);
+		margin: 0 auto;
 
-	.previous-button {
-		margin-right: 20px;
+		.tutorial-text {
+			color: white;
+		}
+
+		.previous-button {
+			margin-right: 20px;
+		}
 	}
 }
