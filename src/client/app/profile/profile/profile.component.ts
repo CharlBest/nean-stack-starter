@@ -6,6 +6,7 @@ import { UserModel } from '../../../../shared/models/user/user.model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FirebaseStorageService } from '../../shared/firebase-storage.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
     private tutorialService: TutorialService,
-    private firebaseStorageService: FirebaseStorageService) { }
+    private firebaseStorageService: FirebaseStorageService,
+    private formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
     this.getUser();
@@ -45,8 +47,7 @@ export class ProfileComponent implements OnInit {
           this.loadEmoji();
         }
       }, error => {
-        // TODO: apply error handeling
-        // this.formErrorsService.applyServerErrorValidationOnForm(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error);
       });
   }
 
@@ -69,12 +70,11 @@ export class ProfileComponent implements OnInit {
     const viewModel = new UpdateAvatarViewModel;
     viewModel.avatarUrl = downloadURL;
 
-    // TODO: apply preloader
     this.profileService.updateAvatar(viewModel)
       .subscribe(() => {
         this.user.avatarUrl = viewModel.avatarUrl;
       }, error => {
-        // TODO: apply error handeling
+        this.formErrorsService.updateFormValidity(error);
       });
   }
 
@@ -87,6 +87,7 @@ export class ProfileComponent implements OnInit {
   }
 
   resendEmailVerificationLink() {
+    this.snackBar.dismiss();
     this.snackBar.open('Sending...', null, {
       duration: 10000,
     });
@@ -98,7 +99,13 @@ export class ProfileComponent implements OnInit {
           duration: 2000,
         });
       }, error => {
-        // TODO: error handeling
+        this.snackBar.dismiss();
+        const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
+          duration: 5000,
+        });
+        sendingBar.onAction().subscribe(x => {
+          this.resendEmailVerificationLink();
+        });
       });
   }
 
