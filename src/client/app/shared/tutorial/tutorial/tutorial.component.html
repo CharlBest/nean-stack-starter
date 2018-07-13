@@ -27,7 +27,8 @@
     <br>
     <br>
 
-    <button mat-raised-button
+    <button *ngIf="!tut.isLast"
+      mat-raised-button
       type="button"
       (click)="skip(tut)">Skip</button>
   </div>
