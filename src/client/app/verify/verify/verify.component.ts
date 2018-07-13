@@ -36,7 +36,7 @@ export class VerifyComponent implements OnInit {
                   this.verifyResult = false;
                 }
               }, error => {
-                // TODO: error handling
+                this.formErrorsService.updateFormValidity(error);
                 this.verifyResult = false;
               });
           }
