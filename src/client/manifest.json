@@ -3,13 +3,8 @@
   "name": "NEAN",
   "icons": [
     {
-      "src": "assets/logo-color-white-bg-194x194",
-      "sizes": "194x194 512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/logo-color-144x144.png",
-      "sizes": "144x144",
+      "src": "assets/logo-color.png",
+      "sizes": "144x144 194x194 512x512",
       "type": "image/png"
     }
   ],
