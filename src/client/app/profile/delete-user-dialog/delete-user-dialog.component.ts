@@ -25,7 +25,7 @@ export class DeleteUserDialogComponent {
         if (email === this.email) {
             this.isProcessing = true;
 
-            this.snackBar.open('Deleting', null, {
+            this.snackBar.open('Deleting...', null, {
                 duration: 10000,
             });
 
@@ -41,6 +41,10 @@ export class DeleteUserDialogComponent {
                         duration: 2000,
                     });
                 }, error => {
+                    this.snackBar.dismiss();
+                    this.snackBar.open('Deleting failed', null, {
+                        duration: 2000,
+                    });
                 });
         }
     }

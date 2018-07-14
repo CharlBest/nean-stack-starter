@@ -25,15 +25,19 @@ export class ReportDialogComponent {
         const viewModel = new ReportUserViewModel;
         viewModel.uId = this.uId;
 
-        this.snackBar.open('Sending', null, {
+        this.snackBar.open('Sending...', null, {
             duration: 10000,
         });
 
         this.sendReport(viewModel)
             .subscribe(() => {
                 this.snackBar.dismiss();
-
                 this.snackBar.open('Sent', null, {
+                    duration: 2000,
+                });
+            }, error => {
+                this.snackBar.dismiss();
+                this.snackBar.open('Sending failed', null, {
                     duration: 2000,
                 });
             });

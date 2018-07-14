@@ -46,6 +46,11 @@ export class UpdateBioComponent implements OnInit {
             duration: 2000,
           });
         }, error => {
+          this.snackBar.dismiss();
+          this.snackBar.open('Update failed', null, {
+            duration: 2000,
+          });
+
           this.formErrorsService.updateFormValidity(error);
           this.snackBar.dismiss();
         });
