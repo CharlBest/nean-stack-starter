@@ -42,6 +42,21 @@
   <script async
     src='https://www.google-analytics.com/analytics.js'></script>
   <!-- End Google Analytics -->
+
+  <!-- https://www.sitepoint.com/content-security-policy-getting-started/ -->
+  <!-- firebase, github, google analytics, youtube/iframe, api url, quill, emojione, web socket -->
+  <meta http-equiv="Content-Security-Policy"
+    content="
+          default-src 'none';
+          style-src 'self' 'unsafe-inline' https://cdn.quilljs.com;
+          script-src 'self' https://js.stripe.com;
+          connect-src 'self' ws://localhost:4200 ws://localhost:3000 https://raw.githubusercontent.com http://localhost:3000;
+          img-src 'self' https://www.google-analytics.com https://firebasestorage.googleapis.com https://cdn.jsdelivr.net;
+          font-src 'self';
+          child-src 'none';
+          media-src 'none';
+          form-action 'none';
+        ">
 </head>
 
 <body>
