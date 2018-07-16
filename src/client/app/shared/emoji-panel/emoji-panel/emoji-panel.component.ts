@@ -3,6 +3,9 @@ import { MatBottomSheet, MatTabChangeEvent } from '@angular/material';
 import * as emojione from 'emojione';
 import { BreakpointService } from '../../breakpoint.service';
 
+declare function require(moduleName: string): any;
+const file: Array<EmojiData> = require('../../../../../../node_modules/emojione-assets/emoji.json');
+
 @Component({
   selector: 'app-emoji-panel',
   templateUrl: './emoji-panel.component.html',
@@ -23,7 +26,7 @@ export class EmojiPanelComponent implements OnInit {
     new EmojiCategory('travel', 'Travel & Places', 'directions_car'),
     new EmojiCategory('objects', 'Objects', 'lightbulb_outline'),
     new EmojiCategory('symbols', 'Symbols', 'priority_high'),
-    new EmojiCategory('flags', 'Flags', 'flag')
+    new EmojiCategory('flags', 'Flags', 'flag'),
   ];
   newEmojiList = [];
 
@@ -31,9 +34,10 @@ export class EmojiPanelComponent implements OnInit {
     public bpService: BreakpointService) { }
 
   ngOnInit() {
-    console.log((<any>emojione));
+    console.log(file);
+    // console.log((<any>emojione));
     (<any>emojione).sprites = true;
-    (<any>emojione).imagePathSVGSprites = 'localhost:4200/assets/emoji/';
+    (<any>emojione).imagePathSVGSprites = './assets/emoji/';
 
     for (const i in (<any>emojione).emojioneList) {
       this.newEmojiList.push({
@@ -41,6 +45,18 @@ export class EmojiPanelComponent implements OnInit {
         key: (<any>emojione).emojioneList[i].uc_base
       });
     }
+
+    for (const key in file) {
+      if (file[key].diversity === null && file[key].category !== 'regional' && file[key].category !== 'modifier') {
+        const tab = this.emojiCategories.find(x => x.category === file[key].category);
+        tab.emojiData.push({
+          key,
+          value: file[key]
+        });
+      }
+    }
+
+    this.emojiCategories.forEach(x => x.emojiData.sort((a, b) => a.value.order - b.value.order));
 
     // On emoji click
     // document.querySelector('body').addEventListener('click', (event) => {
@@ -92,10 +108,37 @@ class EmojiCategory {
   hasViewed = false;
   tabLabelText: string;
   tabLabelIcon: string;
+  emojiData: Array<{ key: string, value: EmojiData }>;
 
   constructor(category, tabLabelText, tabLabelIcon) {
     this.category = category;
     this.tabLabelText = tabLabelText;
     this.tabLabelIcon = tabLabelIcon;
+    this.emojiData = [];
   }
+}
+
+interface EmojiData {
+  ascii: Array<any>;
+  category: string;
+  code_points: {
+    base: string;
+    decimal: string;
+    fully_qualified: string;
+    non_fully_qualified: string;
+    output: string;
+    default_matches: Array<string>;
+    greedy_matches: Array<string>;
+  }
+  display: number;
+  diversities: Array<string>;
+  diversity: string;
+  gender: string;
+  genders: Array<string>;
+  keywords: Array<string>;
+  name: string;
+  order: number;
+  shortname: string;
+  shortname_alternates: Array<string>;
+  unicode_version: number
 }

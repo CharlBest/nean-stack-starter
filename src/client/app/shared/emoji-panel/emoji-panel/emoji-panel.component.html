@@ -35,9 +35,14 @@
           <mat-icon>{{category.tabLabelIcon}}</mat-icon>
         </ng-template>
         <ng-template matTabContent>
-          <span *ngFor="let emoji of newEmojiList"
-            class="emojione emojione-64-{{emoji.category}} _{{emoji.key}}"></span>
-          powered by EmojiOne
+          <ng-container *ngFor="let emoji of category?.emojiData">
+            <span class="emojione emojione-32-{{emoji.value.category}} _{{emoji.value.code_points.base}}"
+              [matMenuTriggerFor]="menu"></span>
+            <mat-menu #menu="matMenu">
+              {{emoji.value|json}}
+            </mat-menu>
+          </ng-container>
+          <div>powered by EmojiOne</div>
         </ng-template>
       </mat-tab>
     </mat-tab-group>

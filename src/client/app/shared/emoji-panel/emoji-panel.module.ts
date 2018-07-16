@@ -2,7 +2,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatTabsModule, MatTooltipModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatMenuModule, MatTabsModule, MatTooltipModule } from '@angular/material';
 import { EmojiPanelDirective } from './emoji-panel.directive';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
@@ -12,7 +12,8 @@ const materialModules = [
   MatButtonModule,
   MatTooltipModule,
   MatCardModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatMenuModule
 ];
 
 @NgModule({
