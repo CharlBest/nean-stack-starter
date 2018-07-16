@@ -44,7 +44,7 @@
   <!-- End Google Analytics -->
 
   <!-- https://www.sitepoint.com/content-security-policy-getting-started/ -->
-  <!-- Firebase, Github, Google Analytics, YouTube, API server, Quill, Emojione, WebSockets -->
+  <!-- Firebase, Github, Google Analytics, API server, WebSockets -->
   <!-- TODO: not sure if localhost in connect-src is a security vulnerability + should this actually be set in header with index.html? -->
   <meta http-equiv="Content-Security-Policy"
     content="
@@ -52,7 +52,7 @@
           style-src 'self' 'unsafe-inline';
           script-src 'self' https://www.google-analytics.com https://js.stripe.com;
           connect-src 'self' ws://localhost:4200 http://localhost:3000 ws://localhost:3000 https://raw.githubusercontent.com wss://nean.io;
-          img-src 'self' https://www.google-analytics.com https://firebasestorage.googleapis.com https://cdn.jsdelivr.net;
+          img-src 'self' https://www.google-analytics.com https://firebasestorage.googleapis.com;
           font-src 'self';
           child-src 'self' https://js.stripe.com;
           media-src 'none';

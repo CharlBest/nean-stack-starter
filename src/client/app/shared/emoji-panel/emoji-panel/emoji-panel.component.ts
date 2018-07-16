@@ -25,25 +25,36 @@ export class EmojiPanelComponent implements OnInit {
     new EmojiCategory('symbols', 'Symbols', 'priority_high'),
     new EmojiCategory('flags', 'Flags', 'flag')
   ];
+  newEmojiList = [];
 
   constructor(public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService) { }
 
   ngOnInit() {
-    this.loadCategory(0);
+    console.log((<any>emojione));
+    (<any>emojione).sprites = true;
+    (<any>emojione).imagePathSVGSprites = 'localhost:4200/assets/emoji/';
 
-    document.querySelector('body').addEventListener('click', (event) => {
-      const img = (<HTMLImageElement>event.target);
-      if (img
-        && img.classList
-        && img.classList.contains('emojione')) {
-        this.inserted.emit(img.title);
+    for (const i in (<any>emojione).emojioneList) {
+      this.newEmojiList.push({
+        category: (<any>emojione).emojioneList[i].category,
+        key: (<any>emojione).emojioneList[i].uc_base
+      });
+    }
 
-        if (this.closeOnInsert) {
-          this.isPanelForWebOpen = !this.isPanelForWebOpen;
-        }
-      }
-    });
+    // On emoji click
+    // document.querySelector('body').addEventListener('click', (event) => {
+    //   const img = (<HTMLImageElement>event.target);
+    //   if (img
+    //     && img.classList
+    //     && img.classList.contains('emojione')) {
+    //     this.inserted.emit(img.title);
+
+    //     if (this.closeOnInsert) {
+    //       this.isPanelForWebOpen = !this.isPanelForWebOpen;
+    //     }
+    //   }
+    // });
   }
 
   onTabSelectChange(event: MatTabChangeEvent) {
@@ -51,16 +62,16 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   loadCategory(categoryIndex: number) {
-    if (!this.emojiCategories[categoryIndex].hasViewed) {
-      let shortname = '';
-      for (const i in (<any>emojione).emojioneList) {
-        if ((<any>emojione).emojioneList[i].category === this.emojiCategories[categoryIndex].category && i.indexOf('tone') === -1) {
-          shortname = shortname + i;
-        }
-      }
-      this.emojiCategories[categoryIndex].tabHTMLContent = emojione.toImage(shortname);
-      this.emojiCategories[categoryIndex].hasViewed = true;
-    }
+    // if (!this.emojiCategories[categoryIndex].hasViewed) {
+    //   let shortname = '';
+    //   for (const i in (<any>emojione).emojioneList) {
+    //     if ((<any>emojione).emojioneList[i].category === this.emojiCategories[categoryIndex].category && i.indexOf('tone') === -1) {
+    //       shortname = shortname + i;
+    //     }
+    //   }
+    //   this.emojiCategories[categoryIndex].tabHTMLContent = emojione.toImage(shortname);
+    //   this.emojiCategories[categoryIndex].hasViewed = true;
+    // }
   }
 
   openPanel() {

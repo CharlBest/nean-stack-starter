@@ -35,8 +35,8 @@
           <mat-icon>{{category.tabLabelIcon}}</mat-icon>
         </ng-template>
         <ng-template matTabContent>
-          <div class="emoji-container"
-            [innerHTML]="category.tabHTMLContent"></div>
+          <span *ngFor="let emoji of newEmojiList"
+            class="emojione emojione-64-{{emoji.category}} _{{emoji.key}}"></span>
           powered by EmojiOne
         </ng-template>
       </mat-tab>

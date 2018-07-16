@@ -25,13 +25,19 @@
             "assets": [
               "src/client/favicon.ico",
               "src/client/manifest.json",
-              "src/client/assets"
+              "src/client/assets",
+              {
+                "glob": "**/*-64-*.png",
+                "input": "./node_modules/emojione-assets/sprites/",
+                "output": "./assets/emoji/"
+              }
             ],
             "styles": [
               "src/client/styles.scss",
               "src/client/app-theme.scss",
               "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/emojione-assets/sprites/emojione-sprite-64.min.css"
             ],
             "scripts": []
           },
