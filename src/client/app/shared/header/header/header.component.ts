@@ -88,11 +88,15 @@ export class HeaderComponent implements OnInit {
   }
 
   back() {
-    if (this.backRouterPath !== null && this.backRouterPath !== undefined) {
+    if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
     } else {
       // TODO: check if there is a back otherwise redirect to home/discover page. High priority
-      this.location.back();
+      if (document.referrer === '' || document.referrer === location.href) {
+        this.router.navigate(['/']);
+      } else {
+        this.location.back();
+      }
     }
   }
 
