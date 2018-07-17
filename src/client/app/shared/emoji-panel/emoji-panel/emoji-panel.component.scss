@@ -2,21 +2,16 @@ mat-card {
 	padding: 0;
 
 	mat-tab-group {
-		width: 272px;
-		height: 272px;
+		width: 290px;
+		height: 290px;
 
-		.emoji-container {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, 36px);
+		.emojione {
+			cursor: pointer;
+			border: 1px solid transparent;
 
-			::ng-deep .emojione {
-				cursor: pointer;
-				border: 1px solid transparent;
-
-				&:hover {
-					border-color: lightgray;
-					border-radius: 4px;
-				}
+			&:hover {
+				border-color: lightgray;
+				border-radius: 4px;
 			}
 		}
 

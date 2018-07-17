@@ -28,8 +28,7 @@
   let-data>
 
   <mat-card>
-    <mat-tab-group (selectedTabChange)="onTabSelectChange($event)"
-      mat-stretch-tabs>
+    <mat-tab-group mat-stretch-tabs>
       <mat-tab *ngFor="let category of emojiCategories">
         <ng-template mat-tab-label>
           <mat-icon>{{category.tabLabelIcon}}</mat-icon>
@@ -37,15 +36,24 @@
         <ng-template matTabContent>
           <ng-container *ngFor="let emoji of category?.emojiData">
             <span class="emojione emojione-32-{{emoji.value.category}} _{{emoji.value.code_points.base}}"
-              [matMenuTriggerFor]="menu"></span>
-            <mat-menu #menu="matMenu">
-              {{emoji.value|json}}
-            </mat-menu>
+              [matMenuTriggerFor]="menu"
+              [matMenuTriggerData]="{emoji: emoji}"
+              #menuTrigger="matMenuTrigger"
+              (click)="openDiversitiesElseInsert(emoji.value, menuTrigger)"></span>
           </ng-container>
           <div>powered by EmojiOne</div>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
   </mat-card>
+
+  <mat-menu #menu="matMenu">
+    <ng-template matMenuContent
+      let-emoji="emoji">
+      <span *ngFor="let emojiDiversity of emoji.value.diversities"
+        class="emojione emojione-32-diversity _{{emojiDiversity}}"
+        (click)="onClick(emojiDiversity)"></span>
+    </ng-template>
+  </mat-menu>
 
 </ng-template>

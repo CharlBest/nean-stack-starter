@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatTabChangeEvent } from '@angular/material';
+import { MatBottomSheet, MatMenuTrigger } from '@angular/material';
 import * as emojione from 'emojione';
 import { BreakpointService } from '../../breakpoint.service';
 
@@ -13,11 +13,10 @@ const file: Array<EmojiData> = require('../../../../../../node_modules/emojione-
 })
 export class EmojiPanelComponent implements OnInit {
   @Input() closeOnInsert = false;
-  @Output() inserted: EventEmitter<string> = new EventEmitter();
+  @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('bottomSheet') bottomSheetRef: TemplateRef<any>;
   isPanelForWebOpen = false;
-  visibleEmoji: string;
-  emojiList;
+
   emojiCategories = [
     new EmojiCategory('people', 'Smileys & People', 'tag_faces'),
     new EmojiCategory('nature', 'Animals & Nature', 'pets'),
@@ -28,23 +27,13 @@ export class EmojiPanelComponent implements OnInit {
     new EmojiCategory('symbols', 'Symbols', 'priority_high'),
     new EmojiCategory('flags', 'Flags', 'flag'),
   ];
-  newEmojiList = [];
 
   constructor(public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService) { }
 
   ngOnInit() {
-    console.log(file);
-    // console.log((<any>emojione));
     (<any>emojione).sprites = true;
     (<any>emojione).imagePathSVGSprites = './assets/emoji/';
-
-    for (const i in (<any>emojione).emojioneList) {
-      this.newEmojiList.push({
-        category: (<any>emojione).emojioneList[i].category,
-        key: (<any>emojione).emojioneList[i].uc_base
-      });
-    }
 
     for (const key in file) {
       if (file[key].diversity === null && file[key].category !== 'regional' && file[key].category !== 'modifier') {
@@ -57,37 +46,14 @@ export class EmojiPanelComponent implements OnInit {
     }
 
     this.emojiCategories.forEach(x => x.emojiData.sort((a, b) => a.value.order - b.value.order));
-
-    // On emoji click
-    // document.querySelector('body').addEventListener('click', (event) => {
-    //   const img = (<HTMLImageElement>event.target);
-    //   if (img
-    //     && img.classList
-    //     && img.classList.contains('emojione')) {
-    //     this.inserted.emit(img.title);
-
-    //     if (this.closeOnInsert) {
-    //       this.isPanelForWebOpen = !this.isPanelForWebOpen;
-    //     }
-    //   }
-    // });
   }
 
-  onTabSelectChange(event: MatTabChangeEvent) {
-    this.loadCategory(event.index);
-  }
+  onClick(key: string) {
+    this.inserted.emit(key);
 
-  loadCategory(categoryIndex: number) {
-    // if (!this.emojiCategories[categoryIndex].hasViewed) {
-    //   let shortname = '';
-    //   for (const i in (<any>emojione).emojioneList) {
-    //     if ((<any>emojione).emojioneList[i].category === this.emojiCategories[categoryIndex].category && i.indexOf('tone') === -1) {
-    //       shortname = shortname + i;
-    //     }
-    //   }
-    //   this.emojiCategories[categoryIndex].tabHTMLContent = emojione.toImage(shortname);
-    //   this.emojiCategories[categoryIndex].hasViewed = true;
-    // }
+    if (this.closeOnInsert) {
+      this.isPanelForWebOpen = !this.isPanelForWebOpen;
+    }
   }
 
   openPanel() {
@@ -100,12 +66,19 @@ export class EmojiPanelComponent implements OnInit {
       });
     }
   }
+
+  openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger) {
+    if (emojiValue.diversities.length > 0) {
+      menuTrigger.openMenu()
+    } else {
+      menuTrigger.closeMenu();
+      this.onClick(emojiValue.code_points.base);
+    }
+  }
 }
 
 class EmojiCategory {
   category: string;
-  tabHTMLContent: string;
-  hasViewed = false;
   tabLabelText: string;
   tabLabelIcon: string;
   emojiData: Array<{ key: string, value: EmojiData }>;
@@ -119,7 +92,7 @@ class EmojiCategory {
 }
 
 interface EmojiData {
-  ascii: Array<any>;
+  ascii: Array<string>;
   category: string;
   code_points: {
     base: string;
