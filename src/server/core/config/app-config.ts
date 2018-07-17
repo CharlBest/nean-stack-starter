@@ -1,9 +1,8 @@
-import * as path from 'path';
+import * as bodyParser from 'body-parser';
+import * as express from 'express';
 // import * as cors from 'cors';
 // import * as morgan from 'morgan';
-// import * as helmet from 'helmet';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import * as helmet from 'helmet';
 // import * as compression from 'compression';
 
 export class AppConfig {
@@ -15,7 +14,7 @@ export class AppConfig {
             // .use(cors())
 
             // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
-            // .use(helmet())
+            .use(helmet())
             // .use(helmet.noCache())
             // .use(helmet.hsts({
             //     maxAge: 31536000,
@@ -31,7 +30,7 @@ export class AppConfig {
                 extended: true
             }));
 
-            // HTTP request logger middleware for node.js
-            // .use(morgan('dev'));
+        // HTTP request logger middleware for node.js
+        // .use(morgan('dev'));
     }
 }
