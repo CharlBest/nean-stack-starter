@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { HTMLEditorComponent } from '../../shared/html-editor/html-editor/html-editor.component';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -11,23 +12,24 @@ import { ProfileService } from '../profile.service';
   templateUrl: './update-bio.component.html',
   styleUrls: ['./update-bio.component.scss']
 })
-export class UpdateBioComponent implements OnInit {
+export class UpdateBioComponent {
 
+  @ViewChild('htmlEditor') htmlEditor: HTMLEditorComponent;
   isProcessing = false;
   @Input() content = '';
-  inputElement: HTMLDivElement;
 
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
     public snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  emojiInserted(key: string) {
+    this.htmlEditor.insertText(key);
   }
 
   onSubmit() {
     const viewModel = new UpdateBioViewModel();
-    viewModel.content = this.inputElement.innerHTML;
+    viewModel.content = this.htmlEditor.editorDomElement.nativeElement.innerHTML;
 
     if (this.content !== viewModel.content) {
       this.isProcessing = true;

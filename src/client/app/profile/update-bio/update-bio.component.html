@@ -2,13 +2,10 @@
   <mat-card-title>Bio</mat-card-title>
   <mat-card-content>
 
-    <app-html-editor [htmlContent]="content"
-      [(editorDomElement)]="inputElement"></app-html-editor>
+    <app-html-editor #htmlEditor
+      [htmlContent]="content"></app-html-editor>
 
-    <!-- <span [appEmojiPanel]="emojiPanel"
-      [placeholder]="'Add a reply...'"
-      #input></span> -->
-    <app-emoji-panel #emojiPanel></app-emoji-panel>
+    <app-emoji-panel (inserted)="emojiInserted($event)"></app-emoji-panel>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button

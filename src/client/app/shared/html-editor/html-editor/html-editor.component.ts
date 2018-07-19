@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Quill from 'quill';
 import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../firebase-storage.service';
@@ -8,23 +8,17 @@ import { FirebaseStorageService } from '../../firebase-storage.service';
     templateUrl: './html-editor.component.html',
     styleUrls: ['./html-editor.component.scss']
 })
-export class HTMLEditorComponent implements OnInit, AfterViewInit {
+export class HTMLEditorComponent implements AfterViewInit {
 
+    @ViewChild('editor') editorDomElement: ElementRef<HTMLDivElement>;
     @Input() htmlContent: string;
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
 
-    @Input() editorDomElement: HTMLDivElement = null;
-    @Output() editorDomElementChange: EventEmitter<HTMLDivElement> = new EventEmitter<HTMLDivElement>(true);
-
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
-    editorId = `id${Math.random().toString().replace('.', '')}`;
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
-
-    ngOnInit() {
-    }
 
     ngAfterViewInit() {
         this.initQuillEditor();
@@ -49,7 +43,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
         icons['image'] = `${openingTag}insert_photo${closingTag}`;
 
         // Initialize
-        this.editor = new Quill(`#${this.editorId}`, {
+        this.editor = new Quill(this.editorDomElement.nativeElement, {
             modules: {
                 toolbar: [
                     ['bold', 'italic'],
@@ -62,11 +56,10 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
             theme: 'snow'
         });
 
-        this.editorDomElement = this.editor.root;
-        this.editorDomElementChange.emit(this.editorDomElement);
-
         if (this.htmlContent !== null && this.htmlContent !== undefined) {
+            // Add existing content to editor
             this.editor.pasteHTML(this.htmlContent);
+
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
             if (document.activeElement) {
                 (<any>document.activeElement).blur();
@@ -74,6 +67,7 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
             }
         }
 
+        // Set toolbar image button handler
         this.editor.getModule('toolbar').addHandler('image', () => {
             this.selectLocalImage();
         });
@@ -99,14 +93,19 @@ export class HTMLEditorComponent implements OnInit, AfterViewInit {
 
     saveToServer(file: File) {
         this.firebaseStorageService.upload(file).subscribe(data => {
-            this.insertToEditor(data);
+            this.insertEmbedImage(data);
         });
 
         this.imageUploadProgressPercentage = this.firebaseStorageService.progress$;
     }
 
-    insertToEditor(url: string) {
+    insertEmbedImage(url: string) {
         const range = this.editor.getSelection();
         this.editor.insertEmbed(range.index, 'image', url);
+    }
+
+    insertText(text: string) {
+        const range = this.editor.getSelection(true);
+        this.editor.insertText(range.index, text);
     }
 }

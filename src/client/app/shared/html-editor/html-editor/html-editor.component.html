@@ -1,4 +1,4 @@
 <mat-progress-bar *ngIf="(imageUploadProgressPercentage | async) > 0 && (imageUploadProgressPercentage | async) < 100"
     [value]="imageUploadProgressPercentage | async"></mat-progress-bar>
 
-<div id="{{editorId}}"></div>
+<div #editor></div>
