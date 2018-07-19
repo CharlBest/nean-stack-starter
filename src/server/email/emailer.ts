@@ -18,6 +18,8 @@ export class Emailer {
             from: Emailer.fromEmail,
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
+            // html: {{username}}
+            // url: /verify/{{emailVerifyCode}}
             substitutions: {
                 username,
                 emailVerifyCode
@@ -36,6 +38,7 @@ export class Emailer {
             from: Emailer.fromEmail,
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
+            // url: /forgot-password/reset?code={{forgotPasswordCode}}&email={{email}}
             substitutions: {
                 email,
                 forgotPasswordCode
@@ -54,6 +57,8 @@ export class Emailer {
             from: Emailer.fromEmail,
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
+
+            // html: {{feedbackContent}}
             substitutions: {
                 feedbackContent
             }
@@ -71,6 +76,7 @@ export class Emailer {
             from: Emailer.fromEmail,
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
+            // url: /verify/{{emailVerifyCode}}
             substitutions: {
                 emailVerifyCode
             }
