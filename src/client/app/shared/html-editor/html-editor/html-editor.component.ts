@@ -105,7 +105,13 @@ export class HTMLEditorComponent implements AfterViewInit {
     }
 
     insertText(text: string) {
-        const range = this.editor.getSelection(true);
-        this.editor.insertText(range.index, text);
+        let range = this.editor.getSelection();
+        if (range) {
+            this.editor.insertText(range.index, text);
+        } else {
+            range = this.editor.getSelection(true);
+            this.editor.insertText(range.index, text);
+            this.editor.blur();
+        }
     }
 }
