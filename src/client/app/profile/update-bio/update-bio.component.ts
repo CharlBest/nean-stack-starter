@@ -23,8 +23,8 @@ export class UpdateBioComponent {
     private profileService: ProfileService,
     public snackBar: MatSnackBar) { }
 
-  emojiInserted(key: string) {
-    this.htmlEditor.insertText(key);
+  emojiInserted(shortname: string) {
+    this.htmlEditor.insertText(shortname);
   }
 
   onSubmit() {

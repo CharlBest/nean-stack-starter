@@ -4,7 +4,6 @@ import * as emojione from 'emojione';
 import { BreakpointService } from '../../breakpoint.service';
 
 declare function require(moduleName: string): any;
-const file: Array<EmojiData> = require('../../../../../../node_modules/emojione-assets/emoji.json');
 
 @Component({
   selector: 'app-emoji-panel',
@@ -12,6 +11,7 @@ const file: Array<EmojiData> = require('../../../../../../node_modules/emojione-
   styleUrls: ['./emoji-panel.component.scss']
 })
 export class EmojiPanelComponent implements OnInit {
+  file: Array<EmojiData> = require('../../../../../../node_modules/emojione-assets/emoji.json');
   @Input() closeOnInsert = false;
   @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('bottomSheet') bottomSheetRef: TemplateRef<any>;
@@ -35,12 +35,12 @@ export class EmojiPanelComponent implements OnInit {
     (<any>emojione).sprites = true;
     (<any>emojione).imagePathSVGSprites = './assets/emoji/';
 
-    for (const key in file) {
-      if (file[key].diversity === null && file[key].category !== 'regional' && file[key].category !== 'modifier') {
-        const tab = this.emojiCategories.find(x => x.category === file[key].category);
+    for (const key in this.file) {
+      if (this.file[key].diversity === null && this.file[key].category !== 'regional' && this.file[key].category !== 'modifier') {
+        const tab = this.emojiCategories.find(x => x.category === this.file[key].category);
         tab.emojiData.push({
           key,
-          value: file[key]
+          value: this.file[key]
         });
       }
     }
@@ -48,8 +48,8 @@ export class EmojiPanelComponent implements OnInit {
     this.emojiCategories.forEach(x => x.emojiData.sort((a, b) => a.value.order - b.value.order));
   }
 
-  onClick(key: string) {
-    this.inserted.emit(key);
+  onClick(shortname: string) {
+    this.inserted.emit(shortname);
 
     if (this.closeOnInsert) {
       this.isPanelForWebOpen = !this.isPanelForWebOpen;
@@ -72,7 +72,7 @@ export class EmojiPanelComponent implements OnInit {
       menuTrigger.openMenu()
     } else {
       menuTrigger.closeMenu();
-      this.onClick(emojiValue.code_points.base);
+      this.onClick(emojiValue.shortname);
     }
   }
 }

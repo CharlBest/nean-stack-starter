@@ -52,7 +52,7 @@
       let-emoji="emoji">
       <span *ngFor="let emojiDiversity of emoji.value.diversities"
         class="emojione emojione-32-diversity _{{emojiDiversity}}"
-        (click)="onClick(emojiDiversity)"></span>
+        (click)="onClick(file[emojiDiversity].shortname)"></span>
     </ng-template>
   </mat-menu>
 
