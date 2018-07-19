@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs';
-import { UserRoutes } from '../../../../../shared/routes/user.routes';
 import { ReportUserViewModel } from '../../../../../shared/view-models/profile/report-user.view-model';
-import { environment } from '../../../../environments/environment';
+import { ReportService } from '../report.service';
 
 @Component({
     selector: 'app-report-dialog',
@@ -17,7 +14,7 @@ export class ReportDialogComponent {
 
     constructor(public snackBar: MatSnackBar,
         public dialog: MatDialog,
-        private http: HttpClient) { }
+        private reportService: ReportService) { }
 
     report() {
         this.dialog.closeAll();
@@ -29,7 +26,7 @@ export class ReportDialogComponent {
             duration: 10000,
         });
 
-        this.sendReport(viewModel)
+        this.reportService.sendReport(viewModel)
             .subscribe(() => {
                 this.snackBar.dismiss();
                 this.snackBar.open('Sent', null, {
@@ -41,9 +38,5 @@ export class ReportDialogComponent {
                     duration: 2000,
                 });
             });
-    }
-
-    private sendReport(viewModel: ReportUserViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report.constructRootUrl()}`, viewModel);
     }
 }
