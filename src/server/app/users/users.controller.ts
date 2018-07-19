@@ -66,7 +66,7 @@ export class UsersController extends BaseController {
 
     public async report(req: Request, res: Response, next: NextFunction) {
         // TODO: do something
-        res.sendStatus(200);
+        res.status(200).json();
     }
 
     // TODO: not in use

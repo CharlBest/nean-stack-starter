@@ -63,7 +63,7 @@ export class GeneralController extends BaseController {
 
         await this.generalService.sendFeedback(res, viewModel.content);
 
-        res.sendStatus(202);
+        res.status(200).json();
     }
 
     public async paymentRequest(req: Request, res: Response, next: NextFunction) {
