@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   tutorialTypeEnum = TutorialType;
   private isDarkTheme: boolean;
   private isDarkThemeStorageKey = 'is_dark_theme';
+  hasNavigatedHomeBecauseOfEmptyReferrer = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -91,8 +92,8 @@ export class HeaderComponent implements OnInit {
     if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
     } else {
-      // TODO: check if there is a back otherwise redirect to home/discover page. High priority
-      if (document.referrer === '' || document.referrer === location.href) {
+      if (document.referrer === '' && !this.hasNavigatedHomeBecauseOfEmptyReferrer) {
+        this.hasNavigatedHomeBecauseOfEmptyReferrer = true;
         this.router.navigate(['/']);
       } else {
         this.location.back();
