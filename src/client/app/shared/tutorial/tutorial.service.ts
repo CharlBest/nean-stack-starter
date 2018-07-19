@@ -6,6 +6,7 @@ import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
+import { HeaderType } from '../header/header/header-type.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,7 @@ export class TutorialService {
         private router: Router,
         private http: HttpClient) { }
 
-    activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
+    async activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
         const navigateUrl = [];
         switch (tutorialType) {
             case TutorialType.None:
@@ -51,7 +52,22 @@ export class TutorialService {
         }
 
         const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: tutorialType === TutorialType.None ? undefined : tutorialType });
-        this.router.navigate(navigateUrl, { queryParams: queryParams });
+        await this.router.navigate(navigateUrl, { queryParams: queryParams });
+
+        if (tutorialType === TutorialType.None) {
+            this.checkIfAfterTutPageHasBackNav();
+        }
+    }
+
+    checkIfAfterTutPageHasBackNav() {
+        let route = this.route;
+        while (route.firstChild) {
+            route = route.firstChild;
+        }
+
+        if (route.snapshot.data['nav'] as HeaderType === HeaderType.Back) {
+            this.router.navigate(['/']);
+        }
     }
 
     public completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
