@@ -8,28 +8,24 @@ CVC: Any 3 degit number
 Zip: Any 5 degit number">info_outline</mat-icon>
 </h2>
 
-<div [hidden]="isProcessing && paymentSuccess"
+<div [hidden]="isProcessing || paymentSuccess"
     class="payment-container">
     <div class="width-enforcer"></div>
     <form [formGroup]="formGroup">
         <mat-dialog-content>
 
-            <div>
-                <div id="card-element"></div>
-                <div id="card-errors"
-                    role="alert"></div>
-            </div>
-            <br>
-            <mat-form-field appearance="outline">
-                <mat-label>&nbsp;&nbsp;Amount in euros</mat-label>
+            <app-stripe-payment #stripeElements
+                (isDoneLoading)="isProcessing = !$event"></app-stripe-payment>
+
+            <mat-form-field>
                 <input matInput
+                    floatLabel="never"
                     formControlName="amount"
+                    placeholder="Amount in euros"
                     type="number"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    (keypress)="$event.charCode >= 48 && $event.charCode <= 57"
                     required>
-                <span matPrefix>
-                    <mat-icon>euro_symbol</mat-icon>
-                </span>
+                <span matPrefix>€&nbsp;</span>
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('amount')"></app-form-errors>
                 </mat-error>
@@ -62,7 +58,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 </mat-dialog-content>
 
 <mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
-    (click)="closeDialog()">
+    mat-dialog-close>
     <div class="payment-successful-container">
         <mat-icon>check_circle</mat-icon>
         <br>
