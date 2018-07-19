@@ -19,6 +19,7 @@ export const environment = {
         }
     },
     authentication: {
+        // This key can be anything. It can be a name or random characters. It will be used to sign (encrypt) and decrypt the passwords.
         privateKey: getEnvironmentVariable('AUTHENTICATION_KEY', '37LvDSm4XvjYOh9Y')
     }
 };
