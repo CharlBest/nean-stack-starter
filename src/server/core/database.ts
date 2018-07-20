@@ -79,7 +79,7 @@ export class Database {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
-                paymentRequest: (await import(`../database/general/paymentRequest.${Database.fileExtension}`)).data
+                anonymousPayment: (await import(`../database/general/anonymousPayment.${Database.fileExtension}`)).data,
             },
             users: {
                 addForgottenPasswordCode: (await import(`../database/users/addForgottenPasswordCode.${Database.fileExtension}`)).data,
@@ -94,7 +94,8 @@ export class Database {
                 updateBio: (await import(`../database/users/updateBio.${Database.fileExtension}`)).data,
                 updatePassword: (await import(`../database/users/updatePassword.${Database.fileExtension}`)).data,
                 deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
-                completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data
+                completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
+                userPayment: (await import(`../database/users/userPayment.${Database.fileExtension}`)).data,
             }
         };
     }

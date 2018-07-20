@@ -218,4 +218,20 @@ export class UsersRepository extends BaseRepository {
             return false;
         }
     }
+
+    public async userPayment(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.userPayment,
+            {
+                userId,
+                token,
+                amount
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

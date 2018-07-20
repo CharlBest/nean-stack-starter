@@ -19,7 +19,7 @@ export class GeneralRoutes extends BaseRoute {
         this.router.post(GeneralStaticRoutes.sendFeedback.constructEndpointUrl(),
             (req, res, next) => this.generalController.sendFeedback(req, res, next).catch(next));
 
-        this.router.post(GeneralStaticRoutes.paymentRequest.constructEndpointUrl(),
-            (req, res, next) => this.generalController.paymentRequest(req, res, next).catch(next));
+        this.router.post(GeneralStaticRoutes.anonymousPayment.constructEndpointUrl(),
+            (req, res, next) => this.generalController.anonymousPayment(req, res, next).catch(next));
     }
 }

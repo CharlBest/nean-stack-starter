@@ -28,7 +28,7 @@ export class GeneralService extends BaseService {
         Emailer.feedbackEmail(content);
     }
 
-    public async paymentRequest(res: Response, token: string, amount: number): Promise<boolean> {
+    public async anonymousPayment(res: Response, token: string, amount: number): Promise<boolean> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
         // Charge the user's card:
         await stripeAccount.charges.create({
@@ -40,6 +40,6 @@ export class GeneralService extends BaseService {
             // asynchronously called
         });
 
-        return await this.generalRepository.paymentRequest(res, this.getUserId(res), token, amount);
+        return await this.generalRepository.anonymousPayment(res, token, amount);
     }
 }

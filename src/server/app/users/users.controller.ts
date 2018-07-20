@@ -12,6 +12,7 @@ import { CompletedTutorial } from '../../../shared/view-models/tutorial/complete
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { UsersService } from './users.service';
+import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model.1';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -188,6 +189,23 @@ export class UsersController extends BaseController {
 
         res.status(200).json(
             await this.usersService.completedTutorial(res, viewModel)
+        );
+    }
+
+    public async userPayment(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UserPaymentViewModel;
+
+        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.usersService.userPayment(res, viewModel.token, viewModel.amount)
         );
     }
 }

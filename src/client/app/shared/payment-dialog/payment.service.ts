@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GeneralRoutes } from '../../../../shared/routes/general.routes';
-import { PaymentRequestViewModel } from '../../../../shared/view-models/payment/payment-request.view-model';
+import { UserRoutes } from '../../../../shared/routes/user.routes';
+import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { environment } from '../../../environments/environment';
 
 declare var Stripe: any;
@@ -50,7 +51,11 @@ export class PaymentService {
         }
     }
 
-    public processPaymentRequest(viewModel: PaymentRequestViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.paymentRequest.constructRootUrl()}`, viewModel);
+    public anonymousPayment(viewModel: AnonymousPaymentViewModel): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.anonymousPayment.constructRootUrl()}`, viewModel);
+    }
+
+    public userPayment(viewModel: AnonymousPaymentViewModel): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.userPayment.constructRootUrl()}`, viewModel);
     }
 }

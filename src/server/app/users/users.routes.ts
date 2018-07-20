@@ -43,5 +43,7 @@ export class UsersRoutes extends BaseRoute {
             (req, res, next) => this.usersController.deleteUser(req, res, next).catch(next));
         this.router.post(UserRoutes.completedTutorial.constructEndpointUrl(), Authentication.loginRequired,
             (req, res, next) => this.usersController.completedTutorial(req, res, next).catch(next));
+        this.router.post(UserRoutes.userPayment.constructEndpointUrl(), Authentication.loginRequired,
+            (req, res, next) => this.usersController.userPayment(req, res, next).catch(next));
     }
 }

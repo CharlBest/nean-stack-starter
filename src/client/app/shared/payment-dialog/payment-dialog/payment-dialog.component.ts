@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
-import { PaymentRequestViewModel } from '../../../../../shared/view-models/payment/payment-request.view-model';
+import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { FormErrorsService } from '../../form-errors/form-errors.service';
 import { PaymentService } from '../payment.service';
 import { StripePaymentComponent } from '../stripe-payment/stripe-payment.component';
@@ -42,11 +42,11 @@ export class PaymentDialogComponent implements OnInit {
     }
 
     sendPaymentToServer(token: string) {
-        const viewModel = new PaymentRequestViewModel();
+        const viewModel = new AnonymousPaymentViewModel();
         viewModel.token = token;
         viewModel.amount = +this.formGroup.get('amount').value;
 
-        this.paymentService.processPaymentRequest(viewModel)
+        this.paymentService.anonymousPayment(viewModel)
             .pipe(finalize(() => this.isProcessing = false))
             .subscribe(() => {
                 this.paymentSuccess = true;

@@ -1,4 +1,4 @@
-export class PaymentRequestViewModel {
+export class AnonymousPaymentViewModel {
     token: string;
     amount: number;
 }

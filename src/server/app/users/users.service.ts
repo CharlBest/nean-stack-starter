@@ -15,6 +15,7 @@ import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
 import { UsersRepository } from './users.repository';
+import * as stripe from 'stripe';
 
 export class UsersService extends BaseService {
 
@@ -206,5 +207,20 @@ export class UsersService extends BaseService {
 
     public async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
         return await this.usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
+    }
+
+    public async userPayment(res: Response, token: string, amount: number): Promise<boolean> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+        // Charge the user's card:
+        await stripeAccount.charges.create({
+            amount: amount * 100,
+            currency: 'EUR',
+            description: 'NEAN donation',
+            source: token,
+        }, (err, charge) => {
+            // asynchronously called
+        });
+
+        return await this.usersRepository.userPayment(res, this.getUserId(res), token, amount);
     }
 }
