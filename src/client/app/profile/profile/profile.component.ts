@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import * as emojione from 'emojione';
 import { finalize } from 'rxjs/operators';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
@@ -42,20 +41,12 @@ export class ProfileComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.user = data;
-
-        if (this.user !== null && this.user.bio !== null && this.user.bio !== undefined && this.user.bio !== '') {
-          this.loadEmoji();
-        }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
   }
 
-  loadEmoji() {
-    (<any>emojione).ascii = true;
-    const output = emojione.toImage(this.user.bio);
-    this.user.bio = output;
-  }
+
 
   openShareDialog() {
     const link = ['/user', this.user.uId];

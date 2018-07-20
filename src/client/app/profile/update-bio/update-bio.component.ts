@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import * as emojione from 'emojione';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -12,7 +13,7 @@ import { ProfileService } from '../profile.service';
   templateUrl: './update-bio.component.html',
   styleUrls: ['./update-bio.component.scss']
 })
-export class UpdateBioComponent {
+export class UpdateBioComponent implements OnChanges {
 
   @ViewChild('htmlEditor') htmlEditor: HTMLEditorComponent;
   isProcessing = false;
@@ -23,8 +24,27 @@ export class UpdateBioComponent {
     private profileService: ProfileService,
     public snackBar: MatSnackBar) { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (propName === 'content') {
+        if (this.content !== null && this.content !== undefined && this.content !== '') {
+          this.loadEmoji();
+        }
+      }
+    }
+  }
+
+  loadEmoji() {
+    // (<any>emojione).ascii = true;
+    (<any>emojione).sprites = true;
+    (<any>emojione).imagePathSVGSprites = './assets/emoji/';
+    const output = emojione.shortnameToImage(this.content);
+    this.content = output;
+  }
+
   emojiInserted(shortname: string) {
     this.htmlEditor.insertText(shortname);
+    this.loadEmoji();
   }
 
   onSubmit() {
