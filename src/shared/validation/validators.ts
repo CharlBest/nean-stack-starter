@@ -99,11 +99,12 @@ export class BuildFormGroup {
         };
     }
 
-    static payment(amount: number = null): FormValidator {
+    static payment(amount: number = null, saveCard: boolean = null): FormValidator {
         return {
             amount: [amount, [
                 CustomValidators.required
-            ]]
+            ]],
+            saveCard: [saveCard, []]
         };
     }
 
@@ -211,7 +212,7 @@ export function trimString(string: string): string {
 }
 
 interface FormValidator {
-    [key: string]: [string | number, Array<Function>];
+    [key: string]: [string | number | boolean, Array<Function>];
 }
 
 type ValidatorFn = (c: AbstractControl | string | number) => ValidationErrors | null;

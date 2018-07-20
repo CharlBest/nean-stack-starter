@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GeneralRoutes } from '../../../../shared/routes/general.routes';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
+import { UserPaymentViewModel } from '../../../../shared/view-models/payment/user-payment.view-model.1';
 import { environment } from '../../../environments/environment';
 
 declare var Stripe: any;
@@ -55,7 +56,7 @@ export class PaymentService {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.anonymousPayment.constructRootUrl()}`, viewModel);
     }
 
-    public userPayment(viewModel: AnonymousPaymentViewModel): Observable<boolean> {
+    public userPayment(viewModel: UserPaymentViewModel): Observable<boolean> {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.userPayment.constructRootUrl()}`, viewModel);
     }
 }

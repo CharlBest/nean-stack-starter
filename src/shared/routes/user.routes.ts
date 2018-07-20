@@ -21,4 +21,7 @@ export class UserRoutes {
     public static searchUserStartWith = new BaseRoute(1, UserRoutes.rootRoute, 'searchUserStartWith');
     public static completedTutorial = new BaseRoute(1, UserRoutes.rootRoute, 'completedTutorial');
     public static userPayment = new BaseRoute(1, UserRoutes.rootRoute, 'userPayment');
+    public static userCards = new BaseRoute(1, UserRoutes.rootRoute, 'userCards');
+    public static createCard = new BaseRoute(1, UserRoutes.rootRoute, 'createCard');
+    public static deleteCard = new BaseRoute(1, UserRoutes.rootRoute, 'deleteCard');
 }

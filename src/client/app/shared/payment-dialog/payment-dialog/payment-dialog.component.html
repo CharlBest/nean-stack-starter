@@ -31,6 +31,13 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-error>
             </mat-form-field>
 
+            <br>
+
+            <mat-checkbox *ngIf="isUserLoggedIn"
+                formControlName="saveCard">Save card</mat-checkbox>
+
+            <br>
+
             <div *ngIf="formErrorsService.formErrors?.token?.required"
                 class="mat-error">
                 Token is required

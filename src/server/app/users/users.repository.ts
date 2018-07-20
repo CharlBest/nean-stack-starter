@@ -234,4 +234,51 @@ export class UsersRepository extends BaseRepository {
             return false;
         }
     }
+
+    public async userCards(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.userCards,
+            {
+                userId,
+                token,
+                amount
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public async createCard(res: Response, userId: number, token: string): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.createCard,
+            {
+                userId,
+                token,
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public async deleteCard(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.deleteCard,
+            {
+                userId,
+                token,
+                amount
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

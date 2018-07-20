@@ -11,6 +11,7 @@ import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
+import { PaymentsComponent } from './payments/payments.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateBioComponent } from './update-bio/update-bio.component';
@@ -46,7 +47,8 @@ const materialModules = [
     ProfileComponent,
     UpdateBioComponent,
     UpdatePasswordComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    PaymentsComponent
   ],
   entryComponents: [
     DeleteUserDialogComponent

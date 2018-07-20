@@ -1,0 +1,18 @@
+<mat-card [hidden]="isProcessing">
+  <mat-card-title>Manage Payments</mat-card-title>
+  <mat-card-content>
+
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      type="submit">Create Card</button>
+    <button mat-raised-button
+      color="warn"
+      type="submit">Delete Card</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="isProcessing">
+  <mat-spinner></mat-spinner>
+</mat-card>

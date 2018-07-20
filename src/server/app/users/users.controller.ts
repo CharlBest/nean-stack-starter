@@ -5,6 +5,7 @@ import { CreateUserViewModel } from '../../../shared/view-models/create-user/cre
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
+import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model.1';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
@@ -12,7 +13,6 @@ import { CompletedTutorial } from '../../../shared/view-models/tutorial/complete
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { UsersService } from './users.service';
-import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model.1';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -206,6 +206,57 @@ export class UsersController extends BaseController {
 
         res.status(200).json(
             await this.usersService.userPayment(res, viewModel.token, viewModel.amount)
+        );
+    }
+
+    public async userCards(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UserPaymentViewModel;
+
+        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.usersService.userCards(res, viewModel.token, viewModel.amount)
+        );
+    }
+
+    public async createCard(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UserPaymentViewModel;
+
+        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.usersService.createCard(res, viewModel.token)
+        );
+    }
+
+    public async deleteCard(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UserPaymentViewModel;
+
+        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.usersService.deleteCard(res, viewModel.token, viewModel.amount)
         );
     }
 }

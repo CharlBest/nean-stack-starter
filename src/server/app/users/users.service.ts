@@ -1,6 +1,7 @@
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
+import * as stripe from 'stripe';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
 import { UserModel } from '../../../shared/models/user/user.model';
@@ -15,7 +16,6 @@ import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
 import { UsersRepository } from './users.repository';
-import * as stripe from 'stripe';
 
 export class UsersService extends BaseService {
 
@@ -222,5 +222,48 @@ export class UsersService extends BaseService {
         });
 
         return await this.usersRepository.userPayment(res, this.getUserId(res), token, amount);
+    }
+
+    public async userCards(res: Response, token: string, amount: number): Promise<boolean> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+        // Charge the user's card:
+        await stripeAccount.charges.create({
+            amount: amount * 100,
+            currency: 'EUR',
+            description: 'NEAN donation',
+            source: token,
+        }, (err, charge) => {
+            // asynchronously called
+        });
+
+        return await this.usersRepository.userCards(res, this.getUserId(res), token, amount);
+    }
+
+    public async createCard(res: Response, token: string): Promise<boolean> {
+        const user = await this.getUserById(res);
+
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+
+        const customer = await stripeAccount.customers.create({
+            source: token,
+            email: user.email,
+        });
+
+        return await this.usersRepository.createCard(res, this.getUserId(res), token);
+    }
+
+    public async deleteCard(res: Response, token: string, amount: number): Promise<boolean> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+        // Charge the user's card:
+        await stripeAccount.charges.create({
+            amount: amount * 100,
+            currency: 'EUR',
+            description: 'NEAN donation',
+            source: token,
+        }, (err, charge) => {
+            // asynchronously called
+        });
+
+        return await this.usersRepository.deleteCard(res, this.getUserId(res), token, amount);
     }
 }

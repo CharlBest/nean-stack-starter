@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,7 +14,7 @@ export class AuthService implements CanActivate {
     constructor(private router: Router) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.checkLogin()) {
+        if (this.hasToken()) {
             return true;
         } else {
             this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
@@ -65,23 +64,12 @@ export class AuthService implements CanActivate {
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
     }
 
-    public checkLogin(): boolean {
+    public hasToken(): boolean {
         const token = sessionStorage.getItem(this.tokeyKey);
         return token != null;
     }
 
     public getLocalToken(): string {
         return sessionStorage.getItem(this.tokeyKey);
-    }
-
-    private initAuthHeaders(): Headers {
-        const token = this.getLocalToken();
-        if (token == null) {
-            throw new Error('No token');
-        }
-
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        headers.append('Authorization', 'Bearer ' + token);
-        return headers;
     }
 }

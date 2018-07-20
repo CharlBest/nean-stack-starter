@@ -96,6 +96,9 @@ export class Database {
                 deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
                 userPayment: (await import(`../database/users/userPayment.${Database.fileExtension}`)).data,
+                userCards: (await import(`../database/users/userCards.${Database.fileExtension}`)).data,
+                createCard: (await import(`../database/users/createCard.${Database.fileExtension}`)).data,
+                deleteCard: (await import(`../database/users/deleteCard.${Database.fileExtension}`)).data,
             }
         };
     }
