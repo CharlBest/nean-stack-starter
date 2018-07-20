@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderType } from '../shared/header/header/header-type.enum';
-import { VerifyComponent } from '../verify/verify/verify.component';
+import { VerifyComponent } from './verify/verify.component';
 
 @NgModule({
     imports: [

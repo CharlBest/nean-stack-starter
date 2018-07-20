@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ChangePasswordComponent } from '../forgot-password/change-password/change-password.component';
 import { HeaderType } from '../shared/header/header/header-type.enum';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({

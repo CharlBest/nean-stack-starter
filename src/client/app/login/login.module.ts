@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
-import { LoginRoutingModule } from '../login/login-routing.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login/login.component';
 
 const materialModules = [

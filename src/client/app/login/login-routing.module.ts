@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from '../login/login/login.component';
 import { HeaderType } from '../shared/header/header/header-type.enum';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     imports: [

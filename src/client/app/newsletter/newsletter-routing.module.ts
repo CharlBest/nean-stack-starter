@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NewsletterComponent } from '../newsletter/newsletter/newsletter.component';
 import { HeaderType } from '../shared/header/header/header-type.enum';
+import { NewsletterComponent } from './newsletter/newsletter.component';
 
 @NgModule({
     imports: [

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeedbackComponent } from '../feedback/feedback/feedback.component';
 import { HeaderType } from '../shared/header/header/header-type.enum';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
     imports: [
