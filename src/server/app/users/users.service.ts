@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import * as stripe from 'stripe';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
+import { UserCardModel } from '../../../shared/models/user/user-card.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -209,34 +210,28 @@ export class UsersService extends BaseService {
         return await this.usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 
-    public async userPayment(res: Response, token: string, amount: number): Promise<boolean> {
+    public async userPayment(res: Response, cardUId: string, token: string, amount: number): Promise<boolean> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        // Charge the user's card:
-        await stripeAccount.charges.create({
-            amount: amount * 100,
-            currency: 'EUR',
-            description: 'NEAN donation',
-            source: token,
-        }, (err, charge) => {
-            // asynchronously called
-        });
+        const paymentUId = nodeUUId();
 
-        return await this.usersRepository.userPayment(res, this.getUserId(res), token, amount);
+        try {
+            const charge = await stripeAccount.charges.create({
+                amount: amount * 100,
+                currency: 'EUR',
+                description: 'NEAN donation',
+                source: token,
+                metadata: { 'paymentUId': paymentUId },
+            });
+
+            return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+        } catch {
+            ServerValidator.addGlobalError(res, 'error', true);
+            throw ValidationUtil.errorResponse(res);
+        }
     }
 
-    public async userCards(res: Response, token: string, amount: number): Promise<boolean> {
-        const stripeAccount = new stripe(environment.stripe.secretKey);
-        // Charge the user's card:
-        await stripeAccount.charges.create({
-            amount: amount * 100,
-            currency: 'EUR',
-            description: 'NEAN donation',
-            source: token,
-        }, (err, charge) => {
-            // asynchronously called
-        });
-
-        return await this.usersRepository.userCards(res, this.getUserId(res), token, amount);
+    public async userCards(res: Response): Promise<UserCardModel[]> {
+        return await this.usersRepository.userCards(res, this.getUserId(res));
     }
 
     public async createCard(res: Response, token: string): Promise<boolean> {
@@ -254,16 +249,21 @@ export class UsersService extends BaseService {
 
     public async deleteCard(res: Response, token: string, amount: number): Promise<boolean> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        // Charge the user's card:
-        await stripeAccount.charges.create({
-            amount: amount * 100,
-            currency: 'EUR',
-            description: 'NEAN donation',
-            source: token,
-        }, (err, charge) => {
-            // asynchronously called
-        });
+        const paymentUId = nodeUUId();
 
-        return await this.usersRepository.deleteCard(res, this.getUserId(res), token, amount);
+        try {
+            const charge = await stripeAccount.charges.create({
+                amount: amount * 100,
+                currency: 'EUR',
+                description: 'NEAN donation',
+                source: token,
+                metadata: { 'paymentUId': paymentUId },
+            });
+
+            return await this.usersRepository.deleteCard(res, this.getUserId(res), 'cardUId');
+        } catch {
+            ServerValidator.addGlobalError(res, 'error', true);
+            throw ValidationUtil.errorResponse(res);
+        }
     }
 }

@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { UserCardModel } from '../../../shared/models/user/user-card.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
@@ -219,10 +220,13 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async userPayment(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+    public async userPayment(res: Response, userId: number, paymentUId: string, chargeId: string, chargeCreated: number, token: string, amount: number): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.userPayment,
             {
                 userId,
+                paymentUId,
+                chargeId,
+                chargeCreated,
                 token,
                 amount
             }
@@ -235,19 +239,17 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async userCards(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+    public async userCards(res: Response, userId: number): Promise<UserCardModel[]> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.userCards,
             {
-                userId,
-                token,
-                amount
+                userId
             }
         );
 
         if (result.records) {
-            return true;
+            return null;
         } else {
-            return false;
+            return null;
         }
     }
 
@@ -266,12 +268,11 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async deleteCard(res: Response, userId: number, token: string, amount: number): Promise<boolean> {
+    public async deleteCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.deleteCard,
             {
                 userId,
-                token,
-                amount
+                cardUId
             }
         );
 

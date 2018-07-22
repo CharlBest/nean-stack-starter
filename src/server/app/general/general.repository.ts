@@ -35,9 +35,12 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async anonymousPayment(res: Response, token: string, amount: number): Promise<boolean> {
+    public async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, token: string, amount: number): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.anonymousPayment,
             {
+                paymentUId,
+                chargeId,
+                chargeCreated,
                 token,
                 amount
             }

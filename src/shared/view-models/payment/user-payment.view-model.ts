@@ -1,4 +1,5 @@
 export class UserPaymentViewModel {
-    token: string;
     amount: number;
+    cardUId: string;
+    token: string;
 }

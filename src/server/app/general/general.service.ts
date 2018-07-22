@@ -1,5 +1,8 @@
 import { Response } from 'express';
 import * as stripe from 'stripe';
+import { v4 as nodeUUId } from 'uuid';
+import { ServerValidator } from '../../../shared/validation/validators';
+import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
@@ -30,16 +33,21 @@ export class GeneralService extends BaseService {
 
     public async anonymousPayment(res: Response, token: string, amount: number): Promise<boolean> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        // Charge the user's card:
-        await stripeAccount.charges.create({
-            amount: amount * 100,
-            currency: 'EUR',
-            description: 'NEAN donation',
-            source: token,
-        }, (err, charge) => {
-            // asynchronously called
-        });
+        const paymentUId = nodeUUId();
 
-        return await this.generalRepository.anonymousPayment(res, token, amount);
+        try {
+            const charge = await stripeAccount.charges.create({
+                amount: amount * 100,
+                currency: 'EUR',
+                description: 'NEAN donation',
+                source: token,
+                metadata: { 'paymentUId': paymentUId },
+            });
+
+            return await this.generalRepository.anonymousPayment(res, paymentUId, charge.id, charge.created, token, amount);
+        } catch {
+            ServerValidator.addGlobalError(res, 'error', true);
+            throw ValidationUtil.errorResponse(res);
+        }
     }
 }
