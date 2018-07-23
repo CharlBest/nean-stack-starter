@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { UserCardModel } from '../../../../../shared/models/user/user-card.model';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
 import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/payment/anonymous-payment.view-model';
-import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model.1';
+import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model';
 import { AuthService } from '../../auth.service';
 import { FormErrorsService } from '../../form-errors/form-errors.service';
 import { PaymentService } from '../payment.service';
@@ -22,6 +23,7 @@ export class PaymentDialogComponent implements OnInit {
     isProcessing = true;
     formGroup: FormGroup;
     paymentSuccess = false;
+    userCards: UserCardModel[];
 
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
@@ -34,6 +36,12 @@ export class PaymentDialogComponent implements OnInit {
 
     formOnInit() {
         this.formGroup = this.fb.group(BuildFormGroup.payment());
+
+        if (this.isUserLoggedIn) {
+            // this.paymentService.userCards().subscribe(data => {
+            //     this.userCards = data;
+            // });
+        }
     }
 
     async onSubmit() {
@@ -47,13 +55,11 @@ export class PaymentDialogComponent implements OnInit {
 
     sendPaymentToServer(token: string) {
         if (this.isUserLoggedIn) {
-            if (this.formGroup.get('saveCard').value === true) {
-
-            }
-
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;
+            viewModel.cardUId = this.formGroup.get('cardUId').value;
             viewModel.amount = +this.formGroup.get('amount').value;
+            viewModel.saveCard = this.formGroup.get('saveCard').value === true;
 
             this.paymentService.userPayment(viewModel)
                 .pipe(finalize(() => this.isProcessing = false))

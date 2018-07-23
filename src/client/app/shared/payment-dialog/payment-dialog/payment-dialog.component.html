@@ -14,7 +14,19 @@ Zip: Any 5 degit number">info_outline</mat-icon>
     <form [formGroup]="formGroup">
         <mat-dialog-content>
 
-            <app-stripe-payment #stripeElements
+            <mat-form-field *ngIf="isUserLoggedIn && userCards?.length > 0">
+                <mat-label>Cards</mat-label>
+                <mat-select>
+                    <mat-option>Add new card</mat-option>
+                    <mat-option *ngFor="let card of userCards"
+                        [value]="card.uId">
+                        {{card.last4}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <app-stripe-payment [hidden]="userCards !== undefined"
+                #stripeElements
                 (isDoneLoading)="isProcessing = !$event"></app-stripe-payment>
 
             <mat-form-field>

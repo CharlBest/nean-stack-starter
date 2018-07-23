@@ -14,6 +14,7 @@
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: string[];
+    stripeCustomerId: string;
 
     // TODO: user role/permission
 }

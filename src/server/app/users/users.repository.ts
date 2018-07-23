@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { UserCardModel } from '../../../shared/models/user/user-card.model';
+import { UserPaymentDetailsModel } from '../../../shared/models/user/user-payment-details.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
@@ -79,6 +80,22 @@ export class UsersRepository extends BaseRepository {
         );
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+
+        if (model !== null && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
+    public async getUserPaymentDetailsById(res: Response, userId: number): Promise<UserPaymentDetailsModel> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserPaymentDetailsById,
+            {
+                userId
+            }
+        );
+
+        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserPaymentDetailsModel[];
 
         if (model !== null && model.length > 0) {
             return model[0];

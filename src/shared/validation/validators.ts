@@ -99,8 +99,9 @@ export class BuildFormGroup {
         };
     }
 
-    static payment(amount: number = null, saveCard: boolean = null): FormValidator {
+    static payment(cardUId: string = null, amount: number = null, saveCard: boolean = null): FormValidator {
         return {
+            cardUId: [cardUId, []],
             amount: [amount, [
                 CustomValidators.required
             ]],

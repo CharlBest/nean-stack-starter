@@ -210,23 +210,118 @@ export class UsersService extends BaseService {
         return await this.usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 
-    public async userPayment(res: Response, cardUId: string, token: string, amount: number): Promise<boolean> {
+    public async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
+        const userPaymentDetails = await this.usersRepository.getUserPaymentDetailsById(res, this.getUserId(res));
+
+        if (userPaymentDetails === null) {
+            ServerValidator.addGlobalError(res, 'error', true);
+            throw ValidationUtil.errorResponse(res);
+        }
+
         const stripeAccount = new stripe(environment.stripe.secretKey);
         const paymentUId = nodeUUId();
 
-        try {
-            const charge = await stripeAccount.charges.create({
-                amount: amount * 100,
-                currency: 'EUR',
-                description: 'NEAN donation',
-                source: token,
-                metadata: { 'paymentUId': paymentUId },
-            });
+        const selectedCard = userPaymentDetails.userCards.find(x => x.uId === cardUId);
+        if (selectedCard) {
+            // Existing customer and card
+            try {
+                const charge = await stripeAccount.charges.create({
+                    amount: amount * 100,
+                    currency: 'EUR',
+                    description: 'NEAN donation',
+                    source: selectedCard.stripeId,
+                    customer: userPaymentDetails.user.stripeCustomerId,
+                    metadata: {
+                        userId: userPaymentDetails.user.id,
+                        paymentUId: paymentUId
+                    },
+                });
 
-            return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
-        } catch {
-            ServerValidator.addGlobalError(res, 'error', true);
-            throw ValidationUtil.errorResponse(res);
+                // TODO: user -> card -> payment
+                return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+            } catch {
+                ServerValidator.addGlobalError(res, 'error', true);
+                throw ValidationUtil.errorResponse(res);
+            }
+        } else {
+            if (saveCard) {
+                if (userPaymentDetails.user.stripeCustomerId) {
+                    try {
+                        const savedCard = await stripeAccount.customers.createSource(userPaymentDetails.user.stripeCustomerId, {
+                            source: token
+                        });
+
+                        // TODO: user -> card
+                        return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+
+
+                        const charge = await stripeAccount.charges.create({
+                            amount: amount * 100,
+                            currency: 'EUR',
+                            description: 'NEAN donation',
+                            source: savedCard.id,
+                            customer: userPaymentDetails.user.stripeCustomerId,
+                            metadata: {
+                                userId: userPaymentDetails.user.id,
+                                paymentUId: paymentUId
+                            },
+                        });
+
+                        // TODO: user -> card -> payment
+                        return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+                    } catch {
+                        ServerValidator.addGlobalError(res, 'error', true);
+                        throw ValidationUtil.errorResponse(res);
+                    }
+                } else {
+                    try {
+                        const customer = await stripeAccount.customers.create({
+                            source: token,
+                            email: userPaymentDetails.user.email,
+                        });
+
+                        // TODO: update user
+                        return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+
+                        const charge = await stripeAccount.charges.create({
+                            amount: amount * 100,
+                            currency: 'EUR',
+                            description: 'NEAN donation',
+                            source: token,
+                            customer: customer.id,
+                            metadata: {
+                                userId: userPaymentDetails.user.id,
+                                paymentUId: paymentUId
+                            },
+                        });
+
+                        // TODO: user -> card -> payment
+                        return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+                    } catch {
+                        ServerValidator.addGlobalError(res, 'error', true);
+                        throw ValidationUtil.errorResponse(res);
+                    }
+                }
+            } else {
+                try {
+                    const charge = await stripeAccount.charges.create({
+                        amount: amount * 100,
+                        currency: 'EUR',
+                        description: 'NEAN donation',
+                        source: token,
+                        metadata: {
+                            userId: userPaymentDetails.user.id,
+                            paymentUId: paymentUId
+                        },
+                    });
+
+                    // user -> payment
+                    return await this.usersRepository.userPayment(res, this.getUserId(res), paymentUId, charge.id, charge.created, token, amount);
+                } catch {
+                    ServerValidator.addGlobalError(res, 'error', true);
+                    throw ValidationUtil.errorResponse(res);
+                }
+            }
         }
     }
 
