@@ -43,12 +43,13 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-error>
             </mat-form-field>
 
-            <br>
+            <ng-container *ngIf="isUserLoggedIn">
+                <br>
 
-            <mat-checkbox *ngIf="isUserLoggedIn"
-                formControlName="saveCard">Save card</mat-checkbox>
+                <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
 
-            <br>
+                <br>
+            </ng-container>
 
             <div *ngIf="formErrorsService.formErrors?.token?.required"
                 class="mat-error">
