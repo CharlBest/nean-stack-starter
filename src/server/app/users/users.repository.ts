@@ -270,11 +270,11 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async createCard(res: Response, userId: number, token: string): Promise<boolean> {
+    public async createCard(res: Response, userId: number, cardId: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.user.createCard,
             {
                 userId,
-                token,
+                cardId,
             }
         );
 
