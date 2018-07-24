@@ -165,7 +165,7 @@ export class UsersController extends BaseController {
     }
 
     public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.getUserById(res);
+        const response = await this.usersService.getLiteUserById(res);
         await this.usersService.resendEmailVerificationLink(res, response.email, response.emailCode);
 
         res.status(200).json(response);
@@ -246,7 +246,7 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.deleteCard(res, viewModel.token, viewModel.amount)
+            await this.usersService.deleteCard(res, '')
         );
     }
 }

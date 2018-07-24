@@ -1,4 +1,5 @@
 export const data = `
 MATCH (user:User { id: {userId} })
-RETURN user
+OPTIONAL MATCH (user)-[:HAS_CARD]->(cards: Card)
+RETURN user, cards
 `
