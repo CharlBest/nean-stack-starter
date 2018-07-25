@@ -42,15 +42,10 @@ export class Database {
 
     public static createNodeObject<T>(node): T {
         if (node !== null && node !== undefined) {
-            const object = {};
+            let object = {};
             _.assign(object, node.properties);
 
-            for (const key in object) {
-                // check also if property is not inherited from prototype
-                if (object.hasOwnProperty(key) && neo4j.isInt(object[key])) {
-                    object[key] = neo4j.integer.toNumber(object[key]);
-                }
-            }
+            object = Database.parseValues(object);
 
             return <T>object;
         } else {
@@ -59,19 +54,22 @@ export class Database {
     }
 
     public static createNodeObjectArray(nodes: any[]): any {
-        return nodes.map(x => Database.createNodeObject(x));
-    }
-
-    public static createNumber(int: any): number {
-        if (int !== null && int !== undefined) {
-            if (neo4j.isInt(int)) {
-                return neo4j.integer.toNumber(int);
-            } else {
-                return int;
-            }
+        if (nodes !== null) {
+            return nodes.map(x => Database.createNodeObject(x));
         } else {
             return null;
         }
+    }
+
+    public static parseValues(object: Object): Object {
+        for (const key in object) {
+            // check also if property is not inherited from prototype
+            if (object.hasOwnProperty(key) && neo4j.isInt(object[key])) {
+                object[key] = neo4j.integer.toNumber(object[key]);
+            }
+        }
+
+        return object;
     }
 
     public static async retrieveQueries() {

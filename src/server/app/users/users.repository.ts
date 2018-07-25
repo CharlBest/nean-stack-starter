@@ -63,7 +63,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserLiteModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
 
         if (model !== null && model.length > 0) {
             return model[0];
@@ -79,7 +79,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserLiteModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
 
         if (model !== null && model.length > 0) {
             return model[0];
