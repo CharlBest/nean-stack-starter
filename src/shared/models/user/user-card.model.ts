@@ -1,7 +1,6 @@
 export class UserCardModel {
     uId: string;
-    stripeId: string;
+    stripeCardId: string;
     last4: string;
-    created: number;
-    type: string;
+    dateCreated: number;
 }

@@ -268,25 +268,32 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        if (result.records) {
-            return null;
+        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as UserCardModel[];
+
+        if (model !== null && model.length > 0) {
+            return model;
         } else {
             return null;
         }
     }
 
-    public async createCard(res: Response, userId: number, cardId: string): Promise<boolean> {
+    public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, last4: string): Promise<UserCardModel> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).users.createCard,
             {
                 userId,
-                cardId,
+                stripeCustomerId,
+                uId,
+                stripeCardId,
+                last4,
             }
         );
 
-        if (result.records) {
-            return true;
+        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as UserCardModel[];
+
+        if (model !== null && model.length > 0) {
+            return model[0];
         } else {
-            return false;
+            return null;
         }
     }
 

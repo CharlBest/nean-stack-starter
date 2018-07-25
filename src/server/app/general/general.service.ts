@@ -41,7 +41,9 @@ export class GeneralService extends BaseService {
                 currency: 'EUR',
                 description: 'NEAN donation',
                 source: token,
-                metadata: { 'paymentUId': paymentUId },
+                metadata: {
+                    paymentUId
+                },
             });
 
             return await this.generalRepository.anonymousPayment(res, paymentUId, charge.id, charge.created, token, amount);

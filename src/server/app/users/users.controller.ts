@@ -227,6 +227,7 @@ export class UsersController extends BaseController {
     public async deleteCard(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
 
+        // TODO
         res.status(200).json(
             await this.usersService.deleteCard(res, '')
         );
