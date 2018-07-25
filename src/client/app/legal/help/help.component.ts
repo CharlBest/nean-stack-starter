@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PWAHelperService } from '../../shared/pwa-helper/pwa-helper.service';
 
 @Component({
   selector: 'app-help',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpComponent implements OnInit {
 
-  constructor() { }
+  constructor(private pwaHelperService: PWAHelperService) { }
 
   ngOnInit() {
   }
 
+  openPWAHelper() {
+    this.pwaHelperService.open()
+  }
 }

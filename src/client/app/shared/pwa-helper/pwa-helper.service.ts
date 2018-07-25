@@ -8,7 +8,7 @@ export class PWAHelperService {
 
     constructor(private overlay: Overlay) { }
 
-    report(uId: string) {
+    open() {
         const config = new OverlayConfig({
             hasBackdrop: true,
             // backdropClass: 'cdk-overlay-transparent-backdrop',
