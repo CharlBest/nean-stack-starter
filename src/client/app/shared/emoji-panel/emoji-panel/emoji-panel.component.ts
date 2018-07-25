@@ -62,7 +62,9 @@ export class EmojiPanelComponent implements OnInit {
     } else {
       this.bottomSheet.open(this.bottomSheetRef, {
         backdropClass: 'cdk-overlay-transparent-backdrop',
-        panelClass: 'emoji-panel'
+        panelClass: 'emoji-panel',
+        autoFocus: false,
+        closeOnNavigation: true
       });
     }
   }

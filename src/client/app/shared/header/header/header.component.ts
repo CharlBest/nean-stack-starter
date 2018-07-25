@@ -154,7 +154,10 @@ export class HeaderComponent implements OnInit {
       this.contextMenuTrigger.openMenu();
     } else {
       this.contextMenuTrigger.closeMenu();
-      this.bottomSheet.open(this.bottomSheetContextMenu);
+      this.bottomSheet.open(this.bottomSheetContextMenu, {
+        autoFocus: false,
+        closeOnNavigation: true
+      });
     }
   }
 }
