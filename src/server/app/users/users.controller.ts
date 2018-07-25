@@ -195,7 +195,7 @@ export class UsersController extends BaseController {
     public async userPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
 
-        const formGroup = BuildFormGroup.payment(viewModel.cardUId, viewModel.amount, viewModel.saveCard);
+        const formGroup = BuildFormGroup.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         const hasToken = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
@@ -219,15 +219,6 @@ export class UsersController extends BaseController {
     public async createCard(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
 
-        const formGroup = BuildFormGroup.payment(viewModel.cardUId, viewModel.amount, viewModel.saveCard);
-        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
-
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
         res.status(200).json(
             await this.usersService.createCard(res, viewModel.token)
         );
@@ -235,15 +226,6 @@ export class UsersController extends BaseController {
 
     public async deleteCard(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
-
-        const formGroup = BuildFormGroup.payment(viewModel.cardUId, viewModel.amount, viewModel.saveCard);
-        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
-
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
 
         res.status(200).json(
             await this.usersService.deleteCard(res, '')
