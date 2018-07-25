@@ -75,7 +75,7 @@ export class Database {
     }
 
     public static async retrieveQueries() {
-        return {
+        const dbQueries: DbQueries = {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
@@ -87,7 +87,8 @@ export class Database {
                 createUser: (await import(`../database/users/createUser.${Database.fileExtension}`)).data,
                 doesUserHavePermissions: (await import(`../database/users/doesUserHavePermissions.${Database.fileExtension}`)).data,
                 doesUsernameAndEmailExist: (await import(`../database/users/doesUsernameAndEmailExist.${Database.fileExtension}`)).data,
-                getUser: (await import(`../database/users/getUser.${Database.fileExtension}`)).data,
+                getLiteUserByEmailOrUsername: (await import(`../database/users/getLiteUserByEmailOrUsername.${Database.fileExtension}`)).data,
+                getLiteUserById: (await import(`../database/users/getLiteUserById.${Database.fileExtension}`)).data,
                 getUserById: (await import(`../database/users/getUserById.${Database.fileExtension}`)).data,
                 verifyEmail: (await import(`../database/users/verifyEmail.${Database.fileExtension}`)).data,
                 updateAvatar: (await import(`../database/users/updateAvatar.${Database.fileExtension}`)).data,
@@ -99,7 +100,38 @@ export class Database {
                 userCards: (await import(`../database/users/userCards.${Database.fileExtension}`)).data,
                 createCard: (await import(`../database/users/createCard.${Database.fileExtension}`)).data,
                 deleteCard: (await import(`../database/users/deleteCard.${Database.fileExtension}`)).data,
-            }
+            },
         };
+
+        return dbQueries;
     }
+}
+
+export interface DbQueries {
+    general: {
+        createNewsletterMember: string,
+        deleteNewsletterMember: string,
+        anonymousPayment: string,
+    };
+
+    users: {
+        addForgottenPasswordCode: string,
+        changeForgottenPassword: string,
+        createUser: string,
+        doesUserHavePermissions: string,
+        doesUsernameAndEmailExist: string,
+        getLiteUserByEmailOrUsername: string,
+        getLiteUserById: string,
+        getUserById: string,
+        verifyEmail: string,
+        updateAvatar: string,
+        updateBio: string,
+        updatePassword: string,
+        deleteUser: string,
+        completedTutorial: string,
+        userPayment: string,
+        userCards: string,
+        createCard: string,
+        deleteCard: string,
+    };
 }
