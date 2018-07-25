@@ -25,9 +25,9 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-select>
             </mat-form-field>
 
-            <app-stripe-payment [hidden]="userCards !== undefined"
+            <app-stripe-elements [hidden]="userCards !== undefined"
                 #stripeElements
-                (isDoneLoading)="isProcessing = !$event"></app-stripe-payment>
+                (isDoneLoading)="isProcessing = !$event"></app-stripe-elements>
 
             <mat-form-field>
                 <input matInput

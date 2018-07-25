@@ -1,15 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
+import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
+import { CreateCardDialogComponent } from './create-card-dialog/create-card-dialog.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ProfileRoutingModule } from './profile-routing.module';
@@ -26,6 +28,7 @@ const materialModules = [
   MatSnackBarModule,
   MatTooltipModule,
   MatInputModule,
+  MatListModule
 ];
 
 @NgModule({
@@ -41,6 +44,7 @@ const materialModules = [
     EmojiPanelModule,
     MediaModule,
     HTMLEditorModule,
+    StripeElementsModule,
     ...materialModules
   ],
   declarations: [
@@ -48,10 +52,12 @@ const materialModules = [
     UpdateBioComponent,
     UpdatePasswordComponent,
     DeleteUserDialogComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    CreateCardDialogComponent
   ],
   entryComponents: [
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    CreateCardDialogComponent
   ]
 })
 export class ProfileModule { }

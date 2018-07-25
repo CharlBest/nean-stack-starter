@@ -59,7 +59,7 @@
 
   <app-update-password></app-update-password>
 
-  <app-payments></app-payments>
+  <app-payments [userCards]="user.userCards"></app-payments>
 </div>
 
 <mat-card [hidden]="isProcessing"

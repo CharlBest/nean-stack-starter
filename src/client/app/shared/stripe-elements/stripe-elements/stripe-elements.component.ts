@@ -1,12 +1,12 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { PaymentService } from '../payment.service';
+import { StripeElementsService } from '../stripe-elements.service';
 
 @Component({
-    selector: 'app-stripe-payment',
-    templateUrl: './stripe-payment.component.html',
-    styleUrls: ['./stripe-payment.component.scss']
+    selector: 'app-stripe-elements',
+    templateUrl: './stripe-elements.component.html',
+    styleUrls: ['./stripe-elements.component.scss']
 })
-export class StripePaymentComponent implements OnInit {
+export class StripeElementsComponent implements OnInit {
 
     @Output() isDoneLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -17,13 +17,13 @@ export class StripePaymentComponent implements OnInit {
     elementsWrapper = new ElementsWrapper();
     error: string;
 
-    constructor(private paymentService: PaymentService) { }
+    constructor(private stripeElementsService: StripeElementsService) { }
 
     ngOnInit() {
-        if (this.paymentService.stripeInstance) {
+        if (this.stripeElementsService.stripeInstance) {
             this.elementsOnInit();
         } else {
-            this.paymentService.stripeInitialized.subscribe(data => {
+            this.stripeElementsService.stripeInitialized.subscribe(data => {
                 if (data) {
                     this.elementsOnInit();
                 }
@@ -33,7 +33,7 @@ export class StripePaymentComponent implements OnInit {
 
     elementsOnInit() {
         // Initialize elements
-        const elements = this.paymentService.stripe.elements({
+        const elements = this.stripeElementsService.stripe.elements({
             locale: 'en',
             fonts: [
                 // TODO: This is not working
@@ -92,7 +92,7 @@ export class StripePaymentComponent implements OnInit {
 
     async generateToken() {
         // createToken takes a single element but pulls in other elements that has been instantiated as well to create a card element
-        const { token, error } = await this.paymentService.stripe.createToken(this.elementsWrapper.cardNumber.element);
+        const { token, error } = await this.stripeElementsService.stripe.createToken(this.elementsWrapper.cardNumber.element);
 
         if (error) {
             this.error = error.message;

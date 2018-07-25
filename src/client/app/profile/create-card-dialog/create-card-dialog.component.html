@@ -1,0 +1,23 @@
+<div [hidden]="isProcessing">
+    <h2 mat-dialog-title>Create Card</h2>
+    <mat-dialog-content>
+
+        <app-stripe-elements #stripeElements
+            (isDoneLoading)="isProcessing = !$event"></app-stripe-elements>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button
+            type="button"
+            (click)="onSubmit()">Create</button>
+        <button mat-raised-button
+            type="button"
+            mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<mat-dialog-content *ngIf="isProcessing">
+    <br>
+    <mat-spinner></mat-spinner>
+    <br>
+</mat-dialog-content>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserCardModel } from '../../../shared/models/user/user-card.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
@@ -37,5 +38,13 @@ export class ProfileService {
 
   public resendEmailVerificationLink(): Observable<UserModel> {
     return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink.constructRootUrl()}`, null);
+  }
+
+  public createCard(token: string): Observable<UserCardModel> {
+    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.createCard.constructRootUrl()}`, { token });
+  }
+
+  public deleteCard(uId: string): Observable<UserCardModel> {
+    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteCard.constructRootUrl()}`);
   }
 }

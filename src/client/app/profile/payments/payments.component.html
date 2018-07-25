@@ -2,14 +2,33 @@
   <mat-card-title>Manage Payments</mat-card-title>
   <mat-card-content>
 
+    <table>
+      <tbody>
+        <tr *ngFor="let card of userCards">
+          <td>
+            <mat-icon>credit_card</mat-icon>
+          </td>
+          <td>**** {{card.last4}}</td>
+          <td>
+            <button mat-icon-button
+              color="warn"
+              (click)="deleteCard(card.uId)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <mat-list-item *ngFor="let card of userCards">
+      <span mat-line>**** {{card.last4}}</span>
+      <mat-icon mat-list-icon>credit_card</mat-icon>
+    </mat-list-item>
 
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
-      type="submit">Create Card</button>
-    <button mat-raised-button
-      color="warn"
-      type="submit">Delete Card</button>
+      (click)="addCard()">Add Card</button>
   </mat-card-actions>
 </mat-card>
 

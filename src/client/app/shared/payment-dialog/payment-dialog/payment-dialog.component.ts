@@ -7,8 +7,8 @@ import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/pay
 import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model';
 import { AuthService } from '../../auth.service';
 import { FormErrorsService } from '../../form-errors/form-errors.service';
+import { StripeElementsComponent } from '../../stripe-elements/stripe-elements/stripe-elements.component';
 import { PaymentService } from '../payment.service';
-import { StripePaymentComponent } from '../stripe-payment/stripe-payment.component';
 
 @Component({
     selector: 'app-payment-dialog',
@@ -17,7 +17,7 @@ import { StripePaymentComponent } from '../stripe-payment/stripe-payment.compone
 })
 export class PaymentDialogComponent implements OnInit {
 
-    @ViewChild('stripeElements') stripeElementsComponent: StripePaymentComponent;
+    @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
 
     isUserLoggedIn: boolean = this.authService.hasToken();
     isProcessing = true;

@@ -217,10 +217,10 @@ export class UsersController extends BaseController {
     }
 
     public async createCard(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as UserPaymentViewModel;
+        const token = req.body.token;
 
         res.status(200).json(
-            await this.usersService.createCard(res, viewModel.token)
+            await this.usersService.createCard(res, token)
         );
     }
 
