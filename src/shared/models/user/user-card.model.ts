@@ -3,4 +3,5 @@ export class UserCardModel {
     stripeCardId: string;
     last4: string;
     dateCreated: number;
+    isDefault: boolean;
 }

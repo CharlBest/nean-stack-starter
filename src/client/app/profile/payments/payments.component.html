@@ -8,6 +8,11 @@
           <td>
             <mat-icon>credit_card</mat-icon>
           </td>
+          <td>
+            <mat-chip-list *ngIf="card.isDefault">
+              <mat-chip>default</mat-chip>
+            </mat-chip-list>
+          </td>
           <td>**** {{card.last4}}</td>
           <td>
             <button mat-icon-button
@@ -19,11 +24,6 @@
         </tr>
       </tbody>
     </table>
-
-    <mat-list-item *ngFor="let card of userCards">
-      <span mat-line>**** {{card.last4}}</span>
-      <mat-icon mat-list-icon>credit_card</mat-icon>
-    </mat-list-item>
 
   </mat-card-content>
   <mat-card-actions>
