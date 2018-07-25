@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class PaymentsComponent implements OnInit {
 
-  @Input() userCards: UserCardModel[];
+  @Input() userCards: UserCardModel[] = [];
   isProcessing = false;
 
   constructor(private dialog: MatDialog,
@@ -37,6 +37,10 @@ export class PaymentsComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data) {
+          if (this.userCards === null || this.userCards === undefined) {
+            this.userCards = [];
+          }
+
           this.userCards = this.userCards.filter(x => x.uId !== uId);
         }
       }, error => {

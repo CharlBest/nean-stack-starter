@@ -260,7 +260,7 @@ export class UsersService extends BaseService {
             // New card
             if (saveCard) {
                 // Save card
-                const newCard = await this.createStripeCard(res, user.stripeCustomerId, user.email, token);
+                const newCard = await this.createStripeCard(res, user, token);
 
                 const charge = await createCharge(newCard.card.stripeCardId, user.id, newCard.stripeCustomerId);
 
@@ -273,15 +273,21 @@ export class UsersService extends BaseService {
         }
     }
 
-    private async createStripeCard(res: Response, stripeCustomerId: string, userEmail: string, token: string): Promise<{ card: UserCardModel, stripeCustomerId: string }> {
+    private async createStripeCard(res: Response, user: UserLiteModel, token: string): Promise<{ card: UserCardModel, stripeCustomerId: string }> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
         try {
-            if (stripeCustomerId === null) {
+            if (user.stripeCustomerId === null) {
                 const customer = await stripeAccount.customers.create({
                     source: token,
-                    email: userEmail,
+                    email: user.email,
+                    metadata: {
+                        userId: user.id,
+                        userUId: user.uId
+                    }
                 });
+
+                console.log(customer);
 
                 const retrievedCustomer = await stripeAccount.customers.retrieve(customer.id, {
                     expand: ['default_source']
@@ -289,14 +295,15 @@ export class UsersService extends BaseService {
 
                 console.log(retrievedCustomer);
 
-                const card = await this.usersRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(), customer.default_source.toString(), (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
+                const card = await this.usersRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
 
                 return {
                     card,
                     stripeCustomerId: customer.id
                 };
             } else {
-                const newCard = await stripeAccount.customers.createSource(stripeCustomerId, {
+                const newCard = await stripeAccount.customers.createSource(user.stripeCustomerId, {
                     source: token
                 });
 
@@ -307,7 +314,7 @@ export class UsersService extends BaseService {
                     stripeCustomerId: null
                 };
             }
-        } catch {
+        } catch (error) {
             ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
         }
@@ -320,19 +327,29 @@ export class UsersService extends BaseService {
     public async createCard(res: Response, token: string): Promise<UserCardModel> {
         const user = await this.getLiteUserById(res);
 
-        return (await this.createStripeCard(res, user.stripeCustomerId, user.email, token)).card;
+        return (await this.createStripeCard(res, user, token)).card;
     }
 
-    public async deleteCard(res: Response, cardId: string): Promise<boolean> {
-        const user = await this.getLiteUserById(res);
+    public async deleteCard(res: Response, uId: string): Promise<boolean> {
+        const user = await this.getUserById(res);
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
+        const card = user.userCards.find(x => x.uId === uId);
 
-        try {
-            const deleteConfirmation = await stripeAccount.customers.deleteCard(user.stripeCustomerId, cardId);
-
-            return await this.usersRepository.deleteCard(res, this.getUserId(res), '');
-        } catch {
+        if (card) {
+            try {
+                const deleteConfirmation = await stripeAccount.customers.deleteCard(user.stripeCustomerId, card.stripeCardId);
+                if (deleteConfirmation.deleted) {
+                    return await this.usersRepository.deleteCard(res, this.getUserId(res), card.uId);
+                } else {
+                    ServerValidator.addGlobalError(res, 'error', true);
+                    throw ValidationUtil.errorResponse(res);
+                }
+            } catch {
+                ServerValidator.addGlobalError(res, 'error', true);
+                throw ValidationUtil.errorResponse(res);
+            }
+        } else {
             ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
         }

@@ -219,17 +219,28 @@ export class UsersController extends BaseController {
     public async createCard(req: Request, res: Response, next: NextFunction) {
         const token = req.body.token;
 
+        const hasErrors = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(token));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(200).json(
             await this.usersService.createCard(res, token)
         );
     }
 
     public async deleteCard(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as UserPaymentViewModel;
+        const uId = req.params.uId;
 
-        // TODO
+        const hasErrors = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(200).json(
-            await this.usersService.deleteCard(res, '')
+            await this.usersService.deleteCard(res, uId)
         );
     }
 }

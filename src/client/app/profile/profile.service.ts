@@ -45,6 +45,6 @@ export class ProfileService {
   }
 
   public deleteCard(uId: string): Observable<UserCardModel> {
-    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteCard.constructRootUrl()}`);
+    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
   }
 }
