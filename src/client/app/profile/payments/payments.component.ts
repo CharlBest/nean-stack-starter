@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatRadioChange } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UserCardModel } from 'shared/models/user/user-card.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -70,13 +70,5 @@ export class PaymentsComponent implements OnInit {
     //       this.formErrorsService.updateFormValidity(error);
     //     });
     // }
-  }
-
-  defaultCardUId() {
-    return this.userCards.find(x => x.isDefault).uId;
-  }
-
-  setNewDefaultCard(event: MatRadioChange) {
-    this.newDefaultCardUId = event.value;
   }
 }

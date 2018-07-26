@@ -2,19 +2,19 @@
   <mat-card-title>Manage Payments</mat-card-title>
   <mat-card-content>
 
-    <mat-radio-group (change)="setNewDefaultCard($event)">
+    <mat-radio-group [(ngModel)]="newDefaultCardUId">
       <table>
         <tbody>
           <tr *ngFor="let card of userCards">
             <td>
-              <ng-container *ngIf="!isChangingDefault">
-                <mat-chip-list *ngIf="card.isDefault">
+              <ng-container *ngIf="!isChangingDefault && card.isDefault">
+                <mat-chip-list>
                   <mat-chip>default</mat-chip>
                 </mat-chip-list>
               </ng-container>
               <ng-container *ngIf="isChangingDefault">
                 <mat-radio-button [value]="card.uId"
-                  [checked]="card.uId === defaultCardUId()"></mat-radio-button>
+                  [checked]="card.isDefault"></mat-radio-button>
               </ng-container>
             </td>
             <td>

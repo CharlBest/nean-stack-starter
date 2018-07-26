@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
@@ -38,6 +38,7 @@ const materialModules = [
     CommonModule,
     ProfileRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     ShareDialogModule,
     ReportDialogModule,
     UploadButtonModule,
