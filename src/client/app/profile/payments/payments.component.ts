@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatRadioChange } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UserCardModel } from 'shared/models/user/user-card.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -15,6 +15,8 @@ export class PaymentsComponent implements OnInit {
 
   @Input() userCards: UserCardModel[] = [];
   isProcessing = false;
+  isChangingDefault = false;
+  newDefaultCardUId: string;
 
   constructor(private dialog: MatDialog,
     private profileService: ProfileService,
@@ -46,5 +48,35 @@ export class PaymentsComponent implements OnInit {
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
+  }
+
+  changeDefaultCard() {
+    this.isChangingDefault = false;
+
+    // if (this.newDefaultCardUId !== null && this.newDefaultCardUId !== this.defaultCardUId()) {
+    //   this.profileService.updateDefaultCard(this.newDefaultCardUId)
+    //     .pipe(finalize(() => this.isProcessing = false))
+    //     .subscribe(data => {
+    //       if (data) {
+    //         this.userCards.forEach(x => {
+    //           if (x.uId !== data.uId) {
+    //             x.isDefault = false;
+    //           } else {
+    //             x.isDefault = true;
+    //           }
+    //         });
+    //       }
+    //     }, error => {
+    //       this.formErrorsService.updateFormValidity(error);
+    //     });
+    // }
+  }
+
+  defaultCardUId() {
+    return this.userCards.find(x => x.isDefault).uId;
+  }
+
+  setNewDefaultCard(event: MatRadioChange) {
+    this.newDefaultCardUId = event.value;
   }
 }

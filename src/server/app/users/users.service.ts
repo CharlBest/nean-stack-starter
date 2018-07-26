@@ -287,13 +287,9 @@ export class UsersService extends BaseService {
                     }
                 });
 
-                console.log(customer);
-
                 const retrievedCustomer = await stripeAccount.customers.retrieve(customer.id, {
                     expand: ['default_source']
                 });
-
-                console.log(retrievedCustomer);
 
                 const card = await this.usersRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
                     (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
@@ -355,7 +351,7 @@ export class UsersService extends BaseService {
         }
     }
 
-    public async updateDefaultCard(res: Response): Promise<boolean> {
+    public async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
         return true;
     }
 

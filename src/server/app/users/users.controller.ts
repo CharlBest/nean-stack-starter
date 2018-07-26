@@ -233,7 +233,7 @@ export class UsersController extends BaseController {
     public async deleteCard(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(uId));
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
@@ -241,6 +241,20 @@ export class UsersController extends BaseController {
 
         res.status(200).json(
             await this.usersService.deleteCard(res, uId)
+        );
+    }
+
+    public async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
+        const uId = req.body.uId;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.usersService.updateDefaultCard(res, uId)
         );
     }
 }

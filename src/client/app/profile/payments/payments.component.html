@@ -2,33 +2,51 @@
   <mat-card-title>Manage Payments</mat-card-title>
   <mat-card-content>
 
-    <table>
-      <tbody>
-        <tr *ngFor="let card of userCards">
-          <td>
-            <mat-icon>credit_card</mat-icon>
-          </td>
-          <td>
-            <mat-chip-list *ngIf="card.isDefault">
-              <mat-chip>default</mat-chip>
-            </mat-chip-list>
-          </td>
-          <td>**** {{card.last4}}</td>
-          <td>
-            <button mat-icon-button
-              color="warn"
-              (click)="deleteCard(card.uId)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <mat-radio-group (change)="setNewDefaultCard($event)">
+      <table>
+        <tbody>
+          <tr *ngFor="let card of userCards">
+            <td>
+              <ng-container *ngIf="!isChangingDefault">
+                <mat-chip-list *ngIf="card.isDefault">
+                  <mat-chip>default</mat-chip>
+                </mat-chip-list>
+              </ng-container>
+              <ng-container *ngIf="isChangingDefault">
+                <mat-radio-button [value]="card.uId"
+                  [checked]="card.uId === defaultCardUId()"></mat-radio-button>
+              </ng-container>
+            </td>
+            <td>
+              <mat-icon>credit_card</mat-icon>
+            </td>
+            <td>**** {{card.last4}}</td>
+            <td>
+              <button mat-icon-button
+                color="warn"
+                (click)="deleteCard(card.uId)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-radio-group>
 
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
+      *ngIf="!isChangingDefault"
       (click)="addCard()">Add Card</button>
+    <button mat-raised-button
+      *ngIf="!isChangingDefault && userCards?.length > 0"
+      (click)="isChangingDefault = true">Change Default Card</button>
+    <button mat-raised-button
+      *ngIf="isChangingDefault && userCards?.length > 0"
+      (click)="changeDefaultCard()">Save Default Card</button>
+    <button mat-raised-button
+      *ngIf="isChangingDefault && userCards?.length > 0"
+      (click)="this.isChangingDefault = false">Cancel</button>
   </mat-card-actions>
 </mat-card>
 

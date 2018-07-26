@@ -47,4 +47,7 @@ export class ProfileService {
   public deleteCard(uId: string): Observable<UserCardModel> {
     return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
   }
+  public updateDefaultCard(uId: string): Observable<UserCardModel> {
+    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
+  }
 }

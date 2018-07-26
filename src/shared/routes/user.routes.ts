@@ -24,4 +24,5 @@ export class UserRoutes {
     public static userCards = new BaseRoute(1, UserRoutes.rootRoute, 'userCards');
     public static createCard = new BaseRoute(1, UserRoutes.rootRoute, 'createCard');
     public static deleteCard = new BaseRoute(1, UserRoutes.rootRoute, 'deleteCard');
+    public static updateDefaultCard = new BaseRoute(1, UserRoutes.rootRoute, 'updateDefaultCard');
 }
