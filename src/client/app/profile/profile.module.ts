@@ -13,6 +13,7 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { CreateCardDialogComponent } from './create-card-dialog/create-card-dialog.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -56,7 +57,8 @@ const materialModules = [
     UpdatePasswordComponent,
     DeleteUserDialogComponent,
     PaymentsComponent,
-    CreateCardDialogComponent
+    CreateCardDialogComponent,
+    PaymentHistoryComponent
   ],
   entryComponents: [
     DeleteUserDialogComponent,

@@ -98,6 +98,7 @@ export class Database {
                 userCards: (await import(`../database/users/userCards.${Database.fileExtension}`)).data,
                 createCard: (await import(`../database/users/createCard.${Database.fileExtension}`)).data,
                 deleteCard: (await import(`../database/users/deleteCard.${Database.fileExtension}`)).data,
+                updateDefaultCard: (await import(`../database/users/updateDefaultCard.${Database.fileExtension}`)).data,
             },
         };
 
@@ -131,5 +132,6 @@ export interface DbQueries {
         userCards: string,
         createCard: string,
         deleteCard: string,
+        updateDefaultCard: string,
     };
 }

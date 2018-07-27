@@ -1,5 +1,4 @@
 export const data = `
-
 MERGE (tutorial:Tutorial { type: {tutorialType} })
 WITH tutorial
 MATCH (user:User { id: {userId} })
@@ -15,5 +14,4 @@ FOREACH (o IN CASE WHEN hasSkipped IS NULL AND {didSkip} THEN [1] ELSE [] END |
     MERGE (user)-[rel:SKIPPED]->(tutorial)
     SET rel.dateCreated = timestamp()
 )
-
 `

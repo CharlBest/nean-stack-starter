@@ -23,6 +23,7 @@
             <td>**** {{card.last4}}</td>
             <td>
               <button mat-icon-button
+                *ngIf="!card.isDefault || userCards.length === 1"
                 color="warn"
                 (click)="deleteCard(card.uId)">
                 <mat-icon>delete</mat-icon>
@@ -40,13 +41,15 @@
       (click)="addCard()">Add Card</button>
     <button mat-raised-button
       *ngIf="!isChangingDefault && userCards?.length > 0"
-      (click)="isChangingDefault = true">Change Default Card</button>
+      (click)="isChangingDefault = true">Change default card</button>
     <button mat-raised-button
       *ngIf="isChangingDefault && userCards?.length > 0"
-      (click)="changeDefaultCard()">Save Default Card</button>
+      (click)="changeDefaultCard()">Save default card</button>
     <button mat-raised-button
       *ngIf="isChangingDefault && userCards?.length > 0"
-      (click)="this.isChangingDefault = false">Cancel</button>
+      (click)="this.isChangingDefault = false; newDefaultCardUId = null">Cancel</button>
+    <button mat-raised-button
+      routerLink="payment-history">Payment history</button>
   </mat-card-actions>
 </mat-card>
 

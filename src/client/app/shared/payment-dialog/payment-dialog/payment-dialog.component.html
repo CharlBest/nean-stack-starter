@@ -16,16 +16,17 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 
             <mat-form-field *ngIf="isUserLoggedIn && userCards?.length > 0">
                 <mat-label>Cards</mat-label>
-                <mat-select>
-                    <mat-option>Add new card</mat-option>
+                <mat-select formControlName="cardUId"
+                    [value]="userCards[0]?.uId">
                     <mat-option *ngFor="let card of userCards"
                         [value]="card.uId">
-                        {{card.last4}}
+                        **** {{card.last4}}
                     </mat-option>
+                    <mat-option value="new">Use new card</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <app-stripe-elements [hidden]="userCards !== undefined"
+            <app-stripe-elements [hidden]="formGroup.get('cardUId').value !== null && formGroup.get('cardUId').value !== 'new'"
                 #stripeElements
                 (isDoneLoading)="isProcessing = !$event"></app-stripe-elements>
 

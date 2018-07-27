@@ -16,7 +16,7 @@ export class PaymentsComponent implements OnInit {
   @Input() userCards: UserCardModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
-  newDefaultCardUId: string;
+  newDefaultCardUId: string = null;
 
   constructor(private dialog: MatDialog,
     private profileService: ProfileService,
@@ -51,24 +51,28 @@ export class PaymentsComponent implements OnInit {
   }
 
   changeDefaultCard() {
-    this.isChangingDefault = false;
+    this.isProcessing = true;
+    const currentDefaultCard = this.userCards.find(x => x.isDefault);
 
-    // if (this.newDefaultCardUId !== null && this.newDefaultCardUId !== this.defaultCardUId()) {
-    //   this.profileService.updateDefaultCard(this.newDefaultCardUId)
-    //     .pipe(finalize(() => this.isProcessing = false))
-    //     .subscribe(data => {
-    //       if (data) {
-    //         this.userCards.forEach(x => {
-    //           if (x.uId !== data.uId) {
-    //             x.isDefault = false;
-    //           } else {
-    //             x.isDefault = true;
-    //           }
-    //         });
-    //       }
-    //     }, error => {
-    //       this.formErrorsService.updateFormValidity(error);
-    //     });
-    // }
+    if (this.newDefaultCardUId !== null && this.newDefaultCardUId !== currentDefaultCard.uId) {
+      this.profileService.updateDefaultCard(this.newDefaultCardUId)
+        .pipe(finalize(() => {
+          this.isProcessing = false;
+          this.isChangingDefault = false;
+        }))
+        .subscribe(data => {
+          if (data) {
+            this.userCards.forEach(x => {
+              if (x.uId !== this.newDefaultCardUId) {
+                x.isDefault = false;
+              } else {
+                x.isDefault = true;
+              }
+            });
+          }
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
   }
 }

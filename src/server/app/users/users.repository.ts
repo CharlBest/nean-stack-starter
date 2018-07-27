@@ -311,4 +311,19 @@ export class UsersRepository extends BaseRepository {
             return false;
         }
     }
+
+    public async updateDefaultCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).users.updateDefaultCard,
+            {
+                userId,
+                cardUId
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

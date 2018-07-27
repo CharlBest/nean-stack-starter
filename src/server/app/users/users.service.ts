@@ -332,7 +332,7 @@ export class UsersService extends BaseService {
         const stripeAccount = new stripe(environment.stripe.secretKey);
         const card = user.userCards.find(x => x.uId === uId);
 
-        if (card) {
+        if (card && (!card.isDefault || user.userCards.length === 1)) {
             try {
                 const deleteConfirmation = await stripeAccount.customers.deleteCard(user.stripeCustomerId, card.stripeCardId);
                 if (deleteConfirmation.deleted) {
@@ -352,7 +352,22 @@ export class UsersService extends BaseService {
     }
 
     public async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
-        return true;
+        const user = await this.getUserById(res);
+
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+        const card = user.userCards.find(x => x.uId === uId);
+
+        try {
+            const updatedCustomer = await stripeAccount.customers.update(user.stripeCustomerId,
+                {
+                    default_source: card.stripeCardId
+                });
+
+            return await this.usersRepository.updateDefaultCard(res, this.getUserId(res), card.uId);
+        } catch (error) {
+            ServerValidator.addGlobalError(res, 'error', error);
+            throw ValidationUtil.errorResponse(res);
+        }
     }
 
     public async userPaymentHistory(res: Response): Promise<boolean> {

@@ -32,16 +32,19 @@ export class PaymentDialogComponent implements OnInit {
 
     ngOnInit() {
         this.formOnInit();
+        this.getUserCards();
     }
 
     formOnInit() {
         this.formGroup = this.fb.group(BuildFormGroup.payment());
+    }
 
-        if (this.isUserLoggedIn) {
-            // this.paymentService.userCards().subscribe(data => {
-            //     this.userCards = data;
-            // });
-        }
+    getUserCards() {
+        this.paymentService.userCards().subscribe(data => {
+            this.userCards = data;
+            const firstCardUId = this.userCards && this.userCards.length > 0 ? this.userCards[0].uId : null;
+            this.formGroup.get('cardUId').setValue(firstCardUId);
+        });
     }
 
     async onSubmit() {
