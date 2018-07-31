@@ -43,16 +43,5 @@ export class UsersRoutes extends BaseRoute {
             (req, res, next) => this.usersController.deleteUser(req, res, next).catch(next));
         this.router.post(UserRoutes.completedTutorial.constructEndpointUrl(), Authentication.loginRequired,
             (req, res, next) => this.usersController.completedTutorial(req, res, next).catch(next));
-        this.router.post(UserRoutes.userPayment.constructEndpointUrl(), Authentication.loginRequired,
-            (req, res, next) => this.usersController.userPayment(req, res, next).catch(next));
-
-        this.router.get(UserRoutes.userCards.constructEndpointUrl(), Authentication.loginRequired,
-            (req, res, next) => this.usersController.userCards(req, res, next).catch(next));
-        this.router.post(UserRoutes.createCard.constructEndpointUrl(), Authentication.loginRequired,
-            (req, res, next) => this.usersController.createCard(req, res, next).catch(next));
-        this.router.delete(UserRoutes.deleteCard.constructEndpointUrl('/:uId'), Authentication.loginRequired,
-            (req, res, next) => this.usersController.deleteCard(req, res, next).catch(next));
-        this.router.post(UserRoutes.updateDefaultCard.constructEndpointUrl(), Authentication.loginRequired,
-            (req, res, next) => this.usersController.updateDefaultCard(req, res, next).catch(next));
     }
 }

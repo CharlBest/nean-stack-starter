@@ -77,7 +77,6 @@ export class Database {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
-                anonymousPayment: (await import(`../database/general/anonymousPayment.${Database.fileExtension}`)).data,
             },
             users: {
                 addForgottenPasswordCode: (await import(`../database/users/addForgottenPasswordCode.${Database.fileExtension}`)).data,
@@ -94,6 +93,9 @@ export class Database {
                 updatePassword: (await import(`../database/users/updatePassword.${Database.fileExtension}`)).data,
                 deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
+            },
+            payments: {
+                anonymousPayment: (await import(`../database/general/anonymousPayment.${Database.fileExtension}`)).data,
                 userPayment: (await import(`../database/users/userPayment.${Database.fileExtension}`)).data,
                 userCards: (await import(`../database/users/userCards.${Database.fileExtension}`)).data,
                 createCard: (await import(`../database/users/createCard.${Database.fileExtension}`)).data,
@@ -110,7 +112,6 @@ export interface DbQueries {
     general: {
         createNewsletterMember: string,
         deleteNewsletterMember: string,
-        anonymousPayment: string,
     };
 
     users: {
@@ -128,6 +129,10 @@ export interface DbQueries {
         updatePassword: string,
         deleteUser: string,
         completedTutorial: string,
+    };
+
+    payments: {
+        anonymousPayment: string,
         userPayment: string,
         userCards: string,
         createCard: string,

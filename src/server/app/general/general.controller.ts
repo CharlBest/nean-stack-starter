@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, CustomValidators, ServerValidator, trimString } from '../../../shared/validation/validators';
+import { BuildFormGroup, ServerValidator, trimString } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { GeneralService } from './general.service';
-import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
 
 export class GeneralController extends BaseController {
     private generalService: GeneralService;
@@ -64,22 +63,5 @@ export class GeneralController extends BaseController {
         await this.generalService.sendFeedback(res, viewModel.content);
 
         res.status(200).json();
-    }
-
-    public async anonymousPayment(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as AnonymousPaymentViewModel;
-
-        const formGroup = BuildFormGroup.payment(viewModel.amount);
-        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
-
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        res.status(200).json(
-            await this.generalService.anonymousPayment(res, viewModel.token, viewModel.amount)
-        );
     }
 }

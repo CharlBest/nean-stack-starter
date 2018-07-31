@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserCardModel } from '../../../shared/models/user/user-card.model';
 import { UserModel } from '../../../shared/models/user/user.model';
+import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
@@ -41,18 +42,18 @@ export class ProfileService {
   }
 
   public createCard(token: string): Observable<UserCardModel> {
-    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.createCard.constructRootUrl()}`, { token });
+    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard.constructRootUrl()}`, { token });
   }
 
   public deleteCard(uId: string): Observable<UserCardModel> {
-    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
+    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
   }
 
   public updateDefaultCard(uId: string): Observable<UserCardModel> {
-    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
+    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
   }
 
   public paymentHistory(): Observable<UserCardModel> {
-    return this.http.get<UserCardModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateDefaultCard.constructRootUrl()}`);
+    return this.http.get<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`);
   }
 }

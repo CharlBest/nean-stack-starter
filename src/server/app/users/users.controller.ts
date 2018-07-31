@@ -5,7 +5,6 @@ import { CreateUserViewModel } from '../../../shared/view-models/create-user/cre
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
-import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
@@ -189,72 +188,6 @@ export class UsersController extends BaseController {
 
         res.status(200).json(
             await this.usersService.completedTutorial(res, viewModel)
-        );
-    }
-
-    public async userPayment(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as UserPaymentViewModel;
-
-        const formGroup = BuildFormGroup.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
-        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
-
-        const hasToken = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
-        const hasCard = ServerValidator.addGlobalError(res, 'cardUId', CustomValidators.required(viewModel.cardUId));
-
-        if (hasErrors && (hasToken === null || hasCard === null)) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        res.status(200).json(
-            await this.usersService.userPayment(res, viewModel.cardUId, viewModel.token, viewModel.amount, viewModel.saveCard)
-        );
-    }
-
-    public async userCards(req: Request, res: Response, next: NextFunction) {
-        res.status(200).json(
-            await this.usersService.userCards(res)
-        );
-    }
-
-    public async createCard(req: Request, res: Response, next: NextFunction) {
-        const token = req.body.token;
-
-        const hasErrors = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(token));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        res.status(200).json(
-            await this.usersService.createCard(res, token)
-        );
-    }
-
-    public async deleteCard(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId;
-
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        res.status(200).json(
-            await this.usersService.deleteCard(res, uId)
-        );
-    }
-
-    public async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
-        const uId = req.body.uId;
-
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
-
-        if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        res.status(200).json(
-            await this.usersService.updateDefaultCard(res, uId)
         );
     }
 }
