@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 export class CreateCardDialogComponent {
 
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
-    isProcessing = false;
+    isProcessing = true;
 
     constructor(private profileService: ProfileService,
         private formErrorsService: FormErrorsService,

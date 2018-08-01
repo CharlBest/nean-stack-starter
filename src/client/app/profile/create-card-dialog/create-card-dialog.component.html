@@ -3,7 +3,7 @@
     <mat-dialog-content>
 
         <app-stripe-elements #stripeElements
-            (isDoneLoading)="isProcessing = !$event"></app-stripe-elements>
+            (isDoneRendering)="isProcessing = !$event"></app-stripe-elements>
 
     </mat-dialog-content>
     <mat-dialog-actions>

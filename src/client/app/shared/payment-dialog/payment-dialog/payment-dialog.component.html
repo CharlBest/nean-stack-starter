@@ -28,7 +28,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
 
             <app-stripe-elements [hidden]="formGroup.get('cardUId').value !== null && formGroup.get('cardUId').value !== 'new'"
                 #stripeElements
-                (isDoneLoading)="isProcessing = !$event"></app-stripe-elements>
+                (isDoneRendering)="isProcessing = !$event"></app-stripe-elements>
 
             <mat-form-field>
                 <input matInput

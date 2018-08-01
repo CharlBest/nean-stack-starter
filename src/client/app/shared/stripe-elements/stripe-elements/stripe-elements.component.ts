@@ -8,7 +8,7 @@ import { StripeElementsService } from '../stripe-elements.service';
 })
 export class StripeElementsComponent implements OnInit {
 
-    @Output() isDoneLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() isDoneRendering: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('cardNumber') cardNumber: ElementRef<HTMLDivElement>;
     @ViewChild('cardExpiry') cardExpiry: ElementRef<HTMLDivElement>;
@@ -75,9 +75,9 @@ export class StripeElementsComponent implements OnInit {
             if (this.elementsWrapper.readyCount < 2) {
                 this.elementsWrapper.readyCount++;
             } else {
-                this.elementsWrapper.isLoading = false;
+                this.elementsWrapper.isRendering = false;
                 this.elementsWrapper.cardNumber.element.focus();
-                this.isDoneLoading.emit(true);
+                this.isDoneRendering.emit(true);
             }
         });
         // change (empty, complete, error, value), ready, focus, blur, click
@@ -104,7 +104,7 @@ export class StripeElementsComponent implements OnInit {
 }
 
 class ElementsWrapper {
-    isLoading = true;
+    isRendering = true;
     readyCount = 0;
 
     cardNumber: ElementWrapper = {
