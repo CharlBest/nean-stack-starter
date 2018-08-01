@@ -95,12 +95,12 @@ export class Database {
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
             },
             payments: {
-                anonymousPayment: (await import(`../database/general/anonymousPayment.${Database.fileExtension}`)).data,
-                userPayment: (await import(`../database/users/userPayment.${Database.fileExtension}`)).data,
-                userCards: (await import(`../database/users/userCards.${Database.fileExtension}`)).data,
-                createCard: (await import(`../database/users/createCard.${Database.fileExtension}`)).data,
-                deleteCard: (await import(`../database/users/deleteCard.${Database.fileExtension}`)).data,
-                updateDefaultCard: (await import(`../database/users/updateDefaultCard.${Database.fileExtension}`)).data,
+                anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
+                userPayment: (await import(`../database/payments/userPayment.${Database.fileExtension}`)).data,
+                userCards: (await import(`../database/payments/userCards.${Database.fileExtension}`)).data,
+                createCard: (await import(`../database/payments/createCard.${Database.fileExtension}`)).data,
+                deleteCard: (await import(`../database/payments/deleteCard.${Database.fileExtension}`)).data,
+                updateDefaultCard: (await import(`../database/payments/updateDefaultCard.${Database.fileExtension}`)).data,
             },
         };
 
