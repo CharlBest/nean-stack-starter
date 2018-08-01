@@ -60,18 +60,37 @@ Make sure you have [Node.js](http://nodejs.org/), [Neo4j](https://neo4j.com/) an
 Neo4j note: create a local database with with username: neo4j and password: neo4j 
 
 ```sh
-$ git clone git@github.com:CharlBest/nean-stack-starter.git
-$ cd nean-stack-starter
-$ npm install
-$ npm run build
-$ npm start
+git clone git@github.com:CharlBest/nean-stack-starter.git
+cd nean-stack-starter
+npm install
+npm run build
+npm start
 ```
 
 Your app should now be running on [localhost:3000](http://localhost:3000/)
 
+## After clone steps
+1. Rename all occurances of the word "nean" to your chosen name
+2. Replace logo in client assets folder
+3. Create accounts for services
+   1. Firebase account (Images)
+   2. Google Analytics
+   3. Heroku (App Hosting)
+   4. Stripe (Payments)
+   5. GCP Neo4j Instance (Database Hosting)
+   6. Cloudflare (DNS)
+   7. Namecheap Domain
+   8. SendGrid (Emails)
+      1. Welcome
+      2. Forgot password
+      3. Feedback
+      4. Email verification link
+      5. Payment successful
+
+
 ## Development (watch/hot reload)
 ```sh
-$ npm run dev
+npm run dev
 ```
 
 Your app should now be running on [localhost:4200](http://localhost:4200/)
