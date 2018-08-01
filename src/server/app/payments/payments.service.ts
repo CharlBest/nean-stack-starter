@@ -120,7 +120,8 @@ export class PaymentsService extends BaseService {
                 });
 
                 const card = await this.paymentsRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).brand,
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
 
                 return {
                     card,
@@ -129,9 +130,9 @@ export class PaymentsService extends BaseService {
             } else {
                 const newCard = await stripeAccount.customers.createSource(user.stripeCustomerId, {
                     source: token
-                });
+                }) as stripe.ICard;
 
-                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), null, nodeUUId(), newCard.id, newCard.last4);
+                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), null, nodeUUId(), newCard.id, newCard.brand, newCard.last4);
 
                 return {
                     card,

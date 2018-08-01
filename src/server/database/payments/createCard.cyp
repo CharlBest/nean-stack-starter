@@ -5,7 +5,7 @@ FOREACH (o IN CASE WHEN {stripeCustomerId} IS NOT NULL THEN [1] ELSE [] END |
     SET user.stripeCustomerId = {stripeCustomerId}
 )
 
-CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, last4: {last4}, dateCreated: timestamp(), isDefault: false })
+CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, brand: {brand}, last4: {last4}, dateCreated: timestamp(), isDefault: false })
 
 WITH user, card
 
