@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { UserCardModel } from 'shared/models/user/user-card.model';
+import { CardModel } from '../../../../shared/models/payment/card.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateCardDialogComponent } from '../create-card-dialog/create-card-dialog.component';
 import { ProfileService } from '../profile.service';
@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class PaymentsComponent implements OnInit {
 
-  @Input() userCards: UserCardModel[] = [];
+  @Input() userCards: CardModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
   newDefaultCardUId: string = null;
@@ -27,7 +27,7 @@ export class PaymentsComponent implements OnInit {
 
   addCard() {
     const dialog = this.dialog.open(CreateCardDialogComponent);
-    dialog.afterClosed().subscribe((data: UserCardModel) => {
+    dialog.afterClosed().subscribe((data: CardModel) => {
       if (data) {
         this.userCards.push(data);
       }

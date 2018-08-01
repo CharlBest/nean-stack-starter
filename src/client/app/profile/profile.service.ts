@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserCardModel } from '../../../shared/models/user/user-card.model';
+import { CardModel } from '../../../shared/models/payment/card.model';
+import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
@@ -41,19 +42,19 @@ export class ProfileService {
     return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink.constructRootUrl()}`, null);
   }
 
-  public createCard(token: string): Observable<UserCardModel> {
-    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard.constructRootUrl()}`, { token });
+  public createCard(token: string): Observable<CardModel> {
+    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard.constructRootUrl()}`, { token });
   }
 
-  public deleteCard(uId: string): Observable<UserCardModel> {
-    return this.http.delete<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
+  public deleteCard(uId: string): Observable<CardModel> {
+    return this.http.delete<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
   }
 
-  public updateDefaultCard(uId: string): Observable<UserCardModel> {
-    return this.http.post<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
+  public updateDefaultCard(uId: string): Observable<CardModel> {
+    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
   }
 
-  public paymentHistory(): Observable<UserCardModel> {
-    return this.http.get<UserCardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`);
+  public paymentHistory(): Observable<PaymentModel[]> {
+    return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory.constructRootUrl()}`);
   }
 }

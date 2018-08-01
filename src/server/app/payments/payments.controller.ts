@@ -96,4 +96,10 @@ export class PaymentsController extends BaseController {
             await this.paymentsService.updateDefaultCard(res, uId)
         );
     }
+
+    public async paymentHistory(req: Request, res: Response, next: NextFunction) {
+        res.status(200).json(
+            await this.paymentsService.paymentHistory(res)
+        );
+    }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserCardModel } from '../../../../shared/models/user/user-card.model';
+import { CardModel } from '../../../../shared/models/payment/card.model';
 import { PaymentRoutes } from '../../../../shared/routes/payment.routes';
 import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../../shared/view-models/payment/user-payment.view-model';
@@ -18,8 +18,8 @@ export class PaymentService {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.anonymousPayment.constructRootUrl()}`, viewModel);
     }
 
-    public userCards(): Observable<UserCardModel[]> {
-        return this.http.get<UserCardModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.userCards.constructRootUrl()}`);
+    public userCards(): Observable<CardModel[]> {
+        return this.http.get<CardModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.userCards.constructRootUrl()}`);
     }
 
     public userPayment(viewModel: UserPaymentViewModel): Observable<boolean> {

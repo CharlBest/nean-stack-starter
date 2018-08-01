@@ -1,5 +1,6 @@
 import { Response } from 'express';
-import { UserCardModel } from '../../../shared/models/user/user-card.model';
+import { CardModel } from '../../../shared/models/payment/card.model';
+import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { Database, DbQueries } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
@@ -46,14 +47,14 @@ export class PaymentsRepository extends BaseRepository {
         }
     }
 
-    public async userCards(res: Response, userId: number): Promise<UserCardModel[]> {
+    public async userCards(res: Response, userId: number): Promise<CardModel[]> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.userCards,
             {
                 userId
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as UserCardModel[];
+        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as CardModel[];
 
         if (model !== null && model.length > 0) {
             return model;
@@ -62,7 +63,7 @@ export class PaymentsRepository extends BaseRepository {
         }
     }
 
-    public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, stripeFingerprint: string, brand: string, last4: string): Promise<UserCardModel> {
+    public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, stripeFingerprint: string, brand: string, last4: string): Promise<CardModel> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.createCard,
             {
                 userId,
@@ -75,7 +76,7 @@ export class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as UserCardModel[];
+        const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as CardModel[];
 
         if (model !== null && model.length > 0) {
             return model[0];
@@ -111,6 +112,22 @@ export class PaymentsRepository extends BaseRepository {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public async paymentHistory(res: Response, userId: number): Promise<PaymentModel[]> {
+        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.paymentHistory,
+            {
+                userId
+            }
+        );
+
+        const model = result.records.map(x => Database.createNodeObject(x.get('payments'))) as PaymentModel[];
+
+        if (model !== null && model.length > 0) {
+            return model;
+        } else {
+            return null;
         }
     }
 }

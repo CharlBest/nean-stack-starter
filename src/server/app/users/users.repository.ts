@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { UserCardModel } from '../../../shared/models/user/user-card.model';
+import { CardModel } from '../../../shared/models/payment/card.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -98,7 +98,7 @@ export class UsersRepository extends BaseRepository {
         const model = result.records.map(x => {
             let localModel = new UserModel();
             localModel = Database.createNodeObject(x.get('user')) as UserModel;
-            localModel.userCards = Database.createNodeObjectArray(x.get('cards')) as UserCardModel[];
+            localModel.userCards = Database.createNodeObjectArray(x.get('cards')) as CardModel[];
             return localModel;
         });
 

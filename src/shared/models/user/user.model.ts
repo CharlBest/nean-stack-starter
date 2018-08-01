@@ -1,4 +1,4 @@
-﻿import { UserCardModel } from './user-card.model';
+﻿import { CardModel } from '../payment/card.model';
 import { UserLiteModel } from './user-lite.model';
 
 export class UserModel extends UserLiteModel {
@@ -11,7 +11,7 @@ export class UserModel extends UserLiteModel {
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: string[];
     stripeCustomerId: string;
-    userCards: UserCardModel[];
+    userCards: CardModel[];
 
     // TODO: user role/permission
 }

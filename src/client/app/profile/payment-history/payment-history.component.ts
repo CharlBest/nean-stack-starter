@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { PaymentModel } from '../../../../shared/models/payment/payment.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 
@@ -11,6 +12,7 @@ import { ProfileService } from '../profile.service';
 export class PaymentHistoryComponent implements OnInit {
 
   isProcessing = false;
+  paymentHistory: PaymentModel[];
 
   constructor(private profileService: ProfileService,
     private formErrorsService: FormErrorsService) { }
@@ -19,7 +21,7 @@ export class PaymentHistoryComponent implements OnInit {
     this.profileService.paymentHistory()
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-
+        this.paymentHistory = data;
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });

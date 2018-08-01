@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatSnackBarModule, MatTableModule, MatTooltipModule } from '@angular/material';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
@@ -31,7 +31,8 @@ const materialModules = [
   MatInputModule,
   MatListModule,
   MatChipsModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTableModule
 ];
 
 @NgModule({

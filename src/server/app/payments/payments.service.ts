@@ -1,7 +1,8 @@
 import { Response } from 'express';
 import * as stripe from 'stripe';
 import { v4 as nodeUUId } from 'uuid';
-import { UserCardModel } from '../../../shared/models/user/user-card.model';
+import { CardModel } from '../../../shared/models/payment/card.model';
+import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { ValidationUtil } from '../../core/utils/validation-util';
@@ -53,7 +54,7 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    private async createStripeCard(res: Response, user: UserLiteModel, token: string): Promise<{ card: UserCardModel, stripeCustomerId: string }> {
+    private async createStripeCard(res: Response, user: UserLiteModel, token: string): Promise<{ card: CardModel, stripeCustomerId: string }> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
         try {
@@ -167,11 +168,11 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    public async userCards(res: Response): Promise<UserCardModel[]> {
+    public async userCards(res: Response): Promise<CardModel[]> {
         return await this.paymentsRepository.userCards(res, this.getUserId(res));
     }
 
-    public async createCard(res: Response, token: string): Promise<UserCardModel> {
+    public async createCard(res: Response, token: string): Promise<CardModel> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         return (await this.createStripeCard(res, user, token)).card;
@@ -221,7 +222,7 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    public async userPaymentHistory(res: Response): Promise<boolean> {
-        return true;
+    public async paymentHistory(res: Response): Promise<PaymentModel[]> {
+        return await this.paymentsRepository.paymentHistory(res, this.getUserId(res));
     }
 }

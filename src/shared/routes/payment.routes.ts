@@ -10,4 +10,5 @@ export class PaymentRoutes {
     public static createCard = new BaseRoute(1, PaymentRoutes.rootRoute, 'createCard');
     public static deleteCard = new BaseRoute(1, PaymentRoutes.rootRoute, 'deleteCard');
     public static updateDefaultCard = new BaseRoute(1, PaymentRoutes.rootRoute, 'updateDefaultCard');
+    public static paymentHistory = new BaseRoute(1, PaymentRoutes.rootRoute, 'paymentHistory');
 }

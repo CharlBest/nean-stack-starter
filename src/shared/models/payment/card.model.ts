@@ -1,4 +1,4 @@
-export class UserCardModel {
+export class CardModel {
     uId: string;
     stripeCardId: string;
     stripeFingerprint: string;
