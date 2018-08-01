@@ -35,19 +35,21 @@ export class PaymentsComponent implements OnInit {
   }
 
   deleteCard(uId: string) {
-    this.profileService.deleteCard(uId)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          if (this.userCards === null || this.userCards === undefined) {
-            this.userCards = [];
-          }
+    if (confirm('Are you sure you want to delete this payment method?')) {
+      this.profileService.deleteCard(uId)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          if (data) {
+            if (this.userCards === null || this.userCards === undefined) {
+              this.userCards = [];
+            }
 
-          this.userCards = this.userCards.filter(x => x.uId !== uId);
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+            this.userCards = this.userCards.filter(x => x.uId !== uId);
+          }
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
   }
 
   changeDefaultCard() {
@@ -73,6 +75,9 @@ export class PaymentsComponent implements OnInit {
         }, error => {
           this.formErrorsService.updateFormValidity(error);
         });
+    } else {
+      this.isProcessing = false;
+      this.isChangingDefault = false;
     }
   }
 }

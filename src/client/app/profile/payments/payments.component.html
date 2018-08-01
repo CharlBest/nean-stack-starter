@@ -1,5 +1,5 @@
 <mat-card [hidden]="isProcessing">
-  <mat-card-title>Manage Payments</mat-card-title>
+  <mat-card-title>Payment Methods</mat-card-title>
   <mat-card-content>
 
     <mat-radio-group [(ngModel)]="newDefaultCardUId">
@@ -21,11 +21,12 @@
               <mat-icon>credit_card</mat-icon>
             </td>
             <td>**** {{card.last4}}</td>
-            <td>
+            <td *ngIf="!isChangingDefault">
               <button mat-icon-button
                 *ngIf="!card.isDefault || userCards.length === 1"
                 color="warn"
-                (click)="deleteCard(card.uId)">
+                (click)="deleteCard(card.uId)"
+                type="button">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -38,18 +39,25 @@
   <mat-card-actions>
     <button mat-raised-button
       *ngIf="!isChangingDefault"
-      (click)="addCard()">Add Card</button>
+      (click)="addCard()"
+      type="button">Add payment method</button>
     <button mat-raised-button
       *ngIf="!isChangingDefault && userCards?.length > 0"
-      (click)="isChangingDefault = true">Change default card</button>
+      (click)="isChangingDefault = true"
+      type="button">Change default method</button>
     <button mat-raised-button
       *ngIf="isChangingDefault && userCards?.length > 0"
-      (click)="changeDefaultCard()">Save default card</button>
+      (click)="changeDefaultCard()"
+      type="button">Save default method</button>
     <button mat-raised-button
       *ngIf="isChangingDefault && userCards?.length > 0"
-      (click)="this.isChangingDefault = false; newDefaultCardUId = null">Cancel</button>
+      (click)="this.isChangingDefault = false; newDefaultCardUId = null"
+      type="button">Cancel</button>
+    <br>
+    <br>
     <button mat-raised-button
-      routerLink="payment-history">Payment history</button>
+      routerLink="payment-history"
+      type="button">Payment history</button>
   </mat-card-actions>
 </mat-card>
 
