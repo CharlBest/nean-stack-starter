@@ -61,13 +61,14 @@ export class PaymentsRepository extends BaseRepository {
         }
     }
 
-    public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, brand: string, last4: string): Promise<UserCardModel> {
+    public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, stripeFingerprint: string, brand: string, last4: string): Promise<UserCardModel> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.createCard,
             {
                 userId,
                 stripeCustomerId,
                 uId,
                 stripeCardId,
+                stripeFingerprint,
                 brand,
                 last4,
             }

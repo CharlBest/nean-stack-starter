@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -11,7 +12,8 @@ export class AuthService implements CanActivate {
     private loggedInUserId = new BehaviorSubject<number>(this.getIdFromJWT());
     loggedInUserId$ = this.loggedInUserId.asObservable();
 
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+        private dialog: MatDialog) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.hasToken()) {
@@ -62,6 +64,7 @@ export class AuthService implements CanActivate {
         sessionStorage.clear();
         this.updateLoggedInUserId(null);
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
+        this.dialog.closeAll();
     }
 
     public hasToken(): boolean {

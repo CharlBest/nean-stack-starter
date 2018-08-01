@@ -41,6 +41,11 @@ export class ProfileComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.user = data;
+
+        // Default card first
+        if (this.user.userCards) {
+          this.user.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });

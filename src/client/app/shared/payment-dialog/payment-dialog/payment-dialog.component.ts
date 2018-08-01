@@ -42,6 +42,11 @@ export class PaymentDialogComponent implements OnInit {
     getUserCards() {
         this.paymentService.userCards().subscribe(data => {
             this.userCards = data;
+            // Default card first
+            if (this.userCards) {
+                this.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+            }
+
             const firstCardUId = this.userCards && this.userCards.length > 0 ? this.userCards[0].uId : null;
             this.formGroup.get('cardUId').setValue(firstCardUId);
         });
@@ -49,14 +54,20 @@ export class PaymentDialogComponent implements OnInit {
 
     async onSubmit() {
         this.isProcessing = true;
-        const token = await this.stripeElementsComponent.generateToken();
 
-        if (token) {
-            this.sendPaymentToServer(token.id)
+        if (this.formGroup.get('cardUId').value === null || this.formGroup.get('cardUId').value === 'new') {
+            const token = await this.stripeElementsComponent.generateToken();
+            if (token) {
+                this.sendPaymentToServer(token.id)
+            } else {
+                alert('Invalid card details');
+            }
+        } else {
+            this.sendPaymentToServer();
         }
     }
 
-    sendPaymentToServer(token: string) {
+    sendPaymentToServer(token: string = null) {
         if (this.isUserLoggedIn) {
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;

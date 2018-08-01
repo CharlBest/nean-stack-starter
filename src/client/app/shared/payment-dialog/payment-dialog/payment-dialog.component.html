@@ -44,7 +44,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-error>
             </mat-form-field>
 
-            <ng-container *ngIf="isUserLoggedIn">
+            <ng-container *ngIf="isUserLoggedIn && (formGroup.get('cardUId').value === null || formGroup.get('cardUId').value === 'new')">
                 <br>
 
                 <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
@@ -78,11 +78,17 @@ Zip: Any 5 degit number">info_outline</mat-icon>
     <br>
 </mat-dialog-content>
 
-<mat-dialog-content *ngIf="!isProcessing && paymentSuccess"
-    mat-dialog-close>
-    <div class="payment-successful-container">
-        <mat-icon>check_circle</mat-icon>
-        <br>
-        <p>Payment successful</p>
-    </div>
-</mat-dialog-content>
+<ng-container *ngIf="!isProcessing && paymentSuccess">
+    <mat-dialog-content>
+        <div class="payment-successful-container">
+            <mat-icon>check_circle</mat-icon>
+            <br>
+            <p>Payment successful</p>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button
+            type="button"
+            mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</ng-container>

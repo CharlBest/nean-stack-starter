@@ -30,7 +30,7 @@ export class PaymentsService extends BaseService {
         const metadata = {
             paymentUId
         };
-        const chargeCreationOptions = {
+        const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
             amount: amount * 100,
             currency: 'EUR',
             description: 'NEAN donation',
@@ -46,8 +46,8 @@ export class PaymentsService extends BaseService {
 
         try {
             return await stripeAccount.charges.create(chargeCreationOptions);
-        } catch {
-            ServerValidator.addGlobalError(res, 'error', true);
+        } catch (error) {
+            ServerValidator.addGlobalError(res, 'error', error);
             throw ValidationUtil.errorResponse(res);
         }
     }
@@ -71,8 +71,8 @@ export class PaymentsService extends BaseService {
                 });
 
                 const card = await this.paymentsRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).brand,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).fingerprint,
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand, (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
 
                 return {
                     card,
@@ -83,15 +83,27 @@ export class PaymentsService extends BaseService {
                     source: token
                 }) as stripe.ICard;
 
-                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), null, nodeUUId(), newCard.id, newCard.brand, newCard.last4);
+                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), user.stripeCustomerId,
+                    nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4);
 
                 return {
                     card,
-                    stripeCustomerId: null
+                    stripeCustomerId: user.stripeCustomerId
                 };
             }
         } catch (error) {
-            ServerValidator.addGlobalError(res, 'error', true);
+            ServerValidator.addGlobalError(res, 'error', 'Stripe failed to create card');
+            throw ValidationUtil.errorResponse(res);
+        }
+    }
+
+    private async getStripeCardDetails(res: Response, token: string): Promise<stripe.tokens.IToken> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+
+        try {
+            return await stripeAccount.tokens.retrieve(token);
+        } catch (error) {
+            ServerValidator.addGlobalError(res, 'error', error);
             throw ValidationUtil.errorResponse(res);
         }
     }
@@ -108,7 +120,7 @@ export class PaymentsService extends BaseService {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         if (user === null) {
-            ServerValidator.addGlobalError(res, 'error', true);
+            ServerValidator.addGlobalError(res, 'error', 'User not found');
             throw ValidationUtil.errorResponse(res);
         }
 
@@ -121,14 +133,23 @@ export class PaymentsService extends BaseService {
         } else {
             // New card
             if (saveCard) {
-                // Save card
-                const newCard = await this.createStripeCard(res, user, token);
+                const cardDetails = await this.getStripeCardDetails(res, token);
+                // TODO: check expire date
+                const existingCard = user.userCards.find(x => x.stripeFingerprint === cardDetails.card.fingerprint);
 
-                const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
+                if (existingCard) {
+                    const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
-                return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                } else {
+                    const newCard = await this.createStripeCard(res, user, token);
+
+                    const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
+
+                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                }
             } else {
-                const charge = await this.createCharge(res, token, amount, user.id);
+                const charge = await this.createCharge(res, token, amount, user.id); // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
 
                 return await this.paymentsRepository.userPayment(res, this.getUserId(res), null, charge.metadata.paymentUId, amount, charge.id, charge.created);
             }
@@ -157,15 +178,15 @@ export class PaymentsService extends BaseService {
                 if (deleteConfirmation.deleted) {
                     return await this.paymentsRepository.deleteCard(res, this.getUserId(res), card.uId);
                 } else {
-                    ServerValidator.addGlobalError(res, 'error', true);
+                    ServerValidator.addGlobalError(res, 'error', 'Stripe failed deleting card');
                     throw ValidationUtil.errorResponse(res);
                 }
             } catch {
-                ServerValidator.addGlobalError(res, 'error', true);
+                ServerValidator.addGlobalError(res, 'error', 'Stripe error while deleting card');
                 throw ValidationUtil.errorResponse(res);
             }
         } else {
-            ServerValidator.addGlobalError(res, 'error', true);
+            ServerValidator.addGlobalError(res, 'error', 'Cannot delete card');
             throw ValidationUtil.errorResponse(res);
         }
     }

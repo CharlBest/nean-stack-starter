@@ -5,7 +5,14 @@ FOREACH (o IN CASE WHEN {stripeCustomerId} IS NOT NULL THEN [1] ELSE [] END |
     SET user.stripeCustomerId = {stripeCustomerId}
 )
 
-CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, brand: {brand}, last4: {last4}, dateCreated: timestamp(), isDefault: false })
+WITH user
+
+OPTIONAL MATCH (card:Card { stripeFingerprint: {stripeFingerprint} })
+FOREACH (o IN CASE WHEN card IS NULL THEN [1] ELSE [] END |
+    CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, stripeFingerprint: {stripeFingerprint}, brand: {brand}, last4: {last4}, dateCreated: timestamp(), isDefault: false })
+)
+WITH user
+MATCH (card:Card { stripeFingerprint: {stripeFingerprint} })
 
 WITH user, card
 
