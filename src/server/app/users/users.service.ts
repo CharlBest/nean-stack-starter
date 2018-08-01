@@ -110,8 +110,9 @@ export class UsersService extends BaseService {
         const viewModel = new TokenViewModel();
         viewModel.userId = user.id;
         const tokenData = {
-            id: user.id,
-            username: user.username
+            i: user.id,
+            // u: user.username,
+            // r: 'role'
         };
 
         // TODO: TTL on token! '1h'
