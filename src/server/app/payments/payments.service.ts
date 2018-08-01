@@ -21,83 +21,34 @@ export class PaymentsService extends BaseService {
         this.usersRepository = new UsersRepository();
     }
 
-    public async anonymousPayment(res: Response, token: string, amount: number): Promise<boolean> {
+    // #region Private
+
+    private async createCharge(res: Response, source: string, amount: number, userId: number = null, customerId: string = null) {
         const stripeAccount = new stripe(environment.stripe.secretKey);
+
         const paymentUId = nodeUUId();
+        const metadata = {
+            paymentUId
+        };
+        const chargeCreationOptions = {
+            amount: amount * 100,
+            currency: 'EUR',
+            description: 'NEAN donation',
+            source: source,
+            metadata
+        };
+        if (userId !== null) {
+            chargeCreationOptions.metadata['userId'] = userId;
+        }
+        if (customerId !== null) {
+            chargeCreationOptions['customer'] = customerId;
+        }
 
         try {
-            const charge = await stripeAccount.charges.create({
-                amount: amount * 100,
-                currency: 'EUR',
-                description: 'NEAN donation',
-                source: token,
-                metadata: {
-                    paymentUId
-                },
-            });
-
-            return await this.paymentsRepository.anonymousPayment(res, paymentUId, charge.id, charge.created, token, amount);
+            return await stripeAccount.charges.create(chargeCreationOptions);
         } catch {
             ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
-        }
-    }
-
-    public async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
-        const stripeAccount = new stripe(environment.stripe.secretKey);
-
-        async function createCharge(source: string, userId: number, customerId: string = null) {
-            const paymentUId = nodeUUId();
-            const metadata = {
-                userId,
-                paymentUId
-            };
-            const chargeCreationOptions = {
-                amount: amount * 100,
-                currency: 'EUR',
-                description: 'NEAN donation',
-                source: source,
-                metadata
-            };
-            if (customerId !== null) {
-                chargeCreationOptions['customer'] = customerId;
-            }
-
-            try {
-                return await stripeAccount.charges.create(chargeCreationOptions);
-            } catch {
-                ServerValidator.addGlobalError(res, 'error', true);
-                throw ValidationUtil.errorResponse(res);
-            }
-        }
-
-        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
-
-        if (user === null) {
-            ServerValidator.addGlobalError(res, 'error', true);
-            throw ValidationUtil.errorResponse(res);
-        }
-
-        const selectedCard = user.userCards.find(x => x.uId === cardUId);
-        if (selectedCard) {
-            // Existing customer and card
-            const charge = await createCharge(selectedCard.stripeCardId, user.id, user.stripeCustomerId);
-
-            return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
-        } else {
-            // New card
-            if (saveCard) {
-                // Save card
-                const newCard = await this.createStripeCard(res, user, token);
-
-                const charge = await createCharge(newCard.card.stripeCardId, user.id, newCard.stripeCustomerId);
-
-                return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
-            } else {
-                const charge = await createCharge(token, user.id);
-
-                return await this.paymentsRepository.userPayment(res, this.getUserId(res), null, charge.metadata.paymentUId, amount, charge.id, charge.created);
-            }
         }
     }
 
@@ -142,6 +93,45 @@ export class PaymentsService extends BaseService {
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
+        }
+    }
+
+    // #endregion
+
+    public async anonymousPayment(res: Response, token: string, amount: number): Promise<boolean> {
+        const charge = await this.createCharge(res, token, amount);
+
+        return await this.paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount);
+    }
+
+    public async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
+        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+
+        if (user === null) {
+            ServerValidator.addGlobalError(res, 'error', true);
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        const selectedCard = user.userCards.find(x => x.uId === cardUId);
+        if (selectedCard) {
+            // Existing customer and card
+            const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
+
+            return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+        } else {
+            // New card
+            if (saveCard) {
+                // Save card
+                const newCard = await this.createStripeCard(res, user, token);
+
+                const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
+
+                return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+            } else {
+                const charge = await this.createCharge(res, token, amount, user.id);
+
+                return await this.paymentsRepository.userPayment(res, this.getUserId(res), null, charge.metadata.paymentUId, amount, charge.id, charge.created);
+            }
         }
     }
 
