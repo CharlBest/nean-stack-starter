@@ -16,14 +16,16 @@ export class Emailer {
                 name: Emailer.fromName
             },
             from: Emailer.fromEmail,
-            subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
-            // html: {{username}}
-            // url: /verify/{{emailVerifyCode}}
-            substitutions: {
-                username,
-                emailVerifyCode
-            }
+        };
+
+        // TODO: fix sendgrid bug with declaring substitution variables
+        // html: {{username}}
+        // url: /verify/{{emailVerifyCode}}
+        data['dynamic_template_data'] = {
+            subject: 'Welcome',
+            username,
+            emailVerifyCode,
         };
 
         Emailer.send(data);
@@ -36,13 +38,14 @@ export class Emailer {
                 name: Emailer.fromName
             },
             from: Emailer.fromEmail,
-            subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
-            // url: /forgot-password/reset?code={{forgotPasswordCode}}&email={{email}}
-            substitutions: {
-                email,
-                forgotPasswordCode
-            }
+        };
+
+        // url: /forgot-password/reset?code={{forgotPasswordCode}}&email={{email}}
+        data['dynamic_template_data'] = {
+            subject: 'Forgot Password',
+            email,
+            forgotPasswordCode,
         };
 
         Emailer.send(data);
@@ -55,13 +58,13 @@ export class Emailer {
                 name: Emailer.fromName
             },
             from: Emailer.fromEmail,
-            subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
+        };
 
-            // html: {{feedbackContent}}
-            substitutions: {
-                feedbackContent
-            }
+        // html: {{feedbackContent}}
+        data['dynamic_template_data'] = {
+            subject: 'Feedback',
+            feedbackContent,
         };
 
         Emailer.send(data);
@@ -74,12 +77,33 @@ export class Emailer {
                 name: Emailer.fromName
             },
             from: Emailer.fromEmail,
-            subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
-            // url: /verify/{{emailVerifyCode}}
-            substitutions: {
-                emailVerifyCode
-            }
+        };
+
+        // url: /verify/{{emailVerifyCode}}
+        data['dynamic_template_data'] = {
+            subject: 'Email verification',
+            emailVerifyCode,
+        };
+
+        Emailer.send(data);
+    }
+
+    static paymentSuccessfulEmail(email: string, amount: number) {
+        const data: MailData = {
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
+            templateId: environment.sendGrid.templates.paymentSuccessful,
+        };
+
+        // html: {{amount}}
+        // url: /verify/{{emailVerifyCode}}
+        data['dynamic_template_data'] = {
+            subject: 'Payment Successful',
+            amount,
         };
 
         Emailer.send(data);
@@ -96,6 +120,8 @@ export class Emailer {
 
         sendGridMail.send(data, null, (err, res) => {
             if (err) {
+                console.log(err);
+                throw err;
                 // TODO: save against profile that email failed to send (maybe)
             }
         });

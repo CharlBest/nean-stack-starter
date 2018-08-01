@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, CustomValidators, ServerValidator, trimString } from '../../../shared/validation/validators';
-import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
-import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
+import { BuildFormGroup, CustomValidators, ServerValidator } from '../../../shared/validation/validators';
+import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
+import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
-import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
 import { PaymentsService } from './payments.service';
-import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
 
 export class PaymentsController extends BaseController {
     private paymentsService: PaymentsService;
@@ -29,7 +27,7 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.anonymousPayment(res, viewModel.token, viewModel.amount)
+            await this.paymentsService.anonymousPayment(res, viewModel.token, viewModel.amount, viewModel.email)
         );
     }
 

@@ -85,6 +85,7 @@ export class PaymentDialogComponent implements OnInit {
         } else {
             const viewModel = new AnonymousPaymentViewModel();
             viewModel.token = token;
+            viewModel.email = this.formGroup.get('email').value;
             viewModel.amount = +this.formGroup.get('amount').value;
 
             this.paymentService.anonymousPayment(viewModel)

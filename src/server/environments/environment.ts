@@ -12,10 +12,11 @@ export const environment = {
     sendGrid: {
         apiKey: getEnvironmentVariable('SENDGRID_API_KEY', '***'),
         templates: {
-            welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
-            forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
-            feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
-            resendEmailVerificationLink: getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', '746786b0-9car-4c4c-a186-636d0ef62d1a')
+            welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', 'd-3238c5b0d7504323b0a693b4d1038d26'),
+            forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', 'd-0a568babd3ee406995b624ae971b442d'),
+            feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', 'd-59414b3bf0f34e3bbf005410d0587060'),
+            resendEmailVerificationLink: getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', 'd-aba9ca3bff4f4adbbdf7f255cf2dec6c'),
+            paymentSuccessful: getEnvironmentVariable('SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL', 'd-590247b465184d61a718a9948087986d'),
         }
     },
     authentication: {

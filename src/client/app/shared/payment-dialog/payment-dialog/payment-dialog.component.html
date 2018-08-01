@@ -44,6 +44,22 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-error>
             </mat-form-field>
 
+            <ng-container *ngIf="!isUserLoggedIn">
+                <br>
+
+                <mat-form-field>
+                    <input matInput
+                        formControlName="email"
+                        placeholder="Email"
+                        type="email"
+                        [required]="true"
+                        required>
+                    <mat-error>
+                        <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
+                    </mat-error>
+                </mat-form-field>
+            </ng-container>
+
             <ng-container *ngIf="isUserLoggedIn && (formGroup.get('cardUId').value === null || formGroup.get('cardUId').value === 'new')">
                 <br>
 

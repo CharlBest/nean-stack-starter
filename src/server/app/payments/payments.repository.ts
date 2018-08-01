@@ -9,13 +9,14 @@ export class PaymentsRepository extends BaseRepository {
         super();
     }
 
-    public async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, amount: number): Promise<boolean> {
+    public async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, amount: number, email: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.anonymousPayment,
             {
                 paymentUId,
                 chargeId,
                 chargeCreated,
-                amount
+                amount,
+                email
             }
         );
 
