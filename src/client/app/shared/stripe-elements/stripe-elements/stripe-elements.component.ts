@@ -15,6 +15,7 @@ export class StripeElementsComponent implements OnInit {
     @ViewChild('cardCvc') cardCvc: ElementRef<HTMLDivElement>;
 
     elementsWrapper = new ElementsWrapper();
+    cardBrandType = CardBrandType;
     error: string;
 
     constructor(private stripeElementsService: StripeElementsService) { }
@@ -87,6 +88,37 @@ export class StripeElementsComponent implements OnInit {
             } else {
                 elementWrapper.error = null;
             }
+
+            // Card brand
+            if (data && data.elementType === 'cardNumber' && data.brand) {
+                switch (data.brand) {
+                    case 'visa':
+                        elementWrapper.cardBrand = CardBrandType.Visa;
+                        break;
+                    case 'mastercard':
+                        elementWrapper.cardBrand = CardBrandType.MasterCard;
+                        break;
+                    case 'amex':
+                        elementWrapper.cardBrand = CardBrandType.AmericanExpress;
+                        break;
+                    case 'discover':
+                        elementWrapper.cardBrand = CardBrandType.Discover;
+                        break;
+                    case 'diners':
+                        elementWrapper.cardBrand = CardBrandType.DinnersClub;
+                        break;
+                    case 'jcb':
+                        elementWrapper.cardBrand = CardBrandType.JCB;
+                        break;
+                    case 'unionpay':
+                        elementWrapper.cardBrand = CardBrandType.UnionPay;
+                        break;
+
+                    default:
+                        elementWrapper.cardBrand = CardBrandType.Unknown;
+                        break;
+                }
+            }
         });
     }
 
@@ -108,7 +140,8 @@ class ElementsWrapper {
     readyCount = 0;
 
     cardNumber: ElementWrapper = {
-        type: 'cardNumber'
+        type: 'cardNumber',
+        cardBrand: CardBrandType.Unknown
     };
     cardExpiry: ElementWrapper = {
         type: 'cardExpiry'
@@ -120,6 +153,18 @@ class ElementsWrapper {
 
 interface ElementWrapper {
     type: 'cardNumber' | 'cardExpiry' | 'cardCvc';
+    cardBrand?: CardBrandType;
     element?: any; /*stripe.elements.Element*/
     error?: string;
+}
+
+enum CardBrandType {
+    Unknown = 1,
+    Visa = 2,
+    MasterCard = 3,
+    DinnersClub = 4,
+    Discover = 5,
+    AmericanExpress = 6,
+    JCB = 7,
+    UnionPay = 8,
 }

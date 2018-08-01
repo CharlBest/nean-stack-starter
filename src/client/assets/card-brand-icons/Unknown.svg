@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.43 78.39">
+    <defs>
+        <style>
+            .a{fill:#f9f9f9;}.b{fill:#e0e0e0;}.c{fill:#eba900;}.d{fill:#999;}.e{fill:none;stroke:#303030;stroke-miterlimit:10;stroke-width:0.53px;}
+        </style>
+    </defs>
+    <title>
+        Default Card
+    </title>
+    <rect width="125.43" height="78.39" class="a" rx="4.18" ry="4.18"/>
+    <rect width="21.16" height="8.28" x="13.74" y="49.92" class="b" rx="4.14" ry="4.14"/>
+    <rect width="21.16" height="8.28" x="39.34" y="49.92" class="b" rx="4.14" ry="4.14"/>
+    <rect width="21.16" height="8.28" x="64.94" y="49.92" class="b" rx="4.14" ry="4.14"/>
+    <rect width="21.16" height="8.28" x="90.54" y="49.92" class="b" rx="4.14" ry="4.14"/>
+    <rect width="46.76" height="3.07" x="64.94" y="65.56" class="b" rx="1.54" ry="1.54"/>
+    <rect width="19.26" height="18.01" x="9.93" y="12.59" class="c" rx="4.15" ry="4.15"/>
+    <rect width="35.45" height="11.96" x="77.4" y="12.59" class="d"/>
+    <polyline points="9.93 16.96 16.95 16.96 16.95 30.59" class="e"/>
+    <line x1="9.93" x2="16.95" y1="21.54" y2="21.54" class="e"/>
+    <line x1="9.93" x2="16.95" y1="25.92" y2="25.92" class="e"/>
+    <polyline points="29.2 26.22 22.18 26.22 22.18 12.59" class="e"/>
+    <line x1="29.2" x2="22.18" y1="21.64" y2="21.64" class="e"/>
+    <line x1="29.2" x2="22.18" y1="17.26" y2="17.26" class="e"/>
+</svg>

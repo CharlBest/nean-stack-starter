@@ -1,8 +1,15 @@
 <div [hidden]="elementsWrapper.isRendering">
     <div class="mat-form-field"
-        style="min-width: 154px;">
-        <div #cardNumber
-            class="element"></div>
+        style="min-width: 190px;">
+        <div class="element"
+            style="display: flex;">
+            <img *ngIf="elementsWrapper.cardNumber.cardBrand"
+                src="assets/card-brand-icons/{{cardBrandType[elementsWrapper.cardNumber.cardBrand]}}.svg"
+                style="max-height: 17px; margin-right: 8px;" />
+
+            <div #cardNumber
+                style="width: 100%;"></div>
+        </div>
         <div class="mat-error">{{elementsWrapper.cardNumber.error}}</div>
     </div>
     <br>
