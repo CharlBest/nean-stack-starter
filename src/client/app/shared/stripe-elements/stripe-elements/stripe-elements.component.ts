@@ -17,6 +17,7 @@ export class StripeElementsComponent implements OnInit {
     elementsWrapper = new ElementsWrapper();
     cardBrandType = CardBrandType;
     error: string;
+    isValid = false;
 
     constructor(private stripeElementsService: StripeElementsService) { }
 
@@ -83,6 +84,9 @@ export class StripeElementsComponent implements OnInit {
         });
         // change (empty, complete, error, value), ready, focus, blur, click
         elementWrapper.element.on('change', data => {
+            elementWrapper.valid = data && data.error === undefined && data.empty === false;
+            this.isValid = this.elementsWrapper.cardNumber.valid && this.elementsWrapper.cardExpiry.valid && this.elementsWrapper.cardCvc.valid;
+
             if (data && data.error && data.error.type === 'validation_error') {
                 elementWrapper.error = data.error.message;
             } else {
@@ -141,13 +145,16 @@ class ElementsWrapper {
 
     cardNumber: ElementWrapper = {
         type: 'cardNumber',
+        valid: false,
         cardBrand: CardBrandType.Unknown
     };
     cardExpiry: ElementWrapper = {
-        type: 'cardExpiry'
+        type: 'cardExpiry',
+        valid: false,
     };
     cardCvc: ElementWrapper = {
-        type: 'cardCvc'
+        type: 'cardCvc',
+        valid: false,
     };
 }
 
@@ -156,6 +163,7 @@ interface ElementWrapper {
     cardBrand?: CardBrandType;
     element?: any; /*stripe.elements.Element*/
     error?: string;
+    valid: boolean;
 }
 
 enum CardBrandType {
