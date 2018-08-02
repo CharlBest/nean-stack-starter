@@ -3,6 +3,7 @@
   <mat-card-content>
 
     <table mat-table
+      *ngIf="paymentHistory && paymentHistory.length > 0"
       [dataSource]="paymentHistory"
       style="width: 100%;">
 
@@ -33,7 +34,7 @@
         *matRowDef="let row; columns: ['amount', 'description', 'dateCreated'];"></tr>
     </table>
 
-    <p *ngIf="paymentHistory && paymentHistory.length > 0">No payment history available</p>
+    <p *ngIf="paymentHistory === null || paymentHistory === undefined || paymentHistory.length === 0">No payment history available</p>
 
   </mat-card-content>
 </mat-card>
