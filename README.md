@@ -78,6 +78,8 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
    3. Heroku (App Hosting)
    4. Stripe (Payments)
    5. GCP Neo4j Instance (Database Hosting)
+      1. Create VM instance in Compute Engine (f1-micro)
+      2. 
    6. Cloudflare (DNS)
    7. Namecheap Domain
    8. SendGrid (Emails)
