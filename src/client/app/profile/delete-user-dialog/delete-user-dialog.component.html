@@ -8,8 +8,8 @@
         <mat-form-field>
             <mat-label>email</mat-label>
             <input matInput
-                #emailInput
-                type="text"
+                #email
+                type="email"
                 required
                 [attr.autofocus]="bpService.isWeb || null">
         </mat-form-field>
@@ -18,7 +18,7 @@
         <button mat-raised-button
             color="warn"
             type="button"
-            (click)="delete(emailInput.value)">Delete</button>
+            (click)="delete(email.value)">Delete</button>
         <button mat-raised-button
             type="button"
             mat-dialog-close>Cancel</button>
