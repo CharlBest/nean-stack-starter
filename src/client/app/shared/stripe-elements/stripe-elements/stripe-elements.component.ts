@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { ThemeService } from '../../theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
 @Component({
@@ -19,7 +21,8 @@ export class StripeElementsComponent implements OnInit {
     error: string;
     isValid = false;
 
-    constructor(private stripeElementsService: StripeElementsService) { }
+    constructor(private stripeElementsService: StripeElementsService,
+        public themeService: ThemeService) { }
 
     ngOnInit() {
         if (this.stripeElementsService.stripeInstance) {
@@ -38,31 +41,37 @@ export class StripeElementsComponent implements OnInit {
         const elements = this.stripeElementsService.stripe.elements({
             locale: 'en',
             fonts: [
-                // TODO: This is not working
-                { src: 'assets/open-sans-v15-latin-regular.woff2' }
+                {
+                    src: environment.production ? `url("${environment.apiUrlEndpoint}/assets/open-sans-v15-latin-regular.woff2")` : '',
+                    family: 'Open Sans'
+                }
             ]
         });
 
         const elementStyles = {
             base: {
-                fontFamily: 'Open Sans',
-                fontSmoothing: 'antialiased',
+                color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255)' : 'rgba(0, 0, 0, 0.87)',
+                '::placeholder': {
+                    color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.54)',
+                }
             }
         };
 
         // Card number
         this.elementsWrapper.cardNumber.element = elements.create(this.elementsWrapper.cardNumber.type, {
-            placeholder: 'Card Number',
+            placeholder: 'Card Number *',
             style: elementStyles
         });
 
         // Card expiry
         this.elementsWrapper.cardExpiry.element = elements.create(this.elementsWrapper.cardExpiry.type, {
+            placeholder: 'MM / YY *',
             style: elementStyles
         });
 
         // Card CVC
         this.elementsWrapper.cardCvc.element = elements.create(this.elementsWrapper.cardCvc.type, {
+            placeholder: 'CVC *',
             style: elementStyles
         });
 

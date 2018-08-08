@@ -154,3 +154,8 @@ body {
 		color: #06c;
 	}
 }
+
+// Stripe element override if dark theme
+.dark-theme .stripe-element {
+	border-color: rgba(255, 255, 255, 0.7) !important;
+}

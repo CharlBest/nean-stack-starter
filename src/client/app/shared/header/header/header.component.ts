@@ -9,6 +9,7 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { AuthService } from '../../auth.service';
 import { BreakpointService } from '../../breakpoint.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
+import { ThemeService } from '../../theme.service';
 import { HeaderType } from "./header-type.enum";
 
 @Component({
@@ -26,8 +27,6 @@ export class HeaderComponent implements OnInit {
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
-  private isDarkTheme: boolean;
-  private isDarkThemeStorageKey = 'is_dark_theme';
   hasNavigatedHomeBecauseOfEmptyReferrer = false;
 
   constructor(private route: ActivatedRoute,
@@ -39,13 +38,12 @@ export class HeaderComponent implements OnInit {
     public snackBar: MatSnackBar,
     private paymentDialogService: PaymentDialogService,
     public bottomSheet: MatBottomSheet,
-    public bpService: BreakpointService) {
+    public bpService: BreakpointService,
+    public themeService: ThemeService) {
     this.checkHasVisited();
   }
 
   ngOnInit() {
-    this.themeOnInit();
-
     this.authService.loggedInUserId$
       .subscribe(id => {
         this.loggedInUserId = id;
@@ -123,30 +121,6 @@ export class HeaderComponent implements OnInit {
 
   openPaymentDialog() {
     this.paymentDialogService.open();
-  }
-
-  toggleTheme() {
-    const darkThemeClass = 'dark-theme';
-
-    this.isDarkTheme = !this.isDarkTheme;
-
-    if (this.isDarkTheme) {
-      document.querySelector('body').classList.add(darkThemeClass);
-    } else {
-      document.querySelector('body').classList.remove(darkThemeClass);
-    }
-
-    this.updateStoredTheme();
-  }
-
-  themeOnInit() {
-    this.isDarkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
-    this.isDarkTheme = !this.isDarkTheme;
-    this.toggleTheme();
-  }
-
-  updateStoredTheme() {
-    localStorage.setItem(this.isDarkThemeStorageKey, `${this.isDarkTheme}`);
   }
 
   openContextMenu() {

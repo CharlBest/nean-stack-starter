@@ -1,10 +1,9 @@
-.element {
+.stripe-element {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.42);
 	padding: 1em 0.5em 1em 0.5em;
 
 	&:hover,
 	&:focus {
 		border-color: rgba(0, 0, 0, 0.87);
-		border-width: 2px;
 	}
 }
