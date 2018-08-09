@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-// declare var Stripe: any;
+declare var Stripe: any;
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class StripeElementsService {
         this.initializeStripe();
     }
 
-    get stripe(): stripe.Stripe {
+    get stripe() {
         if (!this.stripeInstance) {
             this.stripeInstance = Stripe(environment.stripe.publishableKey);
         }
