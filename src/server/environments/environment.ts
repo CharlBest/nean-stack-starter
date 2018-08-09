@@ -1,5 +1,5 @@
 export const environment = {
-    production: getEnvironmentVariable('NODE_ENV', 'development'),
+    production: getEnvironmentVariable('NODE_ENV', 'development') === 'production',
     port: getEnvironmentVariable('PORT', 3000),
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
@@ -25,7 +25,7 @@ export const environment = {
     }
 };
 
-function getEnvironmentVariable(key: string, defaultValue: any) {
+function getEnvironmentVariable(key: string, defaultValue: any): string {
     const isProduction = process.env.NODE_ENV === 'production';
     if (!isProduction) {
         return defaultValue;
