@@ -80,4 +80,15 @@ export class PaymentsComponent implements OnInit {
       this.isChangingDefault = false;
     }
   }
+
+  hasCardExpired(card: CardModel) {
+    const expireDate = new Date();
+    expireDate.setUTCFullYear(card.expireYear, card.expireMonth - 1, 1);
+
+    if (expireDate <= new Date()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

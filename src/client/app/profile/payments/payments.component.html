@@ -21,6 +21,13 @@
               <mat-icon>credit_card</mat-icon>
             </td>
             <td>**** {{card.last4}}</td>
+            <td>
+              <button mat-button
+                *ngIf="hasCardExpired(card)"
+                color="warn">
+                EXPIRED
+              </button>
+            </td>
             <td *ngIf="!isChangingDefault">
               <button mat-icon-button
                 *ngIf="!card.isDefault || userCards.length === 1"

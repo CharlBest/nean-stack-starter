@@ -74,7 +74,8 @@ export class PaymentsService extends BaseService {
 
                 const card = await this.paymentsRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
                     (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).fingerprint,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand, (<stripe.cards.ICard>retrievedCustomer.default_source).last4);
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand, (<stripe.cards.ICard>retrievedCustomer.default_source).last4,
+                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_month, +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_year);
 
                 return {
                     card,
@@ -86,7 +87,7 @@ export class PaymentsService extends BaseService {
                 }) as stripe.ICard;
 
                 const card = await this.paymentsRepository.createCard(res, this.getUserId(res), user.stripeCustomerId,
-                    nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4);
+                    nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4, +newCard.exp_month, +newCard.exp_year);
 
                 return {
                     card,

@@ -9,7 +9,7 @@ WITH user
 
 OPTIONAL MATCH (card:Card { stripeFingerprint: {stripeFingerprint} })
 FOREACH (o IN CASE WHEN card IS NULL THEN [1] ELSE [] END |
-    CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, stripeFingerprint: {stripeFingerprint}, brand: {brand}, last4: {last4}, dateCreated: timestamp(), isDefault: false })
+    CREATE (card:Card { uId: {uId}, stripeCardId: {stripeCardId}, stripeFingerprint: {stripeFingerprint}, brand: {brand}, last4: {last4}, expireMonth: {expireMonth}, expireYear: {expireYear}, dateCreated: timestamp(), isDefault: false })
 )
 WITH user
 MATCH (card:Card { stripeFingerprint: {stripeFingerprint} })
