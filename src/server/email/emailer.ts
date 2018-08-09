@@ -118,12 +118,14 @@ export class Emailer {
             };
         }
 
-        sendGridMail.send(data, null, (err, res) => {
-            if (err) {
-                console.log(err);
-                throw err;
-                // TODO: save against profile that email failed to send (maybe)
-            }
-        });
+        if (environment.production) {
+            sendGridMail.send(data, null, (err, res) => {
+                if (err) {
+                    console.log(err);
+                    throw err;
+                    // TODO: save against profile that email failed to send (maybe)
+                }
+            });
+        }
     }
 }
