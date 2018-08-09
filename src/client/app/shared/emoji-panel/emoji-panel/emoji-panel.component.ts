@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild 
 import { MatBottomSheet, MatMenuTrigger } from '@angular/material';
 import * as emojione from 'emojione';
 import { BreakpointService } from '../../breakpoint.service';
+import { PreventBackNavigationService } from '../../prevent-back-navigation.service';
 
 declare function require(moduleName: string): any;
 
@@ -29,7 +30,8 @@ export class EmojiPanelComponent implements OnInit {
   ];
 
   constructor(public bottomSheet: MatBottomSheet,
-    public bpService: BreakpointService) { }
+    public bpService: BreakpointService,
+    private preventBackNavigationService: PreventBackNavigationService) { }
 
   ngOnInit() {
     (<any>emojione).sprites = true;
@@ -60,12 +62,14 @@ export class EmojiPanelComponent implements OnInit {
     if (this.bpService.isWeb) {
       this.isPanelForWebOpen = true;
     } else {
+      this.preventBackNavigationService.beforeOpen();
+
       this.bottomSheet.open(this.bottomSheetRef, {
         backdropClass: 'cdk-overlay-transparent-backdrop',
         panelClass: 'emoji-panel',
         autoFocus: false,
         closeOnNavigation: true
-      });
+      }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }
   }
 

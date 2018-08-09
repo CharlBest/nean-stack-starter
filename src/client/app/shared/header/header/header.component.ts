@@ -9,6 +9,7 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { AuthService } from '../../auth.service';
 import { BreakpointService } from '../../breakpoint.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
+import { PreventBackNavigationService } from '../../prevent-back-navigation.service';
 import { ThemeService } from '../../theme.service';
 import { HeaderType } from "./header-type.enum";
 
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnInit {
     private paymentDialogService: PaymentDialogService,
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
-    public themeService: ThemeService) {
+    public themeService: ThemeService,
+    private preventBackNavigationService: PreventBackNavigationService) {
     this.checkHasVisited();
   }
 
@@ -128,10 +130,13 @@ export class HeaderComponent implements OnInit {
       this.contextMenuTrigger.openMenu();
     } else {
       this.contextMenuTrigger.closeMenu();
+
+      this.preventBackNavigationService.beforeOpen();
+
       this.bottomSheet.open(this.bottomSheetContextMenu, {
         autoFocus: false,
         closeOnNavigation: true
-      });
+      }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }
   }
 }
