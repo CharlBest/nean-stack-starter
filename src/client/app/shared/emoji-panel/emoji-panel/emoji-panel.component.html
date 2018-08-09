@@ -52,7 +52,8 @@
       let-emoji="emoji">
       <span *ngFor="let emojiDiversity of emoji.value.diversities"
         class="emojione emojione-32-diversity _{{emojiDiversity}}"
-        (click)="onClick(file[emojiDiversity].shortname)"></span>
+        (click)="onClick(file[emojiDiversity].shortname)"
+        style="cursor: pointer;"></span>
     </ng-template>
   </mat-menu>
 

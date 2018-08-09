@@ -3,7 +3,8 @@
   <mat-card-content>
 
     <app-html-editor #htmlEditor
-      [htmlContent]="content"></app-html-editor>
+      [htmlContent]="content"
+      [containsEmoji]="true"></app-html-editor>
 
     <app-emoji-panel (inserted)="emojiInserted($event)"></app-emoji-panel>
   </mat-card-content>

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import * as emojione from 'emojione';
 import Quill from 'quill';
 import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../firebase-storage.service';
@@ -14,6 +15,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Input() htmlContent: string;
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
+    @Input() containsEmoji = false;
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
@@ -58,7 +60,11 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         if (this.htmlContent !== null && this.htmlContent !== undefined) {
             // Add existing content to editor
-            this.editor.pasteHTML(this.htmlContent);
+            if (this.containsEmoji) {
+                this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(this.htmlContent));
+            } else {
+                this.editor.clipboard.dangerouslyPasteHTML(this.htmlContent);
+            }
 
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
             if (document.activeElement) {
@@ -113,5 +119,18 @@ export class HTMLEditorComponent implements AfterViewInit {
             this.editor.insertText(range.index, text);
             this.editor.blur();
         }
+
+        if (this.containsEmoji) {
+            const output = this.renderHTMLWithEmoji(this.editorDomElement.nativeElement.innerHTML);
+            this.editor.clipboard.dangerouslyPasteHTML(output);
+            this.editor.setSelection(range.index, 0);
+        }
+    }
+
+    renderHTMLWithEmoji(html: string) {
+        // (<any>emojione).ascii = true;
+        (<any>emojione).sprites = true;
+        (<any>emojione).imagePathSVGSprites = './assets/emoji/';
+        return emojione.shortnameToImage(html);
     }
 }
