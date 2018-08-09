@@ -97,4 +97,24 @@ export class PaymentDialogComponent implements OnInit {
                 });
         }
     }
+
+    isFormValid(): boolean {
+        // Form validity (Amount is required)
+        if (!this.formGroup.valid) {
+            return false;
+        }
+
+        // Email is requried if anonymous payment
+        if (!this.isUserLoggedIn && (this.formGroup.get('email').value === null || this.formGroup.get('email').value === '')) {
+            return false;
+        }
+
+        // Stripe element valid when adding new card by user
+        if (this.isUserLoggedIn && !this.stripeElementsComponent.isValid &&
+            (this.formGroup.get('cardUId').value === null || this.formGroup.get('cardUId').value === 'new')) {
+            return false;
+        }
+
+        return true;
+    }
 }
