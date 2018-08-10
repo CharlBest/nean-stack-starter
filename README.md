@@ -69,7 +69,7 @@ npm start
 
 Your app should now be running on [localhost:3000](http://localhost:3000/)
 
-## After clone steps
+## Make it your own (after clone)
 1. Rename all occurances of the word "nean" to your chosen name
 2. Replace logo in client assets folder
 3. Create accounts for services
