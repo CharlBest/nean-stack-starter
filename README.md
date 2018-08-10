@@ -32,6 +32,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Notifications area/panel
 * Stripe Payment integration
 * Custom Material theme + font (Night Mode)
+* Progressive Web App (PWA)
 
 Client pages
 
@@ -47,7 +48,6 @@ Client pages
 * terms and conditions, privacy policy and help
 
 ## In-progress or coming soon
-* Progressive Web App (PWA)
 * Angular localization
 * GraphQL integration (Apollo)
 * Cordova IOS build output
