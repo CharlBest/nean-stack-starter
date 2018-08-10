@@ -14,6 +14,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   manualWebSocketBroadcast() {
-    this.webSocketService.messages.next('hallo from somewhere');
+    this.webSocketService.messages.next('hello from somewhere');
   }
 }

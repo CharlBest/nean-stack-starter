@@ -26,14 +26,14 @@ export class NotificationsComponent implements OnInit {
         this.messages.push(data);
 
         // Show notification popup
-        this.snackBar.open(data, 'Say hallo back', {
+        this.snackBar.open(data, 'Say hello back', {
           duration: 5000,
           verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
           horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
         }).onAction()
           .subscribe(() => {
             // Send message back
-            this.webSocketService.messages.next('Hallo to you too');
+            this.webSocketService.messages.next('Hello to you too');
           });
       });
 
