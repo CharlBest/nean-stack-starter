@@ -24,7 +24,7 @@ export class UpdateBioComponent {
     public snackBar: MatSnackBar) { }
 
   emojiInserted(shortname: string) {
-    this.htmlEditor.insertText(shortname);
+    this.htmlEditor.insertText(shortname, true);
   }
 
   onSubmit() {

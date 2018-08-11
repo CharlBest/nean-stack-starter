@@ -105,25 +105,32 @@ export class HTMLEditorComponent implements AfterViewInit {
         this.imageUploadProgressPercentage = this.firebaseStorageService.progress$;
     }
 
-    insertEmbedImage(url: string) {
+    insertEmbedImage(url: string, blurAfterInsert: boolean = false) {
         const range = this.editor.getSelection();
         this.editor.insertEmbed(range.index, 'image', url);
+
+        if (blurAfterInsert) {
+            this.editor.blur();
+        }
     }
 
-    insertText(text: string) {
+    insertText(text: string, blurAfterInsert: boolean = false) {
         let range = this.editor.getSelection();
         if (range) {
             this.editor.insertText(range.index, text);
         } else {
             range = this.editor.getSelection(true);
             this.editor.insertText(range.index, text);
-            this.editor.blur();
         }
 
         if (this.containsEmoji) {
             const output = this.renderHTMLWithEmoji(this.editorDomElement.nativeElement.innerHTML);
             this.editor.clipboard.dangerouslyPasteHTML(output);
             this.editor.setSelection(range.index, 0);
+        }
+
+        if (blurAfterInsert) {
+            this.editor.blur();
         }
     }
 
