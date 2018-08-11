@@ -24,7 +24,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Client share actions
 * Lazy load routes with preloaded parts 
 * Image uploader to Firebase storage
-* Tutorial/on-boading framework
+* Tutorial/on-boading/tour framework
 * Emoji picker (Material CDK)
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
