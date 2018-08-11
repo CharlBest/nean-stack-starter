@@ -17,16 +17,16 @@ export class TutorialComponent implements OnInit {
     // Tutorial 1
     new Tutorial(TutorialType.ContextMenu, 'Click here for more info', TutorialType.SignUp, true),
     new Tutorial(TutorialType.SignUp, 'Sign up', TutorialType.ForgotPassword),
-    new Tutorial(TutorialType.ForgotPassword, 'Forgot password feature', TutorialType.Newsletter),
-    new Tutorial(TutorialType.Newsletter, 'Anonymous user newsletter signup', TutorialType.Feedback),
+    new Tutorial(TutorialType.ForgotPassword, 'Forgot password section', TutorialType.Newsletter),
+    new Tutorial(TutorialType.Newsletter, 'Newsletter signup', TutorialType.Feedback),
     new Tutorial(TutorialType.Feedback, 'Email team some feedback', TutorialType.None, undefined, true),
 
     // Tutorial 2
     new Tutorial(TutorialType.ProfileShare, 'Share button to share info', TutorialType.ProfileReport, true),
     new Tutorial(TutorialType.ProfileReport, 'Report button to report a user', TutorialType.DeleteUser),
-    new Tutorial(TutorialType.DeleteUser, 'Delete user option', TutorialType.AvatarUpload),
-    new Tutorial(TutorialType.AvatarUpload, 'Upload media (Firebase) with preloader', TutorialType.UpdatePassword),
-    new Tutorial(TutorialType.UpdatePassword, 'Update password feature', TutorialType.None, undefined, true)
+    new Tutorial(TutorialType.DeleteUser, 'Delete user button', TutorialType.AvatarUpload),
+    new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword),
+    new Tutorial(TutorialType.UpdatePassword, 'Update password section', TutorialType.None, undefined, true)
   ];
 
   private loggedInUserId: number = this.authService.getLoggedInUserId();
