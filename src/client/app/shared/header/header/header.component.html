@@ -144,8 +144,15 @@
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item (click)="themeService.toggleTheme()">
-      <mat-icon mat-list-icon>brightness_2</mat-icon>
-      <span mat-line>Night mode</span>
+      <mat-icon mat-list-icon
+        *ngIf="!themeService.isDarkTheme">brightness_2</mat-icon>
+      <span mat-line
+        *ngIf="!themeService.isDarkTheme">Night mode</span>
+
+      <mat-icon mat-list-icon
+        *ngIf="themeService.isDarkTheme">brightness_5</mat-icon>
+      <span mat-line
+        *ngIf="themeService.isDarkTheme">Day mode</span>
     </mat-list-item>
 
   </mat-nav-list>
