@@ -19,10 +19,17 @@
         *ngIf="!tut.isFirst"
         class="previous-button">Previous</button>
       <button mat-raised-button
-        type="button"
-        (click)="goToTutorial(tut)">
-        <span *ngIf="!tut.isLast">Next</span>
-        <span *ngIf="tut.isLast">Done</span>
+        *ngIf="!tut.isLast"
+        (click)="goToTutorial(tut)"
+        type="button">
+        Next
+      </button>
+      <button mat-raised-button
+        *ngIf="tut.isLast"
+        (click)="goToTutorial(tut)"
+        color="primary"
+        type="button">
+        Done
       </button>
 
       <br>
@@ -31,7 +38,8 @@
       <button *ngIf="!tut.isLast"
         mat-raised-button
         type="button"
-        (click)="skip(tut)">Skip</button>
+        color="warn"
+        (click)="skip(tut)">Skip tour</button>
     </div>
   </div>
 </div>
