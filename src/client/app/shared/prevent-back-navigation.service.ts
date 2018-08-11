@@ -15,6 +15,5 @@ export class PreventBackNavigationService {
 
     afterClosed() {
         window.onpopstate = () => { };
-        this.location.back();
     }
 }
