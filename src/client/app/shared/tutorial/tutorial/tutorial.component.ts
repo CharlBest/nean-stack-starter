@@ -15,18 +15,18 @@ export class TutorialComponent implements OnInit {
 
   tuts = [
     // Tutorial 1
-    new Tutorial(TutorialType.ContextMenu, 'Click here for more info', TutorialType.SignUp, true),
-    new Tutorial(TutorialType.SignUp, 'Sign up', TutorialType.ForgotPassword),
-    new Tutorial(TutorialType.ForgotPassword, 'Forgot password section', TutorialType.Newsletter),
-    new Tutorial(TutorialType.Newsletter, 'Newsletter signup', TutorialType.Feedback),
-    new Tutorial(TutorialType.Feedback, 'Email team some feedback', TutorialType.None, undefined, true),
+    new Tutorial(TutorialType.ContextMenu, 'Click here for more options', TutorialType.SignUp, true),
+    new Tutorial(TutorialType.SignUp, 'Sign up here!', TutorialType.ForgotPassword),
+    new Tutorial(TutorialType.ForgotPassword, 'Forgot your password?', TutorialType.Newsletter),
+    new Tutorial(TutorialType.Newsletter, 'Newsletter sign up to stay up to date', TutorialType.Feedback),
+    new Tutorial(TutorialType.Feedback, 'Email the team some feedback', TutorialType.None, undefined, true),
 
     // Tutorial 2
-    new Tutorial(TutorialType.ProfileShare, 'Share button to share info', TutorialType.ProfileReport, true),
-    new Tutorial(TutorialType.ProfileReport, 'Report button to report a user', TutorialType.DeleteUser),
-    new Tutorial(TutorialType.DeleteUser, 'Delete user button', TutorialType.AvatarUpload),
+    new Tutorial(TutorialType.ProfileShare, 'Share your profile', TutorialType.ProfileReport, true),
+    new Tutorial(TutorialType.ProfileReport, 'Report the user', TutorialType.DeleteUser),
+    new Tutorial(TutorialType.DeleteUser, 'Delete your account', TutorialType.AvatarUpload),
     new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword),
-    new Tutorial(TutorialType.UpdatePassword, 'Update password section', TutorialType.None, undefined, true)
+    new Tutorial(TutorialType.UpdatePassword, 'Update your password', TutorialType.None, undefined, true)
   ];
 
   private loggedInUserId: number = this.authService.getLoggedInUserId();
