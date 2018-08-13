@@ -51,11 +51,11 @@ export class CreateUserComponent implements OnInit {
     viewModel.password = this.formGroup.get('password').value;
 
     this.createUserService.createUser(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.setUserToken();
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.isProcessing = false;
       });
   }
 
