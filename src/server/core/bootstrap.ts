@@ -4,6 +4,7 @@ import * as http from 'http';
 import * as path from 'path';
 import * as webSocket from 'ws';
 import { GeneralRoutes } from '../app/general/general.routes';
+import { ItemsRoutes } from '../app/items/items.routes';
 import { PaymentsRoutes } from '../app/payments/payments.routes';
 import { UsersRoutes } from '../app/users/users.routes';
 import { environment } from '../environments/environment';
@@ -42,10 +43,12 @@ export class Bootstrap {
         const generalRouter = new GeneralRoutes().router;
         const usersRouter = new UsersRoutes().router;
         const paymentsRouter = new PaymentsRoutes().router;
+        const itemsRouter = new ItemsRoutes().router;
 
         app.use('/api', generalRouter);
         app.use('/api', usersRouter);
         app.use('/api', paymentsRouter);
+        app.use('/api', itemsRouter);
 
         // Not sure if this is the best way of doing it
         // This is to serve web app sub routes

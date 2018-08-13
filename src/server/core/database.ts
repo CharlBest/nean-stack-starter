@@ -103,6 +103,13 @@ export class Database {
                 updateDefaultCard: (await import(`../database/payments/updateDefaultCard.${Database.fileExtension}`)).data,
                 paymentHistory: (await import(`../database/payments/paymentHistory.${Database.fileExtension}`)).data,
             },
+            items: {
+                create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
+                update: (await import(`../database/items/update.${Database.fileExtension}`)).data,
+                get: (await import(`../database/items/get.${Database.fileExtension}`)).data,
+                getAll: (await import(`../database/items/getAll.${Database.fileExtension}`)).data,
+                delete: (await import(`../database/items/delete.${Database.fileExtension}`)).data,
+            },
         };
 
         return dbQueries;
@@ -140,5 +147,13 @@ export interface DbQueries {
         deleteCard: string,
         updateDefaultCard: string,
         paymentHistory: string,
+    };
+
+    items: {
+        create: string,
+        update: string,
+        get: string,
+        getAll: string,
+        delete: string,
     };
 }
