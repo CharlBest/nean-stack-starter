@@ -4,7 +4,7 @@ export class GeneralRoutes {
 
     private static rootRoute = 'general';
 
-    public static createNewsletterMember = new BaseRoute(1, GeneralRoutes.rootRoute, 'createNewsletterMember');
-    public static deleteNewsletterMember = new BaseRoute(1, GeneralRoutes.rootRoute, 'deleteNewsletterMember');
-    public static sendFeedback = new BaseRoute(1, GeneralRoutes.rootRoute, 'sendFeedback');
+    public static createNewsletterMember = () => new BaseRoute(GeneralRoutes.rootRoute, 'createNewsletterMember');
+    public static deleteNewsletterMember = () => new BaseRoute(GeneralRoutes.rootRoute, 'deleteNewsletterMember');
+    public static sendFeedback = () => new BaseRoute(GeneralRoutes.rootRoute, 'sendFeedback');
 }

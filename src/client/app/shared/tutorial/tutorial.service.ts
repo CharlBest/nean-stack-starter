@@ -71,6 +71,6 @@ export class TutorialService {
     }
 
     public completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial.constructRootUrl()}`, viewModel);
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel);
     }
 }

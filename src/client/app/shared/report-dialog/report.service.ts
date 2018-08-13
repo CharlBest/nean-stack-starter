@@ -12,6 +12,6 @@ export class ReportService {
     constructor(private http: HttpClient) { }
 
     public sendReport(viewModel: ReportUserViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report.constructRootUrl()}`, viewModel);
+        return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report().client()}`, viewModel);
     }
 }

@@ -14,6 +14,6 @@ export class CreateUserService {
     constructor(private http: HttpClient) { }
 
     public createUser(viewModel: CreateUserViewModel): Observable<UserModel> {
-        return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.createUser.constructRootUrl()}`, viewModel);
+        return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.createUser().client()}`, viewModel);
     }
 }

@@ -19,42 +19,42 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   public getUser(): Observable<UserModel> {
-    return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser.constructRootUrl()}`);
+    return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser().client()}`);
   }
 
   public updateAvatar(viewModel: UpdateAvatarViewModel): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar.constructRootUrl()}`, viewModel);
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar().client()}`, viewModel);
   }
 
   public updateBio(viewModel: UpdateBioViewModel): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio.constructRootUrl()}`, viewModel);
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio().client()}`, viewModel);
   }
 
   public updatePassword(viewModel: UpdatePasswordViewModel): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword.constructRootUrl()}`, viewModel);
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword().client()}`, viewModel);
   }
 
   public deleteUser(): Observable<UserModel> {
-    return this.http.delete<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser.constructRootUrl()}`);
+    return this.http.delete<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser().client()}`);
   }
 
   public resendEmailVerificationLink(): Observable<UserModel> {
-    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink.constructRootUrl()}`, null);
+    return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null);
   }
 
   public createCard(token: string): Observable<CardModel> {
-    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard.constructRootUrl()}`, { token });
+    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard().client()}`, { token });
   }
 
   public deleteCard(uId: string): Observable<CardModel> {
-    return this.http.delete<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard.constructRootUrl(`/${uId}`)}`);
+    return this.http.delete<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard(uId).client()}`);
   }
 
   public updateDefaultCard(uId: string): Observable<CardModel> {
-    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard.constructRootUrl()}`, { uId });
+    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
   }
 
   public paymentHistory(): Observable<PaymentModel[]> {
-    return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory.constructRootUrl()}`);
+    return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory().client()}`);
   }
 }

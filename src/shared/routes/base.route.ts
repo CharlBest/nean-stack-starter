@@ -1,12 +1,19 @@
 export class BaseRoute {
+    constructor(public rootRoute: string, public route: string, public params?: { [key: string]: any }, public version = 1) { }
 
-    constructor(public version: number, public rootRoute: string, public route: string) { }
-
-    constructEndpointUrl(append: string = ''): string {
-        return `/v${this.version}/${this.rootRoute}/${this.route}${append}`;
+    server(): string {
+        return `/v${this.version}/${this.rootRoute}/${this.route}${this.params ? `/:${Object.keys(this.params).join('/:')}` : ''}`;
     }
 
-    constructRootUrl(append: string = ''): string {
-        return `/api/v${this.version}/${this.rootRoute}/${this.route}${append}`;
+    client(): string {
+        let url = `/api/v${this.version}/${this.rootRoute}/${this.route}`;
+        if (this.params) {
+            for (const key in this.params) {
+                if (this.params.hasOwnProperty(key)) {
+                    url = `${url}/${this.params[key]}`;
+                }
+            }
+        }
+        return url;
     }
 }

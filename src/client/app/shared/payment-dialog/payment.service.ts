@@ -15,14 +15,14 @@ export class PaymentService {
     constructor(private http: HttpClient) { }
 
     public anonymousPayment(viewModel: AnonymousPaymentViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.anonymousPayment.constructRootUrl()}`, viewModel);
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.anonymousPayment().client()}`, viewModel);
     }
 
     public userCards(): Observable<CardModel[]> {
-        return this.http.get<CardModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.userCards.constructRootUrl()}`);
+        return this.http.get<CardModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.userCards().client()}`);
     }
 
     public userPayment(viewModel: UserPaymentViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.userPayment.constructRootUrl()}`, viewModel);
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.userPayment().client()}`, viewModel);
     }
 }

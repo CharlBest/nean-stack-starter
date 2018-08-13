@@ -13,6 +13,6 @@ export class FeedbackService {
     constructor(private http: HttpClient) { }
 
     public sendFeedback(viewModel: FeedbackViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${GeneralRoutes.sendFeedback.constructRootUrl()}`, viewModel);
+        return this.http.post<void>(`${environment.apiUrlEndpoint}${GeneralRoutes.sendFeedback().client()}`, viewModel);
     }
 }

@@ -13,20 +13,20 @@ export class PaymentsRoutes extends BaseRoute {
     }
 
     initRoutes() {
-        this.router.post(PaymentRoutes.anonymousPayment.constructEndpointUrl(),
+        this.router.post(PaymentRoutes.anonymousPayment().server(),
             (req, res, next) => this.paymentsController.anonymousPayment(req, res, next).catch(next));
 
-        this.router.post(PaymentRoutes.userPayment.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(PaymentRoutes.userPayment().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.userPayment(req, res, next).catch(next));
-        this.router.get(PaymentRoutes.userCards.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.get(PaymentRoutes.userCards().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.userCards(req, res, next).catch(next));
-        this.router.post(PaymentRoutes.createCard.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(PaymentRoutes.createCard().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.createCard(req, res, next).catch(next));
-        this.router.delete(PaymentRoutes.deleteCard.constructEndpointUrl('/:uId'), Authentication.loginRequired,
+        this.router.delete(PaymentRoutes.deleteCard().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.deleteCard(req, res, next).catch(next));
-        this.router.post(PaymentRoutes.updateDefaultCard.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(PaymentRoutes.updateDefaultCard().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.updateDefaultCard(req, res, next).catch(next));
-        this.router.get(PaymentRoutes.paymentHistory.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.get(PaymentRoutes.paymentHistory().server(), Authentication.loginRequired,
             (req, res, next) => this.paymentsController.paymentHistory(req, res, next).catch(next));
     }
 }

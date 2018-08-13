@@ -13,35 +13,35 @@ export class UsersRoutes extends BaseRoute {
     }
 
     initRoutes() {
-        this.router.post(UserRoutes.createUser.constructEndpointUrl(),
+        this.router.post(UserRoutes.createUser().server(),
             (req, res, next) => this.usersController.createUser(req, res, next).catch(next));
-        this.router.post(UserRoutes.doesUsernameAndEmailExist.constructEndpointUrl(),
+        this.router.post(UserRoutes.doesUsernameAndEmailExist().server(),
             (req, res, next) => this.usersController.doesUsernameAndEmailExist(req, res, next).catch(next));
-        this.router.post(UserRoutes.forgotPassword.constructEndpointUrl(),
+        this.router.post(UserRoutes.forgotPassword().server(),
             (req, res, next) => this.usersController.forgotPassword(req, res, next).catch(next));
-        this.router.post(UserRoutes.changeForgottenPassword.constructEndpointUrl(),
+        this.router.post(UserRoutes.changeForgottenPassword().server(),
             (req, res, next) => this.usersController.changeForgottenPassword(req, res, next).catch(next));
-        this.router.post(UserRoutes.login.constructEndpointUrl(),
+        this.router.post(UserRoutes.login().server(),
             (req, res, next) => this.usersController.login(req, res, next).catch(next));
-        this.router.post(UserRoutes.report.constructEndpointUrl(),
+        this.router.post(UserRoutes.report().server(),
             (req, res, next) => this.usersController.report(req, res, next).catch(next));
 
         // Authentication - Login required
-        this.router.get(UserRoutes.getUser.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.get(UserRoutes.getUser().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.getUser(req, res, next).catch(next));
-        this.router.post(UserRoutes.verifyEmail.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.verifyEmail().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.verifyEmail(req, res, next).catch(next));
-        this.router.post(UserRoutes.updateAvatar.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.updateAvatar().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.updateAvatar(req, res, next).catch(next));
-        this.router.post(UserRoutes.updateBio.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.updateBio().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.updateBio(req, res, next).catch(next));
-        this.router.post(UserRoutes.updatePassword.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.updatePassword().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.updatePassword(req, res, next).catch(next));
-        this.router.post(UserRoutes.resendEmailVerificationLink.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.resendEmailVerificationLink().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.resendEmailVerificationLink(req, res, next).catch(next));
-        this.router.delete(UserRoutes.deleteUser.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.delete(UserRoutes.deleteUser().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.deleteUser(req, res, next).catch(next));
-        this.router.post(UserRoutes.completedTutorial.constructEndpointUrl(), Authentication.loginRequired,
+        this.router.post(UserRoutes.completedTutorial().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.completedTutorial(req, res, next).catch(next));
     }
 }
