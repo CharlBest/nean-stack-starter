@@ -82,6 +82,12 @@ export class HeaderComponent implements OnInit {
           }
         }
       });
+
+    this.route.queryParamMap.subscribe(params => {
+      if (params.has('dialog') && params.get('dialog') === 'donation') {
+        this.openPaymentDialog();
+      }
+    });
   }
 
   logout() {
