@@ -42,7 +42,7 @@
     <mat-card-content>
       <app-media [src]="user.avatarUrl"
         *ngIf="user.avatarUrl"
-        mat-card-image></app-media>
+        class="avatar"></app-media>
     </mat-card-content>
     <mat-card-actions>
       <app-upload-button (onUploadComplete)="updateAvatar($event)"

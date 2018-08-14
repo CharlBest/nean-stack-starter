@@ -1,22 +1,43 @@
-<div *ngIf="safeSrc !== null">
+<ng-container *ngIf="safeSrc !== null">
 
-  <div [class.thumbnail-container]="thumbnail" *ngIf="mediaTypeEnum.Image == mediaType">
-    <img appImgError [class.thumbnail]="thumbnail" [class.large]="!thumbnail" *ngIf="safeSrc !== ''" (click)="openViewMediaDialog()"
-      [src]="safeSrc" alt="image">
+  <div [class.thumbnail-container]="thumbnail"
+    *ngIf="mediaTypeEnum.Image == mediaType">
+    <img class="image"
+      appImgError
+      [class.thumbnail]="thumbnail"
+      [class.large]="!thumbnail"
+      *ngIf="safeSrc !== ''"
+      (click)="openViewMediaDialog()"
+      [src]="safeSrc"
+      alt="image">
   </div>
 
   <div *ngIf="mediaTypeEnum.YouTube == mediaType">
-    <div *ngIf="thumbnail" class="thumbnail-container">
-      <img class="img thumbnail" [src]="safeSrc" alt="image">
+    <div *ngIf="thumbnail"
+      class="thumbnail-container">
+      <img class="img thumbnail"
+        [src]="safeSrc"
+        alt="image">
     </div>
     <div *ngIf="!thumbnail">
-      <iframe [src]="safeSrc" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+      <iframe [src]="safeSrc"
+        width="560"
+        height="315"
+        frameborder="0"
+        allowfullscreen></iframe>
     </div>
   </div>
 
-  <div *ngIf="mediaTypeEnum.Vimeo == mediaType" [class.thumbnail-container]="thumbnail">
-    <iframe [class.thumbnail]="thumbnail" [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen
+  <div *ngIf="mediaTypeEnum.Vimeo == mediaType"
+    [class.thumbnail-container]="thumbnail">
+    <iframe [class.thumbnail]="thumbnail"
+      [src]="safeSrc"
+      width="560"
+      height="315"
+      frameborder="0"
+      webkitallowfullscreen
+      mozallowfullscreen
       allowfullscreen></iframe>
   </div>
 
-</div>
+</ng-container>

@@ -1,14 +1,15 @@
 iframe {
-    max-width: 420px;
+	max-width: 420px;
 }
 
 .thumbnail-container {
-    .thumbnail {
-        width: 100%;
-    }
+	.image.thumbnail {
+		width: 100%;
+	}
 }
 
-.large {
-    width: 100%;
-    cursor: pointer;
+.image.large {
+	cursor: pointer;
+	max-height: 100%;
+	max-width: 100%;
 }
