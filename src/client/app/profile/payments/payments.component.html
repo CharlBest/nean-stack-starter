@@ -49,7 +49,7 @@
       (click)="addCard()"
       type="button">Add payment method</button>
     <button mat-raised-button
-      *ngIf="!isChangingDefault && userCards?.length > 0"
+      *ngIf="!isChangingDefault && userCards?.length > 1"
       (click)="isChangingDefault = true"
       type="button">Change default method</button>
     <button mat-raised-button
