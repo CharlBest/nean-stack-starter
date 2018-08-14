@@ -7,3 +7,29 @@
 		border-color: rgba(0, 0, 0, 0.87);
 	}
 }
+
+.card-number-container {
+	min-width: 190px;
+
+	.stripe-element {
+		display: flex;
+
+		.card-brand-image {
+			max-height: 17px;
+			margin-right: 8px;
+			user-select: none;
+		}
+	}
+}
+
+.card-expiry-container {
+	min-width: 80px;
+}
+
+.card-cvc-container {
+	min-width: 55px;
+}
+
+.dummy-form-field {
+	display: none;
+}

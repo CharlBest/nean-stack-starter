@@ -56,11 +56,6 @@ body {
 			}
 		}
 
-		.card-item {
-			cursor: pointer;
-			outline: none;
-		}
-
 		// Vertical radioo button layout
 		.radio-group-vertical {
 			display: inline-flex;
@@ -119,6 +114,10 @@ body {
 		input:-webkit-autofill:active {
 			transition: all 5000s ease-in-out 0s;
 		}
+
+		.full-width {
+			width: 100%;
+		}
 	}
 
 	// Material CDK Connected Overlay fullscreen
@@ -141,6 +140,10 @@ body {
 		mat-tab-group {
 			width: 100% !important;
 		}
+	}
+
+	.cursor-pointer {
+		cursor: pointer;
 	}
 }
 

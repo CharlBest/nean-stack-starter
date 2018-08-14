@@ -1,27 +1,23 @@
 <div [hidden]="elementsWrapper.isRendering">
-    <div class="mat-form-field"
-        style="min-width: 190px;">
-        <div class="stripe-element"
-            style="display: flex;">
+    <div class="mat-form-field card-number-container">
+        <div class="stripe-element">
             <img *ngIf="elementsWrapper.cardNumber.cardBrand"
                 src="assets/card-brand-icons/{{cardBrandType[elementsWrapper.cardNumber.cardBrand]}}.svg"
-                style="max-height: 17px; margin-right: 8px; user-select: none;" />
+                class="card-brand-image" />
 
             <div #cardNumber
-                style="width: 100%;"></div>
+                class="full-width"></div>
         </div>
         <div class="mat-error">{{elementsWrapper.cardNumber.error}}</div>
     </div>
     <br>
-    <div class="mat-form-field"
-        style="min-width: 80px;">
+    <div class="mat-form-field card-expiry-container">
         <div #cardExpiry
             class="stripe-element"></div>
         <div class="mat-error">{{elementsWrapper.cardExpiry.error}}</div>
     </div>
     <br>
-    <div class="mat-form-field"
-        style="min-width: 55px;">
+    <div class="mat-form-field card-cvc-container">
         <div #cardCvc
             class="stripe-element"></div>
         <div class="mat-error">{{elementsWrapper.cardCvc.error}}</div>
@@ -29,6 +25,6 @@
     <div>{{error}}</div>
 </div>
 
-<mat-form-field style="display: none;">
+<mat-form-field class="dummy-form-field">
     <input matInput>
 </mat-form-field>
