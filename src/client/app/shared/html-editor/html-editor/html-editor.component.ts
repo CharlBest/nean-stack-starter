@@ -29,20 +29,21 @@ export class HTMLEditorComponent implements AfterViewInit {
     initQuillEditor() {
         // Override toolbar icons
         var icons = Quill.import('ui/icons');
-        const openingTag = '<mat-icon class="mat-icon material-icons">';
-        const closingTag = '</mat-icon>';
+        function buildMatIconTagText(iconName: string, title: string): string {
+            return `<mat-icon class="mat-icon material-icons" title="${title}">${iconName}</mat-icon>`
+        }
 
-        icons['bold'] = `${openingTag}format_bold${closingTag}`;
-        icons['italic'] = `${openingTag}format_italic${closingTag}`;
+        icons['bold'] = `${buildMatIconTagText('format_bold', 'Bold')}`;
+        icons['italic'] = `${buildMatIconTagText('format_italic', 'Italic')}`;
         icons['header'] = {
-            '2': `${openingTag}title${closingTag}`
+            '2': `${buildMatIconTagText('format_size', 'Heading')}`
         };
         icons['list'] = {
-            'ordered': `${openingTag}format_list_numbered${closingTag}`,
-            'bullet': `${openingTag}format_list_bulleted${closingTag}`
+            'ordered': `${buildMatIconTagText('format_list_numbered', 'Numbered list')}`,
+            'bullet': `${buildMatIconTagText('format_list_bulleted', 'Bullet list')}`
         };
-        icons['link'] = `${openingTag}insert_link${closingTag}`;
-        icons['image'] = `${openingTag}insert_photo${closingTag}`;
+        icons['link'] = `${buildMatIconTagText('insert_link', 'Insert link')}`;
+        icons['image'] = `${buildMatIconTagText('insert_photo', 'Insert image')}`;
 
         // Initialize
         this.editor = new Quill(this.editorDomElement.nativeElement, {
