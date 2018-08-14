@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-elements/stripe-elements.component';
@@ -13,11 +13,13 @@ import { ProfileService } from '../profile.service';
 export class CreateCardDialogComponent {
 
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
+    @ViewChild('errorDialog') errorDialog: TemplateRef<ElementRef>;
     isProcessing = true;
 
     constructor(private profileService: ProfileService,
         private formErrorsService: FormErrorsService,
-        private dialogRef: MatDialogRef<CreateCardDialogComponent>) { }
+        private dialogRef: MatDialogRef<CreateCardDialogComponent>,
+        public dialog: MatDialog) { }
 
     async onSubmit() {
         this.isProcessing = true;
@@ -31,6 +33,9 @@ export class CreateCardDialogComponent {
                 }, error => {
                     this.formErrorsService.updateFormValidity(error);
                 });
+        } else {
+            this.dialog.open(this.errorDialog);
+            this.isProcessing = false;
         }
     }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../../shared/models/payment/card.model';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
@@ -18,6 +19,7 @@ import { PaymentService } from '../payment.service';
 export class PaymentDialogComponent implements OnInit {
 
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
+    @ViewChild('errorDialog') errorDialog: TemplateRef<ElementRef>;
 
     isUserLoggedIn: boolean = this.authService.hasToken();
     isProcessing = true;
@@ -28,7 +30,8 @@ export class PaymentDialogComponent implements OnInit {
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
         public formErrorsService: FormErrorsService,
-        private authService: AuthService) { }
+        private authService: AuthService,
+        public dialog: MatDialog) { }
 
     ngOnInit() {
         this.formOnInit();
@@ -60,7 +63,8 @@ export class PaymentDialogComponent implements OnInit {
             if (token) {
                 this.sendPaymentToServer(token.id)
             } else {
-                alert('Invalid card details');
+                this.dialog.open(this.errorDialog);
+                this.isProcessing = false;
             }
         } else {
             this.sendPaymentToServer();
