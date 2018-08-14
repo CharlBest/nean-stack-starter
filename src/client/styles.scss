@@ -114,10 +114,6 @@ body {
 		input:-webkit-autofill:active {
 			transition: all 5000s ease-in-out 0s;
 		}
-
-		.full-width {
-			width: 100%;
-		}
 	}
 
 	// Material CDK Connected Overlay fullscreen
@@ -140,6 +136,10 @@ body {
 		mat-tab-group {
 			width: 100% !important;
 		}
+	}
+
+	.full-width {
+		width: 100%;
 	}
 
 	.cursor-pointer {
