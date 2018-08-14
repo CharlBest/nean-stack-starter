@@ -46,7 +46,8 @@
     </mat-card-content>
     <mat-card-actions>
       <app-upload-button (onUploadComplete)="updateAvatar($event)"
-        [folderName]="'avatars'"></app-upload-button>
+        [folderName]="'avatars'"
+        [buttonText]="user.avatarUrl ? 'Replace avatar' : 'Upload avatar'"></app-upload-button>
       <button mat-raised-button
         color="warn"
         type="button"
