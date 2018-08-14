@@ -7,5 +7,6 @@
 </div>
 
 <div *ngIf="control?.hasError('minlength')">
-    {{control.errors['minlength'].actualLength}} but needs to be {{control.errors['minlength'].requiredLength}}
+    Must be at least {{control.errors['minlength'].requiredLength}} characters long but {{control.errors['minlength'].actualLength}}
+    at the moment
 </div>
