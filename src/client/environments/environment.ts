@@ -21,12 +21,9 @@ export const environment = {
   },
   hostUrlForSharingToWeb: 'http://localhost:3000',
   firebase: {
-    apiKey: '***',
-    authDomain: 'nean-dev.firebaseapp.com',
-    databaseURL: 'https://nean-dev.firebaseio.com',
     projectId: 'nean-dev',
     storageBucket: 'gs://nean-dev.appspot.com/',
-    messagingSenderId: '***'
+    messagingSenderId: '541682575310'
   },
   stripe: {
     publishableKey: 'pk_test_LjqROoizWX5XWMeFFFDPC4ST'

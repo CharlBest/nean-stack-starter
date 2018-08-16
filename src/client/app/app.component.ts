@@ -12,9 +12,6 @@ export class AppComponent {
   constructor(private gaService: GaService) {
     // Firebase
     initializeApp({
-      apiKey: environment.firebase.apiKey,
-      authDomain: environment.firebase.authDomain,
-      databaseURL: environment.firebase.databaseURL,
       storageBucket: environment.firebase.storageBucket
     }, environment.firebase.projectId);
   }
