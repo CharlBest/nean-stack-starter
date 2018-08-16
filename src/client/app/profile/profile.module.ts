@@ -7,7 +7,6 @@ import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { MediaModule } from '../shared/media/media.module';
-import { ReportDialogModule } from '../shared/report-dialog/report-dialog.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
@@ -43,7 +42,6 @@ const materialModules = [
     ReactiveFormsModule,
     FormsModule,
     ShareDialogModule,
-    ReportDialogModule,
     UploadButtonModule,
     FormErrorsModule,
     TutorialModule,
