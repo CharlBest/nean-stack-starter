@@ -1,11 +1,10 @@
-.email-verified {
-	font-size: 1rem;
-	color: green;
+.profile-title {
+	display: flex;
+	justify-content: space-between;
 }
 
-.email-not-verified {
-	font-size: 1rem;
-	color: red;
+.email-verified {
+	color: green;
 }
 
 .profile-actions button {

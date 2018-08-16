@@ -1,17 +1,25 @@
 <div [hidden]="isProcessing"
   *ngIf="user !== null">
   <mat-card>
-    <mat-card-title>{{user.username}}</mat-card-title>
+    <mat-card-title class="profile-title">
+      {{user.username}}
+      <button mat-icon-button
+        type="button"
+        (click)="profileTour()">
+        <mat-icon>info</mat-icon>
+      </button>
+    </mat-card-title>
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     <mat-card-content>
       <div>Email verified:
         <mat-icon *ngIf="user.emailVerified"
+          [inline]="true"
           class="email-verified">done</mat-icon>
         <mat-icon *ngIf="!user.emailVerified"
-          class="email-not-verified">close</mat-icon>
+          [inline]="true"
+          color="warn">close</mat-icon>
       </div>
       <div>Sign-up date: {{user.dateCreated | date}}</div>
-      <!-- <div>Profile views: {{user.views}}</div> -->
     </mat-card-content>
     <mat-card-actions class="profile-actions">
       <button mat-raised-button
@@ -26,9 +34,6 @@
         type="button"
         (click)="resendEmailVerificationLink()"
         *ngIf="!user.emailVerified">Resend email verification link</button>
-      <button mat-raised-button
-        type="button"
-        (click)="profileTour()">Profile tour</button>
       <button mat-raised-button
         color="warn"
         type="button"
