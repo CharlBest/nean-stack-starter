@@ -1,14 +1,13 @@
 export const data = `
 //Auto increment user ids
-OPTIONAL MATCH (nextUser:User)
-WITH nextUser, CASE WHEN nextUser IS NULL THEN 1 ELSE nextUser.id + 1 END as nextId
-ORDER BY nextUser.id DESC
+OPTIONAL MATCH (nextItem:Item)
+WITH nextItem, CASE WHEN nextItem IS NULL THEN 1 ELSE nextItem.id + 1 END as nextId
+ORDER BY nextItem.id DESC
 LIMIT 1
 
-CREATE (user:User { id: nextId, uId: {uId}, email: {email}, username: {username}, password: {password}, passwordSalt: {passwordSalt}, dateCreated: timestamp(), isVerified: false, views: 0, bio: '', avatarUrl: '', emailCode: {emailCode}, emailVerified: false })
+MATCH (user:User { id: {userId} })
 
-//Temp fix for feed bacause first node needs to be included
-MERGE (user)-[:IS]->(user)
+CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: {uId}, title: {title}, description: {description}, dateCreated: timestamp() })
 
-RETURN user
+RETURN item
 `

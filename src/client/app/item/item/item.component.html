@@ -1,4 +1,5 @@
-<mat-expansion-panel #expansionPanel>
+<mat-expansion-panel #expansionPanel
+    *ngIf="isAuthenticated">
     <mat-expansion-panel-header>
         <mat-panel-title>
             Create Item
@@ -35,9 +36,11 @@
             (click)="formGroup.reset(); expansionPanel.close();">Cancel</button>
         <button mat-raised-button
             color="primary"
+            [disabled]="!formGroup.valid"
             (click)="createItem()">Create</button>
     </mat-action-row>
 </mat-expansion-panel>
+<br>
 
 <ng-container *ngFor="let item of items">
     <mat-card>

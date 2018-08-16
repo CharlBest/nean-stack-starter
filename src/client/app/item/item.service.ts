@@ -25,8 +25,8 @@ export class ItemService {
         return this.http.get<ItemModel>(`${environment.apiUrlEndpoint}${ItemRoutes.get(uId).client()}`);
     }
 
-    public getAll(): Observable<ItemModel[]> {
-        return this.http.get<ItemModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAll().client()}`);
+    public getAll(pageIndex: number, pageSize?: number): Observable<ItemModel[]> {
+        return this.http.get<ItemModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAll().client({ pageIndex, pageSize })}`);
     }
 
     public delete(uId: string): Observable<ItemModel> {

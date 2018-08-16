@@ -14,7 +14,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
     <form [formGroup]="formGroup">
         <mat-dialog-content>
 
-            <mat-form-field *ngIf="isUserLoggedIn && userCards?.length > 0">
+            <mat-form-field *ngIf="isAuthenticated && userCards?.length > 0">
                 <mat-label>Cards</mat-label>
                 <mat-select formControlName="cardUId"
                     [value]="userCards[0]?.uId">
@@ -44,7 +44,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-error>
             </mat-form-field>
 
-            <ng-container *ngIf="!isUserLoggedIn">
+            <ng-container *ngIf="!isAuthenticated">
                 <br>
 
                 <mat-form-field>
@@ -60,7 +60,7 @@ Zip: Any 5 degit number">info_outline</mat-icon>
                 </mat-form-field>
             </ng-container>
 
-            <ng-container *ngIf="isUserLoggedIn && (formGroup.get('cardUId').value === null || formGroup.get('cardUId').value === 'new')">
+            <ng-container *ngIf="isAuthenticated && (formGroup.get('cardUId').value === null || formGroup.get('cardUId').value === 'new')">
                 <br>
 
                 <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>

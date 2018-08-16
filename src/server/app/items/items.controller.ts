@@ -1,4 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { BuildFormGroup, ServerValidator } from '../../../shared/validation/validators';
+import { CreateItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
+import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { ItemsService } from './items.service';
 
@@ -11,8 +14,17 @@ export class ItemsController extends BaseController {
     }
 
     public async create(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as CreateItemViewModel;
+
+        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(201).json(
-            await this.itemsService.create(res)
+            await this.itemsService.create(res, viewModel.title, viewModel.description)
         );
     }
 
@@ -29,8 +41,11 @@ export class ItemsController extends BaseController {
     }
 
     public async getAll(req: Request, res: Response, next: NextFunction) {
+        const pageIndex = +req.query.pageIndex;
+        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+
         res.status(200).json(
-            await this.itemsService.getAll(res)
+            await this.itemsService.getAll(res, pageIndex, pageSize)
         );
     }
 

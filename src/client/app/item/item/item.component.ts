@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { ItemModel } from '../../../../shared/models/item/item.model';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
+import { AuthService } from '../../shared/auth.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ItemService } from '../item.service';
@@ -15,6 +16,7 @@ import { ItemService } from '../item.service';
 })
 export class ItemComponent implements OnInit {
 
+  isAuthenticated: boolean = this.authService.hasToken();
   formGroup: FormGroup;
   isProcessing = false;
   items: ItemModel[];
@@ -22,6 +24,7 @@ export class ItemComponent implements OnInit {
   constructor(private itemService: ItemService,
     private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
+    private authService: AuthService,
     private dialogService: DialogService) { }
 
   ngOnInit() {
@@ -36,7 +39,7 @@ export class ItemComponent implements OnInit {
   getAllItems() {
     this.isProcessing = true;
 
-    this.itemService.getAll()
+    this.itemService.getAll(0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.items = data;
@@ -55,6 +58,7 @@ export class ItemComponent implements OnInit {
     this.itemService.create(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
+        console.log(data);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });

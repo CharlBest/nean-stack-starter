@@ -19,7 +19,7 @@ import { PaymentService } from '../payment.service';
 export class PaymentDialogComponent implements OnInit {
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
 
-    isUserLoggedIn: boolean = this.authService.hasToken();
+    isAuthenticated: boolean = this.authService.hasToken();
     isProcessing = true;
     formGroup: FormGroup;
     paymentSuccess = false;
@@ -70,7 +70,7 @@ export class PaymentDialogComponent implements OnInit {
     }
 
     sendPaymentToServer(token: string = null) {
-        if (this.isUserLoggedIn) {
+        if (this.isAuthenticated) {
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;
             viewModel.cardUId = this.formGroup.get('cardUId').value;
@@ -107,12 +107,12 @@ export class PaymentDialogComponent implements OnInit {
         }
 
         // Email is requried if anonymous payment
-        if (!this.isUserLoggedIn && (this.formGroup.get('email').value === null || this.formGroup.get('email').value === '')) {
+        if (!this.isAuthenticated && (this.formGroup.get('email').value === null || this.formGroup.get('email').value === '')) {
             return false;
         }
 
         // Stripe element valid when adding new card by user
-        if (this.isUserLoggedIn && !this.stripeElementsComponent.isValid &&
+        if (this.isAuthenticated && !this.stripeElementsComponent.isValid &&
             (this.formGroup.get('cardUId').value === null || this.formGroup.get('cardUId').value === 'new')) {
             return false;
         }

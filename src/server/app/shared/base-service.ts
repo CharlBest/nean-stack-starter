@@ -6,6 +6,7 @@ export abstract class BaseService {
         if (user !== null && user !== undefined) {
             return +user.i; // alias for id to keep payload light
         } else {
+            console.log('User is not logged in');
             return null;
         }
     }
