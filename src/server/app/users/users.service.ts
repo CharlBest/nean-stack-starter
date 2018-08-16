@@ -4,7 +4,6 @@ import { sign } from 'jsonwebtoken';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
-import { UserModel } from '../../../shared/models/user/user.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
@@ -51,7 +50,7 @@ export class UsersService extends BaseService {
 
     // #endregion
 
-    public async createUser(res: Response, email: string, username: string, password: string): Promise<UserModel> {
+    public async createUser(res: Response, email: string, username: string, password: string): Promise<void> {
         email = email.toLowerCase();
         username = username.toLowerCase();
 
@@ -76,8 +75,6 @@ export class UsersService extends BaseService {
                     client.send('New sign up just now');
                 }
             });
-
-            return user;
         } else {
             if (validation.usernameExist) {
                 ServerValidator.addFormError(res, 'username', { exists: true });
@@ -166,7 +163,7 @@ export class UsersService extends BaseService {
         Emailer.resendEmailVerificationLinkEmail(email, emailCode);
     }
 
-    public async forgotPassword(res: Response, email: string, code: string): Promise<UserModel> {
+    public async forgotPassword(res: Response, email: string, code: string): Promise<void> {
         email = email.toLowerCase();
 
         const user = await this.usersRepository.forgotPassword(res, email, code);
@@ -178,11 +175,9 @@ export class UsersService extends BaseService {
         }
 
         Emailer.forgotPasswordEmail(user.email, code);
-
-        return user;
     }
 
-    public async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<UserModel> {
+    public async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
         const salt = await this.generateSalt();
@@ -194,23 +189,21 @@ export class UsersService extends BaseService {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
-
-        return user;
     }
 
     public async verifyEmail(res: Response, code: string): Promise<boolean> {
         return await this.usersRepository.verifyEmail(res, this.getUserId(res), code);
     }
 
-    public async updateAvatar(res: Response, avatarUrl: string): Promise<UserModel> {
-        return await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
+    public async updateAvatar(res: Response, avatarUrl: string): Promise<void> {
+        await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
     }
 
-    public async updateBio(res: Response, bio: string): Promise<UserModel> {
-        return await this.usersRepository.updateBio(res, this.getUserId(res), bio);
+    public async updateBio(res: Response, bio: string): Promise<void> {
+        await this.usersRepository.updateBio(res, this.getUserId(res), bio);
     }
 
-    public async updatePassword(res: Response, password: string, newPassword: string): Promise<UserModel> {
+    public async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
@@ -227,8 +220,6 @@ export class UsersService extends BaseService {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
-
-        return updatedUser;
     }
 
     public async deleteUser(res: Response): Promise<boolean> {
