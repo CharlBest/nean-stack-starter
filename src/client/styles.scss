@@ -145,6 +145,10 @@ body {
 	.cursor-pointer {
 		cursor: pointer;
 	}
+
+	.flex-spacer {
+		flex: 1 1 auto;
+	}
 }
 
 // Override Quill toolbar with white icons when in night mode (Dark theme)

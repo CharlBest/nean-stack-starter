@@ -43,7 +43,7 @@
     </mat-radio-group>
 
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions align="end">
     <button mat-raised-button
       *ngIf="!isChangingDefault"
       (click)="addCard()"
@@ -60,8 +60,7 @@
       *ngIf="isChangingDefault && userCards?.length > 0"
       (click)="this.isChangingDefault = false; newDefaultCardUId = null"
       type="button">Cancel</button>
-    <br>
-    <br>
+    <div class="flex-spacer"></div>
     <button mat-raised-button
       routerLink="payment-history"
       type="button">Payment history</button>
