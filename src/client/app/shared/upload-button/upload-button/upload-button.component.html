@@ -9,9 +9,9 @@
     type="button"
     (click)="fileInput.click()">{{buttonText}}</button>
 
-<mat-progress-bar *ngIf="(progressPercentage | async) > 0 && (progressPercentage | async) < 100 || !hideProgressBarAfterUpload && (progressPercentage | async) <= 100"
-    [value]="progressPercentage | async"
-    matTooltip="{{progressPercentage | async}}%"></mat-progress-bar>
+<mat-progress-bar *ngIf="showProgressBar"
+    [value]="progressPercentage"
+    matTooltip="{{progressPercentage}}%"></mat-progress-bar>
 
 <app-media [src]="previewImgUrl"
     *ngIf="showPreview"></app-media>

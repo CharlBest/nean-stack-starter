@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 
 @Component({
@@ -8,20 +7,22 @@ import { FirebaseStorageService } from '../../firebase-storage.service';
     styleUrls: ['./upload-button.component.scss']
 })
 export class UploadButtonComponent {
-    previewImgUrl: string;
-    progressPercentage: Observable<number>;
-
     @Input() buttonText = 'Upload file';
     @Input() folderName = 'images';
     @Input() showPreview = false;
     @Input() hideProgressBarAfterUpload = true;
     @Input() maxFileSizeInMB = 10;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
+    previewImgUrl: string;
     error: string;
+    progressPercentage: number;
+    showProgressBar = false;
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
 
     handleChange(event: Event) {
+        this.showProgressBar = true;
+
         // Reset
         this.previewImgUrl = null;
         this.error = null;
@@ -30,12 +31,14 @@ export class UploadButtonComponent {
 
         // User cancelled
         if (!file) {
+            this.showProgressBar = false;
             return;
         }
 
         // Max file size
         if ((file.size / 1024 / 1024 /*in MB*/) > this.maxFileSizeInMB) {
             this.error = `File exceeds ${this.maxFileSizeInMB} MB. Please upload a smaller file`;
+            this.showProgressBar = false;
             return;
         }
 
@@ -45,6 +48,12 @@ export class UploadButtonComponent {
             this.error = null;
         });
 
-        this.progressPercentage = this.firebaseStorageService.progress$;
+        // Progress
+        this.firebaseStorageService.progress$.subscribe(progress => {
+            this.progressPercentage = progress;
+            if (this.hideProgressBarAfterUpload && progress === 100) {
+                this.showProgressBar = false;
+            }
+        });
     }
 }
