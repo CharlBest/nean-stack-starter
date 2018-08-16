@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../shared/models/payment/card.model';
 import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateCardDialogComponent } from '../create-card-dialog/create-card-dialog.component';
 import { ProfileService } from '../profile.service';
@@ -21,7 +22,8 @@ export class PaymentsComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
     private profileService: ProfileService,
-    private formErrorsService: FormErrorsService) { }
+    private formErrorsService: FormErrorsService,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
   }
@@ -36,21 +38,23 @@ export class PaymentsComponent implements OnInit {
   }
 
   deleteCard(uId: string) {
-    if (confirm('Are you sure you want to delete this payment method?')) {
-      this.profileService.deleteCard(uId)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(data => {
-          if (data) {
-            if (this.userCards === null || this.userCards === undefined) {
-              this.userCards = [];
-            }
+    this.dialogService.confirm('Are you sure you want to delete this payment method?').subscribe(data => {
+      if (data) {
+        this.profileService.deleteCard(uId)
+          .pipe(finalize(() => this.isProcessing = false))
+          .subscribe(data => {
+            if (data) {
+              if (this.userCards === null || this.userCards === undefined) {
+                this.userCards = [];
+              }
 
-            this.userCards = this.userCards.filter(x => x.uId !== uId);
-          }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
-    }
+              this.userCards = this.userCards.filter(x => x.uId !== uId);
+            }
+          }, error => {
+            this.formErrorsService.updateFormValidity(error);
+          });
+      }
+    });
   }
 
   changeDefaultCard() {

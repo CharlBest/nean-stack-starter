@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
@@ -10,6 +9,7 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 import { LoginService } from '../../login/login.service';
 import { AuthService } from '../../shared/auth.service';
 import { BreakpointService } from '../../shared/breakpoint.service';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateUserService } from '../create-user.service';
 
@@ -22,7 +22,6 @@ export class CreateUserComponent implements OnInit {
 
   formGroup: FormGroup;
   isProcessing = false;
-  @ViewChild('authenticationFailedDialog') authenticationFailedDialog: TemplateRef<ElementRef>;
 
   constructor(private fb: FormBuilder,
     private createUserService: CreateUserService,
@@ -31,7 +30,7 @@ export class CreateUserComponent implements OnInit {
     private authService: AuthService,
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
-    private dialog: MatDialog) {
+    private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -74,7 +73,7 @@ export class CreateUserComponent implements OnInit {
 
           this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });
         } else {
-          this.dialog.open(this.authenticationFailedDialog);
+          this.dialogService.alert('Authentication failed');
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);

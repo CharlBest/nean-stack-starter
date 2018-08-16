@@ -1,12 +1,12 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../../shared/models/payment/card.model';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
 import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model';
 import { AuthService } from '../../auth.service';
+import { DialogService } from '../../dialog/dialog.service';
 import { FormErrorsService } from '../../form-errors/form-errors.service';
 import { StripeElementsComponent } from '../../stripe-elements/stripe-elements/stripe-elements.component';
 import { PaymentService } from '../payment.service';
@@ -17,9 +17,7 @@ import { PaymentService } from '../payment.service';
     styleUrls: ['./payment-dialog.component.scss']
 })
 export class PaymentDialogComponent implements OnInit {
-
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
-    @ViewChild('errorDialog') errorDialog: TemplateRef<ElementRef>;
 
     isUserLoggedIn: boolean = this.authService.hasToken();
     isProcessing = true;
@@ -31,7 +29,7 @@ export class PaymentDialogComponent implements OnInit {
         private paymentService: PaymentService,
         public formErrorsService: FormErrorsService,
         private authService: AuthService,
-        public dialog: MatDialog) { }
+        public dialogService: DialogService) { }
 
     ngOnInit() {
         this.formOnInit();
@@ -63,7 +61,7 @@ export class PaymentDialogComponent implements OnInit {
             if (token) {
                 this.sendPaymentToServer(token.id)
             } else {
-                this.dialog.open(this.errorDialog);
+                this.dialogService.alert('Invalid card details');
                 this.isProcessing = false;
             }
         } else {
