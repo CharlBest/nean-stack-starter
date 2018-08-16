@@ -6,7 +6,7 @@ import { UserComponent } from './user/user.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: UserComponent, pathMatch: 'full', data: { title: 'User', nav: HeaderType.Back } }
+            { path: ':id', component: UserComponent, pathMatch: 'full', data: { title: 'User', nav: HeaderType.Back } }
         ])
     ],
     exports: [RouterModule]

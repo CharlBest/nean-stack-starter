@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GeneralRoutes } from '../../../shared/routes/general.routes';
-import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
+import { UserRoutes } from '../../../shared/routes/user.routes';
+import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    public sendFeedback(viewModel: FeedbackViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${GeneralRoutes.sendFeedback().client()}`, viewModel);
+    public getUserPublic(userId: number): Observable<UserPublicViewModel> {
+        return this.http.get<UserPublicViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserPublic(userId).client()}`);
     }
 }

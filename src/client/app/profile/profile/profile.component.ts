@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
+import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FirebaseStorageService } from '../../shared/firebase-storage.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
@@ -30,7 +32,8 @@ export class ProfileComponent implements OnInit {
     private dialog: MatDialog,
     private tutorialService: TutorialService,
     private firebaseStorageService: FirebaseStorageService,
-    private formErrorsService: FormErrorsService) { }
+    private formErrorsService: FormErrorsService,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
     this.getUser();
@@ -52,12 +55,34 @@ export class ProfileComponent implements OnInit {
   }
 
   openShareDialog() {
-    const link = ['/user', this.user.uId];
+    const link = ['/user', this.user.id];
     this.shareDialogService.share(link);
   }
 
-  openReportDialog() {
-    this.reportDialogService.report(this.user.uId);
+  reportUser() {
+    this.dialogService.confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
+      if (data) {
+        const viewModel = new ReportUserViewModel;
+        viewModel.uId = this.user.uId;
+
+        this.snackBar.open('Sending...', null, {
+          duration: 10000,
+        });
+
+        this.profileService.sendReport(viewModel)
+          .subscribe(() => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Sent', null, {
+              duration: 2000,
+            });
+          }, error => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Sending failed', null, {
+              duration: 2000,
+            });
+          });
+      }
+    })
   }
 
   updateAvatar(downloadURL: string) {

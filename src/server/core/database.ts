@@ -61,7 +61,7 @@ export class Database {
         }
     }
 
-    public static parseValues(object: Object): Object {
+    public static parseValues<T>(object: Object): T {
         for (const key in object) {
             // check also if property is not inherited from prototype
             if (object.hasOwnProperty(key) && neo4j.isInt(object[key])) {
@@ -69,7 +69,7 @@ export class Database {
             }
         }
 
-        return object;
+        return <T>object;
     }
 
     public static async retrieveQueries() {
@@ -87,6 +87,7 @@ export class Database {
                 getLiteUserByEmailOrUsername: (await import(`../database/users/getLiteUserByEmailOrUsername.${Database.fileExtension}`)).data,
                 getLiteUserById: (await import(`../database/users/getLiteUserById.${Database.fileExtension}`)).data,
                 getUserById: (await import(`../database/users/getUserById.${Database.fileExtension}`)).data,
+                getUserPublic: (await import(`../database/users/getUserPublic.${Database.fileExtension}`)).data,
                 verifyEmail: (await import(`../database/users/verifyEmail.${Database.fileExtension}`)).data,
                 updateAvatar: (await import(`../database/users/updateAvatar.${Database.fileExtension}`)).data,
                 updateBio: (await import(`../database/users/updateBio.${Database.fileExtension}`)).data,
@@ -131,6 +132,7 @@ export interface DbQueries {
         getLiteUserByEmailOrUsername: string,
         getLiteUserById: string,
         getUserById: string,
+        getUserPublic: string,
         verifyEmail: string,
         updateAvatar: string,
         updateBio: string,

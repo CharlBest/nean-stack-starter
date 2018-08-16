@@ -1,1 +1,8 @@
-user page
+<mat-card [hidden]="isProcessing">
+    <mat-card-title>{{user?.username}}</mat-card-title>
+    <mat-card-content [innerHTML]="user?.bio"></mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
+</mat-card>

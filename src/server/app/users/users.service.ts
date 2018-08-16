@@ -10,6 +10,7 @@ import { TokenViewModel } from '../../../shared/view-models/create-user/token.vi
 import { CardViewModel } from '../../../shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
+import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Authentication } from '../../core/middleware/authentication';
 import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
@@ -136,6 +137,7 @@ export class UsersService extends BaseService {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         const viewModel: UserProfileViewModel = {
+            id: user.id,
             uId: user.uId,
             email: user.email,
             username: user.username,
@@ -157,6 +159,10 @@ export class UsersService extends BaseService {
         };
 
         return viewModel;
+    }
+
+    public async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
+        return await this.usersRepository.getUserPublic(res, userId);
     }
 
     public async resendEmailVerificationLink(res: Response, email: string, emailCode: string): Promise<void> {

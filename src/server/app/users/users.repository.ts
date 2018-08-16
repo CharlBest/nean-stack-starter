@@ -1,9 +1,11 @@
 import { Response } from 'express';
+import { ItemModel } from '../../../shared/models/item/item.model';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Database, DbQueries } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
@@ -100,7 +102,28 @@ export class UsersRepository extends BaseRepository {
             localModel = Database.createNodeObject(x.get('user')) as UserModel;
             localModel.userCards = Database.createNodeObjectArray(x.get('cards')) as CardModel[];
             return localModel;
-        });
+        }) as UserModel[];
+
+        if (model !== null && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
+    public async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
+        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).users.getUserPublic,
+            {
+                userId
+            }
+        );
+
+        const model = result.records.map(x => {
+            let localModel = new UserPublicViewModel();
+            localModel = Database.parseValues(x.get('user')) as UserPublicViewModel;
+            localModel.items = Database.createNodeObjectArray(x.get('items')) as ItemModel[];
+            return localModel;
+        }) as UserPublicViewModel[];
 
         if (model !== null && model.length > 0) {
             return model[0];

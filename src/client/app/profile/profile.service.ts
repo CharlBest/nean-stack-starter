@@ -5,6 +5,7 @@ import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
+import { ReportUserViewModel } from '../../../shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
@@ -56,5 +57,9 @@ export class ProfileService {
 
   public paymentHistory(): Observable<PaymentModel[]> {
     return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory().client()}`);
+  }
+
+  public sendReport(viewModel: ReportUserViewModel): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report().client()}`, viewModel);
   }
 }

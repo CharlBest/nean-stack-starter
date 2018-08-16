@@ -64,6 +64,14 @@ export class UsersController extends BaseController {
         );
     }
 
+    public async getUserPublic(req: Request, res: Response, next: NextFunction) {
+        const id = +req.params.id;
+
+        res.status(200).json(
+            await this.usersService.getUserPublic(res, id)
+        );
+    }
+
     public async report(req: Request, res: Response, next: NextFunction) {
         // TODO: do something
         res.status(200).json();
