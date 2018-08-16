@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { UserModel } from '../../../../shared/models/user/user.model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
 import { FirebaseStorageService } from '../../shared/firebase-storage.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
@@ -19,7 +19,7 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: UserModel = null;
+  user: UserProfileViewModel = null;
   isProcessing = true;
   tutorialTypeEnum = TutorialType;
 
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser() {
-    this.profileService.getUser()
+    this.profileService.getUserProfile()
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.user = data;

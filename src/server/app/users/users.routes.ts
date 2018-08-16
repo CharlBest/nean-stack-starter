@@ -27,8 +27,8 @@ export class UsersRoutes extends BaseRoute {
             (req, res, next) => this.usersController.report(req, res, next).catch(next));
 
         // Authentication - Login required
-        this.router.get(UserRoutes.getUser().server(), Authentication.loginRequired,
-            (req, res, next) => this.usersController.getUser(req, res, next).catch(next));
+        this.router.get(UserRoutes.getUserProfile().server(), Authentication.loginRequired,
+            (req, res, next) => this.usersController.getUserProfile(req, res, next).catch(next));
         this.router.post(UserRoutes.verifyEmail().server(), Authentication.loginRequired,
             (req, res, next) => this.usersController.verifyEmail(req, res, next).catch(next));
         this.router.post(UserRoutes.updateAvatar().server(), Authentication.loginRequired,

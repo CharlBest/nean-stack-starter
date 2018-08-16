@@ -9,6 +9,7 @@ import { UserRoutes } from '../../../shared/routes/user.routes';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
+import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -18,8 +19,8 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  public getUser(): Observable<UserModel> {
-    return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser().client()}`);
+  public getUserProfile(): Observable<UserProfileViewModel> {
+    return this.http.get<UserProfileViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserProfile().client()}`);
   }
 
   public updateAvatar(viewModel: UpdateAvatarViewModel): Observable<UserModel> {

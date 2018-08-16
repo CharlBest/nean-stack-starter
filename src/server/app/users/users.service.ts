@@ -8,7 +8,9 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
+import { CardViewModel } from '../../../shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { Authentication } from '../../core/middleware/authentication';
 import { WebSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
@@ -133,8 +135,31 @@ export class UsersService extends BaseService {
         return await this.usersRepository.getLiteUserById(res, this.getUserId(res));
     }
 
-    public async getUserById(res: Response): Promise<UserModel> {
-        return await this.usersRepository.getUserById(res, this.getUserId(res));
+    public async getUserProfile(res: Response): Promise<UserProfileViewModel> {
+        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+
+        const viewModel: UserProfileViewModel = {
+            uId: user.uId,
+            email: user.email,
+            username: user.username,
+            dateCreated: user.dateCreated,
+            bio: user.bio,
+            avatarUrl: user.avatarUrl,
+            emailVerified: user.emailVerified,
+            userCards: user.userCards.map(x => {
+                const card: CardViewModel = {
+                    uId: x.uId,
+                    expireMonth: x.expireMonth,
+                    expireYear: x.expireYear,
+                    brand: x.brand,
+                    last4: x.last4,
+                    isDefault: x.isDefault,
+                };
+                return card;
+            }),
+        };
+
+        return viewModel;
     }
 
     public async resendEmailVerificationLink(res: Response, email: string, emailCode: string): Promise<void> {
@@ -186,7 +211,7 @@ export class UsersService extends BaseService {
     }
 
     public async updatePassword(res: Response, password: string, newPassword: string): Promise<UserModel> {
-        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+        const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'password', { invalid: true });

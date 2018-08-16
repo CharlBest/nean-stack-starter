@@ -9,7 +9,7 @@ export class UserRoutes {
     public static forgotPassword = () => new BaseRoute(UserRoutes.rootRoute, 'forgotPassword');
     public static changeForgottenPassword = () => new BaseRoute(UserRoutes.rootRoute, 'changeForgottenPassword');
     public static login = () => new BaseRoute(UserRoutes.rootRoute, 'login');
-    public static getUser = () => new BaseRoute(UserRoutes.rootRoute, 'getUser');
+    public static getUserProfile = () => new BaseRoute(UserRoutes.rootRoute, 'getUserProfile');
     public static updateAvatar = () => new BaseRoute(UserRoutes.rootRoute, 'updateAvatar');
     public static updateBio = () => new BaseRoute(UserRoutes.rootRoute, 'updateBio');
     public static updatePassword = () => new BaseRoute(UserRoutes.rootRoute, 'updatePassword');

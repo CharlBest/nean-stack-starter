@@ -58,9 +58,9 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async getUser(req: Request, res: Response, next: NextFunction) {
+    public async getUserProfile(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await this.usersService.getUserById(res)
+            await this.usersService.getUserProfile(res)
         );
     }
 

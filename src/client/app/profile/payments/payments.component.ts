@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../shared/models/payment/card.model';
+import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateCardDialogComponent } from '../create-card-dialog/create-card-dialog.component';
 import { ProfileService } from '../profile.service';
@@ -13,7 +14,7 @@ import { ProfileService } from '../profile.service';
 })
 export class PaymentsComponent implements OnInit {
 
-  @Input() userCards: CardModel[] = [];
+  @Input() userCards: CardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
   newDefaultCardUId: string = null;
@@ -81,7 +82,7 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  hasCardExpired(card: CardModel) {
+  hasCardExpired(card: CardViewModel) {
     const expireDate = new Date();
     expireDate.setUTCFullYear(card.expireYear, card.expireMonth - 1, 1);
 
