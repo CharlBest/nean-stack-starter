@@ -10,7 +10,6 @@ export class UserModel extends UserLiteModel {
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: string[];
-    stripeCustomerId: string;
     userCards: CardModel[];
 
     // TODO: user role/permission
