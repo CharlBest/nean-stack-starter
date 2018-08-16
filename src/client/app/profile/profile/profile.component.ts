@@ -8,7 +8,6 @@ import { UserProfileViewModel } from '../../../../shared/view-models/user/user-p
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FirebaseStorageService } from '../../shared/firebase-storage.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { ReportDialogService } from '../../shared/report-dialog/report-dialog.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
@@ -27,7 +26,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
-    private reportDialogService: ReportDialogService,
     public snackBar: MatSnackBar,
     private dialog: MatDialog,
     private tutorialService: TutorialService,
