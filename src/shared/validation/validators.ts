@@ -118,6 +118,17 @@ export class BuildFormGroup {
             ]]
         };
     }
+
+    static createItem(title: string = null, description: string = null): FormValidator {
+        return {
+            title: [title, [
+                CustomValidators.required
+            ]],
+            description: [description, [
+                CustomValidators.required
+            ]]
+        };
+    }
 }
 
 export class ServerValidator {
