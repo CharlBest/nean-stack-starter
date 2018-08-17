@@ -149,6 +149,10 @@ body {
 	.flex-spacer {
 		flex: 1 1 auto;
 	}
+
+	a {
+		color: inherit;
+	}
 }
 
 // Override Quill toolbar with white icons when in night mode (Dark theme)
