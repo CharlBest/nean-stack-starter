@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
         this.loggedInUserId = id;
       });
 
+    // Check if user has gone to primary nav page
     this.router.events
       .subscribe((event) => {
         if (event instanceof NavigationEnd && this.activeHeader === HeaderType.Primary) {
@@ -58,6 +59,7 @@ export class HeaderComponent implements OnInit {
         }
       });
 
+    // Set title, navigation and back route
     this.router.events
       .pipe(
         map(() => this.route),
