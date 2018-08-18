@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
-  hasNavigatedHomeBecauseOfEmptyReferrer = false;
+  hasNavigatedToPageWithPrimaryNav = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -49,6 +49,13 @@ export class HeaderComponent implements OnInit {
     this.authService.loggedInUserId$
       .subscribe(id => {
         this.loggedInUserId = id;
+      });
+
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd && this.activeHeader === HeaderType.Primary) {
+          this.hasNavigatedToPageWithPrimaryNav = true;
+        }
       });
 
     this.router.events
@@ -98,8 +105,7 @@ export class HeaderComponent implements OnInit {
     if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
     } else {
-      if (document.referrer === '' && !this.hasNavigatedHomeBecauseOfEmptyReferrer) {
-        this.hasNavigatedHomeBecauseOfEmptyReferrer = true;
+      if (document.referrer === '' && !this.hasNavigatedToPageWithPrimaryNav) {
         this.router.navigate(['/']);
       } else {
         this.location.back();
