@@ -31,6 +31,16 @@ export class HomeComponent implements OnInit {
       const content = (<XMLHttpRequest>event.target).responseText;
       this.readmeText = marked(content);
       this.isProcessing = false;
+
+      //Remove DEMO link in text
+      setTimeout(() => {
+        const anchorLinks = document.getElementsByTagName('a');
+        for (var i = 0; i < anchorLinks.length; i++) {
+          if (anchorLinks[i].href === 'https://nean.io/') {
+            anchorLinks[i].remove();
+          }
+        }
+      }, 100);
     });
 
     oReq.open('GET', 'https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/README.md');
