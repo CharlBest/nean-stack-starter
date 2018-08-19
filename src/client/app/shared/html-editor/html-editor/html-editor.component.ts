@@ -59,7 +59,7 @@ export class HTMLEditorComponent implements AfterViewInit {
             theme: 'snow'
         });
 
-        if (this.htmlContent !== null && this.htmlContent !== undefined) {
+        if (this.htmlContent) {
             // Add existing content to editor
             if (this.containsEmoji) {
                 this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(this.htmlContent));

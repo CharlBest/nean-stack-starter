@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        if (data !== null && data.token !== null) {
+        if (data && data.token) {
           this.authService.setToken(data.token, data.userId);
 
           this.router.navigateByUrl(this.returnUrl);

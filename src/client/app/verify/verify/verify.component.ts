@@ -12,7 +12,7 @@ import { VerifyService } from '../verify.service';
 export class VerifyComponent implements OnInit {
 
   code: string;
-  verifyResult: boolean;
+  verifyResult: boolean = null;
   isProcessing = true;
 
   constructor(private verifyService: VerifyService,
@@ -26,7 +26,7 @@ export class VerifyComponent implements OnInit {
         if (params.has('code')) {
           this.code = params.get('code');
 
-          if (this.code !== undefined && this.code !== '') {
+          if (this.code && this.code !== '') {
             this.verifyService.verifyEmail(this.code)
               .pipe(finalize(() => this.isProcessing = false))
               .subscribe(data => {

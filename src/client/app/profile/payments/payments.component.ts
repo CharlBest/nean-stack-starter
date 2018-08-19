@@ -61,7 +61,7 @@ export class PaymentsComponent implements OnInit {
     this.isProcessing = true;
     const currentDefaultCard = this.userCards.find(x => x.isDefault);
 
-    if (this.newDefaultCardUId !== null && this.newDefaultCardUId !== currentDefaultCard.uId) {
+    if (this.newDefaultCardUId && this.newDefaultCardUId !== currentDefaultCard.uId) {
       this.profileService.updateDefaultCard(this.newDefaultCardUId)
         .pipe(finalize(() => {
           this.isProcessing = false;

@@ -136,11 +136,11 @@ export class ServerValidator {
         const validationErrors = [];
         for (const field in form) {
             if (form.hasOwnProperty(field)) {
-                if (form[field] !== undefined && form[field] !== null && form[field].length > 1) {
+                if (form[field] && form[field].length > 1) {
                     const errors = {};
                     for (let i = 0; i < form[field][1].length; i++) {
                         const error = form[field][1][i](form[field][0]);
-                        if (error !== null) {
+                        if (error) {
                             Object.assign(errors, error);
                         }
                     }
@@ -162,7 +162,7 @@ export class ServerValidator {
                 res.locals.error.formErrors = [];
             }
             const savedError = res.locals.error.formErrors.find(x => x.field === error.field);
-            if (savedError !== undefined) {
+            if (savedError) {
                 Object.assign(savedError.errors, error.errors);
             } else {
                 res.locals.error.formErrors.push(error);
@@ -173,7 +173,7 @@ export class ServerValidator {
     }
 
     static addFormError(res: Response, field: string, error: Object) {
-        if (error !== undefined && error !== null) {
+        if (error) {
             if (res.locals.error === undefined) {
                 res.locals.error = {};
             }
@@ -181,7 +181,7 @@ export class ServerValidator {
                 res.locals.error.formErrors = [];
             }
             const savedError = res.locals.error.formErrors.find(x => x.field === field);
-            if (savedError !== undefined) {
+            if (savedError) {
                 Object.assign(savedError.errors, error);
             } else {
                 res.locals.error.formErrors.push({
@@ -195,7 +195,7 @@ export class ServerValidator {
     }
 
     static addGlobalError(res: Response, field: string, error: Object) {
-        if (error !== undefined && error !== null) {
+        if (error) {
             if (res.locals.error === undefined) {
                 res.locals.error = {};
             }
@@ -216,7 +216,7 @@ export class ServerValidator {
 }
 
 export function trimString(string: string): string {
-    if (string !== null && string !== undefined) {
+    if (string) {
         string = string.replace(/^\s+|\s+$/g, '');
         return string.replace(/^(&nbsp;)+|(&nbsp;)+$/g, '');
     } else {

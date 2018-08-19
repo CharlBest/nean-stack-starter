@@ -21,7 +21,7 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('item'))) as ItemModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -37,7 +37,7 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -53,7 +53,7 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -70,7 +70,7 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('items'))) as ItemModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model;
         } else {
             return null;
@@ -86,7 +86,7 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;

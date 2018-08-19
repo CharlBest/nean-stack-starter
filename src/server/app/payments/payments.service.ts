@@ -39,10 +39,10 @@ export class PaymentsService extends BaseService {
             source: source,
             metadata
         };
-        if (userId !== null) {
+        if (userId) {
             chargeCreationOptions.metadata['userId'] = userId;
         }
-        if (customerId !== null) {
+        if (customerId) {
             chargeCreationOptions['customer'] = customerId;
         }
 

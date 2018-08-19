@@ -26,10 +26,10 @@ export class AuthService implements CanActivate {
 
     private getIdFromJWT() {
         const token = this.getLocalToken();
-        if (token !== null) {
+        if (token) {
             const parsedToken = this.parseJwt(token);
             const id = parsedToken.data.i /* alias for ID */;
-            if (id !== null && id !== undefined) {
+            if (id) {
                 return +id;
             }
         }

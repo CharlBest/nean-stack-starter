@@ -68,7 +68,7 @@ export class CreateUserComponent implements OnInit {
     this.loginService.login(model)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        if (data !== null && data.token !== null) {
+        if (data && data.token) {
           this.authService.setToken(data.token, data.userId);
 
           this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });

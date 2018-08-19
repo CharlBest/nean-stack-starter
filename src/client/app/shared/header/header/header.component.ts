@@ -73,18 +73,18 @@ export class HeaderComponent implements OnInit {
       .subscribe((event) => {
         if (event.snapshot.data) {
           const title = event.snapshot.data['title'];
-          if (title !== null) {
+          if (title) {
             this.titleService.setTitle(title);
             this.headerBackTitle = title;
           }
 
           const nav = event.snapshot.data['nav'] as HeaderType;
-          if (nav !== null) {
+          if (nav) {
             this.activeHeader = nav;
           }
 
           const backRouterPath = event.snapshot.data['backRouterPath'] as string;
-          if (backRouterPath !== null) {
+          if (backRouterPath) {
             this.backRouterPath = backRouterPath;
           } else {
             this.backRouterPath = null;

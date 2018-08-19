@@ -37,7 +37,7 @@ export class UrlDataService {
 
     init(formGroup: FormGroup) {
         const formData = this.route.snapshot.queryParams.data || null;
-        if (formData !== null) {
+        if (formData) {
             const data = JSON.parse(this.b64DecodeUnicode(formData));
             formGroup.setValue(data);
         }

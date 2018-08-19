@@ -41,7 +41,7 @@ export class Database {
     }
 
     public static createNodeObject<T>(node): T {
-        if (node !== null && node !== undefined) {
+        if (node) {
             let object = {};
             _.assign(object, node.properties);
 
@@ -54,7 +54,7 @@ export class Database {
     }
 
     public static createNodeObjectArray(nodes: any[]): any {
-        if (nodes !== null) {
+        if (nodes) {
             return nodes.map(x => Database.createNodeObject(x));
         } else {
             return null;

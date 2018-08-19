@@ -56,7 +56,7 @@ export class PaymentsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as CardModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model;
         } else {
             return null;
@@ -80,7 +80,7 @@ export class PaymentsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('card'))) as CardModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -126,7 +126,7 @@ export class PaymentsRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('payments'))) as PaymentModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model;
         } else {
             return null;

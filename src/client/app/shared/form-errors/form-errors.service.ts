@@ -16,12 +16,12 @@ export class FormErrorsService {
 
       const errors = errorResponse.error.error.validation;
 
-      if (errors !== null && errors !== undefined) {
-        if (errors.formErrors !== undefined && form !== undefined && form !== null) {
+      if (errors) {
+        if (errors.formErrors && form) {
           for (const key in form.controls) {
             if (form.controls.hasOwnProperty(key)) {
               const fieldError = errors.formErrors.find(x => x.field === key);
-              if (fieldError !== undefined) {
+              if (fieldError) {
                 form.get(key).setErrors(fieldError.errors);
               }
             }

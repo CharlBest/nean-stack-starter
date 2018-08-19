@@ -29,7 +29,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -51,7 +51,7 @@ export class UsersRepository extends BaseRepository {
             return localModel;
         });
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -67,7 +67,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -83,7 +83,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -104,7 +104,7 @@ export class UsersRepository extends BaseRepository {
             return localModel;
         }) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -125,7 +125,7 @@ export class UsersRepository extends BaseRepository {
             return localModel;
         }) as UserPublicViewModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -142,7 +142,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -161,7 +161,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -193,7 +193,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -210,7 +210,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;
@@ -228,7 +228,7 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
 
-        if (model !== null && model.length > 0) {
+        if (model && model.length > 0) {
             return model[0];
         } else {
             return null;

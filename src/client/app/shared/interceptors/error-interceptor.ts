@@ -21,8 +21,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (err instanceof HttpErrorResponse) {
                     // Neo4j offline
                     if (err.status === 500
-                        && err.error !== undefined
-                        && err.error.error !== undefined
+                        && err.error
+                        && err.error.error
                         && err.error.error.name === 'Neo4jError'
                         && err.error.error.code === 'ServiceUnavailable') {
                         console.error('Neo4j is offline', err);
