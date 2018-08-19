@@ -31,7 +31,7 @@ function getEnvironmentVariable(key: string, defaultValue: any): string {
         return defaultValue;
     } else {
         const value = process.env[key];
-        if (value === undefined) {
+        if (!value) {
             throw new Error(`Environment variable with key ${key} does not exist`);
         }
 

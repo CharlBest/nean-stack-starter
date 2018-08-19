@@ -52,7 +52,7 @@ export class TutorialComponent implements OnInit {
           this.tutorialInUrl = +params.get('tut');
           this.active = true;
 
-          if (this.returnUrl === null) {
+          if (!this.returnUrl) {
             this.returnUrl = location.pathname || '/';
           }
         } else {

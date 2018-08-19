@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authService.hasToken() && this.route.snapshot.queryParams.tut === undefined) {
+    if (this.authService.hasToken() && !this.route.snapshot.queryParams.tut) {
       this.router.navigate(['/']);
     }
 

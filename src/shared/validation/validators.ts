@@ -132,7 +132,7 @@ export class BuildFormGroup {
 }
 
 export class ServerValidator {
-    static setErrorsAndSave(res: Response, form: FormValidator) {
+    static setErrorsAndSave(res: Response, form: FormValidator): boolean {
         const validationErrors = [];
         for (const field in form) {
             if (form.hasOwnProperty(field)) {
@@ -155,10 +155,10 @@ export class ServerValidator {
             }
         }
         validationErrors.forEach((error) => {
-            if (res.locals.error === undefined) {
+            if (!res.locals.error) {
                 res.locals.error = {};
             }
-            if (res.locals.error.formErrors === undefined) {
+            if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
             const savedError = res.locals.error.formErrors.find(x => x.field === error.field);
@@ -172,12 +172,12 @@ export class ServerValidator {
         return validationErrors.length > 0 ? true : false;
     }
 
-    static addFormError(res: Response, field: string, error: Object) {
+    static addFormError(res: Response, field: string, error: Object): boolean {
         if (error) {
-            if (res.locals.error === undefined) {
+            if (!res.locals.error) {
                 res.locals.error = {};
             }
-            if (res.locals.error.formErrors === undefined) {
+            if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
             const savedError = res.locals.error.formErrors.find(x => x.field === field);
@@ -194,12 +194,12 @@ export class ServerValidator {
         return error ? true : false;
     }
 
-    static addGlobalError(res: Response, field: string, error: Object) {
+    static addGlobalError(res: Response, field: string, error: Object): boolean {
         if (error) {
-            if (res.locals.error === undefined) {
+            if (!res.locals.error) {
                 res.locals.error = {};
             }
-            if (res.locals.error.globalErrors === undefined) {
+            if (!res.locals.error.globalErrors) {
                 res.locals.error.globalErrors = {};
             }
             if (res.locals.error.globalErrors.hasOwnProperty(field)) {

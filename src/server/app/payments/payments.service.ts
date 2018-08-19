@@ -58,7 +58,7 @@ export class PaymentsService extends BaseService {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
         try {
-            if (user.stripeCustomerId === null) {
+            if (!user.stripeCustomerId) {
                 const customer = await stripeAccount.customers.create({
                     source: token,
                     email: user.email,
@@ -124,7 +124,7 @@ export class PaymentsService extends BaseService {
     public async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
-        if (user === null) {
+        if (!user) {
             ServerValidator.addGlobalError(res, 'error', 'User not found');
             throw ValidationUtil.errorResponse(res);
         }

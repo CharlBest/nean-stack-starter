@@ -28,7 +28,7 @@ export class StripeElementsService {
         const elementId = 'stripe-client-script';
         var script = document.getElementById(elementId);
 
-        if (script === undefined || script === null) {
+        if (!script) {
             let node = document.createElement('script');
             node.src = 'https://js.stripe.com/v3/';
             node.type = 'text/javascript';

@@ -44,7 +44,7 @@ export class PaymentsComponent implements OnInit {
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {
             if (data) {
-              if (this.userCards === null || this.userCards === undefined) {
+              if (!this.userCards) {
                 this.userCards = [];
               }
 

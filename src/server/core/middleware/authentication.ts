@@ -16,7 +16,7 @@ export class Authentication {
     static setAuthUser(req: Request, res: Response, next: NextFunction): void {
         const token = Authentication.getTokenInHeader(req);
 
-        if (token === null) {
+        if (!token) {
             res.locals.user = null;
             next();
         } else {

@@ -56,7 +56,7 @@ export class UsersService extends BaseService {
         username = username.toLowerCase();
 
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
-        if (validation === null || validation === undefined) {
+        if (!validation) {
             ServerValidator.addGlobalError(res, 'error', true);
             throw ValidationUtil.errorResponse(res);
         }
@@ -102,7 +102,7 @@ export class UsersService extends BaseService {
 
         const user = await this.usersRepository.getLiteUserByEmailOrUsername(res, emailOrUsername);
 
-        if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
+        if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'invalidCredentials', true);
             throw ValidationUtil.errorResponse(res);
         }
@@ -174,7 +174,7 @@ export class UsersService extends BaseService {
 
         const user = await this.usersRepository.forgotPassword(res, email, code);
 
-        if (user === null) {
+        if (!user) {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
             ServerValidator.addGlobalError(res, 'email', { notFound: true });
             throw ValidationUtil.errorResponse(res);
@@ -191,7 +191,7 @@ export class UsersService extends BaseService {
 
         const user = await this.usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
 
-        if (user === null) {
+        if (!user) {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
@@ -212,7 +212,7 @@ export class UsersService extends BaseService {
     public async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
-        if (user === null || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
+        if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'password', { invalid: true });
             throw ValidationUtil.errorResponse(res);
         }
@@ -222,7 +222,7 @@ export class UsersService extends BaseService {
 
         const updatedUser = await this.usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
 
-        if (updatedUser === null) {
+        if (!updatedUser) {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
