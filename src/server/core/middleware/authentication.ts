@@ -5,15 +5,15 @@ import { environment } from '../../environments/environment';
 export class Authentication {
     static issuerName = 'nean-stack-starter';
 
-    static loginRequired(req: Request | any, res: Response, next: NextFunction): void {
-        if ((<any>req).user === null) {
+    static loginRequired(req: Request, res: Response, next: NextFunction): void {
+        if (!res.locals.user) {
             res.status(401).send({ detail: 'Unauthorized user' });
         }
 
         next();
     }
 
-    static setAuthUser(req: Request | any, res: Response, next: NextFunction): void {
+    static setAuthUser(req: Request, res: Response, next: NextFunction): void {
         const token = Authentication.getTokenInHeader(req);
 
         if (token === null) {
