@@ -40,7 +40,7 @@ export class PaymentsController extends BaseController {
         const hasToken = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(viewModel.token));
         const hasCard = ServerValidator.addGlobalError(res, 'cardUId', CustomValidators.required(viewModel.cardUId));
 
-        if (hasErrors || (hasToken === null && hasCard === null)) {
+        if (hasErrors || (!hasToken && !hasCard)) {
             throw ValidationUtil.errorResponse(res);
         }
 
