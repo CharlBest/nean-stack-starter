@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator } from '../../../shared/validation/validators';
+import { BuildFormGroup, CustomValidators, ServerValidator } from '../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
@@ -50,8 +50,16 @@ export class ItemsController extends BaseController {
     }
 
     public async delete(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(200).json(
-            await this.itemsService.delete(res)
+            await this.itemsService.delete(res, uId)
         );
     }
 }

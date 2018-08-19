@@ -56,7 +56,7 @@ export class PaymentsController extends BaseController {
     }
 
     public async createCard(req: Request, res: Response, next: NextFunction) {
-        const token = req.body.token;
+        const token = req.body.token as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'token', CustomValidators.required(token));
 
@@ -70,7 +70,7 @@ export class PaymentsController extends BaseController {
     }
 
     public async deleteCard(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId;
+        const uId = req.params.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
 
@@ -84,7 +84,7 @@ export class PaymentsController extends BaseController {
     }
 
     public async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
-        const uId = req.body.uId;
+        const uId = req.body.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
 

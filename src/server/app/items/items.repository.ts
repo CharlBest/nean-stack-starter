@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { ItemModel } from '../../../shared/models/item/item.model';
+import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { Database, DbQueries } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
@@ -9,7 +9,7 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    public async create(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemModel> {
+    public async create(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).items.create,
             {
                 userId,
@@ -19,7 +19,12 @@ export class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('item'))) as ItemModel[];
+        const model = result.records.map(x => {
+            let viewModel = new ItemViewModel();
+            viewModel = Database.createNodeObject(x.get('item'));
+            viewModel.canEdit = true;
+            return viewModel;
+        }) as ItemViewModel[];
 
         if (model && model.length > 0) {
             return model[0];
@@ -44,14 +49,19 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async get(res: Response, userId: number): Promise<any> {
+    public async get(res: Response, userId: number): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).items.get,
             {
                 userId
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
+        const model = result.records.map(x => {
+            let viewModel = new ItemViewModel();
+            viewModel = Database.createNodeObject(x.get('item'));
+            viewModel.canEdit = x.get('canEdit');
+            return viewModel;
+        }) as ItemViewModel[];
 
         if (model && model.length > 0) {
             return model[0];
@@ -60,15 +70,21 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemModel[]> {
+    public async getAll(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).items.getAll,
             {
+                userId,
                 pageIndex,
                 pageSize
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('items'))) as ItemModel[];
+        const model = result.records.map(x => {
+            let viewModel = new ItemViewModel();
+            viewModel = Database.createNodeObject(x.get('items'));
+            viewModel.canEdit = x.get('canEdit');
+            return viewModel;
+        }) as ItemViewModel[];
 
         if (model && model.length > 0) {
             return model;
@@ -77,19 +93,18 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async delete(res: Response, userId: number): Promise<any> {
+    public async delete(res: Response, userId: number, uId: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).items.delete,
             {
-                userId
+                userId,
+                uId
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
-
-        if (model && model.length > 0) {
-            return model[0];
+        if (result.records) {
+            return true;
         } else {
-            return null;
+            return false;
         }
     }
 }

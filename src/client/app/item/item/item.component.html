@@ -44,7 +44,18 @@
 
 <ng-container *ngFor="let item of items">
     <mat-card>
-        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-title class="title-container">
+            <span>{{item.title}}</span>
+            <span class="flex-spacer"></span>
+            <ng-container *ngIf="item.canEdit">
+                <button mat-icon-button
+                    color="warn"
+                    (click)="deleteItem(item.uId)"
+                    type="button">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </ng-container>
+        </mat-card-title>
         <mat-card-content>{{item.description}}</mat-card-content>
     </mat-card>
     <br>

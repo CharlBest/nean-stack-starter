@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { ItemModel } from '../../../../shared/models/item/item.model';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
+import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -19,7 +19,7 @@ export class ItemComponent implements OnInit {
   isAuthenticated: boolean = this.authService.hasToken();
   formGroup: FormGroup;
   isProcessing = false;
-  items: ItemModel[];
+  items: ItemViewModel[];
 
   constructor(private itemService: ItemService,
     private fb: FormBuilder,
@@ -58,7 +58,7 @@ export class ItemComponent implements OnInit {
     this.itemService.create(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        console.log(data);
+        this.items.unshift(data);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
