@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompletedTutorial } from '../../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { TutorialService } from '../tutorial.service';
 
 @Component({

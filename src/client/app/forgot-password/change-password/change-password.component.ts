@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
-import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({

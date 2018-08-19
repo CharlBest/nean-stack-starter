@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FirebaseStorageService } from '../../firebase-storage.service';
+import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
     selector: 'app-upload-button',

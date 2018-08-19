@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import * as emojione from 'emojione';
 import Quill from 'quill';
 import { Observable } from 'rxjs';
-import { FirebaseStorageService } from '../../firebase-storage.service';
+import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
     selector: 'app-html-editor',

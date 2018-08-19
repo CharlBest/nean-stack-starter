@@ -4,9 +4,9 @@ import { finalize } from 'rxjs/operators';
 import { ItemModel } from '../../../../shared/models/item/item.model';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
-import { AuthService } from '../../shared/auth.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { ItemService } from '../item.service';
 
 @Component({

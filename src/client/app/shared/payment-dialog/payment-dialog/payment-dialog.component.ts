@@ -5,9 +5,9 @@ import { CardModel } from '../../../../../shared/models/payment/card.model';
 import { BuildFormGroup } from '../../../../../shared/validation/validators';
 import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model';
-import { AuthService } from '../../auth.service';
 import { DialogService } from '../../dialog/dialog.service';
 import { FormErrorsService } from '../../form-errors/form-errors.service';
+import { AuthService } from '../../services/auth.service';
 import { StripeElementsComponent } from '../../stripe-elements/stripe-elements/stripe-elements.component';
 import { PaymentService } from '../payment.service';
 

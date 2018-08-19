@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
-import { GaService } from './shared/ga.service';
+import { GaService } from './shared/services/ga.service';
 
 @Component({
   selector: 'app-root',

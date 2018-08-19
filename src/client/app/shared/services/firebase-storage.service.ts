@@ -3,7 +3,7 @@ import { app, storage } from 'firebase/app';
 import 'firebase/storage';
 import { Observable, Subject } from 'rxjs';
 import { v4 as randomStringGenerator } from 'uuid';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'

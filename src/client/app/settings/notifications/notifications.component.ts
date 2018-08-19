@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebSocketService } from '../../shared/websocket.service';
+import { WebSocketService } from '../../shared/services/websocket.service';
 
 @Component({
   selector: 'app-notifications',

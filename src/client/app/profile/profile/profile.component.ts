@@ -6,8 +6,8 @@ import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/up
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { FirebaseStorageService } from '../../shared/firebase-storage.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';

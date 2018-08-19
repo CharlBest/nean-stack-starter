@@ -5,8 +5,8 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { FeedbackService } from '../feedback.service';
 
 @Component({

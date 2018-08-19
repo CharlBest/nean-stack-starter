@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet, MatMenuTrigger } from '@angular/material';
 import * as emojione from 'emojione';
-import { BreakpointService } from '../../breakpoint.service';
-import { PreventBackNavigationService } from '../../prevent-back-navigation.service';
+import { BreakpointService } from '../../services/breakpoint.service';
+import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
 
 declare function require(moduleName: string): any;
 

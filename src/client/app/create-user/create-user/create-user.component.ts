@@ -7,10 +7,10 @@ import { CreateUserViewModel } from '../../../../shared/view-models/create-user/
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
-import { AuthService } from '../../shared/auth.service';
-import { BreakpointService } from '../../shared/breakpoint.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { CreateUserService } from '../create-user.service';
 
 @Component({

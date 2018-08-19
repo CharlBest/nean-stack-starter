@@ -4,8 +4,8 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { BreakpointService } from '../../shared/breakpoint.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({

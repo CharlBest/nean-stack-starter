@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AuthService } from './shared/auth.service';
-import { CustomPreloading } from './shared/custom-preloading';
+import { PreloadingStrategy, Route, RouterModule } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { AuthService } from './shared/services/auth.service';
+
+// Preload defined module routes
+export class CustomPreloading implements PreloadingStrategy {
+  preload(route: Route, preload: Function): Observable<any> {
+    return route.data && route.data.preload ? preload() : of(null);
+  }
+}
 
 @NgModule({
   imports: [

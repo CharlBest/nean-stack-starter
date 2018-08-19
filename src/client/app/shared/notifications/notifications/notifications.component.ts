@@ -1,8 +1,8 @@
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { BreakpointService } from '../../breakpoint.service';
-import { WebSocketService } from '../../websocket.service';
+import { BreakpointService } from '../../services/breakpoint.service';
+import { WebSocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-notifications',

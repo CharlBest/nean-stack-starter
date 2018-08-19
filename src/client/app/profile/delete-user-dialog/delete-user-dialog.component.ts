@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { AuthService } from '../../shared/auth.service';
-import { BreakpointService } from '../../shared/breakpoint.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ProfileService } from '../profile.service';
 
 @Component({

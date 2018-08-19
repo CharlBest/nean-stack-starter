@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { BreakpointService } from '../../shared/breakpoint.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { NewsletterService } from '../newsletter.service';
 
 @Component({

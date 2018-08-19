@@ -6,11 +6,11 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
-import { AuthService } from '../../auth.service';
-import { BreakpointService } from '../../breakpoint.service';
 import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
-import { PreventBackNavigationService } from '../../prevent-back-navigation.service';
-import { ThemeService } from '../../theme.service';
+import { AuthService } from '../../services/auth.service';
+import { BreakpointService } from '../../services/breakpoint.service';
+import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
+import { ThemeService } from '../../services/theme.service';
 import { HeaderType } from "./header-type.enum";
 
 @Component({
