@@ -59,6 +59,7 @@ export class ItemComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.items.unshift(data);
+        this.formGroup.reset();
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
@@ -70,6 +71,9 @@ export class ItemComponent implements OnInit {
         this.itemService.delete(uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {
+            if (data) {
+              this.items.splice(this.items.findIndex(x => x.uId === uId), 1);
+            }
           }, error => {
             this.formErrorsService.updateFormValidity(error, this.formGroup);
           });
