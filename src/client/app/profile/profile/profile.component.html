@@ -1,5 +1,5 @@
 <div [hidden]="isProcessing"
-  *ngIf="user !== null">
+  *ngIf="user">
   <mat-card>
     <mat-card-title class="profile-title">
       {{user.username}}
@@ -69,7 +69,7 @@
 </div>
 
 <mat-card [hidden]="isProcessing"
-  *ngIf="user === null">
+  *ngIf="!user">
   <mat-card-content>
     An error occurred
   </mat-card-content>
