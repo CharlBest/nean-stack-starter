@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
-import { ItemRoutingModule } from './item-routing.module';
 import { ItemComponent } from './item/item.component';
+import { ItemsRoutingModule } from './items-routing.module';
+import { ItemsComponent } from './items/items.component';
 
 const materialModules = [
   MatButtonModule,
@@ -18,13 +19,14 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    ItemRoutingModule,
+    ItemsRoutingModule,
     ReactiveFormsModule,
     FormErrorsModule,
     ...materialModules,
   ],
   declarations: [
-    ItemComponent
+    ItemComponent,
+    ItemsComponent,
   ]
 })
-export class ItemModule { }
+export class ItemsModule { }

@@ -7,18 +7,18 @@ import { ItemViewModel } from '../../../../shared/view-models/item/item.view-mod
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
-import { ItemService } from '../item.service';
+import { ItemService } from '../items.service';
 
 @Component({
-  selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  selector: 'app-items',
+  templateUrl: './items.component.html',
+  styleUrls: ['./items.component.scss']
 })
-export class ItemComponent implements OnInit {
+export class ItemsComponent implements OnInit {
 
   isAuthenticated: boolean = this.authService.hasToken();
   formGroup: FormGroup;
-  isProcessing = false;
+  isProcessing = true;
   items: ItemViewModel[];
 
   constructor(private itemService: ItemService,

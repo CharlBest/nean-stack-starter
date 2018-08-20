@@ -35,8 +35,16 @@ export class ItemsController extends BaseController {
     }
 
     public async get(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', CustomValidators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(200).json(
-            await this.itemsService.get(res)
+            await this.itemsService.get(res, uId)
         );
     }
 
