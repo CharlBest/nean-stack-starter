@@ -1,6 +1,19 @@
-<mat-card [hidden]="isProcessing">
-    <mat-card-title>{{user?.username}}</mat-card-title>
-    <mat-card-content [innerHTML]="user?.bio"></mat-card-content>
+<div [hidden]="isProcessing || !user">
+    <mat-card>
+        <mat-card-title>{{user?.username}}</mat-card-title>
+        <mat-card-content [innerHTML]="user?.bio"></mat-card-content>
+    </mat-card>
+
+    <mat-card *ngFor="let item of user?.items"
+        routerLink="/items/{{item.uId}}"
+        class="cursor-pointer">
+        <mat-card-title>{{item?.title}}</mat-card-title>
+        <mat-card-content>{{item?.description}}</mat-card-content>
+    </mat-card>
+</div>
+
+<mat-card *ngIf="!isProcessing && !user">
+    No user found
 </mat-card>
 
 <mat-card *ngIf="isProcessing">

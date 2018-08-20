@@ -44,33 +44,28 @@
 </ng-container>
 
 <ng-container *ngIf="!isProcessing">
-    <ng-container *ngFor="let item of items">
-        <mat-card routerLink="/items/{{item.uId}}"
-            class="card">
-            <mat-card-title class="title-container">
-                <span>{{item.title}}</span>
-                <span class="flex-spacer"></span>
-                <ng-container *ngIf="item.canEdit">
-                    <button mat-icon-button
-                        color="warn"
-                        (click)="deleteItem(item.uId)"
-                        type="button">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </ng-container>
-            </mat-card-title>
-            <mat-card-content>{{item.description}}</mat-card-content>
-        </mat-card>
-        <br>
-    </ng-container>
+    <mat-card *ngFor="let item of items"
+        routerLink="/items/{{item.uId}}"
+        class="cursor-pointer">
+        <mat-card-title class="title-container">
+            <span>{{item.title}}</span>
+            <span class="flex-spacer"></span>
+            <ng-container *ngIf="item.canEdit">
+                <button mat-icon-button
+                    color="warn"
+                    (click)="deleteItem(item.uId)"
+                    type="button">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </ng-container>
+        </mat-card-title>
+        <mat-card-content>{{item.description}}</mat-card-content>
+    </mat-card>
 </ng-container>
 
-<ng-container *ngIf="!isProcessing && (!items || items?.length === 0)">
-    <mat-card>
-        No items exist
-    </mat-card>
-    <br>
-</ng-container>
+<mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
+    No items exist
+</mat-card>
 
 <mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>
