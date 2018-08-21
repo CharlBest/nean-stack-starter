@@ -1,15 +1,15 @@
 <ng-container *ngIf="isAuthenticated">
-    <mat-expansion-panel #expansionPanel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Create Item
-            </mat-panel-title>
-            <mat-panel-description>
-                Type the title and description
-            </mat-panel-description>
-        </mat-expansion-panel-header>
+    <form [formGroup]="formGroup">
+        <mat-expansion-panel #expansionPanel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Create Item
+                </mat-panel-title>
+                <mat-panel-description>
+                    Type the title and description
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-        <form [formGroup]="formGroup">
             <mat-form-field>
                 <mat-label>Title</mat-label>
                 <input matInput
@@ -29,38 +29,26 @@
                     <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
-        </form>
 
-        <mat-action-row>
-            <button mat-button
-                (click)="formGroup.reset(); expansionPanel.close();">Cancel</button>
-            <button mat-raised-button
-                color="primary"
-                [disabled]="!formGroup.valid"
-                (click)="createItem()">Create</button>
-        </mat-action-row>
-    </mat-expansion-panel>
+            <mat-action-row>
+                <button mat-button
+                    type="button"
+                    (click)="reset()">Cancel</button>
+                <button mat-raised-button
+                    type="submit"
+                    color="primary"
+                    [disabled]="!formGroup.valid"
+                    (click)="createItem()">Create</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </form>
     <br>
 </ng-container>
 
 <ng-container *ngIf="!isProcessing">
-    <mat-card *ngFor="let item of items"
-        routerLink="/items/{{item.uId}}"
-        class="cursor-pointer">
-        <mat-card-title class="title-container">
-            <span>{{item.title}}</span>
-            <span class="flex-spacer"></span>
-            <ng-container *ngIf="item.canEdit">
-                <button mat-icon-button
-                    color="warn"
-                    (click)="deleteItem(item.uId)"
-                    type="button">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </ng-container>
-        </mat-card-title>
-        <mat-card-content>{{item.description}}</mat-card-content>
-    </mat-card>
+    <app-item *ngFor="let item of items"
+        [item]="item"
+        routerLink="/items/{{item.uId}}"></app-item>
 </ng-container>
 
 <mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">

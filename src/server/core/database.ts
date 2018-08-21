@@ -7,7 +7,7 @@ export class Database {
     static driver;
     static fileExtension = 'cyp';
 
-    public static createSession() {
+    public static createSession(): neo4j.Session {
         if (this.driver) {
             return this.driver.session();
         } else {
@@ -33,7 +33,7 @@ export class Database {
         return driver;
     }
 
-    public static clearDriver() {
+    public static clearDriver(): void {
         if (this.driver) {
             this.driver.close();
             this.driver = null;

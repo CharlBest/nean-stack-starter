@@ -1,63 +1,78 @@
-<!-- <ng-container *ngIf="isAuthenticated">
-    <mat-expansion-panel #expansionPanel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Create Item
-            </mat-panel-title>
-            <mat-panel-description>
-                Type the title and description
-            </mat-panel-description>
-        </mat-expansion-panel-header>
+<mat-card *ngIf="!isProcessing && item">
+    <mat-card-title class="title-container">
+        <span routerLink="/user/{{item.user.id}}"
+            style="cursor: pointer;">
+            <span>
+                <img [src]="item.user.avatarUrl"
+                    style="width: 25px; height: 25px; border-radius: 50%;" />
+            </span>
+            <span>{{item.user.username}}</span>
+        </span>
+        <span class="flex-spacer"></span>
+        <button mat-icon-button
+            type="button"
+            [matMenuTriggerFor]="menu"
+            #contextMenuTrigger="matMenuTrigger"
+            (click)="openContextMenu($event)"
+            matTooltip="Menu"
+            aria-label="Menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-card-title>
+    <mat-card-content>
+        <h3>{{item.title}}</h3>
+        <p>{{item.description}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button
+            type="button">
+            <mat-icon>mode_comment</mat-icon>
+            Comment
+        </button>
+        <button mat-button
+            type="button">
+            <mat-icon>share</mat-icon>
+            Share
+        </button>
+    </mat-card-actions>
+</mat-card>
 
-        <form [formGroup]="formGroup">
-            <mat-form-field>
-                <mat-label>Title</mat-label>
-                <input matInput
-                    formControlName="title">
-                <mat-error>
-                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
-                </mat-error>
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field>
-                <mat-label>Description</mat-label>
-                <input matInput
-                    formControlName="description">
-                <mat-error>
-                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
-                </mat-error>
-            </mat-form-field>
-        </form>
-
-        <mat-action-row>
-            <button mat-button
-                (click)="formGroup.reset(); expansionPanel.close();">Cancel</button>
-            <button mat-raised-button
-                color="primary"
-                [disabled]="!formGroup.valid"
-                (click)="createItem()">Create</button>
-        </mat-action-row>
-    </mat-expansion-panel>
-    <br>
-</ng-container> -->
-
-<ng-container *ngIf="!isProcessing && item">
-    <mat-card>
-        <mat-card-title>{{item.title}}</mat-card-title>
-        <mat-card-content>{{item.description}}</mat-card-content>
-    </mat-card>
-    <br>
-</ng-container>
-
-<ng-container *ngIf="!isProcessing && !item">
-    <mat-card>
-        Item does not exist
-    </mat-card>
-    <br>
-</ng-container>
-
-<mat-card *ngIf="isProcessing">
+<mat-card *ngIf="isProcessing && !item">
     <mat-spinner></mat-spinner>
 </mat-card>
+
+<mat-menu #menu="matMenu">
+    <ng-template matMenuContent>
+        <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+    </ng-template>
+</mat-menu>
+
+<ng-template #bottomSheetContextMenu>
+    <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
+</ng-template>
+
+<!-- Context menu links -->
+<ng-template #contextMenu
+    let-data>
+    <mat-nav-list (click)="bottomSheet.dismiss()">
+
+        <mat-list-item>
+            <mat-icon mat-list-icon>star</mat-icon>
+            <span mat-line>Save</span>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>edit</mat-icon>
+            <span mat-line>Edit</span>
+        </mat-list-item>
+        <mat-list-item (click)="deleteItem(item.uId)">
+            <mat-icon mat-list-icon
+                color="warn">delete</mat-icon>
+            <span mat-line>Delete</span>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>report</mat-icon>
+            <span mat-line>Report</span>
+        </mat-list-item>
+
+    </mat-nav-list>
+</ng-template>

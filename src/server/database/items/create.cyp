@@ -9,5 +9,10 @@ MATCH (user:User { id: {userId} })
 
 CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: {uId}, title: {title}, description: {description}, dateCreated: timestamp() })
 
-RETURN item
+RETURN item, user
+{
+    id: user.id,
+    username: user.username,
+    avatarUrl: user.avatarUrl
+}
 `

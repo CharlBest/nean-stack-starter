@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { DbQueries } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 export class GeneralRepository extends BaseRepository {
@@ -9,7 +8,7 @@ export class GeneralRepository extends BaseRepository {
     }
 
     public async createNewsletterMember(res: Response, email: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).general.createNewsletterMember,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.createNewsletterMember,
             {
                 email
             }
@@ -23,7 +22,7 @@ export class GeneralRepository extends BaseRepository {
     }
 
     public async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).general.deleteNewsletterMember,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.deleteNewsletterMember,
             {
                 email
             }

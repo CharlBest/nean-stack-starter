@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatExpansionPanel } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
-import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ItemService } from '../items.service';
@@ -16,6 +16,7 @@ import { ItemService } from '../items.service';
 })
 export class ItemsComponent implements OnInit {
 
+  @ViewChild('expansionPanel') expansionPanel: MatExpansionPanel;
   isAuthenticated: boolean = this.authService.hasToken();
   formGroup: FormGroup;
   isProcessing = true;
@@ -24,8 +25,7 @@ export class ItemsComponent implements OnInit {
   constructor(private itemService: ItemService,
     private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
-    private authService: AuthService,
-    private dialogService: DialogService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -59,25 +59,14 @@ export class ItemsComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.items.unshift(data);
-        this.formGroup.reset();
+        this.reset();
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
   }
 
-  deleteItem(uId: string) {
-    this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
-      if (data) {
-        this.itemService.delete(uId)
-          .pipe(finalize(() => this.isProcessing = false))
-          .subscribe(data => {
-            if (data) {
-              this.items.splice(this.items.findIndex(x => x.uId === uId), 1);
-            }
-          }, error => {
-            this.formErrorsService.updateFormValidity(error, this.formGroup);
-          });
-      }
-    });
+  reset() {
+    this.expansionPanel.close();
+    this.formGroup.reset();
   }
 }

@@ -1,6 +1,11 @@
 export const data = `
 MATCH (item:Item { uId: {uId} })
+MATCH (user:User)-[:HAS_ITEM]->(item)
 
-RETURN item,
-CASE WHEN (:User { id: {userId} })-[:HAS_ITEM]->(item) THEN true ELSE false END as canEdit
+RETURN item, user
+{
+    id: user.id,
+    username: user.username,
+    avatarUrl: user.avatarUrl
+}
 `

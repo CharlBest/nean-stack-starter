@@ -66,7 +66,6 @@
     <div (click)="back()">
       <button mat-icon-button
         type="button"
-        matTooltip="Back"
         aria-label="Back">
         <mat-icon>arrow_back</mat-icon>
       </button>
@@ -118,8 +117,8 @@
   <mat-nav-list (click)="bottomSheet.dismiss()">
 
     <mat-list-item routerLink="/settings">
-      <span mat-line>Settings</span>
       <mat-icon mat-list-icon>settings</mat-icon>
+      <span mat-line>Settings</span>
     </mat-list-item>
     <mat-list-item routerLink="/feedback">
       <mat-icon mat-list-icon>feedback</mat-icon>

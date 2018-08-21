@@ -156,7 +156,7 @@ export class ServerValidator {
         }
         validationErrors.forEach((error) => {
             if (!res.locals.error) {
-                res.locals.error = {};
+                res.locals.error = <any>{};
             }
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
@@ -175,7 +175,7 @@ export class ServerValidator {
     static addFormError(res: Response, field: string, error: Object): boolean {
         if (error) {
             if (!res.locals.error) {
-                res.locals.error = {};
+                res.locals.error = <any>{};
             }
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
@@ -197,7 +197,7 @@ export class ServerValidator {
     static addGlobalError(res: Response, field: string, error: Object): boolean {
         if (error) {
             if (!res.locals.error) {
-                res.locals.error = {};
+                res.locals.error = <any>{};
             }
             if (!res.locals.error.globalErrors) {
                 res.locals.error.globalErrors = {};

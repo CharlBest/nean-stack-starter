@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
-import { Database, DbQueries } from '../../core/database';
+import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 export class PaymentsRepository extends BaseRepository {
@@ -11,7 +11,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, amount: number, email: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.anonymousPayment,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.anonymousPayment,
             {
                 paymentUId,
                 chargeId,
@@ -29,7 +29,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async userPayment(res: Response, userId: number, cardUId: string, paymentUId: string, amount: number, chargeId: string, chargeCreated: number): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.userPayment,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.userPayment,
             {
                 userId,
                 cardUId,
@@ -48,7 +48,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async userCards(res: Response, userId: number): Promise<CardModel[]> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.userCards,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.userCards,
             {
                 userId
             }
@@ -64,7 +64,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string, stripeFingerprint: string, brand: string, last4: string, expireMonth: number, expireYear: number): Promise<CardModel> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.createCard,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.createCard,
             {
                 userId,
                 stripeCustomerId,
@@ -88,7 +88,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async deleteCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.deleteCard,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.deleteCard,
             {
                 userId,
                 cardUId
@@ -103,7 +103,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async updateDefaultCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.updateDefaultCard,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.updateDefaultCard,
             {
                 userId,
                 cardUId
@@ -118,7 +118,7 @@ export class PaymentsRepository extends BaseRepository {
     }
 
     public async paymentHistory(res: Response, userId: number): Promise<PaymentModel[]> {
-        const result = await res.locals.neo4jSession.run((<DbQueries>res.app.locals.dbQueries).payments.paymentHistory,
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.payments.paymentHistory,
             {
                 userId
             }

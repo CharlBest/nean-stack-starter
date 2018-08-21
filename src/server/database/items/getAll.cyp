@@ -1,8 +1,13 @@
 export const data = `
 MATCH (items:Item)
+MATCH (users:User)-[:HAS_ITEM]->(items)
 
-RETURN items,
-CASE WHEN (:User { id: {userId} })-[:HAS_ITEM]->(items) THEN true ELSE false END as canEdit
+RETURN items, users
+{
+    id: users.id,
+    username: users.username,
+    avatarUrl: users.avatarUrl
+}
 
 ORDER BY items.dateCreated DESC
 SKIP {pageIndex}*{pageSize}
