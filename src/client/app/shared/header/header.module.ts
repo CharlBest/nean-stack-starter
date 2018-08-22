@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatBottomSheetModule, MatButtonModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
@@ -16,7 +16,8 @@ const materialModules = [
   MatToolbarModule,
   MatListModule,
   MatBottomSheetModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatCardModule
 ];
 
 @NgModule({

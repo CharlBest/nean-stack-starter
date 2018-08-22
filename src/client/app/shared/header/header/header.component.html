@@ -156,3 +156,34 @@
 
   </mat-nav-list>
 </ng-template>
+
+<mat-card class="navigation bottom">
+  <button mat-button
+    routerLink="/"
+    color="primary">
+    <mat-icon>home</mat-icon>
+    <div>Home</div>
+  </button>
+  <button mat-button
+    color="primary">
+    <mat-icon>search</mat-icon>
+    <div>Seach</div>
+  </button>
+  <button mat-button
+    routerLink="/items"
+    color="primary">
+    <mat-icon>edit</mat-icon>
+    <div>Create</div>
+  </button>
+  <button mat-button
+    color="primary">
+    <mat-icon>notifications</mat-icon>
+    <div>Notifications</div>
+  </button>
+  <button mat-button
+    routerLink="/profile"
+    color="primary">
+    <mat-icon>person</mat-icon>
+    <div>Profile</div>
+  </button>
+</mat-card>

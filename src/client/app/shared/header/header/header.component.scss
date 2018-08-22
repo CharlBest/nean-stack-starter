@@ -5,3 +5,35 @@ mat-toolbar a {
 .mobile-toolbar a {
 	width: 50%;
 }
+
+.navigation {
+	padding: 0;
+	width: 100%;
+	display: flex;
+	margin: 0;
+	justify-content: space-around;
+	box-shadow: none !important;
+	z-index: 1;
+
+	&.bottom {
+		position: fixed;
+		bottom: 0;
+		border-top: 1px solid rgba(0, 0, 0, 0.12);
+	}
+
+	button {
+		line-height: 1rem;
+		min-width: 56px;
+		padding: 4px 0;
+
+		@media (max-width: 640px) {
+			// Tablet
+			font-size: 0.8rem;
+		}
+
+		@media (max-width: 360px) {
+			// Mobile
+			font-size: 0.6rem;
+		}
+	}
+}
