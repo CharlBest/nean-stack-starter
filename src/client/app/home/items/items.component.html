@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-subtitle>Everything on this demo site is live/working condition. Creating a profile, sending emails, donating
+        money, uploading profile pictures and more.</mat-card-subtitle>
+</mat-card>
+
+<app-github></app-github>
+
+<ng-container *ngIf="!isProcessing">
+    <app-item *ngFor="let item of items"
+        [item]="item"
+        routerLink="/home/{{item.uId}}"></app-item>
+</ng-container>
+
+<mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
+    No items exist
+</mat-card>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
+</mat-card>

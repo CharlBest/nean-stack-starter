@@ -7,7 +7,7 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { PreventBackNavigationService } from '../../shared/services/prevent-back-navigation.service';
-import { ItemService } from '../items.service';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-item',
@@ -22,7 +22,7 @@ export class ItemComponent implements OnInit {
   isProcessing = false;
   @Input() item: ItemViewModel;
 
-  constructor(private itemService: ItemService,
+  constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
     private authService: AuthService,
     private dialogService: DialogService,
@@ -36,7 +36,7 @@ export class ItemComponent implements OnInit {
   deleteItem(uId: string) {
     this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
       if (data) {
-        this.itemService.delete(uId)
+        this.homeService.delete(uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {
           }, error => {

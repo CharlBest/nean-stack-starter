@@ -1,20 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { MediaModule } from '../shared/media/media.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import { CommentsComponent } from './comments/comments.component';
+import { GitHubComponent } from './github/github.component';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home/home.component';
+import { ItemComponent } from './item/item.component';
+import { ItemsComponent } from './items/items.component';
 
 const materialModules = [
-  MatInputModule,
-  MatChipsModule,
-  MatListModule,
-  MatCardModule,
-  MatProgressSpinnerModule,
-  MatIconModule,
   MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatMenuModule,
+  MatListModule,
+  MatBottomSheetModule,
+  MatTooltipModule
 ];
 
 @NgModule({
@@ -27,7 +32,10 @@ const materialModules = [
     ...materialModules
   ],
   declarations: [
-    HomeComponent
+    ItemComponent,
+    ItemsComponent,
+    CommentsComponent,
+    GitHubComponent,
   ]
 })
 export class HomeModule { }

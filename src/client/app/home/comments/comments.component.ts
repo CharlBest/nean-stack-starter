@@ -6,7 +6,7 @@ import { ItemViewModel } from '../../../../shared/view-models/item/item.view-mod
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
-import { ItemService } from '../items.service';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-comments',
@@ -21,7 +21,7 @@ export class CommentsComponent implements OnInit {
   isProcessing = false;
   item: ItemViewModel;
 
-  constructor(private itemService: ItemService,
+  constructor(private homeService: HomeService,
     private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
@@ -40,7 +40,7 @@ export class CommentsComponent implements OnInit {
   getItem() {
     this.isProcessing = true;
 
-    this.itemService.get(this.itemUId)
+    this.homeService.get(this.itemUId)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.item = data;

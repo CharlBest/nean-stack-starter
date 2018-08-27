@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import * as marked from 'marked';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-github',
+  templateUrl: './github.component.html',
+  styleUrls: ['./github.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class GitHubComponent implements OnInit {
 
   isProcessing = true;
   readmeText: string;
-  tutorialTypeEnum = TutorialType;
 
   constructor() { }
 

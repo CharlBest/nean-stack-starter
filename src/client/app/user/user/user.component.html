@@ -5,7 +5,7 @@
     </mat-card>
 
     <mat-card *ngFor="let item of user?.items"
-        routerLink="/items/{{item.uId}}"
+        routerLink="/home/{{item.uId}}"
         class="cursor-pointer">
         <mat-card-title>{{item?.title}}</mat-card-title>
         <mat-card-content>{{item?.description}}</mat-card-content>

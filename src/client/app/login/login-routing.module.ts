@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeaderType } from '../shared/header/header/header-type.enum';
+import { NavigationType } from '../shared/navigation/navigation/navigation-type.enum';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Login', nav: HeaderType.Primary } }
+            { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Login', nav: NavigationType.Primary } }
         ])
     ],
     exports: [RouterModule]

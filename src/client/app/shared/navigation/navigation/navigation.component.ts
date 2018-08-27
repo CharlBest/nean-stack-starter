@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
 import { ThemeService } from '../../services/theme.service';
-import { HeaderType } from "./header-type.enum";
+import { NavigationType } from "./navigation-type.enum";
 
 @Component({
   selector: 'app-navigation',
@@ -23,8 +23,8 @@ export class NavigationComponent implements OnInit {
   @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
-  activeHeader = HeaderType.Primary;
-  headerTypes = HeaderType;
+  activeHeader = NavigationType.Primary;
+  headerTypes = NavigationType;
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
@@ -54,7 +54,7 @@ export class NavigationComponent implements OnInit {
     // Check if user has gone to primary nav page
     this.router.events
       .subscribe((event) => {
-        if (event instanceof NavigationEnd && this.activeHeader === HeaderType.Primary) {
+        if (event instanceof NavigationEnd && this.activeHeader === NavigationType.Primary) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }
       });
@@ -78,7 +78,7 @@ export class NavigationComponent implements OnInit {
             this.headerBackTitle = title;
           }
 
-          const nav = event.snapshot.data['nav'] as HeaderType;
+          const nav = event.snapshot.data['nav'] as NavigationType;
           if (nav) {
             this.activeHeader = nav;
           }

@@ -1,3 +1,39 @@
-<mat-card>
-    <mat-card-title>Terms and conditions page</mat-card-title>
+<form [formGroup]="formGroup">
+    <mat-card>
+        <mat-card-title>Create Item</mat-card-title>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput
+                    formControlName="title">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput
+                    formControlName="description">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button
+                type="button">Cancel</button>
+            <button mat-raised-button
+                type="submit"
+                color="primary"
+                [disabled]="!formGroup.valid"
+                (click)="createItem()">Create</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
 </mat-card>

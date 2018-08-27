@@ -1,0 +1,8 @@
+<mat-card [hidden]="isProcessing">
+    <mat-card-content [innerHTML]="readmeText"
+        class="github-readme-container"></mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
+</mat-card>

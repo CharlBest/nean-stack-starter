@@ -6,7 +6,7 @@ import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
-import { HeaderType } from '../header/header/header-type.enum';
+import { NavigationType } from '../navigation/navigation/navigation-type.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -65,7 +65,7 @@ export class TutorialService {
             route = route.firstChild;
         }
 
-        if (route.snapshot.data['nav'] as HeaderType === HeaderType.Back) {
+        if (route.snapshot.data['nav'] as NavigationType === NavigationType.Back) {
             this.router.navigate(['/']);
         }
     }
