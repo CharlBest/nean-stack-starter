@@ -1,8 +1,9 @@
 <!-- Main nav -->
-<header *ngIf="headerTypes.Primary == activeHeader">
+<header #navbar
+  [style.height]="topToolbarHeightInPx">
 
-  <mat-toolbar color="primary">
-    <!-- Left -->
+  <mat-toolbar *ngIf="headerTypes.Primary == activeNavigation"
+    color="primary">
     <a mat-button
       routerLink="/">
       <img class="logo"
@@ -12,12 +13,11 @@
     </a>
 
     <ng-container *ngIf="bpService.isWeb">
-      <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+      <div class="navigation">
+        <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+      </div>
     </ng-container>
 
-    <span class="flex-spacer"></span>
-
-    <!-- Right -->
     <button mat-icon-button
       type="button"
       [matMenuTriggerFor]="menu"
@@ -30,16 +30,9 @@
     </button>
   </mat-toolbar>
 
-  <mat-toolbar *ngIf="!bpService.isWeb"
-    color="primary"
-    class="mobile-toolbar">
-    <ng-container *ngTemplateOutlet="navLinks"></ng-container>
-  </mat-toolbar>
-</header>
-
-<!-- Back nav -->
-<header *ngIf="headerTypes.Back == activeHeader">
-  <mat-toolbar color="primary">
+  <!-- Back nav -->
+  <mat-toolbar *ngIf="headerTypes.Back == activeNavigation"
+    color="primary">
     <div (click)="back()">
       <button mat-icon-button
         type="button"
@@ -53,6 +46,13 @@
     </div>
   </mat-toolbar>
 </header>
+<div [style.height]="topToolbarHeightInPx"></div>
+
+<!-- Bottom Nav -->
+<mat-toolbar *ngIf="!bpService.isWeb"
+  class="navigation bottom">
+  <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+</mat-toolbar>
 
 <!-- Context menu -->
 <mat-menu #menu="matMenu">
@@ -68,17 +68,32 @@
 <!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
-    *ngIf="!loggedInUserId"
-    routerLink="/login">
-    <mat-icon *ngIf="bpService.isWeb">lock</mat-icon>
-    <span>&nbsp;Login</span>
+    routerLink="/">
+    <mat-icon>home</mat-icon>
+    <div>Home</div>
   </a>
-
   <a mat-button
-    *ngIf="loggedInUserId"
-    routerLink="/profile">
-    <mat-icon *ngIf="bpService.isWeb">account_circle</mat-icon>
-    <span>&nbsp;Profile</span>
+    routerLink="/search">
+    <mat-icon>search</mat-icon>
+    <div>Seach</div>
+  </a>
+  <a mat-button
+    routerLink="/create-item">
+    <mat-icon>edit</mat-icon>
+    <div>Create</div>
+  </a>
+  <a mat-button
+    routerLink="/activity">
+    <mat-icon matBadge="{{notificationService.messages?.length}}"
+      matBadgeColor="warn"
+      [matBadgeHidden]="notificationService.messages?.length <= 0">
+      notifications</mat-icon>
+    <div>Activity</div>
+  </a>
+  <a mat-button
+    routerLink="/account">
+    <mat-icon>person</mat-icon>
+    <div>Account</div>
   </a>
 </ng-template>
 
@@ -132,38 +147,18 @@
   </mat-nav-list>
 </ng-template>
 
-<mat-card class="navigation bottom">
-  <a mat-button
-    routerLink="/"
-    color="primary">
-    <mat-icon>home</mat-icon>
-    <div>Home</div>
-  </a>
-  <a mat-button
-    routerLink="/search"
-    color="primary">
-    <mat-icon>search</mat-icon>
-    <div>Seach</div>
-  </a>
-  <a mat-button
-    routerLink="/create-item"
-    color="primary">
-    <mat-icon>edit</mat-icon>
-    <div>Create</div>
-  </a>
-  <a mat-button
-    routerLink="/activity"
-    color="primary">
-    <mat-icon matBadge="{{notificationService.messages?.length}}"
-      matBadgeColor="warn"
-      [matBadgeHidden]="notificationService.messages?.length <= 0">
-      notifications</mat-icon>
-    <div>Activity</div>
-  </a>
-  <a mat-button
-    routerLink="/account"
-    color="primary">
-    <mat-icon>person</mat-icon>
-    <div>Account</div>
-  </a>
-</mat-card>
+
+
+
+
+<!-- <a mat-button
+  *ngIf="!loggedInUserId"
+  routerLink="/login">
+  <span>&nbsp;Login</span>
+</a>
+
+<a mat-button
+  *ngIf="loggedInUserId"
+  routerLink="/profile">
+  <span>&nbsp;Profile</span>
+</a> -->

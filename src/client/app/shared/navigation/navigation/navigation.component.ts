@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -21,14 +21,17 @@ import { NavigationType } from "./navigation-type.enum";
 export class NavigationComponent implements OnInit {
   @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
   @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
+  @ViewChild('navbar') navbar: ElementRef<HTMLDivElement>;
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
-  activeHeader = NavigationType.Primary;
+  activeNavigation = NavigationType.Primary;
   headerTypes = NavigationType;
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   hasNavigatedToPageWithPrimaryNav = false;
+  topToolbarHeight = 64;
+  topToolbarHeightInPx = `${this.topToolbarHeight}px`;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -54,7 +57,7 @@ export class NavigationComponent implements OnInit {
     // Check if user has gone to primary nav page
     this.router.events
       .subscribe((event) => {
-        if (event instanceof NavigationEnd && this.activeHeader === NavigationType.Primary) {
+        if (event instanceof NavigationEnd && this.activeNavigation === NavigationType.Primary) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }
       });
@@ -80,7 +83,7 @@ export class NavigationComponent implements OnInit {
 
           const nav = event.snapshot.data['nav'] as NavigationType;
           if (nav) {
-            this.activeHeader = nav;
+            this.activeNavigation = nav;
           }
 
           const backRouterPath = event.snapshot.data['backRouterPath'] as string;
@@ -94,6 +97,9 @@ export class NavigationComponent implements OnInit {
 
     // Activate notifications
     this.notificationService.activate();
+
+    // Hide/show top toolbar
+    this.showTopToolbarOnScrollUp();
   }
 
   logout() {
@@ -144,6 +150,19 @@ export class NavigationComponent implements OnInit {
         autoFocus: false,
         closeOnNavigation: true
       }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
+    }
+  }
+
+  showTopToolbarOnScrollUp() {
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = () => {
+      var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos || currentScrollPos < this.topToolbarHeight || this.activeNavigation === NavigationType.Back) {
+        this.navbar.nativeElement.style.top = '0';
+      } else {
+        this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;;
+      }
+      prevScrollpos = currentScrollPos;
     }
   }
 }

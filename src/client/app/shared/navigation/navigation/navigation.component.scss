@@ -1,9 +1,13 @@
-mat-toolbar a {
-	font-weight: bold;
-}
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	transition: top 0.3s;
+	z-index: 1;
 
-.mobile-toolbar a {
-	width: 50%;
+	a {
+		font-weight: bold;
+	}
 }
 
 .navigation {
@@ -11,6 +15,7 @@ mat-toolbar a {
 	width: 100%;
 	display: flex;
 	margin: 0;
+	height: auto;
 	justify-content: space-around;
 	box-shadow: none !important;
 	z-index: 1;
@@ -25,6 +30,7 @@ mat-toolbar a {
 		line-height: 1rem;
 		min-width: 56px;
 		padding: 4px 0;
+		font-weight: normal;
 
 		@media (max-width: 640px) {
 			// Tablet
