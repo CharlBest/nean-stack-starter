@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatInputModule } from '@angular/material';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
 
 const materialModules = [
   MatButtonModule,
   MatCardModule,
+  MatInputModule,
 ];
 
 @NgModule({

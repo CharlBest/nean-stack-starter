@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Login', nav: NavigationType.Primary } }
+            { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Login', nav: NavigationType.Back } }
         ])
     ],
     exports: [RouterModule]

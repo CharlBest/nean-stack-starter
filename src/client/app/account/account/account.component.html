@@ -1,3 +1,58 @@
 <mat-card>
-    <mat-card-title>Account</mat-card-title>
+    <mat-card-content>
+        <mat-nav-list>
+            <mat-list-item routerLink="/login"
+                *ngIf="!loggedInUserId">
+                <mat-icon mat-list-icon>lock</mat-icon>
+                <span mat-line>Login</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/profile"
+                *ngIf="loggedInUserId">
+                <mat-icon mat-list-icon>account_circle</mat-icon>
+                <span mat-line>Profile</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLink="/settings">
+                <mat-icon mat-list-icon>settings</mat-icon>
+                <span mat-line>Settings</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/feedback">
+                <mat-icon mat-list-icon>feedback</mat-icon>
+                <span mat-line>Feedback</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/newsletter">
+                <mat-icon mat-list-icon>mail</mat-icon>
+                <span mat-line>Newsletter</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/legal/help">
+                <mat-icon mat-list-icon>help</mat-icon>
+                <span mat-line>Help</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/payment">
+                <mat-icon mat-list-icon>credit_card</mat-icon>
+                <span mat-line>Donate</span>
+            </mat-list-item>
+            <mat-list-item (click)="takeTour()">
+                <mat-icon mat-list-icon>live_help</mat-icon>
+                <span mat-line>Take tour</span>
+            </mat-list-item>
+            <mat-list-item *ngIf="loggedInUserId"
+                (click)="logout()">
+                <mat-icon mat-list-icon>exit_to_app</mat-icon>
+                <span mat-line>Logout</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="themeService.toggleTheme()">
+                <mat-icon mat-list-icon
+                    *ngIf="!themeService.isDarkTheme">brightness_2</mat-icon>
+                <span mat-line
+                    *ngIf="!themeService.isDarkTheme">Night mode</span>
+
+                <mat-icon mat-list-icon
+                    *ngIf="themeService.isDarkTheme">brightness_5</mat-icon>
+                <span mat-line
+                    *ngIf="themeService.isDarkTheme">Day mode</span>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-card-content>
 </mat-card>

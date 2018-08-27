@@ -15,8 +15,7 @@ export class TutorialComponent implements OnInit {
 
   tuts = [
     // Tutorial 1
-    new Tutorial(TutorialType.ContextMenu, 'Click here for more options', TutorialType.SignUp, true),
-    new Tutorial(TutorialType.SignUp, 'Sign up here!', TutorialType.ForgotPassword),
+    new Tutorial(TutorialType.SignUp, 'Sign up here!', TutorialType.ForgotPassword, true),
     new Tutorial(TutorialType.ForgotPassword, 'Forgot your password?', TutorialType.Newsletter),
     new Tutorial(TutorialType.Newsletter, 'Newsletter sign up to stay up to date', TutorialType.Feedback),
     new Tutorial(TutorialType.Feedback, 'Email the team some feedback', TutorialType.None, undefined, true),

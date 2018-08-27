@@ -1,16 +1,13 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
-import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
-import { ThemeService } from '../../services/theme.service';
 import { NavigationType } from "./navigation-type.enum";
 
 @Component({
@@ -19,13 +16,11 @@ import { NavigationType } from "./navigation-type.enum";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
-  @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
   @ViewChild('navbar') navbar: ElementRef<HTMLDivElement>;
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
   activeNavigation = NavigationType.Primary;
-  headerTypes = NavigationType;
+  navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
@@ -38,12 +33,8 @@ export class NavigationComponent implements OnInit {
     private authService: AuthService,
     private titleService: Title,
     private location: Location,
-    private tutorialService: TutorialService,
     public snackBar: MatSnackBar,
-    public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
-    public themeService: ThemeService,
-    private preventBackNavigationService: PreventBackNavigationService,
     public notificationService: NotificationService) {
     this.checkHasVisited();
   }
@@ -102,10 +93,6 @@ export class NavigationComponent implements OnInit {
     this.showTopToolbarOnScrollUp();
   }
 
-  logout() {
-    this.authService.removeToken();
-  }
-
   back() {
     if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
@@ -116,10 +103,6 @@ export class NavigationComponent implements OnInit {
         this.location.back();
       }
     }
-  }
-
-  takeTour() {
-    this.tutorialService.activateTutorial(TutorialType.ContextMenu);
   }
 
   checkHasVisited() {
@@ -133,23 +116,8 @@ export class NavigationComponent implements OnInit {
         duration: 20000,
       }).onAction()
         .subscribe(() => {
-          this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
+          this.router.navigate([], { queryParams: { tut: TutorialType.SignUp } });
         });
-    }
-  }
-
-  openContextMenu() {
-    if (this.bpService.isWeb) {
-      this.contextMenuTrigger.openMenu();
-    } else {
-      this.contextMenuTrigger.closeMenu();
-
-      this.preventBackNavigationService.beforeOpen();
-
-      this.bottomSheet.open(this.bottomSheetContextMenu, {
-        autoFocus: false,
-        closeOnNavigation: true
-      }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }
   }
 

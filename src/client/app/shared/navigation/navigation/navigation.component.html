@@ -2,7 +2,7 @@
 <header #navbar
   [style.height]="topToolbarHeightInPx">
 
-  <mat-toolbar *ngIf="headerTypes.Primary == activeNavigation"
+  <mat-toolbar *ngIf="navigationType.Primary == activeNavigation"
     color="primary">
     <a mat-button
       routerLink="/">
@@ -17,21 +17,10 @@
         <ng-container *ngTemplateOutlet="navLinks"></ng-container>
       </div>
     </ng-container>
-
-    <button mat-icon-button
-      type="button"
-      [matMenuTriggerFor]="menu"
-      #contextMenuTrigger="matMenuTrigger"
-      (click)="openContextMenu()"
-      [appTutorial]="tutorialTypeEnum.ContextMenu"
-      matTooltip="Menu"
-      aria-label="Menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
   </mat-toolbar>
 
   <!-- Back nav -->
-  <mat-toolbar *ngIf="headerTypes.Back == activeNavigation"
+  <mat-toolbar *ngIf="navigationType.Back == activeNavigation"
     color="primary">
     <div (click)="back()">
       <button mat-icon-button
@@ -53,17 +42,6 @@
   class="navigation bottom">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </mat-toolbar>
-
-<!-- Context menu -->
-<mat-menu #menu="matMenu">
-  <ng-template matMenuContent>
-    <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
-  </ng-template>
-</mat-menu>
-
-<ng-template #bottomSheetContextMenu>
-  <ng-container *ngTemplateOutlet="contextMenu; context: {$implicit: {}}"></ng-container>
-</ng-template>
 
 <!-- Nav links -->
 <ng-template #navLinks>
@@ -96,69 +74,3 @@
     <div>Account</div>
   </a>
 </ng-template>
-
-<!-- Context menu links -->
-<ng-template #contextMenu
-  let-data>
-  <mat-nav-list (click)="bottomSheet.dismiss()">
-
-    <mat-list-item routerLink="/settings">
-      <mat-icon mat-list-icon>settings</mat-icon>
-      <span mat-line>Settings</span>
-    </mat-list-item>
-    <mat-list-item routerLink="/feedback">
-      <mat-icon mat-list-icon>feedback</mat-icon>
-      <span mat-line>Feedback</span>
-    </mat-list-item>
-    <mat-list-item routerLink="/newsletter">
-      <mat-icon mat-list-icon>mail</mat-icon>
-      <span mat-line>Newsletter</span>
-    </mat-list-item>
-    <mat-list-item routerLink="/legal/help">
-      <mat-icon mat-list-icon>help</mat-icon>
-      <span mat-line>Help</span>
-    </mat-list-item>
-    <mat-list-item routerLink="/payment">
-      <mat-icon mat-list-icon>credit_card</mat-icon>
-      <span mat-line>Donate</span>
-    </mat-list-item>
-    <mat-list-item (click)="takeTour()">
-      <mat-icon mat-list-icon>live_help</mat-icon>
-      <span mat-line>Take tour</span>
-    </mat-list-item>
-    <mat-list-item *ngIf="loggedInUserId"
-      (click)="logout()">
-      <mat-icon mat-list-icon>exit_to_app</mat-icon>
-      <span mat-line>Logout</span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item (click)="themeService.toggleTheme()">
-      <mat-icon mat-list-icon
-        *ngIf="!themeService.isDarkTheme">brightness_2</mat-icon>
-      <span mat-line
-        *ngIf="!themeService.isDarkTheme">Night mode</span>
-
-      <mat-icon mat-list-icon
-        *ngIf="themeService.isDarkTheme">brightness_5</mat-icon>
-      <span mat-line
-        *ngIf="themeService.isDarkTheme">Day mode</span>
-    </mat-list-item>
-
-  </mat-nav-list>
-</ng-template>
-
-
-
-
-
-<!-- <a mat-button
-  *ngIf="!loggedInUserId"
-  routerLink="/login">
-  <span>&nbsp;Login</span>
-</a>
-
-<a mat-button
-  *ngIf="loggedInUserId"
-  routerLink="/profile">
-  <span>&nbsp;Profile</span>
-</a> -->
