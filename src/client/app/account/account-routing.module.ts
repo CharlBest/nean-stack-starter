@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavigationType } from '../shared/navigation/navigation/navigation-type.enum';
+import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { AccountComponent } from './account/account.component';
 
 @NgModule({

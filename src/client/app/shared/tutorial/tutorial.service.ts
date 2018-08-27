@@ -6,7 +6,7 @@ import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
-import { NavigationType } from '../navigation/navigation/navigation-type.enum';
+import { NavigationType } from '../navigation/navigation-type.enum';
 
 @Injectable({
     providedIn: 'root'

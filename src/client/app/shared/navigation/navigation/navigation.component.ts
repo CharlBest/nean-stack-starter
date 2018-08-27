@@ -8,7 +8,7 @@ import { TutorialType } from '../../../../../shared/view-models/tutorial/tutoria
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
-import { NavigationType } from "./navigation-type.enum";
+import { NavigationType } from "../navigation-type.enum";
 
 @Component({
   selector: 'app-navigation',

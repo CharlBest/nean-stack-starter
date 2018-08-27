@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavigationType } from '../shared/navigation/navigation/navigation-type.enum';
+import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 

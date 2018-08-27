@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavigationType } from '../shared/navigation/navigation/navigation-type.enum';
+import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { HelpComponent } from './help/help.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavigationType } from '../shared/navigation/navigation/navigation-type.enum';
+import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { LanguageComponent } from './language/language.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { SettingsComponent } from './settings/settings.component';
