@@ -7,10 +7,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterModule } from './shared/footer/footer.module';
-import { HeaderModule } from './shared/header/header.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error-interceptor';
+import { NavigationModule } from './shared/navigation/navigation.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 
 @NgModule({
@@ -22,8 +21,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HeaderModule,
-    FooterModule,
+    NavigationModule,
     TutorialModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],

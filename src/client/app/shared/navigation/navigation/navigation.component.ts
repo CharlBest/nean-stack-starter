@@ -14,11 +14,11 @@ import { ThemeService } from '../../services/theme.service';
 import { HeaderType } from "./header-type.enum";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class NavigationComponent implements OnInit {
   @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
   @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
 

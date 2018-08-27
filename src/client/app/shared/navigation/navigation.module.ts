@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { PaymentDialogModule } from '../payment-dialog/payment-dialog.module';
 import { TutorialModule } from '../tutorial/tutorial.module';
-import { HeaderComponent } from './header/header.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 const materialModules = [
   MatInputModule,
@@ -30,10 +30,10 @@ const materialModules = [
     ...materialModules
   ],
   exports: [
-    HeaderComponent
+    NavigationComponent
   ],
   declarations: [
-    HeaderComponent
+    NavigationComponent
   ]
 })
-export class HeaderModule { }
+export class NavigationModule { }
