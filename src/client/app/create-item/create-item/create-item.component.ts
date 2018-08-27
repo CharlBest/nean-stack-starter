@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
@@ -18,7 +19,8 @@ export class CreateItemComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
-    private createItemService: CreateItemService) { }
+    private createItemService: CreateItemService,
+    private router: Router) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -38,6 +40,7 @@ export class CreateItemComponent implements OnInit {
     this.createItemService.create(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
+        this.router.navigate(['/']);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });

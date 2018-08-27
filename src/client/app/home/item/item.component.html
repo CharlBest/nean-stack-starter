@@ -1,14 +1,14 @@
 <mat-card *ngIf="!isProcessing && item">
-    <mat-card-title class="title-container">
-        <span routerLink="/user/{{item.user.id}}"
-            style="cursor: pointer;">
-            <span>
-                <img [src]="item.user.avatarUrl"
-                    style="width: 25px; height: 25px; border-radius: 50%;" />
-            </span>
-            <span>{{item.user.username}}</span>
-        </span>
+    <mat-card-header routerLink="/user/{{item?.user?.id}}"
+        style="cursor: pointer;">
+        <div mat-card-avatar
+            [style.background-image]="'url(' + item.user.avatarUrl + ')'"
+            class="user-avatar"></div>
+        <mat-card-title>{{item.user.username}}</mat-card-title>
+        <mat-card-subtitle>{{item.user.username}}</mat-card-subtitle>
+
         <span class="flex-spacer"></span>
+
         <button mat-icon-button
             type="button"
             [matMenuTriggerFor]="menu"
@@ -18,18 +18,23 @@
             aria-label="Menu">
             <mat-icon>more_vert</mat-icon>
         </button>
-    </mat-card-title>
+    </mat-card-header>
+    <!-- <img mat-card-image
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="{{item.user.username}} avatar"> -->
     <mat-card-content>
         <h3>{{item.title}}</h3>
         <p>{{item.description}}</p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-button
+            routerLink="/home/{{item.uId}}"
             type="button">
             <mat-icon>mode_comment</mat-icon>
             Comment
         </button>
         <button mat-button
+            (click)="openShareDialog()"
             type="button">
             <mat-icon>share</mat-icon>
             Share

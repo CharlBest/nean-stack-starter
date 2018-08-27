@@ -7,6 +7,7 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { PreventBackNavigationService } from '../../shared/services/prevent-back-navigation.service';
+import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class ItemComponent implements OnInit {
     private dialogService: DialogService,
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
-    private preventBackNavigationService: PreventBackNavigationService) { }
+    private preventBackNavigationService: PreventBackNavigationService,
+    private shareDialogService: ShareDialogService) { }
 
   ngOnInit() {
   }
@@ -46,7 +48,6 @@ export class ItemComponent implements OnInit {
     });
   }
 
-
   openContextMenu(event: Event) {
     event.preventDefault();
     event.stopPropagation();
@@ -63,5 +64,10 @@ export class ItemComponent implements OnInit {
         closeOnNavigation: true
       }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }
+  }
+
+  openShareDialog() {
+    const link = ['/home', this.item.uId];
+    this.shareDialogService.share(link);
   }
 }

@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { MediaModule } from '../shared/media/media.module';
-import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { CommentsComponent } from './comments/comments.component';
 import { GitHubComponent } from './github/github.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -13,7 +12,6 @@ import { ItemsComponent } from './items/items.component';
 const materialModules = [
   MatButtonModule,
   MatCardModule,
-  MatInputModule,
   MatIconModule,
   MatProgressSpinnerModule,
   MatMenuModule,
@@ -27,9 +25,8 @@ const materialModules = [
   imports: [
     CommonModule,
     HomeRoutingModule,
-    ReactiveFormsModule,
     MediaModule,
-    TutorialModule,
+    ShareDialogModule,
     ...materialModules
   ],
   declarations: [
@@ -37,6 +34,9 @@ const materialModules = [
     ItemsComponent,
     CommentsComponent,
     GitHubComponent,
+  ],
+  exports: [
+    ItemComponent
   ]
 })
 export class HomeModule { }

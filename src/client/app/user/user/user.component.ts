@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class UserComponent implements OnInit {
 
   constructor(private userService: UserService,
     private route: ActivatedRoute,
-    private formErrorsService: FormErrorsService) { }
+    private formErrorsService: FormErrorsService,
+    private shareDialogService: ShareDialogService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -34,8 +36,15 @@ export class UserComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.user = data;
+        // TODO: This can be optomized
+        this.user.items.forEach(x => (<any>x.user) = this.user);
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
+  }
+
+  openShareDialog() {
+    const link = ['/user', this.userId];
+    this.shareDialogService.share(link);
   }
 }
