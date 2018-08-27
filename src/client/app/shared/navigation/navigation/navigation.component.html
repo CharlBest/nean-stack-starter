@@ -18,29 +18,6 @@
     <span class="flex-spacer"></span>
 
     <!-- Right -->
-    <a mat-button
-      (click)="openPaymentDialog()"
-      [class.mat-icon-button]="!bpService.isWeb"
-      matTooltip="Donate"
-      aria-label="Donate">
-      <mat-icon>credit_card</mat-icon>
-      <span *ngIf="bpService.isWeb">&nbsp;Donate</span>
-    </a>
-
-    <a mat-button
-      href="https://github.com/CharlBest/nean-stack-starter"
-      target="_blank"
-      rel="noopener"
-      [class.mat-icon-button]="!bpService.isWeb"
-      matTooltip="GitHub"
-      aria-label="GitHub">
-      <img src="assets/github-logo-white.svg"
-        alt="GitHub">
-      <span *ngIf="bpService.isWeb">&nbsp;GitHub</span>
-    </a>
-
-    <app-notifications></app-notifications>
-
     <button mat-icon-button
       type="button"
       [matMenuTriggerFor]="menu"
@@ -91,12 +68,6 @@
 <!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
-    routerLink="/">
-    <mat-icon *ngIf="bpService.isWeb">home</mat-icon>
-    <span>&nbsp;Home</span>
-  </a>
-
-  <a mat-button
     *ngIf="!loggedInUserId"
     routerLink="/login">
     <mat-icon *ngIf="bpService.isWeb">lock</mat-icon>
@@ -132,6 +103,10 @@
       <mat-icon mat-list-icon>help</mat-icon>
       <span mat-line>Help</span>
     </mat-list-item>
+    <mat-list-item routerLink="/payment">
+      <mat-icon mat-list-icon>credit_card</mat-icon>
+      <span mat-line>Donate</span>
+    </mat-list-item>
     <mat-list-item (click)="takeTour()">
       <mat-icon mat-list-icon>live_help</mat-icon>
       <span mat-line>Take tour</span>
@@ -158,34 +133,37 @@
 </ng-template>
 
 <mat-card class="navigation bottom">
-  <button mat-button
+  <a mat-button
     routerLink="/"
     color="primary">
     <mat-icon>home</mat-icon>
     <div>Home</div>
-  </button>
-  <button mat-button
+  </a>
+  <a mat-button
     routerLink="/search"
     color="primary">
     <mat-icon>search</mat-icon>
     <div>Seach</div>
-  </button>
-  <button mat-button
+  </a>
+  <a mat-button
     routerLink="/create-item"
     color="primary">
     <mat-icon>edit</mat-icon>
     <div>Create</div>
-  </button>
-  <button mat-button
+  </a>
+  <a mat-button
     routerLink="/activity"
     color="primary">
-    <mat-icon>notifications</mat-icon>
+    <mat-icon matBadge="{{notificationService.messages?.length}}"
+      matBadgeColor="warn"
+      [matBadgeHidden]="notificationService.messages?.length <= 0">
+      notifications</mat-icon>
     <div>Activity</div>
-  </button>
-  <button mat-button
+  </a>
+  <a mat-button
     routerLink="/account"
     color="primary">
     <mat-icon>person</mat-icon>
     <div>Account</div>
-  </button>
+  </a>
 </mat-card>

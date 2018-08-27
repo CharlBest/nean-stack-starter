@@ -1,18 +1,13 @@
-<h2 mat-dialog-title>
-    Donate
-    <mat-icon matTooltipClass="info-tooltip"
-        matTooltip="Demo:
-Card number: 4242 4242 4242 4242
-Expire date: Any future date 
-CVC: Any 3 degit number
-Zip: Any 5 degit number">info_outline</mat-icon>
-</h2>
+<form [formGroup]="formGroup">
+    <mat-card [hidden]="isProcessing || paymentSuccess">
+        <mat-card-content>
 
-<div [hidden]="isProcessing || paymentSuccess"
-    class="payment-container">
-    <div class="width-enforcer"></div>
-    <form [formGroup]="formGroup">
-        <mat-dialog-content>
+            <mat-icon matTooltipClass="info-tooltip"
+                matTooltip="Demo:
+                    Card number: 4242 4242 4242 4242
+                    Expire date: Any future date 
+                    CVC: Any 3 degit number
+                    Zip: Any 5 degit number">info_outline</mat-icon>
 
             <mat-form-field *ngIf="isAuthenticated && userCards?.length > 0">
                 <mat-label>Cards</mat-label>
@@ -74,37 +69,27 @@ Zip: Any 5 degit number">info_outline</mat-icon>
             </div>
 
             <br>
-        </mat-dialog-content>
-        <mat-dialog-actions>
+        </mat-card-content>
+        <mat-card-actions>
             <button mat-raised-button
                 color="primary"
                 type="submit"
                 [disabled]="!isFormValid()"
                 (click)="onSubmit()">Pay</button>
-            <button mat-raised-button
-                type="button"
-                mat-dialog-close>Cancel</button>
-        </mat-dialog-actions>
-    </form>
-</div>
+        </mat-card-actions>
+    </mat-card>
+</form>
 
-<mat-dialog-content *ngIf="isProcessing">
-    <br>
+<mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>
-    <br>
-</mat-dialog-content>
+</mat-card>
 
-<ng-container *ngIf="!isProcessing && paymentSuccess">
-    <mat-dialog-content>
+<mat-card *ngIf="!isProcessing && paymentSuccess">
+    <mat-card-content>
         <div class="payment-successful-container">
             <mat-icon>check_circle</mat-icon>
             <br>
             <p>Payment successful</p>
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-raised-button
-            type="button"
-            mat-dialog-close>Close</button>
-    </mat-dialog-actions>
-</ng-container>
+    </mat-card-content>
+</mat-card>

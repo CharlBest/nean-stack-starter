@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DialogModule } from './shared/dialog/dialog.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error-interceptor';
 import { NavigationModule } from './shared/navigation/navigation.module';
@@ -23,6 +24,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     AppRoutingModule,
     NavigationModule,
     TutorialModule,
+    DialogModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

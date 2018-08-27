@@ -1,7 +1,26 @@
-<mat-card [hidden]="isProcessing">
-    <mat-card-content [innerHTML]="readmeText"
-        class="github-readme-container"></mat-card-content>
-</mat-card>
+<mat-expansion-panel [hidden]="isProcessing">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            What is NEAN?
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div [innerHTML]="readmeText"
+        class="github-readme-container"></div>
+
+    <mat-action-row>
+        <a mat-button
+            href="https://github.com/CharlBest/nean-stack-starter"
+            target="_blank"
+            rel="noopener"
+            matTooltip="GitHub"
+            aria-label="GitHub">
+            <img src="assets/github-logo.svg"
+                alt="GitHub">
+            <span>&nbsp;&nbsp;GitHub</span>
+        </a>
+    </mat-action-row>
+</mat-expansion-panel>
 
 <mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>

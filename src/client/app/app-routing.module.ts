@@ -30,6 +30,7 @@ export class CustomPreloading implements PreloadingStrategy {
       { path: 'create-item', loadChildren: './create-item/create-item.module#CreateItemModule' },
       { path: 'activity', loadChildren: './activity/activity.module#ActivityModule' },
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
+      { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
       { path: 'verify', loadChildren: './verify/verify.module#VerifyModule', canActivate: [AuthService] },
       { path: '**', redirectTo: '' }
     ], { preloadingStrategy: CustomPreloading })

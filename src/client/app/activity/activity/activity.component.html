@@ -1,3 +1,24 @@
-<mat-card>
-    <mat-card-title>Activity</mat-card-title>
+<mat-card *ngIf="notificationService.messages.length > 0">
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let message of notificationService.messages; let i = index">
+                <span mat-line>{{message}}</span>
+                <button mat-icon-button
+                    type="button"
+                    (click)="removeMessage(i)"
+                    matTooltip="Mark As Read"
+                    aria-label="Mark As Read">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="notificationService.messages.length <= 0">
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>No Messages</mat-list-item>
+        </mat-list>
+    </mat-card-content>
 </mat-card>

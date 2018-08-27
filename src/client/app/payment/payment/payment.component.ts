@@ -1,22 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { CardModel } from '../../../../../shared/models/payment/card.model';
-import { BuildFormGroup } from '../../../../../shared/validation/validators';
-import { AnonymousPaymentViewModel } from '../../../../../shared/view-models/payment/anonymous-payment.view-model';
-import { UserPaymentViewModel } from '../../../../../shared/view-models/payment/user-payment.view-model';
-import { DialogService } from '../../dialog/dialog.service';
-import { FormErrorsService } from '../../form-errors/form-errors.service';
-import { AuthService } from '../../services/auth.service';
-import { StripeElementsComponent } from '../../stripe-elements/stripe-elements/stripe-elements.component';
+import { CardModel } from '../../../../shared/models/payment/card.model';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
+import { UserPaymentViewModel } from '../../../../shared/view-models/payment/user-payment.view-model';
+import { DialogService } from '../../shared/dialog/dialog.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-elements/stripe-elements.component';
 import { PaymentService } from '../payment.service';
 
 @Component({
-    selector: 'app-payment-dialog',
-    templateUrl: './payment-dialog.component.html',
-    styleUrls: ['./payment-dialog.component.scss']
+    selector: 'app-payment',
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.scss']
 })
-export class PaymentDialogComponent implements OnInit {
+export class PaymentComponent implements OnInit {
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
 
     isAuthenticated: boolean = this.authService.hasToken();

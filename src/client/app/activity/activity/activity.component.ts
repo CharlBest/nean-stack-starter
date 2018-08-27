@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../../shared/services/notification.service';
 
 @Component({
   selector: 'app-activity',
@@ -6,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
-
-  constructor() { }
+  constructor(public notificationService: NotificationService) { }
 
   ngOnInit() {
+  }
+
+  removeMessage(index: number) {
+    this.notificationService.removeMessage(index);
   }
 }

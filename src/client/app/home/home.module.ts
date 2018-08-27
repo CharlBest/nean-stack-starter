@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { MediaModule } from '../shared/media/media.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { CommentsComponent } from './comments/comments.component';
@@ -19,7 +19,8 @@ const materialModules = [
   MatMenuModule,
   MatListModule,
   MatBottomSheetModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule,
 ];
 
 @NgModule({

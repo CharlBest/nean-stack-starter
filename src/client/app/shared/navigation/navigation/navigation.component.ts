@@ -6,9 +6,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { TutorialService } from '../../../shared/tutorial/tutorial.service';
-import { PaymentDialogService } from '../../payment-dialog/payment-dialog.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { NotificationService } from '../../services/notification.service';
 import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
 import { ThemeService } from '../../services/theme.service';
 import { NavigationType } from "./navigation-type.enum";
@@ -37,11 +37,11 @@ export class NavigationComponent implements OnInit {
     private location: Location,
     private tutorialService: TutorialService,
     public snackBar: MatSnackBar,
-    private paymentDialogService: PaymentDialogService,
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
     public themeService: ThemeService,
-    private preventBackNavigationService: PreventBackNavigationService) {
+    private preventBackNavigationService: PreventBackNavigationService,
+    public notificationService: NotificationService) {
     this.checkHasVisited();
   }
 
@@ -92,11 +92,8 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-    this.route.queryParamMap.subscribe(params => {
-      if (params.has('dialog') && params.get('dialog') === 'donation') {
-        this.openPaymentDialog();
-      }
-    });
+    // Activate notifications
+    this.notificationService.activate();
   }
 
   logout() {
@@ -133,10 +130,6 @@ export class NavigationComponent implements OnInit {
           this.router.navigate([], { queryParams: { tut: TutorialType.ContextMenu } });
         });
     }
-  }
-
-  openPaymentDialog() {
-    this.paymentDialogService.open();
   }
 
   openContextMenu() {

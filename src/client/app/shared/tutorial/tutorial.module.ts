@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { TutorialDirective } from './tutorial.directive';
 import { TutorialComponent } from './tutorial/tutorial.component';
 
 const materialModules = [
-    MatDialogModule,
     MatButtonModule,
     MatIconModule
 ];
