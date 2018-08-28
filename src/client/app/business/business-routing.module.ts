@@ -17,4 +17,4 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
     ],
     exports: [RouterModule]
 })
-export class LegalRoutingModule { }
+export class BusinessRoutingModule { }

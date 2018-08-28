@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatRadioModule, MatTableModule } from '@angular/material';
 import { GitHubModule } from '../shared/github/github.module';
 import { PWAHelperModule } from '../shared/pwa-helper/pwa-helper.module';
+import { BusinessRoutingModule } from './business-routing.module';
 import { DevComponent } from './dev/dev.component';
 import { HelpComponent } from './help/help.component';
-import { LegalRoutingModule } from './legal-routing.module';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 
@@ -19,7 +19,7 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    LegalRoutingModule,
+    BusinessRoutingModule,
     PWAHelperModule,
     GitHubModule,
     ...materialModules
@@ -31,4 +31,4 @@ const materialModules = [
     DevComponent,
   ]
 })
-export class LegalModule { }
+export class BusinessModule { }
