@@ -60,7 +60,6 @@ export class ItemComponent implements OnInit {
       this.preventBackNavigationService.beforeOpen();
 
       this.bottomSheet.open(this.bottomSheetContextMenu, {
-        autoFocus: false,
         closeOnNavigation: true
       }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }

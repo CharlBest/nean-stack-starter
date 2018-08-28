@@ -5,8 +5,8 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <div [innerHTML]="readmeText"
-        class="github-readme-container"></div>
+    <app-github [filePath]="'README'"
+        (doneLoading)="doneLoading()"></app-github>
 
     <mat-action-row>
         <a mat-button

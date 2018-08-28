@@ -67,7 +67,6 @@ export class EmojiPanelComponent implements OnInit {
       this.bottomSheet.open(this.bottomSheetRef, {
         backdropClass: 'cdk-overlay-transparent-backdrop',
         panelClass: 'emoji-panel',
-        autoFocus: false,
         closeOnNavigation: true
       }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }

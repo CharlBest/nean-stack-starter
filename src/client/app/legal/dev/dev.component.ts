@@ -13,9 +13,11 @@ const { version: appVersion } = require('../../../../../package.json');
   styleUrls: ['./dev.component.scss']
 })
 export class DevComponent implements OnInit {
-  appVersion = appVersion;
-  angularVersion = AngularVersion;
-  angularMaterialVersion = AngularMaterialVersion;
+  dataSource = [
+    { description: 'Package.json', version: `v${appVersion}` },
+    { description: 'Angular', version: `v${AngularVersion.full}` },
+    { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
+  ];
 
   constructor() { }
 
