@@ -46,22 +46,38 @@
 <!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
-    routerLink="/">
+    routerLink="/"
+    routerLinkActive
+    #rla1="routerLinkActive"
+    [color]="rla1.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>home</mat-icon>
     <div>Home</div>
   </a>
   <a mat-button
-    routerLink="/search">
+    routerLink="/search"
+    routerLinkActive
+    #rla2="routerLinkActive"
+    [color]="rla2.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>search</mat-icon>
     <div>Seach</div>
   </a>
   <a mat-button
-    routerLink="/create-item">
+    routerLink="/create-item"
+    routerLinkActive
+    #rla3="routerLinkActive"
+    [color]="rla3.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>edit</mat-icon>
     <div>Create</div>
   </a>
   <a mat-button
-    routerLink="/activity">
+    routerLink="/activity"
+    routerLinkActive
+    #rla4="routerLinkActive"
+    [color]="rla4.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon matBadge="{{notificationService.messages?.length}}"
       matBadgeColor="warn"
       [matBadgeHidden]="notificationService.messages?.length <= 0">
@@ -69,7 +85,11 @@
     <div>Activity</div>
   </a>
   <a mat-button
-    routerLink="/account">
+    routerLink="/account"
+    routerLinkActive
+    #rla5="routerLinkActive"
+    [color]="rla5.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>person</mat-icon>
     <div>Account</div>
   </a>
