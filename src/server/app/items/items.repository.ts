@@ -1,4 +1,6 @@
 import { Response } from 'express';
+import { ItemModel } from '../../../shared/models/item/item.model';
+import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
@@ -21,8 +23,8 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('item'));
-            viewModel.user = Database.parseValues(x.get('user'));
+            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
+            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
             return viewModel;
         }) as ItemViewModel[];
 
@@ -59,8 +61,8 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('item'));
-            viewModel.user = Database.parseValues(x.get('user'));
+            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
+            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
             return viewModel;
         }) as ItemViewModel[];
 
@@ -82,8 +84,8 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('items'));
-            viewModel.user = Database.parseValues(x.get('users'));
+            viewModel = Database.createNodeObject(x.get('items')) as ItemModel;
+            viewModel.user = Database.parseValues(x.get('users')) as ItemUserViewModel;
             return viewModel;
         }) as ItemViewModel[];
 

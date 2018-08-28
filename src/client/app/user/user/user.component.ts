@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { ItemViewModel } from 'shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
@@ -37,7 +38,11 @@ export class UserComponent implements OnInit {
       .subscribe(data => {
         this.user = data;
         // TODO: This can be optomized
-        this.user.items.forEach(x => (<any>x.user) = this.user);
+        this.user.items.forEach((x: ItemViewModel) => x.user = {
+          id: this.userId,
+          username: this.user.username,
+          avatarUrl: this.user.avatarUrl
+        });
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
