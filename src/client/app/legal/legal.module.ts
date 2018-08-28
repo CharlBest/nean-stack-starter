@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatRadioModule } from '@angular/material';
 import { PWAHelperModule } from '../shared/pwa-helper/pwa-helper.module';
+import { DevComponent } from './dev/dev.component';
 import { HelpComponent } from './help/help.component';
 import { LegalRoutingModule } from './legal-routing.module';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
@@ -24,6 +25,7 @@ const materialModules = [
     HelpComponent,
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
+    DevComponent,
   ]
 })
 export class LegalModule { }
