@@ -10,3 +10,4 @@
 * Responsiveness by resizing window
 * Throttle network to 3G to slow down request responses
 * Zoom browser in/out
+* Test all browsers
