@@ -20,6 +20,7 @@ export class GitHubComponent implements OnInit {
       this.getMarkdownPage();
     } else {
       this.readmeText = 'IN DEVELOPMENT MODE';
+      this.doneLoading.emit();
     }
   }
 
