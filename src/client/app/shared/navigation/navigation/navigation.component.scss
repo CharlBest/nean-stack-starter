@@ -18,13 +18,13 @@ header {
 	height: auto;
 	justify-content: space-around;
 	box-shadow: none !important;
+	border-radius: 0;
 	z-index: 1;
 
 	&.bottom {
 		position: fixed;
 		bottom: 0;
 		border-top: 1px solid rgba(0, 0, 0, 0.06);
-		background-color: inherit;
 	}
 
 	a {

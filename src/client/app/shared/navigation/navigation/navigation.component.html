@@ -38,10 +38,10 @@
 <div [style.height]="topToolbarHeightInPx"></div>
 
 <!-- Bottom Nav -->
-<mat-toolbar *ngIf="!bpService.isWeb"
+<mat-card *ngIf="!bpService.isWeb"
   class="navigation bottom">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
-</mat-toolbar>
+</mat-card>
 
 <!-- Nav links -->
 <ng-template #navLinks>
