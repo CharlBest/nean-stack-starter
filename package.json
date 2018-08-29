@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.457",
+  "version": "0.0.458",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -44,8 +44,8 @@
     "@angular/cdk": "^6.4.6",
     "@angular/cli": "^6.1.5",
     "@angular/common": "^6.1.4",
-    "@angular/compiler": "^6.1.4",
-    "@angular/compiler-cli": "^6.1.4",
+    "@angular/compiler": "^6.1.1",
+    "@angular/compiler-cli": "^6.1.1",
     "@angular/core": "^6.1.4",
     "@angular/forms": "^6.1.4",
     "@angular/http": "^6.1.4",
