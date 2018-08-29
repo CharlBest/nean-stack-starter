@@ -1,24 +1,14 @@
-.card {
-	padding-top: 0;
-	padding-left: 0;
-	padding-right: 0;
+mat-card-header {
+	padding-top: -24px;
+	padding-left: -24px;
+	padding-right: -24px;
+	cursor: pointer;
 
-	.side-padding {
-		padding-left: 24px;
-		padding-right: 24px;
+	&:focus {
+		outline: none;
 	}
 
-	mat-card-header {
-		@extend .side-padding;
-		cursor: pointer;
-		padding-top: 24px;
-
-		&:focus {
-			outline: none;
-		}
-
-		.user-avatar {
-			background-size: cover;
-		}
+	.user-avatar {
+		background-size: cover;
 	}
 }
