@@ -12,17 +12,18 @@ export class AuthService implements CanActivate {
     private loggedInUserId = new BehaviorSubject<number>(this.getIdFromJWT());
     loggedInUserId$ = this.loggedInUserId.asObservable();
 
-    constructor(private router: Router,
-        private dialog: MatDialog) { }
-
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.hasToken()) {
+    private _preventLogoutOnNextRequest: boolean;
+    get shouldPreventLogoutOnNextRequest() {
+        if (this._preventLogoutOnNextRequest) {
+            this._preventLogoutOnNextRequest = false;
             return true;
         } else {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
     }
+
+    constructor(private router: Router,
+        private dialog: MatDialog) { }
 
     private getIdFromJWT() {
         const token = this.getLocalToken();
@@ -36,7 +37,7 @@ export class AuthService implements CanActivate {
         return null;
     }
 
-    parseJwt(token) {
+    private parseJwt(token) {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         try {
@@ -47,32 +48,45 @@ export class AuthService implements CanActivate {
         }
     }
 
-    public updateLoggedInUserId(value) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        if (this.hasToken()) {
+            return true;
+        } else {
+            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+            return false;
+        }
+    }
+
+    updateLoggedInUserId(value) {
         this.loggedInUserId.next(value);
     }
 
-    public getLoggedInUserId(): number {
+    getLoggedInUserId(): number {
         return this.loggedInUserId.getValue();
     }
 
-    public setToken(accessToken: string, id: number) {
+    setToken(accessToken: string, id: number) {
         sessionStorage.setItem(this.tokeyKey, accessToken);
         this.updateLoggedInUserId(id);
     }
 
-    public removeToken() {
+    removeToken() {
         sessionStorage.clear();
         this.updateLoggedInUserId(null);
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
         this.dialog.closeAll();
     }
 
-    public hasToken(): boolean {
+    hasToken(): boolean {
         const token = sessionStorage.getItem(this.tokeyKey);
         return token != null;
     }
 
-    public getLocalToken(): string {
+    getLocalToken(): string {
         return sessionStorage.getItem(this.tokeyKey);
+    }
+
+    preventLogoutOnNextRequest() {
+        this._preventLogoutOnNextRequest = true;
     }
 }
