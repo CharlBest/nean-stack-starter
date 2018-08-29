@@ -27,7 +27,7 @@ body {
 	// App root rules
 	app-root {
 		margin-bottom: 49px;
-		display: block;
+		display: flex;
 
 		// Validation
 		.validation-message {
