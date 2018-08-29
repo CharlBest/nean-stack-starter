@@ -1,5 +1,5 @@
 <mat-card *ngIf="!isProcessing && item"
-    class="item-card">
+    class="card">
     <mat-card-header routerLink="/user/{{item?.user?.id}}">
         <div mat-card-avatar
             [style.background-image]="'url(' + item.user.avatarUrl + ')'"
