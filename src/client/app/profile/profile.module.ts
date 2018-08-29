@@ -10,7 +10,7 @@ import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
-import { CreateCardDialogComponent } from './create-card-dialog/create-card-dialog.component';
+import { CreateCardComponent } from './create-card/create-card.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { PaymentsComponent } from './payments/payments.component';
@@ -56,12 +56,11 @@ const materialModules = [
     UpdatePasswordComponent,
     DeleteUserDialogComponent,
     PaymentsComponent,
-    CreateCardDialogComponent,
-    PaymentHistoryComponent
+    PaymentHistoryComponent,
+    CreateCardComponent,
   ],
   entryComponents: [
-    DeleteUserDialogComponent,
-    CreateCardDialogComponent
+    DeleteUserDialogComponent
   ]
 })
 export class ProfileModule { }

@@ -1,11 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { CardModel } from '../../../../shared/models/payment/card.model';
 import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { CreateCardDialogComponent } from '../create-card-dialog/create-card-dialog.component';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -20,21 +17,11 @@ export class PaymentsComponent implements OnInit {
   isChangingDefault = false;
   newDefaultCardUId: string = null;
 
-  constructor(private dialog: MatDialog,
-    private profileService: ProfileService,
+  constructor(private profileService: ProfileService,
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService) { }
 
   ngOnInit() {
-  }
-
-  addCard() {
-    const dialog = this.dialog.open(CreateCardDialogComponent);
-    dialog.afterClosed().subscribe((data: CardModel) => {
-      if (data) {
-        this.userCards.push(data);
-      }
-    });
   }
 
   deleteCard(uId: string) {

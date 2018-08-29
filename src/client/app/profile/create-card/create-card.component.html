@@ -1,0 +1,20 @@
+<mat-card [hidden]="isProcessing">
+    <mat-card-title>Create Card</mat-card-title>
+    <mat-card-content>
+
+        <app-stripe-elements #stripeElements
+            (isDoneRendering)="isProcessing = !$event"></app-stripe-elements>
+
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button
+            type="button"
+            color="primary"
+            [disabled]="!stripeElements.isValid"
+            (click)="onSubmit()">Create</button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="isProcessing">
+    <mat-spinner></mat-spinner>
+</mat-card>

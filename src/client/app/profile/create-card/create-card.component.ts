@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -7,19 +7,19 @@ import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-ele
 import { ProfileService } from '../profile.service';
 
 @Component({
-    selector: 'app-create-card-dialog',
-    templateUrl: './create-card-dialog.component.html',
-    styleUrls: ['./create-card-dialog.component.scss']
+    selector: 'app-create-card',
+    templateUrl: './create-card.component.html',
+    styleUrls: ['./create-card.component.scss']
 })
-export class CreateCardDialogComponent {
+export class CreateCardComponent {
 
     @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
     isProcessing = true;
 
     constructor(private profileService: ProfileService,
         private formErrorsService: FormErrorsService,
-        private dialogRef: MatDialogRef<CreateCardDialogComponent>,
-        private dialogService: DialogService) { }
+        private dialogService: DialogService,
+        private router: Router) { }
 
     async onSubmit() {
         this.isProcessing = true;
@@ -28,8 +28,8 @@ export class CreateCardDialogComponent {
         if (token) {
             this.profileService.createCard(token.id)
                 .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(data => {
-                    this.dialogRef.close(data);
+                .subscribe(() => {
+                    this.router.navigate(['/profile']);
                 }, error => {
                     this.formErrorsService.updateFormValidity(error);
                 });

@@ -49,7 +49,7 @@
   <mat-card-actions align="end">
     <button mat-raised-button
       *ngIf="!isChangingDefault"
-      (click)="addCard()"
+      routerLink="create-card"
       type="button">Add payment method</button>
     <button mat-raised-button
       *ngIf="!isChangingDefault && userCards?.length > 1"
