@@ -9,9 +9,13 @@
         <mat-label>type here...</mat-label>
         <textarea matInput
           formControlName="content"
-          rows="10"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="18"
           [attr.autofocus]="bpService.isWeb || null"></textarea>
-        <mat-hint *ngIf="formGroup.get('content').value?.length < 10">Minimum of {{formGroup.get('content').value?.length}}/10 characters</mat-hint>
+        <mat-hint *ngIf="formGroup.get('content').value?.length < 10">Minimum of {{formGroup.get('content').value?.length}}/10
+          characters
+        </mat-hint>
         <mat-error>
           <app-form-errors [control]="formGroup.get('content')"></app-form-errors>
         </mat-error>
