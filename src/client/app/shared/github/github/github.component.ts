@@ -16,7 +16,7 @@ export class GitHubComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (!environment.production) {
+    if (environment.production) {
       this.getMarkdownPage();
     } else {
       this.readmeText = 'IN DEVELOPMENT MODE';
