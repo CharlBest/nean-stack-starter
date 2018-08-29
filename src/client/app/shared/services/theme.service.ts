@@ -11,14 +11,7 @@ export class ThemeService {
         return this.darkTheme;
     }
 
-    constructor() {
-        this.themeOnInit();
-    }
-
-    private themeOnInit() {
-        this.darkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
-        this.updateTheme();
-    }
+    constructor() { }
 
     private updateTheme() {
         if (this.darkTheme) {
@@ -28,6 +21,11 @@ export class ThemeService {
         }
 
         localStorage.setItem(this.isDarkThemeStorageKey, `${this.darkTheme}`);
+    }
+
+    init() {
+        this.darkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
+        this.updateTheme();
     }
 
     toggleTheme() {

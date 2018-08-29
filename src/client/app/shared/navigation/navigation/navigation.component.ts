@@ -8,6 +8,7 @@ import { TutorialType } from '../../../../../shared/view-models/tutorial/tutoria
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
+import { ThemeService } from '../../services/theme.service';
 import { NavigationType } from "../navigation-type.enum";
 
 @Component({
@@ -33,7 +34,8 @@ export class NavigationComponent implements OnInit {
     private authService: AuthService,
     private titleService: Title,
     private location: Location,
-    public snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService,
     public bpService: BreakpointService,
     public notificationService: NotificationService) {
     this.checkHasVisited();
@@ -91,6 +93,9 @@ export class NavigationComponent implements OnInit {
 
     // Hide/show top toolbar
     this.showTopToolbarOnScrollUp();
+
+    // Activate theme
+    this.themeService.init();
   }
 
   back() {
