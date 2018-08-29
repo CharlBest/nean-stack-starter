@@ -56,7 +56,7 @@ body {
 			}
 		}
 
-		// Vertical radioo button layout
+		// Vertical radio button layout
 		.radio-group-vertical {
 			display: inline-flex;
 			flex-direction: column;
@@ -152,6 +152,18 @@ body {
 
 	a {
 		color: inherit;
+	}
+
+	.display-flex {
+		display: flex;
+
+		&.flex-center {
+			justify-content: center;
+		}
+
+		&.flex-right {
+			justify-content: flex-end;
+		}
 	}
 }
 
