@@ -28,6 +28,7 @@ body {
 	app-root {
 		margin-bottom: 49px;
 		display: flex;
+		flex-direction: column;
 
 		// Validation
 		.validation-message {
