@@ -4,7 +4,7 @@
             [style.background-image]="'url(' + item.user.avatarUrl + ')'"
             class="user-avatar"></div>
         <mat-card-title>{{item.user.username}}</mat-card-title>
-        <mat-card-subtitle>{{item.user.username}}</mat-card-subtitle>
+        <mat-card-subtitle>{{item.dateCreated | date}}</mat-card-subtitle>
 
         <span class="flex-spacer"></span>
 
