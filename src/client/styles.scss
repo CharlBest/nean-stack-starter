@@ -153,18 +153,6 @@ body {
 	a {
 		color: inherit;
 	}
-
-	.display-flex {
-		display: flex;
-
-		&.flex-center {
-			justify-content: center;
-		}
-
-		&.flex-right {
-			justify-content: flex-end;
-		}
-	}
 }
 
 // Override Quill toolbar with white icons when in night mode (Dark theme)
