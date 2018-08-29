@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material';
+import { CardBrandComponent } from './card-brand/card-brand.component';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
 
 const materialModules = [
@@ -13,10 +14,12 @@ const materialModules = [
         ...materialModules
     ],
     declarations: [
-        StripeElementsComponent
+        StripeElementsComponent,
+        CardBrandComponent,
     ],
     exports: [
-        StripeElementsComponent
+        StripeElementsComponent,
+        CardBrandComponent,
     ]
 })
 export class StripeElementsModule { }

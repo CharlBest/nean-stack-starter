@@ -1,12 +1,10 @@
 <div [hidden]="elementsWrapper.isRendering">
     <div class="mat-form-field card-number-container">
         <div class="stripe-element">
-            <img *ngIf="elementsWrapper.cardNumber.cardBrand"
-                src="assets/card-brand-icons/{{cardBrandType[elementsWrapper.cardNumber.cardBrand]}}.svg"
-                class="card-brand-image" />
+            <app-card-brand [cardBrandEnum]="elementsWrapper.cardNumber.cardBrand"></app-card-brand>
 
             <div #cardNumber
-                class="full-width"></div>
+                class="card-number"></div>
         </div>
         <div class="mat-error">{{elementsWrapper.cardNumber.error}}</div>
     </div>

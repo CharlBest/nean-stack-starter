@@ -18,7 +18,10 @@
               </ng-container>
             </td>
             <td>
-              <mat-icon>credit_card</mat-icon>
+              <app-card-brand *ngIf="card.brand"
+                [cardBrandString]="card.brand"></app-card-brand>
+
+              <mat-icon *ngIf="!card.brand">credit_card</mat-icon>
             </td>
             <td>**** {{card.last4}}</td>
             <td>

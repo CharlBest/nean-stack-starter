@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ThemeService } from '../../services/theme.service';
+import { CardBrandType } from '../card-brand.enum';
 import { StripeElementsService } from '../stripe-elements.service';
 
 @Component({
@@ -173,15 +174,4 @@ interface ElementWrapper {
     element?: any; /*stripe.elements.Element*/
     error?: string;
     valid: boolean;
-}
-
-enum CardBrandType {
-    Unknown = 1,
-    Visa = 2,
-    MasterCard = 3,
-    DinnersClub = 4,
-    Discover = 5,
-    AmericanExpress = 6,
-    JCB = 7,
-    UnionPay = 8,
 }

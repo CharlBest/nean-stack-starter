@@ -2,12 +2,14 @@
     <mat-card [hidden]="isProcessing || paymentSuccess">
         <mat-card-content>
 
-            <mat-icon matTooltipClass="info-tooltip"
-                matTooltip="Demo:
+            <div class="info-tooltip-container">
+                <mat-icon matTooltipClass="info-tooltip"
+                    matTooltip="Demo:
                     Card number: 4242 4242 4242 4242
                     Expire date: Any future date 
                     CVC: Any 3 degit number
                     Zip: Any 5 degit number">info_outline</mat-icon>
+            </div>
 
             <mat-form-field *ngIf="isAuthenticated && userCards?.length > 0">
                 <mat-label>Cards</mat-label>
@@ -20,6 +22,8 @@
                     <mat-option value="new">Use new card</mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <br>
 
             <app-stripe-elements [hidden]="formGroup.get('cardUId').value !== null && formGroup.get('cardUId').value !== 'new'"
                 #stripeElements
@@ -56,6 +60,7 @@
             </ng-container>
 
             <ng-container *ngIf="isAuthenticated && (formGroup.get('cardUId').value === null || formGroup.get('cardUId').value === 'new')">
+                <br>
                 <br>
 
                 <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>

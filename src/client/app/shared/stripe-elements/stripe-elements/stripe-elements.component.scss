@@ -14,10 +14,9 @@
 	.stripe-element {
 		display: flex;
 
-		.card-brand-image {
-			max-height: 17px;
-			margin-right: 8px;
-			user-select: none;
+		.card-number {
+			width: 100%;
+			margin-left: 8px;
 		}
 	}
 }
