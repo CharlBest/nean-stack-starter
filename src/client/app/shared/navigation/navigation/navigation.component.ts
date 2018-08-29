@@ -122,9 +122,10 @@ export class NavigationComponent implements OnInit {
   }
 
   showTopToolbarOnScrollUp() {
-    var prevScrollpos = window.pageYOffset;
+    let prevScrollpos = window.pageYOffset;
+    // TODO: this could be a performance bottleneck (Add debounce)
     window.onscroll = () => {
-      var currentScrollPos = window.pageYOffset;
+      let currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos || currentScrollPos < this.topToolbarHeight || this.activeNavigation === NavigationType.Back) {
         this.navbar.nativeElement.style.top = '0';
       } else {
