@@ -1,6 +1,6 @@
-<mat-card *ngIf="!isProcessing && item">
-    <mat-card-header routerLink="/user/{{item?.user?.id}}"
-        style="cursor: pointer;">
+<mat-card *ngIf="!isProcessing && item"
+    class="item-card">
+    <mat-card-header routerLink="/user/{{item?.user?.id}}">
         <div mat-card-avatar
             [style.background-image]="'url(' + item.user.avatarUrl + ')'"
             class="user-avatar"></div>
@@ -22,11 +22,11 @@
     <!-- <img mat-card-image
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="{{item.user.username}} avatar"> -->
-    <mat-card-content>
+    <mat-card-content class="side-padding">
         <h3>{{item.title}}</h3>
         <p>{{item.description}}</p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions class="side-padding">
         <button mat-button
             routerLink="/home/{{item.uId}}"
             type="button">

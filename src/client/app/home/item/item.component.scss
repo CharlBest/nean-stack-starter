@@ -1,3 +1,24 @@
-.user-avatar {
-	background-size: cover;
+.item-card {
+	padding-top: 0;
+	padding-left: 0;
+	padding-right: 0;
+
+	.side-padding {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	mat-card-header {
+		@extend .side-padding;
+		cursor: pointer;
+		padding-top: 24px;
+
+		&:focus {
+			outline: none;
+		}
+
+		.user-avatar {
+			background-size: cover;
+		}
+	}
 }
