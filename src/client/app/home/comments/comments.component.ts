@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -22,7 +21,6 @@ export class CommentsComponent implements OnInit {
   item: ItemViewModel;
 
   constructor(private homeService: HomeService,
-    private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
     private authService: AuthService,

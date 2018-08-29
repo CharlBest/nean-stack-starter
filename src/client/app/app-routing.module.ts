@@ -16,7 +16,7 @@ export class CustomPreloading implements PreloadingStrategy {
       { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'full' },
       // Chrome extension routing workaround
       { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
-      // TODO: add updates consumtion page back in
+      { path: 'home', loadChildren: './home/home.module#HomeModule' },
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
       { path: 'login', loadChildren: './login/login.module#LoginModule', data: { preload: true } },
       { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },

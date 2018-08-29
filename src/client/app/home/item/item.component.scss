@@ -12,3 +12,8 @@ mat-card-header {
 		background-size: cover;
 	}
 }
+
+mat-card-actions {
+	display: flex;
+	justify-content: space-around;
+}
