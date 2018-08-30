@@ -5,6 +5,7 @@ import { DevComponent } from './dev/dev.component';
 import { HelpComponent } from './help/help.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { UserDataComponent } from './user-data/user-data.component';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
             { path: 'privacypolicy', component: PrivacyPolicyComponent, pathMatch: 'full', data: { title: 'Privacy Policy', nav: NavigationType.Back } },
             { path: 'help', component: HelpComponent, pathMatch: 'full', data: { title: 'Help', nav: NavigationType.Back } },
             { path: 'dev', component: DevComponent, pathMatch: 'full', data: { title: 'Developer', nav: NavigationType.Back } },
+            { path: 'user-data', component: UserDataComponent, pathMatch: 'full', data: { title: 'Your data', nav: NavigationType.Back } },
         ])
     ],
     exports: [RouterModule]

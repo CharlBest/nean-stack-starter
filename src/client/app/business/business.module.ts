@@ -8,6 +8,7 @@ import { DevComponent } from './dev/dev.component';
 import { HelpComponent } from './help/help.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { UserDataComponent } from './user-data/user-data.component';
 
 const materialModules = [
   MatButtonModule,
@@ -29,6 +30,7 @@ const materialModules = [
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
     DevComponent,
+    UserDataComponent,
   ]
 })
 export class BusinessModule { }
