@@ -10,7 +10,7 @@ export class ShareDialogComponent {
 
     link: string;
 
-    constructor(public snackBar: MatSnackBar) { }
+    constructor(private snackBar: MatSnackBar) { }
 
     onLinkClick() {
         return false;

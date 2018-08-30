@@ -15,8 +15,8 @@ export class DeleteUserDialogComponent {
     @Input() email: string;
     isProcessing = false;
 
-    constructor(public snackBar: MatSnackBar,
-        public dialog: MatDialog,
+    constructor(private snackBar: MatSnackBar,
+        private dialog: MatDialog,
         private profileService: ProfileService,
         private authService: AuthService,
         public bpService: BreakpointService) { }

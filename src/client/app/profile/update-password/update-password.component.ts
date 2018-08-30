@@ -22,7 +22,7 @@ export class UpdatePasswordComponent implements OnInit {
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
-    public snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.formOnInit();

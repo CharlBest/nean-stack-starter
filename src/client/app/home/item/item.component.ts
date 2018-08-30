@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatMenuTrigger } from '@angular/material';
+import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
+import { ReportItemViewModel } from '../../../../shared/view-models/item/report-item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -27,6 +28,7 @@ export class ItemComponent implements OnInit {
     public formErrorsService: FormErrorsService,
     private authService: AuthService,
     private dialogService: DialogService,
+    private snackBar: MatSnackBar,
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
     private preventBackNavigationService: PreventBackNavigationService,
@@ -35,10 +37,10 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteItem(uId: string) {
+  deleteItem() {
     this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
       if (data) {
-        this.homeService.delete(uId)
+        this.homeService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {
           }, error => {
@@ -68,5 +70,31 @@ export class ItemComponent implements OnInit {
   openShareDialog() {
     const link = ['/home', this.item.uId];
     this.shareDialogService.share(link);
+  }
+
+  reportItem() {
+    this.dialogService.confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
+      if (data) {
+        const viewModel = new ReportItemViewModel;
+        viewModel.uId = this.item.uId;
+
+        this.snackBar.open('Sending...', null, {
+          duration: 10000,
+        });
+
+        this.homeService.sendReport(viewModel)
+          .subscribe(() => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Sent', null, {
+              duration: 2000,
+            });
+          }, error => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Sending failed', null, {
+              duration: 2000,
+            });
+          });
+      }
+    });
   }
 }

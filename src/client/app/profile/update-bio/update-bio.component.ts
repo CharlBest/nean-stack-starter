@@ -21,7 +21,7 @@ export class UpdateBioComponent {
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
-    public snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar) { }
 
   emojiInserted(shortname: string) {
     this.htmlEditor.insertText(shortname, true);

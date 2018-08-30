@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
-    public snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private tutorialService: TutorialService,
     private firebaseStorageService: FirebaseStorageService,
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
             });
           });
       }
-    })
+    });
   }
 
   updateAvatar(downloadURL: string) {

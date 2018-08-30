@@ -68,12 +68,12 @@
             <mat-icon mat-list-icon>edit</mat-icon>
             <span mat-line>Edit</span>
         </mat-list-item>
-        <mat-list-item (click)="deleteItem(item.uId)">
+        <mat-list-item (click)="deleteItem()">
             <mat-icon mat-list-icon
                 color="warn">delete</mat-icon>
             <span mat-line>Delete</span>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item (click)="reportItem()">
             <mat-icon mat-list-icon>report</mat-icon>
             <span mat-line>Report</span>
         </mat-list-item>
