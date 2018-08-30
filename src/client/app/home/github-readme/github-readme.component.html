@@ -1,4 +1,4 @@
-<mat-expansion-panel [hidden]="isProcessing">
+<mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
             What is NEAN?
@@ -7,6 +7,8 @@
 
     <app-github [filePath]="'README'"
         (doneLoading)="doneLoading()"></app-github>
+
+    <mat-spinner *ngIf="isProcessing"></mat-spinner>
 
     <mat-action-row>
         <a mat-button
@@ -21,7 +23,3 @@
         </a>
     </mat-action-row>
 </mat-expansion-panel>
-
-<mat-card *ngIf="isProcessing">
-    <mat-spinner></mat-spinner>
-</mat-card>
