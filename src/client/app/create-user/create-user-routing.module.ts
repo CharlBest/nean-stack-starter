@@ -6,7 +6,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: CreateUserComponent, pathMatch: 'full', data: { title: 'Create account', nav: NavigationType.Back } }
+            { path: '', component: CreateUserComponent, pathMatch: 'full', data: { title: 'Sign Up', nav: NavigationType.Back } }
         ])
     ],
     exports: [RouterModule]
