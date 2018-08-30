@@ -6,6 +6,7 @@ import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CreateItemService } from '../create-item.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-create-item',
@@ -20,6 +21,7 @@ export class CreateItemComponent implements OnInit {
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
     private createItemService: CreateItemService,
+    public bpService: BreakpointService,
     private router: Router) { }
 
   ngOnInit() {
