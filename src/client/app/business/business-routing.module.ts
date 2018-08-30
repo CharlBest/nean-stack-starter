@@ -14,7 +14,7 @@ import { UserDataComponent } from './user-data/user-data.component';
             { path: 'privacypolicy', component: PrivacyPolicyComponent, pathMatch: 'full', data: { title: 'Privacy Policy', nav: NavigationType.Back } },
             { path: 'help', component: HelpComponent, pathMatch: 'full', data: { title: 'Help', nav: NavigationType.Back } },
             { path: 'dev', component: DevComponent, pathMatch: 'full', data: { title: 'Developer', nav: NavigationType.Back } },
-            { path: 'user-data', component: UserDataComponent, pathMatch: 'full', data: { title: 'Your data', nav: NavigationType.Back } },
+            { path: 'user-data', component: UserDataComponent, pathMatch: 'full', data: { title: 'Your Data', nav: NavigationType.Back } },
         ])
     ],
     exports: [RouterModule]

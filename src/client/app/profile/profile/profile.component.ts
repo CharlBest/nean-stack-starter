@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
@@ -10,7 +11,6 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
-import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -27,11 +27,11 @@ export class ProfileComponent implements OnInit {
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog,
     private tutorialService: TutorialService,
     private firebaseStorageService: FirebaseStorageService,
     private formErrorsService: FormErrorsService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+    private router: Router) { }
 
   ngOnInit() {
     this.getUser();
@@ -127,8 +127,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openDeleteAccountDialog() {
-    const dialogRef = this.dialog.open(DeleteUserDialogComponent);
-    dialogRef.componentInstance.email = this.user.email;
+    this.router.navigate(['/profile/delete'], { queryParams: { email: this.user.email } });
   }
 
   profileTour() {

@@ -1,6 +1,5 @@
-<div [hidden]="isProcessing">
-    <h2 mat-dialog-title>Delete account</h2>
-    <mat-dialog-content>
+<mat-card [hidden]="isProcessing">
+    <mat-card-content>
         <p>
             We are sad to see you go. All information linked with
             <strong>{{email}}</strong> will be deleted and can't be recovered after proceeding. Please enter your email.
@@ -13,21 +12,16 @@
                 required
                 [attr.autofocus]="bpService.isWeb || null">
         </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions>
+    </mat-card-content>
+    <mat-card-actions>
         <button mat-raised-button
             color="warn"
             type="button"
             [disabled]="email !== emailInput.value"
             (click)="delete(emailInput.value)">Delete</button>
-        <button mat-raised-button
-            type="button"
-            mat-dialog-close>Cancel</button>
-    </mat-dialog-actions>
-</div>
+    </mat-card-actions>
+</mat-card>
 
-<mat-dialog-content *ngIf="isProcessing">
-    <br>
+<mat-card *ngIf="isProcessing">
     <mat-spinner></mat-spinner>
-    <br>
-</mat-dialog-content>
+</mat-card>
