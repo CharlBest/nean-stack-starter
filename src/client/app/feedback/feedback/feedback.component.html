@@ -10,8 +10,8 @@
         <textarea matInput
           formControlName="content"
           cdkTextareaAutosize
-          cdkAutosizeMinRows="2"
-          cdkAutosizeMaxRows="18"
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="8"
           [attr.autofocus]="bpService.isWeb || null"></textarea>
         <mat-hint *ngIf="formGroup.get('content').value?.length < 10">Minimum of {{formGroup.get('content').value?.length}}/10
           characters
