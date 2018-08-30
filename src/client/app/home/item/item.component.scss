@@ -13,6 +13,18 @@ mat-card-header {
 	}
 }
 
+mat-card-content {
+	// h3 {
+	// 	overflow: hidden;
+	// 	max-height: 46px;
+	// }
+
+	// p {
+	// 	overflow: hidden;
+	// 	max-height: 96px;
+	// }
+}
+
 mat-card-actions {
 	display: flex;
 	justify-content: space-around;
