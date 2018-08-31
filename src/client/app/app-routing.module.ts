@@ -20,7 +20,6 @@ export class CustomPreloading implements PreloadingStrategy {
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
       { path: 'login', loadChildren: './login/login.module#LoginModule', data: { preload: true } },
       { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
-      { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
       { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', data: { preload: true }, canActivate: [AuthService] },
       { path: 'feedback', loadChildren: './feedback/feedback.module#FeedbackModule' },
       { path: 'business', loadChildren: './business/business.module#BusinessModule' },
