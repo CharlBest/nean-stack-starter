@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { CookieConsentSnackbarService } from '../../cookie-consent/cookie-consent-snackbar.service';
 import { ASCIIArtService } from '../../services/ascii-art.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
@@ -39,7 +40,8 @@ export class NavigationComponent implements OnInit {
     private themeService: ThemeService,
     public bpService: BreakpointService,
     public notificationService: NotificationService,
-    private ASCIIArtService: ASCIIArtService) {
+    private ASCIIArtService: ASCIIArtService,
+    private cookieConsentSnackbarService: CookieConsentSnackbarService) {
     this.checkHasVisited();
   }
 
@@ -101,6 +103,9 @@ export class NavigationComponent implements OnInit {
 
     // ASCII Art
     this.ASCIIArtService.slant();
+
+    // Show cookie consent
+    this.cookieConsentSnackbarService.openCookieConsentSnackBar();
   }
 
   back() {
