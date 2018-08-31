@@ -33,6 +33,8 @@
         {{headerBackTitle}}
       </a>
     </div>
+    <span class="flex-spacer"></span>
+    <ng-container *ngTemplateOutlet="navigationService.navigationPlaceholderTemplate"></ng-container>
   </mat-toolbar>
 </header>
 <div [style.height]="topToolbarHeightInPx"></div>

@@ -12,6 +12,7 @@ import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
 import { ThemeService } from '../../services/theme.service';
 import { NavigationType } from "../navigation-type.enum";
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-navigation',
@@ -22,7 +23,7 @@ export class NavigationComponent implements OnInit {
   @ViewChild('navbar') navbar: ElementRef<HTMLDivElement>;
 
   loggedInUserId: number = this.authService.getLoggedInUserId();
-  activeNavigation = NavigationType.Primary;
+  activeNavigation;
   navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string;
@@ -41,7 +42,8 @@ export class NavigationComponent implements OnInit {
     public bpService: BreakpointService,
     public notificationService: NotificationService,
     private ASCIIArtService: ASCIIArtService,
-    private cookieConsentSnackbarService: CookieConsentSnackbarService) {
+    private cookieConsentSnackbarService: CookieConsentSnackbarService,
+    public navigationService: NavigationService) {
     this.checkHasVisited();
   }
 
@@ -88,6 +90,12 @@ export class NavigationComponent implements OnInit {
             this.backRouterPath = backRouterPath;
           } else {
             this.backRouterPath = null;
+          }
+
+          // Reset back nav right placeholder
+          // TODO: bug: wipe on page load
+          if (this.navigationService.navigationPlaceholderTemplate) {
+            this.navigationService.navigationPlaceholderTemplate = null;
           }
         }
       });

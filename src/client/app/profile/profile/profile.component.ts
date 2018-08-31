@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
@@ -20,6 +21,7 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileComponent implements OnInit {
 
+  @ViewChild('backNavRightPlaceholder') backNavRightPlaceholder: TemplateRef<any>;
   user: UserProfileViewModel = null;
   isProcessing = true;
   tutorialTypeEnum = TutorialType;
@@ -31,10 +33,14 @@ export class ProfileComponent implements OnInit {
     private firebaseStorageService: FirebaseStorageService,
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService,
-    private router: Router) { }
+    private router: Router,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.getUser();
+
+    // Set template ref for back nav right placeholder
+    this.navigationService.navigationPlaceholderTemplate = this.backNavRightPlaceholder;
   }
 
   getUser() {
