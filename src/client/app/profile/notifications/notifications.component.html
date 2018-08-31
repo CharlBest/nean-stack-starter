@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-title>Notifications</mat-card-title>
+
+    <div class="header">
+        <span>Push notifications</span>
+        <mat-slide-toggle (change)="toggleChange($event)"
+            [checked]="pushNotificationPermissionGrandted"
+            color="primary"></mat-slide-toggle>
+    </div>
+    <br>
+    <mat-card-subtitle>Get push notifications to find out what's going on when your're not on NEAN. You can turn them off
+        anytime.
+    </mat-card-subtitle>
+</mat-card>
