@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class AuthService implements CanActivate {
-    private tokeyKey = 'token';
+    private readonly tokenStorageKey = 'token';
 
     private loggedInUserId = new BehaviorSubject<number>(this.getIdFromJWT());
     loggedInUserId$ = this.loggedInUserId.asObservable();
@@ -66,7 +66,7 @@ export class AuthService implements CanActivate {
     }
 
     setToken(accessToken: string, id: number) {
-        sessionStorage.setItem(this.tokeyKey, accessToken);
+        sessionStorage.setItem(this.tokenStorageKey, accessToken);
         this.updateLoggedInUserId(id);
     }
 
@@ -78,12 +78,12 @@ export class AuthService implements CanActivate {
     }
 
     hasToken(): boolean {
-        const token = sessionStorage.getItem(this.tokeyKey);
-        return token != null;
+        const token = sessionStorage.getItem(this.tokenStorageKey);
+        return token !== null && token !== undefined;
     }
 
     getLocalToken(): string {
-        return sessionStorage.getItem(this.tokeyKey);
+        return sessionStorage.getItem(this.tokenStorageKey);
     }
 
     preventLogoutOnNextRequest() {
