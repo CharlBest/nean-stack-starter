@@ -1,5 +1,4 @@
-<mat-card *ngIf="!isProcessing && item"
-    class="item-card">
+<mat-card *ngIf="!isProcessing && item">
     <mat-card-content>
         <div class="item-header">
             <button routerLink="/user/{{item?.user?.id}}"
@@ -29,16 +28,14 @@
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="{{item.user.username}} avatar"> -->
 
-        <div class="item-content">
-            <h3>{{item.title}}</h3>
+        <h3>{{item.title}}</h3>
 
-            <p #description
-                class="description">{{item.description}}</p>
-            <div class="more-button-container">
-                <button mat-button
-                    *ngIf="showMoreButton"
-                    (click)="showMoreDescription()">More</button>
-            </div>
+        <p #description
+            class="description">{{item.description}}</p>
+        <div class="more-button-container">
+            <button mat-button
+                *ngIf="showMoreButton"
+                (click)="showMoreDescription()">More</button>
         </div>
     </mat-card-content>
     <mat-card-actions>

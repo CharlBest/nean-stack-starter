@@ -1,70 +1,50 @@
-.item-card {
-	padding-top: 0;
-	padding-left: 0;
-	padding-right: 0;
+.item-header {
+	display: flex;
+	margin-top: -24px;
+	margin-left: -16px;
+	margin-right: -16px;
 
-	.item-header {
-		display: flex;
+	button:first-child {
+		padding-top: 24px;
+		padding-left: 24px;
+		padding-right: 24px;
+		flex-grow: 1;
+		// Remove default button styles
+		line-height: inherit;
+		border-radius: 0;
+		text-align: left;
 
-		button:first-child {
-			padding-top: 24px;
-			padding-left: 24px;
-			padding-right: 24px;
-			flex-grow: 1;
-			// Remove default button styles
-			line-height: inherit;
-			border-radius: 0;
-			text-align: left;
+		::ng-deep .mat-button-wrapper > div {
+			display: flex;
 
-			::ng-deep .mat-button-wrapper > div {
-				display: flex;
+			.mat-card-avatar {
+				background-size: cover;
+			}
 
-				.mat-card-avatar {
-					background-size: cover;
+			.header-text-container {
+				margin: 0 8px;
+
+				mat-card-title {
+					font-size: 14px;
 				}
 
-				.header-text-container {
-					margin: 0 8px;
-
-					mat-card-title {
-						font-size: 14px;
-					}
-
-					mat-card-subtitle {
-						margin-top: -8px;
-						margin-bottom: 0;
-					}
+				mat-card-subtitle {
+					margin-top: -8px;
+					margin-bottom: 0;
 				}
 			}
 		}
 	}
-
-	.item-content {
-		padding-left: 24px;
-		padding-right: 24px;
-
-		.description {
-			// 1.4em per line
-			max-height: 8.4em;
-			overflow: hidden;
-		}
-
-		.more-button-container {
-			text-align: center;
-		}
-	}
 }
 
-mat-card-content {
-	// h3 {
-	// 	overflow: hidden;
-	// 	max-height: 46px;
-	// }
+.description {
+	// 1.4em per line
+	max-height: 8.4em;
+	overflow: hidden;
+}
 
-	// p {
-	// 	overflow: hidden;
-	// 	max-height: 96px;
-	// }
+.more-button-container {
+	text-align: center;
 }
 
 mat-card-actions {
