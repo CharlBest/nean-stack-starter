@@ -19,6 +19,6 @@ export class ActivityComponent implements OnInit {
   }
 
   manualWebSocketBroadcast() {
-    this.webSocketService.messages.next('hello from somewhere');
+    this.webSocketService.send({ message: 'hello from somewhere' });
   }
 }

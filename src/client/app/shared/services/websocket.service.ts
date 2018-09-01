@@ -1,47 +1,47 @@
-import { Injectable } from '@angular/core';
-import { Observable, Observer, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { WebSocketSubject } from 'rxjs/websocket';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
-export class WebSocketService {
+export class WebSocketService implements OnDestroy {
 
-    public messages: Subject<string>;
+    public webSocketStream$: Subject<SocketData> = new Subject<SocketData>();
+    private webSocketSubject: WebSocketSubject<SocketData>;
 
     constructor() {
-        this.messages = <Subject<string>>this.connect(this.messages)
-            .pipe(
-                map((response): string => response.data)
-            );
+        this.init();
     }
 
-    public connect(subject: Subject<any>): Subject<MessageEvent> {
-        if (!subject) {
-            subject = this.create<any>();
-            console.log('socket connected');
-        }
-        return subject;
-    }
-
-    private create<T>(): Subject<T> {
-        const ws = new WebSocket(environment.webSocketUrlEndpoint);
-
-        const observable = Observable.create((obs: Observer<MessageEvent>) => {
-            ws.onmessage = obs.next.bind(obs);
-            ws.onerror = obs.error.bind(obs);
-            ws.onclose = obs.complete.bind(obs);
-            return ws.close.bind(ws);
+    init() {
+        this.webSocketSubject = new WebSocketSubject({
+            url: environment.webSocketUrlEndpoint
         });
 
-        const observer = {
-            next: (data: string) => {
-                if (ws.readyState === WebSocket.OPEN) {
-                    ws.send(data);
-                }
+        this.webSocketSubject.subscribe(
+            data => {
+                this.webSocketStream$.next(data);
+            }, err => {
+                console.error(err);
+            }, () => {
+                console.warn('Socket completed');
             }
-        };
-        return Subject.create(observer, observable);
+        );
     }
+
+    send(data: SocketData) {
+        this.webSocketSubject.next(data);
+    }
+
+    ngOnDestroy() {
+        if (this.webSocketSubject) {
+            this.webSocketSubject.unsubscribe();
+        }
+    }
+}
+
+class SocketData {
+    message: string;
 }
