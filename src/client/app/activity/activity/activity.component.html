@@ -1,11 +1,15 @@
+<br>
+<button mat-raised-button
+    type="button"
+    (click)="manualWebSocketBroadcast()"
+    matTooltip="Web Socket Broadcast to other open sessions">
+    <mat-icon>notifications_active</mat-icon>
+    &nbsp;&nbsp;Trigger Broadcast</button>
+<br>
+<br>
+
 <mat-card>
     <mat-card-content>
-        <button mat-raised-button
-            type="button"
-            (click)="manualWebSocketBroadcast()">
-            <mat-icon>notifications_active</mat-icon>
-            &nbsp;&nbsp;Trigger Web Socket Broadcast to other open sessions</button>
-
         <ng-container *ngIf="notificationService.messages.length > 0">
             <mat-list>
                 <mat-list-item *ngFor="let message of notificationService.messages; let i = index">

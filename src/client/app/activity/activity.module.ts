@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatCardModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatTooltipModule } from '@angular/material';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { ActivityComponent } from './activity/activity.component';
 
@@ -10,6 +10,7 @@ const materialModules = [
   MatBadgeModule,
   MatListModule,
   MatCardModule,
+  MatTooltipModule,
 ];
 
 @NgModule({
