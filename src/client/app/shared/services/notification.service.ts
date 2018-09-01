@@ -14,7 +14,7 @@ export class NotificationService {
         private snackBar: MatSnackBar,
         private bpService: BreakpointService) { }
 
-    activate() {
+    init() {
         // SnackBar
         this.webSocketService.messages
             .subscribe((data) => {

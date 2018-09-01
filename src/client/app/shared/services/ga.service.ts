@@ -8,31 +8,18 @@ import { LoggerService } from './logger.service';
 })
 export class GaService {
 
-  static initializeDelay = 1000;
-
+  private initializeDelay = 1000;
   private previousUrl: string;
   private ga: (...rest: any[]) => void;
 
   constructor(private logger: LoggerService,
-    private router: Router) {
-    this.initializeGa();
+    private router: Router) { }
 
-    if (window['appType'] === 'web') {
-      this.ga('create', environment.googleAnalytics.web, 'auto');
-    } else if (window['appType'] === 'ios') {
-      this.ga('create', environment.googleAnalytics.ios, 'auto');
-    } else if (window['appType'] === 'chromeextension') {
-      this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
-    }
-
-    this.trackRouterNavigation();
-  }
-
-  locationChanged(url: string) {
+  private locationChanged(url: string) {
     this.sendPage(url);
   }
 
-  sendPage(url: string) {
+  private sendPage(url: string) {
     if (url === this.previousUrl) { return; }
     this.previousUrl = url;
     this.ga('set', 'page', '/' + url);
@@ -54,12 +41,35 @@ export class GaService {
         // this.logger.log('GA fn:', window['ga'].toString());
         this.ga = window['ga'];
         gaQueue.forEach((command) => this.ga.apply(null, command));
-      }, GaService.initializeDelay));
+      }, this.initializeDelay));
 
     } else {
       // delegate `ga` calls to the logger if no ga installed
       this.ga = (...rest: any[]) => { this.logger.log('ga:', rest); };
     }
+  }
+
+  private trackRouterNavigation() {
+    this.router.events
+      .subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.locationChanged(event.urlAfterRedirects);
+        }
+      });
+  }
+
+  init() {
+    this.initializeGa();
+
+    if (window['appType'] === 'web') {
+      this.ga('create', environment.googleAnalytics.web, 'auto');
+    } else if (window['appType'] === 'ios') {
+      this.ga('create', environment.googleAnalytics.ios, 'auto');
+    } else if (window['appType'] === 'chromeextension') {
+      this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
+    }
+
+    this.trackRouterNavigation();
   }
 
   emitEvent(eventCategory: string,
@@ -72,14 +82,5 @@ export class GaService {
       eventAction: eventAction,
       eventValue: eventValue
     });
-  }
-
-  private trackRouterNavigation() {
-    this.router.events
-      .subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          this.locationChanged(event.urlAfterRedirects);
-        }
-      });
   }
 }

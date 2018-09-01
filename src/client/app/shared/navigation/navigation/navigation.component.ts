@@ -5,12 +5,9 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { CookieConsentSnackbarService } from '../../cookie-consent/cookie-consent-snackbar.service';
-import { ASCIIArtService } from '../../services/ascii-art.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
-import { ThemeService } from '../../services/theme.service';
 import { NavigationType } from "../navigation-type.enum";
 import { NavigationService } from '../navigation.service';
 
@@ -38,11 +35,8 @@ export class NavigationComponent implements OnInit {
     private titleService: Title,
     private location: Location,
     private snackBar: MatSnackBar,
-    private themeService: ThemeService,
     public bpService: BreakpointService,
     public notificationService: NotificationService,
-    private ASCIIArtService: ASCIIArtService,
-    private cookieConsentSnackbarService: CookieConsentSnackbarService,
     public navigationService: NavigationService) {
     this.checkHasVisited();
   }
@@ -100,20 +94,8 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-    // Activate notifications
-    this.notificationService.activate();
-
     // Hide/show top toolbar
     this.showTopToolbarOnScrollUp();
-
-    // Activate theme
-    this.themeService.init();
-
-    // ASCII Art
-    this.ASCIIArtService.slant();
-
-    // Show cookie consent
-    this.cookieConsentSnackbarService.openCookieConsentSnackBar();
   }
 
   back() {
