@@ -1,15 +1,47 @@
-mat-card-header {
-	padding-top: -24px;
-	padding-left: -24px;
-	padding-right: -24px;
-	cursor: pointer;
+.item-card {
+	padding-top: 0;
+	padding-left: 0;
+	padding-right: 0;
 
-	&:focus {
-		outline: none;
+	.item-header {
+		display: flex;
+
+		button:first-child {
+			padding-top: 24px;
+			padding-left: 24px;
+			padding-right: 24px;
+			flex-grow: 1;
+			// Remove default button styles
+			line-height: inherit;
+			border-radius: 0;
+			text-align: left;
+
+			::ng-deep .mat-button-wrapper > div {
+				display: flex;
+
+				.mat-card-avatar {
+					background-size: cover;
+				}
+
+				.header-text-container {
+					margin: 0 8px;
+
+					mat-card-title {
+						font-size: 14px;
+					}
+
+					mat-card-subtitle {
+						margin-top: -8px;
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
 	}
 
-	.user-avatar {
-		background-size: cover;
+	.item-content {
+		padding-left: 24px;
+		padding-right: 24px;
 	}
 }
 
