@@ -54,9 +54,7 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="isProcessing && !item">
-    <mat-spinner></mat-spinner>
-</mat-card>
+<mat-spinner *ngIf="isProcessing && !item"></mat-spinner>
 
 <mat-menu #menu="matMenu">
     <ng-template matMenuContent>
