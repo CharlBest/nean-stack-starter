@@ -12,7 +12,7 @@ export class UploadButtonComponent {
     @Input() showPreview = false;
     @Input() hideProgressBarAfterUpload = true;
     @Input() maxFileSizeInMB = 10;
-    @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
+    @Output() uploadComplete: EventEmitter<string> = new EventEmitter();
     previewImgUrl: string;
     error: string;
     progressPercentage: number;
@@ -43,7 +43,7 @@ export class UploadButtonComponent {
         }
 
         this.firebaseStorageService.upload(file).subscribe(data => {
-            this.onUploadComplete.emit(data);
+            this.uploadComplete.emit(data);
             this.previewImgUrl = data;
             this.error = null;
         });

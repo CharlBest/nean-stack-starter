@@ -11,5 +11,4 @@ export class CookiePolicyComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

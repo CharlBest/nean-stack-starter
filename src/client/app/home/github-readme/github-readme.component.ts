@@ -15,12 +15,12 @@ export class GitHubReadMeComponent implements OnInit {
   }
 
   doneLoading() {
-    //Remove DEMO link in text
+    // Remove DEMO link in text
     setTimeout(() => {
       const container = document.getElementsByClassName('github-readme-container');
       if (container && container[0]) {
         const anchorLinks = container[0].getElementsByTagName('a');
-        for (var i = 0; i < anchorLinks.length; i++) {
+        for (let i = 0; i < anchorLinks.length; i++) {
           if (anchorLinks[i].href === 'https://nean.io/') {
             anchorLinks[i].remove();
           }

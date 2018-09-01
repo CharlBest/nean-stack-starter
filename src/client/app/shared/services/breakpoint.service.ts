@@ -26,7 +26,7 @@ export class BreakpointService implements OnDestroy {
                 if (this.isWebSubject.value !== data.matches) {
                     this.isWebSubject.next(data.matches);
                 }
-            })
+            });
     }
 
     ngOnDestroy() {

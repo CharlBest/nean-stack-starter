@@ -8,7 +8,7 @@ import { TutorialType } from '../../../../../shared/view-models/tutorial/tutoria
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
-import { NavigationType } from "../navigation-type.enum";
+import { NavigationType } from '../navigation-type.enum';
 import { NavigationService } from '../navigation.service';
 
 @Component({
@@ -130,13 +130,13 @@ export class NavigationComponent implements OnInit {
     let prevScrollpos = window.pageYOffset;
     // TODO: this could be a performance bottleneck (Add debounce)
     window.onscroll = () => {
-      let currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos || currentScrollPos < this.topToolbarHeight || this.activeNavigation === NavigationType.Back) {
         this.navbar.nativeElement.style.top = '0';
       } else {
-        this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;;
+        this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;
       }
       prevScrollpos = currentScrollPos;
-    }
+    };
   }
 }

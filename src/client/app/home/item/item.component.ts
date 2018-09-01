@@ -56,7 +56,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       if (data) {
         this.homeService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
-          .subscribe(data => {
+          .subscribe(() => {
           }, error => {
             this.formErrorsService.updateFormValidity(error);
           });

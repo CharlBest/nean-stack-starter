@@ -74,7 +74,7 @@ export class EmojiPanelComponent implements OnInit {
 
   openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger) {
     if (emojiValue.diversities.length > 0) {
-      menuTrigger.openMenu()
+      menuTrigger.openMenu();
     } else {
       menuTrigger.closeMenu();
       this.onClick(emojiValue.shortname);
@@ -107,7 +107,7 @@ interface EmojiData {
     output: string;
     default_matches: Array<string>;
     greedy_matches: Array<string>;
-  }
+  };
   display: number;
   diversities: Array<string>;
   diversity: string;
@@ -118,5 +118,5 @@ interface EmojiData {
   order: number;
   shortname: string;
   shortname_alternates: Array<string>;
-  unicode_version: number
+  unicode_version: number;
 }

@@ -62,7 +62,7 @@ export class PaymentComponent implements OnInit {
         if (this.formGroup.get('cardUId').value === null || this.formGroup.get('cardUId').value === 'new') {
             const token = await this.stripeElementsComponent.generateToken();
             if (token) {
-                this.sendPaymentToServer(token.id)
+                this.sendPaymentToServer(token.id);
             } else {
                 this.dialogService.alert('Invalid card details');
                 this.isProcessing = false;

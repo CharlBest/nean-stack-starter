@@ -13,5 +13,4 @@ export class ViewMediaDialogComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

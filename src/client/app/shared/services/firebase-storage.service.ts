@@ -24,7 +24,7 @@ export class FirebaseStorageService implements OnDestroy {
         this.progress.next(0);
 
         // Create a storage ref
-        let fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
+        const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
         const storageRef = app(environment.firebase.projectId).storage().ref(`${folderName || this.folderName}/${fileName}`);
 
         // Upload file

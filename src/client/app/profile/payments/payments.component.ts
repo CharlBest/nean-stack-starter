@@ -25,8 +25,8 @@ export class PaymentsComponent implements OnInit {
   }
 
   deleteCard(uId: string) {
-    this.dialogService.confirm('Are you sure you want to delete this payment method?').subscribe(data => {
-      if (data) {
+    this.dialogService.confirm('Are you sure you want to delete this payment method?').subscribe(hasConfirmed => {
+      if (hasConfirmed) {
         this.profileService.deleteCard(uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {

@@ -14,6 +14,6 @@ export class HelpComponent implements OnInit {
   }
 
   openPWAHelper() {
-    this.pwaHelperService.open()
+    this.pwaHelperService.open();
   }
 }

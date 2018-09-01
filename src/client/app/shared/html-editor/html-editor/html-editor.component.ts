@@ -28,9 +28,9 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     initQuillEditor() {
         // Override toolbar icons
-        var icons = Quill.import('ui/icons');
+        const icons = Quill.import('ui/icons');
         function buildMatIconTagText(iconName: string, title: string): string {
-            return `<mat-icon class="mat-icon material-icons" title="${title}">${iconName}</mat-icon>`
+            return `<mat-icon class="mat-icon material-icons" title="${title}">${iconName}</mat-icon>`;
         }
 
         icons['bold'] = `${buildMatIconTagText('format_bold', 'Bold')}`;

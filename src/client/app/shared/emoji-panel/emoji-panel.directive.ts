@@ -7,8 +7,8 @@ import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 })
 export class EmojiPanelDirective implements OnInit {
 
-    @Input('placeholder') placeholder = 'Type here...';
-    @Input('appEmojiPanel') appEmojiPanel: EmojiPanelComponent;
+    @Input() placeholder = 'Type here...';
+    @Input() appEmojiPanel: EmojiPanelComponent;
 
     @HostListener('keyup') onKeypress() {
         // sanitize

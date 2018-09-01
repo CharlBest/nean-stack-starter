@@ -26,10 +26,10 @@ export class StripeElementsService {
 
     initializeStripe() {
         const elementId = 'stripe-client-script';
-        var script = document.getElementById(elementId);
+        const script = document.getElementById(elementId);
 
         if (!script) {
-            let node = document.createElement('script');
+            const node = document.createElement('script');
             node.src = 'https://js.stripe.com/v3/';
             node.type = 'text/javascript';
             node.async = false;

@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(private gaService: GaService,
     private themeService: ThemeService,
     private notificationService: NotificationService,
-    private ASCIIArtService: ASCIIArtService,
+    private asciiArtService: ASCIIArtService,
     private cookieConsentSnackbarService: CookieConsentSnackbarService, ) {
     // Google Analytics
     this.gaService.init();
@@ -31,7 +31,7 @@ export class AppComponent {
     this.cookieConsentSnackbarService.openCookieConsentSnackBar();
 
     // ASCII Art
-    this.ASCIIArtService.slant();
+    this.asciiArtService.slant();
 
     // Firebase
     initializeApp({

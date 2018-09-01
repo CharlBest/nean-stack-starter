@@ -12,5 +12,4 @@ export class UserDataComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
