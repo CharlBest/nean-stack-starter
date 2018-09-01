@@ -13,22 +13,22 @@ export class CustomPreloading implements PreloadingStrategy {
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'full' },
+      { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'full', data: { preload: true } },
       // Chrome extension routing workaround
       { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
       { path: 'home', loadChildren: './home/home.module#HomeModule' },
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
-      { path: 'login', loadChildren: './login/login.module#LoginModule', data: { preload: true } },
+      { path: 'login', loadChildren: './login/login.module#LoginModule' },
       { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
-      { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', data: { preload: true }, canActivate: [AuthService] },
+      { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', canActivate: [AuthService] },
       { path: 'feedback', loadChildren: './feedback/feedback.module#FeedbackModule' },
       { path: 'business', loadChildren: './business/business.module#BusinessModule' },
       { path: 'newsletter', loadChildren: './newsletter/newsletter.module#NewsletterModule' },
       { path: 'user', loadChildren: './user/user.module#UserModule' },
-      { path: 'search', loadChildren: './search/search.module#SearchModule' },
-      { path: 'create-item', loadChildren: './create-item/create-item.module#CreateItemModule', canActivate: [AuthService] },
-      { path: 'activity', loadChildren: './activity/activity.module#ActivityModule' },
-      { path: 'account', loadChildren: './account/account.module#AccountModule' },
+      { path: 'search', loadChildren: './search/search.module#SearchModule', data: { preload: true } },
+      { path: 'create-item', loadChildren: './create-item/create-item.module#CreateItemModule', data: { preload: true }, canActivate: [AuthService] },
+      { path: 'activity', loadChildren: './activity/activity.module#ActivityModule', data: { preload: true } },
+      { path: 'account', loadChildren: './account/account.module#AccountModule', data: { preload: true } },
       { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
       { path: 'verify', loadChildren: './verify/verify.module#VerifyModule', canActivate: [AuthService] },
       { path: '**', redirectTo: '' }
