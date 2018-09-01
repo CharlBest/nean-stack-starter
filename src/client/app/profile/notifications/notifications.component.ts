@@ -8,6 +8,7 @@ import { MatSlideToggleChange } from '@angular/material';
 })
 export class NotificationsComponent implements OnInit {
 
+  // TODO: not sure if Notification.permission is supported by all browsers
   pushNotificationPermissionGrandted = (<any>Notification).permission === 'granted';
 
   constructor() { }
