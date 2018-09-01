@@ -11,12 +11,12 @@ export class CookieConsentService {
   constructor(private snackBar: MatSnackBar) { }
 
   hasAcceptedCookieConsent() {
-    const consent = sessionStorage.getItem(this.cookieConsentStorageKey);
+    const consent = localStorage.getItem(this.cookieConsentStorageKey);
     return consent !== null && consent !== undefined && consent === 'true';
   }
 
   acceptCookieConsent() {
-    sessionStorage.setItem(this.cookieConsentStorageKey, 'true');
+    localStorage.setItem(this.cookieConsentStorageKey, 'true');
     // TODO: this will hide all snackbars even ones that suggest taking a tour
     this.snackBar.dismiss();
   }
