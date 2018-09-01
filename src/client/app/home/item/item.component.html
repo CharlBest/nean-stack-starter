@@ -31,7 +31,14 @@
 
         <div class="item-content">
             <h3>{{item.title}}</h3>
-            <p>{{item.description}}</p>
+
+            <p #description
+                class="description">{{item.description}}</p>
+            <div class="more-button-container">
+                <button mat-button
+                    *ngIf="showMoreButton"
+                    (click)="showMoreDescription()">More</button>
+            </div>
         </div>
     </mat-card-content>
     <mat-card-actions>

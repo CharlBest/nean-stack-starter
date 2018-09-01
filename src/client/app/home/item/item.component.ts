@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -16,13 +16,14 @@ import { HomeService } from '../home.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, AfterViewInit {
   @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
   @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
-
+  @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
+  @Input() item: ItemViewModel;
   loggedInUserId: number = this.authService.getLoggedInUserId();
   isProcessing = false;
-  @Input() item: ItemViewModel;
+  showMoreButton = false;
 
   constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
@@ -35,6 +36,19 @@ export class ItemComponent implements OnInit {
     private shareDialogService: ShareDialogService) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    if (this.description) {
+      setTimeout(() => {
+        if (this.description.nativeElement.offsetHeight < this.description.nativeElement.scrollHeight ||
+          this.description.nativeElement.offsetWidth < this.description.nativeElement.scrollWidth) {
+          this.showMoreButton = true;
+        } else {
+          this.showMoreButton = false;
+        }
+      });
+    }
   }
 
   deleteItem() {
@@ -96,5 +110,10 @@ export class ItemComponent implements OnInit {
           });
       }
     });
+  }
+
+  showMoreDescription() {
+    this.description.nativeElement.style.maxHeight = 'none';
+    this.showMoreButton = false;
   }
 }
