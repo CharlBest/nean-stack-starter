@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CookieConsentService {
 
-  private readonly cookieConsentStorageKey = 'cookie-consent';
+  private readonly cookieConsentStorageKey = 'cookie_consent';
 
   constructor(private snackBar: MatSnackBar) { }
 
