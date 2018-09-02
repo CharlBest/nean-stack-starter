@@ -195,6 +195,8 @@ export class UsersService extends BaseService {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
+
+        Emailer.passwordUpdated(user.email);
     }
 
     public async verifyEmail(res: Response, code: string): Promise<boolean> {
@@ -226,6 +228,8 @@ export class UsersService extends BaseService {
             ServerValidator.addGlobalError(res, 'password', { error: true });
             throw ValidationUtil.errorResponse(res);
         }
+
+        Emailer.passwordUpdated(updatedUser.email);
     }
 
     public async deleteUser(res: Response): Promise<boolean> {
