@@ -100,10 +100,27 @@ export class Emailer {
         };
 
         // html: {{amount}}
-        // url: /verify/{{emailVerifyCode}}
         data['dynamic_template_data'] = {
             subject: 'Payment Successful',
             amount,
+        };
+
+        Emailer.send(data);
+    }
+
+    static passwordUpdated(email: string) {
+        const data: MailData = {
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
+            templateId: environment.sendGrid.templates.passwordUpdated,
+        };
+
+        // html: {{email}}
+        data['dynamic_template_data'] = {
+            subject: 'Payment Successful',
         };
 
         Emailer.send(data);
