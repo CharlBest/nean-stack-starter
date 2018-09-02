@@ -127,7 +127,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         if (this.containsEmoji) {
             const output = this.renderHTMLWithEmoji(this.editorDomElement.nativeElement.innerHTML);
             this.editor.clipboard.dangerouslyPasteHTML(output);
-            this.editor.setSelection(range.index, 0);
+            this.editor.setSelection(range.index + 2, 0);
         }
 
         if (blurAfterInsert) {
