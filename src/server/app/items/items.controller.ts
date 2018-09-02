@@ -44,7 +44,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.get(res, uId)
+            await this.itemsService.get(res, req.ip, uId)
         );
     }
 

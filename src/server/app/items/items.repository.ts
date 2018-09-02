@@ -51,10 +51,11 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async get(res: Response, userId: number, uId: string): Promise<ItemViewModel> {
+    public async get(res: Response, userId: number, ip: string, uId: string): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.get,
             {
                 userId,
+                ip,
                 uId
             }
         );
