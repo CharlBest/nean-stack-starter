@@ -21,6 +21,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
   @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
+  @Input() isViewingComments: boolean;
   loggedInUserId: number = this.authService.getLoggedInUserId();
   isProcessing = false;
   showMoreButton = false;

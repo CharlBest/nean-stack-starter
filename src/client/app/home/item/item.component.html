@@ -41,6 +41,7 @@
     <mat-card-actions>
         <button mat-button
             routerLink="/home/{{item.uId}}"
+            *ngIf="!isViewingComments"
             type="button">
             <mat-icon>mode_comment</mat-icon>
             Comment

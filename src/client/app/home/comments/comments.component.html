@@ -1,50 +1,6 @@
-<!-- <ng-container *ngIf="isAuthenticated">
-    <mat-expansion-panel #expansionPanel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Create Item
-            </mat-panel-title>
-            <mat-panel-description>
-                Type the title and description
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <form [formGroup]="formGroup">
-            <mat-form-field>
-                <mat-label>Title</mat-label>
-                <input matInput
-                    formControlName="title">
-                <mat-error>
-                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
-                </mat-error>
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field>
-                <mat-label>Description</mat-label>
-                <input matInput
-                    formControlName="description">
-                <mat-error>
-                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
-                </mat-error>
-            </mat-form-field>
-        </form>
-
-        <mat-action-row>
-            <button mat-button
-                (click)="formGroup.reset(); expansionPanel.close();">Cancel</button>
-            <button mat-raised-button
-                color="primary"
-                [disabled]="!formGroup.valid"
-                (click)="createItem()">Create</button>
-        </mat-action-row>
-    </mat-expansion-panel>
-    <br>
-</ng-container> -->
-
 <ng-container *ngIf="!isProcessing && item">
-    <app-item [item]="item"></app-item>
+    <app-item [item]="item"
+        [isViewingComments]="true"></app-item>
 </ng-container>
 
 <ng-container *ngIf="!isProcessing && !item">
