@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { WebSocketSubject } from 'rxjs/websocket';
+import { WebSocketSubject } from 'rxjs/webSocket';
 import { SocketDataModel } from '../../../../shared/models/web-socket/socket-data.model';
 import { environment } from '../../../environments/environment';
 
