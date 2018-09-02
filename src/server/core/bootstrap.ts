@@ -2,7 +2,8 @@ import * as express from 'express';
 import { NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as path from 'path';
-import * as webSocket from 'ws';
+import * as WebSocket from 'ws';
+import { SocketDataModel } from '../../shared/models/web-socket/socket-data.model';
 import { GeneralRoutes } from '../app/general/general.routes';
 import { ItemsRoutes } from '../app/items/items.routes';
 import { PaymentsRoutes } from '../app/payments/payments.routes';
@@ -74,41 +75,41 @@ export class Bootstrap {
     public setupWebSockets(server: http.Server): void {
         const wss = WebSocketServer.getSocketServer(server);
 
-        wss.on('connection', (ws, req) => {
+        wss.on('connection', (ws: ExtendedWebSocket, req) => {
             // const location = url.parse(req.url, true);
             // You might use location.query.access_token to authenticate or share sessions
             // or req.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
 
-            ws.on('message', data => {
+            // Keep alive
+            ws.isAlive = true;
+            ws.on('pong', () => {
+                ws.isAlive = true;
+            });
+
+            ws.on('message', (data: SocketDataModel) => {
                 wss.clients.forEach(client => {
-                    if (client !== ws && client.readyState === webSocket.OPEN) {
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
                         client.send(data);
                     }
                 });
             });
 
-            (<any>ws).isAlive = true;
-            ws.on('pong', () => {
-                (<any>ws).isAlive = true;
+            ws.on('error', err => {
+                // console.warn(`Client disconnected - reason: ${err}`);
             });
-
-            // ws.send('something');
         });
 
-        //#region heartbeat
+        // Heart beat
+        setInterval(() => {
+            wss.clients.forEach((ws: ExtendedWebSocket) => {
+                if (!ws.isAlive) {
+                    return ws.terminate();
+                }
 
-        // const interval = setInterval(function ping() {
-        //     wss.clients.forEach((client: any) => {
-        //         if (client.isAlive === false) {
-        //             return client.terminate();
-        //         }
-
-        //         client.isAlive = false;
-        //         client.ping('', false);
-        //     });
-        // }, 30000);
-
-        //#endregion
+                ws.isAlive = false;
+                ws.ping(null, undefined);
+            });
+        }, 10000);
     }
 
     public setupGraphQL(app: express.Application): void {
@@ -169,4 +170,8 @@ export class Bootstrap {
             }, 1740000);
         }
     }
+}
+
+interface ExtendedWebSocket extends WebSocket {
+    isAlive: boolean;
 }

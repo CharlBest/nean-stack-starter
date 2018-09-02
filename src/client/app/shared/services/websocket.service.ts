@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/websocket';
+import { SocketDataModel } from '../../../../shared/models/web-socket/socket-data.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -8,8 +9,8 @@ import { environment } from '../../../environments/environment';
 })
 export class WebSocketService implements OnDestroy {
 
-    public webSocketStream$: Subject<SocketData> = new Subject<SocketData>();
-    private webSocketSubject: WebSocketSubject<SocketData>;
+    public webSocketStream$: Subject<SocketDataModel> = new Subject<SocketDataModel>();
+    private webSocketSubject: WebSocketSubject<SocketDataModel>;
 
     constructor() {
         this.init();
@@ -31,7 +32,7 @@ export class WebSocketService implements OnDestroy {
         );
     }
 
-    send(data: SocketData) {
+    send(data: SocketDataModel) {
         this.webSocketSubject.next(data);
     }
 
@@ -40,8 +41,4 @@ export class WebSocketService implements OnDestroy {
             this.webSocketSubject.unsubscribe();
         }
     }
-}
-
-class SocketData {
-    message: string;
 }
