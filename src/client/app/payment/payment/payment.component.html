@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup">
-    <mat-card [hidden]="isProcessing || paymentSuccess">
+    <mat-card [hidden]="isProcessing || paymentSuccess || isProcessingStripeElements">
         <mat-card-content>
 
             <div class="info-tooltip-container">
@@ -27,7 +27,7 @@
 
             <app-stripe-elements [hidden]="formGroup.get('cardUId').value !== null && formGroup.get('cardUId').value !== 'new'"
                 #stripeElements
-                (isDoneRendering)="isProcessing = !$event"></app-stripe-elements>
+                (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
 
             <mat-form-field>
                 <input matInput
@@ -85,7 +85,7 @@
     </mat-card>
 </form>
 
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
+<mat-spinner *ngIf="isProcessing || isProcessingStripeElements"></mat-spinner>
 
 <mat-card *ngIf="!isProcessing && paymentSuccess">
     <mat-card-content>
