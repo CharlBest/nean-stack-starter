@@ -18,6 +18,7 @@ export class NotificationService {
         // SnackBar
         this.webSocketService.webSocketStream$
             .subscribe(data => {
+                this.snackBar.dismiss();
                 // Add messages to queue
                 this.messages.push(data.message);
 

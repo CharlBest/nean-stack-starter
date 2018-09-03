@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { NotificationService } from '../../shared/services/notification.service';
 import { WebSocketService } from '../../shared/services/websocket.service';
 
@@ -9,7 +10,8 @@ import { WebSocketService } from '../../shared/services/websocket.service';
 })
 export class ActivityComponent implements OnInit {
   constructor(public notificationService: NotificationService,
-    private webSocketService: WebSocketService) { }
+    private webSocketService: WebSocketService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -20,5 +22,6 @@ export class ActivityComponent implements OnInit {
 
   manualWebSocketBroadcast() {
     this.webSocketService.send({ message: 'hello from somewhere' });
+    this.snackBar.open('Sent');
   }
 }
