@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
@@ -15,6 +15,7 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdatePasswordComponent implements OnInit {
 
+  @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
   formGroup: FormGroup;
   isProcessing = false;
   tutorialTypeEnum = TutorialType;
@@ -53,7 +54,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.profileService.updatePassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.formGroup.reset();
+        this.formRef.resetForm();
 
         this.snackBar.dismiss();
         this.snackBar.open('Updated password', null, {
