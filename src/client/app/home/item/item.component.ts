@@ -93,21 +93,15 @@ export class ItemComponent implements OnInit, AfterViewInit {
         const viewModel = new ReportItemViewModel;
         viewModel.uId = this.item.uId;
 
-        this.snackBar.open('Sending...', null, {
-          duration: 10000,
-        });
+        this.snackBar.open('Sending...');
 
         this.homeService.sendReport(viewModel)
           .subscribe(() => {
             this.snackBar.dismiss();
-            this.snackBar.open('Sent', null, {
-              duration: 2000,
-            });
+            this.snackBar.open('Sent');
           }, error => {
             this.snackBar.dismiss();
-            this.snackBar.open('Sending failed', null, {
-              duration: 2000,
-            });
+            this.snackBar.open('Sending failed');
           });
       }
     });

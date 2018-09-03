@@ -69,21 +69,15 @@ export class ProfileComponent implements OnInit {
         const viewModel = new ReportUserViewModel;
         viewModel.uId = this.user.uId;
 
-        this.snackBar.open('Sending...', null, {
-          duration: 10000,
-        });
+        this.snackBar.open('Sending...');
 
         this.profileService.sendReport(viewModel)
           .subscribe(() => {
             this.snackBar.dismiss();
-            this.snackBar.open('Sent', null, {
-              duration: 2000,
-            });
+            this.snackBar.open('Sent');
           }, error => {
             this.snackBar.dismiss();
-            this.snackBar.open('Sending failed', null, {
-              duration: 2000,
-            });
+            this.snackBar.open('Sending failed');
           });
       }
     });
@@ -111,20 +105,16 @@ export class ProfileComponent implements OnInit {
 
   resendEmailVerificationLink() {
     this.snackBar.dismiss();
-    this.snackBar.open('Sending...', null, {
-      duration: 10000,
-    });
+    this.snackBar.open('Sending...');
 
     this.profileService.resendEmailVerificationLink()
       .subscribe(() => {
         this.snackBar.dismiss();
-        this.snackBar.open('Sent', null, {
-          duration: 2000,
-        });
+        this.snackBar.open('Sent');
       }, error => {
         this.snackBar.dismiss();
         const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
-          duration: 5000,
+          duration: 5000
         });
         sendingBar.onAction().subscribe(x => {
           this.resendEmailVerificationLink();

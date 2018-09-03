@@ -34,9 +34,7 @@ export class UpdateBioComponent {
     if (this.content !== viewModel.content) {
       this.isProcessing = true;
 
-      this.snackBar.open('Updating bio...', null, {
-        duration: 10000,
-      });
+      this.snackBar.open('Updating bio...');
 
       this.profileService.updateBio(viewModel)
         .pipe(finalize(() => this.isProcessing = false))
@@ -44,14 +42,10 @@ export class UpdateBioComponent {
           this.content = viewModel.content;
 
           this.snackBar.dismiss();
-          this.snackBar.open('Updated bio', null, {
-            duration: 2000,
-          });
+          this.snackBar.open('Updated bio');
         }, error => {
           this.snackBar.dismiss();
-          this.snackBar.open('Update failed', null, {
-            duration: 2000,
-          });
+          this.snackBar.open('Update failed');
 
           this.formErrorsService.updateFormValidity(error);
           this.snackBar.dismiss();

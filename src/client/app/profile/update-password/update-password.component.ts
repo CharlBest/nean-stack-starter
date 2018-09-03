@@ -43,9 +43,7 @@ export class UpdatePasswordComponent implements OnInit {
       return;
     }
 
-    this.snackBar.open('Updating password...', null, {
-      duration: 10000,
-    });
+    this.snackBar.open('Updating password...');
 
     const viewModel = new UpdatePasswordViewModel();
     viewModel.password = this.formGroup.get('password').value;
@@ -57,14 +55,10 @@ export class UpdatePasswordComponent implements OnInit {
         this.formRef.resetForm();
 
         this.snackBar.dismiss();
-        this.snackBar.open('Updated password', null, {
-          duration: 2000,
-        });
+        this.snackBar.open('Updated password');
       }, error => {
         this.snackBar.dismiss();
-        this.snackBar.open('Update failed', null, {
-          duration: 2000,
-        });
+        this.snackBar.open('Update failed');
 
         this.formErrorsService.updateFormValidity(error, this.formGroup);
         this.snackBar.dismiss();

@@ -34,9 +34,7 @@ export class DeleteUserComponent implements OnInit {
         if (this.email && email === this.email) {
             this.isProcessing = true;
 
-            this.snackBar.open('Deleting...', null, {
-                duration: 10000,
-            });
+            this.snackBar.open('Deleting...');
 
             this.profileService.deleteUser()
                 .pipe(finalize(() => this.isProcessing = false))
@@ -44,14 +42,10 @@ export class DeleteUserComponent implements OnInit {
                     this.authService.removeToken();
                     this.snackBar.dismiss();
 
-                    this.snackBar.open('Deleted', null, {
-                        duration: 2000,
-                    });
+                    this.snackBar.open('Deleted');
                 }, error => {
                     this.snackBar.dismiss();
-                    this.snackBar.open('Deleting failed', null, {
-                        duration: 2000,
-                    });
+                    this.snackBar.open('Deleting failed');
                 });
         }
     }
