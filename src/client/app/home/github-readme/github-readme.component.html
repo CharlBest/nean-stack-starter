@@ -18,7 +18,8 @@
             matTooltip="GitHub"
             aria-label="GitHub">
             <img src="assets/github-logo.svg"
-                alt="GitHub">
+                alt="GitHub"
+                [class.light-github-logo]="themeService.isDarkTheme">
             <span>&nbsp;&nbsp;GitHub</span>
         </a>
     </mat-action-row>

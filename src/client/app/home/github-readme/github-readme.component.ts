@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-github-readme',
@@ -9,7 +10,7 @@ export class GitHubReadMeComponent implements OnInit {
 
   isProcessing = true;
 
-  constructor() { }
+  constructor(public themeService: ThemeService) { }
 
   ngOnInit() {
   }

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ThemeService {
     private isDarkThemeStorageKey = 'is_dark_theme';
     private darkThemeClass = 'dark-theme';
-    private darkTheme: boolean;
+    private darkTheme: boolean = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
     get isDarkTheme(): boolean {
         return this.darkTheme;
     }
@@ -24,7 +24,6 @@ export class ThemeService {
     }
 
     init() {
-        this.darkTheme = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
         this.updateTheme();
     }
 

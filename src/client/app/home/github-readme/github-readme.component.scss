@@ -5,3 +5,7 @@ mat-expansion-panel {
 .github-readme-container ::ng-deep code {
 	white-space: pre-line;
 }
+
+.light-github-logo {
+	filter: invert(1);
+}
