@@ -76,11 +76,12 @@
             <mat-icon mat-list-icon>star</mat-icon>
             <span mat-line>Save</span>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item *ngIf="item?.user?.id === loggedInUserId">
             <mat-icon mat-list-icon>edit</mat-icon>
             <span mat-line>Edit</span>
         </mat-list-item>
-        <mat-list-item (click)="deleteItem()">
+        <mat-list-item (click)="deleteItem()"
+            *ngIf="item?.user?.id === loggedInUserId">
             <mat-icon mat-list-icon
                 color="warn">delete</mat-icon>
             <span mat-line>Delete</span>
