@@ -120,7 +120,7 @@ export class Emailer {
 
         // html: {{email}}
         data['dynamic_template_data'] = {
-            subject: 'Payment Successful',
+            subject: 'Password Updated',
         };
 
         Emailer.send(data);
