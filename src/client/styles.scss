@@ -153,6 +153,10 @@ body {
 	a {
 		color: inherit;
 	}
+
+	.mat-list {
+		padding-top: 0;
+	}
 }
 
 // Override Quill toolbar with white icons when in night mode (Dark theme)
