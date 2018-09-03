@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -59,7 +58,6 @@ export class LoginComponent implements OnInit {
     viewModel.password = this.formGroup.get('password').value;
 
     this.loginService.login(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data && data.token) {
           this.authService.setToken(data.token, data.userId);
@@ -67,9 +65,11 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(this.returnUrl);
         } else {
           this.dialogService.alert('Authentication failed');
+          this.isProcessing = false;
         }
       }, (error) => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.isProcessing = false;
       });
   }
 }
