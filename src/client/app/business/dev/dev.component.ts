@@ -16,7 +16,7 @@ const { version: appVersion } = require('../../../../../package.json');
 export class DevComponent implements OnInit {
   dataSource = [
     { description: 'GitHub package.json', version: '' },
-    { description: 'Current Live package.json', version: `v${appVersion}` },
+    { description: 'App package.json', version: `v${appVersion}` },
     { description: 'Angular', version: `v${AngularVersion.full}` },
     { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
   ];
