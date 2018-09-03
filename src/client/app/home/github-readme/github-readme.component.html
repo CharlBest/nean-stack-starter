@@ -5,7 +5,7 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <app-github [filePath]="'README'"
+    <app-github [filePath]="'README.md'"
         (doneLoading)="doneLoading()"></app-github>
 
     <mat-spinner *ngIf="isProcessing"></mat-spinner>

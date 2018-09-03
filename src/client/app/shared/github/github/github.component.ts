@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as marked from 'marked';
 import { environment } from '../../../../environments/environment';
+import { GitHubService } from '../github.service';
 
 @Component({
   selector: 'app-github',
@@ -13,7 +14,7 @@ export class GitHubComponent implements OnInit {
   @Output() doneLoading: EventEmitter<void> = new EventEmitter<void>();
   readmeText: string;
 
-  constructor() { }
+  constructor(private gitHubService: GitHubService) { }
 
   ngOnInit() {
     if (environment.production) {
@@ -25,14 +26,9 @@ export class GitHubComponent implements OnInit {
   }
 
   getMarkdownPage() {
-    const oReq = new XMLHttpRequest();
-    oReq.addEventListener('load', (event) => {
-      const content = (<XMLHttpRequest>event.target).responseText;
-      this.readmeText = marked(content);
+    this.gitHubService.getFile(this.filePath).subscribe(data => {
+      this.readmeText = marked(data);
       this.doneLoading.emit();
     });
-
-    oReq.open('GET', `https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/${this.filePath}.md`);
-    oReq.send();
   }
 }

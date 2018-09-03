@@ -1,5 +1,6 @@
 import { Component, OnInit, VERSION as AngularVersion } from '@angular/core';
 import { VERSION as AngularMaterialVersion } from '@angular/material';
+import { GitHubService } from '../../shared/github/github.service';
 
 // TODO: Replace require import as soon as Angular supports Typescript 2.9
 // import packageJson from '../../package.json';
@@ -14,13 +15,23 @@ const { version: appVersion } = require('../../../../../package.json');
 })
 export class DevComponent implements OnInit {
   dataSource = [
-    { description: 'Package.json', version: `v${appVersion}` },
+    { description: 'GitHub package.json', version: '' },
+    { description: 'Current Live package.json', version: `v${appVersion}` },
     { description: 'Angular', version: `v${AngularVersion.full}` },
     { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
   ];
 
-  constructor() { }
+  constructor(private gitHubService: GitHubService) { }
 
   ngOnInit() {
+    this.getCurrentVersionInGitHubPackageJson();
+  }
+
+  getCurrentVersionInGitHubPackageJson() {
+    this.gitHubService.getFile('package.json').subscribe(data => {
+      const startIndex = data.indexOf('"version"');
+      const endIndex = data.indexOf('",', startIndex);
+      this.dataSource[0].version = `v${data.substring(startIndex + 12, endIndex)}`;
+    });
   }
 }
