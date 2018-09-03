@@ -1,8 +1,25 @@
-<mat-card>
-    <mat-card-content>
-        <mat-form-field>
-            <mat-label>Search</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </mat-card-content>
-</mat-card>
+<form [hidden]="isProcessing"
+    [formGroup]="formGroup">
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input matInput
+                    formControlName="term"
+                    [attr.autofocus]="bpService.isWeb || null" />
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!formGroup.valid"
+                (click)="onSubmit()">Search</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>
