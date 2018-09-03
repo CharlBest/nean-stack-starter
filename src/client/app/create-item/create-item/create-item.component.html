@@ -4,12 +4,9 @@
         <mat-card-content>
             <mat-form-field>
                 <mat-label>Title</mat-label>
-                <textarea matInput
+                <input matInput
                     formControlName="title"
-                    cdkTextareaAutosize
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="3"
-                    [attr.autofocus]="bpService.isWeb || null"></textarea>
+                    [attr.autofocus]="bpService.isWeb || null" />
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
                 </mat-error>
