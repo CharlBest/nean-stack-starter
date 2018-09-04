@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, SecurityContext, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
 import { Observable } from 'rxjs';
@@ -20,7 +21,8 @@ export class HTMLEditorComponent implements AfterViewInit {
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
 
-    constructor(private firebaseStorageService: FirebaseStorageService) { }
+    constructor(private firebaseStorageService: FirebaseStorageService,
+        private domSanitizer: DomSanitizer) { }
 
     ngAfterViewInit() {
         this.initQuillEditor();
@@ -60,11 +62,14 @@ export class HTMLEditorComponent implements AfterViewInit {
         });
 
         if (this.htmlContent) {
+            // Sanitize
+            const sanitizedHTML = this.domSanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
+
             // Add existing content to editor
             if (this.containsEmoji) {
-                this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(this.htmlContent));
+                this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(sanitizedHTML));
             } else {
-                this.editor.clipboard.dangerouslyPasteHTML(this.htmlContent);
+                this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
             }
 
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
@@ -126,7 +131,8 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         if (this.containsEmoji) {
             const output = this.renderHTMLWithEmoji(this.editorDomElement.nativeElement.innerHTML);
-            this.editor.clipboard.dangerouslyPasteHTML(output);
+            const sanitizedHTML = this.domSanitizer.sanitize(SecurityContext.HTML, output);
+            this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
             this.editor.setSelection(range.index + 2, 0);
         }
 
