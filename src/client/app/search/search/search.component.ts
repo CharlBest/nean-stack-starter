@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 
@@ -14,7 +15,8 @@ export class SearchComponent implements OnInit {
 
   constructor(public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -27,6 +29,6 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    alert('This feature is not yet implemented');
+    this.dialogService.alert('This feature is not yet implemented');
   }
 }
