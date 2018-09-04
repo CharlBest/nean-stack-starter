@@ -28,19 +28,19 @@ header {
 	}
 
 	a {
-		line-height: 1rem;
+		line-height: 1em;
 		min-width: 56px;
 		padding: 4px 0;
 		font-weight: normal;
 
 		@media (max-width: 640px) {
 			// Tablet
-			font-size: 0.8rem;
+			font-size: 0.8em;
 		}
 
 		@media (max-width: 360px) {
 			// Mobile
-			font-size: 0.6rem;
+			font-size: 0.6em;
 		}
 	}
 }
