@@ -4,7 +4,8 @@
             <button routerLink="/user/{{item?.user?.id}}"
                 mat-button>
                 <div>
-                    <div mat-card-avatar
+                    <div *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''"
+                        mat-card-avatar
                         [style.background-image]="'url(' + item.user.avatarUrl + ')'"></div>
                     <div class="header-text-container">
                         <mat-card-title>{{item.user.username}}</mat-card-title>
