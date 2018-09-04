@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class GiphyService {
+    // TODO: not yet in use
     baseUrl = 'https://api.giphy.com/v1/gifs';
     apiKey = '***';
     url = {
