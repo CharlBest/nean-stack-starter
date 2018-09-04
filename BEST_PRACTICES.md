@@ -11,3 +11,4 @@
 * Throttle network to 3G to slow down request responses
 * Zoom browser in/out
 * Test all browsers
+* Check Lighthouse score in Chrome Dev Tools audit
