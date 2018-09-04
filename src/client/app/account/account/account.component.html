@@ -36,10 +36,6 @@
                 <mat-icon mat-list-icon>live_help</mat-icon>
                 <span mat-line>Take Tour</span>
             </mat-list-item>
-            <mat-list-item routerLink="/business/user-data">
-                <mat-icon mat-list-icon>graphic_eq</mat-icon>
-                <span mat-line>Your Data</span>
-            </mat-list-item>
             <mat-list-item *ngIf="loggedInUserId"
                 (click)="logout()">
                 <mat-icon mat-list-icon>exit_to_app</mat-icon>
