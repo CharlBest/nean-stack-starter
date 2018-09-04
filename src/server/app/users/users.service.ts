@@ -1,6 +1,7 @@
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
+import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as webSocket from 'ws';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
@@ -207,8 +208,20 @@ export class UsersService extends BaseService {
         await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
     }
 
-    public async updateBio(res: Response, bio: string): Promise<void> {
-        await this.usersRepository.updateBio(res, this.getUserId(res), bio);
+    public async updateBio(res: Response, content: string): Promise<void> {
+        const sanitizedHTMLContent = sanitizedHTML(content, {
+            allowedTags: ['p', 'br', 'strong', 'em', 'h2', 'ul', 'ol', 'li', 'a', 'img'],
+            allowedAttributes: {
+                'a': ['href', 'target'],
+                'img': ['src']
+            },
+            selfClosing: ['img', 'br'],
+            allowedSchemes: ['https', 'mailto'],
+            allowedSchemesAppliedToAttributes: ['href', 'src'],
+            allowedIframeHostnames: ['www.youtube.com']
+        });
+
+        await this.usersRepository.updateBio(res, this.getUserId(res), sanitizedHTMLContent);
     }
 
     public async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
