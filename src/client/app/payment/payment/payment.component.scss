@@ -1,9 +1,9 @@
 .info-tooltip-container {
 	text-align: right;
-}
 
-::ng-deep .info-tooltip {
-	white-space: pre-line;
+	::ng-deep .info-tooltip {
+		white-space: pre-line;
+	}
 }
 
 .payment-successful-container {
