@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { GitHubModule } from '../shared/github/github.module';
 import { MediaModule } from '../shared/media/media.module';
+import { NetworkStatusModule } from '../shared/network-status/network-status.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { CommentsComponent } from './comments/comments.component';
 import { GitHubReadMeComponent } from './github-readme/github-readme.component';
@@ -29,6 +30,7 @@ const materialModules = [
     MediaModule,
     ShareDialogModule,
     GitHubModule,
+    NetworkStatusModule,
     ...materialModules
   ],
   declarations: [

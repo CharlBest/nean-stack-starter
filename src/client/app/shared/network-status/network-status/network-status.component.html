@@ -1,0 +1,6 @@
+<mat-card *ngIf="networkStatusService?.isOffline$ | async">
+    <mat-card-content>
+        <mat-icon>airplanemode_active</mat-icon>
+        <div>No network connection</div>
+    </mat-card-content>
+</mat-card>

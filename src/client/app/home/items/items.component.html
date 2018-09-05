@@ -10,8 +10,10 @@
         [item]="item"></app-item>
 </ng-container>
 
-<mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
+<mat-card *ngIf="!isProcessing && (!items || items?.length === 0) && networkStatus.isOnline">
     No items exist
 </mat-card>
+
+<app-network-status #networkStatus></app-network-status>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>

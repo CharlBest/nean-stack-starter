@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
 import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
+import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { ASCIIArtService } from './shared/services/ascii-art.service';
 import { GaService } from './shared/services/ga.service';
 import { NotificationService } from './shared/services/notification.service';
@@ -17,7 +18,8 @@ export class AppComponent {
     private themeService: ThemeService,
     private notificationService: NotificationService,
     private asciiArtService: ASCIIArtService,
-    private cookieConsentSnackbarService: CookieConsentSnackbarService, ) {
+    private cookieConsentSnackbarService: CookieConsentSnackbarService,
+    private networkStatusService: NetworkStatusService) {
     // Google Analytics
     this.gaService.init();
 
@@ -32,6 +34,9 @@ export class AppComponent {
 
     // ASCII Art
     this.asciiArtService.slant();
+
+    // Initialize network status event
+    this.networkStatusService.init();
 
     // Firebase
     initializeApp({
