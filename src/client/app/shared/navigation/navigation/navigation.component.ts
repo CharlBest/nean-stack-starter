@@ -30,7 +30,7 @@ export class NavigationComponent implements OnInit {
   topToolbarHeightInPx = `${this.topToolbarHeight}px`;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private authService: AuthService,
     private titleService: Title,
     private location: Location,

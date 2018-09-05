@@ -90,10 +90,7 @@
   </a>
   <a mat-button
     routerLink="/account"
-    routerLinkActive
-    #rla5="routerLinkActive"
-    [color]="rla5.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
-    [routerLinkActiveOptions]="{exact: true}">
+    [class.mat-primary]="router.isActive('/account') || router.isActive('/profile') || router.isActive('/login') || router.isActive('/create-user') || router.isActive('/forgot-password')">
     <mat-icon>person</mat-icon>
     <div>Account</div>
   </a>
