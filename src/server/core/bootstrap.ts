@@ -173,7 +173,9 @@ export class Bootstrap {
     }
 
     public setupAutoPeriodicDataFetch(app: express.Application): void {
-        new DataFetcher().init(app);
+        if (app.get('env') !== 'development') {
+            new DataFetcher().init(app);
+        }
     }
 }
 

@@ -41,7 +41,6 @@ export class DataFetcher {
             return document.querySelectorAll(sel).length;
         }, this.selectors.LENGTH_SELECTOR_CLASS);
 
-        console.log(listLength);
         let neo4jSession;
 
         for (let i = 1; i <= listLength; i++) {
