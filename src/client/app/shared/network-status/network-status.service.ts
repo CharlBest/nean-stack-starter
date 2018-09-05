@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -8,11 +9,17 @@ export class NetworkStatusService {
 
   isOffline$: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   init() {
     window.onload = () => {
       const handleNetworkChange = () => {
+        if (!navigator.onLine) {
+          this.snackBar.open('Offline');
+        } else {
+          this.snackBar.dismiss();
+        }
+
         this.isOffline$.next(!navigator.onLine);
       };
 

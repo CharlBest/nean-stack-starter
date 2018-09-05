@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatSnackBarModule } from '@angular/material';
 import { NetworkStatusComponent } from './network-status/network-status.component';
 
 const materialModules = [
   MatCardModule,
-  MatIconModule
+  MatIconModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({
