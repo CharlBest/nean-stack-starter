@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
+import { DataFetcher } from './middleware/data-fetcher';
 import { Neo4j } from './middleware/neo4j';
 import { WebSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
@@ -169,6 +170,10 @@ export class Bootstrap {
                 http.get('http://nean.io');
             }, 1740000);
         }
+    }
+
+    public setupAutoPeriodicDataFetch(app: express.Application): void {
+        new DataFetcher().init(app);
     }
 }
 

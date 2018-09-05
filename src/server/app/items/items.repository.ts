@@ -11,6 +11,17 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
+    public async createInternal(neo4jSession: any, dbQuery: string, userId: number, uId: string, title: string, description: string): Promise<void> {
+        await neo4jSession.run(dbQuery,
+            {
+                userId,
+                uId,
+                title,
+                description
+            }
+        );
+    }
+
     public async create(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.create,
             {
