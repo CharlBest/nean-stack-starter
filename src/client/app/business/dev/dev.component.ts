@@ -14,6 +14,8 @@ const { version: appVersion } = require('../../../../../package.json');
   styleUrls: ['./dev.component.scss']
 })
 export class DevComponent implements OnInit {
+  isProcessingBestPractices = true;
+  isProcessingChangelog = true;
   dataSource = [
     { description: 'GitHub package.json', version: '' },
     { description: 'App package.json', version: `v${appVersion}` },

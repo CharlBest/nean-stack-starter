@@ -18,14 +18,18 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card>
+<mat-card [hidden]="isProcessingBestPractices">
     <mat-card-content>
-        <app-github [filePath]="'BEST_PRACTICES.md'"></app-github>
+        <app-github [filePath]="'BEST_PRACTICES.md'"
+            (doneLoading)="isProcessingBestPractices = false"></app-github>
     </mat-card-content>
 </mat-card>
 
-<mat-card>
+<mat-card [hidden]="isProcessingChangelog">
     <mat-card-content>
-        <app-github [filePath]="'CHANGELOG.md'"></app-github>
+        <app-github [filePath]="'CHANGELOG.md'"
+            (doneLoading)="isProcessingChangelog = false"></app-github>
     </mat-card-content>
 </mat-card>
+
+<mat-spinner *ngIf="isProcessingBestPractices || isProcessingChangelog"></mat-spinner>

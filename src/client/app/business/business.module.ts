@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatListModule, MatRadioModule, MatTableModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatTableModule } from '@angular/material';
 import { GitHubModule } from '../shared/github/github.module';
 import { PWAHelperModule } from '../shared/pwa-helper/pwa-helper.module';
 import { BusinessRoutingModule } from './business-routing.module';
@@ -17,6 +17,7 @@ const materialModules = [
   MatRadioModule,
   MatTableModule,
   MatListModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
