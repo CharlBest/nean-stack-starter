@@ -36,7 +36,7 @@ export class App {
         // Setup core tools
         this.bootstrapApp.setupCoreTools(this.express);
         // Setup Heroku ping to prevent free tier sleeping
-        this.bootstrapApp.setupHerokuPing(this.express);
+        // this.bootstrapApp.setupHerokuPing(this.express);
         // Database data fetcher
         this.bootstrapApp.setupAutoPeriodicDataFetch(this.express);
 
