@@ -28,7 +28,7 @@ export class NavigationComponent implements OnInit {
   hasNavigatedToPageWithPrimaryNav = false;
   desktopTopToolbarHeight = 64;
   mobileTopToolbarHeight = 56;
-  topToolbarHeightInPx;
+  topToolbarHeightInPx: string;
 
   constructor(private route: ActivatedRoute,
     public router: Router,
