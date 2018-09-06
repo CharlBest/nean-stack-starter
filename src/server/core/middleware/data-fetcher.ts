@@ -30,6 +30,7 @@ export class DataFetcher {
         // TODO: Check null and undefined thouroughout especially with query selectors
 
         const browser = await puppeteer.launch({
+            args: ['--no-sandbox'],
             headless: true
         });
         const page = await browser.newPage();
