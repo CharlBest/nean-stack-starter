@@ -1,12 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatExpansionPanel } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
-import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { AuthService } from '../../shared/services/auth.service';
 import { HomeService } from '../home.service';
 
 @Component({

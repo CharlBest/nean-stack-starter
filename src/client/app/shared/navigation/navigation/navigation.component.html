@@ -50,7 +50,8 @@
 <!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
-    routerLink="/"
+    (click)="goToHome()"
+    routerLink
     routerLinkActive
     #rla1="routerLinkActive"
     [color]="rla1.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
@@ -90,7 +91,7 @@
   </a>
   <a mat-button
     routerLink="/account"
-    [class.mat-primary]="router.isActive('/account') || router.isActive('/profile') || router.isActive('/login') || router.isActive('/create-user') || router.isActive('/forgot-password')">
+    [ngClass]="isAccountLinkActive()">
     <mat-icon>person</mat-icon>
     <div>Account</div>
   </a>

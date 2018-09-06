@@ -139,4 +139,27 @@ export class NavigationComponent implements OnInit {
       prevScrollpos = currentScrollPos;
     };
   }
+
+  goToHome() {
+    if (this.router.isActive('/', true)) {
+      // TODO: not the greatest experience
+      location.reload();
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  isAccountLinkActive() {
+    if (this.router.isActive('/account', true) || this.router.isActive('/profile', true) ||
+      this.router.isActive('/login', true) || this.router.isActive('/create-user', true) ||
+      this.router.isActive('/forgot-password', true) || this.router.isActive('/business', false) ||
+      this.router.isActive('/payment', true) || this.router.isActive('/newsletter', true) ||
+      this.router.isActive('/feedback', true)) {
+      if (this.bpService.isWeb) {
+        return 'mat-accent';
+      } else {
+        return 'mat-primary';
+      }
+    }
+  }
 }
