@@ -50,8 +50,7 @@
 <!-- Nav links -->
 <ng-template #navLinks>
   <a mat-button
-    (click)="goToHome()"
-    routerLink
+    routerLink="/"
     routerLinkActive
     #rla1="routerLinkActive"
     [color]="rla1.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"

@@ -149,15 +149,6 @@ export class NavigationComponent implements OnInit {
     };
   }
 
-  goToHome() {
-    if (this.router.isActive('/', true)) {
-      // TODO: not the greatest experience
-      location.reload();
-    } else {
-      this.router.navigate(['/']);
-    }
-  }
-
   isAccountLinkActive() {
     if (this.router.isActive('/account', true) || this.router.isActive('/profile', true) ||
       this.router.isActive('/login', true) || this.router.isActive('/create-user', true) ||
