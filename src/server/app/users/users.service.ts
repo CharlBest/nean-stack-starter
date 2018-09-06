@@ -218,7 +218,9 @@ export class UsersService extends BaseService {
             selfClosing: ['img', 'br'],
             allowedSchemes: ['https', 'mailto'],
             allowedSchemesAppliedToAttributes: ['href', 'src'],
-            allowedIframeHostnames: ['www.youtube.com']
+            allowedIframeHostnames: ['www.youtube.com'],
+            // TODO: the is required but think it's a bug. Remove in future version of sanitize-html
+            parser: null
         });
 
         await this.usersRepository.updateBio(res, this.getUserId(res), sanitizedHTMLContent);
