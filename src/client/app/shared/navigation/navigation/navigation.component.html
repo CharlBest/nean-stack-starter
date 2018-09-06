@@ -51,37 +51,25 @@
 <ng-template #navLinks>
   <a mat-button
     routerLink="/"
-    routerLinkActive
-    #rla1="routerLinkActive"
-    [color]="rla1.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
-    [routerLinkActiveOptions]="{exact: true}">
+    [ngClass]="navItems['home'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <mat-icon>home</mat-icon>
     <div>Home</div>
   </a>
   <a mat-button
     routerLink="/search"
-    routerLinkActive
-    #rla2="routerLinkActive"
-    [color]="rla2.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
-    [routerLinkActiveOptions]="{exact: true}">
+    [ngClass]="navItems['search'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <mat-icon>search</mat-icon>
     <div>Seach</div>
   </a>
   <a mat-button
     routerLink="/create-item"
-    routerLinkActive
-    #rla3="routerLinkActive"
-    [color]="rla3.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
-    [routerLinkActiveOptions]="{exact: true}">
+    [ngClass]="navItems['createItem'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <mat-icon>edit</mat-icon>
     <div>Create</div>
   </a>
   <a mat-button
     routerLink="/activity"
-    routerLinkActive
-    #rla4="routerLinkActive"
-    [color]="rla4.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
-    [routerLinkActiveOptions]="{exact: true}">
+    [ngClass]="navItems['activity'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <mat-icon matBadge="{{notificationService.messages?.length}}"
       matBadgeColor="warn"
       [matBadgeHidden]="notificationService.messages?.length <= 0">
@@ -90,7 +78,7 @@
   </a>
   <a mat-button
     routerLink="/account"
-    [ngClass]="isAccountLinkActive()">
+    [ngClass]="navItems['account'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <mat-icon>person</mat-icon>
     <div>Account</div>
   </a>

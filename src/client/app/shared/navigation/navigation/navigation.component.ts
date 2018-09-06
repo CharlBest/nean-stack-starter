@@ -3,8 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
@@ -29,6 +30,13 @@ export class NavigationComponent implements OnInit {
   desktopTopToolbarHeight = 64;
   mobileTopToolbarHeight = 56;
   topToolbarHeightInPx: string;
+  navItems: NavItem = {
+    home: { paths: [{ path: '' }, { path: 'home' }, { path: 'user' }, { path: 'items' }, { path: 'item' }] },
+    search: { paths: [{ path: 'search' }] },
+    createItem: { paths: [{ path: 'create-item' }] },
+    activity: { paths: [{ path: 'activity' }] },
+    account: { paths: [{ path: 'account' }, { path: 'create-user' }, { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' }, { path: 'login' }, { path: 'forgot-password' }, { path: 'profile' }, { path: 'payment' }, { path: 'verify' }] }
+  };
 
   constructor(private route: ActivatedRoute,
     public router: Router,
@@ -50,8 +58,9 @@ export class NavigationComponent implements OnInit {
 
     // Check if user has gone to primary nav page
     this.router.events
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd && this.activeNavigation === NavigationType.Primary) {
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(event => {
+        if (this.activeNavigation === NavigationType.Primary) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }
       });
@@ -59,6 +68,7 @@ export class NavigationComponent implements OnInit {
     // Set title, navigation and back route
     this.router.events
       .pipe(
+        filter(e => e instanceof NavigationEnd),
         map(() => this.route),
         map(route => {
           while (route.firstChild) {
@@ -67,7 +77,7 @@ export class NavigationComponent implements OnInit {
           return route;
         })
       )
-      .subscribe((event) => {
+      .subscribe(event => {
         if (event.snapshot.data) {
           const title = event.snapshot.data['title'];
           if (title) {
@@ -93,6 +103,8 @@ export class NavigationComponent implements OnInit {
             this.navigationService.navigationPlaceholderTemplate = null;
           }
         }
+
+        this.updateActiveNavItem();
       });
 
     this.bpService.isDesktop$.subscribe(data => {
@@ -105,6 +117,9 @@ export class NavigationComponent implements OnInit {
 
     // Hide/show top toolbar
     this.showTopToolbarOnScrollUp();
+
+    // Check if all root routes are set in nav items
+    this.checkAllNavItemAssociations();
   }
 
   back() {
@@ -162,4 +177,32 @@ export class NavigationComponent implements OnInit {
       }
     }
   }
+
+  checkAllNavItemAssociations() {
+    if (!environment.production) {
+      const allNavItems = [].concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(x => x.path)));
+      this.router.config.forEach(x => {
+        if (!allNavItems.includes(x.path) && x.path !== '**' && x.path !== '404') {
+          alert(x.path);
+        }
+      });
+    }
+  }
+
+  updateActiveNavItem() {
+    Object.keys(this.navItems).forEach(x => {
+      if (this.navItems[x].paths.some(y => this.router.isActive(y.path, y.exact !== undefined ? y.exact : true))) {
+        this.navItems[x].active = true;
+      } else {
+        this.navItems[x].active = false;
+      }
+    });
+  }
+}
+
+interface NavItem {
+  [key: string]: {
+    paths: Array<{ path: string, exact?: boolean }>,
+    active?: boolean
+  };
 }

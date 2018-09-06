@@ -15,7 +15,7 @@ export class CustomPreloading implements PreloadingStrategy {
     RouterModule.forRoot([
       { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'full', data: { preload: true } },
       // Chrome extension routing workaround
-      { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
+      // { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
       { path: 'home', loadChildren: './home/home.module#HomeModule' },
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
       { path: 'login', loadChildren: './login/login.module#LoginModule' },
