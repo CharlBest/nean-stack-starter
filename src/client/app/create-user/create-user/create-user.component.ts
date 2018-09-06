@@ -71,7 +71,7 @@ export class CreateUserComponent implements OnInit {
         if (data && data.token) {
           this.authService.setToken(data.token, data.userId);
 
-          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });
+          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare }, queryParamsHandling: 'merge' });
         } else {
           this.dialogService.alert('Authentication failed');
         }

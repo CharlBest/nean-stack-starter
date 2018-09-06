@@ -121,7 +121,7 @@ export class NavigationComponent implements OnInit {
         duration: 20000,
       }).onAction()
         .subscribe(() => {
-          this.router.navigate([], { queryParams: { tut: TutorialType.SignUp } });
+          this.router.navigate([], { queryParams: { tut: TutorialType.SignUp }, queryParamsHandling: 'merge' });
         });
     }
   }

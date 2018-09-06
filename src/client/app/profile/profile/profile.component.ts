@@ -123,7 +123,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openDeleteAccountDialog() {
-    this.router.navigate(['/profile/delete'], { queryParams: { email: this.user.email } });
+    this.router.navigate(['/profile/delete'], { queryParams: { email: this.user.email }, queryParamsHandling: 'merge' });
   }
 
   profileTour() {

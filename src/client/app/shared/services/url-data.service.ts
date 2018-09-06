@@ -15,7 +15,7 @@ export class UrlDataService {
 
     private save(formGroup: FormGroup) {
         const encodedData = this.b64EncodeUnicode(JSON.stringify(formGroup.value));
-        this.router.navigate([], { queryParams: { data: encodedData } });
+        this.router.navigate([], { queryParams: { data: encodedData }, queryParamsHandling: 'merge' });
     }
 
     private b64EncodeUnicode(str) {

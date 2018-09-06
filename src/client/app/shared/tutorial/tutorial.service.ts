@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
@@ -51,8 +51,7 @@ export class TutorialService {
                 break;
         }
 
-        const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams, { tut: tutorialType === TutorialType.None ? undefined : tutorialType });
-        await this.router.navigate(navigateUrl, { queryParams: queryParams });
+        await this.router.navigate(navigateUrl, { queryParams: { tut: tutorialType === TutorialType.None ? null : tutorialType }, queryParamsHandling: 'merge' });
 
         if (tutorialType === TutorialType.None) {
             this.checkIfAfterTutPageHasBackNav();

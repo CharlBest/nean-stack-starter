@@ -52,7 +52,7 @@ export class AuthService implements CanActivate {
         if (this.hasToken()) {
             return true;
         } else {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+            this.router.navigate(['login'], { queryParams: { returnUrl: state.url }, queryParamsHandling: 'merge' });
             return false;
         }
     }
@@ -73,7 +73,7 @@ export class AuthService implements CanActivate {
     removeToken() {
         sessionStorage.clear();
         this.updateLoggedInUserId(null);
-        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
+        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }, queryParamsHandling: 'merge' });
         this.dialog.closeAll();
     }
 
