@@ -9,7 +9,7 @@
                         [style.background-image]="'url(' + item.user.avatarUrl + ')'"></div>
                     <div class="header-text-container">
                         <mat-card-title>{{item.user.username}}</mat-card-title>
-                        <mat-card-subtitle>{{item.dateCreated | date}}</mat-card-subtitle>
+                        <mat-card-subtitle>{{item.dateCreated | date:'HH:mm MMM d, y'}}</mat-card-subtitle>
                     </div>
                 </div>
             </button>
