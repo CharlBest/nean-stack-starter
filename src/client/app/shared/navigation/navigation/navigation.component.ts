@@ -26,8 +26,9 @@ export class NavigationComponent implements OnInit {
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   hasNavigatedToPageWithPrimaryNav = false;
-  topToolbarHeight = 64;
-  topToolbarHeightInPx = `${this.topToolbarHeight}px`;
+  desktopTopToolbarHeight = 64;
+  mobileTopToolbarHeight = 56;
+  topToolbarHeightInPx;
 
   constructor(private route: ActivatedRoute,
     public router: Router,
@@ -94,6 +95,14 @@ export class NavigationComponent implements OnInit {
         }
       });
 
+    this.bpService.isWeb$.subscribe(isWeb => {
+      if (isWeb) {
+        this.topToolbarHeightInPx = `${this.desktopTopToolbarHeight}px`;
+      } else {
+        this.topToolbarHeightInPx = `${this.mobileTopToolbarHeight}px`;
+      }
+    });
+
     // Hide/show top toolbar
     this.showTopToolbarOnScrollUp();
   }
@@ -131,7 +140,7 @@ export class NavigationComponent implements OnInit {
     // TODO: this could be a performance bottleneck (Add debounce)
     window.onscroll = () => {
       const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos || currentScrollPos < this.topToolbarHeight || this.activeNavigation === NavigationType.Back) {
+      if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight || this.activeNavigation === NavigationType.Back) {
         this.navbar.nativeElement.style.top = '0';
       } else {
         this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;
