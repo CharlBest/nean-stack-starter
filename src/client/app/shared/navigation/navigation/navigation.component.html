@@ -13,7 +13,7 @@
         width="55px">
     </a>
 
-    <ng-container *ngIf="bpService.isWeb">
+    <ng-container *ngIf="bpService.isDesktop">
       <div class="navigation">
         <ng-container *ngTemplateOutlet="navLinks"></ng-container>
       </div>
@@ -42,7 +42,7 @@
 <div [style.height]="topToolbarHeightInPx"></div>
 
 <!-- Bottom Nav -->
-<mat-card *ngIf="!bpService.isWeb"
+<mat-card *ngIf="!bpService.isDesktop"
   class="navigation bottom">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </mat-card>
@@ -54,7 +54,7 @@
     routerLink
     routerLinkActive
     #rla1="routerLinkActive"
-    [color]="rla1.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [color]="rla1.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>home</mat-icon>
     <div>Home</div>
@@ -63,7 +63,7 @@
     routerLink="/search"
     routerLinkActive
     #rla2="routerLinkActive"
-    [color]="rla2.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [color]="rla2.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>search</mat-icon>
     <div>Seach</div>
@@ -72,7 +72,7 @@
     routerLink="/create-item"
     routerLinkActive
     #rla3="routerLinkActive"
-    [color]="rla3.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [color]="rla3.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>edit</mat-icon>
     <div>Create</div>
@@ -81,7 +81,7 @@
     routerLink="/activity"
     routerLinkActive
     #rla4="routerLinkActive"
-    [color]="rla4.isActive ? bpService.isWeb ? 'accent' : 'primary' : ''"
+    [color]="rla4.isActive ? bpService.isDesktop ? 'accent' : 'primary' : ''"
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon matBadge="{{notificationService.messages?.length}}"
       matBadgeColor="warn"

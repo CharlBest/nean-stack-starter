@@ -25,8 +25,8 @@ export class NotificationService {
                 // Show notification popup
                 this.snackBar.open(data.message, 'Say hello back', {
                     duration: 5000,
-                    verticalPosition: this.bpService.isWeb ? 'top' : 'bottom',
-                    horizontalPosition: this.bpService.isWeb ? 'right' : 'center'
+                    verticalPosition: this.bpService.isDesktop ? 'top' : 'bottom',
+                    horizontalPosition: this.bpService.isDesktop ? 'right' : 'center'
                 }).onAction()
                     .subscribe(() => {
                         // Send message back

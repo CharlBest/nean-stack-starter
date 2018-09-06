@@ -6,7 +6,7 @@
                 <mat-label>Title</mat-label>
                 <input matInput
                     formControlName="title"
-                    [attr.autofocus]="bpService.isWeb || null" />
+                    [attr.autofocus]="bpService.isDesktop || null" />
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
                 </mat-error>
@@ -20,8 +20,7 @@
                     formControlName="description"
                     cdkTextareaAutosize
                     cdkAutosizeMinRows="3"
-                    cdkAutosizeMaxRows="8"
-                    [attr.autofocus]="bpService.isWeb || null"></textarea>
+                    cdkAutosizeMaxRows="8"></textarea>
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
                 </mat-error>

@@ -8,28 +8,28 @@ import { share } from 'rxjs/operators';
 })
 export class BreakpointService implements OnDestroy {
 
-    private isWebMediaQueries = [
+    private isDesktopMediaQueries = [
         Breakpoints.WebLandscape,
         Breakpoints.WebPortrait,
         Breakpoints.TabletLandscape,
         Breakpoints.TabletPortrait
     ];
-    private isWebSubject = new BehaviorSubject<boolean>(this.breakpointObserver.isMatched(this.isWebMediaQueries));
-    get isWeb(): boolean {
-        return this.isWebSubject.value;
+    private isDesktopSubject = new BehaviorSubject<boolean>(this.breakpointObserver.isMatched(this.isDesktopMediaQueries));
+    get isDesktop(): boolean {
+        return this.isDesktopSubject.value;
     }
-    isWeb$ = this.isWebSubject.asObservable().pipe(share());
+    isDesktop$ = this.isDesktopSubject.asObservable().pipe(share());
 
     constructor(private breakpointObserver: BreakpointObserver) {
-        this.breakpointObserver.observe(this.isWebMediaQueries)
+        this.breakpointObserver.observe(this.isDesktopMediaQueries)
             .subscribe(data => {
-                if (this.isWebSubject.value !== data.matches) {
-                    this.isWebSubject.next(data.matches);
+                if (this.isDesktopSubject.value !== data.matches) {
+                    this.isDesktopSubject.next(data.matches);
                 }
             });
     }
 
     ngOnDestroy() {
-        this.isWebSubject.complete();
+        this.isDesktopSubject.complete();
     }
 }

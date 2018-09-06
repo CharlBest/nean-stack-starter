@@ -2,7 +2,8 @@
     <mat-card-content>
         <p>
             We are sad to see you go. All information linked with
-            <strong>{{email}}</strong> will be deleted and can't be recovered after proceeding. Please enter your email.
+            <strong>{{email}}</strong> will be deleted and can't be recovered after proceeding. Please enter your
+            email.
         </p>
         <mat-form-field>
             <mat-label>email</mat-label>
@@ -10,7 +11,7 @@
                 #emailInput
                 type="email"
                 required
-                [attr.autofocus]="bpService.isWeb || null">
+                [attr.autofocus]="bpService.isDesktop || null">
         </mat-form-field>
     </mat-card-content>
     <mat-card-actions>

@@ -59,7 +59,7 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   openPanel() {
-    if (this.bpService.isWeb) {
+    if (this.bpService.isDesktop) {
       this.isPanelForWebOpen = true;
     } else {
       this.preventBackNavigationService.beforeOpen();

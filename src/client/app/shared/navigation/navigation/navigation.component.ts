@@ -95,8 +95,8 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-    this.bpService.isWeb$.subscribe(isWeb => {
-      if (isWeb) {
+    this.bpService.isDesktop$.subscribe(data => {
+      if (data) {
         this.topToolbarHeightInPx = `${this.desktopTopToolbarHeight}px`;
       } else {
         this.topToolbarHeightInPx = `${this.mobileTopToolbarHeight}px`;
@@ -164,7 +164,7 @@ export class NavigationComponent implements OnInit {
       this.router.isActive('/forgot-password', true) || this.router.isActive('/business', false) ||
       this.router.isActive('/payment', true) || this.router.isActive('/newsletter', true) ||
       this.router.isActive('/feedback', true)) {
-      if (this.bpService.isWeb) {
+      if (this.bpService.isDesktop) {
         return 'mat-accent';
       } else {
         return 'mat-primary';

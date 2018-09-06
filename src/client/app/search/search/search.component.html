@@ -6,7 +6,7 @@
                 <mat-label>Search</mat-label>
                 <input matInput
                     formControlName="term"
-                    [attr.autofocus]="bpService.isWeb || null" />
+                    [attr.autofocus]="bpService.isDesktop || null" />
                 <mat-error>
                     <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
                 </mat-error>

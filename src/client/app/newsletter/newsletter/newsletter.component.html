@@ -15,7 +15,7 @@
           type="email"
           autocomplete="email"
           required
-          [attr.autofocus]="bpService.isWeb || null">
+          [attr.autofocus]="bpService.isDesktop || null">
         <mat-error>
           <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
         </mat-error>

@@ -69,7 +69,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     event.stopPropagation();
 
-    if (this.bpService.isWeb) {
+    if (this.bpService.isDesktop) {
       this.contextMenuTrigger.openMenu();
     } else {
       this.contextMenuTrigger.closeMenu();
