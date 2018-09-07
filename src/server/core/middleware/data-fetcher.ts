@@ -1,9 +1,6 @@
 
 import * as express from 'express';
-import * as puppeteer from 'puppeteer';
-import { v4 as nodeUUId } from 'uuid';
 import { ItemsRepository } from '../../app/items/items.repository';
-import { Database } from '../database';
 
 export class DataFetcher {
     // dom element selectors
@@ -29,50 +26,50 @@ export class DataFetcher {
     async execution() {
         // TODO: Check null and undefined thouroughout especially with query selectors
 
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox'],
-            headless: true
-        });
-        const page = await browser.newPage();
+        // const browser = await puppeteer.launch({
+        //     args: ['--no-sandbox'],
+        //     headless: true
+        // });
+        // const page = await browser.newPage();
 
-        await page.goto('https://www.daft.ie/dublin/residential-property-for-rent/?searchSource=rental');
-        await page.waitFor(2 * 1000);
+        // await page.goto('https://www.daft.ie/dublin/residential-property-for-rent/?searchSource=rental');
+        // await page.waitFor(2 * 1000);
 
-        const listLength = await page.evaluate((sel) => {
-            return document.querySelectorAll(sel).length;
-        }, this.selectors.LENGTH_SELECTOR_CLASS);
+        // const listLength = await page.evaluate((sel) => {
+        //     return document.querySelectorAll(sel).length;
+        // }, this.selectors.LENGTH_SELECTOR_CLASS);
 
-        let neo4jSession;
+        // let neo4jSession;
 
-        for (let i = 1; i <= listLength; i++) {
-            // change the index to the next child
-            const titleSelector = this.selectors.LIST_TITLE_SELECTOR.replace('INDEX', i.toString());
-            const descriptionSelector = this.selectors.LIST_DESCRIPTION_SELECTOR.replace('INDEX', i.toString());
+        // for (let i = 1; i <= listLength; i++) {
+        //     // change the index to the next child
+        //     const titleSelector = this.selectors.LIST_TITLE_SELECTOR.replace('INDEX', i.toString());
+        //     const descriptionSelector = this.selectors.LIST_DESCRIPTION_SELECTOR.replace('INDEX', i.toString());
 
-            const title = await page.evaluate((sel) => {
-                const element = (<HTMLAnchorElement>document.querySelector(sel));
-                return element ? element.textContent : null;
+        //     const title = await page.evaluate((sel) => {
+        //         const element = (<HTMLAnchorElement>document.querySelector(sel));
+        //         return element ? element.textContent : null;
 
-            }, titleSelector);
+        //     }, titleSelector);
 
-            const description = await page.evaluate((sel) => {
-                const element = (<HTMLParagraphElement>document.querySelector(sel));
-                return element ? element.textContent : null;
-            }, descriptionSelector);
+        //     const description = await page.evaluate((sel) => {
+        //         const element = (<HTMLParagraphElement>document.querySelector(sel));
+        //         return element ? element.textContent : null;
+        //     }, descriptionSelector);
 
-            if (title && description) {
-                neo4jSession = Database.createSession();
-                await this.itemsRepository.createInternal(neo4jSession, this.app.locals.dbQueries.items.create, 1, nodeUUId(), title, description);
-            }
-        }
+        //     if (title && description) {
+        //         neo4jSession = Database.createSession();
+        //         await this.itemsRepository.createInternal(neo4jSession, this.app.locals.dbQueries.items.create, 1, nodeUUId(), title, description);
+        //     }
+        // }
 
-        if (neo4jSession) {
-            neo4jSession.close();
-        }
+        // if (neo4jSession) {
+        //     neo4jSession.close();
+        // }
 
-        // Recursion loop for execution
-        this.clearInterval();
-        this.interval = setTimeout(() => this.execution(), this.msToNextHour());
+        // // Recursion loop for execution
+        // this.clearInterval();
+        // this.interval = setTimeout(() => this.execution(), this.msToNextHour());
     }
 
     msToNextHour(): number {
