@@ -22,8 +22,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.refreshSameUrlService.init(() => {
-      this.getAllItems();
       window.scrollTo(0, 0);
+      this.getAllItems();
     });
 
     this.getAllItems();
