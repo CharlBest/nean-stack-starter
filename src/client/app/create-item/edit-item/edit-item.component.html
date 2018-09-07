@@ -1,0 +1,6 @@
+<app-item-form #itemForm
+    *ngIf="!isProcessing"
+    [item]="item"
+    (submit)="onSubmit()"></app-item-form>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>

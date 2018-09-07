@@ -1,0 +1,39 @@
+<form [formGroup]="formGroup"
+    [hidden]="isProcessing">
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput
+                    formControlName="title"
+                    [attr.autofocus]="bpService.isDesktop || null" />
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput
+                    formControlName="description"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="8"></textarea>
+                <mat-error>
+                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                type="submit"
+                color="primary"
+                [disabled]="!formGroup.valid"
+                (click)="submit.emit()">{{item ? 'Update' : 'Create'}}</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>

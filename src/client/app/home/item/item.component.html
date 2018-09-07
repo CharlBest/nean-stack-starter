@@ -77,7 +77,8 @@
             <mat-icon mat-list-icon>star</mat-icon>
             <span mat-line>Save</span>
         </mat-list-item>
-        <mat-list-item *ngIf="item?.user?.id === loggedInUserId">
+        <mat-list-item *ngIf="item?.user?.id === loggedInUserId"
+            routerLink="create-item/{{item?.uId}}">
             <mat-icon mat-list-icon>edit</mat-icon>
             <span mat-line>Edit</span>
         </mat-list-item>

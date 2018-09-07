@@ -46,14 +46,22 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async update(res: Response, userId: number): Promise<any> {
+    public async update(res: Response, userId: number, uId: string, title: string, description: string): Promise<any> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
-                userId
+                userId,
+                uId,
+                title,
+                description
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as any[];
+        const model = result.records.map(x => {
+            let viewModel = new ItemViewModel();
+            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
+            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
+            return viewModel;
+        }) as ItemViewModel[];
 
         if (model && model.length > 0) {
             return model[0];

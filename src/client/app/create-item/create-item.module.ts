@@ -5,6 +5,8 @@ import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModul
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { CreateItemRoutingModule } from './create-item-routing.module';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { EditItemComponent } from './edit-item/edit-item.component';
+import { ItemFormComponent } from './item-form/item-form.component';
 
 const materialModules = [
   MatButtonModule,
@@ -22,7 +24,9 @@ const materialModules = [
     ...materialModules
   ],
   declarations: [
-    CreateItemComponent
+    CreateItemComponent,
+    EditItemComponent,
+    ItemFormComponent
   ]
 })
 export class CreateItemModule { }

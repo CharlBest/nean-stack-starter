@@ -17,7 +17,11 @@ export class CreateItemService {
         return this.http.post<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.create().client()}`, viewModel);
     }
 
-    public update(viewModel: CreateItemViewModel): Observable<ItemViewModel> {
-        return this.http.put<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.update().client()}`, viewModel);
+    public update(uId: string, viewModel: CreateItemViewModel): Observable<ItemViewModel> {
+        return this.http.put<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.update(uId).client()}`, viewModel);
+    }
+
+    public get(uId: string): Observable<ItemViewModel> {
+        return this.http.get<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.get(uId).client()}`);
     }
 }

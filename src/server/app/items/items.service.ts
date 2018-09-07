@@ -17,8 +17,8 @@ export class ItemsService extends BaseService {
         return await this.itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description);
     }
 
-    public async update(res: Response): Promise<ItemViewModel> {
-        return await this.itemsRepository.update(res, this.getUserId(res));
+    public async update(res: Response, uId: string, title: string, description: string): Promise<ItemViewModel> {
+        return await this.itemsRepository.update(res, this.getUserId(res), uId, title, description);
     }
 
     public async get(res: Response, ip: string, uId: string): Promise<ItemViewModel> {

@@ -29,8 +29,20 @@ export class ItemsController extends BaseController {
     }
 
     public async update(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+        const viewModel = req.body as CreateItemViewModel;
+
+        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
         res.status(200).json(
-            await this.itemsService.update(res)
+            await this.itemsService.update(res, uId, viewModel.title, viewModel.description)
         );
     }
 
