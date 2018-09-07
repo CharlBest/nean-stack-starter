@@ -4,5 +4,7 @@ import { Injectable, TemplateRef } from '@angular/core';
     providedIn: 'root'
 })
 export class NavigationService {
+    backRouterPath: string;
+    previousUrl = '';
     navigationPlaceholderTemplate: TemplateRef<any>;
 }

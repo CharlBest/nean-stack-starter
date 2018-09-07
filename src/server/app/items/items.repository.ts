@@ -46,7 +46,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async update(res: Response, userId: number, uId: string, title: string, description: string): Promise<any> {
+    public async update(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
                 userId,

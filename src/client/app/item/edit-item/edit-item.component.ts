@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { CreateItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
+import { CreateOrEditItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { CreateItemService } from '../create-item.service';
 import { ItemFormComponent } from '../item-form/item-form.component';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -20,7 +20,7 @@ export class EditItemComponent implements OnInit {
   item: ItemViewModel;
 
   constructor(public formErrorsService: FormErrorsService,
-    private createItemService: CreateItemService,
+    private itemService: ItemService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -36,27 +36,26 @@ export class EditItemComponent implements OnInit {
   getItem() {
     this.isProcessing = true;
 
-    this.createItemService.get(this.itemUId)
+    this.itemService.get(this.itemUId)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.item = data;
       }, error => {
-        this.formErrorsService.updateFormValidity(error);
-        // this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
       });
   }
 
   onSubmit() {
     this.itemForm.isProcessing = true;
 
-    const viewModel = new CreateItemViewModel();
+    const viewModel = new CreateOrEditItemViewModel();
     viewModel.title = this.itemForm.formGroup.get('title').value;
     viewModel.description = this.itemForm.formGroup.get('description').value;
 
-    this.createItemService.update(this.item.uId, viewModel)
+    this.itemService.update(this.item.uId, viewModel)
       .pipe(finalize(() => this.itemForm.isProcessing = false))
-      .subscribe(() => {
-        this.router.navigate(['/']);
+      .subscribe(data => {
+        this.router.navigate(['/item', data.uId]);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
       });

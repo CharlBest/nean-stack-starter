@@ -1,25 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatExpansionModule, MatProgressSpinnerModule } from '@angular/material';
+import { ItemModule } from '../item/item.module';
 import { GitHubModule } from '../shared/github/github.module';
-import { MediaModule } from '../shared/media/media.module';
 import { NetworkStatusModule } from '../shared/network-status/network-status.module';
-import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
-import { CommentsComponent } from './comments/comments.component';
 import { GitHubReadMeComponent } from './github-readme/github-readme.component';
 import { HomeRoutingModule } from './home-routing.module';
-import { ItemComponent } from './item/item.component';
-import { ItemsComponent } from './items/items.component';
+import { HomeComponent } from './home/home.component';
 
 const materialModules = [
   MatButtonModule,
   MatCardModule,
-  MatIconModule,
   MatProgressSpinnerModule,
-  MatMenuModule,
-  MatListModule,
-  MatBottomSheetModule,
-  MatTooltipModule,
   MatExpansionModule,
 ];
 
@@ -27,20 +19,14 @@ const materialModules = [
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MediaModule,
-    ShareDialogModule,
+    ItemModule,
     GitHubModule,
     NetworkStatusModule,
     ...materialModules
   ],
   declarations: [
-    ItemComponent,
-    ItemsComponent,
-    CommentsComponent,
+    HomeComponent,
     GitHubReadMeComponent,
-  ],
-  exports: [
-    ItemComponent
   ]
 })
 export class HomeModule { }

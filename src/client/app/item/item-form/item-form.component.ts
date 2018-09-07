@@ -12,7 +12,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 })
 export class ItemFormComponent implements OnInit {
 
-  @Output() submit: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
   isProcessing = false;

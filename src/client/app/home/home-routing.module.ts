@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavigationType } from '../shared/navigation/navigation-type.enum';
-import { CommentsComponent } from './comments/comments.component';
-import { ItemsComponent } from './items/items.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: ItemsComponent, pathMatch: 'full', data: { title: 'Home', nav: NavigationType.Primary } },
-            { path: ':uId', component: CommentsComponent, pathMatch: 'full', data: { title: 'Comments', nav: NavigationType.Back } }
+            { path: '', component: HomeComponent, pathMatch: 'full', data: { title: 'Home', nav: NavigationType.Primary } },
         ])
     ],
     exports: [RouterModule]

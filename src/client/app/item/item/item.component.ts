@@ -9,7 +9,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { PreventBackNavigationService } from '../../shared/services/prevent-back-navigation.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
-import { HomeService } from '../home.service';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-item',
@@ -26,7 +26,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   isProcessing = false;
   showMoreButton = false;
 
-  constructor(private homeService: HomeService,
+  constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
     private authService: AuthService,
     private dialogService: DialogService,
@@ -55,7 +55,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   deleteItem() {
     this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
       if (data) {
-        this.homeService.delete(this.item.uId)
+        this.itemService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(() => {
           }, error => {
@@ -95,7 +95,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
 
         this.snackBar.open('Sending...');
 
-        this.homeService.sendReport(viewModel)
+        this.itemService.sendReport(viewModel)
           .subscribe(() => {
             this.snackBar.dismiss();
             this.snackBar.open('Sent');

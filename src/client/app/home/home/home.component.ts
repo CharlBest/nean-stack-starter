@@ -6,12 +6,12 @@ import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.se
 import { HomeService } from '../home.service';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
   providers: [RefreshSameUrlService]
 })
-export class ItemsComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   isProcessing = true;
   items: ItemViewModel[];

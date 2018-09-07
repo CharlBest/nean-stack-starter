@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemRoutes } from '../../../shared/routes/item.routes';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { ReportItemViewModel } from '../../../shared/view-models/item/report-item.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -13,19 +12,7 @@ export class HomeService {
 
     constructor(private http: HttpClient) { }
 
-    public get(uId: string): Observable<ItemViewModel> {
-        return this.http.get<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.get(uId).client()}`);
-    }
-
     public getAll(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
         return this.http.get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAll().client({ pageIndex, pageSize })}`);
-    }
-
-    public delete(uId: string): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${ItemRoutes.delete(uId).client()}`);
-    }
-
-    public sendReport(viewModel: ReportItemViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.report().client()}`, viewModel);
     }
 }

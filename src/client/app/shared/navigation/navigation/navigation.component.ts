@@ -59,7 +59,8 @@ export class NavigationComponent implements OnInit {
     // Check if user has gone to primary nav page
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(event => {
+      .subscribe((event: NavigationEnd) => {
+        this.navigationService.previousUrl = event.url;
         if (this.activeNavigation === NavigationType.Primary) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }
@@ -89,8 +90,7 @@ export class NavigationComponent implements OnInit {
           if (nav) {
             this.activeNavigation = nav;
           }
-
-          const backRouterPath = event.snapshot.data['backRouterPath'] as string;
+          const backRouterPath = event.snapshot.data['backRouterPath'] || this.navigationService.backRouterPath;
           if (backRouterPath) {
             this.backRouterPath = backRouterPath;
           } else {
@@ -125,6 +125,7 @@ export class NavigationComponent implements OnInit {
   back() {
     if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
+      this.navigationService.backRouterPath = null;
     } else {
       if (document.referrer === '' && !this.hasNavigatedToPageWithPrimaryNav) {
         this.router.navigate(['/']);

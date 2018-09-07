@@ -41,7 +41,7 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-button
-            routerLink="/home/{{item.uId}}"
+            routerLink="/item/{{item.uId}}"
             *ngIf="!isViewingComments"
             type="button">
             <mat-icon>mode_comment</mat-icon>
@@ -78,7 +78,7 @@
             <span mat-line>Save</span>
         </mat-list-item>
         <mat-list-item *ngIf="item?.user?.id === loggedInUserId"
-            routerLink="create-item/{{item?.uId}}">
+            routerLink="item/edit/{{item?.uId}}">
             <mat-icon mat-list-icon>edit</mat-icon>
             <span mat-line>Edit</span>
         </mat-list-item>

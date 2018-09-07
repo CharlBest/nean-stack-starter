@@ -17,6 +17,7 @@ export class CustomPreloading implements PreloadingStrategy {
       // Chrome extension routing workaround
       // { path: 'index.extension.html', pathMatch: 'full', redirectTo: '', data: { preload: true } },
       { path: 'home', loadChildren: './home/home.module#HomeModule' },
+      { path: 'item', loadChildren: './item/item.module#ItemModule', data: { preload: true } },
       { path: 'create-user', loadChildren: './create-user/create-user.module#CreateUserModule' },
       { path: 'login', loadChildren: './login/login.module#LoginModule' },
       { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
@@ -26,7 +27,6 @@ export class CustomPreloading implements PreloadingStrategy {
       { path: 'newsletter', loadChildren: './newsletter/newsletter.module#NewsletterModule' },
       { path: 'user', loadChildren: './user/user.module#UserModule' },
       { path: 'search', loadChildren: './search/search.module#SearchModule', data: { preload: true } },
-      { path: 'create-item', loadChildren: './create-item/create-item.module#CreateItemModule', data: { preload: true }, canActivate: [AuthService] },
       { path: 'activity', loadChildren: './activity/activity.module#ActivityModule', data: { preload: true } },
       { path: 'account', loadChildren: './account/account.module#AccountModule', data: { preload: true } },
       { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },

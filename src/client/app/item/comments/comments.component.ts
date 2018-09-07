@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
-import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { AuthService } from '../../shared/services/auth.service';
-import { HomeService } from '../home.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-comments',
@@ -14,17 +13,22 @@ import { HomeService } from '../home.service';
 })
 export class CommentsComponent implements OnInit {
 
-  // isAuthenticated: boolean = this.authService.hasToken();
   itemUId: string;
+  // isAuthenticated: boolean = this.authService.hasToken();
   // formGroup: FormGroup;
   isProcessing = false;
   item: ItemViewModel;
 
-  constructor(private homeService: HomeService,
+  constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
-    private authService: AuthService,
-    private dialogService: DialogService) { }
+    private navigationService: NavigationService) {
+    if (this.navigationService.previousUrl.startsWith('/item/create') ||
+      this.navigationService.previousUrl.startsWith('/item/edit')) {
+      this.navigationService.backRouterPath = '/';
+      console.log('hit');
+    }
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -38,7 +42,7 @@ export class CommentsComponent implements OnInit {
   getItem() {
     this.isProcessing = true;
 
-    this.homeService.get(this.itemUId)
+    this.itemService.get(this.itemUId)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.item = data;

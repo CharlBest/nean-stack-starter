@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
-import { CreateItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
+import { CreateOrEditItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { ItemsService } from './items.service';
@@ -14,7 +14,7 @@ export class ItemsController extends BaseController {
     }
 
     public async create(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as CreateItemViewModel;
+        const viewModel = req.body as CreateOrEditItemViewModel;
 
         const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -30,7 +30,7 @@ export class ItemsController extends BaseController {
 
     public async update(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
-        const viewModel = req.body as CreateItemViewModel;
+        const viewModel = req.body as CreateOrEditItemViewModel;
 
         const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
