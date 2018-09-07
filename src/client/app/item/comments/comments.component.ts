@@ -26,7 +26,6 @@ export class CommentsComponent implements OnInit {
     if (this.navigationService.previousUrl.startsWith('/item/create') ||
       this.navigationService.previousUrl.startsWith('/item/edit')) {
       this.navigationService.backRouterPath = '/';
-      console.log('hit');
     }
   }
 
