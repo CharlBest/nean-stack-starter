@@ -38,7 +38,7 @@ export class App {
         // Setup Heroku ping to prevent free tier sleeping
         // this.bootstrapApp.setupHerokuPing(this.express);
         // Database data fetcher
-        this.bootstrapApp.setupAutoPeriodicDataFetch(this.express);
+        // this.bootstrapApp.setupAutoPeriodicDataFetch(this.express);
 
         // TODO: add logger (maybe morgan (http)) or custom
 
