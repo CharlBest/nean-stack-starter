@@ -1,28 +1,52 @@
-import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Response } from 'express';
 
-export class CustomValidators {
+function isEmptyInputValue(value: any): boolean {
+    // we don't check for string here so it also works with arrays
+    return value == null || value.length === 0;
+}
 
+const EMAIL_REGEXP =
+    /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+
+// Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
+export class Validators {
     private static wrapControl(control: AbstractControl | string | number): AbstractControl {
-        return control instanceof AbstractControl ? control : <any>{ value: control };
+        // Warning if this method starts allowing booleans
+        return control && (<any>control).value !== undefined ? control : <any>{ value: control };
     }
 
-    static required(control: AbstractControl | string | number): ValidationErrors | null {
-        return Validators.required(CustomValidators.wrapControl(control));
+    static required(control: AbstractControl | any): ValidationErrors | null {
+        control = Validators.wrapControl(control);
+        return isEmptyInputValue(control.value) ? { 'required': true } : null;
     }
 
-    static email(control: AbstractControl | string | number): ValidationErrors | null {
-        return Validators.email(CustomValidators.wrapControl(control));
+    static email(control: AbstractControl | any): ValidationErrors | null {
+        control = Validators.wrapControl(control);
+        if (isEmptyInputValue(control.value)) {
+            return null;  // don't validate empty values to allow optional controls
+        }
+        return EMAIL_REGEXP.test(control.value) ? null : { 'email': true };
     }
 
-    static minLength(length: number): ValidatorFn {
-        return (control: AbstractControl | string | number): ValidationErrors | null => {
-            return Validators.minLength(length).call(this, CustomValidators.wrapControl(control));
+    static minLength(minLength: number): ValidatorFn {
+        return (control: AbstractControl | any): ValidationErrors | null => {
+            control = Validators.wrapControl(control);
+            if (isEmptyInputValue(control.value)) {
+                return null;  // don't validate empty values to allow optional controls
+            }
+            const length: number = control.value ? control.value.length : 0;
+            return length < minLength ?
+                { 'minlength': { 'requiredLength': minLength, 'actualLength': length } } :
+                null;
         };
     }
 
-    static is4(control: AbstractControl | string | number): ValidationErrors | null {
-        return CustomValidators.wrapControl(control).value === '4' ? { is4: true } : null;
+    static is4(control: AbstractControl): ValidationErrors | null {
+        control = Validators.wrapControl(control);
+        if (isEmptyInputValue(control.value)) {
+            return null;  // don't validate empty values to allow optional controls
+        }
+        return control.value === '4' ? { 'is4': true } : null;
     }
 }
 
@@ -30,15 +54,15 @@ export class BuildFormGroup {
     static createUser(email: string = null, username: string = null, password: string = null): FormValidator {
         return {
             email: [email, [
-                CustomValidators.required,
-                CustomValidators.email
+                Validators.required,
+                Validators.email
             ]],
             username: [username, [
-                CustomValidators.required
+                Validators.required
             ]],
             password: [password, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]]
         };
     }
@@ -46,8 +70,8 @@ export class BuildFormGroup {
     static feedback(content: string = null): FormValidator {
         return {
             content: [content, [
-                CustomValidators.required,
-                CustomValidators.minLength(10)
+                Validators.required,
+                Validators.minLength(10)
             ]]
         };
     }
@@ -55,11 +79,11 @@ export class BuildFormGroup {
     static login(emailOrUsername: string = null, password: string = null): FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
-                CustomValidators.required
+                Validators.required
             ]],
             password: [password, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]]
         };
     }
@@ -67,8 +91,8 @@ export class BuildFormGroup {
     static changeForgottenPassword(password: string = null): FormValidator {
         return {
             password: [password, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]]
         };
     }
@@ -76,8 +100,8 @@ export class BuildFormGroup {
     static forgotPassword(email: string = null): FormValidator {
         return {
             email: [email, [
-                CustomValidators.required,
-                CustomValidators.email
+                Validators.required,
+                Validators.email
             ]]
         };
     }
@@ -85,16 +109,16 @@ export class BuildFormGroup {
     static updatePassword(password: string = null, newPassword: string = null, confirmPassword: string = null): FormValidator {
         return {
             password: [password, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]],
             newPassword: [newPassword, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]],
             confirmPassword: [confirmPassword, [
-                CustomValidators.required,
-                CustomValidators.minLength(6)
+                Validators.required,
+                Validators.minLength(6)
             ]]
         };
     }
@@ -102,7 +126,7 @@ export class BuildFormGroup {
     static payment(amount: number = null, cardUId: string = null, saveCard: boolean = null, email: string = null): FormValidator {
         return {
             amount: [amount, [
-                CustomValidators.required
+                Validators.required
             ]],
             cardUId: [cardUId, []],
             saveCard: [saveCard, []],
@@ -113,8 +137,8 @@ export class BuildFormGroup {
     static newsletter(email: string = null): FormValidator {
         return {
             email: [email, [
-                CustomValidators.required,
-                CustomValidators.email
+                Validators.required,
+                Validators.email
             ]]
         };
     }
@@ -122,10 +146,10 @@ export class BuildFormGroup {
     static createItem(title: string = null, description: string = null): FormValidator {
         return {
             title: [title, [
-                CustomValidators.required
+                Validators.required
             ]],
             description: [description, [
-                CustomValidators.required
+                Validators.required
             ]]
         };
     }
@@ -229,3 +253,11 @@ interface FormValidator {
 }
 
 type ValidatorFn = (c: AbstractControl | string | number) => ValidationErrors | null;
+
+interface ValidationErrors {
+    [key: string]: any;
+}
+
+abstract class AbstractControl {
+    value: any;
+}

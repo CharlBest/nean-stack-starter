@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { BuildFormGroup, CustomValidators, ServerValidator, trimString } from '../../../shared/validation/validators';
+import { BuildFormGroup, ServerValidator, trimString, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -113,9 +113,9 @@ export class UsersController extends BaseController {
         const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.password);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', CustomValidators.required(viewModel.email));
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', CustomValidators.email(viewModel.email));
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'code', CustomValidators.required(viewModel.code));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', Validators.required(viewModel.email));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', Validators.email(viewModel.email));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'code', Validators.required(viewModel.code));
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
@@ -129,7 +129,7 @@ export class UsersController extends BaseController {
     public async verifyEmail(req: Request, res: Response, next: NextFunction) {
         const code = req.body.code;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'code', CustomValidators.required(code));
+        const hasErrors = ServerValidator.addGlobalError(res, 'code', Validators.required(code));
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
@@ -188,7 +188,7 @@ export class UsersController extends BaseController {
         const viewModel = req.body as CompletedTutorial;
 
         // TODO: no UI element for this error
-        const hasErrors = ServerValidator.addGlobalError(res, 'tutorialType', CustomValidators.required(viewModel.tutorialType));
+        const hasErrors = ServerValidator.addGlobalError(res, 'tutorialType', Validators.required(viewModel.tutorialType));
 
         if (hasErrors) {
             throw ValidationUtil.errorResponse(res);
