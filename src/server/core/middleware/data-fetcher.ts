@@ -22,10 +22,8 @@ export class DataFetcher {
     }
 
     init(app: express.Application) {
-        if (app.get('env') !== 'development') {
-            setTimeout(() => this.app = app, 1000);
-            this.interval = setTimeout(() => this.execution(), 0);
-        }
+        setTimeout(() => this.app = app, 1000);
+        this.interval = setTimeout(() => this.execution(), 0);
     }
 
     async execution() {
@@ -44,8 +42,6 @@ export class DataFetcher {
             return document.querySelectorAll(sel).length;
         }, this.selectors.LENGTH_SELECTOR_CLASS);
 
-        let neo4jSession;
-
         for (let i = 1; i <= listLength; i++) {
             // change the index to the next child
             const titleSelector = this.selectors.LIST_TITLE_SELECTOR.replace('INDEX', i.toString());
@@ -63,14 +59,13 @@ export class DataFetcher {
             }, descriptionSelector);
 
             if (title && description) {
-                neo4jSession = Database.createSession();
-                await this.itemsRepository.createInternal(neo4jSession, this.app.locals.dbQueries.items.create, 1, nodeUUId(), title, description);
+                const neo4jSession = Database.createSession();
+                await this.itemsRepository.createInternal(neo4jSession, this.app, 1, nodeUUId(), title, description);
+                neo4jSession.close();
             }
         }
 
-        if (neo4jSession) {
-            neo4jSession.close();
-        }
+        await browser.close();
 
         // Recursion loop for execution
         this.clearInterval();

@@ -1,3 +1,4 @@
+import * as express from 'express';
 import { Response } from 'express';
 import { ItemModel } from '../../../shared/models/item/item.model';
 import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
@@ -11,8 +12,8 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    public async createInternal(neo4jSession: any, dbQuery: string, userId: number, uId: string, title: string, description: string): Promise<void> {
-        await neo4jSession.run(dbQuery,
+    public async createInternal(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string): Promise<void> {
+        await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
                 uId,
