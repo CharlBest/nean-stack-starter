@@ -1,13 +1,13 @@
 import * as http from 'http';
-import * as webSocket from 'ws';
+import * as WebSocket from 'ws';
 
 export class WebSocketServer {
-    private static socketServer: webSocket.Server = null;
+    private static socketServer: WebSocket.Server = null;
 
-    static getSocketServer(server: http.Server = null) {
+    static getSocketServer(server: http.Server = null): WebSocket.Server {
         if (!this.socketServer) {
             if (server) {
-                return this.socketServer = new webSocket.Server({ server });
+                return this.socketServer = new WebSocket.Server({ server });
             } else {
                 return null;
             }

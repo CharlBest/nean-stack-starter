@@ -3,8 +3,9 @@ import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
-import * as webSocket from 'ws';
+import * as WebSocket from 'ws';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
+import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
@@ -71,10 +72,15 @@ export class UsersService extends BaseService {
             Emailer.welcomeEmail(user.email, user.username, user.emailCode);
 
             // Notify everyone there is another sign up
+            // TODO: This should be extracted into a single place where it can be called from
             const wss = WebSocketServer.getSocketServer();
+            const dataModel = new SocketDataModel();
+            dataModel.message = 'New sign up just now';
+            const payload = JSON.stringify(dataModel);
+
             wss.clients.forEach(client => {
-                if (client.readyState === webSocket.OPEN) {
-                    client.send('New sign up just now');
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(payload);
                 }
             });
         } else {
