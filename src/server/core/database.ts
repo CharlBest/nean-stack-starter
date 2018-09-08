@@ -11,8 +11,8 @@ export class Database {
         if (this.driver) {
             return this.driver.session();
         } else {
-            const driver = this.createDriver();
-            return driver.session();
+            this.driver = this.createDriver();
+            return this.driver.session();
         }
     }
 
@@ -20,13 +20,13 @@ export class Database {
         const driver = neo4j.driver(environment.database.uri, neo4j.auth.basic(environment.database.username, environment.database.password));
 
         // Register a callback to know if driver creation was successful:
-        (<any>driver).onCompleted = () => {
+        driver.onCompleted = () => {
             // proceed with using the driver, it was successfully instantiated
         };
 
         // Register a callback to know if driver creation failed.
         // This could happen due to wrong credentials or database unavailability:
-        (<any>driver).onError = (error) => {
+        driver.onError = (error) => {
             console.log('Neo4j driver instantiation failed', error);
         };
 
