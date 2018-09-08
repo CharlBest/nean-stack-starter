@@ -4,7 +4,7 @@ export const environment = {
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
         username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),
-        password: getEnvironmentVariable('DATABASE_PASSWORD', 'neo4j')
+        password: getEnvironmentVariable('DATABASE_PASSWORD', '1234')
     },
     stripe: {
         secretKey: getEnvironmentVariable('STRIPE_KEY', 'sk_test_RKOxhujxxM8c4xIqt6t036Qo')
