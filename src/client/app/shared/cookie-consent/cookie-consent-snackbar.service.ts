@@ -13,7 +13,7 @@ export class CookieConsentSnackbarService {
 
   openCookieConsentSnackBar() {
     if (!this.cookieConsentService.hasAcceptedCookieConsent()) {
-      setTimeout(() => this.snackBar.openFromComponent(CookieConsentComponent));
+      setTimeout(() => this.cookieConsentService.snackBarRef = this.snackBar.openFromComponent(CookieConsentComponent));
     }
   }
 }

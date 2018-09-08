@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBarRef } from '@angular/material';
+import { CookieConsentComponent } from './cookie-consent/cookie-consent.component';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,9 @@ import { MatSnackBar } from '@angular/material';
 export class CookieConsentService {
 
   private readonly cookieConsentStorageKey = 'cookie_consent';
+  snackBarRef: MatSnackBarRef<CookieConsentComponent>;
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor() { }
 
   hasAcceptedCookieConsent() {
     const consent = localStorage.getItem(this.cookieConsentStorageKey);
@@ -17,7 +19,6 @@ export class CookieConsentService {
 
   acceptCookieConsent() {
     localStorage.setItem(this.cookieConsentStorageKey, 'true');
-    // TODO: this will hide all snackbars even ones that suggest taking a tour
-    this.snackBar.dismiss();
+    this.snackBarRef.dismiss();
   }
 }

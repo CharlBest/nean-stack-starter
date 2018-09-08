@@ -16,8 +16,6 @@ export class NetworkStatusService {
       const handleNetworkChange = () => {
         if (!navigator.onLine) {
           this.snackBar.open('Offline');
-        } else {
-          this.snackBar.dismiss();
         }
 
         this.isOffline$.next(!navigator.onLine);
