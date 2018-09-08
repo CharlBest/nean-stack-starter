@@ -1,5 +1,5 @@
 export const data = `
-MERGE (tutorial:Tutorial { type: {tutorialType} })
+MERGE (tutorial:Tutorial { type: toInt({tutorialType}) })
 WITH tutorial
 MATCH (user:User { id: {userId} })
 OPTIONAL MATCH (user)-[hasCompleted:COMPLETED]->(tutorial)
