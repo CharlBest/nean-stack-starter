@@ -59,14 +59,15 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async getLiteUserByEmailOrUsername(res: Response, emailOrUsername: string): Promise<UserLiteModel> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getLiteUserByEmailOrUsername,
+    public async getUserByEmailOrUsername(res: Response, emailOrUsername: string)
+        : Promise<Pick<UserModel, 'password' | 'passwordSalt' | 'id'>> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserByEmailOrUsername,
             {
                 emailOrUsername
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as any[];
 
         if (model && model.length > 0) {
             return model[0];

@@ -107,7 +107,7 @@ export class UsersService extends BaseService {
     public async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
         emailOrUsername = emailOrUsername.toLowerCase();
 
-        const user = await this.usersRepository.getLiteUserByEmailOrUsername(res, emailOrUsername);
+        const user = await this.usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'invalidCredentials', true);
