@@ -51,6 +51,7 @@ export class EditItemComponent implements OnInit {
     const viewModel = new CreateOrEditItemViewModel();
     viewModel.title = this.itemForm.formGroup.get('title').value;
     viewModel.description = this.itemForm.formGroup.get('description').value;
+    viewModel.media = this.itemForm.formGroup.get('media').value;
 
     this.itemService.update(this.item.uId, viewModel)
       .pipe(finalize(() => this.itemForm.isProcessing = false))

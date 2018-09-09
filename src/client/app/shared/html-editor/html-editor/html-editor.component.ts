@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, SecurityContext, ViewChild
 import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
+    uploadSubscription: Subscription;
 
     constructor(private firebaseStorageService: FirebaseStorageService,
         private domSanitizer: DomSanitizer) { }
@@ -104,7 +105,12 @@ export class HTMLEditorComponent implements AfterViewInit {
     }
 
     saveToServer(file: File) {
-        this.firebaseStorageService.upload(file).subscribe(data => {
+        // I'm probably doing this wrong
+        if (this.uploadSubscription) {
+            this.uploadSubscription.unsubscribe();
+        }
+
+        this.uploadSubscription = this.firebaseStorageService.upload(file).subscribe(data => {
             this.insertEmbedImage(data);
         });
 

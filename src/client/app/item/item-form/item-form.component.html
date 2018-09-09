@@ -25,6 +25,21 @@
                     <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
                 </mat-error>
             </mat-form-field>
+
+            <br>
+
+            <div class="item-media-container">
+                <div *ngFor="let media of formGroup.get('media').value; let i = index"
+                    class="item-media">
+                    <app-media [src]="media"
+                        *ngIf="media"></app-media>
+
+                    <button mat-raised-button
+                        type="button"
+                        color="warn"
+                        (click)="removeMedia(i)">Remove</button>
+                </div>
+            </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
@@ -32,6 +47,10 @@
                 color="primary"
                 [disabled]="!formGroup.valid"
                 (click)="onSubmit.emit()">{{item ? 'Update' : 'Create'}}</button>
+
+            <app-upload-button (uploadComplete)="addItemMedia($event)"
+                [folderName]="'item'"
+                [buttonText]="'Add media'"></app-upload-button>
         </mat-card-actions>
     </mat-card>
 </form>

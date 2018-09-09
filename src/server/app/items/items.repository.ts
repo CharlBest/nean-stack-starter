@@ -12,24 +12,26 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    public async createInternal(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string): Promise<void> {
+    public async createItemFromDataFetcher(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
                 uId,
                 title,
-                description
+                description,
+                media
             }
         );
     }
 
-    public async create(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemViewModel> {
+    public async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.create,
             {
                 userId,
                 uId,
                 title,
-                description
+                description,
+                media
             }
         );
 
@@ -47,13 +49,14 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async update(res: Response, userId: number, uId: string, title: string, description: string): Promise<ItemViewModel> {
+    public async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
                 userId,
                 uId,
                 title,
-                description
+                description,
+                media
             }
         );
 

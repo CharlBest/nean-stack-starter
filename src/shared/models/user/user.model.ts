@@ -9,7 +9,7 @@ export class UserModel extends UserLiteModel {
     avatarUrl: string;
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
-    forgotPasswordCodes: string[];
+    forgotPasswordCodes: Array<string>;
     userCards: CardModel[];
 
     // TODO: user role/permission

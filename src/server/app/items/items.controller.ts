@@ -16,7 +16,7 @@ export class ItemsController extends BaseController {
     public async create(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateOrEditItemViewModel;
 
-        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
+        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description, viewModel.media);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -24,7 +24,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await this.itemsService.create(res, viewModel.title, viewModel.description)
+            await this.itemsService.create(res, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 
@@ -32,7 +32,7 @@ export class ItemsController extends BaseController {
         const uId = req.params.uId as string;
         const viewModel = req.body as CreateOrEditItemViewModel;
 
-        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description);
+        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description, viewModel.media);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
@@ -42,7 +42,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.update(res, uId, viewModel.title, viewModel.description)
+            await this.itemsService.update(res, uId, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 

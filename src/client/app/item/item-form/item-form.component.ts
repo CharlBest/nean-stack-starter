@@ -28,7 +28,21 @@ export class ItemFormComponent implements OnInit {
   formOnInit() {
     this.formGroup = this.fb.group(BuildFormGroup.createItem(
       this.item ? this.item.title : null,
-      this.item ? this.item.description : null
+      this.item ? this.item.description : null,
+      this.item ? this.item.media : null
     ));
+  }
+
+  addItemMedia(downloadURL: string) {
+    const control = this.formGroup.get('media');
+    if (control.value && control.value.length > 0) {
+      control.value.push(downloadURL);
+    } else {
+      control.setValue([downloadURL]);
+    }
+  }
+
+  removeMedia(index: number) {
+    this.formGroup.get('media').value.splice(index, 1);
   }
 }

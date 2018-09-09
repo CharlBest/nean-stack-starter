@@ -3,6 +3,7 @@ MATCH (user:User { id: {userId} })-[:HAS_ITEM]->(item:Item { uId: {uId} })
 
 SET item.title = {title}
 SET item.description = {description}
+SET item.media = {media}
 
 RETURN item, user
 {

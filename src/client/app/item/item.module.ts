@@ -11,6 +11,7 @@ import { EditItemComponent } from './edit-item/edit-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemRoutingModule } from './item-routing.module';
 import { ItemComponent } from './item/item.component';
+import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 
 const materialModules = [
   MatButtonModule,
@@ -28,6 +29,7 @@ const materialModules = [
     CommonModule,
     ItemRoutingModule,
     MediaModule,
+    UploadButtonModule,
     ShareDialogModule,
     ReactiveFormsModule,
     FormErrorsModule,

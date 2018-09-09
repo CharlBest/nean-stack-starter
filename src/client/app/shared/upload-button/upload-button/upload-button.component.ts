@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class UploadButtonComponent {
     error: string;
     progressPercentage: number;
     showProgressBar = false;
+    uploadSubscription: Subscription;
+    progressSubscription: Subscription;
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
 
@@ -42,14 +45,22 @@ export class UploadButtonComponent {
             return;
         }
 
-        this.firebaseStorageService.upload(file).subscribe(data => {
+        // I'm probably doing this wrong
+        if (this.uploadSubscription) {
+            this.uploadSubscription.unsubscribe();
+        }
+        if (this.progressSubscription) {
+            this.progressSubscription.unsubscribe();
+        }
+
+        this.uploadSubscription = this.firebaseStorageService.upload(file).subscribe(data => {
             this.uploadComplete.emit(data);
             this.previewImgUrl = data;
             this.error = null;
         });
 
         // Progress
-        this.firebaseStorageService.progress$.subscribe(progress => {
+        this.progressSubscription = this.firebaseStorageService.progress$.subscribe(progress => {
             this.progressPercentage = progress;
             if (this.hideProgressBarAfterUpload && progress === 100) {
                 this.showProgressBar = false;

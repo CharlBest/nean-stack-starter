@@ -143,14 +143,15 @@ export class BuildFormGroup {
         };
     }
 
-    static createItem(title: string = null, description: string = null): FormValidator {
+    static createItem(title: string = null, description: string = null, media: Array<string> = null): FormValidator {
         return {
             title: [title, [
                 Validators.required
             ]],
             description: [description, [
                 Validators.required
-            ]]
+            ]],
+            media: [media]
         };
     }
 }
@@ -249,7 +250,7 @@ export function trimString(string: string): string {
 }
 
 interface FormValidator {
-    [key: string]: [string | number | boolean, Array<Function>];
+    [key: string]: any;
 }
 
 type ValidatorFn = (c: AbstractControl | string | number) => ValidationErrors | null;

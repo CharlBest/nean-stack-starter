@@ -25,9 +25,10 @@
             </button>
         </div>
 
-        <!-- <img mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="{{item.user.username}} avatar"> -->
+        <img *ngIf="item?.media && item?.media?.length > 0"
+            mat-card-image
+            [src]="item?.media[0]"
+            alt="item image">
 
         <a routerLink="/item/{{item.uId}}"
             class="item-body">

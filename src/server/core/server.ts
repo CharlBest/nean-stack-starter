@@ -1,5 +1,5 @@
-import * as http from 'http';
 import * as express from 'express';
+import * as http from 'http';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
 

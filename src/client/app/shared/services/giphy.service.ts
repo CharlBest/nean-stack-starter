@@ -132,7 +132,7 @@ export class GiphyService {
 }
 
 class Params {
-    q: string[];
+    q: Array<string>;
     limit: string;
     offset: string;
     rating: string;
