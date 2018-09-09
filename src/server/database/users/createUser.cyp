@@ -11,4 +11,9 @@ CREATE (user:User { id: nextId, uId: {uId}, email: {email}, username: {username}
 MERGE (user)-[:IS]->(user)
 
 RETURN user
+{ 
+    email: user.email,
+    username: user.username,
+    emailCode: user.emailCode
+}
 `

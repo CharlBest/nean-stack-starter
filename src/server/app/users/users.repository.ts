@@ -15,7 +15,8 @@ export class UsersRepository extends BaseRepository {
         super();
     }
 
-    public async createUser(res: Response, uId: string, email: string, username: string, password: string, passwordSalt: string, emailCode: string): Promise<UserModel> {
+    public async createUser(res: Response, uId: string, email: string, username: string, password: string, passwordSalt: string, emailCode: string)
+        : Promise<Pick<UserModel, 'email' | 'username' | 'emailCode'>> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.createUser,
             {
                 uId,
@@ -27,7 +28,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as any[];
 
         if (model && model.length > 0) {
             return model[0];
@@ -132,7 +133,7 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async forgotPassword(res: Response, email: string, code: string): Promise<UserModel> {
+    public async forgotPassword(res: Response, email: string, code: string): Promise<Pick<UserModel, 'email'>> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.addForgottenPasswordCode,
             {
                 email,
@@ -140,7 +141,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
 
         if (model && model.length > 0) {
             return model[0];
@@ -149,7 +150,7 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string): Promise<UserModel> {
+    public async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string): Promise<Pick<UserModel, 'email'>> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.changeForgottenPassword,
             {
                 email,
@@ -159,7 +160,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
 
         if (model && model.length > 0) {
             return model[0];
@@ -183,7 +184,7 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    public async updateAvatar(res: Response, userId: number, avatarUrl: string): Promise<UserModel> {
+    public async updateAvatar(res: Response, userId: number, avatarUrl: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateAvatar,
             {
                 userId,
@@ -191,16 +192,14 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
-
-        if (model && model.length > 0) {
-            return model[0];
+        if (result) {
+            return true;
         } else {
             return null;
         }
     }
 
-    public async updateBio(res: Response, userId: number, bio: string): Promise<UserModel> {
+    public async updateBio(res: Response, userId: number, bio: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateBio,
             {
                 userId,
@@ -208,16 +207,14 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
-
-        if (model && model.length > 0) {
-            return model[0];
+        if (result) {
+            return true;
         } else {
             return null;
         }
     }
 
-    public async updatePassword(res: Response, userId: number, password: string, passwordSalt: string): Promise<UserModel> {
+    public async updatePassword(res: Response, userId: number, password: string, passwordSalt: string): Promise<Pick<UserModel, 'email'>> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePassword,
             {
                 userId,
@@ -226,7 +223,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
 
         if (model && model.length > 0) {
             return model[0];
