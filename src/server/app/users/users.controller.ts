@@ -175,7 +175,7 @@ export class UsersController extends BaseController {
         const response = await this.usersService.getLiteUserById(res);
         await this.usersService.resendEmailVerificationLink(res, response.email, response.emailCode);
 
-        res.status(200).json(response);
+        res.status(200).json();
     }
 
     public async deleteUser(req: Request, res: Response, next: NextFunction) {
