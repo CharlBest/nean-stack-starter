@@ -11,6 +11,7 @@ export class DataFetcher {
         LENGTH_SELECTOR_CLASS: '#sr_content div.box',
         LIST_TITLE_SELECTOR: '#sr_content div.box:nth-child(INDEX) > .search_result_title_box > h2 > a',
         LIST_DESCRIPTION_SELECTOR: '#sr_content div.box:nth-child(INDEX) > .text-block > p',
+        LIST_IMAGE_SELECTOR: '#sr_content div.box:nth-child(INDEX) > .image > a > img',
     };
 
     private itemsRepository: ItemsRepository;
@@ -46,21 +47,30 @@ export class DataFetcher {
             // change the index to the next child
             const titleSelector = this.selectors.LIST_TITLE_SELECTOR.replace('INDEX', i.toString());
             const descriptionSelector = this.selectors.LIST_DESCRIPTION_SELECTOR.replace('INDEX', i.toString());
+            const imageSelector = this.selectors.LIST_IMAGE_SELECTOR.replace('INDEX', i.toString());
 
+            // Title
             const title = await page.evaluate((sel) => {
                 const element = (<HTMLAnchorElement>document.querySelector(sel));
                 return element ? element.textContent : null;
 
             }, titleSelector);
 
+            // Description
             const description = await page.evaluate((sel) => {
                 const element = (<HTMLParagraphElement>document.querySelector(sel));
                 return element ? element.textContent : null;
             }, descriptionSelector);
 
+            // Image
+            const image = await page.evaluate((sel) => {
+                const element = (<HTMLImageElement>document.querySelector(sel));
+                return element ? element.src : null;
+            }, imageSelector);
+
             if (title && description) {
                 const neo4jSession = Database.createSession();
-                await this.itemsRepository.createItemFromDataFetcher(neo4jSession, this.app, 1, nodeUUId(), title, description, null);
+                await this.itemsRepository.createItemFromDataFetcher(neo4jSession, this.app, 1, nodeUUId(), title, description, image ? [image] : null);
                 neo4jSession.close();
             }
         }
