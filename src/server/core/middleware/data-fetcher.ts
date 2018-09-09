@@ -70,7 +70,7 @@ export class DataFetcher {
 
             if (title && description) {
                 const neo4jSession = Database.createSession();
-                await this.itemsRepository.createItemFromDataFetcher(neo4jSession, this.app, 1, nodeUUId(), title, description, image ? [image] : null);
+                await this.itemsRepository.createItemFromDataFetcher(neo4jSession, this.app, 1, nodeUUId(), title, description, null);
                 neo4jSession.close();
             }
         }
