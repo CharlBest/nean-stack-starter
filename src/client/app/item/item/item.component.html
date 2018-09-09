@@ -29,10 +29,14 @@
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="{{item.user.username}} avatar"> -->
 
-        <h3>{{item.title}}</h3>
+        <a routerLink="/item/{{item.uId}}"
+            class="item-body">
+            <h3>{{item.title}}</h3>
 
-        <p #description
-            class="description">{{item.description}}</p>
+            <p #description
+                class="description">{{item.description}}</p>
+        </a>
+
         <div class="more-button-container">
             <button mat-button
                 *ngIf="showMoreButton"

@@ -42,14 +42,20 @@
 	}
 }
 
-.description {
-	// 1.4em per line
-	max-height: 8.4em;
-	overflow: hidden;
-}
+.item-body {
+	text-decoration: none;
+	cursor: pointer;
+	outline: none;
 
-.more-button-container {
-	text-align: center;
+	.description {
+		// 1.4em per line
+		max-height: 8.4em;
+		overflow: hidden;
+	}
+
+	.more-button-container {
+		text-align: center;
+	}
 }
 
 mat-card-actions {
