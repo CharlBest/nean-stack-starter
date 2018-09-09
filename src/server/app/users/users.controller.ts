@@ -172,8 +172,7 @@ export class UsersController extends BaseController {
     }
 
     public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
-        const response = await this.usersService.getLiteUserById(res);
-        await this.usersService.resendEmailVerificationLink(res, response.email, response.emailCode);
+        await this.usersService.resendEmailVerificationLink(res);
 
         res.status(200).json();
     }

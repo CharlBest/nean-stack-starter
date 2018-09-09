@@ -4,7 +4,6 @@ import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
-import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -136,10 +135,6 @@ export class UsersService extends BaseService {
         return viewModel;
     }
 
-    public async getLiteUserById(res: Response): Promise<UserLiteModel> {
-        return await this.usersRepository.getLiteUserById(res, this.getUserId(res));
-    }
-
     public async getUserProfile(res: Response): Promise<UserProfileViewModel> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
@@ -172,8 +167,10 @@ export class UsersService extends BaseService {
         return await this.usersRepository.getUserPublic(res, userId);
     }
 
-    public async resendEmailVerificationLink(res: Response, email: string, emailCode: string): Promise<void> {
-        Emailer.resendEmailVerificationLinkEmail(email, emailCode);
+    public async resendEmailVerificationLink(res: Response): Promise<void> {
+        const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
+
+        Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
     }
 
     public async forgotPassword(res: Response, email: string, code: string): Promise<void> {
