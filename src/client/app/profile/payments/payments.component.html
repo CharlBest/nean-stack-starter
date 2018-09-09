@@ -49,7 +49,7 @@
   <mat-card-actions align="end">
     <button mat-raised-button
       *ngIf="!isChangingDefault"
-      routerLink="create-card"
+      routerLink="/profile/create-card"
       type="button">Add payment method</button>
     <button mat-raised-button
       *ngIf="!isChangingDefault && userCards?.length > 1"
@@ -65,7 +65,7 @@
       type="button">Cancel</button>
     <span class="flex-spacer"></span>
     <button mat-raised-button
-      routerLink="payment-history"
+      routerLink="/profile/payment-history"
       type="button">Payment history</button>
   </mat-card-actions>
 </mat-card>
