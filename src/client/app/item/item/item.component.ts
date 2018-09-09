@@ -40,7 +40,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.description) {
+    if (this.description && !this.isViewingComments) {
       setTimeout(() => {
         if (this.description.nativeElement.offsetHeight < this.description.nativeElement.scrollHeight ||
           this.description.nativeElement.offsetWidth < this.description.nativeElement.scrollWidth) {
@@ -49,6 +49,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
           this.showMoreButton = false;
         }
       });
+    } else {
+      this.showMoreDescription();
     }
   }
 
