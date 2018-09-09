@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
-import { CreateOrEditItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
+import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { ItemsService } from './items.service';
@@ -14,9 +14,9 @@ export class ItemsController extends BaseController {
     }
 
     public async create(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as CreateOrEditItemViewModel;
+        const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description, viewModel.media);
+        const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -30,9 +30,9 @@ export class ItemsController extends BaseController {
 
     public async update(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
-        const viewModel = req.body as CreateOrEditItemViewModel;
+        const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = BuildFormGroup.createItem(viewModel.title, viewModel.description, viewModel.media);
+        const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));

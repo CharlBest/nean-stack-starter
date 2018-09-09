@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { CreateOrEditItemViewModel } from '../../../../shared/view-models/item/create-item.view-model';
+import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ItemFormComponent } from '../item-form/item-form.component';
@@ -48,7 +48,7 @@ export class EditItemComponent implements OnInit {
   onSubmit() {
     this.itemForm.isProcessing = true;
 
-    const viewModel = new CreateOrEditItemViewModel();
+    const viewModel = new CreateOrUpdateItemViewModel();
     viewModel.title = this.itemForm.formGroup.get('title').value;
     viewModel.description = this.itemForm.formGroup.get('description').value;
     viewModel.media = this.itemForm.formGroup.get('media').value;

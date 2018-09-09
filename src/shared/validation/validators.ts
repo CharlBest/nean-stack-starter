@@ -143,7 +143,7 @@ export class BuildFormGroup {
         };
     }
 
-    static createItem(title: string = null, description: string = null, media: Array<string> = null): FormValidator {
+    static createOrUpdateItem(title: string = null, description: string = null, media: Array<string> = null): FormValidator {
         return {
             title: [title, [
                 Validators.required

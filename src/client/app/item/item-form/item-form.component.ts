@@ -26,7 +26,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.createItem(
+    this.formGroup = this.fb.group(BuildFormGroup.createOrUpdateItem(
       this.item ? this.item.title : null,
       this.item ? this.item.description : null,
       this.item ? this.item.media : null

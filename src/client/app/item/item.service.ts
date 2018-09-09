@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemRoutes } from '../../../shared/routes/item.routes';
-import { CreateOrEditItemViewModel } from '../../../shared/view-models/item/create-item.view-model';
+import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../shared/view-models/item/report-item.view-model';
 import { environment } from '../../environments/environment';
@@ -14,11 +14,11 @@ export class ItemService {
 
     constructor(private http: HttpClient) { }
 
-    public create(viewModel: CreateOrEditItemViewModel): Observable<ItemViewModel> {
+    public create(viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
         return this.http.post<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.create().client()}`, viewModel);
     }
 
-    public update(uId: string, viewModel: CreateOrEditItemViewModel): Observable<ItemViewModel> {
+    public update(uId: string, viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
         return this.http.put<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.update(uId).client()}`, viewModel);
     }
 
