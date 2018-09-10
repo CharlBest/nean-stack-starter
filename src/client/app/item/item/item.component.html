@@ -25,11 +25,25 @@
             </button>
         </div>
 
-        <img routerLink="/item/{{item.uId}}"
-            *ngIf="item?.media && item?.media?.length > 0"
-            mat-card-image
-            [src]="item?.media[0]"
-            alt="item image">
+        <div *ngIf="item?.media && item?.media?.length > 0"
+            class="item-media">
+            <div>
+                <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
+                <button mat-icon-button
+                    (click)="mediaPrevious()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <button mat-icon-button
+                    (click)="mediaNext()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+
+            <img routerLink="/item/{{item.uId}}"
+                mat-card-image
+                [src]="item?.media[activeMediaIndex]"
+                alt="item image">
+        </div>
 
         <a routerLink="/item/{{item.uId}}"
             class="item-body">

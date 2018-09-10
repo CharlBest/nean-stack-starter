@@ -25,6 +25,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   loggedInUserId: number = this.authService.getLoggedInUserId();
   isProcessing = false;
   showMoreButton = false;
+  activeMediaIndex = 0;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
@@ -112,5 +113,22 @@ export class ItemComponent implements OnInit, AfterViewInit {
   showMoreDescription() {
     this.description.nativeElement.style.maxHeight = 'none';
     this.showMoreButton = false;
+  }
+
+  mediaPrevious() {
+    if (this.activeMediaIndex === 0) {
+      this.activeMediaIndex = this.item.media.length - 1;
+    } else {
+      this.activeMediaIndex--;
+    }
+  }
+
+  mediaNext() {
+    // TODO: swithcing out the images to fast (clicking rapidly) freezes it
+    if (this.activeMediaIndex >= this.item.media.length - 1) {
+      this.activeMediaIndex = 0;
+    } else {
+      this.activeMediaIndex++;
+    }
   }
 }
