@@ -6,7 +6,10 @@ import { AccountComponent } from './account/account.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: AccountComponent, pathMatch: 'full', data: { title: 'Account', nav: NavigationType.Primary } },
+            {
+                path: '', component: AccountComponent, pathMatch: 'full',
+                data: { title: 'Account', nav: NavigationType.Primary }
+            },
         ])
     ],
     exports: [RouterModule]

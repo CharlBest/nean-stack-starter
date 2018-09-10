@@ -5,13 +5,13 @@ import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, Ma
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
+import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemRoutingModule } from './item-routing.module';
 import { ItemComponent } from './item/item.component';
-import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 
 const materialModules = [
   MatButtonModule,

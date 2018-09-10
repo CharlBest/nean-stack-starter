@@ -14,23 +14,23 @@ export class ItemService {
 
     constructor(private http: HttpClient) { }
 
-    public create(viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
+    create(viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
         return this.http.post<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.create().client()}`, viewModel);
     }
 
-    public update(uId: string, viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
+    update(uId: string, viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
         return this.http.put<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.update(uId).client()}`, viewModel);
     }
 
-    public get(uId: string): Observable<ItemViewModel> {
+    get(uId: string): Observable<ItemViewModel> {
         return this.http.get<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.get(uId).client()}`);
     }
 
-    public delete(uId: string): Observable<boolean> {
+    delete(uId: string): Observable<boolean> {
         return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${ItemRoutes.delete(uId).client()}`);
     }
 
-    public sendReport(viewModel: ReportItemViewModel): Observable<void> {
+    sendReport(viewModel: ReportItemViewModel): Observable<void> {
         return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.report().client()}`, viewModel);
     }
 }

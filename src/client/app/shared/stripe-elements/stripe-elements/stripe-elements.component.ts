@@ -95,7 +95,9 @@ export class StripeElementsComponent implements OnInit {
         // change (empty, complete, error, value), ready, focus, blur, click
         elementWrapper.element.on('change', data => {
             elementWrapper.valid = data && data.error === undefined && data.empty === false;
-            this.isValid = this.elementsWrapper.cardNumber.valid && this.elementsWrapper.cardExpiry.valid && this.elementsWrapper.cardCvc.valid;
+            this.isValid = this.elementsWrapper.cardNumber.valid &&
+                this.elementsWrapper.cardExpiry.valid &&
+                this.elementsWrapper.cardCvc.valid;
 
             if (data && data.error && data.error.type === 'validation_error') {
                 elementWrapper.error = data.error.message;

@@ -13,7 +13,7 @@ export class LoginService {
 
     constructor(private http: HttpClient) { }
 
-    public login(viewModel: LoginViewModel): Observable<TokenViewModel> {
+    login(viewModel: LoginViewModel): Observable<TokenViewModel> {
         return this.http.post<TokenViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.login().client()}`, viewModel);
     }
 }

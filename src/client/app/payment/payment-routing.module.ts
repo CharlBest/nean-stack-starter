@@ -6,7 +6,10 @@ import { PaymentComponent } from './payment/payment.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: PaymentComponent, pathMatch: 'full', data: { title: 'Payment', nav: NavigationType.Back } }
+            {
+                path: '', component: PaymentComponent, pathMatch: 'full',
+                data: { title: 'Payment', nav: NavigationType.Back }
+            }
         ])
     ],
     exports: [RouterModule]

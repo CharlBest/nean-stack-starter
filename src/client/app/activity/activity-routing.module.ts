@@ -6,7 +6,10 @@ import { ActivityComponent } from './activity/activity.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: ActivityComponent, pathMatch: 'full', data: { title: 'Activity', nav: NavigationType.Primary } },
+            {
+                path: '', component: ActivityComponent, pathMatch: 'full',
+                data: { title: 'Activity', nav: NavigationType.Primary }
+            },
         ])
     ],
     exports: [RouterModule]

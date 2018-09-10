@@ -6,7 +6,10 @@ import { VerifyComponent } from './verify/verify.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: ':code', component: VerifyComponent, pathMatch: 'full', data: { title: 'Verify email', nav: NavigationType.Back } }
+            {
+                path: ':code', component: VerifyComponent, pathMatch: 'full',
+                data: { title: 'Verify email', nav: NavigationType.Back }
+            }
         ])
     ],
     exports: [RouterModule]

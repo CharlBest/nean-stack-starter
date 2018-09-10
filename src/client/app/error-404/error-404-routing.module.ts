@@ -6,7 +6,10 @@ import { Error404Component } from './error-404/error-404.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: Error404Component, pathMatch: 'full', data: { title: 'Error 404', nav: NavigationType.Back } }
+            {
+                path: '', component: Error404Component, pathMatch: 'full',
+                data: { title: 'Error 404', nav: NavigationType.Back }
+            }
         ])
     ],
     exports: [RouterModule]

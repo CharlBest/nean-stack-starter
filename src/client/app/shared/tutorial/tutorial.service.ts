@@ -51,7 +51,10 @@ export class TutorialService {
                 break;
         }
 
-        await this.router.navigate(navigateUrl, { queryParams: { tut: tutorialType === TutorialType.None ? null : tutorialType }, queryParamsHandling: 'merge' });
+        await this.router.navigate(navigateUrl, {
+            queryParams: { tut: tutorialType === TutorialType.None ? null : tutorialType },
+            queryParamsHandling: 'merge'
+        });
 
         if (tutorialType === TutorialType.None) {
             this.checkIfAfterTutPageHasBackNav();
@@ -70,7 +73,7 @@ export class TutorialService {
         }
     }
 
-    public completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
+    completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel);
     }
 }

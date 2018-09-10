@@ -9,10 +9,22 @@ import { ProfileComponent } from './profile/profile.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: ProfileComponent, pathMatch: 'full', data: { title: 'Profile', nav: NavigationType.Back } },
-            { path: 'payment-history', component: PaymentHistoryComponent, pathMatch: 'full', data: { title: 'Payment History', nav: NavigationType.Back } },
-            { path: 'create-card', component: CreateCardComponent, pathMatch: 'full', data: { title: 'Create Card', nav: NavigationType.Back } },
-            { path: 'delete', component: DeleteUserComponent, pathMatch: 'full', data: { title: 'Delete Account', nav: NavigationType.Back } },
+            {
+                path: '', component: ProfileComponent, pathMatch: 'full',
+                data: { title: 'Profile', nav: NavigationType.Back }
+            },
+            {
+                path: 'payment-history', component: PaymentHistoryComponent, pathMatch: 'full',
+                data: { title: 'Payment History', nav: NavigationType.Back }
+            },
+            {
+                path: 'create-card', component: CreateCardComponent, pathMatch: 'full',
+                data: { title: 'Create Card', nav: NavigationType.Back }
+            },
+            {
+                path: 'delete', component: DeleteUserComponent, pathMatch: 'full',
+                data: { title: 'Delete Account', nav: NavigationType.Back }
+            },
         ])
     ],
     exports: [RouterModule]

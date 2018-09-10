@@ -6,7 +6,10 @@ import { HomeComponent } from './home/home.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: HomeComponent, pathMatch: 'full', data: { title: 'Home', nav: NavigationType.Primary } },
+            {
+                path: '', component: HomeComponent, pathMatch: 'full',
+                data: { title: 'Home', nav: NavigationType.Primary }
+            },
         ])
     ],
     exports: [RouterModule]

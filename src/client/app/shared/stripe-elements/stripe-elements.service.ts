@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
@@ -12,7 +11,7 @@ export class StripeElementsService {
     @Output() stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
     stripeInstance;
 
-    constructor(private http: HttpClient) {
+    constructor() {
         this.initializeStripe();
     }
 

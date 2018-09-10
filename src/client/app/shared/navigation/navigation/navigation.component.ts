@@ -35,7 +35,14 @@ export class NavigationComponent implements OnInit {
     search: { paths: [{ path: 'search' }] },
     createItem: { paths: [{ path: 'create-item' }] },
     activity: { paths: [{ path: 'activity' }] },
-    account: { paths: [{ path: 'account' }, { path: 'create-user' }, { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' }, { path: 'login' }, { path: 'forgot-password' }, { path: 'profile' }, { path: 'payment' }, { path: 'verify' }] }
+    account: {
+      paths: [
+        { path: 'account' }, { path: 'create-user' },
+        { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
+        { path: 'login' }, { path: 'forgot-password' }, { path: 'profile' },
+        { path: 'payment' }, { path: 'verify' }
+      ]
+    }
   };
 
   constructor(private route: ActivatedRoute,
@@ -156,7 +163,8 @@ export class NavigationComponent implements OnInit {
     // TODO: this could be a performance bottleneck (Add debounce)
     window.onscroll = () => {
       const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight || this.activeNavigation === NavigationType.Back) {
+      if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight ||
+        this.activeNavigation === NavigationType.Back) {
         this.navbar.nativeElement.style.top = '0';
       } else {
         this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;

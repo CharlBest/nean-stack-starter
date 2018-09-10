@@ -12,7 +12,7 @@ export class LanguageComponent implements OnInit {
     new Language('af-ZA', 'Afrikaans'),
   ];
 
-  constructor( @Inject(LOCALE_ID) public activeLanguage: string) { }
+  constructor(@Inject(LOCALE_ID) public activeLanguage: string) { }
 
   ngOnInit() {
   }

@@ -6,7 +6,10 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: NewsletterComponent, pathMatch: 'full', data: { title: 'Newsletter', nav: NavigationType.Back } }
+            {
+                path: '', component: NewsletterComponent, pathMatch: 'full',
+                data: { title: 'Newsletter', nav: NavigationType.Back }
+            }
         ])
     ],
     exports: [RouterModule]

@@ -9,9 +9,18 @@ import { EditItemComponent } from './edit-item/edit-item.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: 'create', component: CreateItemComponent, pathMatch: 'full', data: { title: 'Create Item', nav: NavigationType.Primary }, canActivate: [AuthService] },
-            { path: 'edit/:uId', component: EditItemComponent, pathMatch: 'full', data: { title: 'Edit Item', nav: NavigationType.Back }, canActivate: [AuthService] },
-            { path: ':uId', component: CommentsComponent, pathMatch: 'full', data: { title: 'Comments', nav: NavigationType.Back } },
+            {
+                path: 'create', component: CreateItemComponent, pathMatch: 'full',
+                data: { title: 'Create Item', nav: NavigationType.Primary }, canActivate: [AuthService]
+            },
+            {
+                path: 'edit/:uId', component: EditItemComponent, pathMatch: 'full',
+                data: { title: 'Edit Item', nav: NavigationType.Back }, canActivate: [AuthService]
+            },
+            {
+                path: ':uId', component: CommentsComponent, pathMatch: 'full',
+                data: { title: 'Comments', nav: NavigationType.Back }
+            },
         ])
     ],
     exports: [RouterModule]

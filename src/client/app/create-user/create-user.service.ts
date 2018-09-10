@@ -12,7 +12,7 @@ export class CreateUserService {
 
     constructor(private http: HttpClient) { }
 
-    public createUser(viewModel: CreateUserViewModel): Observable<void> {
+    createUser(viewModel: CreateUserViewModel): Observable<void> {
         return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.createUser().client()}`, viewModel);
     }
 }

@@ -6,7 +6,10 @@ import { FeedbackComponent } from './feedback/feedback.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: FeedbackComponent, pathMatch: 'full', data: { title: 'Feedback', nav: NavigationType.Back } }
+            {
+                path: '', component: FeedbackComponent, pathMatch: 'full',
+                data: { title: 'Feedback', nav: NavigationType.Back }
+            }
         ])
     ],
     exports: [RouterModule]

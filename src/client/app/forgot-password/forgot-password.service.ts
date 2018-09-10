@@ -13,11 +13,11 @@ export class ForgotPasswordService {
 
     constructor(private http: HttpClient) { }
 
-    public forgotPassword(viewModel: ForgotPasswordViewModel): Observable<void> {
+    forgotPassword(viewModel: ForgotPasswordViewModel): Observable<void> {
         return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.forgotPassword().client()}`, viewModel);
     }
 
-    public changeForgottenPassword(viewModel: ChangeForgottenPasswordViewModel): Observable<void> {
+    changeForgottenPassword(viewModel: ChangeForgottenPasswordViewModel): Observable<void> {
         return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.changeForgottenPassword().client()}`, viewModel);
     }
 }

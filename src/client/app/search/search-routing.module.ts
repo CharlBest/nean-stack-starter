@@ -6,7 +6,10 @@ import { SearchComponent } from './search/search.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: '', component: SearchComponent, pathMatch: 'full', data: { title: 'Search', nav: NavigationType.Primary } },
+            {
+                path: '', component: SearchComponent, pathMatch: 'full',
+                data: { title: 'Search', nav: NavigationType.Primary }
+            },
         ])
     ],
     exports: [RouterModule]
