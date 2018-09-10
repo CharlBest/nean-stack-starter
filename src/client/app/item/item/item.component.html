@@ -25,7 +25,8 @@
             </button>
         </div>
 
-        <img *ngIf="item?.media && item?.media?.length > 0"
+        <img routerLink="/item/{{item.uId}}"
+            *ngIf="item?.media && item?.media?.length > 0"
             mat-card-image
             [src]="item?.media[0]"
             alt="item image">
@@ -34,8 +35,7 @@
             class="item-body">
             <h3>{{item.title}}</h3>
 
-            <p #description
-                class="description">{{item.description}}</p>
+            <p #description>{{item.description}}</p>
         </a>
 
         <div class="more-button-container">

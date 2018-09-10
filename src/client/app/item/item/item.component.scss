@@ -46,16 +46,17 @@
 	text-decoration: none;
 	cursor: pointer;
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 
-	.description {
+	p {
 		// 1.4em per line
 		max-height: 8.4em;
 		overflow: hidden;
 	}
+}
 
-	.more-button-container {
-		text-align: center;
-	}
+.more-button-container {
+	text-align: center;
 }
 
 mat-card-actions {
