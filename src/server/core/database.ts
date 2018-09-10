@@ -8,7 +8,8 @@ export class Database {
     static fileExtension = 'cyp';
 
     private static createDriver() {
-        const driver = neo4j.driver(environment.database.uri, neo4j.auth.basic(environment.database.username, environment.database.password));
+        const driver = neo4j.driver(environment.database.uri,
+            neo4j.auth.basic(environment.database.username, environment.database.password));
 
         // Register a callback to know if driver creation was successful:
         driver.onCompleted = () => {

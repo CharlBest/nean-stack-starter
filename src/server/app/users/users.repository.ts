@@ -151,7 +151,8 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string): Promise<Pick<UserModel, 'email'>> {
+    async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string)
+        : Promise<Pick<UserModel, 'email'>> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.changeForgottenPassword,
             {
                 email,

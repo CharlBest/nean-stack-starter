@@ -54,7 +54,8 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    private async createStripeCard(res: Response, user: UserLiteModel, token: string): Promise<{ card: CardModel, stripeCustomerId: string }> {
+    private async createStripeCard(res: Response, user: UserLiteModel, token: string)
+        : Promise<{ card: CardModel, stripeCustomerId: string }> {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
         try {
@@ -72,10 +73,18 @@ export class PaymentsService extends BaseService {
                     expand: ['default_source']
                 });
 
-                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), customer.id, nodeUUId(),
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).id, (<stripe.cards.ICard>retrievedCustomer.default_source).fingerprint,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand, (<stripe.cards.ICard>retrievedCustomer.default_source).last4,
-                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_month, +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_year);
+                const card = await this.paymentsRepository.createCard(
+                    res,
+                    this.getUserId(res),
+                    customer.id,
+                    nodeUUId(),
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).id,
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).fingerprint,
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand,
+                    (<stripe.cards.ICard>retrievedCustomer.default_source).last4,
+                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_month,
+                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_year
+                );
 
                 return {
                     card,
@@ -136,7 +145,8 @@ export class PaymentsService extends BaseService {
 
             Emailer.paymentSuccessfulEmail(user.email, amount);
 
-            return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+            return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
+                charge.metadata.paymentUId, amount, charge.id, charge.created);
         } else {
             // New card
             if (saveCard) {
@@ -149,7 +159,8 @@ export class PaymentsService extends BaseService {
 
                     Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId,
+                        charge.metadata.paymentUId, amount, charge.id, charge.created);
                 } else {
                     const newCard = await this.createStripeCard(res, user, token);
 
@@ -157,14 +168,17 @@ export class PaymentsService extends BaseService {
 
                     Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId,
+                        charge.metadata.paymentUId, amount, charge.id, charge.created);
                 }
             } else {
-                const charge = await this.createCharge(res, token, amount, user.id); // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
+                // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
+                const charge = await this.createCharge(res, token, amount, user.id);
 
                 Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                return await this.paymentsRepository.userPayment(res, this.getUserId(res), null, charge.metadata.paymentUId, amount, charge.id, charge.created);
+                return await this.paymentsRepository.userPayment(res, this.getUserId(res), null,
+                    charge.metadata.paymentUId, amount, charge.id, charge.created);
             }
         }
     }

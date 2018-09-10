@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { Response } from 'express';
 import { ItemModel } from '../../../shared/models/item/item.model';
 import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
@@ -12,7 +11,8 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    async createItemFromDataFetcher(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<void> {
+    async createItemFromDataFetcher(neo4jSession: any, app: any, userId: number, uId: string,
+        title: string, description: string, media: Array<string>): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
@@ -24,7 +24,8 @@ export class ItemsRepository extends BaseRepository {
         );
     }
 
-    async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
+        : Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.create,
             {
                 userId,
@@ -49,7 +50,8 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
+        : Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
                 userId,

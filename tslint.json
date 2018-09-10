@@ -29,7 +29,8 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      false
+      true,
+      140
     ],
     "member-access": [
       true,
@@ -62,7 +63,10 @@
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-inferrable-types": false,
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
     "no-shadowed-variable": true,
@@ -75,6 +79,7 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
+    "require-internal-with-underscore": true,
     "one-line": [
       true,
       "check-open-brace",
@@ -123,6 +128,7 @@
       "check-type"
     ],
     "no-output-on-prefix": false,
+    "no-duplicate-imports": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

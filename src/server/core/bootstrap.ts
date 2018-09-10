@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
@@ -147,10 +146,15 @@ export class Bootstrap {
     }
 
     setupCors(app: express.Application): void {
-        app.use((req: Request | any, res: Response, next: NextFunction) => {
+        app.use((req: express.Request | any, res: express.Response, next: express.NextFunction) => {
             // TODO: don't think this is working
             const allowedOrigins = app.get('env') === 'development'
-                ? ['http://localhost:4200' /*Dev web client*/, 'http://localhost:3000' /*Web client*/, 'http://localhost:8000' /*IOS client*/, 'http://10.0.0.10:3000' /*Phone client*/]
+                ? [
+                    'http://localhost:4200' /*Dev web client*/,
+                    'http://localhost:3000' /*Web client*/,
+                    'http://localhost:8000' /*IOS client*/,
+                    'http://10.0.0.10:3000' /*Phone client*/
+                ]
                 : ['https://nean.io'];
             const origin = req.headers.origin;
             if (allowedOrigins.indexOf(origin) > -1) {
@@ -158,7 +162,8 @@ export class Bootstrap {
             }
 
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+            res.header('Access-Control-Allow-Headers',
+                'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
             res.header('Access-Control-Allow-Credentials', 'true');
             next();
         });
