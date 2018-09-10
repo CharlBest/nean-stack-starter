@@ -9,8 +9,8 @@ import { environment } from '../../../environments/environment';
 })
 export class WebSocketService implements OnDestroy {
 
-    public webSocketStream$: Subject<SocketDataModel> = new Subject<SocketDataModel>();
     private webSocketSubject: WebSocketSubject<SocketDataModel>;
+    webSocketStream$: Subject<SocketDataModel> = new Subject<SocketDataModel>();
 
     constructor() {
         this.init();

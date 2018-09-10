@@ -14,7 +14,7 @@ export class PaymentsController extends BaseController {
         this.paymentsService = new PaymentsService();
     }
 
-    public async anonymousPayment(req: Request, res: Response, next: NextFunction) {
+    async anonymousPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as AnonymousPaymentViewModel;
 
         const formGroup = BuildFormGroup.payment(viewModel.amount);
@@ -31,7 +31,7 @@ export class PaymentsController extends BaseController {
         );
     }
 
-    public async userPayment(req: Request, res: Response, next: NextFunction) {
+    async userPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
 
         const formGroup = BuildFormGroup.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
@@ -49,13 +49,13 @@ export class PaymentsController extends BaseController {
         );
     }
 
-    public async userCards(req: Request, res: Response, next: NextFunction) {
+    async userCards(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
             await this.paymentsService.userCards(res)
         );
     }
 
-    public async createCard(req: Request, res: Response, next: NextFunction) {
+    async createCard(req: Request, res: Response, next: NextFunction) {
         const token = req.body.token as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'token', Validators.required(token));
@@ -69,7 +69,7 @@ export class PaymentsController extends BaseController {
         );
     }
 
-    public async deleteCard(req: Request, res: Response, next: NextFunction) {
+    async deleteCard(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
@@ -83,7 +83,7 @@ export class PaymentsController extends BaseController {
         );
     }
 
-    public async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
+    async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
         const uId = req.body.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
@@ -97,7 +97,7 @@ export class PaymentsController extends BaseController {
         );
     }
 
-    public async paymentHistory(req: Request, res: Response, next: NextFunction) {
+    async paymentHistory(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
             await this.paymentsService.paymentHistory(res)
         );

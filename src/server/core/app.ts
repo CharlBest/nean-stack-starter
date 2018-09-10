@@ -16,7 +16,7 @@ export class App {
         this.bootstrapApp.defineExpressApp(this.express);
     }
 
-    public async bootstrap(): Promise<void> {
+    async bootstrap(): Promise<void> {
         // Configure the app config for all the middlewares
         const appConfig = new AppConfig();
         appConfig.configure(this.express);

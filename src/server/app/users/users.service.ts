@@ -52,7 +52,7 @@ export class UsersService extends BaseService {
 
     // #endregion
 
-    public async createUser(res: Response, email: string, username: string, password: string): Promise<void> {
+    async createUser(res: Response, email: string, username: string, password: string): Promise<void> {
         email = email.toLowerCase();
         username = username.toLowerCase();
 
@@ -96,14 +96,14 @@ export class UsersService extends BaseService {
         }
     }
 
-    public async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
+    async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist> {
         email = email.toLowerCase();
         username = username.toLowerCase();
 
         return await this.usersRepository.doesUsernameAndEmailExist(res, email, username);
     }
 
-    public async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
+    async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
         emailOrUsername = emailOrUsername.toLowerCase();
 
         const user = await this.usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
@@ -135,7 +135,7 @@ export class UsersService extends BaseService {
         return viewModel;
     }
 
-    public async getUserProfile(res: Response): Promise<UserProfileViewModel> {
+    async getUserProfile(res: Response): Promise<UserProfileViewModel> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         const viewModel: UserProfileViewModel = {
@@ -163,17 +163,17 @@ export class UsersService extends BaseService {
         return viewModel;
     }
 
-    public async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
+    async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
         return await this.usersRepository.getUserPublic(res, userId);
     }
 
-    public async resendEmailVerificationLink(res: Response): Promise<void> {
+    async resendEmailVerificationLink(res: Response): Promise<void> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
     }
 
-    public async forgotPassword(res: Response, email: string, code: string): Promise<void> {
+    async forgotPassword(res: Response, email: string, code: string): Promise<void> {
         email = email.toLowerCase();
 
         const user = await this.usersRepository.forgotPassword(res, email, code);
@@ -187,7 +187,7 @@ export class UsersService extends BaseService {
         Emailer.forgotPasswordEmail(user.email, code);
     }
 
-    public async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
+    async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
         const salt = await this.generateSalt();
@@ -203,15 +203,15 @@ export class UsersService extends BaseService {
         Emailer.passwordUpdated(user.email);
     }
 
-    public async verifyEmail(res: Response, code: string): Promise<boolean> {
+    async verifyEmail(res: Response, code: string): Promise<boolean> {
         return await this.usersRepository.verifyEmail(res, this.getUserId(res), code);
     }
 
-    public async updateAvatar(res: Response, avatarUrl: string): Promise<void> {
+    async updateAvatar(res: Response, avatarUrl: string): Promise<void> {
         await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
     }
 
-    public async updateBio(res: Response, content: string): Promise<void> {
+    async updateBio(res: Response, content: string): Promise<void> {
         const sanitizedHTMLContent = sanitizedHTML(content, {
             allowedTags: ['p', 'br', 'strong', 'em', 'h2', 'ul', 'ol', 'li', 'a', 'img'],
             allowedAttributes: {
@@ -229,7 +229,7 @@ export class UsersService extends BaseService {
         await this.usersRepository.updateBio(res, this.getUserId(res), sanitizedHTMLContent);
     }
 
-    public async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
+    async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
@@ -250,11 +250,11 @@ export class UsersService extends BaseService {
         Emailer.passwordUpdated(updatedUser.email);
     }
 
-    public async deleteUser(res: Response): Promise<boolean> {
+    async deleteUser(res: Response): Promise<boolean> {
         return await this.usersRepository.deleteUser(res, this.getUserId(res));
     }
 
-    public async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
+    async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
         return await this.usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 }

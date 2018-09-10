@@ -240,12 +240,12 @@ export class ServerValidator {
     }
 }
 
-export function trimString(string: string): string {
-    if (string) {
-        string = string.replace(/^\s+|\s+$/g, '');
-        return string.replace(/^(&nbsp;)+|(&nbsp;)+$/g, '');
+export function trimString(stringToTrim: string): string {
+    if (stringToTrim) {
+        stringToTrim = stringToTrim.replace(/^\s+|\s+$/g, '');
+        return stringToTrim.replace(/^(&nbsp;)+|(&nbsp;)+$/g, '');
     } else {
-        return string;
+        return stringToTrim;
     }
 }
 

@@ -7,7 +7,7 @@ export class GeneralRepository extends BaseRepository {
         super();
     }
 
-    public async createNewsletterMember(res: Response, email: string): Promise<boolean> {
+    async createNewsletterMember(res: Response, email: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.createNewsletterMember,
             {
                 email
@@ -21,7 +21,7 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 
-    public async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
+    async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.general.deleteNewsletterMember,
             {
                 email

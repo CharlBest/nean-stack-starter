@@ -14,7 +14,7 @@ export class GeneralController extends BaseController {
         this.generalService = new GeneralService();
     }
 
-    public async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
+    async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NewsletterMemberViewModel;
 
         // Trim inputs
@@ -32,7 +32,7 @@ export class GeneralController extends BaseController {
         );
     }
 
-    public async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
+    async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NewsletterMemberViewModel;
 
         // Trim inputs
@@ -50,7 +50,7 @@ export class GeneralController extends BaseController {
         );
     }
 
-    public async sendFeedback(req: Request, res: Response, next: NextFunction) {
+    async sendFeedback(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as FeedbackViewModel;
 
         const formGroup = BuildFormGroup.feedback(viewModel.content);

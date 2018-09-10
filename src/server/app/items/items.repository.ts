@@ -12,7 +12,7 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    public async createItemFromDataFetcher(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<void> {
+    async createItemFromDataFetcher(neo4jSession: any, app: express.Application, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
@@ -24,7 +24,7 @@ export class ItemsRepository extends BaseRepository {
         );
     }
 
-    public async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.create,
             {
                 userId,
@@ -49,7 +49,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
                 userId,
@@ -74,7 +74,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async get(res: Response, userId: number, ip: string, uId: string): Promise<ItemViewModel> {
+    async get(res: Response, userId: number, ip: string, uId: string): Promise<ItemViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.get,
             {
                 userId,
@@ -97,7 +97,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async getAll(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+    async getAll(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getAll,
             {
                 userId,
@@ -120,7 +120,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    public async delete(res: Response, userId: number, uId: string): Promise<boolean> {
+    async delete(res: Response, userId: number, uId: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.delete,
             {
                 userId,

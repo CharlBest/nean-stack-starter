@@ -7,15 +7,6 @@ export class Database {
     static driver;
     static fileExtension = 'cyp';
 
-    public static createSession(): neo4j.Session {
-        if (this.driver) {
-            return this.driver.session();
-        } else {
-            this.driver = this.createDriver();
-            return this.driver.session();
-        }
-    }
-
     private static createDriver() {
         const driver = neo4j.driver(environment.database.uri, neo4j.auth.basic(environment.database.username, environment.database.password));
 
@@ -33,14 +24,23 @@ export class Database {
         return driver;
     }
 
-    public static clearDriver(): void {
+    static createSession(): neo4j.Session {
+        if (this.driver) {
+            return this.driver.session();
+        } else {
+            this.driver = this.createDriver();
+            return this.driver.session();
+        }
+    }
+
+    static clearDriver(): void {
         if (this.driver) {
             this.driver.close();
             this.driver = null;
         }
     }
 
-    public static createNodeObject<T>(node): T {
+    static createNodeObject<T>(node): T {
         if (node) {
             let object = {};
             _.assign(object, node.properties);
@@ -53,7 +53,7 @@ export class Database {
         }
     }
 
-    public static createNodeObjectArray(nodes: any[]): any {
+    static createNodeObjectArray(nodes: any[]): any {
         if (nodes) {
             return nodes.map(x => Database.createNodeObject(x));
         } else {
@@ -61,7 +61,7 @@ export class Database {
         }
     }
 
-    public static parseValues<T>(object: Object): T {
+    static parseValues<T>(object: Object): T {
         for (const key in object) {
             // check also if property is not inherited from prototype
             if (object.hasOwnProperty(key) && neo4j.isInt(object[key])) {
@@ -72,7 +72,7 @@ export class Database {
         return <T>object;
     }
 
-    public static async retrieveQueries() {
+    static async retrieveQueries() {
         const dbQueries: DbQueries = {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,

@@ -5,7 +5,7 @@ import { Database } from './database';
 
 export class Server {
 
-    public static normalizePort(port: string | number): number | string | boolean {
+    static normalizePort(port: string | number): number | string | boolean {
         const parsedPort: number = (typeof port === 'string') ? parseInt(port, 10) : port;
         if (isNaN(parsedPort)) { // named pipe
             return port;
@@ -18,7 +18,7 @@ export class Server {
 
     constructor(public httpServer: http.Server) { }
 
-    public use(app: express.Application): void {
+    use(app: express.Application): void {
         this.httpServer.on('listening', () => {
             this.onStartUp(app);
         });
@@ -30,11 +30,11 @@ export class Server {
         });
     }
 
-    public onStartUp(app: express.Application): void {
+    onStartUp(app: express.Application): void {
         console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
     }
 
-    public onError(error: any): void {
+    onError(error: any): void {
         if (error.syscall !== 'listen') {
             throw error;
         }
@@ -52,7 +52,7 @@ export class Server {
         }
     }
 
-    public onClose() {
+    onClose() {
         Database.clearDriver();
     }
 }

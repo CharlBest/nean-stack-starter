@@ -21,7 +21,7 @@ export class UsersController extends BaseController {
         this.usersService = new UsersService();
     }
 
-    public async createUser(req: Request, res: Response, next: NextFunction) {
+    async createUser(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
         // Trim inputs
@@ -40,7 +40,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async login(req: Request, res: Response, next: NextFunction) {
+    async login(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as LoginViewModel;
 
         // Trim inputs
@@ -58,13 +58,13 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async getUserProfile(req: Request, res: Response, next: NextFunction) {
+    async getUserProfile(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
             await this.usersService.getUserProfile(res)
         );
     }
 
-    public async getUserPublic(req: Request, res: Response, next: NextFunction) {
+    async getUserPublic(req: Request, res: Response, next: NextFunction) {
         const id = +req.params.id;
 
         res.status(200).json(
@@ -72,13 +72,13 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async report(req: Request, res: Response, next: NextFunction) {
+    async report(req: Request, res: Response, next: NextFunction) {
         // TODO: do something
         res.status(200).json();
     }
 
     // TODO: not in use
-    public async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
+    async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
         res.status(200).json(
@@ -86,7 +86,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    async forgotPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ForgotPasswordViewModel;
 
         // Trim inputs
@@ -104,7 +104,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
+    async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ChangeForgottenPasswordViewModel;
 
         // Trim inputs
@@ -126,7 +126,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async verifyEmail(req: Request, res: Response, next: NextFunction) {
+    async verifyEmail(req: Request, res: Response, next: NextFunction) {
         const code = req.body.code;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'code', Validators.required(code));
@@ -140,7 +140,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async updateAvatar(req: Request, res: Response, next: NextFunction) {
+    async updateAvatar(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateAvatarViewModel;
 
         res.status(200).json(
@@ -148,7 +148,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async updateBio(req: Request, res: Response, next: NextFunction) {
+    async updateBio(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateBioViewModel;
 
         res.status(200).json(
@@ -156,7 +156,7 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async updatePassword(req: Request, res: Response, next: NextFunction) {
+    async updatePassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdatePasswordViewModel;
 
         const formGroup = BuildFormGroup.updatePassword(viewModel.password, viewModel.newPassword, viewModel.newPassword);
@@ -171,19 +171,19 @@ export class UsersController extends BaseController {
         );
     }
 
-    public async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
+    async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
         await this.usersService.resendEmailVerificationLink(res);
 
         res.status(200).json();
     }
 
-    public async deleteUser(req: Request, res: Response, next: NextFunction) {
+    async deleteUser(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
             await this.usersService.deleteUser(res)
         );
     }
 
-    public async completedTutorial(req: Request, res: Response, next: NextFunction) {
+    async completedTutorial(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CompletedTutorial;
 
         // TODO: no UI element for this error

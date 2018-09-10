@@ -13,23 +13,23 @@ export class ItemsService extends BaseService {
         this.itemsRepository = new ItemsRepository();
     }
 
-    public async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         return await this.itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
     }
 
-    public async update(res: Response, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async update(res: Response, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         return await this.itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
     }
 
-    public async get(res: Response, ip: string, uId: string): Promise<ItemViewModel> {
+    async get(res: Response, ip: string, uId: string): Promise<ItemViewModel> {
         return await this.itemsRepository.get(res, this.getUserId(res), ip, uId);
     }
 
-    public async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+    async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
         return await this.itemsRepository.getAll(res, this.getUserId(res), pageIndex, pageSize);
     }
 
-    public async delete(res: Response, uId: string): Promise<boolean> {
+    async delete(res: Response, uId: string): Promise<boolean> {
         return await this.itemsRepository.delete(res, this.getUserId(res), uId);
     }
 }

@@ -21,24 +21,24 @@ const root = './';
 
 export class Bootstrap {
 
-    public defineExpressApp(app: express.Application) {
+    defineExpressApp(app: express.Application) {
         app.set('port', process.env.PORT || Server.normalizePort(environment.port));
     }
 
-    public startServer(app: express.Application): http.Server {
+    startServer(app: express.Application): http.Server {
         return app.listen(app.get('port'));
     }
 
-    public setupCoreTools(app: express.Application): void {
+    setupCoreTools(app: express.Application): void {
         // const swaggerUI = new SwaggerUI();
         // swaggerUI.setup(app);
     }
 
-    public setupAuthentication(app: express.Application): void {
+    setupAuthentication(app: express.Application): void {
         app.use(Authentication.setAuthUser);
     }
 
-    public setupRoutes(app: express.Application): void {
+    setupRoutes(app: express.Application): void {
         app.use(express.static(path.join(root, 'dist/nean-stack-starter')));
 
         // serving api routes
@@ -73,7 +73,7 @@ export class Bootstrap {
         });
     }
 
-    public setupWebSockets(server: http.Server): void {
+    setupWebSockets(server: http.Server): void {
         const wss = WebSocketServer.getSocketServer(server);
 
         wss.on('connection', (ws: ExtendedWebSocket, req) => {
@@ -113,7 +113,7 @@ export class Bootstrap {
         }, 10000);
     }
 
-    public setupGraphQL(app: express.Application): void {
+    setupGraphQL(app: express.Application): void {
         // const schema = makeExecutableSchema({
         //     typeDefs,
         //     resolvers
@@ -124,7 +124,7 @@ export class Bootstrap {
         // }));
     }
 
-    public setupErrors(app: express.Application): void {
+    setupErrors(app: express.Application): void {
         app.use(ApiError.NotFoundError);
 
         if (app.get('env') === 'development') {
@@ -134,7 +134,7 @@ export class Bootstrap {
         }
     }
 
-    public setupDatabase(app: express.Application): void {
+    setupDatabase(app: express.Application): void {
         // Retrieve all queries
         // TODO: not sure if .then is wrong because queries is empty until then (should be await)
         Database.retrieveQueries().then(queries => {
@@ -146,7 +146,7 @@ export class Bootstrap {
         app.use(Neo4j.sessionCleanup);
     }
 
-    public setupCors(app: express.Application): void {
+    setupCors(app: express.Application): void {
         app.use((req: Request | any, res: Response, next: NextFunction) => {
             // TODO: don't think this is working
             const allowedOrigins = app.get('env') === 'development'
@@ -164,7 +164,7 @@ export class Bootstrap {
         });
     }
 
-    public setupHerokuPing(app: express.Application): void {
+    setupHerokuPing(app: express.Application): void {
         if (app.get('env') !== 'development') {
             setInterval(function () {
                 http.get('http://nean.io');
@@ -172,7 +172,7 @@ export class Bootstrap {
         }
     }
 
-    public setupAutoPeriodicDataFetch(app: express.Application): void {
+    setupAutoPeriodicDataFetch(app: express.Application): void {
         if (app.get('env') !== 'development') {
             new DataFetcher().init(app);
         }

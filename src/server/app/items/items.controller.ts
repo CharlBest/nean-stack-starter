@@ -13,7 +13,7 @@ export class ItemsController extends BaseController {
         this.itemsService = new ItemsService();
     }
 
-    public async create(req: Request, res: Response, next: NextFunction) {
+    async create(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
         const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
@@ -28,7 +28,7 @@ export class ItemsController extends BaseController {
         );
     }
 
-    public async update(req: Request, res: Response, next: NextFunction) {
+    async update(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
@@ -46,7 +46,7 @@ export class ItemsController extends BaseController {
         );
     }
 
-    public async get(req: Request, res: Response, next: NextFunction) {
+    async get(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
@@ -60,7 +60,7 @@ export class ItemsController extends BaseController {
         );
     }
 
-    public async getAll(req: Request, res: Response, next: NextFunction) {
+    async getAll(req: Request, res: Response, next: NextFunction) {
         const pageIndex = +req.query.pageIndex;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
@@ -69,7 +69,7 @@ export class ItemsController extends BaseController {
         );
     }
 
-    public async delete(req: Request, res: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));

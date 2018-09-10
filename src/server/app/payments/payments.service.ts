@@ -113,7 +113,7 @@ export class PaymentsService extends BaseService {
 
     // #endregion
 
-    public async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
+    async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
         const charge = await this.createCharge(res, token, amount);
 
         Emailer.paymentSuccessfulEmail(email, amount);
@@ -121,7 +121,7 @@ export class PaymentsService extends BaseService {
         return await this.paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
     }
 
-    public async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
+    async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
@@ -169,17 +169,17 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    public async userCards(res: Response): Promise<CardModel[]> {
+    async userCards(res: Response): Promise<CardModel[]> {
         return await this.paymentsRepository.userCards(res, this.getUserId(res));
     }
 
-    public async createCard(res: Response, token: string): Promise<CardModel> {
+    async createCard(res: Response, token: string): Promise<CardModel> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
         return (await this.createStripeCard(res, user, token)).card;
     }
 
-    public async deleteCard(res: Response, uId: string): Promise<boolean> {
+    async deleteCard(res: Response, uId: string): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
@@ -204,7 +204,7 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    public async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
+    async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
@@ -223,7 +223,7 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    public async paymentHistory(res: Response): Promise<PaymentModel[]> {
+    async paymentHistory(res: Response): Promise<PaymentModel[]> {
         return await this.paymentsRepository.paymentHistory(res, this.getUserId(res));
     }
 }

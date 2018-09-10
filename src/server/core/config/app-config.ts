@@ -6,7 +6,7 @@ import * as helmet from 'helmet';
 // import * as compression from 'compression';
 
 export class AppConfig {
-    public configure(app: express.Application): void {
+    configure(app: express.Application): void {
 
         app
             // Enabling the cors headers

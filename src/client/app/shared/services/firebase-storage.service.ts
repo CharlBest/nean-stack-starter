@@ -12,11 +12,11 @@ export class FirebaseStorageService implements OnDestroy {
     folderName = 'images';
 
     private progress = new Subject<number>();
-    public progress$: Observable<number> = this.progress.asObservable();
     private onUpload = new Subject<string>();
     private onUpload$: Observable<string> = this.onUpload.asObservable();
     private onDelete = new Subject<boolean>();
     private onDelete$: Observable<boolean> = this.onDelete.asObservable();
+    progress$: Observable<number> = this.progress.asObservable();
 
     constructor() { }
 

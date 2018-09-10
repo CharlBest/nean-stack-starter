@@ -12,17 +12,17 @@ export class GeneralService extends BaseService {
         this.generalRepository = new GeneralRepository();
     }
 
-    public async createNewsletterMember(res: Response, email: string): Promise<boolean> {
+    async createNewsletterMember(res: Response, email: string): Promise<boolean> {
         email = email.toLowerCase();
         return await this.generalRepository.createNewsletterMember(res, email);
     }
 
-    public async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
+    async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
         email = email.toLowerCase();
         return await this.generalRepository.deleteNewsletterMember(res, email);
     }
 
-    public async sendFeedback(res: Response, content: string): Promise<void> {
+    async sendFeedback(res: Response, content: string): Promise<void> {
         Emailer.feedbackEmail(content);
     }
 }
