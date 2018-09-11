@@ -15,11 +15,13 @@ export class DialogService {
         dialogRef.componentInstance.message = message;
     }
 
-    confirm(message: string): Observable<boolean> {
+    confirm(message: string, confirmButtonText: string = null, closeButtonText: string = null): Observable<boolean> {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: true
         });
         dialogRef.componentInstance.message = message;
+        dialogRef.componentInstance.confirmButtonText = confirmButtonText;
+        dialogRef.componentInstance.closeButtonText = closeButtonText;
 
         return dialogRef.afterClosed();
     }

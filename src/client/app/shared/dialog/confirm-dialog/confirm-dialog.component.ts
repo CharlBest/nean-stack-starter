@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ConfirmDialogComponent {
     @Input() message: string;
+    @Input() confirmButtonText = 'Confirm';
+    @Input() closeButtonText = 'Close';
 }
