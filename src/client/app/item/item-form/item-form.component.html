@@ -50,7 +50,8 @@
 
             <app-upload-button (uploadComplete)="addItemMedia($event)"
                 [folderName]="'item'"
-                [buttonText]="'Add media'"></app-upload-button>
+                [buttonText]="'Add media'"
+                *ngIf="formGroup.get('media')?.value?.length < MAX_MEDIA_UPLOADS"></app-upload-button>
         </mat-card-actions>
     </mat-card>
 </form>

@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
+import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { BaseService } from '../shared/base-service';
 import { ItemsRepository } from './items.repository';
@@ -14,10 +15,16 @@ export class ItemsService extends BaseService {
     }
 
     async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+        if (media && Array.isArray(media)) {
+            media.slice(0, MAX_MEDIA_UPLOADS);
+        }
         return await this.itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
     }
 
     async update(res: Response, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+        if (media && Array.isArray(media)) {
+            media.slice(0, MAX_MEDIA_UPLOADS);
+        }
         return await this.itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
     }
 

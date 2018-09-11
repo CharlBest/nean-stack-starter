@@ -45,7 +45,9 @@ export class EditItemComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.item = data;
-        this.savedMedia = [...data.media];
+        if (data.media) {
+          this.savedMedia = [...data.media];
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
       });
@@ -70,13 +72,15 @@ export class EditItemComponent implements OnInit {
   }
 
   deleteRemovedImagesFromStorage() {
-    for (const media of this.savedMedia) {
-      if (!(<Array<string>>this.itemForm.formGroup.get('media').value).includes(media)) {
-        if (this.deleteSubscription) {
-          this.deleteSubscription.unsubscribe();
-        }
+    if (this.savedMedia) {
+      for (const media of this.savedMedia) {
+        if (!(<Array<string>>this.itemForm.formGroup.get('media').value).includes(media)) {
+          if (this.deleteSubscription) {
+            this.deleteSubscription.unsubscribe();
+          }
 
-        this.deleteSubscription = this.firebaseStorageService.delete(media).subscribe();
+          this.deleteSubscription = this.firebaseStorageService.delete(media).subscribe();
+        }
       }
     }
   }

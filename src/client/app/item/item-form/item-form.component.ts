@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { BuildFormGroup, MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -16,6 +16,7 @@ export class ItemFormComponent implements OnInit {
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
   isProcessing = false;
+  readonly MAX_MEDIA_UPLOADS = MAX_MEDIA_UPLOADS;
 
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
