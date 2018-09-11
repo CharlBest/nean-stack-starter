@@ -20,7 +20,8 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
-    uploadSubscription: Subscription;
+    uploadMediaSubscription: Subscription;
+    deleteMediaSubscription: Subscription;
 
     constructor(private firebaseStorageService: FirebaseStorageService,
         private domSanitizer: DomSanitizer) { }
@@ -97,24 +98,25 @@ export class HTMLEditorComponent implements AfterViewInit {
 
             // file type is only image.
             if (/^image\//.test(file.type)) {
-                this.saveToServer(file);
+                this.saveFileToServer(file);
             } else {
                 console.warn('You could only upload images.');
             }
         };
     }
 
-    saveToServer(file: File) {
+    saveFileToServer(file: File) {
         // I'm probably doing this wrong
-        if (this.uploadSubscription) {
-            this.uploadSubscription.unsubscribe();
+        if (this.uploadMediaSubscription) {
+            this.uploadMediaSubscription.unsubscribe();
         }
 
-        this.uploadSubscription = this.firebaseStorageService.upload(file).subscribe(data => {
+        const { onProgress, onUpload } = this.firebaseStorageService.upload(file);
+        this.uploadMediaSubscription = onUpload.subscribe(data => {
             this.insertEmbedImage(data);
         });
 
-        this.imageUploadProgressPercentage = this.firebaseStorageService.progress$;
+        this.imageUploadProgressPercentage = onProgress;
     }
 
     insertEmbedImage(url: string, blurAfterInsert: boolean = false) {
@@ -123,7 +125,13 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         if (blurAfterInsert) {
             this.editor.blur();
+        } else {
+            this.editor.setSelection(range.index + 1, 0);
         }
+
+        // TODO: this still won't work when the user inserts an image but does not click update which
+        // means the file will be in Firebase storage but not in use
+        this.updateFileStorageWithUrls();
     }
 
     insertText(text: string, blurAfterInsert: boolean = false) {
@@ -136,7 +144,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         }
 
         if (this.containsEmoji) {
-            const output = this.renderHTMLWithEmoji(this.editorDomElement.nativeElement.innerHTML);
+            const output = this.renderHTMLWithEmoji(this.getInnerHTML());
             const sanitizedHTML = this.domSanitizer.sanitize(SecurityContext.HTML, output);
             this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
             this.editor.setSelection(range.index + 2, 0);
@@ -152,5 +160,46 @@ export class HTMLEditorComponent implements AfterViewInit {
         (<any>emojione).sprites = true;
         (<any>emojione).imagePathSVGSprites = './assets/emoji/';
         return emojione.shortnameToImage(html);
+    }
+
+    getInnerHTML() {
+        return (<HTMLDivElement>this.editorDomElement.nativeElement.firstChild).innerHTML;
+    }
+
+    getUrls(content: string): Array<string> {
+        const regex = new RegExp('src="(https:\/\/firebasestorage\.googleapis\.com.*?)"', 'ig');
+        const urls = [];
+
+        function getUrl() {
+            const match = regex.exec(content);
+            if (match) {
+                urls.push(match[1]);
+            }
+            return match;
+        }
+
+        let matches = getUrl();
+        if (matches) {
+            while (matches !== null) {
+                matches = getUrl();
+            }
+        }
+
+        return urls;
+    }
+
+    updateFileStorageWithUrls() {
+        const oldUrls = this.getUrls(this.htmlContent);
+        const newUrls = this.getUrls(this.getInnerHTML());
+
+        for (let i = 0; i < oldUrls.length; i++) {
+            if (!newUrls.includes(oldUrls[i])) {
+                if (this.deleteMediaSubscription) {
+                    this.deleteMediaSubscription.unsubscribe();
+                }
+
+                this.deleteMediaSubscription = this.firebaseStorageService.delete(oldUrls[i]).subscribe();
+            }
+        }
     }
 }

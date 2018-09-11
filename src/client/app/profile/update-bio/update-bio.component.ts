@@ -29,7 +29,7 @@ export class UpdateBioComponent {
 
   onSubmit() {
     const viewModel = new UpdateBioViewModel();
-    viewModel.content = this.htmlEditor.editorDomElement.nativeElement.innerHTML;
+    viewModel.content = this.htmlEditor.getInnerHTML();
 
     if (this.content !== viewModel.content) {
       this.isProcessing = true;
@@ -39,6 +39,7 @@ export class UpdateBioComponent {
       this.profileService.updateBio(viewModel)
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(() => {
+          this.htmlEditor.updateFileStorageWithUrls();
           this.content = viewModel.content;
 
           this.snackBar.dismiss();

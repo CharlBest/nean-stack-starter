@@ -53,14 +53,15 @@ export class UploadButtonComponent {
             this.progressSubscription.unsubscribe();
         }
 
-        this.uploadSubscription = this.firebaseStorageService.upload(file).subscribe(data => {
+        const { onProgress, onUpload } = this.firebaseStorageService.upload(file);
+        this.uploadSubscription = onUpload.subscribe(data => {
             this.uploadComplete.emit(data);
             this.previewImgUrl = data;
             this.error = null;
         });
 
         // Progress
-        this.progressSubscription = this.firebaseStorageService.progress$.subscribe(progress => {
+        this.progressSubscription = onProgress.subscribe(progress => {
             this.progressPercentage = progress;
             if (this.hideProgressBarAfterUpload && progress === 100) {
                 this.showProgressBar = false;
