@@ -20,18 +20,32 @@ export class Server {
 
     use(app: express.Application): void {
         this.httpServer.on('listening', () => {
-            this.onStartUp(app);
+            console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
         });
+
         this.httpServer.on('error', (error) => {
             this.onError(error);
         });
-        this.httpServer.on('close', (error) => {
-            this.onClose();
-        });
-    }
 
-    onStartUp(app: express.Application): void {
-        console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
+        this.httpServer.on('close', (error) => {
+            Database.clearDriver();
+        });
+
+        // process.on('SIGINT', () => { });
+        // process.on('SIGHUP', () => { });
+        // process.on('SIGQUIT', () => { });
+        // process.on('exit', () => { });
+
+        process.on('SIGTERM', () => {
+            Database.clearDriver();
+            process.exit(0);
+        });
+
+        process.on('uncaughtException', (event) => {
+            process.stderr.write('Uncaught exception... \n');
+            process.stderr.write(event.stack + '\n');
+            process.exit(1);
+        });
     }
 
     onError(error: any): void {
@@ -50,9 +64,5 @@ export class Server {
             default:
                 throw error;
         }
-    }
-
-    onClose() {
-        Database.clearDriver();
     }
 }
