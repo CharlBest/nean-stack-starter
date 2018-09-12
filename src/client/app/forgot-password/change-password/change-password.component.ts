@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
@@ -25,7 +26,8 @@ export class ChangePasswordComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     public formErrorsService: FormErrorsService,
-    public bpService: BreakpointService) { }
+    public bpService: BreakpointService,
+    private passwordStrengthService: PasswordStrengthService) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -45,6 +47,14 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.passwordStrengthService.init(this.formGroup.get('password').value).subscribe(data => {
+      if (data) {
+        this.changeForgottenPassword();
+      }
+    });
+  }
+
+  changeForgottenPassword() {
     this.isProcessing = true;
 
     const viewModel = new ChangeForgottenPasswordViewModel;

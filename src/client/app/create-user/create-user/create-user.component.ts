@@ -9,10 +9,10 @@ import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-t
 import { LoginService } from '../../login/login.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { CreateUserService } from '../create-user.service';
-import { passwordList } from '../password-list.model';
 
 @Component({
   selector: 'app-create-user',
@@ -31,8 +31,8 @@ export class CreateUserComponent implements OnInit {
     private authService: AuthService,
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
-    private dialogService: DialogService) {
-  }
+    private dialogService: DialogService,
+    private passwordStrengthService: PasswordStrengthService) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -43,15 +43,11 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit() {
-    if (passwordList.includes(this.formGroup.get('password').value)) {
-      this.dialogService.confirm('It seems your password is weak. Would you like to proceed?', 'Yes', 'No').subscribe(data => {
-        if (data) {
-          this.createUser();
-        }
-      });
-    } else {
-      this.createUser();
-    }
+    this.passwordStrengthService.init(this.formGroup.get('password').value).subscribe(data => {
+      if (data) {
+        this.createUser();
+      }
+    });
   }
 
   createUser() {
