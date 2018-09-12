@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService implements CanActivate {
     private readonly tokenStorageKey = 'token';
 
-    private loggedInUserId = new BehaviorSubject<number>(this.getIdFromJWT());
+    private loggedInUserId = new BehaviorSubject<number>(0);
     loggedInUserId$ = this.loggedInUserId.asObservable();
 
     private _preventLogoutOnNextRequest: boolean;
@@ -21,20 +21,24 @@ export class AuthService implements CanActivate {
             return false;
         }
     }
+    private tokenExpireDateInSeconds: number;
 
     constructor(private router: Router,
         private dialog: MatDialog) { }
 
-    private getIdFromJWT() {
+    private getDataFromJWT(): { id: number, expireDate: number } {
         const token = this.getLocalToken();
+
         if (token) {
             const parsedToken = this.parseJwt(token);
-            const id = parsedToken.data.i /* alias for ID */;
-            if (id) {
-                return +id;
-            }
+
+            const id = +parsedToken.data.i /* alias for ID */;
+            const expireDate = +parsedToken.exp;
+
+            return { id, expireDate };
         }
-        return null;
+
+        return { id: null, expireDate: null };
     }
 
     private parseJwt(token) {
@@ -48,6 +52,10 @@ export class AuthService implements CanActivate {
         }
     }
 
+    init() {
+        this.updateLoggedInUser();
+    }
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.hasToken()) {
             return true;
@@ -57,28 +65,34 @@ export class AuthService implements CanActivate {
         }
     }
 
-    updateLoggedInUserId(value) {
-        this.loggedInUserId.next(value);
+    updateLoggedInUser() {
+        const { id, expireDate } = this.getDataFromJWT();
+        this.loggedInUserId.next(id);
+        this.tokenExpireDateInSeconds = expireDate;
     }
 
     getLoggedInUserId(): number {
         return this.loggedInUserId.getValue();
     }
 
-    setToken(accessToken: string, id: number) {
-        sessionStorage.setItem(this.tokenStorageKey, accessToken);
-        this.updateLoggedInUserId(id);
+    setToken(token: string) {
+        sessionStorage.setItem(this.tokenStorageKey, token);
+        this.updateLoggedInUser();
     }
 
     removeToken() {
-        sessionStorage.clear();
-        this.updateLoggedInUserId(null);
+        sessionStorage.removeItem(this.tokenStorageKey);
+        this.updateLoggedInUser();
+    }
+
+    removeTokenAndNavigateToLogin() {
+        this.removeToken();
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }, queryParamsHandling: 'merge' });
         this.dialog.closeAll();
     }
 
     hasToken(): boolean {
-        const token = sessionStorage.getItem(this.tokenStorageKey);
+        const token = this.getLocalToken();
         return token !== null && token !== undefined;
     }
 
@@ -88,5 +102,13 @@ export class AuthService implements CanActivate {
 
     preventLogoutOnNextRequest() {
         this._preventLogoutOnNextRequest = true;
+    }
+
+    hasTokenExpired() {
+        if (this.hasToken() && Math.floor(Date.now() / 1000) >= this.tokenExpireDateInSeconds) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

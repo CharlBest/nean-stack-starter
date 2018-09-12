@@ -39,7 +39,7 @@ export class DeleteUserComponent implements OnInit {
             this.profileService.deleteUser()
                 .pipe(finalize(() => this.isProcessing = false))
                 .subscribe(() => {
-                    this.authService.removeToken();
+                    this.authService.removeTokenAndNavigateToLogin();
                     this.snackBar.dismiss();
 
                     this.snackBar.open('Deleted');

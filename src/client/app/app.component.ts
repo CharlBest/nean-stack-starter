@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
 import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { ASCIIArtService } from './shared/services/ascii-art.service';
+import { AuthService } from './shared/services/auth.service';
 import { GaService } from './shared/services/ga.service';
 import { NotificationService } from './shared/services/notification.service';
 import { ThemeService } from './shared/services/theme.service';
@@ -14,12 +15,16 @@ import { ThemeService } from './shared/services/theme.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private gaService: GaService,
+  constructor(private authService: AuthService,
+    private gaService: GaService,
     private themeService: ThemeService,
     private notificationService: NotificationService,
     private asciiArtService: ASCIIArtService,
     private cookieConsentSnackbarService: CookieConsentSnackbarService,
     private networkStatusService: NetworkStatusService) {
+    // Authentication
+    this.authService.init();
+
     // Google Analytics
     this.gaService.init();
 

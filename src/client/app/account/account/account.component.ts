@@ -24,6 +24,6 @@ export class AccountComponent implements OnInit {
   }
 
   logout() {
-    this.authService.removeToken();
+    this.authService.removeTokenAndNavigateToLogin();
   }
 }

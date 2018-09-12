@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../../environments/environment';
@@ -73,7 +73,16 @@ export class NavigationComponent implements OnInit {
         }
       });
 
-    // Set title, navigation and back route
+    // Navigation Start: remove expired auth token
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationStart))
+      .subscribe(event => {
+        if (this.authService.hasTokenExpired()) {
+          this.authService.removeToken();
+        }
+      });
+
+    // Navigation End: Set title, navigation and back route
     this.router.events
       .pipe(
         filter(e => e instanceof NavigationEnd),

@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         console.error('Authentication 401 Unauthorized', err);
 
                         // This will redirect to the login page
-                        this.authService.removeToken();
+                        this.authService.removeTokenAndNavigateToLogin();
                     }
                 }
             })

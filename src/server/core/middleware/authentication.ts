@@ -23,10 +23,9 @@ export class Authentication {
             verify(token, environment.authentication.privateKey, { issuer: Authentication.issuerName }, (error, decode) => {
                 if (error) {
                     res.locals.user = null;
-                    return res.status(401).json({ message: 'Unauthorized user' });
-                }
-
-                if (decode['data']) {
+                    // TODO: not sure if removing this is the right thing to do.
+                    // return res.status(401).json({ message: 'Unauthorized user' });
+                } else if (decode['data']) {
                     res.locals.user = decode['data'];
                 }
 

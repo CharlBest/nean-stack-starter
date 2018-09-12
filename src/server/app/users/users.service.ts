@@ -114,17 +114,15 @@ export class UsersService extends BaseService {
         }
 
         const viewModel = new TokenViewModel();
-        viewModel.userId = user.id;
         const tokenData = {
             i: user.id,
             // u: user.username,
             // r: 'role'
         };
 
-        // TODO: TTL on token! '1h'
         viewModel.token = sign(
             {
-                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                exp: Math.floor(Date.now() / 1000) + (60 * 60), /* 1 hour */
                 data: tokenData
             },
             environment.authentication.privateKey,

@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(viewModel)
       .subscribe(data => {
         if (data && data.token) {
-          this.authService.setToken(data.token, data.userId);
+          this.authService.setToken(data.token);
 
           this.router.navigateByUrl(this.returnUrl);
         } else {
