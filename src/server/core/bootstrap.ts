@@ -107,7 +107,7 @@ export class Bootstrap {
                 }
 
                 ws.isAlive = false;
-                ws.ping(null, undefined);
+                ws.ping(() => { });
             });
         }, 10000);
     }
