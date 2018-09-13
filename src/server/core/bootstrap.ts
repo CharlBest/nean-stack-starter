@@ -109,7 +109,7 @@ export class Bootstrap {
                 ws.isAlive = false;
                 ws.ping(() => { });
             });
-        }, 10000);
+        }, 30000);
     }
 
     setupGraphQL(app: express.Application): void {
