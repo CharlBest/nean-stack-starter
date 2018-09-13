@@ -31,15 +31,15 @@ export class NavigationComponent implements OnInit {
   mobileTopToolbarHeight = 56;
   topToolbarHeightInPx: string;
   navItems: NavItem = {
-    home: { paths: [{ path: '' }, { path: 'home' }, { path: 'user' }, { path: 'items' }, { path: 'item' }] },
+    home: { paths: [{ path: '' }, { path: 'home' }, { path: 'user' }, { path: 'item' }, { path: 'item/edit', exact: false }] },
     search: { paths: [{ path: 'search' }] },
-    createItem: { paths: [{ path: 'create-item' }] },
+    createItem: { paths: [{ path: 'item/create' }] },
     activity: { paths: [{ path: 'activity' }] },
     account: {
       paths: [
         { path: 'account' }, { path: 'create-user' },
         { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
-        { path: 'login' }, { path: 'forgot-password' }, { path: 'profile' },
+        { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile' },
         { path: 'payment' }, { path: 'verify' }
       ]
     }
@@ -180,20 +180,6 @@ export class NavigationComponent implements OnInit {
       }
       prevScrollpos = currentScrollPos;
     };
-  }
-
-  isAccountLinkActive() {
-    if (this.router.isActive('/account', true) || this.router.isActive('/profile', true) ||
-      this.router.isActive('/login', true) || this.router.isActive('/create-user', true) ||
-      this.router.isActive('/forgot-password', true) || this.router.isActive('/business', false) ||
-      this.router.isActive('/payment', true) || this.router.isActive('/newsletter', true) ||
-      this.router.isActive('/feedback', true)) {
-      if (this.bpService.isDesktop) {
-        return 'mat-accent';
-      } else {
-        return 'mat-primary';
-      }
-    }
   }
 
   checkAllNavItemAssociations() {
