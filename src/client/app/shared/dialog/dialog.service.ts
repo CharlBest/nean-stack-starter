@@ -20,8 +20,12 @@ export class DialogService {
             disableClose: true
         });
         dialogRef.componentInstance.message = message;
-        dialogRef.componentInstance.confirmButtonText = confirmButtonText;
-        dialogRef.componentInstance.closeButtonText = closeButtonText;
+        if (confirmButtonText) {
+            dialogRef.componentInstance.confirmButtonText = confirmButtonText;
+        }
+        if (closeButtonText) {
+            dialogRef.componentInstance.closeButtonText = closeButtonText;
+        }
 
         return dialogRef.afterClosed();
     }
