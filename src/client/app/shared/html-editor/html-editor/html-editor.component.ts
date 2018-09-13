@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, SecurityContext, ViewChild
 import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
@@ -20,8 +20,6 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
-    uploadMediaSubscription: Subscription;
-    deleteMediaSubscription: Subscription;
 
     constructor(private firebaseStorageService: FirebaseStorageService,
         private domSanitizer: DomSanitizer) { }
@@ -106,13 +104,8 @@ export class HTMLEditorComponent implements AfterViewInit {
     }
 
     saveFileToServer(file: File) {
-        // I'm probably doing this wrong
-        if (this.uploadMediaSubscription) {
-            this.uploadMediaSubscription.unsubscribe();
-        }
-
         const { onProgress, onUpload } = this.firebaseStorageService.upload(file);
-        this.uploadMediaSubscription = onUpload.subscribe(data => {
+        onUpload.subscribe(data => {
             this.insertEmbedImage(data);
         });
 
@@ -194,11 +187,7 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         for (let i = 0; i < oldUrls.length; i++) {
             if (!newUrls.includes(oldUrls[i])) {
-                if (this.deleteMediaSubscription) {
-                    this.deleteMediaSubscription.unsubscribe();
-                }
-
-                this.deleteMediaSubscription = this.firebaseStorageService.delete(oldUrls[i]).subscribe();
+                this.firebaseStorageService.delete(oldUrls[i]).subscribe();
             }
         }
     }
