@@ -68,7 +68,7 @@ export class UsersController extends BaseController {
         const id = +req.params.id;
 
         res.status(200).json(
-            await this.usersService.getUserPublic(res, id)
+            await this.usersService.getUserPublic(res, req.ip, id)
         );
     }
 

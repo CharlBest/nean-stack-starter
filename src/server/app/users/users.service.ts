@@ -161,8 +161,8 @@ export class UsersService extends BaseService {
         return viewModel;
     }
 
-    async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
-        return await this.usersRepository.getUserPublic(res, userId);
+    async getUserPublic(res: Response, ip: string, userId: number): Promise<UserPublicViewModel> {
+        return await this.usersRepository.getUserPublic(res, this.getUserId(res), ip, userId);
     }
 
     async resendEmailVerificationLink(res: Response): Promise<void> {

@@ -113,10 +113,12 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    async getUserPublic(res: Response, userId: number): Promise<UserPublicViewModel> {
+    async getUserPublic(res: Response, loggedInUserId: number, ip: string, userId: number): Promise<UserPublicViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserPublic,
             {
-                userId
+                userId,
+                loggedInUserId,
+                ip
             }
         );
 
