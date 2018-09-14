@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -21,7 +20,6 @@ export class EditItemComponent implements OnInit {
   isProcessing = true;
   item: ItemViewModel;
   savedMedia: Array<string>;
-  deleteSubscription: Subscription;
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService,
@@ -75,11 +73,7 @@ export class EditItemComponent implements OnInit {
     if (this.savedMedia) {
       for (const media of this.savedMedia) {
         if (!(<Array<string>>this.itemForm.formGroup.get('media').value).includes(media)) {
-          if (this.deleteSubscription) {
-            this.deleteSubscription.unsubscribe();
-          }
-
-          this.deleteSubscription = this.firebaseStorageService.delete(media).subscribe();
+          this.firebaseStorageService.delete(media).subscribe();
         }
       }
     }

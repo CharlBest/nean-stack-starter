@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuildFormGroup, MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 
@@ -20,7 +21,8 @@ export class ItemFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
-    public bpService: BreakpointService) { }
+    public bpService: BreakpointService,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -44,6 +46,10 @@ export class ItemFormComponent implements OnInit {
   }
 
   removeMedia(index: number) {
-    this.formGroup.get('media').value.splice(index, 1);
+    this.dialogService.confirm('Are you sure?').subscribe(data => {
+      if (data) {
+        this.formGroup.get('media').value.splice(index, 1);
+      }
+    });
   }
 }
