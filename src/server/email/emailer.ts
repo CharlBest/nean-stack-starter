@@ -34,10 +34,12 @@ export class Emailer {
     static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
         const data: MailData = {
             to: {
-                email,
+                email
+            },
+            from: {
+                email: Emailer.fromEmail,
                 name: Emailer.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.forgotPassword,
         };
 
