@@ -33,11 +33,19 @@ export class UpdatePasswordComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(BuildFormGroup.updatePassword());
+
+    const confirmPasswordControl = this.formGroup.get('confirmPassword');
+    confirmPasswordControl.statusChanges.subscribe(data => {
+      if (!confirmPasswordControl.errors) {
+        if (this.formGroup.get('newPassword').value !== confirmPasswordControl.value) {
+          confirmPasswordControl.setErrors([{ passwordCompare: true }]);
+        }
+      }
+    });
   }
 
   onSubmit() {
     if (this.formGroup.get('newPassword').value !== this.formGroup.get('confirmPassword').value) {
-      this.formGroup.get('confirmPassword').setErrors([{ passwordCompare: false }]);
       return;
     }
 
