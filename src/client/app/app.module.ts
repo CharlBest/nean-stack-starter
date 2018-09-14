@@ -49,7 +49,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: <MatDialogConfig>{ autoFocus: false, hasBackdrop: true, closeOnNavigation: true }
+      useValue: <MatDialogConfig>{ autoFocus: false, hasBackdrop: true, closeOnNavigation: true, restoreFocus: false }
     },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
