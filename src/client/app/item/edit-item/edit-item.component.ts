@@ -63,7 +63,7 @@ export class EditItemComponent implements OnInit {
       .pipe(finalize(() => this.itemForm.isProcessing = false))
       .subscribe(data => {
         this.deleteRemovedImagesFromStorage();
-        this.router.navigate(['/item', data.uId]);
+        this.router.navigate(['/item/comments', data.uId]);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
       });
