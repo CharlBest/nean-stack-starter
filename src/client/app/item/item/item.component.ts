@@ -82,7 +82,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
       this.preventBackNavigationService.beforeOpen();
 
       this.bottomSheet.open(this.bottomSheetContextMenu, {
-        closeOnNavigation: true
+        closeOnNavigation: true,
+        autoFocus: false
       }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
     }
   }
@@ -132,9 +133,5 @@ export class ItemComponent implements OnInit, AfterViewInit {
     } else {
       this.activeMediaIndex++;
     }
-  }
-
-  goToEditItem(uId: string) {
-    this.router.navigate(['/item/edit', uId]);
   }
 }
