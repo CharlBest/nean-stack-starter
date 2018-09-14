@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../../shared/view-models/item/report-item.view-model';
@@ -35,7 +36,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
     public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
     private preventBackNavigationService: PreventBackNavigationService,
-    private shareDialogService: ShareDialogService) { }
+    private shareDialogService: ShareDialogService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -130,5 +132,9 @@ export class ItemComponent implements OnInit, AfterViewInit {
     } else {
       this.activeMediaIndex++;
     }
+  }
+
+  goToEditItem(uId: string) {
+    this.router.navigate(['/item/edit', uId]);
   }
 }
