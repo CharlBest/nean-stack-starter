@@ -9,8 +9,14 @@ function isEmptyInputValue(value: any): boolean {
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 export const MAX_MEDIA_UPLOADS = 5;
 
+const PASSWORD_REFEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]+$/;
+const PASSWORD_LENGTH = 6;
+
+
 // Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
 export class Validators {
+    private static nullValidator(c: AbstractControl): ValidationErrors | null { return null; }
+
     private static wrapControl(control: AbstractControl | string | number): AbstractControl {
         // Warning if this method starts allowing booleans
         return control && (<any>control).value !== undefined ? control : <any>{ value: control };
@@ -42,6 +48,40 @@ export class Validators {
         };
     }
 
+    static pattern(pattern: string | RegExp): ValidatorFn {
+        if (!pattern) {
+            return Validators.nullValidator;
+        }
+        let regex: RegExp;
+        let regexStr: string;
+        if (typeof pattern === 'string') {
+            regexStr = '';
+
+            if (pattern.charAt(0) !== '^') {
+                regexStr += '^';
+            }
+
+            regexStr += pattern;
+
+            if (pattern.charAt(pattern.length - 1) !== '$') {
+                regexStr += '$';
+            }
+
+            regex = new RegExp(regexStr);
+        } else {
+            regexStr = pattern.toString();
+            regex = pattern;
+        }
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (isEmptyInputValue(control.value)) {
+                return null;  // don't validate empty values to allow optional controls
+            }
+            const value: string = control.value;
+            return regex.test(value) ? null :
+                { 'pattern': { 'requiredPattern': regexStr, 'actualValue': value } };
+        };
+    }
+
     static is4(control: AbstractControl): ValidationErrors | null {
         control = Validators.wrapControl(control);
         if (isEmptyInputValue(control.value)) {
@@ -63,7 +103,8 @@ export class BuildFormGroup {
             ]],
             password: [password, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.pattern(PASSWORD_REFEXP)
             ]]
         };
     }
@@ -84,7 +125,7 @@ export class BuildFormGroup {
             ]],
             password: [password, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH)
             ]]
         };
     }
@@ -93,7 +134,8 @@ export class BuildFormGroup {
         return {
             password: [password, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.pattern(PASSWORD_REFEXP)
             ]]
         };
     }
@@ -111,15 +153,16 @@ export class BuildFormGroup {
         return {
             password: [password, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH)
             ]],
             newPassword: [newPassword, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.pattern(PASSWORD_REFEXP)
             ]],
             confirmPassword: [confirmPassword, [
                 Validators.required,
-                Validators.minLength(6)
+                Validators.minLength(PASSWORD_LENGTH)
             ]]
         };
     }
