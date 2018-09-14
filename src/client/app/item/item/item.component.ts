@@ -51,7 +51,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
         } else {
           this.showMoreButton = false;
         }
-      }, 100);
+      });
     } else {
       this.showMoreDescription();
     }
