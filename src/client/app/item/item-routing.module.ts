@@ -18,7 +18,7 @@ import { EditItemComponent } from './edit-item/edit-item.component';
                 data: { title: 'Edit Item', nav: NavigationType.Back }, canActivate: [AuthService]
             },
             {
-                path: ':uId', component: CommentsComponent, pathMatch: 'full',
+                path: 'comments/:uId', component: CommentsComponent, pathMatch: 'full',
                 data: { title: 'Comments', nav: NavigationType.Back }
             },
         ])

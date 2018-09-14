@@ -44,7 +44,7 @@
                 alt="item image">
         </div>
 
-        <a routerLink="/item/{{item.uId}}"
+        <a routerLink="/item/comments/{{item.uId}}"
             class="item-body">
             <h3>{{item.title}}</h3>
 
@@ -59,7 +59,7 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-button
-            routerLink="/item/{{item.uId}}"
+            routerLink="/item/comments/{{item.uId}}"
             *ngIf="!isViewingComments"
             type="button">
             <mat-icon>mode_comment</mat-icon>

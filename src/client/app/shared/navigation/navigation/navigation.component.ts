@@ -31,7 +31,12 @@ export class NavigationComponent implements OnInit {
   mobileTopToolbarHeight = 56;
   topToolbarHeightInPx: string;
   navItems: NavItem = {
-    home: { paths: [{ path: '' }, { path: 'home' }, { path: 'user' }, { path: 'item' }, { path: 'item/edit', exact: false }] },
+    home: {
+      paths: [
+        { path: '' }, { path: 'home' }, { path: 'user', exact: false },
+        { path: 'item' }, { path: 'item/comments', exact: false }, { path: 'item/edit', exact: false }
+      ]
+    },
     search: { paths: [{ path: 'search' }] },
     createItem: { paths: [{ path: 'item/create' }] },
     activity: { paths: [{ path: 'activity' }] },
