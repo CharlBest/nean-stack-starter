@@ -12,8 +12,10 @@ export class FormErrorsComponent implements OnChanges {
   isValid: boolean;
 
   ngOnChanges() {
-    this.control.statusChanges.subscribe(x => {
-      this.isValid = !this.control.hasError('email') && !this.control.hasError('required') && !this.control.hasError('minlength');
-    });
+    if (this.control) {
+      this.control.statusChanges.subscribe(x => {
+        this.isValid = !this.control.hasError('email') && !this.control.hasError('required') && !this.control.hasError('minlength');
+      });
+    }
   }
 }
