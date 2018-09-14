@@ -28,7 +28,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as any[];
+        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email' | 'username' | 'emailCode'>>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];
@@ -67,7 +67,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as any[];
+        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'password' | 'passwordSalt' | 'id'>>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];
@@ -83,7 +83,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as UserLiteModel[];
+        const model = result.records.map(x => Database.parseValues<UserLiteModel>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];
@@ -101,10 +101,10 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let localModel = new UserModel();
-            localModel = Database.createNodeObject(x.get('user')) as UserModel;
-            localModel.userCards = Database.createNodeObjectArray(x.get('cards')) as CardModel[];
+            localModel = Database.createNodeObject<UserModel>(x.get('user'));
+            localModel.userCards = Database.createNodeObjectArray<CardModel>(x.get('cards'));
             return localModel;
-        }) as UserModel[];
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -127,10 +127,10 @@ export class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let localModel = new UserPublicViewModel();
-            localModel = Database.parseValues(x.get('user')) as UserPublicViewModel;
-            localModel.items = Database.createNodeObjectArray(x.get('items')) as ItemModel[];
+            localModel = Database.parseValues<UserPublicViewModel>(x.get('user'));
+            localModel.items = Database.createNodeObjectArray<ItemModel>(x.get('items'));
             return localModel;
-        }) as UserPublicViewModel[];
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -147,7 +147,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
+        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];
@@ -167,7 +167,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
+        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];
@@ -230,7 +230,7 @@ export class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues(x.get('user'))) as Pick<UserModel, 'email'>[];
+        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
 
         if (model && model.length > 0) {
             return model[0];

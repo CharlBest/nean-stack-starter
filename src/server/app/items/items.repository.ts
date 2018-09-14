@@ -38,10 +38,10 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
-            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
+            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
             return viewModel;
-        }) as ItemViewModel[];
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -64,10 +64,10 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
-            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
+            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
             return viewModel;
-        }) as ItemViewModel[];
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -87,10 +87,10 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('item')) as ItemModel;
-            viewModel.user = Database.parseValues(x.get('user')) as ItemUserViewModel;
+            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
             return viewModel;
-        }) as ItemViewModel[];
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -110,10 +110,10 @@ export class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject(x.get('items')) as ItemModel;
-            viewModel.user = Database.parseValues(x.get('users')) as ItemUserViewModel;
+            viewModel = Database.createNodeObject<ItemModel>(x.get('items'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
             return viewModel;
-        }) as ItemViewModel[];
+        });
 
         if (model && model.length > 0) {
             return model;

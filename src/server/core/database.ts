@@ -54,9 +54,9 @@ export class Database {
         }
     }
 
-    static createNodeObjectArray(nodes: any[]): any {
+    static createNodeObjectArray<T>(nodes: any[]): T[] {
         if (nodes) {
-            return nodes.map(x => Database.createNodeObject(x));
+            return nodes.map(x => Database.createNodeObject(x)) as T[];
         } else {
             return null;
         }
