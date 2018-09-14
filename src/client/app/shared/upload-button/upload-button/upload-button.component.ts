@@ -17,6 +17,7 @@ export class UploadButtonComponent {
     error: string;
     progressPercentage: number;
     showProgressBar = false;
+    // TODO: better UX is to allow uploading multiple in parallel
     isProcessing = false;
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
