@@ -1,12 +1,17 @@
-<div *ngIf="control?.hasError('email')">
+<ng-container *ngIf="control?.hasError('email'); else elseif1">
     Invalid email address
-</div>
+</ng-container>
 
-<div *ngIf="control?.hasError('required')">
-    Required
-</div>
+<ng-template #elseif1>
+    <ng-container *ngIf="control?.hasError('required'); else elseif2">
+        Required
+    </ng-container>
+</ng-template>
 
-<div *ngIf="control?.hasError('minlength')">
-    {{control.errors['minlength'].requiredLength}} characters required but {{control.errors['minlength'].actualLength}}
-    found
-</div>
+<ng-template #elseif2>
+    <ng-container *ngIf="control?.hasError('minlength')">
+        {{control.errors['minlength'].requiredLength}} characters required but
+        {{control.errors['minlength'].actualLength}}
+        found
+    </ng-container>
+</ng-template>
