@@ -21,5 +21,6 @@ RETURN user {
     isVerified: user.isVerified,
     bio: user.bio,
     avatarUrl: user.avatarUrl
-}, collect(items) as items
+}, collect(items)[{pageIndex}*{pageSize}..({pageIndex}+1)*{pageSize}] as items
 `
+// pageIndex & pageSize as used above is slow I think. Rahter use apoc.cypher.run for sub query support

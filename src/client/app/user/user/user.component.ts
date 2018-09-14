@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getUserPublic(this.userId)
+    this.userService.getUserPublic(this.userId, 0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         const itemsOwner = {
