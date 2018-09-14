@@ -36,13 +36,16 @@ export class UserComponent implements OnInit {
     this.userService.getUserPublic(this.userId)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.user = data;
-        // TODO: This can be optomized
-        this.user.items.forEach((x: ItemViewModel) => x.user = {
+        const itemsOwner = {
           id: this.userId,
-          username: this.user.username,
-          avatarUrl: this.user.avatarUrl
-        });
+          username: data.username,
+          avatarUrl: data.avatarUrl
+        };
+
+        // TODO: This can be optomized
+        data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+
+        this.user = data;
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
