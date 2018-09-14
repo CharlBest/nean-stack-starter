@@ -7,6 +7,7 @@
 
 <button mat-raised-button
     type="button"
+    [disabled]="isProcessing"
     (click)="fileInput.click()">{{buttonText}}</button>
 
 <mat-progress-bar *ngIf="showProgressBar"

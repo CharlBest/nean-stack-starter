@@ -17,11 +17,13 @@ export class UploadButtonComponent {
     error: string;
     progressPercentage: number;
     showProgressBar = false;
+    isProcessing = false;
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
 
     handleChange(event: Event) {
         this.showProgressBar = true;
+        this.isProcessing = true;
 
         // Reset
         this.previewImgUrl = null;
@@ -32,6 +34,7 @@ export class UploadButtonComponent {
         // User cancelled
         if (!file) {
             this.showProgressBar = false;
+            this.isProcessing = false;
             return;
         }
 
@@ -39,6 +42,7 @@ export class UploadButtonComponent {
         if ((file.size / 1024 / 1024 /*in MB*/) > this.maxFileSizeInMB) {
             this.error = `File exceeds ${this.maxFileSizeInMB} MB. Please upload a smaller file`;
             this.showProgressBar = false;
+            this.isProcessing = false;
             return;
         }
 
@@ -47,9 +51,9 @@ export class UploadButtonComponent {
             this.uploadComplete.emit(data);
             this.previewImgUrl = data;
             this.error = null;
-        });
+            this.isProcessing = false;
+        }, () => this.isProcessing = false);
 
-        // Progress
         onProgress.subscribe(progress => {
             this.progressPercentage = progress;
             if (this.hideProgressBarAfterUpload && progress === 100) {
