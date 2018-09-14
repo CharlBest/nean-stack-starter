@@ -25,7 +25,7 @@
             </button>
         </div>
 
-        <div *ngIf="item?.media"
+        <div *ngIf="item?.media && item?.media?.length > 0"
             class="item-media">
             <div *ngIf="item?.media?.length > 1">
                 <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
