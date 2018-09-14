@@ -46,6 +46,16 @@ export class Server {
             process.stderr.write(event.stack + '\n');
             process.exit(1);
         });
+
+        process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+            process.stderr.write('Unhandled rejection... \n');
+            process.stderr.write(reason + '\n');
+
+            console.log(reason);
+            console.log(reason && reason.messsage ? reason.message : 'No message was provided for unhandledRejection');
+
+            process.exit(1);
+        });
     }
 
     onError(error: any): void {
