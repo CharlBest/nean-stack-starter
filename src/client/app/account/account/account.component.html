@@ -12,6 +12,10 @@
                 <span mat-line>Profile</span>
             </mat-list-item>
             <mat-divider></mat-divider>
+            <mat-list-item routerLink="/payment">
+                <mat-icon mat-list-icon>credit_card</mat-icon>
+                <span mat-line>Donate</span>
+            </mat-list-item>
             <mat-list-item routerLink="/feedback">
                 <mat-icon mat-list-icon>feedback</mat-icon>
                 <span mat-line>Feedback</span>
@@ -20,6 +24,10 @@
                 <mat-icon mat-list-icon>mail</mat-icon>
                 <span mat-line>Newsletter</span>
             </mat-list-item>
+            <mat-list-item (click)="takeTour()">
+                <mat-icon mat-list-icon>live_help</mat-icon>
+                <span mat-line>Take Tour</span>
+            </mat-list-item>
             <mat-list-item routerLink="/business/help">
                 <mat-icon mat-list-icon>help</mat-icon>
                 <span mat-line>Help</span>
@@ -27,14 +35,6 @@
             <mat-list-item routerLink="/business/dev">
                 <mat-icon mat-list-icon>code</mat-icon>
                 <span mat-line>Developer</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/payment">
-                <mat-icon mat-list-icon>credit_card</mat-icon>
-                <span mat-line>Donate</span>
-            </mat-list-item>
-            <mat-list-item (click)="takeTour()">
-                <mat-icon mat-list-icon>live_help</mat-icon>
-                <span mat-line>Take Tour</span>
             </mat-list-item>
             <mat-list-item *ngIf="loggedInUserId"
                 (click)="logout()">
