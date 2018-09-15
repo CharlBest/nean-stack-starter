@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBarRef } from '@angular/material';
+import { TutorialService } from '../tutorial/tutorial.service';
 import { CookieConsentComponent } from './cookie-consent/cookie-consent.component';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class CookieConsentService {
   private readonly cookieConsentStorageKey = 'cookie_consent';
   snackBarRef: MatSnackBarRef<CookieConsentComponent>;
 
-  constructor() { }
+  constructor(private tutorialService: TutorialService) { }
 
   hasAcceptedCookieConsent() {
     const consent = localStorage.getItem(this.cookieConsentStorageKey);
@@ -20,5 +21,6 @@ export class CookieConsentService {
   acceptCookieConsent() {
     localStorage.setItem(this.cookieConsentStorageKey, 'true');
     this.snackBarRef.dismiss();
+    this.tutorialService.checkHasVisited();
   }
 }

@@ -1,6 +1,5 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -55,12 +54,9 @@ export class NavigationComponent implements OnInit {
     private authService: AuthService,
     private titleService: Title,
     private location: Location,
-    private snackBar: MatSnackBar,
     public bpService: BreakpointService,
     public notificationService: NotificationService,
-    public navigationService: NavigationService) {
-    this.checkHasVisited();
-  }
+    public navigationService: NavigationService) { }
 
   ngOnInit() {
     this.authService.loggedInUserId$
@@ -153,22 +149,6 @@ export class NavigationComponent implements OnInit {
       } else {
         this.location.back();
       }
-    }
-  }
-
-  checkHasVisited() {
-    const hasVisitedStorageKey = 'has_user_visited';
-    const hasUserVisited = localStorage.getItem(hasVisitedStorageKey) === 'true';
-
-    if (!hasUserVisited) {
-      localStorage.setItem(hasVisitedStorageKey, 'true');
-
-      this.snackBar.open('Take the tour', 'Go', {
-        duration: 20000,
-      }).onAction()
-        .subscribe(() => {
-          this.router.navigate([], { queryParams: { tut: TutorialType.SignUp }, queryParamsHandling: 'merge' });
-        });
     }
   }
 

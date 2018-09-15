@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
@@ -14,7 +15,8 @@ import { NavigationType } from '../navigation/navigation-type.enum';
 export class TutorialService {
     constructor(private route: ActivatedRoute,
         private router: Router,
-        private http: HttpClient) { }
+        private http: HttpClient,
+        private snackBar: MatSnackBar) { }
 
     async activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
         const navigateUrl = [];
@@ -75,5 +77,21 @@ export class TutorialService {
 
     completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel);
+    }
+
+    checkHasVisited() {
+        const hasVisitedStorageKey = 'has_user_visited';
+        const hasUserVisited = localStorage.getItem(hasVisitedStorageKey) === 'true';
+
+        if (!hasUserVisited) {
+            localStorage.setItem(hasVisitedStorageKey, 'true');
+
+            this.snackBar.open('Take the tour', 'Go', {
+                duration: 20000,
+            }).onAction()
+                .subscribe(() => {
+                    this.activateTutorial(TutorialType.SignUp);
+                });
+        }
     }
 }
