@@ -13,7 +13,14 @@
         [item]="item"></app-item>
 
     <mat-card *ngIf="!user?.items || user?.items?.length === 0">
-        No items exist
+        <mat-card-content>
+            No items exist
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                routerLink="/item/create"
+                type="button">Create Item</button>
+        </mat-card-actions>
     </mat-card>
 </div>
 
