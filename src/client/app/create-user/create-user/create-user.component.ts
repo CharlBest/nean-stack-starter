@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -54,8 +54,8 @@ export class CreateUserComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
-    viewModel.email = trimString(this.formGroup.get('email').value);
-    viewModel.username = trimString(this.formGroup.get('username').value);
+    viewModel.email = this.formGroup.get('email').value.trim();
+    viewModel.username = this.formGroup.get('username').value.trim();
     viewModel.password = this.formGroup.get('password').value;
 
     this.createUserService.createUser(viewModel)

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '../../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
@@ -58,7 +58,7 @@ export class ChangePasswordComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new ChangeForgottenPasswordViewModel;
-    viewModel.email = trimString(this.email);
+    viewModel.email = this.email.trim();
     viewModel.code = this.code;
     viewModel.password = this.formGroup.get('password').value;
 

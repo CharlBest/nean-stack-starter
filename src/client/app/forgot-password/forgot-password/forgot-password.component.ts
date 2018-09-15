@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new ForgotPasswordViewModel();
-    viewModel.email = trimString(this.formGroup.get('email').value);
+    viewModel.email = this.formGroup.get('email').value.trim();
 
     this.forgotPasswordService.forgotPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

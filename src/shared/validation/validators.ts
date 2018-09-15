@@ -284,15 +284,6 @@ export class ServerValidator {
     }
 }
 
-export function trimString(stringToTrim: string): string {
-    if (stringToTrim) {
-        stringToTrim = stringToTrim.replace(/^\s+|\s+$/g, '');
-        return stringToTrim.replace(/^(&nbsp;)+|(&nbsp;)+$/g, '');
-    } else {
-        return stringToTrim;
-    }
-}
-
 interface FormValidator {
     [key: string]: any;
 }

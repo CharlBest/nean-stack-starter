@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { BuildFormGroup, ServerValidator, trimString, Validators } from '../../../shared/validation/validators';
+import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -24,9 +24,8 @@ export class UsersController extends BaseController {
     async createUser(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
-        // Trim inputs
-        viewModel.username = trimString(viewModel.username);
-        viewModel.email = trimString(viewModel.email);
+        viewModel.username = viewModel.username.trim();
+        viewModel.email = viewModel.email.trim();
 
         const formGroup = BuildFormGroup.createUser(viewModel.email, viewModel.username, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -43,8 +42,7 @@ export class UsersController extends BaseController {
     async login(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as LoginViewModel;
 
-        // Trim inputs
-        viewModel.emailOrUsername = trimString(viewModel.emailOrUsername);
+        viewModel.emailOrUsername = viewModel.emailOrUsername.trim();
 
         const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -91,8 +89,7 @@ export class UsersController extends BaseController {
     async forgotPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ForgotPasswordViewModel;
 
-        // Trim inputs
-        viewModel.email = trimString(viewModel.email);
+        viewModel.email = viewModel.email.trim();
 
         const formGroup = BuildFormGroup.forgotPassword(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -109,8 +106,7 @@ export class UsersController extends BaseController {
     async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ChangeForgottenPasswordViewModel;
 
-        // Trim inputs
-        viewModel.email = trimString(viewModel.email);
+        viewModel.email = viewModel.email.trim();
 
         const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.password);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);

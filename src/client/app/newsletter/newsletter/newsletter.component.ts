@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup, trimString } from '../../../../shared/validation/validators';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -46,7 +46,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = trimString(this.formGroup.get('email').value);
+    viewModel.email = this.formGroup.get('email').value.trim();
 
     this.newsletterService.createNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -59,7 +59,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = trimString(this.formGroup.get('email').value);
+    viewModel.email = this.formGroup.get('email').value.trim();
 
     this.newsletterService.deleteNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

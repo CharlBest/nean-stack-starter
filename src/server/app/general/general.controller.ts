@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator, trimString, Validators } from '../../../shared/validation/validators';
+import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
@@ -18,8 +18,7 @@ export class GeneralController extends BaseController {
     async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NewsletterMemberViewModel;
 
-        // Trim inputs
-        viewModel.email = trimString(viewModel.email);
+        viewModel.email = viewModel.email.trim();
 
         const formGroup = BuildFormGroup.newsletter(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -36,8 +35,7 @@ export class GeneralController extends BaseController {
     async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NewsletterMemberViewModel;
 
-        // Trim inputs
-        viewModel.email = trimString(viewModel.email);
+        viewModel.email = viewModel.email.trim();
 
         const formGroup = BuildFormGroup.newsletter(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
