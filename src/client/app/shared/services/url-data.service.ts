@@ -38,8 +38,12 @@ export class UrlDataService {
     init(formGroup: FormGroup) {
         const formData = this.route.snapshot.queryParams.data || null;
         if (formData) {
-            const data = JSON.parse(this.b64DecodeUnicode(formData));
-            formGroup.setValue(data);
+            try {
+                const data = JSON.parse(this.b64DecodeUnicode(formData));
+                formGroup.setValue(data);
+            } catch (error) {
+                console.log('Error parsing form data from url', error);
+            }
         }
 
         formGroup.valueChanges.pipe(
