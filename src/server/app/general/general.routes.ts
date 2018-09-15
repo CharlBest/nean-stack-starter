@@ -13,12 +13,12 @@ export class GeneralRoutes extends BaseRoute {
 
     initRoutes() {
         this.router.post(GeneralStaticRoutes.createNewsletterMember().server(),
-            (req, res, next) => this.generalController.createNewsletterMember(req, res, next).catch(next));
+            async (req, res, next) => this.generalController.createNewsletterMember(req, res, next).catch(next));
         this.router.post(GeneralStaticRoutes.deleteNewsletterMember().server(),
-            (req, res, next) => this.generalController.deleteNewsletterMember(req, res, next).catch(next));
+            async (req, res, next) => this.generalController.deleteNewsletterMember(req, res, next).catch(next));
         this.router.post(GeneralStaticRoutes.sendFeedback().server(),
-            (req, res, next) => this.generalController.sendFeedback(req, res, next).catch(next));
+            async (req, res, next) => this.generalController.sendFeedback(req, res, next).catch(next));
         this.router.post(GeneralStaticRoutes.invite().server(),
-            (req, res, next) => this.generalController.invite(req, res, next).catch(next));
+            async (req, res, next) => this.generalController.invite(req, res, next).catch(next));
     }
 }

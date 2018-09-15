@@ -4,7 +4,7 @@ import { environment } from '../environments/environment';
 
 export class Database {
 
-    static driver;
+    static driver: neo4j.Driver;
     static fileExtension = 'cyp';
 
     private static createDriver() {
