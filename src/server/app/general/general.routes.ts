@@ -18,5 +18,7 @@ export class GeneralRoutes extends BaseRoute {
             (req, res, next) => this.generalController.deleteNewsletterMember(req, res, next).catch(next));
         this.router.post(GeneralStaticRoutes.sendFeedback().server(),
             (req, res, next) => this.generalController.sendFeedback(req, res, next).catch(next));
+        this.router.post(GeneralStaticRoutes.invite().server(),
+            (req, res, next) => this.generalController.invite(req, res, next).catch(next));
     }
 }

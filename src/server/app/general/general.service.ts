@@ -25,4 +25,8 @@ export class GeneralService extends BaseService {
     async sendFeedback(res: Response, content: string): Promise<void> {
         Emailer.feedbackEmail(content);
     }
+
+    async invite(res: Response, emails: Array<string>): Promise<void> {
+        Emailer.invite(emails);
+    }
 }

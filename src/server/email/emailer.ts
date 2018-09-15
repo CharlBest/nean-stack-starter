@@ -126,6 +126,23 @@ export class Emailer {
         Emailer.send(data);
     }
 
+    static invite(emails: Array<string>) {
+        const data: MailData = {
+            to: emails,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
+            },
+            templateId: environment.sendGrid.templates.invite,
+        };
+
+        data['dynamic_template_data'] = {
+            subject: 'Invite',
+        };
+
+        Emailer.send(data);
+    }
+
     static send(data: MailData) {
         if (!environment.production) {
             data.mailSettings = {

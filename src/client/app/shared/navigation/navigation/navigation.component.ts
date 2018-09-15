@@ -44,7 +44,7 @@ export class NavigationComponent implements OnInit {
         { path: 'account' }, { path: 'create-user' },
         { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
         { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile' },
-        { path: 'payment' }, { path: 'verify' }
+        { path: 'payment' }, { path: 'verify' }, { path: 'invite' }
       ]
     }
   };

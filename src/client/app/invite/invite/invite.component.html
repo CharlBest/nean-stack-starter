@@ -1,0 +1,43 @@
+<mat-card [hidden]="isProcessing || isDone">
+  <mat-card-content>
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let email of emails"
+          (removed)="remove(email)">
+          {{email}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+
+        <input #emailsInput
+          placeholder="emails"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+          [attr.autofocus]="bpService.isDesktop || null"
+          type="email"
+          required />
+      </mat-chip-list>
+      <mat-error>Invalid email address</mat-error>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emailsInput?.value?.length < 5 && emails?.length === 0"
+      (click)="onSubmit(emailsInput)">Send Invites</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="!isProcessing && isDone">
+  <mat-card-content>
+    Emails has been sent
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      routerLink="/"
+      type="button">Home</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>
