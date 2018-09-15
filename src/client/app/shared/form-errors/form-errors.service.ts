@@ -13,7 +13,6 @@ export class FormErrorsService {
 
   updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup = null) {
     if (errorResponse.status === 400) {
-
       const errors = errorResponse.error.error.validation;
 
       if (errors) {
@@ -30,7 +29,6 @@ export class FormErrorsService {
 
         this.formErrors = errors.globalErrors;
       }
-
     }
   }
 }

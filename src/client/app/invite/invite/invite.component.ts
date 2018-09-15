@@ -1,10 +1,10 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatChipInputEvent, MatChipList } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { Validators } from '../../../../shared/validation/validators';
 import { InviteViewModel } from '../../../../shared/view-models/invite/invite.view-model';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { InviteService } from '../invite.service';
 
@@ -16,7 +16,6 @@ import { InviteService } from '../invite.service';
 export class InviteComponent implements OnInit {
 
   @ViewChild(MatChipList) chipList: MatChipList;
-  formGroup: FormGroup;
   isProcessing = false;
   isDone = false;
   emails: Array<string> = [];
@@ -24,6 +23,7 @@ export class InviteComponent implements OnInit {
   separatorKeysCodes = [ENTER, COMMA, 186];
 
   constructor(private inviteService: InviteService,
+    public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) { }
 
   ngOnInit() {
@@ -70,6 +70,8 @@ export class InviteComponent implements OnInit {
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(() => {
           this.isDone = true;
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
         });
     }
   }

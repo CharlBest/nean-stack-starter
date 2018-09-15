@@ -19,6 +19,11 @@
       </mat-chip-list>
       <mat-error>Invalid email address</mat-error>
     </mat-form-field>
+
+    <div *ngIf="formErrorsService.formErrors?.emails"
+      class="mat-error">
+      There was an error with the email list
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
@@ -31,7 +36,7 @@
 
 <mat-card *ngIf="!isProcessing && isDone">
   <mat-card-content>
-    Emails has been sent
+    Email list has been sent
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button

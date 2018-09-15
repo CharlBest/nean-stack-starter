@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, trimString, Validators } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
+import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { GeneralService } from './general.service';
-import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
 
 export class GeneralController extends BaseController {
     private generalService: GeneralService;
@@ -79,7 +79,7 @@ export class GeneralController extends BaseController {
                 hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'emails', Validators.email(email));
             }
         } else {
-            hasErrors = true;
+            hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'emails', Validators.required(null));
         }
 
         if (hasErrors) {
