@@ -1,4 +1,4 @@
-<form [hidden]="isProcessing"
+<form [hidden]="isProcessing || isDone"
   [formGroup]="formGroup">
   <mat-card [appTutorial]="tutorialTypeEnum.Newsletter">
     <mat-card-subtitle *ngIf="!removingEmail">
@@ -20,11 +20,6 @@
           <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
         </mat-error>
       </mat-form-field>
-
-      <div *ngIf="message && !removingEmail"
-        class="message-success">Thank you for joining</div>
-      <div *ngIf="message && removingEmail"
-        class="message-error">We removed you</div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button
@@ -42,5 +37,17 @@
     </mat-card-actions>
   </mat-card>
 </form>
+
+<mat-card *ngIf="!isProcessing && isDone">
+  <mat-card-content>
+    <span *ngIf="!removingEmail">Thank you for joining</span>
+    <span *ngIf="removingEmail">You are now removed</span>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      routerLink="/"
+      type="button">Home</button>
+  </mat-card-actions>
+</mat-card>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>

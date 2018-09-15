@@ -18,7 +18,7 @@ export class NewsletterComponent implements OnInit {
   formGroup: FormGroup;
   isProcessing = false;
   removingEmail = false;
-  message = false;
+  isDone = false;
   tutorialTypeEnum = TutorialType;
 
   constructor(private newsletterService: NewsletterService,
@@ -51,7 +51,7 @@ export class NewsletterComponent implements OnInit {
     this.newsletterService.createNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.message = true;
+        this.isDone = true;
       });
   }
 
@@ -64,7 +64,7 @@ export class NewsletterComponent implements OnInit {
     this.newsletterService.deleteNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.message = true;
+        this.isDone = true;
       });
   }
 }
