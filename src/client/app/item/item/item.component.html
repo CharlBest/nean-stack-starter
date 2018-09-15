@@ -4,9 +4,16 @@
             <button routerLink="/user/{{item?.user?.id}}"
                 mat-button>
                 <div>
-                    <div *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''"
+                    <div *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
                         mat-card-avatar
                         [style.background-image]="'url(' + item.user.avatarUrl + ')'"></div>
+                    <ng-template #defaultAvatar>
+                        <div mat-card-avatar
+                            class="default-avatar">
+                            <mat-icon>account_circle</mat-icon>
+                        </div>
+                    </ng-template>
+
                     <div class="header-text-container">
                         <mat-card-title>{{item.user.username}}</mat-card-title>
                         <mat-card-subtitle>{{item.dateCreated | date:'HH:mm MMM d, y'}}</mat-card-subtitle>
