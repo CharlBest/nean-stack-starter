@@ -11,11 +11,11 @@ export class Emailer {
 
     static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: {
-                email,
-                name: Emailer.fromName
+            to: email,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.welcome,
         };
 
@@ -33,12 +33,10 @@ export class Emailer {
 
     static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
         const data: MailData = {
-            to: {
-                email
-            },
+            to: email,
             from: {
-                email: Emailer.fromEmail,
-                name: Emailer.fromName
+                email: this.fromEmail,
+                name: this.fromName
             },
             templateId: environment.sendGrid.templates.forgotPassword,
         };
@@ -55,11 +53,11 @@ export class Emailer {
 
     static feedbackEmail(feedbackContent: string) {
         const data: MailData = {
-            to: {
-                email: 'admin@nean.io',
-                name: Emailer.fromName
+            to: this.fromEmail,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.feedback,
         };
 
@@ -74,11 +72,11 @@ export class Emailer {
 
     static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: {
-                email,
-                name: Emailer.fromName
+            to: email,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
         };
 
@@ -93,11 +91,11 @@ export class Emailer {
 
     static paymentSuccessfulEmail(email: string, amount: number) {
         const data: MailData = {
-            to: {
-                email,
-                name: Emailer.fromName
+            to: email,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.paymentSuccessful,
         };
 
@@ -112,11 +110,11 @@ export class Emailer {
 
     static passwordUpdated(email: string) {
         const data: MailData = {
-            to: {
-                email,
-                name: Emailer.fromName
+            to: email,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
             },
-            from: Emailer.fromEmail,
             templateId: environment.sendGrid.templates.passwordUpdated,
         };
 
