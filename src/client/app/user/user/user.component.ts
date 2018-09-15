@@ -52,7 +52,6 @@ export class UserComponent implements OnInit {
   }
 
   openShareDialog() {
-    const link = ['/user', this.userId];
-    this.shareDialogService.share(link);
+    this.shareDialogService.share(['/user', this.userId]);
   }
 }

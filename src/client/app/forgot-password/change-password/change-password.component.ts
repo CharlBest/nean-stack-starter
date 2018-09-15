@@ -65,8 +65,7 @@ export class ChangePasswordComponent implements OnInit {
     this.forgotPasswordService.changeForgottenPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        const link = ['/login'];
-        this.router.navigate(link);
+        this.router.navigate(['/login']);
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });

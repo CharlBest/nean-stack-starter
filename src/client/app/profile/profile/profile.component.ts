@@ -59,8 +59,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openShareDialog() {
-    const link = ['/user', this.user.id];
-    this.shareDialogService.share(link);
+    this.shareDialogService.share(['/user', this.user.id]);
   }
 
   reportUser() {

@@ -89,8 +89,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   }
 
   openShareDialog() {
-    const link = ['/home', this.item.uId];
-    this.shareDialogService.share(link);
+    this.shareDialogService.share(['/home', this.item.uId]);
   }
 
   reportItem() {
