@@ -35,7 +35,7 @@ export class PaymentsService extends BaseService {
         const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
             amount: amount * 100,
             currency: 'EUR',
-            description: 'NEAN donation',
+            description: 'Donation',
             source: source,
             metadata
         };
