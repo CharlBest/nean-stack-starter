@@ -65,6 +65,7 @@ export class GeneralController extends BaseController {
     }
 
     async invite(req: Request, res: Response, next: NextFunction) {
+        // TODO: this endpoint can be overloaded with to many emails or requests
         const viewModel = req.body as InviteViewModel;
 
         // Remove duplicates
