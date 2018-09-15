@@ -1,4 +1,4 @@
-<form [hidden]="isProcessing"
+<form [hidden]="isProcessing || isDone"
   [formGroup]="formGroup">
   <mat-card [appTutorial]="tutorialTypeEnum.Feedback">
     <mat-card-subtitle>
@@ -31,5 +31,16 @@
     </mat-card-actions>
   </mat-card>
 </form>
+
+<mat-card *ngIf="!isProcessing && isDone">
+  <mat-card-content>
+    Email was sent. Thank you for your feedback
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      routerLink="/"
+      type="button">Home</button>
+  </mat-card-actions>
+</mat-card>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>

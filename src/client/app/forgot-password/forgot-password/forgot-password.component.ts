@@ -17,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   formGroup: FormGroup;
   isProcessing = false;
-  emailSent = false;
+  isDone = false;
   tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgotPasswordService.forgotPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.emailSent = true;
+        this.isDone = true;
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });

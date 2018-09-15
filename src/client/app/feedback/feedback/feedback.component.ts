@@ -18,6 +18,7 @@ export class FeedbackComponent implements OnInit {
 
   formGroup: FormGroup;
   isProcessing = false;
+  isDone = false;
   tutorialTypeEnum = TutorialType;
 
   constructor(private feedbackService: FeedbackService,
@@ -43,7 +44,7 @@ export class FeedbackComponent implements OnInit {
     this.feedbackService.sendFeedback(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
-        this.router.navigate(['/']);
+        this.isDone = true;
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
