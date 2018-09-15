@@ -9,7 +9,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { NewsletterService } from '../newsletter.service';
 
 @Component({
-  selector: 'app-feedback',
+  selector: 'app-newsletter',
   templateUrl: './newsletter.component.html',
   styleUrls: ['./newsletter.component.scss']
 })
