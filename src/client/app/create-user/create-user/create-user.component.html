@@ -20,11 +20,11 @@
                     required
                     [attr.autofocus]="bpService.isDesktop || null">
                 <mat-error>
-                    <app-form-errors #emailErrors
-                        [control]="formGroup.get('email')"></app-form-errors>
-                    <ng-container *ngIf="emailErrors.isValid && formGroup.get('email').hasError('exists')">
-                        Email already exists
-                    </ng-container>
+                    <app-form-errors [control]="formGroup.get('email')">
+                        <ng-container *ngIf="formGroup.get('email').hasError('exists')">
+                            Email already exists
+                        </ng-container>
+                    </app-form-errors>
                 </mat-error>
             </mat-form-field>
 
@@ -37,11 +37,11 @@
                     type="text"
                     required>
                 <mat-error>
-                    <app-form-errors #usernameErrors
-                        [control]="formGroup.get('username')"></app-form-errors>
-                    <ng-container *ngIf="usernameErrors.isValid && formGroup.get('username').hasError('exists')">
-                        Username already exists
-                    </ng-container>
+                    <app-form-errors [control]="formGroup.get('username')">
+                        <ng-container *ngIf="formGroup.get('username').hasError('exists')">
+                            Username already exists
+                        </ng-container>
+                    </app-form-errors>
                 </mat-error>
             </mat-form-field>
 
@@ -54,11 +54,11 @@
                     type="password"
                     required>
                 <mat-error>
-                    <app-form-errors #passwordErrors
-                        [control]="formGroup.get('password')"></app-form-errors>
-                    <ng-container *ngIf="passwordErrors.isValid && formGroup.get('password').hasError('pattern')">
-                        1 lower case, 1 upper case character and 1 digit required
-                    </ng-container>
+                    <app-form-errors [control]="formGroup.get('password')">
+                        <ng-container *ngIf="formGroup.get('password').hasError('pattern')">
+                            1 lower case, 1 upper case character and 1 digit required
+                        </ng-container>
+                    </app-form-errors>
                 </mat-error>
             </mat-form-field>
 

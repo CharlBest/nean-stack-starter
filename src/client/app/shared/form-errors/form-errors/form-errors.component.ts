@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,15 +7,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./form-errors.component.scss']
 })
 
-export class FormErrorsComponent implements OnChanges {
+export class FormErrorsComponent {
   @Input() control: FormControl;
-  isValid: boolean;
-
-  ngOnChanges() {
-    if (this.control) {
-      this.control.statusChanges.subscribe(x => {
-        this.isValid = !this.control.hasError('email') && !this.control.hasError('required') && !this.control.hasError('minlength');
-      });
-    }
-  }
 }

@@ -9,9 +9,13 @@
 </ng-template>
 
 <ng-template #elseif2>
-    <ng-container *ngIf="control?.hasError('minlength')">
+    <ng-container *ngIf="control?.hasError('minlength'); else else1">
         {{control.errors['minlength'].requiredLength}} characters required but
         {{control.errors['minlength'].actualLength}}
         found
     </ng-container>
+</ng-template>
+
+<ng-template #else1>
+    <ng-content></ng-content>
 </ng-template>
