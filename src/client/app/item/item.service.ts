@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemRoutes } from '../../../shared/routes/item.routes';
+import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
@@ -58,5 +59,10 @@ export class ItemService {
 
     deleteComment(uId: string): Observable<void> {
         return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteComment(uId).client()}`);
+    }
+
+    getComments(uId: string, pageIndex: number, pageSize?: number): Observable<CommentViewModel[]> {
+        return this.http
+            .get<CommentViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getComments(uId).client({ pageIndex, pageSize })}`);
     }
 }

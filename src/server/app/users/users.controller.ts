@@ -64,7 +64,7 @@ export class UsersController extends BaseController {
 
     async getUserPublic(req: Request, res: Response, next: NextFunction) {
         const id = +req.params.id;
-        const pageIndex = +req.query.pageIndex;
+        const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(

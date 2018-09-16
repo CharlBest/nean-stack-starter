@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { ItemsService } from './items.service';
-import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 
 export class ItemsController extends BaseController {
     private itemsService: ItemsService;
@@ -62,7 +62,7 @@ export class ItemsController extends BaseController {
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
-        const pageIndex = +req.query.pageIndex;
+        const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
@@ -113,7 +113,7 @@ export class ItemsController extends BaseController {
     }
 
     async getAllFavourites(req: Request, res: Response, next: NextFunction) {
-        const pageIndex = +req.query.pageIndex;
+        const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
@@ -165,6 +165,22 @@ export class ItemsController extends BaseController {
 
         res.status(200).json(
             await this.itemsService.deleteComment(res, uId)
+        );
+    }
+
+    async getComments(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+        const pageIndex = +req.query.pageIndex || 0;
+        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.itemsService.getComments(res, uId, pageIndex, pageSize)
         );
     }
 }

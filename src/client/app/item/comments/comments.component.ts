@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -23,6 +24,7 @@ export class CommentsComponent implements OnInit {
   isProcessing = false;
   isProcessingComment = false;
   item: ItemViewModel;
+  comments: CommentViewModel[];
   showCommentSubmitButton = false;
 
   constructor(private itemService: ItemService,
@@ -42,6 +44,7 @@ export class CommentsComponent implements OnInit {
       if (params.has('uId')) {
         this.itemUId = params.get('uId');
         this.getItem();
+        this.getComments();
       }
     });
 
@@ -62,6 +65,16 @@ export class CommentsComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(BuildFormGroup.createOrUpdateComment());
+  }
+
+  getComments() {
+    this.itemService.getComments(this.itemUId, 0)
+      .pipe(finalize(() => this.isProcessingComment = false))
+      .subscribe(data => {
+        this.comments = data;
+      }, error => {
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
+      });
   }
 
   createComment() {

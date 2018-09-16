@@ -32,10 +32,14 @@
     </form>
 </ng-container>
 
+<mat-card *ngIf="comments && comments.length > 0">
+    <mat-card-content *ngFor="let comment of comments">{{comment.description}}</mat-card-content>
+</mat-card>
+
 <ng-container *ngIf="!isProcessing && !item">
     <mat-card>
         Item does not exist
     </mat-card>
 </ng-container>
 
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
+<mat-spinner *ngIf="isProcessing || isProcessingComment"></mat-spinner>

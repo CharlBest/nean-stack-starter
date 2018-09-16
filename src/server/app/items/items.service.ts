@@ -64,4 +64,8 @@ export class ItemsService extends BaseService {
     async deleteComment(res: Response, uId: string): Promise<boolean> {
         return await this.itemsRepository.deleteComment(res, this.getUserId(res), uId);
     }
+
+    async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[]> {
+        return await this.itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
+    }
 }

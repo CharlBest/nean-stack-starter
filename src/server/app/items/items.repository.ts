@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { CommentModel } from '../../../shared/models/item/comment.model';
 import { ItemModel } from '../../../shared/models/item/item.model';
+import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { Database } from '../../core/database';
@@ -243,6 +244,30 @@ export class ItemsRepository extends BaseRepository {
             return true;
         } else {
             return false;
+        }
+    }
+
+    async getComments(res: Response, userId: number, uId: string, pageIndex: number, pageSize: number): Promise<CommentViewModel[]> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComments,
+            {
+                userId,
+                uId,
+                pageIndex,
+                pageSize
+            }
+        );
+
+        const model = result.records.map(x => {
+            let viewModel = new CommentViewModel();
+            viewModel = Database.createNodeObject<CommentModel>(x.get('comments'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            return viewModel;
+        });
+
+        if (model && model.length > 0) {
+            return model;
+        } else {
+            return null;
         }
     }
 }
