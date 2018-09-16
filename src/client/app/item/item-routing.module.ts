@@ -23,8 +23,8 @@ import { FavouritesComponent } from './favourites/favourites.component';
                 data: { title: 'Comments', nav: NavigationType.Back }
             },
             {
-                path: 'favourites', component: FavouritesComponent, pathMatch: 'full',
-                data: { title: 'Favourites', nav: NavigationType.Back }, canActivate: [AuthService]
+                path: 'saved', component: FavouritesComponent, pathMatch: 'full',
+                data: { title: 'Saved', nav: NavigationType.Back }, canActivate: [AuthService]
             },
         ])
     ],
