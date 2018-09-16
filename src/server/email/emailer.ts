@@ -134,6 +134,7 @@ export class Emailer {
                 name: this.fromName
             },
             templateId: environment.sendGrid.templates.invite,
+            isMultiple: true,
         };
 
         data['dynamic_template_data'] = {
