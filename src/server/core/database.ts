@@ -8,8 +8,13 @@ export class Database {
     static fileExtension = 'cyp';
 
     private static createDriver() {
-        const driver = neo4j.driver(environment.database.uri,
-            neo4j.auth.basic(environment.database.username, environment.database.password));
+        const driver = neo4j.driver(
+            environment.database.uri,
+            neo4j.auth.basic(environment.database.username, environment.database.password),
+            {
+                // disableLosslessIntegers: true
+            }
+        );
 
         // Register a callback to know if driver creation was successful:
         driver.onCompleted = () => {
@@ -114,6 +119,9 @@ export class Database {
                 createFavourite: (await import(`../database/items/createFavourite.${Database.fileExtension}`)).data,
                 deleteFavourite: (await import(`../database/items/deleteFavourite.${Database.fileExtension}`)).data,
                 getAllFavourites: (await import(`../database/items/getAllFavourites.${Database.fileExtension}`)).data,
+                createComment: (await import(`../database/items/createComment.${Database.fileExtension}`)).data,
+                updateComment: (await import(`../database/items/updateComment.${Database.fileExtension}`)).data,
+                deleteComment: (await import(`../database/items/deleteComment.${Database.fileExtension}`)).data,
             },
         };
 
@@ -164,5 +172,8 @@ export interface DbQueries {
         createFavourite: string,
         deleteFavourite: string,
         getAllFavourites: string,
+        createComment: string,
+        updateComment: string,
+        deleteComment: string,
     };
 }

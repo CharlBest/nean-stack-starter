@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { CommentModel } from '../../../shared/models/item/comment.model';
 import { ItemModel } from '../../../shared/models/item/item.model';
 import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
@@ -190,6 +191,58 @@ export class ItemsRepository extends BaseRepository {
             return model;
         } else {
             return null;
+        }
+    }
+
+    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string): Promise<CommentModel> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.createComment,
+            {
+                userId,
+                uId,
+                itemUId,
+                description,
+            }
+        );
+
+        const model = result.records.map(x => Database.createNodeObject<CommentModel>(x.get('comment')));
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
+    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentModel> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.updateComment,
+            {
+                userId,
+                uId,
+                description,
+            }
+        );
+
+        const model = result.records.map(x => Database.createNodeObject<CommentModel>(x.get('comment')));
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
+    async deleteComment(res: Response, userId: number, uId: string): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.deleteComment,
+            {
+                userId,
+                uId
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

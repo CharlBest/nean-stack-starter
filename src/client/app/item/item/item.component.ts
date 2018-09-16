@@ -144,7 +144,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
 
   createFavourite() {
     this.itemService.createFavourite(this.item.uId)
-      // .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.item.favourite = true;
       }, error => {
@@ -154,7 +153,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
 
   deleteFavourite() {
     this.itemService.deleteFavourite(this.item.uId)
-      // .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.item.favourite = false;
       }, error => {

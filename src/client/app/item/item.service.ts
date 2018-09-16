@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemRoutes } from '../../../shared/routes/item.routes';
+import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../shared/view-models/item/report-item.view-model';
@@ -45,5 +46,17 @@ export class ItemService {
     getAllFavourites(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
         return this.http
             .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAllFavourites().client({ pageIndex, pageSize })}`);
+    }
+
+    createComment(viewModel: CreateOrUpdateCommentViewModel): Observable<void> {
+        return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment().client()}`, viewModel);
+    }
+
+    updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<void> {
+        return this.http.put<void>(`${environment.apiUrlEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel);
+    }
+
+    deleteComment(uId: string): Observable<void> {
+        return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteComment(uId).client()}`);
     }
 }

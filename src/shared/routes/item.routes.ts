@@ -13,4 +13,7 @@ export class ItemRoutes {
     static createFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'createFavourite', { uId });
     static deleteFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'deleteFavourite', { uId });
     static getAllFavourites = () => new BaseRoute(ItemRoutes.rootRoute, 'getAllFavourites');
+    static createComment = () => new BaseRoute(ItemRoutes.rootRoute, 'createComment');
+    static updateComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'updateComment', { uId });
+    static deleteComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'deleteComment', { uId });
 }

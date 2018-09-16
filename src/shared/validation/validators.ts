@@ -198,6 +198,14 @@ export class BuildFormGroup {
             media: [media]
         };
     }
+
+    static createOrUpdateComment(description: string = null): FormValidator {
+        return {
+            description: [description, [
+                Validators.required
+            ]]
+        };
+    }
 }
 
 export class ServerValidator {

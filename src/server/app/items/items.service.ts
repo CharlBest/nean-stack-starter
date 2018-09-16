@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
+import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { BaseService } from '../shared/base-service';
@@ -50,5 +51,17 @@ export class ItemsService extends BaseService {
 
     async getAllFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
         return await this.itemsRepository.getAllFavourites(res, this.getUserId(res), pageIndex, pageSize);
+    }
+
+    async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {
+        return await this.itemsRepository.createComment(res, this.getUserId(res), nodeUUId(), itemUId, description);
+    }
+
+    async updateComment(res: Response, uId: string, description: string): Promise<CommentModel> {
+        return await this.itemsRepository.updateComment(res, this.getUserId(res), uId, description);
+    }
+
+    async deleteComment(res: Response, uId: string): Promise<boolean> {
+        return await this.itemsRepository.deleteComment(res, this.getUserId(res), uId);
     }
 }
