@@ -195,7 +195,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string): Promise<CommentModel> {
+    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string): Promise<CommentViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.createComment,
             {
                 userId,
@@ -205,7 +205,12 @@ export class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject<CommentModel>(x.get('comment')));
+        const model = result.records.map(x => {
+            let viewModel = new CommentViewModel();
+            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            return viewModel;
+        });
 
         if (model && model.length > 0) {
             return model[0];
@@ -214,7 +219,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentModel> {
+    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentViewModel> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.updateComment,
             {
                 userId,
@@ -223,7 +228,12 @@ export class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject<CommentModel>(x.get('comment')));
+        const model = result.records.map(x => {
+            let viewModel = new CommentViewModel();
+            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            return viewModel;
+        });
 
         if (model && model.length > 0) {
             return model[0];

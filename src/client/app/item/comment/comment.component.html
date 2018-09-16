@@ -1,0 +1,33 @@
+<div class="container">
+    <span routerLink="/user/{{comment?.user?.id}}">
+        <div *ngIf="comment.user?.avatarUrl && comment.user?.avatarUrl !== ''; else defaultAvatar"
+            mat-card-avatar
+            [style.background-image]="'url(' + comment.user.avatarUrl + ')'"></div>
+        <ng-template #defaultAvatar>
+            <span mat-card-avatar
+                class="default-avatar">
+                <mat-icon>account_circle</mat-icon>
+            </span>
+        </ng-template>
+    </span>
+
+    <div>
+        <div>
+            <a class="username"
+                routerLink="/user/{{comment?.user?.id}}">{{comment.user.username}}&nbsp;&middot;&nbsp;</a>
+            <span class="date">{{comment.dateCreated | date:'HH:mm MMM d, y'}}</span>
+        </div>
+
+        <span>{{comment.description}}</span>
+    </div>
+</div>
+
+<!-- <button mat-button
+        [matMenuTriggerFor]="menu"
+        xPosition="after"
+        #contextMenuTrigger="matMenuTrigger"
+        (click)="openContextMenu($event)"
+        matTooltip="Menu"
+        aria-label="Menu">
+        <mat-icon>more_vert</mat-icon>
+</button> -->

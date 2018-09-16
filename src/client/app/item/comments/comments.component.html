@@ -33,7 +33,10 @@
 </ng-container>
 
 <mat-card *ngIf="comments && comments.length > 0">
-    <mat-card-content *ngFor="let comment of comments">{{comment.description}}</mat-card-content>
+    <mat-card-content>
+        <app-comment *ngFor="let comment of comments"
+            [comment]="comment"></app-comment>
+    </mat-card-content>
 </mat-card>
 
 <ng-container *ngIf="!isProcessing && !item">

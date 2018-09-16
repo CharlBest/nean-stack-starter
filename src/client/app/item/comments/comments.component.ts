@@ -87,7 +87,8 @@ export class CommentsComponent implements OnInit {
     this.itemService.createComment(viewModel)
       .pipe(finalize(() => this.isProcessingComment = false))
       .subscribe(data => {
-        console.log(data);
+        this.comments.unshift(data);
+        this.formGroup.reset();
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });

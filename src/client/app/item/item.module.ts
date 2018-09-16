@@ -6,6 +6,7 @@ import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
+import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
@@ -43,6 +44,7 @@ const materialModules = [
     CreateItemComponent,
     EditItemComponent,
     FavouritesComponent,
+    CommentComponent,
   ],
   exports: [
     ItemComponent

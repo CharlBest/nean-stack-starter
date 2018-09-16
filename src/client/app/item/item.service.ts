@@ -49,12 +49,12 @@ export class ItemService {
             .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAllFavourites().client({ pageIndex, pageSize })}`);
     }
 
-    createComment(viewModel: CreateOrUpdateCommentViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment().client()}`, viewModel);
+    createComment(viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
+        return this.http.post<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment().client()}`, viewModel);
     }
 
-    updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<void> {
-        return this.http.put<void>(`${environment.apiUrlEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel);
+    updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
+        return this.http.put<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel);
     }
 
     deleteComment(uId: string): Observable<void> {

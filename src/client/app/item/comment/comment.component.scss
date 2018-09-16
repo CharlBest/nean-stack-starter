@@ -1,0 +1,22 @@
+.container {
+	display: flex;
+	margin-bottom: 24px;
+
+	.mat-card-avatar {
+		background-size: cover;
+		margin-right: 10px;
+		cursor: pointer;
+		outline: none;
+	}
+
+	.username {
+		font-weight: bold;
+		cursor: pointer;
+		outline: none;
+		text-decoration: none;
+	}
+
+	.date {
+		opacity: 0.5;
+	}
+}
