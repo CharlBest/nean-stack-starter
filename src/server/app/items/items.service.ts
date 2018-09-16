@@ -47,4 +47,8 @@ export class ItemsService extends BaseService {
     async deleteFavourite(res: Response, uId: string): Promise<boolean> {
         return await this.itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
     }
+
+    async getAllFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        return await this.itemsRepository.getAllFavourites(res, this.getUserId(res), pageIndex, pageSize);
+    }
 }

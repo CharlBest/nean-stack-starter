@@ -113,6 +113,7 @@ export class Database {
                 delete: (await import(`../database/items/delete.${Database.fileExtension}`)).data,
                 createFavourite: (await import(`../database/items/createFavourite.${Database.fileExtension}`)).data,
                 deleteFavourite: (await import(`../database/items/deleteFavourite.${Database.fileExtension}`)).data,
+                getAllFavourites: (await import(`../database/items/getAllFavourites.${Database.fileExtension}`)).data,
             },
         };
 
@@ -162,5 +163,6 @@ export interface DbQueries {
         delete: string,
         createFavourite: string,
         deleteFavourite: string,
+        getAllFavourites: string,
     };
 }

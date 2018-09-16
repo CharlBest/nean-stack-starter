@@ -110,4 +110,13 @@ export class ItemsController extends BaseController {
             await this.itemsService.deleteFavourite(res, uId)
         );
     }
+
+    async getAllFavourites(req: Request, res: Response, next: NextFunction) {
+        const pageIndex = +req.query.pageIndex;
+        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+
+        res.status(200).json(
+            await this.itemsService.getAllFavourites(res, pageIndex, pageSize)
+        );
+    }
 }

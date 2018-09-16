@@ -9,6 +9,7 @@ import { UploadButtonModule } from '../shared/upload-button/upload-button.module
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
+import { FavouritesComponent } from './favourites/favourites.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemRoutingModule } from './item-routing.module';
 import { ItemComponent } from './item/item.component';
@@ -41,6 +42,7 @@ const materialModules = [
     ItemFormComponent,
     CreateItemComponent,
     EditItemComponent,
+    FavouritesComponent,
   ],
   exports: [
     ItemComponent

@@ -5,6 +5,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
+import { FavouritesComponent } from './favourites/favourites.component';
 
 @NgModule({
     imports: [
@@ -20,6 +21,10 @@ import { EditItemComponent } from './edit-item/edit-item.component';
             {
                 path: 'comments/:uId', component: CommentsComponent, pathMatch: 'full',
                 data: { title: 'Comments', nav: NavigationType.Back }
+            },
+            {
+                path: 'favourites', component: FavouritesComponent, pathMatch: 'full',
+                data: { title: 'Favourites', nav: NavigationType.Back }, canActivate: [AuthService]
             },
         ])
     ],

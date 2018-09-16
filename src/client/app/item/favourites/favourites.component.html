@@ -1,0 +1,10 @@
+<ng-container *ngIf="!isProcessing">
+    <app-item *ngFor="let item of items"
+        [item]="item"></app-item>
+</ng-container>
+
+<mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
+    You have no favourites
+</mat-card>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>

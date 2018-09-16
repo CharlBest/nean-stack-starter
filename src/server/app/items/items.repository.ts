@@ -168,16 +168,28 @@ export class ItemsRepository extends BaseRepository {
             return false;
         }
     }
-}
 
+    async getAllFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getAllFavourites,
+            {
+                userId,
+                pageIndex,
+                pageSize
+            }
+        );
 
+        const model = result.records.map(x => {
+            let viewModel = new ItemViewModel();
+            viewModel = Database.createNodeObject<ItemModel>(x.get('items'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            viewModel.favourite = true;
+            return viewModel;
+        });
 
-declare global {
-    namespace Express {
-        interface Response {
-            locals?: {
-                test: string;
-            };
+        if (model && model.length > 0) {
+            return model;
+        } else {
+            return null;
         }
     }
 }

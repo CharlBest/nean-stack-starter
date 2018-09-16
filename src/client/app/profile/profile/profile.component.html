@@ -35,6 +35,9 @@
         routerLink="/user/{{user.id}}">Items</button>
       <button mat-raised-button
         type="button"
+        routerLink="/item/favourites">Favourites</button>
+      <button mat-raised-button
+        type="button"
         (click)="openShareDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileShare">Share</button>
       <button mat-raised-button
