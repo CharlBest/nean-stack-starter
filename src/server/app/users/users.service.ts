@@ -120,6 +120,7 @@ export class UsersService extends BaseService {
             // r: 'role'
         };
 
+        // HS256 algorithm
         viewModel.token = sign(
             {
                 exp: Math.floor(Date.now() / 1000) + (60 * 60), /* 1 hour */
