@@ -1,5 +1,5 @@
 export const data = `
-MATCH (items:Item), (users:User)-[:HAS_ITEM]->(items)
+MATCH (users:User)-[:HAS_ITEM]->(items)
 
 OPTIONAL MATCH (:User { id: {userId} })-[favourite:HAS_FAVOURITE]->(items)
 

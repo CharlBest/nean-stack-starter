@@ -1,6 +1,5 @@
 export const data = `
-MATCH (item:Item { uId: {uId} })
-MATCH (user:User)-[:HAS_ITEM]->(item)
+MATCH (user:User)-[:HAS_ITEM]->(item:Item { uId: {uId} })
 
 // Capture views (only once per user or IP address)
 OPTIONAL MATCH (viewingUser:User { id: {userId} })
