@@ -33,4 +33,12 @@ export class ItemService {
     sendReport(viewModel: ReportItemViewModel): Observable<void> {
         return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.report().client()}`, viewModel);
     }
+
+    createFavourite(uId: string): Observable<void> {
+        return this.http.post<void>(`${environment.apiUrlEndpoint}${ItemRoutes.createFavourite(uId).client()}`, null);
+    }
+
+    deleteFavourite(uId: string): Observable<void> {
+        return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteFavourite(uId).client()}`);
+    }
 }

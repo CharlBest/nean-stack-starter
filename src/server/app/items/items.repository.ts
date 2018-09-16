@@ -89,6 +89,7 @@ export class ItemsRepository extends BaseRepository {
             let viewModel = new ItemViewModel();
             viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
             viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel.favourite = x.get('favourite');
             return viewModel;
         });
 
@@ -112,6 +113,7 @@ export class ItemsRepository extends BaseRepository {
             let viewModel = new ItemViewModel();
             viewModel = Database.createNodeObject<ItemModel>(x.get('items'));
             viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            viewModel.favourite = x.get('favourite');
             return viewModel;
         });
 
@@ -124,6 +126,36 @@ export class ItemsRepository extends BaseRepository {
 
     async delete(res: Response, userId: number, uId: string): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.delete,
+            {
+                userId,
+                uId
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async createFavourite(res: Response, userId: number, uId: string): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.createFavourite,
+            {
+                userId,
+                uId
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async deleteFavourite(res: Response, userId: number, uId: string): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.deleteFavourite,
             {
                 userId,
                 uId

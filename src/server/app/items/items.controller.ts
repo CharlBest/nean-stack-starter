@@ -82,4 +82,32 @@ export class ItemsController extends BaseController {
             await this.itemsService.delete(res, uId)
         );
     }
+
+    async createFavourite(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.itemsService.createFavourite(res, uId)
+        );
+    }
+
+    async deleteFavourite(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
+
+        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+
+        if (hasErrors) {
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        res.status(200).json(
+            await this.itemsService.deleteFavourite(res, uId)
+        );
+    }
 }

@@ -133,4 +133,32 @@ export class ItemComponent implements OnInit, AfterViewInit {
       this.activeMediaIndex++;
     }
   }
+
+  favouriteItem() {
+    if (this.item.favourite) {
+      this.deleteFavourite();
+    } else {
+      this.createFavourite();
+    }
+  }
+
+  createFavourite() {
+    this.itemService.createFavourite(this.item.uId)
+      // .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.item.favourite = true;
+      }, error => {
+        this.formErrorsService.updateFormValidity(error);
+      });
+  }
+
+  deleteFavourite() {
+    this.itemService.deleteFavourite(this.item.uId)
+      // .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.item.favourite = false;
+      }, error => {
+        this.formErrorsService.updateFormValidity(error);
+      });
+  }
 }

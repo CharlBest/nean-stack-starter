@@ -15,10 +15,15 @@ FOREACH (o IN CASE WHEN viewingUser IS NULL THEN [1] ELSE [] END |
 )
 SET item.views = SIZE(()-[:VIEWED]->(item))
 
+WITH viewingUser, item, user
+
+OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
+
 RETURN item, user
 {
     id: user.id,
     username: user.username,
     avatarUrl: user.avatarUrl
-}
+},
+CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite
 `

@@ -98,8 +98,10 @@
     let-data>
     <mat-nav-list (click)="bottomSheet.dismiss()">
 
-        <mat-list-item *ngIf="loggedInUserId">
-            <mat-icon mat-list-icon>star</mat-icon>
+        <mat-list-item *ngIf="loggedInUserId"
+            (click)="favouriteItem()">
+            <mat-icon mat-list-icon
+                [color]="item?.favourite ? 'accent' : ''">star</mat-icon>
             <span mat-line>Save</span>
         </mat-list-item>
         <mat-list-item *ngIf="item?.user?.id === loggedInUserId"

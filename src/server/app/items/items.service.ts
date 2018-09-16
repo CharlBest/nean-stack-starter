@@ -39,4 +39,12 @@ export class ItemsService extends BaseService {
     async delete(res: Response, uId: string): Promise<boolean> {
         return await this.itemsRepository.delete(res, this.getUserId(res), uId);
     }
+
+    async createFavourite(res: Response, uId: string): Promise<boolean> {
+        return await this.itemsRepository.createFavourite(res, this.getUserId(res), uId);
+    }
+
+    async deleteFavourite(res: Response, uId: string): Promise<boolean> {
+        return await this.itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
+    }
 }

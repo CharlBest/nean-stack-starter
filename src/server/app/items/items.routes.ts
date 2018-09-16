@@ -19,6 +19,10 @@ export class ItemsRoutes extends BaseRoute {
             async (req, res, next) => this.itemsController.update(req, res, next).catch(next));
         this.router.delete(ItemRoutes.delete().server(), Authentication.loginRequired,
             async (req, res, next) => this.itemsController.delete(req, res, next).catch(next));
+        this.router.post(ItemRoutes.createFavourite().server(), Authentication.loginRequired,
+            async (req, res, next) => this.itemsController.createFavourite(req, res, next).catch(next));
+        this.router.delete(ItemRoutes.deleteFavourite().server(), Authentication.loginRequired,
+            async (req, res, next) => this.itemsController.deleteFavourite(req, res, next).catch(next));
 
         this.router.get(ItemRoutes.get().server(),
             async (req, res, next) => this.itemsController.get(req, res, next).catch(next));

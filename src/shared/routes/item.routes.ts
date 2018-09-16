@@ -10,4 +10,6 @@ export class ItemRoutes {
     static getAll = () => new BaseRoute(ItemRoutes.rootRoute, 'getAll');
     static delete = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'delete', { uId });
     static report = () => new BaseRoute(ItemRoutes.rootRoute, 'report');
+    static createFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'createFavourite', { uId });
+    static deleteFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'deleteFavourite', { uId });
 }
