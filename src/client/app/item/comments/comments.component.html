@@ -1,12 +1,11 @@
-<ng-container *ngIf="!isProcessing && item">
+<div *ngIf="!isProcessing && item">
     <app-item [item]="item"
         [isViewingComments]="true"></app-item>
 
     <form [formGroup]="formGroup"
-        *ngIf="isAuthenticated">
+        [hidden]="!isAuthenticated">
         <mat-card>
             <mat-card-content>
-                <h3>Comments</h3>
                 <mat-form-field>
                     <mat-label>type comment here...</mat-label>
                     <textarea matInput
@@ -30,7 +29,16 @@
             </mat-card-actions>
         </mat-card>
     </form>
-</ng-container>
+
+    <mat-card *ngIf="!isAuthenticated">
+        <mat-card-content>
+            <button mat-raised-button
+                type="button"
+                (click)="goToLogin()">Login</button>
+            if you want to comment
+        </mat-card-content>
+    </mat-card>
+</div>
 
 <mat-card *ngIf="comments && comments.length > 0">
     <mat-card-content>

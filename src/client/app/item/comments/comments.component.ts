@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
@@ -18,13 +18,14 @@ import { ItemService } from '../item.service';
 })
 export class CommentsComponent implements OnInit {
 
+  @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
   itemUId: string;
   isAuthenticated: boolean = this.authService.hasToken();
   formGroup: FormGroup;
   isProcessing = false;
   isProcessingComment = false;
   item: ItemViewModel;
-  comments: CommentViewModel[];
+  comments: CommentViewModel[] = [];
   showCommentSubmitButton = false;
 
   constructor(private itemService: ItemService,
@@ -32,7 +33,8 @@ export class CommentsComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
     if (this.navigationService.previousUrl.startsWith('/item/create') ||
       this.navigationService.previousUrl.startsWith('/item/edit')) {
       this.navigationService.backRouterPath = '/';
@@ -87,8 +89,12 @@ export class CommentsComponent implements OnInit {
     this.itemService.createComment(viewModel)
       .pipe(finalize(() => this.isProcessingComment = false))
       .subscribe(data => {
-        this.comments.unshift(data);
-        this.formGroup.reset();
+        if (this.comments && this.comments.length > 0) {
+          this.comments.unshift(data);
+        } else {
+          this.comments = [data];
+        }
+        this.formRef.resetForm();
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
@@ -107,5 +113,9 @@ export class CommentsComponent implements OnInit {
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
       });
+  }
+
+  goToLogin() {
+    this.router.navigate(['login'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
   }
 }
