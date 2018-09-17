@@ -26,9 +26,9 @@ export class NavigationComponent implements OnInit {
   backRouterPath: string;
   tutorialTypeEnum = TutorialType;
   hasNavigatedToPageWithPrimaryNav = false;
-  desktopTopToolbarHeight = 64;
-  mobileTopToolbarHeight = 56;
-  topToolbarHeightInPx: string;
+  readonly desktopTopToolbarHeight = 64;
+  readonly mobileTopToolbarHeight = 56;
+  toolbarHeight: number;
   navItems: NavItem = {
     home: {
       paths: [
@@ -126,9 +126,9 @@ export class NavigationComponent implements OnInit {
 
     this.bpService.isDesktop$.subscribe(data => {
       if (data) {
-        this.topToolbarHeightInPx = `${this.desktopTopToolbarHeight}px`;
+        this.toolbarHeight = this.desktopTopToolbarHeight;
       } else {
-        this.topToolbarHeightInPx = `${this.mobileTopToolbarHeight}px`;
+        this.toolbarHeight = this.mobileTopToolbarHeight;
       }
     });
 
@@ -161,7 +161,7 @@ export class NavigationComponent implements OnInit {
         this.activeNavigation === NavigationType.Back) {
         this.navbar.nativeElement.style.top = '0';
       } else {
-        this.navbar.nativeElement.style.top = `-${this.topToolbarHeightInPx}`;
+        this.navbar.nativeElement.style.top = `-${this.toolbarHeight}px`;
       }
       prevScrollpos = currentScrollPos;
     };

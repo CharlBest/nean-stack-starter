@@ -1,9 +1,9 @@
 <!-- Main nav -->
 <header #navbar
-  [style.height]="topToolbarHeightInPx">
+  [style.height.px]="toolbarHeight">
 
   <mat-toolbar *ngIf="navigationType.Primary == activeNavigation"
-    [style.height]="topToolbarHeightInPx"
+    [style.height.px]="toolbarHeight"
     color="primary">
     <a mat-button
       routerLink="/">
@@ -22,7 +22,7 @@
 
   <!-- Back nav -->
   <mat-toolbar *ngIf="navigationType.Back == activeNavigation"
-    [style.height]="topToolbarHeightInPx"
+    [style.height.px]="toolbarHeight"
     color="primary">
     <div (click)="back()">
       <button mat-icon-button
@@ -39,7 +39,7 @@
     <ng-container *ngTemplateOutlet="navigationService.navigationPlaceholderTemplate"></ng-container>
   </mat-toolbar>
 </header>
-<div [style.height]="topToolbarHeightInPx"></div>
+<div [style.height.px]="toolbarHeight"></div>
 
 <!-- Bottom Nav -->
 <mat-card *ngIf="!bpService.isDesktop"
