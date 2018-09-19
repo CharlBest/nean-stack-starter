@@ -9,6 +9,13 @@
 		outline: none;
 	}
 
+	.default-avatar mat-icon {
+		font-size: 40px;
+		height: 40px;
+		width: 40px;
+		opacity: 0.2;
+	}
+
 	.username {
 		font-weight: bold;
 		cursor: pointer;

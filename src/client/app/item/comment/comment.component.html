@@ -14,7 +14,12 @@
     <div>
         <div>
             <a class="username"
-                routerLink="/user/{{comment?.user?.id}}">{{comment.user.username}}&nbsp;&middot;&nbsp;</a>
+                routerLink="/user/{{comment?.user?.id}}">
+                {{comment.user.username}}
+                <mat-icon [inline]="true"
+                    *ngIf="itemUserId === comment?.user?.id">done</mat-icon>
+                &nbsp;&middot;&nbsp;
+            </a>
             <span class="date">{{comment.dateCreated | date:'HH:mm MMM d, y'}}</span>
         </div>
 

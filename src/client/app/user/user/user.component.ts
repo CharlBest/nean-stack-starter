@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from 'shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { UserService } from '../user.service';
 
@@ -17,11 +18,13 @@ export class UserComponent implements OnInit {
   isProcessing = true;
   userId: number;
   user: UserPublicViewModel;
+  loggedInUserId: number = this.authService.getLoggedInUserId();
 
   constructor(private userService: UserService,
     private route: ActivatedRoute,
     private formErrorsService: FormErrorsService,
-    private shareDialogService: ShareDialogService) { }
+    private shareDialogService: ShareDialogService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {

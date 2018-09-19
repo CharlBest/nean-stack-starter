@@ -8,6 +8,7 @@ import { CommentViewModel } from '../../../../shared/view-models/item/comment.vi
 })
 export class CommentComponent implements OnInit {
   @Input() comment: CommentViewModel;
+  @Input() itemUserId: number;
 
   constructor() { }
 
