@@ -1,6 +1,6 @@
 
 import * as express from 'express';
-import * as puppeteer from 'puppeteer';
+// import * as puppeteer from 'puppeteer';
 import { v4 as nodeUUId } from 'uuid';
 import { ItemsRepository } from '../../app/items/items.repository';
 import { Database } from '../database';
@@ -30,10 +30,11 @@ export class DataFetcher {
     async execution() {
         // TODO: Check null and undefined thouroughout especially with query selectors
 
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox'],
-            headless: true
-        });
+        // const browser = await puppeteer.launch({
+        //     args: ['--no-sandbox'],
+        //     headless: true
+        // });
+        const browser: any = '';
         const page = await browser.newPage();
 
         await page.goto('https://www.daft.ie/dublin/residential-property-for-rent/?searchSource=rental');
