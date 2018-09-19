@@ -44,9 +44,9 @@ export class ItemService {
         return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteFavourite(uId).client()}`);
     }
 
-    getAllFavourites(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
+    getFavourites(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAllFavourites().client({ pageIndex, pageSize })}`);
+            .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`);
     }
 
     createComment(viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {

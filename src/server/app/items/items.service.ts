@@ -33,8 +33,8 @@ export class ItemsService extends BaseService {
         return await this.itemsRepository.get(res, this.getUserId(res), ip, uId);
     }
 
-    async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        return await this.itemsRepository.getAll(res, this.getUserId(res), pageIndex, pageSize);
+    async getItems(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        return await this.itemsRepository.getItems(res, this.getUserId(res), pageIndex, pageSize);
     }
 
     async delete(res: Response, uId: string): Promise<boolean> {
@@ -49,8 +49,8 @@ export class ItemsService extends BaseService {
         return await this.itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
     }
 
-    async getAllFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        return await this.itemsRepository.getAllFavourites(res, this.getUserId(res), pageIndex, pageSize);
+    async getFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        return await this.itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
     }
 
     async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {

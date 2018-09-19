@@ -61,12 +61,12 @@ export class ItemsController extends BaseController {
         );
     }
 
-    async getAll(req: Request, res: Response, next: NextFunction) {
+    async getItems(req: Request, res: Response, next: NextFunction) {
         const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await this.itemsService.getAll(res, pageIndex, pageSize)
+            await this.itemsService.getItems(res, pageIndex, pageSize)
         );
     }
 
@@ -112,12 +112,12 @@ export class ItemsController extends BaseController {
         );
     }
 
-    async getAllFavourites(req: Request, res: Response, next: NextFunction) {
+    async getFavourites(req: Request, res: Response, next: NextFunction) {
         const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await this.itemsService.getAllFavourites(res, pageIndex, pageSize)
+            await this.itemsService.getFavourites(res, pageIndex, pageSize)
         );
     }
 

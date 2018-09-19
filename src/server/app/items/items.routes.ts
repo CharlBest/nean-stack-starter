@@ -23,8 +23,8 @@ export class ItemsRoutes extends BaseRoute {
             async (req, res, next) => this.itemsController.createFavourite(req, res, next).catch(next));
         this.router.delete(ItemRoutes.deleteFavourite().server(), Authentication.loginRequired,
             async (req, res, next) => this.itemsController.deleteFavourite(req, res, next).catch(next));
-        this.router.get(ItemRoutes.getAllFavourites().server(), Authentication.loginRequired,
-            async (req, res, next) => this.itemsController.getAllFavourites(req, res, next).catch(next));
+        this.router.get(ItemRoutes.getFavourites().server(), Authentication.loginRequired,
+            async (req, res, next) => this.itemsController.getFavourites(req, res, next).catch(next));
         this.router.post(ItemRoutes.createComment().server(), Authentication.loginRequired,
             async (req, res, next) => this.itemsController.createComment(req, res, next).catch(next));
         this.router.put(ItemRoutes.updateComment().server(), Authentication.loginRequired,
@@ -34,8 +34,8 @@ export class ItemsRoutes extends BaseRoute {
 
         this.router.get(ItemRoutes.get().server(),
             async (req, res, next) => this.itemsController.get(req, res, next).catch(next));
-        this.router.get(ItemRoutes.getAll().server(),
-            async (req, res, next) => this.itemsController.getAll(req, res, next).catch(next));
+        this.router.get(ItemRoutes.getItems().server(),
+            async (req, res, next) => this.itemsController.getItems(req, res, next).catch(next));
         this.router.get(ItemRoutes.getComments().server(),
             async (req, res, next) => this.itemsController.getComments(req, res, next).catch(next));
         this.router.get(ItemRoutes.getComment().server(),

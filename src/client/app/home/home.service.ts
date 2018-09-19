@@ -12,7 +12,7 @@ export class HomeService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
-        return this.http.get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getAll().client({ pageIndex, pageSize })}`);
+    getItems(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
+        return this.http.get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getItems().client({ pageIndex, pageSize })}`);
     }
 }

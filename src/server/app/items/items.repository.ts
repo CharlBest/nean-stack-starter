@@ -103,8 +103,8 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getAll(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getAll,
+    async getItems(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getItems,
             {
                 userId,
                 pageIndex,
@@ -172,8 +172,8 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getAllFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getAllFavourites,
+    async getFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getFavourites,
             {
                 userId,
                 pageIndex,

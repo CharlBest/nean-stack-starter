@@ -23,16 +23,16 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.refreshSameUrlService.init(() => {
       window.scrollTo(0, 0);
-      this.getAllItems();
+      this.getItems();
     });
 
-    this.getAllItems();
+    this.getItems();
   }
 
-  getAllItems() {
+  getItems() {
     this.isProcessing = true;
 
-    this.homeService.getAll(0)
+    this.homeService.getItems(0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.items = data;

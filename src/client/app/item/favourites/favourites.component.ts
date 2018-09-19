@@ -18,13 +18,13 @@ export class FavouritesComponent implements OnInit {
     public formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
-    this.getAllItems();
+    this.getFavourites();
   }
 
-  getAllItems() {
+  getFavourites() {
     this.isProcessing = true;
 
-    this.itemService.getAllFavourites(0)
+    this.itemService.getFavourites(0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.items = data;
