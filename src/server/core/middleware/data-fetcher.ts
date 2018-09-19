@@ -1,5 +1,5 @@
 
-import * as express from 'express';
+import { Application } from 'express';
 // import * as puppeteer from 'puppeteer';
 import { v4 as nodeUUId } from 'uuid';
 import { ItemsRepository } from '../../app/items/items.repository';
@@ -16,13 +16,13 @@ export class DataFetcher {
 
     private itemsRepository: ItemsRepository;
     interval: any;
-    app: express.Application;
+    app: Application;
 
     constructor() {
         this.itemsRepository = new ItemsRepository();
     }
 
-    init(app: express.Application) {
+    init(app: Application) {
         setTimeout(() => this.app = app, 1000);
         this.interval = setTimeout(() => this.execution(), 0);
     }
@@ -34,7 +34,7 @@ export class DataFetcher {
         //     args: ['--no-sandbox'],
         //     headless: true
         // });
-        const browser: any = '';
+        const browser = null;
         const page = await browser.newPage();
 
         await page.goto('https://www.daft.ie/dublin/residential-property-for-rent/?searchSource=rental');

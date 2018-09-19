@@ -12,7 +12,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             tap((event: HttpEvent<any>) => {
                 // if (event instanceof HttpResponse) do stuff with response if you want
-            }, (err: any) => {
+            }, err => {
                 if (err instanceof Error) {
                     // A client-side or network error occurred. Handle it accordingly.
                     console.log('An error occurred:', err.message);

@@ -1,12 +1,12 @@
 import * as bodyParser from 'body-parser';
-import * as express from 'express';
+import { Application } from 'express';
 // import * as cors from 'cors';
 // import * as morgan from 'morgan';
 import * as helmet from 'helmet';
 // import * as compression from 'compression';
 
 export class AppConfig {
-    configure(app: express.Application): void {
+    configure(app: Application): void {
 
         app
             // Enabling the cors headers

@@ -10,7 +10,7 @@ export class ShareDialogService {
     constructor(private dialog: MatDialog,
         private router: Router) { }
 
-    share(link: any[]) {
+    share(link: [string, string | number]) {
         const newLink = environment.hostUrlForSharingToWeb + this.router.createUrlTree(link).toString();
         const dialogRef = this.dialog.open(ShareDialogComponent);
 

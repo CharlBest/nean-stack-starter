@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { Application } from 'express';
 import * as http from 'http';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
@@ -18,14 +18,12 @@ export class Server {
 
     constructor(public httpServer: http.Server) { }
 
-    use(app: express.Application): void {
+    use(app: Application): void {
         this.httpServer.on('listening', () => {
             console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
         });
 
-        this.httpServer.on('error', (error) => {
-            this.onError(error);
-        });
+        // this.httpServer.on('error', (error) => { });
 
         this.httpServer.on('close', (error) => {
             Database.clearDriver();
@@ -54,23 +52,5 @@ export class Server {
 
             process.exit(1);
         });
-    }
-
-    onError(error: any): void {
-        if (error.syscall !== 'listen') {
-            throw error;
-        }
-        switch (error.code) {
-            case 'EACCES':
-                console.error(`The Server requires elevated privileges`);
-                process.exit(1);
-                break;
-            case 'EADDRINUSE':
-                console.error(`Port is already in use or blocked by the os`);
-                process.exit(1);
-                break;
-            default:
-                throw error;
-        }
     }
 }

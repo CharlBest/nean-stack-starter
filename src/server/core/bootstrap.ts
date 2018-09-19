@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { static as expressStatic, Application, Request, Response, NextFunction } from 'express';
 import * as http from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
@@ -20,25 +20,25 @@ const root = './';
 
 export class Bootstrap {
 
-    defineExpressApp(app: express.Application) {
+    defineExpressApp(app: Application) {
         app.set('port', process.env.PORT || Server.normalizePort(environment.port));
     }
 
-    startServer(app: express.Application): http.Server {
+    startServer(app: Application): http.Server {
         return app.listen(app.get('port'));
     }
 
-    setupCoreTools(app: express.Application): void {
+    setupCoreTools(app: Application): void {
         // const swaggerUI = new SwaggerUI();
         // swaggerUI.setup(app);
     }
 
-    setupAuthentication(app: express.Application): void {
+    setupAuthentication(app: Application): void {
         app.use(Authentication.setAuthUser);
     }
 
-    setupRoutes(app: express.Application): void {
-        app.use(express.static(path.join(root, 'dist/nean-stack-starter')));
+    setupRoutes(app: Application): void {
+        app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 
         // serving api routes
         const generalRouter = new GeneralRoutes().router;
@@ -112,7 +112,7 @@ export class Bootstrap {
         }, 30000);
     }
 
-    setupGraphQL(app: express.Application): void {
+    setupGraphQL(app: Application): void {
         // const schema = makeExecutableSchema({
         //     typeDefs,
         //     resolvers
@@ -123,7 +123,7 @@ export class Bootstrap {
         // }));
     }
 
-    setupErrors(app: express.Application): void {
+    setupErrors(app: Application): void {
         app.use(ApiError.NotFoundError);
 
         if (app.get('env') === 'development') {
@@ -133,7 +133,7 @@ export class Bootstrap {
         }
     }
 
-    setupDatabase(app: express.Application): void {
+    setupDatabase(app: Application): void {
         // Retrieve all queries
         // TODO: not sure if .then is wrong because queries is empty until then (should be await)
         Database.retrieveQueries().then(queries => {
@@ -145,8 +145,8 @@ export class Bootstrap {
         app.use(Neo4j.sessionCleanup);
     }
 
-    setupCors(app: express.Application): void {
-        app.use((req: express.Request | any, res: express.Response, next: express.NextFunction) => {
+    setupCors(app: Application): void {
+        app.use((req: Request, res: Response, next: NextFunction) => {
             // TODO: don't think this is working
             const allowedOrigins = app.get('env') === 'development'
                 ? [
@@ -156,7 +156,7 @@ export class Bootstrap {
                     'http://10.0.0.10:3000' /*Phone client*/
                 ]
                 : ['https://nean.io'];
-            const origin = req.headers.origin;
+            const origin = req.headers.origin as string;
             if (allowedOrigins.indexOf(origin) > -1) {
                 res.setHeader('Access-Control-Allow-Origin', origin);
             }
@@ -169,7 +169,7 @@ export class Bootstrap {
         });
     }
 
-    setupHerokuPing(app: express.Application): void {
+    setupHerokuPing(app: Application): void {
         if (app.get('env') !== 'development') {
             setInterval(function () {
                 http.get('http://nean.io');
@@ -177,7 +177,7 @@ export class Bootstrap {
         }
     }
 
-    setupAutoPeriodicDataFetch(app: express.Application): void {
+    setupAutoPeriodicDataFetch(app: Application): void {
         if (app.get('env') !== 'development') {
             new DataFetcher().init(app);
         }

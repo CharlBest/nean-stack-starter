@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(authRequest).pipe(
             tap((event: HttpEvent<any>) => {
                 // if (event instanceof HttpResponse) do stuff with response if you want
-            }, (err: any) => {
+            }, err => {
                 if (err instanceof HttpErrorResponse) {
                     if (err.status === 401 && !this.authService.shouldPreventLogoutOnNextRequest) {
                         console.error('Authentication 401 Unauthorized', err);

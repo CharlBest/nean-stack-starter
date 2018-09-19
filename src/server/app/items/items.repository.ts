@@ -1,4 +1,5 @@
-import { Response } from 'express';
+import { Application, Response } from 'express';
+import { v1 as neo4j } from 'neo4j-driver';
 import { CommentModel } from '../../../shared/models/item/comment.model';
 import { ItemModel } from '../../../shared/models/item/item.model';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
@@ -13,7 +14,7 @@ export class ItemsRepository extends BaseRepository {
         super();
     }
 
-    async createItemFromDataFetcher(neo4jSession: any, app: any, userId: number, uId: string,
+    async createItemFromDataFetcher(neo4jSession: neo4j.Session, app: Application, userId: number, uId: string,
         title: string, description: string, media: Array<string>): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
