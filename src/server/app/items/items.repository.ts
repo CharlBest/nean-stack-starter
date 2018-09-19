@@ -281,4 +281,28 @@ export class ItemsRepository extends BaseRepository {
             return null;
         }
     }
+
+    async getComment(res: Response, userId: number, ip: string, uId: string): Promise<CommentViewModel> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComment,
+            {
+                userId,
+                ip,
+                uId
+            }
+        );
+
+        const model = result.records.map(x => {
+            let viewModel = new CommentViewModel();
+            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
+            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel.itemUId = x.get('itemUId');
+            return viewModel;
+        });
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
 }

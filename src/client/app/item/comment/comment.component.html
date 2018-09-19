@@ -12,7 +12,7 @@
         </ng-template>
     </span>
 
-    <div>
+    <div class="content">
         <div>
             <a class="username"
                 routerLink="/user/{{comment?.user?.id}}">
@@ -25,6 +25,14 @@
         </div>
 
         <span>{{comment.description}}</span>
+    </div>
+
+    <div>
+        <button mat-icon-button
+            matTooltip="Menu"
+            aria-label="Menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
     </div>
 </div>
 

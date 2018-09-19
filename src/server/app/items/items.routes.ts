@@ -39,6 +39,6 @@ export class ItemsRoutes extends BaseRoute {
         this.router.get(ItemRoutes.getComments().server(),
             async (req, res, next) => this.itemsController.getComments(req, res, next).catch(next));
         this.router.get(ItemRoutes.getComment().server(),
-            async (req, res, next) => this.itemsController.getComments(req, res, next).catch(next));
+            async (req, res, next) => this.itemsController.getComment(req, res, next).catch(next));
     }
 }

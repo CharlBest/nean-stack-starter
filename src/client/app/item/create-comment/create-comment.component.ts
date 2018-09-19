@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
@@ -20,8 +19,7 @@ export class CreateCommentComponent implements OnInit {
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,
-    private itemService: ItemService,
-    private router: Router) { }
+    private itemService: ItemService) { }
 
   ngOnInit() {
   }
@@ -36,10 +34,10 @@ export class CreateCommentComponent implements OnInit {
     this.itemService.createComment(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.onSuccess.emit(data);
         this.commentForm.formRef.resetForm();
+        this.onSuccess.emit(data);
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.commentForm.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
       });
   }
 }

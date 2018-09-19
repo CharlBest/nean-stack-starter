@@ -1,11 +1,9 @@
 export const data = `
-MATCH (user:User { id: {userId} })-[:HAS_ITEM]->(item:Item { uId: {uId} })
+MATCH (user:User { id: {userId} })-[:MADE_COMMENT]->(comment:Comment { uId: {uId} })
 
-SET item.title = {title}
-SET item.description = {description}
-SET item.media = {media}
+SET comment.description = {description}
 
-RETURN item, user
+RETURN comment, user
 {
     id: user.id,
     username: user.username,

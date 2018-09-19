@@ -41,7 +41,9 @@ export class EditCommentComponent implements OnInit {
       .subscribe(data => {
         this.comment = data;
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.commentForm.formGroup);
+        // TODO: cannot pass in commentForm.formGroup here because the element does not exist
+        // because of *ngIf. Hiding it will cause the form to initilize without the data required
+        this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
       });
   }
 
@@ -54,9 +56,9 @@ export class EditCommentComponent implements OnInit {
     this.itemService.updateComment(this.comment.uId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.router.navigate(['/item/comments', data.uId]);
+        this.router.navigate(['/item/comments', this.comment.itemUId]);
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.commentForm.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
       });
   }
 }

@@ -20,7 +20,7 @@
                 type="submit"
                 *ngIf="showCommentSubmitButton || (formGroup.get('description').value && formGroup.get('description').value !== '')"
                 [disabled]="!formGroup.valid"
-                (click)="onSubmit.emit()">Comment</button>
+                (click)="onSubmit.emit()">{{comment ? 'Update Comment' : 'Comment'}}</button>
         </mat-card-actions>
     </mat-card>
 </form>

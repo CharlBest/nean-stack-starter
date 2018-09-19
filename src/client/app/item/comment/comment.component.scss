@@ -16,14 +16,18 @@
 		opacity: 0.2;
 	}
 
-	.username {
-		font-weight: bold;
-		cursor: pointer;
-		outline: none;
-		text-decoration: none;
-	}
+	.content {
+		flex-grow: 1;
 
-	.date {
-		opacity: 0.5;
+		.username {
+			font-weight: bold;
+			cursor: pointer;
+			outline: none;
+			text-decoration: none;
+		}
+
+		.date {
+			opacity: 0.5;
+		}
 	}
 }

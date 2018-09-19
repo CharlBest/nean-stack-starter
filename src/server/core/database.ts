@@ -123,6 +123,7 @@ export class Database {
                 updateComment: (await import(`../database/items/updateComment.${Database.fileExtension}`)).data,
                 deleteComment: (await import(`../database/items/deleteComment.${Database.fileExtension}`)).data,
                 getComments: (await import(`../database/items/getComments.${Database.fileExtension}`)).data,
+                getComment: (await import(`../database/items/getComment.${Database.fileExtension}`)).data,
             },
         };
 
@@ -177,5 +178,6 @@ export interface DbQueries {
         updateComment: string,
         deleteComment: string,
         getComments: string,
+        getComment: string,
     };
 }

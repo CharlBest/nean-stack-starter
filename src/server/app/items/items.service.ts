@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
+import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { BaseService } from '../shared/base-service';
 import { ItemsRepository } from './items.repository';
@@ -67,5 +68,9 @@ export class ItemsService extends BaseService {
 
     async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[]> {
         return await this.itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
+    }
+
+    async getComment(res: Response, ip: string, uId: string): Promise<CommentViewModel> {
+        return await this.itemsRepository.getComment(res, this.getUserId(res), ip, uId);
     }
 }

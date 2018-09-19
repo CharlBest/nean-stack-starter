@@ -47,7 +47,7 @@ export class EditItemComponent implements OnInit {
           this.savedMedia = [...data.media];
         }
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
       });
   }
 
@@ -65,7 +65,7 @@ export class EditItemComponent implements OnInit {
         this.deleteRemovedImagesFromStorage();
         this.router.navigate(['/item/comments', data.uId]);
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.itemForm.formGroup);
+        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
       });
   }
 
