@@ -52,7 +52,7 @@ export class EditItemComponent implements OnInit {
   }
 
   onSubmit() {
-    this.itemForm.isProcessing = true;
+    this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateItemViewModel();
     viewModel.title = this.itemForm.formGroup.get('title').value;
@@ -60,7 +60,7 @@ export class EditItemComponent implements OnInit {
     viewModel.media = this.itemForm.formGroup.get('media').value;
 
     this.itemService.update(this.item.uId, viewModel)
-      .pipe(finalize(() => this.itemForm.isProcessing = false))
+      .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.deleteRemovedImagesFromStorage();
         this.router.navigate(['/item/comments', data.uId]);

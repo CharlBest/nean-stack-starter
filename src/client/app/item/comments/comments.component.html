@@ -2,33 +2,9 @@
     <app-item [item]="item"
         [isViewingComments]="true"></app-item>
 
-    <form [formGroup]="formGroup"
-        [hidden]="!isAuthenticated">
-        <mat-card>
-            <mat-card-content>
-                <mat-form-field>
-                    <mat-label>type comment here...</mat-label>
-                    <textarea matInput
-                        formControlName="description"
-                        cdkTextareaAutosize
-                        cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="8"
-                        (blur)="showCommentSubmitButton = false"
-                        (focus)="showCommentSubmitButton = true"></textarea>
-                    <mat-error>
-                        <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
-                    </mat-error>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button
-                    type="submit"
-                    *ngIf="showCommentSubmitButton || (formGroup.get('description').value && formGroup.get('description').value !== '')"
-                    [disabled]="!formGroup.valid"
-                    (click)="createComment()">Comment</button>
-            </mat-card-actions>
-        </mat-card>
-    </form>
+    <app-create-comment [hidden]="!isAuthenticated"
+        [itemUId]="item?.uId"
+        (onSuccess)="insertComment($event)"></app-create-comment>
 
     <mat-card *ngIf="!isAuthenticated">
         <mat-card-content>

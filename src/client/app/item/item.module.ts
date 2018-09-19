@@ -6,9 +6,12 @@ import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
+import { CommentFormComponent } from './comment-form/comment-form.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
+import { CreateCommentComponent } from './create-comment/create-comment.component';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { ItemFormComponent } from './item-form/item-form.component';
@@ -45,6 +48,9 @@ const materialModules = [
     EditItemComponent,
     FavouritesComponent,
     CommentComponent,
+    CommentFormComponent,
+    EditCommentComponent,
+    CreateCommentComponent,
   ],
   exports: [
     ItemComponent

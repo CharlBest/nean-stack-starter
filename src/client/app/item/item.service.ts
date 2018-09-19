@@ -61,8 +61,12 @@ export class ItemService {
         return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteComment(uId).client()}`);
     }
 
-    getComments(uId: string, pageIndex: number, pageSize?: number): Observable<CommentViewModel[]> {
+    getComments(itemUId: string, pageIndex: number, pageSize?: number): Observable<CommentViewModel[]> {
         return this.http
-            .get<CommentViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getComments(uId).client({ pageIndex, pageSize })}`);
+            .get<CommentViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getComments(itemUId).client({ pageIndex, pageSize })}`);
+    }
+
+    getComment(uId: string): Observable<CommentViewModel> {
+        return this.http.get<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.getComment(uId).client()}`);
     }
 }

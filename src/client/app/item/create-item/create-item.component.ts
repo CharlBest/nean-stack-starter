@@ -14,6 +14,7 @@ import { ItemService } from '../item.service';
 export class CreateItemComponent implements OnInit {
 
   @ViewChild('itemForm') itemForm: ItemFormComponent;
+  isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService,
@@ -23,7 +24,7 @@ export class CreateItemComponent implements OnInit {
   }
 
   onSubmit() {
-    this.itemForm.isProcessing = true;
+    this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateItemViewModel();
     viewModel.title = this.itemForm.formGroup.get('title').value;
@@ -31,7 +32,7 @@ export class CreateItemComponent implements OnInit {
     viewModel.media = this.itemForm.formGroup.get('media').value;
 
     this.itemService.create(viewModel)
-      .pipe(finalize(() => this.itemForm.isProcessing = false))
+      .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         this.router.navigate(['/item/comments', data.uId]);
       }, error => {

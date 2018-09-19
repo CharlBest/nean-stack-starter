@@ -1,4 +1,5 @@
-<div class="container">
+<div [hidden]="isProcessing"
+    class="container">
     <span routerLink="/user/{{comment?.user?.id}}">
         <div *ngIf="comment.user?.avatarUrl && comment.user?.avatarUrl !== ''; else defaultAvatar"
             mat-card-avatar
@@ -36,3 +37,5 @@
         aria-label="Menu">
         <mat-icon>more_vert</mat-icon>
 </button> -->
+
+<mat-spinner *ngIf="isProcessing && !comment"></mat-spinner>

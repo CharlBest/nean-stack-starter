@@ -4,6 +4,7 @@ import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { AuthService } from '../shared/services/auth.service';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
+import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 
@@ -21,6 +22,10 @@ import { FavouritesComponent } from './favourites/favourites.component';
             {
                 path: 'comments/:uId', component: CommentsComponent, pathMatch: 'full',
                 data: { title: 'Comments', nav: NavigationType.Back }
+            },
+            {
+                path: 'comment/edit/:uId', component: EditCommentComponent, pathMatch: 'full',
+                data: { title: 'Edit Comment', nav: NavigationType.Back }
             },
             {
                 path: 'saved', component: FavouritesComponent, pathMatch: 'full',

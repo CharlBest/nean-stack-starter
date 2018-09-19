@@ -1,13 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
-import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { NavigationService } from '../../shared/navigation/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ItemService } from '../item.service';
 
@@ -18,28 +14,18 @@ import { ItemService } from '../item.service';
 })
 export class CommentsComponent implements OnInit {
 
-  @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
   itemUId: string;
   isAuthenticated: boolean = this.authService.hasToken();
-  formGroup: FormGroup;
   isProcessing = false;
   isProcessingComment = false;
   item: ItemViewModel;
   comments: CommentViewModel[] = [];
-  showCommentSubmitButton = false;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
-    private fb: FormBuilder,
     private route: ActivatedRoute,
-    private navigationService: NavigationService,
     private authService: AuthService,
-    private router: Router) {
-    if (this.navigationService.previousUrl.startsWith('/item/create') ||
-      this.navigationService.previousUrl.startsWith('/item/edit')) {
-      this.navigationService.backRouterPath = '/';
-    }
-  }
+    private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -49,8 +35,6 @@ export class CommentsComponent implements OnInit {
         this.getComments();
       }
     });
-
-    this.formOnInit();
   }
 
   getItem() {
@@ -61,58 +45,28 @@ export class CommentsComponent implements OnInit {
       .subscribe(data => {
         this.item = data;
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error);
       });
   }
 
-  formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.createOrUpdateComment());
-  }
-
   getComments() {
+    this.isProcessingComment = true;
+
     this.itemService.getComments(this.itemUId, 0)
       .pipe(finalize(() => this.isProcessingComment = false))
       .subscribe(data => {
         this.comments = data;
       }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.formErrorsService.updateFormValidity(error);
       });
   }
 
-  createComment() {
-    this.isProcessingComment = true;
-
-    const viewModel = new CreateOrUpdateCommentViewModel();
-    viewModel.itemUId = this.itemUId;
-    viewModel.description = this.formGroup.get('description').value;
-
-    this.itemService.createComment(viewModel)
-      .pipe(finalize(() => this.isProcessingComment = false))
-      .subscribe(data => {
-        if (this.comments && this.comments.length > 0) {
-          this.comments.unshift(data);
-        } else {
-          this.comments = [data];
-        }
-        this.formRef.resetForm();
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-      });
-  }
-
-  deleteComment() {
-    this.isProcessingComment = true;
-
-    const viewModel = new CreateOrUpdateCommentViewModel();
-    viewModel.description = this.formGroup.get('description').value;
-
-    this.itemService.createComment(viewModel)
-      .pipe(finalize(() => this.isProcessingComment = false))
-      .subscribe(data => {
-        console.log(data);
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-      });
+  insertComment(comment: CommentViewModel) {
+    if (this.comments && this.comments.length > 0) {
+      this.comments.unshift(comment);
+    } else {
+      this.comments = [comment];
+    }
   }
 
   goToLogin() {

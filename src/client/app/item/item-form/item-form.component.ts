@@ -16,7 +16,6 @@ export class ItemFormComponent implements OnInit {
   @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
-  isProcessing = false;
   readonly MAX_MEDIA_UPLOADS = MAX_MEDIA_UPLOADS;
 
   constructor(private fb: FormBuilder,

@@ -1,5 +1,4 @@
-<form [formGroup]="formGroup"
-    [hidden]="isProcessing">
+<form [formGroup]="formGroup">
     <mat-card>
         <mat-card-content>
             <mat-form-field>
@@ -55,5 +54,3 @@
         </mat-card-actions>
     </mat-card>
 </form>
-
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
