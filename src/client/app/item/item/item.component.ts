@@ -62,6 +62,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
   deleteItem() {
     this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
       if (data) {
+        this.bottomSheet.dismiss();
+
         this.itemService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(() => {
@@ -97,6 +99,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
   reportItem() {
     this.dialogService.confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
       if (data) {
+        this.bottomSheet.dismiss();
+
         const viewModel = new ReportItemViewModel;
         viewModel.uId = this.item.uId;
 

@@ -96,7 +96,7 @@
 <!-- Context menu links -->
 <ng-template #contextMenu
     let-data>
-    <mat-nav-list (click)="bottomSheet.dismiss()">
+    <mat-nav-list>
 
         <mat-list-item *ngIf="loggedInUserId"
             (click)="favouriteItem()">
@@ -105,6 +105,7 @@
             <span mat-line>Save</span>
         </mat-list-item>
         <mat-list-item *ngIf="item?.user?.id === loggedInUserId"
+            (click)="bottomSheet.dismiss()"
             routerLink="/item/edit/{{item.uId}}">
             <mat-icon mat-list-icon>edit</mat-icon>
             <span mat-line>Edit</span>
