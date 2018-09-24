@@ -2,13 +2,13 @@ mat-form-field {
 	width: 100%;
 }
 
-.item-media-container {
+.media-container {
 	display: flex;
 	align-items: baseline;
 	justify-content: space-around;
 	flex-wrap: wrap;
 
-	.item-media {
+	.media {
 		max-width: 29%;
 		margin: 10px 2%;
 	}

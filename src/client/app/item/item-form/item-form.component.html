@@ -27,9 +27,9 @@
 
             <br>
 
-            <div class="item-media-container">
+            <div class="media-container">
                 <div *ngFor="let media of formGroup.get('media').value; let i = index"
-                    class="item-media">
+                    class="media">
                     <app-media [src]="media"
                         *ngIf="media"></app-media>
 

@@ -1,6 +1,6 @@
 <mat-card *ngIf="!isProcessing && item">
     <mat-card-content>
-        <div class="item-header">
+        <div class="header">
             <button routerLink="/user/{{item?.user?.id}}"
                 mat-button>
                 <div>
@@ -33,7 +33,7 @@
         </div>
 
         <div *ngIf="item?.media && item?.media?.length > 0"
-            class="item-media">
+            class="media">
             <div *ngIf="item?.media?.length > 1">
                 <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
                 <button mat-icon-button
@@ -52,7 +52,7 @@
         </div>
 
         <a routerLink="/item/comments/{{item.uId}}"
-            class="item-body">
+            class="body">
             <h3>{{item.title}}</h3>
 
             <p #description>{{item.description}}</p>
