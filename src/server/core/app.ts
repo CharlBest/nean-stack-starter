@@ -48,6 +48,6 @@ export class App {
         this.bootstrapApp.setupWebSockets(activeServer);
 
         const server = new Server(activeServer);
-        server.use(this.express);
+        server.init(this.express);
     }
 }

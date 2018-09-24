@@ -18,7 +18,7 @@ export class Server {
 
     constructor(public httpServer: http.Server) { }
 
-    use(app: Application): void {
+    init(app: Application): void {
         this.httpServer.on('listening', () => {
             console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
         });
