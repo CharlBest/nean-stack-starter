@@ -1,18 +1,20 @@
 import * as http from 'http';
 import * as WebSocket from 'ws';
 
-export class WebSocketServer {
-    private static socketServer: WebSocket.Server = null;
+class WebSocketServer {
+    private socketServer: WebSocket.Server;
 
-    static getSocketServer(server: http.Server = null): WebSocket.Server {
-        if (!this.socketServer) {
-            if (server) {
-                return this.socketServer = new WebSocket.Server({ server });
-            } else {
-                return null;
-            }
-        } else {
+    init(server: http.Server): WebSocket.Server {
+        return this.socketServer = new WebSocket.Server({ server });
+    }
+
+    getSocketServer(): WebSocket.Server {
+        if (this.socketServer) {
             return this.socketServer;
+        } else {
+            throw new Error(`WebSocket Server is null or undefined`);
         }
     }
 }
+
+export const webSocketServer = new WebSocketServer();

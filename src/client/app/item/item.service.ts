@@ -49,8 +49,8 @@ export class ItemService {
             .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`);
     }
 
-    createComment(viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
-        return this.http.post<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment().client()}`, viewModel);
+    createComment(itemUId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
+        return this.http.post<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment(itemUId).client()}`, viewModel);
     }
 
     updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {

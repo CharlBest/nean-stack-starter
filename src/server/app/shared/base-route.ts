@@ -8,5 +8,5 @@ export abstract class BaseRoute {
         this.router = Router();
     }
 
-    abstract initRoutes();
+    abstract initRoutes(): void;
 }

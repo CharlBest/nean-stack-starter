@@ -25,7 +25,7 @@ export class Server {
 
         // this.httpServer.on('error', (error) => { });
 
-        this.httpServer.on('close', (error) => {
+        this.httpServer.on('close', () => {
             Database.clearDriver();
         });
 

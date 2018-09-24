@@ -154,7 +154,7 @@ export class Emailer {
         }
 
         if (environment.production) {
-            sendGridMail.send(data, null, (err, res) => {
+            sendGridMail.send(data, undefined, (err: Error) => {
                 if (err) {
                     console.log(err);
                     throw err;

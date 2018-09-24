@@ -28,7 +28,7 @@ export class ItemsRepository extends BaseRepository {
     }
 
     async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
-        : Promise<ItemViewModel> {
+        : Promise<ItemViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.create,
             {
                 userId,
@@ -54,7 +54,7 @@ export class ItemsRepository extends BaseRepository {
     }
 
     async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
-        : Promise<ItemViewModel> {
+        : Promise<ItemViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.update,
             {
                 userId,
@@ -79,7 +79,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async get(res: Response, userId: number, ip: string, uId: string): Promise<ItemViewModel> {
+    async get(res: Response, userId: number | null, ip: string, uId: string): Promise<ItemViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.get,
             {
                 userId,
@@ -103,7 +103,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getItems(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+    async getItems(res: Response, userId: number | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getItems,
             {
                 userId,
@@ -172,7 +172,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
+    async getFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getFavourites,
             {
                 userId,
@@ -196,7 +196,8 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string): Promise<CommentViewModel> {
+    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string)
+        : Promise<CommentViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.createComment,
             {
                 userId,
@@ -220,7 +221,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentViewModel> {
+    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.updateComment,
             {
                 userId,
@@ -258,7 +259,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getComments(res: Response, userId: number, uId: string, pageIndex: number, pageSize: number): Promise<CommentViewModel[]> {
+    async getComments(res: Response, userId: number, uId: string, pageIndex: number, pageSize: number): Promise<CommentViewModel[] | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComments,
             {
                 userId,
@@ -282,7 +283,7 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getComment(res: Response, userId: number, ip: string, uId: string): Promise<CommentViewModel> {
+    async getComment(res: Response, userId: number, ip: string, uId: string): Promise<CommentViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComment,
             {
                 userId,

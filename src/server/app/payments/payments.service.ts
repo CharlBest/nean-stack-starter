@@ -25,22 +25,23 @@ export class PaymentsService extends BaseService {
 
     // #region Private
 
-    private async createCharge(res: Response, source: string, amount: number, userId: number = null, customerId: string = null) {
+    private async createCharge(res: Response, source: string, amount: number,
+        userId: null | number = null, customerId: null | string = null) {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
-        const paymentUId = nodeUUId();
-        const metadata = {
-            paymentUId
-        };
         const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
             amount: amount * 100,
             currency: 'EUR',
             description: 'Donation',
             source: source,
-            metadata
+            metadata: {
+                paymentUId: nodeUUId()
+            }
         };
         if (userId) {
-            chargeCreationOptions.metadata['userId'] = userId;
+            if (chargeCreationOptions.metadata) {
+                chargeCreationOptions.metadata['userId'] = userId;
+            }
         }
         if (customerId) {
             chargeCreationOptions['customer'] = customerId;
@@ -86,6 +87,11 @@ export class PaymentsService extends BaseService {
                     +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_year
                 );
 
+                if (!card) {
+                    ServerValidator.addGlobalError(res, 'card', { required: true });
+                    throw ValidationUtil.errorResponse(res);
+                }
+
                 return {
                     card,
                     stripeCustomerId: customer.id
@@ -97,6 +103,11 @@ export class PaymentsService extends BaseService {
 
                 const card = await this.paymentsRepository.createCard(res, this.getUserId(res), user.stripeCustomerId,
                     nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4, +newCard.exp_month, +newCard.exp_year);
+
+                if (!card) {
+                    ServerValidator.addGlobalError(res, 'card', { required: true });
+                    throw ValidationUtil.errorResponse(res);
+                }
 
                 return {
                     card,
@@ -151,8 +162,10 @@ export class PaymentsService extends BaseService {
             // New card
             if (saveCard) {
                 const cardDetails = await this.getStripeCardDetails(res, token);
+
                 // TODO: check expire date
-                const existingCard = user.userCards.find(x => x.stripeFingerprint === cardDetails.card.fingerprint);
+                const existingCard = user.userCards
+                    .find(x => cardDetails.card ? x.stripeFingerprint === cardDetails.card.fingerprint : false);
 
                 if (existingCard) {
                     const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
@@ -183,18 +196,28 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    async userCards(res: Response): Promise<CardModel[]> {
+    async userCards(res: Response): Promise<CardModel[] | null> {
         return await this.paymentsRepository.userCards(res, this.getUserId(res));
     }
 
     async createCard(res: Response, token: string): Promise<CardModel> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
 
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
+
         return (await this.createStripeCard(res, user, token)).card;
     }
 
     async deleteCard(res: Response, uId: string): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
         const card = user.userCards.find(x => x.uId === uId);
@@ -221,8 +244,18 @@ export class PaymentsService extends BaseService {
     async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
+
         const stripeAccount = new stripe(environment.stripe.secretKey);
         const card = user.userCards.find(x => x.uId === uId);
+
+        if (!card) {
+            ServerValidator.addGlobalError(res, 'user deafult card', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
 
         try {
             const updatedCustomer = await stripeAccount.customers.update(user.stripeCustomerId,
@@ -237,7 +270,7 @@ export class PaymentsService extends BaseService {
         }
     }
 
-    async paymentHistory(res: Response): Promise<PaymentModel[]> {
+    async paymentHistory(res: Response): Promise<PaymentModel[] | null> {
         return await this.paymentsRepository.paymentHistory(res, this.getUserId(res));
     }
 }

@@ -1,4 +1,4 @@
-import { static as expressStatic, Application, Request, Response, NextFunction } from 'express';
+import { Application, NextFunction, Request, Response, static as expressStatic } from 'express';
 import * as http from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
@@ -13,7 +13,7 @@ import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
 import { DataFetcher } from './middleware/data-fetcher';
 import { Neo4j } from './middleware/neo4j';
-import { WebSocketServer } from './middleware/web-socket-server';
+import { webSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
 
 const root = './';
@@ -73,7 +73,7 @@ export class Bootstrap {
     }
 
     setupWebSockets(server: http.Server): void {
-        const wss = WebSocketServer.getSocketServer(server);
+        const wss = webSocketServer.init(server);
 
         wss.on('connection', (ws: ExtendedWebSocket, req) => {
             // const location = url.parse(req.url, true);

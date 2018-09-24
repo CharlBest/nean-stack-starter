@@ -13,7 +13,7 @@ import { CompletedTutorial } from '../../../shared/view-models/tutorial/complete
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Authentication } from '../../core/middleware/authentication';
-import { WebSocketServer } from '../../core/middleware/web-socket-server';
+import { webSocketServer } from '../../core/middleware/web-socket-server';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
@@ -41,7 +41,7 @@ export class UsersService extends BaseService {
         return hashedPassword.toString('hex');
     }
 
-    private async verifyPassword(password, salt, passwordAttempt): Promise<boolean> {
+    private async verifyPassword(password: string, salt: string, passwordAttempt: string): Promise<boolean> {
         const hashedPassword = await this.hashPassword(passwordAttempt, salt);
         if (password === hashedPassword) {
             return true;
@@ -67,12 +67,17 @@ export class UsersService extends BaseService {
 
             const user = await this.usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
 
+            if (!user) {
+                ServerValidator.addGlobalError(res, 'user', { required: true });
+                throw ValidationUtil.errorResponse(res);
+            }
+
             // Send email
             Emailer.welcomeEmail(user.email, user.username, user.emailCode);
 
             // Notify everyone there is another sign up
             // TODO: This should be extracted into a single place where it can be called from
-            const wss = WebSocketServer.getSocketServer();
+            const wss = webSocketServer.getSocketServer();
             const dataModel = new SocketDataModel();
             dataModel.message = 'New sign up just now';
             const payload = JSON.stringify(dataModel);
@@ -100,7 +105,14 @@ export class UsersService extends BaseService {
         email = email.toLowerCase();
         username = username.toLowerCase();
 
-        return await this.usersRepository.doesUsernameAndEmailExist(res, email, username);
+        const user = await this.usersRepository.doesUsernameAndEmailExist(res, email, username);
+
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        return user;
     }
 
     async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
@@ -137,6 +149,11 @@ export class UsersService extends BaseService {
     async getUserProfile(res: Response): Promise<UserProfileViewModel> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
+
         const viewModel: UserProfileViewModel = {
             id: user.id,
             uId: user.uId,
@@ -163,11 +180,23 @@ export class UsersService extends BaseService {
     }
 
     async getUserPublic(res: Response, ip: string, userId: number, pageIndex: number, pageSize: number): Promise<UserPublicViewModel> {
-        return await this.usersRepository.getUserPublic(res, this.getUserId(res), ip, userId, pageIndex, pageSize);
+        const user = await this.usersRepository.getUserPublic(res, this.getUserId(res), ip, userId, pageIndex, pageSize);
+
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
+
+        return user;
     }
 
     async resendEmailVerificationLink(res: Response): Promise<void> {
         const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
+
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'user', { required: true });
+            throw ValidationUtil.errorResponse(res);
+        }
 
         Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
     }
@@ -222,7 +251,7 @@ export class UsersService extends BaseService {
             allowedSchemesAppliedToAttributes: ['href', 'src'],
             allowedIframeHostnames: ['www.youtube.com'],
             // TODO: the is required but think it's a bug. Remove in future version of sanitize-html
-            parser: null
+            parser: {}
         });
 
         await this.usersRepository.updateBio(res, this.getUserId(res), sanitizedHTMLContent);

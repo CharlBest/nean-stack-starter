@@ -42,11 +42,10 @@ export class Database {
     static clearDriver(): void {
         if (this.driver) {
             this.driver.close();
-            this.driver = null;
         }
     }
 
-    static createNodeObject<T>(node): T {
+    static createNodeObject<T>(node: any): T {
         if (node) {
             let object = {};
             _.assign(object, node.properties);
@@ -55,7 +54,7 @@ export class Database {
 
             return <T>object;
         } else {
-            return null;
+            return <any>null;
         }
     }
 
@@ -63,7 +62,7 @@ export class Database {
         if (nodes) {
             return nodes.map(x => Database.createNodeObject(x)) as T[];
         } else {
-            return null;
+            return <any>null;
         }
     }
 

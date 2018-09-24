@@ -17,17 +17,17 @@ const PASSWORD_LENGTH = 6;
 export class Validators {
     private static nullValidator(c: AbstractControl): ValidationErrors | null { return null; }
 
-    private static wrapControl(control: AbstractControl | string | number): AbstractControl {
+    private static wrapControl(control: AbstractControl | Object | string | number | null): AbstractControl {
         // Warning if this method starts allowing booleans
         return control && (<any>control).value !== undefined ? control : <any>{ value: control };
     }
 
-    static required(control: AbstractControl | any): ValidationErrors | null {
+    static required(control: AbstractControl | string | number | null): ValidationErrors | null {
         control = Validators.wrapControl(control);
         return isEmptyInputValue(control.value) ? { 'required': true } : null;
     }
 
-    static email(control: AbstractControl | any): ValidationErrors | null {
+    static email(control: AbstractControl | string): ValidationErrors | null {
         control = Validators.wrapControl(control);
         if (isEmptyInputValue(control.value)) {
             return null;  // don't validate empty values to allow optional controls
@@ -92,7 +92,7 @@ export class Validators {
 }
 
 export class BuildFormGroup {
-    static createUser(email: string = null, username: string = null, password: string = null): FormValidator {
+    static createUser(email: string | null = null, username: string | null = null, password: string | null = null): FormValidator {
         return {
             email: [email, [
                 Validators.required,
@@ -109,7 +109,7 @@ export class BuildFormGroup {
         };
     }
 
-    static feedback(content: string = null): FormValidator {
+    static feedback(content: string | null = null): FormValidator {
         return {
             content: [content, [
                 Validators.required,
@@ -118,7 +118,7 @@ export class BuildFormGroup {
         };
     }
 
-    static login(emailOrUsername: string = null, password: string = null): FormValidator {
+    static login(emailOrUsername: string | null = null, password: string | null = null): FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
                 Validators.required
@@ -130,7 +130,7 @@ export class BuildFormGroup {
         };
     }
 
-    static changeForgottenPassword(password: string = null): FormValidator {
+    static changeForgottenPassword(password: string | null = null): FormValidator {
         return {
             password: [password, [
                 Validators.required,
@@ -140,7 +140,7 @@ export class BuildFormGroup {
         };
     }
 
-    static forgotPassword(email: string = null): FormValidator {
+    static forgotPassword(email: string | null = null): FormValidator {
         return {
             email: [email, [
                 Validators.required,
@@ -149,7 +149,8 @@ export class BuildFormGroup {
         };
     }
 
-    static updatePassword(password: string = null, newPassword: string = null, confirmPassword: string = null): FormValidator {
+    static updatePassword(password: string | null = null, newPassword: string | null = null, confirmPassword: string | null = null)
+        : FormValidator {
         return {
             password: [password, [
                 Validators.required,
@@ -167,7 +168,8 @@ export class BuildFormGroup {
         };
     }
 
-    static payment(amount: number = null, cardUId: string = null, saveCard: boolean = null, email: string = null): FormValidator {
+    static payment(amount: number | null = null, cardUId: string | null = null,
+        saveCard: boolean | null = null, email: string | null = null): FormValidator {
         return {
             amount: [amount, [
                 Validators.required
@@ -178,7 +180,7 @@ export class BuildFormGroup {
         };
     }
 
-    static newsletter(email: string = null): FormValidator {
+    static newsletter(email: string | null = null): FormValidator {
         return {
             email: [email, [
                 Validators.required,
@@ -187,7 +189,8 @@ export class BuildFormGroup {
         };
     }
 
-    static createOrUpdateItem(title: string = null, description: string = null, media: Array<string> = null): FormValidator {
+    static createOrUpdateItem(title: string | null = null, description: string | null = null, media: Array<string> | null = null)
+        : FormValidator {
         return {
             title: [title, [
                 Validators.required
@@ -199,7 +202,7 @@ export class BuildFormGroup {
         };
     }
 
-    static createOrUpdateComment(description: string = null): FormValidator {
+    static createOrUpdateComment(description: string | null = null): FormValidator {
         return {
             description: [description, [
                 Validators.required
@@ -249,7 +252,7 @@ export class ServerValidator {
         return validationErrors.length > 0 ? true : false;
     }
 
-    static addFormError(res: Response, field: string, error: Object): boolean {
+    static addFormError(res: Response, field: string, error: ValidationErrors | null): boolean {
         if (error) {
             if (!res.locals.error) {
                 res.locals.error = <any>{};
@@ -271,7 +274,7 @@ export class ServerValidator {
         return error ? true : false;
     }
 
-    static addGlobalError(res: Response, field: string, error: Object): boolean {
+    static addGlobalError(res: Response, field: string, error: null | ValidationErrors | boolean | string): boolean {
         if (error) {
             if (!res.locals.error) {
                 res.locals.error = <any>{};

@@ -122,6 +122,7 @@ export class ItemsController extends BaseController {
     }
 
     async createComment(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
         const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
@@ -132,7 +133,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await this.itemsService.createComment(res, viewModel.itemUId, viewModel.description)
+            await this.itemsService.createComment(res, uId, viewModel.description)
         );
     }
 

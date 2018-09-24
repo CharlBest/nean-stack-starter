@@ -1,5 +1,6 @@
 export class BaseRoute {
-    constructor(public rootRoute: string, public route: string, public params?: { [key: string]: string | number }, public version = 1) { }
+    constructor(public rootRoute: string, public route: string,
+        public params?: { [key: string]: string | number | undefined }, public version = 1) { }
 
     server(): string {
         return `/v${this.version}/${this.rootRoute}/${this.route}${this.params ? `/:${Object.keys(this.params).join('/:')}` : ''}`;

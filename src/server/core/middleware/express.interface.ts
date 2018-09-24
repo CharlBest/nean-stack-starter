@@ -3,7 +3,7 @@ import { DbQueries } from '../database';
 
 declare module 'express' {
     interface Response {
-        locals?: ResponseLocals;
+        locals: ResponseLocals;
         app: {
             locals: {
                 dbQueries: DbQueries;
@@ -13,7 +13,7 @@ declare module 'express' {
 }
 
 interface ResponseLocals {
-    user: UserToken;
+    user: UserToken | null;
     neo4jSession: neo4j.Session;
     error: Error;
 }
@@ -25,6 +25,6 @@ interface UserToken {
 }
 
 interface Error {
-    globalErrors;
-    formErrors;
+    globalErrors: { [key: string]: string };
+    formErrors: Array<any>;
 }

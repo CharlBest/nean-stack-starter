@@ -34,7 +34,7 @@ export class Authentication {
         }
     }
 
-    static getTokenInHeader(req: Request): string {
+    static getTokenInHeader(req: Request): string | null {
         let token = null;
         const authorization = req.headers.authorization as string;
 
