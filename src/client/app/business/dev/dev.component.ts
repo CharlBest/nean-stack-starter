@@ -17,7 +17,7 @@ export class DevComponent implements OnInit {
   isProcessingBestPractices = true;
   isProcessingChangelog = true;
   dataSource = [
-    { description: 'GitHub package.json', version: '' },
+    { description: 'GitHub package.json', version: null },
     { description: 'App package.json', version: `v${appVersion}` },
     { description: 'Angular', version: `v${AngularVersion.full}` },
     { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
