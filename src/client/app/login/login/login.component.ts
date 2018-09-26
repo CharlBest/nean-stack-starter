@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new LoginViewModel();
-    viewModel.emailOrUsername = this.formGroup.get('emailOrUsername').value.trim();
-    viewModel.password = this.formGroup.get('password').value;
+    viewModel.emailOrUsername = this.formGroup.controls['emailOrUsername'].value.trim();
+    viewModel.password = this.formGroup.controls['password'].value;
 
     this.loginService.login(viewModel)
       .subscribe(data => {

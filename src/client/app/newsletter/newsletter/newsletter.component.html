@@ -17,7 +17,7 @@
           required
           [attr.autofocus]="bpService.isDesktop || null">
         <mat-error>
-          <app-form-errors [control]="formGroup.get('email')"></app-form-errors>
+          <app-form-errors [control]="formGroup.controls['email']"></app-form-errors>
         </mat-error>
       </mat-form-field>
     </mat-card-content>

@@ -55,9 +55,9 @@ export class EditItemComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateItemViewModel();
-    viewModel.title = this.itemForm.formGroup.get('title').value;
-    viewModel.description = this.itemForm.formGroup.get('description').value;
-    viewModel.media = this.itemForm.formGroup.get('media').value;
+    viewModel.title = this.itemForm.formGroup.controls['title'].value;
+    viewModel.description = this.itemForm.formGroup.controls['description'].value;
+    viewModel.media = this.itemForm.formGroup.controls['media'].value;
 
     this.itemService.update(this.item.uId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -72,7 +72,7 @@ export class EditItemComponent implements OnInit {
   deleteRemovedImagesFromStorage() {
     if (this.savedMedia) {
       for (const media of this.savedMedia) {
-        if (!(<Array<string>>this.itemForm.formGroup.get('media').value).includes(media)) {
+        if (!(<Array<string>>this.itemForm.formGroup.controls['media'].value).includes(media)) {
           this.firebaseStorageService.delete(media).subscribe();
         }
       }

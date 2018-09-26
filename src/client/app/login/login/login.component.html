@@ -20,7 +20,7 @@
                     required
                     [attr.autofocus]="bpService.isDesktop || null">
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('emailOrUsername')"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls['emailOrUsername']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 
@@ -33,7 +33,7 @@
                     type="password"
                     required>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('password')"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls['password']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 

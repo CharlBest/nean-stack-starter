@@ -20,8 +20,8 @@
                     required
                     [attr.autofocus]="bpService.isDesktop || null">
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('email')">
-                        <ng-container *ngIf="formGroup.get('email').hasError('exists')">
+                    <app-form-errors [control]="formGroup.controls['email']">
+                        <ng-container *ngIf="formGroup.controls['email'].hasError('exists')">
                             Email already exists
                         </ng-container>
                     </app-form-errors>
@@ -37,8 +37,8 @@
                     type="text"
                     required>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('username')">
-                        <ng-container *ngIf="formGroup.get('username').hasError('exists')">
+                    <app-form-errors [control]="formGroup.controls['username']">
+                        <ng-container *ngIf="formGroup.controls['username'].hasError('exists')">
                             Username already exists
                         </ng-container>
                     </app-form-errors>
@@ -54,8 +54,8 @@
                     type="password"
                     required>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('password')">
-                        <ng-container *ngIf="formGroup.get('password').hasError('pattern')">
+                    <app-form-errors [control]="formGroup.controls['password']">
+                        <ng-container *ngIf="formGroup.controls['password'].hasError('pattern')">
                             1 lower case, 1 upper case character and 1 digit required
                         </ng-container>
                     </app-form-errors>

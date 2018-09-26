@@ -46,7 +46,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = this.formGroup.get('email').value.trim();
+    viewModel.email = this.formGroup.controls['email'].value.trim();
 
     this.newsletterService.createNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -59,7 +59,7 @@ export class NewsletterComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = this.formGroup.get('email').value.trim();
+    viewModel.email = this.formGroup.controls['email'].value.trim();
 
     this.newsletterService.deleteNewsletterMember(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

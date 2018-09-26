@@ -11,14 +11,14 @@
                     (blur)="showCommentSubmitButton = false"
                     (focus)="showCommentSubmitButton = true"></textarea>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
                 type="submit"
-                *ngIf="showCommentSubmitButton || (formGroup.get('description').value && formGroup.get('description').value !== '')"
+                *ngIf="showCommentSubmitButton || (formGroup.controls['description'].value && formGroup.controls['description'].value !== '')"
                 [disabled]="!formGroup.valid"
                 (click)="onSubmit.emit()">{{comment ? 'Update Comment' : 'Comment'}}</button>
         </mat-card-actions>

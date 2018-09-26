@@ -36,7 +36,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   addItemMedia(downloadURL: string) {
-    const control = this.formGroup.get('media');
+    const control = this.formGroup.controls['media'];
     if (control.value && control.value.length > 0) {
       control.value.push(downloadURL);
     } else {
@@ -47,7 +47,7 @@ export class ItemFormComponent implements OnInit {
   removeMedia(index: number) {
     this.dialogService.confirm('Are you sure?').subscribe(data => {
       if (data) {
-        this.formGroup.get('media').value.splice(index, 1);
+        this.formGroup.controls['media'].value.splice(index, 1);
       }
     });
   }

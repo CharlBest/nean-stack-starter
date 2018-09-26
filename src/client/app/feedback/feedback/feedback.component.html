@@ -13,12 +13,12 @@
           cdkAutosizeMinRows="3"
           cdkAutosizeMaxRows="8"
           [attr.autofocus]="bpService.isDesktop || null"></textarea>
-        <mat-hint *ngIf="formGroup.get('content').value?.length < 10">Minimum of
-          {{formGroup.get('content').value?.length}}/10
+        <mat-hint *ngIf="formGroup.controls['content'].value?.length < 10">Minimum of
+          {{formGroup.controls['content'].value?.length}}/10
           characters
         </mat-hint>
         <mat-error>
-          <app-form-errors [control]="formGroup.get('content')"></app-form-errors>
+          <app-form-errors [control]="formGroup.controls['content']"></app-form-errors>
         </mat-error>
       </mat-form-field>
     </mat-card-content>

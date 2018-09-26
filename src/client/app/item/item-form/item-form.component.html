@@ -7,7 +7,7 @@
                     formControlName="title"
                     [attr.autofocus]="bpService.isDesktop || null" />
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('title')"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls['title']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 
@@ -21,14 +21,14 @@
                     cdkAutosizeMinRows="3"
                     cdkAutosizeMaxRows="8"></textarea>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.get('description')"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 
             <br>
 
             <div class="media-container">
-                <div *ngFor="let media of formGroup.get('media').value; let i = index"
+                <div *ngFor="let media of formGroup.controls['media'].value; let i = index"
                     class="media">
                     <app-media [src]="media"
                         *ngIf="media"></app-media>
@@ -51,7 +51,7 @@
             <app-upload-button (uploadComplete)="addItemMedia($event)"
                 [folderName]="'item'"
                 [buttonText]="'Add media'"
-                *ngIf="formGroup.get('media')?.value?.length < MAX_MEDIA_UPLOADS"></app-upload-button>
+                *ngIf="formGroup.controls['media']?.value?.length < MAX_MEDIA_UPLOADS"></app-upload-button>
         </mat-card-actions>
     </mat-card>
 </form>

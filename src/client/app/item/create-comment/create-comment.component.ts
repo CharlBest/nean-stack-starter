@@ -28,7 +28,7 @@ export class CreateCommentComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
-    viewModel.description = this.commentForm.formGroup.get('description').value;
+    viewModel.description = this.commentForm.formGroup.controls['description'].value;
 
     this.itemService.createComment(this.itemUId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
