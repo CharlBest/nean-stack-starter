@@ -19,8 +19,8 @@ import { NavigationService } from '../navigation.service';
 export class NavigationComponent implements OnInit {
   @ViewChild('navbar') navbar: ElementRef<HTMLDivElement>;
 
-  loggedInUserId: number = this.authService.getLoggedInUserId();
-  activeNavigation;
+  loggedInUserId = this.authService.getLoggedInUserId();
+  activeNavigation: NavigationType;
   navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string;

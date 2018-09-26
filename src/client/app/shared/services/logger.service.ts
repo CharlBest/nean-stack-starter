@@ -5,15 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class LoggerService {
 
-  log(value: unknown, ...rest) {
+  log(value: unknown, ...rest: any[]) {
     console.log(value, ...rest);
   }
 
-  error(value: unknown, ...rest) {
+  error(value: unknown, ...rest: any[]) {
     console.error(value, ...rest);
   }
 
-  warn(value: unknown, ...rest) {
+  warn(value: unknown, ...rest: any[]) {
     console.warn(value, ...rest);
   }
 }

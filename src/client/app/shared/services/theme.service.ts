@@ -14,10 +14,15 @@ export class ThemeService {
     constructor() { }
 
     private updateTheme() {
-        if (this.darkTheme) {
-            document.querySelector('body').classList.add(this.darkThemeClass);
+        const bodyElement = document.querySelector('body');
+        if (bodyElement) {
+            if (this.darkTheme) {
+                bodyElement.classList.add(this.darkThemeClass);
+            } else {
+                bodyElement.classList.remove(this.darkThemeClass);
+            }
         } else {
-            document.querySelector('body').classList.remove(this.darkThemeClass);
+            console.error('Body tag can\'t be found');
         }
 
         localStorage.setItem(this.isDarkThemeStorageKey, `${this.darkTheme}`);

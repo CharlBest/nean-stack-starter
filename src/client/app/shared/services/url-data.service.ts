@@ -18,7 +18,7 @@ export class UrlDataService {
         this.router.navigate([], { queryParams: { data: encodedData }, queryParamsHandling: 'merge' });
     }
 
-    private b64EncodeUnicode(str) {
+    private b64EncodeUnicode(str: string) {
         // first we use encodeURIComponent to get percent-encoded UTF-8,
         // then we convert the percent encodings into raw bytes which
         // can be fed into btoa.
@@ -28,7 +28,7 @@ export class UrlDataService {
             }));
     }
 
-    private b64DecodeUnicode(str) {
+    private b64DecodeUnicode(str: string) {
         // Going backwards: from bytestream, to percent-encoding, to original string.
         return decodeURIComponent(atob(str).split('').map((c) => {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);

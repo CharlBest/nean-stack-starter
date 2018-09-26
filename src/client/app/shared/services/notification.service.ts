@@ -8,7 +8,7 @@ import { WebSocketService } from './websocket.service';
 })
 export class NotificationService {
 
-    messages = [];
+    messages: Array<string> = [];
 
     constructor(private webSocketService: WebSocketService,
         private snackBar: MatSnackBar,

@@ -72,10 +72,7 @@ export class GaService {
     this.trackRouterNavigation();
   }
 
-  emitEvent(eventCategory: string,
-    eventAction: string,
-    eventLabel: string = null,
-    eventValue: number = null) {
+  emitEvent(eventCategory: string, eventAction: string, eventLabel: string | null = null, eventValue: number | null = null) {
     this.ga('send', 'event', {
       eventCategory: eventCategory,
       eventLabel: eventLabel,

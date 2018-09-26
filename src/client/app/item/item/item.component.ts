@@ -22,7 +22,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
-  loggedInUserId: number = this.authService.getLoggedInUserId();
+  loggedInUserId = this.authService.getLoggedInUserId();
   isProcessing = false;
   showMoreButton = false;
   activeMediaIndex = 0;

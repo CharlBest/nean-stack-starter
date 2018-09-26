@@ -13,7 +13,7 @@ import { ItemService } from '../item.service';
 export class CommentComponent implements OnInit {
   @Input() comment: CommentViewModel;
   @Input() itemUserId: number;
-  loggedInUserId: number = this.authService.getLoggedInUserId();
+  loggedInUserId = this.authService.getLoggedInUserId();
   isProcessing = false;
 
   constructor(private itemService: ItemService,

@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   isProcessing = true;
   userId: number;
   user: UserPublicViewModel;
-  loggedInUserId: number = this.authService.getLoggedInUserId();
+  loggedInUserId = this.authService.getLoggedInUserId();
 
   constructor(private userService: UserService,
     private route: ActivatedRoute,

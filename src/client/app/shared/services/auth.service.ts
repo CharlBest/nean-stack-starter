@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService implements CanActivate {
     private readonly tokenStorageKey = 'token';
 
-    private loggedInUserId = new BehaviorSubject<number>(0);
+    private loggedInUserId = new BehaviorSubject<number | null>(0);
     loggedInUserId$ = this.loggedInUserId.asObservable();
 
     private _preventLogoutOnNextRequest: boolean;
@@ -21,12 +21,12 @@ export class AuthService implements CanActivate {
             return false;
         }
     }
-    private tokenExpireDateInSeconds: number;
+    private tokenExpireDateInSeconds: number | null;
 
     constructor(private router: Router,
         private dialog: MatDialog) { }
 
-    private getDataFromJWT(): { id: number, expireDate: number } {
+    private getDataFromJWT(): { id: number | null, expireDate: number | null } {
         const token = this.getLocalToken();
 
         if (token) {
@@ -41,7 +41,7 @@ export class AuthService implements CanActivate {
         return { id: null, expireDate: null };
     }
 
-    private parseJwt(token) {
+    private parseJwt(token: string) {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         try {
@@ -71,7 +71,7 @@ export class AuthService implements CanActivate {
         this.tokenExpireDateInSeconds = expireDate;
     }
 
-    getLoggedInUserId(): number {
+    getLoggedInUserId(): number | null {
         return this.loggedInUserId.getValue();
     }
 
@@ -96,7 +96,7 @@ export class AuthService implements CanActivate {
         return token !== null && token !== undefined;
     }
 
-    getLocalToken(): string {
+    getLocalToken(): string | null {
         return sessionStorage.getItem(this.tokenStorageKey);
     }
 
@@ -105,7 +105,7 @@ export class AuthService implements CanActivate {
     }
 
     hasTokenExpired() {
-        if (this.hasToken() && Math.floor(Date.now() / 1000) >= this.tokenExpireDateInSeconds) {
+        if (this.tokenExpireDateInSeconds && this.hasToken() && Math.floor(Date.now() / 1000) >= this.tokenExpireDateInSeconds) {
             return true;
         } else {
             return false;

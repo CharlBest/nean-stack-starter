@@ -13,6 +13,7 @@ import { TutorialService } from '../tutorial.service';
 })
 export class TutorialComponent implements OnInit {
 
+  private loggedInUserId = this.authService.getLoggedInUserId();
   tuts = [
     // Tutorial 1
     new Tutorial(TutorialType.SignUp, 'Sign up here!', TutorialType.ForgotPassword, true),
@@ -27,12 +28,10 @@ export class TutorialComponent implements OnInit {
     new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword),
     new Tutorial(TutorialType.UpdatePassword, 'Update your password', TutorialType.None, undefined, true)
   ];
-
-  private loggedInUserId: number = this.authService.getLoggedInUserId();
   tutorialTypeEnum = TutorialType;
   tutorialInUrl: TutorialType;
   active: boolean;
-  returnUrl: string = null;
+  returnUrl: string | null = null;
 
   constructor(private route: ActivatedRoute,
     private location: Location,

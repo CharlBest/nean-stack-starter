@@ -10,7 +10,7 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  loggedInUserId: number = this.authService.getLoggedInUserId();
+  loggedInUserId = this.authService.getLoggedInUserId();
 
   constructor(public themeService: ThemeService,
     private tutorialService: TutorialService,
