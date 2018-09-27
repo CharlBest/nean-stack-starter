@@ -35,21 +35,37 @@ export class UrlDataService {
         }).join(''));
     }
 
-    init(formGroup: FormGroup) {
-        const formData = this.route.snapshot.queryParams.data || null;
-        if (formData) {
-            try {
-                const data = JSON.parse(this.b64DecodeUnicode(formData));
-                formGroup.setValue(data);
-            } catch (error) {
-                console.log('Error parsing form data from url', error);
-            }
-        }
-
+    init(formGroup: FormGroup): boolean {
         formGroup.valueChanges.pipe(
             debounceTime(this.miliSecondsBeforeSave)
         ).subscribe(() => {
             this.save(formGroup);
         });
+
+        const formData = this.route.snapshot.queryParams.data || null;
+        if (formData) {
+            try {
+                const data = JSON.parse(this.b64DecodeUnicode(formData));
+
+                for (const field in data) {
+                    if (data.hasOwnProperty(field) && data[field]) {
+                        const control = formGroup.get(field);
+                        if (control && !control.value) {
+                            const newControl = formGroup.get(field);
+                            if (newControl) {
+                                newControl.setValue(data[field]);
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            } catch (error) {
+                console.log('Error parsing form data from url', error);
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
