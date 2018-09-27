@@ -29,8 +29,6 @@ class App {
         bootstrap.setupDatabase(this.express);
         // Setup routes
         bootstrap.setupRoutes(this.express);
-        // Setup errors
-        bootstrap.setupErrors(this.express);
         // Setup core tools
         bootstrap.setupCoreTools(this.express);
         // Setup Heroku ping to prevent free tier sleeping
@@ -39,6 +37,8 @@ class App {
         // bootstrap.setupAutoPeriodicDataFetch(this.express);
 
         // TODO: add logger (maybe morgan (http)) or custom
+        // Setup errors
+        bootstrap.setupErrors(this.express);
 
         const activeServer = bootstrap.startServer(this.express);
 
