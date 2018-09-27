@@ -1,0 +1,26 @@
+<!-- Menu button -->
+<button mat-button
+    [matMenuTriggerFor]="menu"
+    xPosition="after"
+    #contextMenuTrigger="matMenuTrigger"
+    (click)="open($event)"
+    matTooltip="Menu"
+    aria-label="Menu">
+    <mat-icon>more_vert</mat-icon>
+</button>
+
+<!-- Overlay Menu -->
+<mat-menu #menu="matMenu">
+    <!-- TODO: Better perf but causes bottom sheet to break: <ng-template matMenuContent></ng-template> -->
+    <ng-container *ngTemplateOutlet="contextMenu"></ng-container>
+</mat-menu>
+
+<!-- Bottom Menu -->
+<ng-template #bottomSheetContextMenu>
+    <ng-container *ngTemplateOutlet="contextMenu"></ng-container>
+</ng-template>
+
+<!-- Menu links -->
+<ng-template #contextMenu>
+    <ng-content></ng-content>
+</ng-template>

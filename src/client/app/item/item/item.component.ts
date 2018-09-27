@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatMenuTrigger, MatSnackBar } from '@angular/material';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../../shared/view-models/item/report-item.view-model';
+import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
-import { PreventBackNavigationService } from '../../shared/services/prevent-back-navigation.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { ItemService } from '../item.service';
 
@@ -17,8 +17,7 @@ import { ItemService } from '../item.service';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit, AfterViewInit {
-  @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
-  @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
   @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
@@ -32,9 +31,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
-    public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
-    private preventBackNavigationService: PreventBackNavigationService,
     private shareDialogService: ShareDialogService) { }
 
   ngOnInit() {
@@ -62,7 +59,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   deleteItem() {
     this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
       if (data) {
-        this.bottomSheet.dismiss();
+        this.contextMenu.close();
 
         this.itemService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
@@ -74,24 +71,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openContextMenu(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (this.bpService.isDesktop) {
-      this.contextMenuTrigger.openMenu();
-    } else {
-      this.contextMenuTrigger.closeMenu();
-
-      this.preventBackNavigationService.beforeOpen();
-
-      this.bottomSheet.open(this.bottomSheetContextMenu, {
-        closeOnNavigation: true,
-        autoFocus: false
-      }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
-    }
-  }
-
   openShareDialog() {
     this.shareDialogService.share(['/home', this.item.uId]);
   }
@@ -99,7 +78,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   reportItem() {
     this.dialogService.confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
       if (data) {
-        this.bottomSheet.dismiss();
+        this.contextMenu.close();
 
         const viewModel = new ReportItemViewModel;
         viewModel.uId = this.item.uId;

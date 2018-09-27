@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule } from '@angular/material';
+import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
@@ -26,7 +27,6 @@ const materialModules = [
   MatMenuModule,
   MatListModule,
   MatIconModule,
-  MatBottomSheetModule,
 ];
 
 @NgModule({
@@ -38,6 +38,7 @@ const materialModules = [
     ShareDialogModule,
     ReactiveFormsModule,
     FormErrorsModule,
+    ContextMenuModule,
     ...materialModules
   ],
   declarations: [
