@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { FormError } from '../models/shared/error.model';
 
 function isEmptyInputValue(value: any): boolean {
     // we don't check for string here so it also works with arrays
@@ -241,7 +242,7 @@ export class ServerValidator {
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
-            const savedError = res.locals.error.formErrors.find(x => x.field === error.field);
+            const savedError = res.locals.error.formErrors.find((x: FormError) => x.field === error.field);
             if (savedError) {
                 Object.assign(savedError.errors, error.errors);
             } else {
@@ -260,7 +261,7 @@ export class ServerValidator {
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
-            const savedError = res.locals.error.formErrors.find(x => x.field === field);
+            const savedError = res.locals.error.formErrors.find((x: FormError) => x.field === field);
             if (savedError) {
                 Object.assign(savedError.errors, error);
             } else {

@@ -16,7 +16,7 @@ import { ItemService } from '../item.service';
 export class EditItemComponent implements OnInit {
 
   @ViewChild('itemForm') itemForm: ItemFormComponent;
-  itemUId: string;
+  itemUId: string | null;
   isProcessing = true;
   item: ItemViewModel;
   savedMedia: Array<string>;
@@ -37,18 +37,20 @@ export class EditItemComponent implements OnInit {
   }
 
   getItem() {
-    this.isProcessing = true;
+    if (this.itemUId) {
+      this.isProcessing = true;
 
-    this.itemService.get(this.itemUId)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        this.item = data;
-        if (data.media) {
-          this.savedMedia = [...data.media];
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-      });
+      this.itemService.get(this.itemUId)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          this.item = data;
+          if (data.media) {
+            this.savedMedia = [...data.media];
+          }
+        }, error => {
+          this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
+        });
+    }
   }
 
   onSubmit() {

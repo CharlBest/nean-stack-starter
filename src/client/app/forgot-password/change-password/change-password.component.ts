@@ -17,8 +17,8 @@ import { ForgotPasswordService } from '../forgot-password.service';
 export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
-  code: string;
-  email: string;
+  code: string | null;
+  email: string | null;
   isProcessing = false;
 
   constructor(private route: ActivatedRoute,
@@ -55,19 +55,21 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   changeForgottenPassword() {
-    this.isProcessing = true;
+    if (this.email && this.code) {
+      this.isProcessing = true;
 
-    const viewModel = new ChangeForgottenPasswordViewModel;
-    viewModel.email = this.email.trim();
-    viewModel.code = this.code;
-    viewModel.password = this.formGroup.controls['password'].value;
+      const viewModel = new ChangeForgottenPasswordViewModel;
+      viewModel.email = this.email.trim();
+      viewModel.code = this.code;
+      viewModel.password = this.formGroup.controls['password'].value;
 
-    this.forgotPasswordService.changeForgottenPassword(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(() => {
-        this.router.navigate(['/login']);
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-      });
+      this.forgotPasswordService.changeForgottenPassword(viewModel)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(() => {
+          this.router.navigate(['/login']);
+        }, error => {
+          this.formErrorsService.updateFormValidity(error, this.formGroup);
+        });
+    }
   }
 }

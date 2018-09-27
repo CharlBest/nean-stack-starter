@@ -9,8 +9,10 @@
 
             <ng-container matColumnDef="version">
                 <td mat-cell
-                    *matCellDef="let element">{{element.version}}</td>
-                <mat-spinner *ngIf="!element.version"></mat-spinner>
+                    *matCellDef="let element">
+                    <ng-container *ngIf="element.version">{{element.version}}</ng-container>
+                    <mat-spinner *ngIf="!element.version"></mat-spinner>
+                </td>
             </ng-container>
 
             <tr mat-row

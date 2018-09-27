@@ -66,10 +66,12 @@ export class HTMLEditorComponent implements AfterViewInit {
             const sanitizedHTML = this.domSanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
 
             // Add existing content to editor
-            if (this.containsEmoji) {
-                this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(sanitizedHTML));
-            } else {
-                this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
+            if (sanitizedHTML) {
+                if (this.containsEmoji) {
+                    this.editor.clipboard.dangerouslyPasteHTML(this.renderHTMLWithEmoji(sanitizedHTML));
+                } else {
+                    this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
+                }
             }
 
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
@@ -92,13 +94,15 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         // Listen upload local image and save to server
         input.onchange = () => {
-            const file = input.files[0];
+            if (input.files) {
+                const file = input.files[0];
 
-            // file type is only image.
-            if (/^image\//.test(file.type)) {
-                this.saveFileToServer(file);
-            } else {
-                console.warn('You could only upload images.');
+                // file type is only image.
+                if (/^image\//.test(file.type)) {
+                    this.saveFileToServer(file);
+                } else {
+                    console.warn('You could only upload images.');
+                }
             }
         };
     }
@@ -113,7 +117,8 @@ export class HTMLEditorComponent implements AfterViewInit {
     }
 
     insertEmbedImage(url: string, blurAfterInsert: boolean = false) {
-        const range = this.editor.getSelection();
+        // TODO: not sure if setting the default here is a good decision
+        const range = this.editor.getSelection() || { index: 0 };
         this.editor.insertEmbed(range.index, 'image', url);
 
         if (blurAfterInsert) {
@@ -139,7 +144,9 @@ export class HTMLEditorComponent implements AfterViewInit {
         if (this.containsEmoji) {
             const output = this.renderHTMLWithEmoji(this.getInnerHTML());
             const sanitizedHTML = this.domSanitizer.sanitize(SecurityContext.HTML, output);
-            this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
+            if (sanitizedHTML) {
+                this.editor.clipboard.dangerouslyPasteHTML(sanitizedHTML);
+            }
             this.editor.setSelection(range.index + 2, 0);
         }
 
@@ -161,7 +168,7 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     getUrls(content: string): Array<string> {
         const regex = new RegExp('src="(https:\/\/firebasestorage\.googleapis\.com.*?)"', 'ig');
-        const urls = [];
+        const urls: Array<string> = [];
 
         function getUrl() {
             const match = regex.exec(content);

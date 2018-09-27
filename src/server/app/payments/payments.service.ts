@@ -141,7 +141,7 @@ export class PaymentsService extends BaseService {
         return await this.paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
     }
 
-    async userPayment(res: Response, cardUId: string, token: string, amount: number, saveCard: boolean): Promise<boolean> {
+    async userPayment(res: Response, cardUId: string, token: string | null, amount: number, saveCard: boolean): Promise<boolean> {
         const user = await this.usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
@@ -158,7 +158,7 @@ export class PaymentsService extends BaseService {
 
             return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
                 charge.metadata.paymentUId, amount, charge.id, charge.created);
-        } else {
+        } else if (token) {
             // New card
             if (saveCard) {
                 const cardDetails = await this.getStripeCardDetails(res, token);
@@ -193,6 +193,8 @@ export class PaymentsService extends BaseService {
                 return await this.paymentsRepository.userPayment(res, this.getUserId(res), null,
                     charge.metadata.paymentUId, amount, charge.id, charge.created);
             }
+        } else {
+            throw new Error('Neither card was found nor token was provided');
         }
     }
 

@@ -23,7 +23,7 @@ export class NavigationComponent implements OnInit {
   activeNavigation: NavigationType;
   navigationType = NavigationType;
   headerBackTitle = '';
-  backRouterPath: string;
+  backRouterPath: string | null;
   tutorialTypeEnum = TutorialType;
   hasNavigatedToPageWithPrimaryNav = false;
   readonly desktopTopToolbarHeight = 64;
@@ -169,9 +169,9 @@ export class NavigationComponent implements OnInit {
 
   checkAllNavItemAssociations() {
     if (!environment.production) {
-      const allNavItems = [].concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(x => x.path)));
+      const allNavItems = (<Array<string>>[]).concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(x => x.path)));
       this.router.config.forEach(x => {
-        if (!allNavItems.includes(x.path) && x.path !== '**' && x.path !== '404') {
+        if (x.path && !allNavItems.includes(x.path) && x.path !== '**' && x.path !== '404') {
           alert(x.path);
         }
       });

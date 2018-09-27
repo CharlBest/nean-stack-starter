@@ -1,3 +1,3 @@
 export class UpdateAvatarViewModel {
-    avatarUrl: string;
+    avatarUrl: string | null;
 }

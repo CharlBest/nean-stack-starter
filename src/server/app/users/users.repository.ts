@@ -191,7 +191,7 @@ export class UsersRepository extends BaseRepository {
         }
     }
 
-    async updateAvatar(res: Response, userId: number, avatarUrl: string): Promise<boolean> {
+    async updateAvatar(res: Response, userId: number, avatarUrl: string | null): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateAvatar,
             {
                 userId,

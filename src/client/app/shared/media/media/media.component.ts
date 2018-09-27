@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog.component';
 
 @Component({
@@ -10,11 +10,11 @@ import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog
 })
 export class MediaComponent implements OnChanges {
 
-  @Input() src = null;
+  @Input() src: string;
   @Input() thumbnail = false;
   mediaType: MediaType;
   mediaTypeEnum = MediaType;
-  safeSrc: SafeResourceUrl;
+  safeSrc: string;
 
   constructor(private sanitizer: DomSanitizer,
     public dialog: MatDialog) { }
@@ -47,14 +47,14 @@ export class MediaComponent implements OnChanges {
         this.src = this.src.replace('youtube.com/watch?v=', 'youtube.com/embed/');
 
         // TODO: this is dangerous and should be looked at again
-        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
+        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src) as string;
       }
 
       this.mediaType = MediaType.YouTube;
     } else if (this.src.substr(0, 25).indexOf('vimeo.com') > -1) {
       this.src = this.src.replace('vimeo.com/', 'player.vimeo.com/video/');
       // TODO: this is dangerous and should be looked at again
-      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
+      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src) as string;
       this.mediaType = MediaType.Vimeo;
     } else {
       this.mediaType = MediaType.Image;

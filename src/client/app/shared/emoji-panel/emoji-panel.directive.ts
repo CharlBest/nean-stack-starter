@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2, Sanitizer, SecurityContext } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2, Sanitizer } from '@angular/core';
 import * as emojione from 'emojione';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
@@ -31,7 +31,7 @@ export class EmojiPanelDirective implements OnInit {
 
     emojiPanel() {
         this.appEmojiPanel.inserted
-            .subscribe(data => {
+            .subscribe((data: string) => {
                 (<any>emojione).ascii = true;
                 const output = emojione.toImage(data);
 
@@ -40,7 +40,7 @@ export class EmojiPanelDirective implements OnInit {
             });
     }
 
-    private sanitize(content: string): string {
-        return this.sanitizer.sanitize(SecurityContext.HTML, content);
+    private sanitize(content: string) {
+        // return this.sanitizer.sanitize(SecurityContext.HTML, content);
     }
 }

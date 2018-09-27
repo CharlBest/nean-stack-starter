@@ -235,7 +235,7 @@ export class UsersService extends BaseService {
         return await this.usersRepository.verifyEmail(res, this.getUserId(res), code);
     }
 
-    async updateAvatar(res: Response, avatarUrl: string): Promise<void> {
+    async updateAvatar(res: Response, avatarUrl: string | null): Promise<void> {
         await this.usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
     }
 

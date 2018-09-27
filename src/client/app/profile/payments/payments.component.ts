@@ -15,7 +15,7 @@ export class PaymentsComponent implements OnInit {
   @Input() userCards: CardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
-  newDefaultCardUId: string = null;
+  newDefaultCardUId: string | null;
 
   constructor(private profileService: ProfileService,
     private formErrorsService: FormErrorsService,
@@ -47,6 +47,11 @@ export class PaymentsComponent implements OnInit {
   changeDefaultCard() {
     this.isProcessing = true;
     const currentDefaultCard = this.userCards.find(x => x.isDefault);
+
+    if (!currentDefaultCard) {
+      console.error('No default card could be found');
+      return;
+    }
 
     if (this.newDefaultCardUId && this.newDefaultCardUId !== currentDefaultCard.uId) {
       this.profileService.updateDefaultCard(this.newDefaultCardUId)

@@ -26,5 +26,4 @@ export class PaymentHistoryComponent implements OnInit {
         this.formErrorsService.updateFormValidity(error);
       });
   }
-
 }

@@ -13,8 +13,8 @@ export class UploadButtonComponent {
     @Input() hideProgressBarAfterUpload = true;
     @Input() maxFileSizeInMB = 10;
     @Output() uploadComplete: EventEmitter<string> = new EventEmitter();
-    previewImgUrl: string;
-    error: string;
+    previewImgUrl: string | null;
+    error: string | null;
     progressPercentage: number;
     showProgressBar = false;
     // TODO: better UX is to allow uploading multiple in parallel
@@ -30,7 +30,8 @@ export class UploadButtonComponent {
         this.previewImgUrl = null;
         this.error = null;
 
-        const file = (<HTMLInputElement>event.target).files[0];
+        const target = event.target as HTMLInputElement;
+        const file = target && target.files ? target.files[0] : null;
 
         // User cancelled
         if (!file) {

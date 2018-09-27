@@ -40,10 +40,14 @@ export class EmojiPanelComponent implements OnInit {
     for (const key in this.file) {
       if (this.file[key].diversity === null && this.file[key].category !== 'regional' && this.file[key].category !== 'modifier') {
         const tab = this.emojiCategories.find(x => x.category === this.file[key].category);
-        tab.emojiData.push({
-          key,
-          value: this.file[key]
-        });
+        if (tab) {
+          tab.emojiData.push({
+            key,
+            value: this.file[key]
+          });
+        } else {
+          console.error('Could not find tab');
+        }
       }
     }
 
@@ -89,7 +93,7 @@ class EmojiCategory {
   tabLabelIcon: string;
   emojiData: Array<{ key: string, value: EmojiData }>;
 
-  constructor(category, tabLabelText, tabLabelIcon) {
+  constructor(category: string, tabLabelText: string, tabLabelIcon: string) {
     this.category = category;
     this.tabLabelText = tabLabelText;
     this.tabLabelIcon = tabLabelIcon;

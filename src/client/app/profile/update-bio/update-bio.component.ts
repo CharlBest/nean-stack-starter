@@ -1,5 +1,4 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
@@ -18,8 +17,7 @@ export class UpdateBioComponent {
   isProcessing = false;
   @Input() content = '';
 
-  constructor(private fb: FormBuilder,
-    public formErrorsService: FormErrorsService,
+  constructor(public formErrorsService: FormErrorsService,
     private profileService: ProfileService,
     private snackBar: MatSnackBar) { }
 

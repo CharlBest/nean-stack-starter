@@ -15,7 +15,7 @@ import { ItemService } from '../item.service';
 export class EditCommentComponent implements OnInit {
 
   @ViewChild('commentForm') commentForm: CommentFormComponent;
-  commentUId: string;
+  commentUId: string | null;
   isProcessing = true;
   comment: CommentViewModel;
 
@@ -34,17 +34,19 @@ export class EditCommentComponent implements OnInit {
   }
 
   getComment() {
-    this.isProcessing = true;
+    if (this.commentUId) {
+      this.isProcessing = true;
 
-    this.itemService.getComment(this.commentUId)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        this.comment = data;
-      }, error => {
-        // TODO: cannot pass in commentForm.formGroup here because the element does not exist
-        // because of *ngIf. Hiding it will cause the form to initilize without the data required
-        this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
-      });
+      this.itemService.getComment(this.commentUId)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          this.comment = data;
+        }, error => {
+          // TODO: cannot pass in commentForm.formGroup here because the element does not exist
+          // because of *ngIf. Hiding it will cause the form to initilize without the data required
+          this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
+        });
+    }
   }
 
   onSubmit() {

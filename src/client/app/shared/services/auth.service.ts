@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { UserTokenModel } from '../../../../shared/models/shared/user-token.model';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class AuthService implements CanActivate {
         const token = this.getLocalToken();
 
         if (token) {
-            const parsedToken = this.parseJwt(token);
+            const parsedToken = this.parseJwt(token) as { data: UserTokenModel, exp: number };
 
             const id = +parsedToken.data.i /* alias for ID */;
             const expireDate = +parsedToken.exp;

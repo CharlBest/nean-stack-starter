@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class DeleteUserComponent implements OnInit {
 
-    email: string;
+    email: string | null;
     isProcessing = false;
 
     constructor(private snackBar: MatSnackBar,

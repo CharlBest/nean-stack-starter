@@ -18,7 +18,7 @@ export class TutorialService {
         private http: HttpClient,
         private snackBar: MatSnackBar) { }
 
-    async activateTutorial(tutorialType: TutorialType, returnUrl: string = '/') {
+    async activateTutorial(tutorialType: TutorialType, returnUrl: string | null = '/') {
         const navigateUrl = [];
         switch (tutorialType) {
             case TutorialType.None:

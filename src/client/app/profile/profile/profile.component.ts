@@ -22,7 +22,7 @@ import { ProfileService } from '../profile.service';
 export class ProfileComponent implements OnInit {
 
   @ViewChild('backNavRightPlaceholder') backNavRightPlaceholder: TemplateRef<any>;
-  user: UserProfileViewModel = null;
+  user: UserProfileViewModel;
   isProcessing = true;
   tutorialTypeEnum = TutorialType;
 
@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  updateAvatar(downloadURL: string) {
+  updateAvatar(downloadURL: string | null) {
     const viewModel = new UpdateAvatarViewModel;
     viewModel.avatarUrl = downloadURL;
 
@@ -95,11 +95,13 @@ export class ProfileComponent implements OnInit {
   }
 
   removeAvatar() {
-    this.firebaseStorageService.delete(this.user.avatarUrl).subscribe(data => {
-      if (data) {
-        this.updateAvatar(null);
-      }
-    });
+    if (this.user.avatarUrl) {
+      this.firebaseStorageService.delete(this.user.avatarUrl).subscribe(data => {
+        if (data) {
+          this.updateAvatar(null);
+        }
+      });
+    }
   }
 
   resendEmailVerificationLink() {

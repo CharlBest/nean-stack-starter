@@ -6,7 +6,7 @@ export class BaseRoute {
         return `/v${this.version}/${this.rootRoute}/${this.route}${this.params ? `/:${Object.keys(this.params).join('/:')}` : ''}`;
     }
 
-    client(queryParams?: { [key: string]: string | number }): string {
+    client(queryParams?: { [key: string]: string | number | undefined }): string {
         let url = `/api/v${this.version}/${this.rootRoute}/${this.route}`;
 
         // Params

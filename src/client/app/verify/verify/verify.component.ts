@@ -11,8 +11,8 @@ import { VerifyService } from '../verify.service';
 })
 export class VerifyComponent implements OnInit {
 
-  code: string;
-  verifyResult: boolean = null;
+  code: string | null;
+  verifyResult: boolean;
   isProcessing = true;
 
   constructor(private verifyService: VerifyService,

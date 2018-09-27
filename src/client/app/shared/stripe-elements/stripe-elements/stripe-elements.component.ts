@@ -29,7 +29,7 @@ export class StripeElementsComponent implements OnInit {
         if (this.stripeElementsService.stripeInstance) {
             this.elementsOnInit();
         } else {
-            this.stripeElementsService.stripeInitialized.subscribe(data => {
+            this.stripeElementsService.stripeInitialized.subscribe((data: boolean) => {
                 if (data) {
                     this.elementsOnInit();
                 }
@@ -93,7 +93,7 @@ export class StripeElementsComponent implements OnInit {
             }
         });
         // change (empty, complete, error, value), ready, focus, blur, click
-        elementWrapper.element.on('change', data => {
+        elementWrapper.element.on('change', (data: any) => {
             elementWrapper.valid = data && data.error === undefined && data.empty === false;
             this.isValid = this.elementsWrapper.cardNumber.valid &&
                 this.elementsWrapper.cardExpiry.valid &&
@@ -174,6 +174,6 @@ interface ElementWrapper {
     type: 'cardNumber' | 'cardExpiry' | 'cardCvc';
     cardBrand?: CardBrandType;
     element?: any; /*stripe.elements.Element*/
-    error?: string;
+    error?: string | null;
     valid: boolean;
 }

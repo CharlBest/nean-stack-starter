@@ -15,7 +15,7 @@ export class DialogService {
         dialogRef.componentInstance.message = message;
     }
 
-    confirm(message: string, confirmButtonText: string = null, closeButtonText: string = null): Observable<boolean> {
+    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null): Observable<boolean> {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: true
         });

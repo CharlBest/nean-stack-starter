@@ -9,9 +9,9 @@ export class TutorialDirective implements OnInit {
     @Input() appTutorial: TutorialType;
     @Input() tutorialBackgroundColor = 'none';
 
-    private tutorialInUrl: TutorialType;
-    private zIndex: string;
-    private backgroundColor: string;
+    private tutorialInUrl: TutorialType | null;
+    private zIndex: string | null;
+    private backgroundColor: string | null;
 
     constructor(private elementRef: ElementRef,
         private route: ActivatedRoute) { }
@@ -25,7 +25,10 @@ export class TutorialDirective implements OnInit {
         this.route.queryParamMap
             .subscribe(params => {
                 if (params.has('tut')) {
-                    this.tutorialInUrl = +params.get('tut');
+                    const tut = params.get('tut');
+                    if (tut) {
+                        this.tutorialInUrl = +tut;
+                    }
                     this.process();
                 } else {
                     this.reset();
@@ -45,7 +48,7 @@ export class TutorialDirective implements OnInit {
         if (this.tutorialInUrl === this.appTutorial) {
             element.style.zIndex = '11';
             element.style.backgroundColor = this.tutorialBackgroundColor;
-            window.scroll(null, element.offsetTop);
+            window.scroll(undefined, element.offsetTop);
         }
     }
 

@@ -77,7 +77,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    sendPaymentToServer(token: string = null) {
+    sendPaymentToServer(token: string | null = null) {
         if (this.isAuthenticated) {
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;
@@ -93,18 +93,20 @@ export class PaymentComponent implements OnInit {
                     this.formErrorsService.updateFormValidity(error, this.formGroup);
                 });
         } else {
-            const viewModel = new AnonymousPaymentViewModel();
-            viewModel.token = token;
-            viewModel.email = this.formGroup.controls['email'].value;
-            viewModel.amount = +this.formGroup.controls['amount'].value;
+            if (token) {
+                const viewModel = new AnonymousPaymentViewModel();
+                viewModel.token = token;
+                viewModel.email = this.formGroup.controls['email'].value;
+                viewModel.amount = +this.formGroup.controls['amount'].value;
 
-            this.paymentService.anonymousPayment(viewModel)
-                .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(() => {
-                    this.paymentSuccess = true;
-                }, error => {
-                    this.formErrorsService.updateFormValidity(error, this.formGroup);
-                });
+                this.paymentService.anonymousPayment(viewModel)
+                    .pipe(finalize(() => this.isProcessing = false))
+                    .subscribe(() => {
+                        this.paymentSuccess = true;
+                    }, error => {
+                        this.formErrorsService.updateFormValidity(error, this.formGroup);
+                    });
+            }
         }
     }
 

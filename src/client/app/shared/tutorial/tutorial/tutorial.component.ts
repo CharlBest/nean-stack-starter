@@ -29,9 +29,9 @@ export class TutorialComponent implements OnInit {
     new Tutorial(TutorialType.UpdatePassword, 'Update your password', TutorialType.None, undefined, true)
   ];
   tutorialTypeEnum = TutorialType;
-  tutorialInUrl: TutorialType;
+  tutorialInUrl: TutorialType | null;
   active: boolean;
-  returnUrl: string | null = null;
+  returnUrl: string | null;
 
   constructor(private route: ActivatedRoute,
     private location: Location,
@@ -47,7 +47,10 @@ export class TutorialComponent implements OnInit {
     this.route.queryParamMap
       .subscribe(params => {
         if (params.has('tut')) {
-          this.tutorialInUrl = +params.get('tut');
+          const tut = params.get('tut');
+          if (tut) {
+            this.tutorialInUrl = +tut;
+          }
           this.active = true;
 
           if (!this.returnUrl) {

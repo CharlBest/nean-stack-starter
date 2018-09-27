@@ -14,7 +14,7 @@ import { ItemService } from '../item.service';
 })
 export class CommentsComponent implements OnInit {
 
-  itemUId: string;
+  itemUId: string | null;
   isAuthenticated: boolean = this.authService.hasToken();
   isProcessing = false;
   isProcessingComment = false;
@@ -38,27 +38,31 @@ export class CommentsComponent implements OnInit {
   }
 
   getItem() {
-    this.isProcessing = true;
+    if (this.itemUId) {
+      this.isProcessing = true;
 
-    this.itemService.get(this.itemUId)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        this.item = data;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+      this.itemService.get(this.itemUId)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          this.item = data;
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
   }
 
   getComments() {
-    this.isProcessingComment = true;
+    if (this.itemUId) {
+      this.isProcessingComment = true;
 
-    this.itemService.getComments(this.itemUId, 0)
-      .pipe(finalize(() => this.isProcessingComment = false))
-      .subscribe(data => {
-        this.comments = data;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+      this.itemService.getComments(this.itemUId, 0)
+        .pipe(finalize(() => this.isProcessingComment = false))
+        .subscribe(data => {
+          this.comments = data;
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
   }
 
   insertComment(comment: CommentViewModel) {

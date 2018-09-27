@@ -16,7 +16,7 @@ import { UserService } from '../user.service';
 export class UserComponent implements OnInit {
 
   isProcessing = true;
-  userId: number;
+  userId: number | null;
   user: UserPublicViewModel;
   loggedInUserId = this.authService.getLoggedInUserId();
 
@@ -29,32 +29,39 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       if (params.has('id')) {
-        this.userId = +params.get('id');
+        const userId = params.get('id');
+        this.userId = userId ? +userId : null;
         this.getUser();
       }
     });
   }
 
   getUser() {
-    this.userService.getUserPublic(this.userId, 0)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        const itemsOwner = {
-          id: this.userId,
-          username: data.username,
-          avatarUrl: data.avatarUrl
-        };
+    if (this.userId) {
+      this.userService.getUserPublic(this.userId, 0)
+        .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          if (this.userId) {
+            const itemsOwner = {
+              id: this.userId,
+              username: data.username,
+              avatarUrl: data.avatarUrl
+            };
 
-        // TODO: This can be optomized
-        data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+            // TODO: This can be optomized
+            data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+          }
 
-        this.user = data;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+          this.user = data;
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
   }
 
   openShareDialog() {
-    this.shareDialogService.share(['/user', this.userId]);
+    if (this.userId) {
+      this.shareDialogService.share(['/user', this.userId]);
+    }
   }
 }

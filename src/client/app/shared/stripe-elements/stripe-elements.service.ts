@@ -9,7 +9,7 @@ declare var Stripe: any;
 export class StripeElementsService {
 
     @Output() stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
-    stripeInstance;
+    stripeInstance: any;
 
     constructor() {
         this.initializeStripe();

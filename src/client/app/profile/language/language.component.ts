@@ -24,7 +24,7 @@ export class LanguageComponent implements OnInit {
     }
   }
 
-  getCookie(name: string): string {
+  getCookie(name: string): string | null {
     const nameLenPlus = (name.length + 1);
     return document.cookie
       .split(';')
@@ -42,7 +42,7 @@ class Language {
   code: string;
   title: string;
 
-  constructor(code: 'en-US' | 'af-ZA', title) {
+  constructor(code: 'en-US' | 'af-ZA', title: string) {
     this.code = code;
     this.title = title;
   }
