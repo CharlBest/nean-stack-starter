@@ -40,14 +40,14 @@ export class Server {
         });
 
         process.on('uncaughtException', (event) => {
-            process.stderr.write('Internal: Uncaught exception\n');
-            process.stderr.write(event.stack + '\n');
+            console.log('Internal: Uncaught exception\n');
+            console.log(event.stack + '\n');
             process.exit(1);
         });
 
         process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
-            process.stderr.write('Internal: UnhandledPromiseRejectionWarning\n');
-            process.stderr.write(reason + '\n');
+            console.log('Internal: UnhandledPromiseRejectionWarning\n');
+            console.log(reason + '\n');
             console.log(reason.stack || reason.messsage || reason);
 
             process.exit(1);
