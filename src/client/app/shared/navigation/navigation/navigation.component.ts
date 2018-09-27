@@ -2,7 +2,8 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
@@ -161,17 +162,23 @@ export class NavigationComponent implements OnInit {
     });
 
     let prevScrollpos = window.pageYOffset;
-    // TODO: this could be a performance bottleneck (Add debounce)
-    window.onscroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight ||
-        this.activeNavigation === NavigationType.Back) {
-        this.navbar.nativeElement.style.top = '0';
-      } else {
-        this.navbar.nativeElement.style.top = `-${this.toolbarHeight}px`;
-      }
-      prevScrollpos = currentScrollPos;
-    };
+    fromEvent(window, 'scroll')
+      .pipe(debounceTime(100))
+      .subscribe((e: any) => {
+        const currentScrollPos = window.pageYOffset;
+
+        if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight ||
+          this.activeNavigation === NavigationType.Back) {
+          if (this.navbar.nativeElement.style.top !== '0px') {
+            this.navbar.nativeElement.style.top = '0';
+          }
+        } else {
+          if (this.navbar.nativeElement.style.top !== `-${this.toolbarHeight}px`) {
+            this.navbar.nativeElement.style.top = `-${this.toolbarHeight}px`;
+          }
+        }
+        prevScrollpos = currentScrollPos;
+      });
   }
 
   checkAllNavItemAssociations() {
