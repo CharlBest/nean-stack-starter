@@ -9,7 +9,7 @@ import { UserPublicViewModel } from '../../../shared/view-models/user/user-publi
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
-export class UsersRepository extends BaseRepository {
+class UsersRepository extends BaseRepository {
 
     constructor() {
         super();
@@ -269,3 +269,5 @@ export class UsersRepository extends BaseRepository {
         }
     }
 }
+
+export const usersRepository = new UsersRepository();

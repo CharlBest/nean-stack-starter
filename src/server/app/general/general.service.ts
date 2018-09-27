@@ -1,25 +1,22 @@
 import { Response } from 'express';
 import { Emailer } from '../../email/emailer';
 import { BaseService } from '../shared/base-service';
-import { GeneralRepository } from './general.repository';
+import { generalRepository } from './general.repository';
 
-export class GeneralService extends BaseService {
-
-    private generalRepository: GeneralRepository;
+class GeneralService extends BaseService {
 
     constructor() {
         super();
-        this.generalRepository = new GeneralRepository();
     }
 
     async createNewsletterMember(res: Response, email: string): Promise<boolean> {
         email = email.toLowerCase();
-        return await this.generalRepository.createNewsletterMember(res, email);
+        return await generalRepository.createNewsletterMember(res, email);
     }
 
     async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
         email = email.toLowerCase();
-        return await this.generalRepository.deleteNewsletterMember(res, email);
+        return await generalRepository.deleteNewsletterMember(res, email);
     }
 
     async sendFeedback(res: Response, content: string): Promise<void> {
@@ -30,3 +27,5 @@ export class GeneralService extends BaseService {
         Emailer.invite(emails);
     }
 }
+
+export const generalService = new GeneralService();

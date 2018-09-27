@@ -11,14 +11,12 @@ import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/upd
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
-import { UsersService } from './users.service';
+import { usersService } from './users.service';
 
-export class UsersController extends BaseController {
-    private usersService: UsersService;
+class UsersController extends BaseController {
 
     constructor() {
         super();
-        this.usersService = new UsersService();
     }
 
     async createUser(req: Request, res: Response, next: NextFunction) {
@@ -35,7 +33,7 @@ export class UsersController extends BaseController {
         }
 
         res.status(201).json(
-            await this.usersService.createUser(res, viewModel.email, viewModel.username, viewModel.password)
+            await usersService.createUser(res, viewModel.email, viewModel.username, viewModel.password)
         );
     }
 
@@ -52,13 +50,13 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.login(res, viewModel.emailOrUsername, viewModel.password)
+            await usersService.login(res, viewModel.emailOrUsername, viewModel.password)
         );
     }
 
     async getUserProfile(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await this.usersService.getUserProfile(res)
+            await usersService.getUserProfile(res)
         );
     }
 
@@ -68,7 +66,7 @@ export class UsersController extends BaseController {
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await this.usersService.getUserPublic(res, req.ip, id, pageIndex, pageSize)
+            await usersService.getUserPublic(res, req.ip, id, pageIndex, pageSize)
         );
     }
 
@@ -82,7 +80,7 @@ export class UsersController extends BaseController {
         const viewModel = req.body as CreateUserViewModel;
 
         res.status(200).json(
-            await this.usersService.doesUsernameAndEmailExist(res, viewModel.email, viewModel.username)
+            await usersService.doesUsernameAndEmailExist(res, viewModel.email, viewModel.username)
         );
     }
 
@@ -99,7 +97,7 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.forgotPassword(res, viewModel.email, nodeUUId())
+            await usersService.forgotPassword(res, viewModel.email, nodeUUId())
         );
     }
 
@@ -120,7 +118,7 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.changeForgottenPassword(res, viewModel.email, viewModel.code, viewModel.password)
+            await usersService.changeForgottenPassword(res, viewModel.email, viewModel.code, viewModel.password)
         );
     }
 
@@ -134,7 +132,7 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.verifyEmail(res, code)
+            await usersService.verifyEmail(res, code)
         );
     }
 
@@ -142,7 +140,7 @@ export class UsersController extends BaseController {
         const viewModel = req.body as UpdateAvatarViewModel;
 
         res.status(200).json(
-            await this.usersService.updateAvatar(res, viewModel.avatarUrl)
+            await usersService.updateAvatar(res, viewModel.avatarUrl)
         );
     }
 
@@ -150,7 +148,7 @@ export class UsersController extends BaseController {
         const viewModel = req.body as UpdateBioViewModel;
 
         res.status(200).json(
-            await this.usersService.updateBio(res, viewModel.content)
+            await usersService.updateBio(res, viewModel.content)
         );
     }
 
@@ -165,19 +163,19 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.updatePassword(res, viewModel.password, viewModel.newPassword)
+            await usersService.updatePassword(res, viewModel.password, viewModel.newPassword)
         );
     }
 
     async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
-        await this.usersService.resendEmailVerificationLink(res);
+        await usersService.resendEmailVerificationLink(res);
 
         res.status(200).json();
     }
 
     async deleteUser(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await this.usersService.deleteUser(res)
+            await usersService.deleteUser(res)
         );
     }
 
@@ -192,7 +190,9 @@ export class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await this.usersService.completedTutorial(res, viewModel)
+            await usersService.completedTutorial(res, viewModel)
         );
     }
 }
+
+export const usersController = new UsersController();

@@ -1,53 +1,53 @@
 import * as express from 'express';
-import { Bootstrap } from './bootstrap';
-import { AppConfig } from './config/app-config';
+import { bootstrap } from './bootstrap';
+import { appConfig } from './config/app-config';
 // import * as dotenv from 'dotenv';
 import { Server } from './server';
 
-export class App {
+class App {
 
     private express: express.Application = express();
-    private bootstrapApp = new Bootstrap();
 
     constructor() {
         // It also loads the .env file into the 'process.env' variable.
         // dotenv.config();
         // Create express app
-        this.bootstrapApp.defineExpressApp(this.express);
+        bootstrap.defineExpressApp(this.express);
     }
 
-    async bootstrap(): Promise<void> {
+    async bootstrapApp(): Promise<void> {
         // Configure the app config for all the middlewares
-        const appConfig = new AppConfig();
         appConfig.configure(this.express);
 
         // Setup CORS
-        this.bootstrapApp.setupCors(this.express);
+        bootstrap.setupCors(this.express);
         // Setup GraphQL
-        // this.bootstrapApp.setupGraphQL(this.express);
+        // bootstrap.setupGraphQL(this.express);
         // Auth
-        this.bootstrapApp.setupAuthentication(this.express);
+        bootstrap.setupAuthentication(this.express);
         // Setup DB
-        this.bootstrapApp.setupDatabase(this.express);
+        bootstrap.setupDatabase(this.express);
         // Setup routes
-        this.bootstrapApp.setupRoutes(this.express);
+        bootstrap.setupRoutes(this.express);
         // Setup errors
-        this.bootstrapApp.setupErrors(this.express);
+        bootstrap.setupErrors(this.express);
         // Setup core tools
-        this.bootstrapApp.setupCoreTools(this.express);
+        bootstrap.setupCoreTools(this.express);
         // Setup Heroku ping to prevent free tier sleeping
-        // this.bootstrapApp.setupHerokuPing(this.express);
+        // bootstrap.setupHerokuPing(this.express);
         // Database data fetcher
-        // this.bootstrapApp.setupAutoPeriodicDataFetch(this.express);
+        // bootstrap.setupAutoPeriodicDataFetch(this.express);
 
         // TODO: add logger (maybe morgan (http)) or custom
 
-        const activeServer = this.bootstrapApp.startServer(this.express);
+        const activeServer = bootstrap.startServer(this.express);
 
         // Setup web sockets
-        this.bootstrapApp.setupWebSockets(activeServer);
+        bootstrap.setupWebSockets(activeServer);
 
         const server = new Server(activeServer);
         server.init(this.express);
     }
 }
+
+export const app = new App();

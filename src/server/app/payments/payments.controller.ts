@@ -4,14 +4,12 @@ import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/a
 import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
-import { PaymentsService } from './payments.service';
+import { paymentsService } from './payments.service';
 
-export class PaymentsController extends BaseController {
-    private paymentsService: PaymentsService;
+class PaymentsController extends BaseController {
 
     constructor() {
         super();
-        this.paymentsService = new PaymentsService();
     }
 
     async anonymousPayment(req: Request, res: Response, next: NextFunction) {
@@ -27,7 +25,7 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.anonymousPayment(res, viewModel.token, viewModel.amount, viewModel.email)
+            await paymentsService.anonymousPayment(res, viewModel.token, viewModel.amount, viewModel.email)
         );
     }
 
@@ -45,13 +43,13 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.userPayment(res, viewModel.cardUId, viewModel.token, viewModel.amount, viewModel.saveCard)
+            await paymentsService.userPayment(res, viewModel.cardUId, viewModel.token, viewModel.amount, viewModel.saveCard)
         );
     }
 
     async userCards(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await this.paymentsService.userCards(res)
+            await paymentsService.userCards(res)
         );
     }
 
@@ -65,7 +63,7 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.createCard(res, token)
+            await paymentsService.createCard(res, token)
         );
     }
 
@@ -79,7 +77,7 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.deleteCard(res, uId)
+            await paymentsService.deleteCard(res, uId)
         );
     }
 
@@ -93,13 +91,15 @@ export class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.paymentsService.updateDefaultCard(res, uId)
+            await paymentsService.updateDefaultCard(res, uId)
         );
     }
 
     async paymentHistory(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await this.paymentsService.paymentHistory(res)
+            await paymentsService.paymentHistory(res)
         );
     }
 }
+
+export const paymentsController = new PaymentsController();

@@ -1,6 +1,5 @@
 
 import { Application } from 'express';
-import { ItemsRepository } from '../../app/items/items.repository';
 
 export class DataFetcher {
     // dom element selectors
@@ -11,12 +10,10 @@ export class DataFetcher {
         LIST_IMAGE_SELECTOR: '#sr_content div.box:nth-child(INDEX) > .image > a > img',
     };
 
-    private itemsRepository: ItemsRepository;
     interval: any;
     app: Application;
 
     constructor() {
-        this.itemsRepository = new ItemsRepository();
     }
 
     init(app: Application) {

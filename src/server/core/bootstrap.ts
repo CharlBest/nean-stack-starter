@@ -3,10 +3,10 @@ import * as http from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
 import { SocketDataModel } from '../../shared/models/web-socket/socket-data.model';
-import { GeneralRoutes } from '../app/general/general.routes';
-import { ItemsRoutes } from '../app/items/items.routes';
-import { PaymentsRoutes } from '../app/payments/payments.routes';
-import { UsersRoutes } from '../app/users/users.routes';
+import { generalRoutes } from '../app/general/general.routes';
+import { itemsRoutes } from '../app/items/items.routes';
+import { paymentsRoutes } from '../app/payments/payments.routes';
+import { usersRoutes } from '../app/users/users.routes';
 import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
@@ -18,7 +18,7 @@ import { Server } from './server';
 
 const root = './';
 
-export class Bootstrap {
+class Bootstrap {
 
     defineExpressApp(app: Application) {
         app.set('port', process.env.PORT || Server.normalizePort(environment.port));
@@ -41,15 +41,10 @@ export class Bootstrap {
         app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 
         // serving api routes
-        const generalRouter = new GeneralRoutes().router;
-        const usersRouter = new UsersRoutes().router;
-        const paymentsRouter = new PaymentsRoutes().router;
-        const itemsRouter = new ItemsRoutes().router;
-
-        app.use('/api', generalRouter);
-        app.use('/api', usersRouter);
-        app.use('/api', paymentsRouter);
-        app.use('/api', itemsRouter);
+        app.use('/api', generalRoutes);
+        app.use('/api', usersRoutes);
+        app.use('/api', paymentsRoutes);
+        app.use('/api', itemsRoutes);
 
         // Not sure if this is the best way of doing it
         // This is to serve web app sub routes
@@ -183,6 +178,8 @@ export class Bootstrap {
         }
     }
 }
+
+export const bootstrap = new Bootstrap();
 
 interface ExtendedWebSocket extends WebSocket {
     isAlive: boolean;

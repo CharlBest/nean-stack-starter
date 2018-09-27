@@ -4,14 +4,12 @@ import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
-import { ItemsService } from './items.service';
+import { itemsService } from './items.service';
 
-export class ItemsController extends BaseController {
-    private itemsService: ItemsService;
+class ItemsController extends BaseController {
 
     constructor() {
         super();
-        this.itemsService = new ItemsService();
     }
 
     async create(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +23,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await this.itemsService.create(res, viewModel.title, viewModel.description, viewModel.media)
+            await itemsService.create(res, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 
@@ -43,7 +41,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.update(res, uId, viewModel.title, viewModel.description, viewModel.media)
+            await itemsService.update(res, uId, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 
@@ -57,7 +55,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.get(res, req.ip, uId)
+            await itemsService.get(res, req.ip, uId)
         );
     }
 
@@ -66,7 +64,7 @@ export class ItemsController extends BaseController {
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await this.itemsService.getItems(res, pageIndex, pageSize)
+            await itemsService.getItems(res, pageIndex, pageSize)
         );
     }
 
@@ -80,7 +78,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.delete(res, uId)
+            await itemsService.delete(res, uId)
         );
     }
 
@@ -94,7 +92,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.createFavourite(res, uId)
+            await itemsService.createFavourite(res, uId)
         );
     }
 
@@ -108,7 +106,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.deleteFavourite(res, uId)
+            await itemsService.deleteFavourite(res, uId)
         );
     }
 
@@ -117,7 +115,7 @@ export class ItemsController extends BaseController {
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await this.itemsService.getFavourites(res, pageIndex, pageSize)
+            await itemsService.getFavourites(res, pageIndex, pageSize)
         );
     }
 
@@ -133,7 +131,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await this.itemsService.createComment(res, uId, viewModel.description)
+            await itemsService.createComment(res, uId, viewModel.description)
         );
     }
 
@@ -151,7 +149,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.updateComment(res, uId, viewModel.description)
+            await itemsService.updateComment(res, uId, viewModel.description)
         );
     }
 
@@ -165,7 +163,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.deleteComment(res, uId)
+            await itemsService.deleteComment(res, uId)
         );
     }
 
@@ -181,7 +179,7 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.getComments(res, uId, pageIndex, pageSize)
+            await itemsService.getComments(res, uId, pageIndex, pageSize)
         );
     }
 
@@ -195,7 +193,9 @@ export class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await this.itemsService.getComment(res, req.ip, uId)
+            await itemsService.getComment(res, req.ip, uId)
         );
     }
 }
+
+export const itemsController = new ItemsController();

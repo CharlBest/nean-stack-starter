@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { BaseRepository } from '../shared/base-repository';
 
-export class GeneralRepository extends BaseRepository {
+class GeneralRepository extends BaseRepository {
 
     constructor() {
         super();
@@ -35,3 +35,5 @@ export class GeneralRepository extends BaseRepository {
         }
     }
 }
+
+export const generalRepository = new GeneralRepository();

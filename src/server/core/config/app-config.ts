@@ -5,7 +5,7 @@ import { Application } from 'express';
 import * as helmet from 'helmet';
 // import * as compression from 'compression';
 
-export class AppConfig {
+class AppConfig {
     configure(app: Application): void {
 
         app
@@ -34,3 +34,5 @@ export class AppConfig {
         // .use(morgan('dev'));
     }
 }
+
+export const appConfig = new AppConfig();

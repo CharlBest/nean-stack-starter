@@ -5,14 +5,12 @@ import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
-import { GeneralService } from './general.service';
+import { generalService } from './general.service';
 
-export class GeneralController extends BaseController {
-    private generalService: GeneralService;
+class GeneralController extends BaseController {
 
     constructor() {
         super();
-        this.generalService = new GeneralService();
     }
 
     async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
@@ -28,7 +26,7 @@ export class GeneralController extends BaseController {
         }
 
         res.status(201).json(
-            await this.generalService.createNewsletterMember(res, viewModel.email)
+            await generalService.createNewsletterMember(res, viewModel.email)
         );
     }
 
@@ -45,7 +43,7 @@ export class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await this.generalService.deleteNewsletterMember(res, viewModel.email)
+            await generalService.deleteNewsletterMember(res, viewModel.email)
         );
     }
 
@@ -59,7 +57,7 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.errorResponse(res);
         }
 
-        await this.generalService.sendFeedback(res, viewModel.content);
+        await generalService.sendFeedback(res, viewModel.content);
 
         res.status(200).json();
     }
@@ -85,8 +83,10 @@ export class GeneralController extends BaseController {
             throw ValidationUtil.errorResponse(res);
         }
 
-        await this.generalService.invite(res, viewModel.emails);
+        await generalService.invite(res, viewModel.emails);
 
         res.status(200).json();
     }
 }
+
+export const generalController = new GeneralController();

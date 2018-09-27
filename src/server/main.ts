@@ -1,5 +1,3 @@
-import { App } from './core/app';
+import { app } from './core/app';
 
-export const app = new App();
-
-app.bootstrap();
+app.bootstrapApp();

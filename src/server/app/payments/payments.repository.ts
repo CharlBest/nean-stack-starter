@@ -4,7 +4,7 @@ import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
-export class PaymentsRepository extends BaseRepository {
+class PaymentsRepository extends BaseRepository {
 
     constructor() {
         super();
@@ -136,3 +136,5 @@ export class PaymentsRepository extends BaseRepository {
         }
     }
 }
+
+export const paymentsRepository = new PaymentsRepository();

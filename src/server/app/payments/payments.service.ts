@@ -9,18 +9,13 @@ import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
-import { UsersRepository } from '../users/users.repository';
-import { PaymentsRepository } from './payments.repository';
+import { usersRepository } from '../users/users.repository';
+import { paymentsRepository } from './payments.repository';
 
-export class PaymentsService extends BaseService {
-
-    private paymentsRepository: PaymentsRepository;
-    private usersRepository: UsersRepository;
+class PaymentsService extends BaseService {
 
     constructor() {
         super();
-        this.paymentsRepository = new PaymentsRepository();
-        this.usersRepository = new UsersRepository();
     }
 
     // #region Private
@@ -74,7 +69,7 @@ export class PaymentsService extends BaseService {
                     expand: ['default_source']
                 });
 
-                const card = await this.paymentsRepository.createCard(
+                const card = await paymentsRepository.createCard(
                     res,
                     this.getUserId(res),
                     customer.id,
@@ -101,7 +96,7 @@ export class PaymentsService extends BaseService {
                     source: token
                 }) as stripe.ICard;
 
-                const card = await this.paymentsRepository.createCard(res, this.getUserId(res), user.stripeCustomerId,
+                const card = await paymentsRepository.createCard(res, this.getUserId(res), user.stripeCustomerId,
                     nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4, +newCard.exp_month, +newCard.exp_year);
 
                 if (!card) {
@@ -138,11 +133,11 @@ export class PaymentsService extends BaseService {
 
         Emailer.paymentSuccessfulEmail(email, amount);
 
-        return await this.paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
+        return await paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
     }
 
     async userPayment(res: Response, cardUId: string, token: string | null, amount: number, saveCard: boolean): Promise<boolean> {
-        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+        const user = await usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'error', 'User not found');
@@ -156,7 +151,7 @@ export class PaymentsService extends BaseService {
 
             Emailer.paymentSuccessfulEmail(user.email, amount);
 
-            return await this.paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
+            return await paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
                 charge.metadata.paymentUId, amount, charge.id, charge.created);
         } else if (token) {
             // New card
@@ -172,7 +167,7 @@ export class PaymentsService extends BaseService {
 
                     Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId,
+                    return await paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId,
                         charge.metadata.paymentUId, amount, charge.id, charge.created);
                 } else {
                     const newCard = await this.createStripeCard(res, user, token);
@@ -181,7 +176,7 @@ export class PaymentsService extends BaseService {
 
                     Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                    return await this.paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId,
+                    return await paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId,
                         charge.metadata.paymentUId, amount, charge.id, charge.created);
                 }
             } else {
@@ -190,7 +185,7 @@ export class PaymentsService extends BaseService {
 
                 Emailer.paymentSuccessfulEmail(user.email, amount);
 
-                return await this.paymentsRepository.userPayment(res, this.getUserId(res), null,
+                return await paymentsRepository.userPayment(res, this.getUserId(res), null,
                     charge.metadata.paymentUId, amount, charge.id, charge.created);
             }
         } else {
@@ -199,11 +194,11 @@ export class PaymentsService extends BaseService {
     }
 
     async userCards(res: Response): Promise<CardModel[] | null> {
-        return await this.paymentsRepository.userCards(res, this.getUserId(res));
+        return await paymentsRepository.userCards(res, this.getUserId(res));
     }
 
     async createCard(res: Response, token: string): Promise<CardModel> {
-        const user = await this.usersRepository.getLiteUserById(res, this.getUserId(res));
+        const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
@@ -214,7 +209,7 @@ export class PaymentsService extends BaseService {
     }
 
     async deleteCard(res: Response, uId: string): Promise<boolean> {
-        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+        const user = await usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
@@ -228,7 +223,7 @@ export class PaymentsService extends BaseService {
             try {
                 const deleteConfirmation = await stripeAccount.customers.deleteCard(user.stripeCustomerId, card.stripeCardId);
                 if (deleteConfirmation.deleted) {
-                    return await this.paymentsRepository.deleteCard(res, this.getUserId(res), card.uId);
+                    return await paymentsRepository.deleteCard(res, this.getUserId(res), card.uId);
                 } else {
                     ServerValidator.addGlobalError(res, 'error', 'Stripe failed deleting card');
                     throw ValidationUtil.errorResponse(res);
@@ -244,7 +239,7 @@ export class PaymentsService extends BaseService {
     }
 
     async updateDefaultCard(res: Response, uId: string): Promise<boolean> {
-        const user = await this.usersRepository.getUserById(res, this.getUserId(res));
+        const user = await usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
@@ -265,7 +260,7 @@ export class PaymentsService extends BaseService {
                     default_source: card.stripeCardId
                 });
 
-            return await this.paymentsRepository.updateDefaultCard(res, this.getUserId(res), card.uId);
+            return await paymentsRepository.updateDefaultCard(res, this.getUserId(res), card.uId);
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', error);
             throw ValidationUtil.errorResponse(res);
@@ -273,6 +268,8 @@ export class PaymentsService extends BaseService {
     }
 
     async paymentHistory(res: Response): Promise<PaymentModel[] | null> {
-        return await this.paymentsRepository.paymentHistory(res, this.getUserId(res));
+        return await paymentsRepository.paymentHistory(res, this.getUserId(res));
     }
 }
+
+export const paymentsService = new PaymentsService();

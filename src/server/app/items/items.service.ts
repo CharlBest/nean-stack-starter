@@ -6,15 +6,12 @@ import { CommentViewModel } from '../../../shared/view-models/item/comment.view-
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseService } from '../shared/base-service';
-import { ItemsRepository } from './items.repository';
+import { itemsRepository } from './items.repository';
 
-export class ItemsService extends BaseService {
-
-    private itemsRepository: ItemsRepository;
+class ItemsService extends BaseService {
 
     constructor() {
         super();
-        this.itemsRepository = new ItemsRepository();
     }
 
     async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
@@ -22,7 +19,7 @@ export class ItemsService extends BaseService {
             media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
-        const result = await this.itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
+        const result = await itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
@@ -37,7 +34,7 @@ export class ItemsService extends BaseService {
             media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
-        const result = await this.itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
+        const result = await itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
@@ -48,7 +45,7 @@ export class ItemsService extends BaseService {
     }
 
     async get(res: Response, ip: string, uId: string): Promise<ItemViewModel> {
-        const result = await this.itemsRepository.get(res, this.getOptionalUserId(res), ip, uId);
+        const result = await itemsRepository.get(res, this.getOptionalUserId(res), ip, uId);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
@@ -59,7 +56,7 @@ export class ItemsService extends BaseService {
     }
 
     async getItems(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        const result = await this.itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
+        const result = await itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
@@ -70,19 +67,19 @@ export class ItemsService extends BaseService {
     }
 
     async delete(res: Response, uId: string): Promise<boolean> {
-        return await this.itemsRepository.delete(res, this.getUserId(res), uId);
+        return await itemsRepository.delete(res, this.getUserId(res), uId);
     }
 
     async createFavourite(res: Response, uId: string): Promise<boolean> {
-        return await this.itemsRepository.createFavourite(res, this.getUserId(res), uId);
+        return await itemsRepository.createFavourite(res, this.getUserId(res), uId);
     }
 
     async deleteFavourite(res: Response, uId: string): Promise<boolean> {
-        return await this.itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
+        return await itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
     }
 
     async getFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        const result = await this.itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
+        const result = await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'favourite', { required: true });
@@ -93,7 +90,7 @@ export class ItemsService extends BaseService {
     }
 
     async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {
-        const result = await this.itemsRepository.createComment(res, this.getUserId(res), nodeUUId(), itemUId, description);
+        const result = await itemsRepository.createComment(res, this.getUserId(res), nodeUUId(), itemUId, description);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
@@ -104,7 +101,7 @@ export class ItemsService extends BaseService {
     }
 
     async updateComment(res: Response, uId: string, description: string): Promise<CommentModel> {
-        const result = await this.itemsRepository.updateComment(res, this.getUserId(res), uId, description);
+        const result = await itemsRepository.updateComment(res, this.getUserId(res), uId, description);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
@@ -115,11 +112,11 @@ export class ItemsService extends BaseService {
     }
 
     async deleteComment(res: Response, uId: string): Promise<boolean> {
-        return await this.itemsRepository.deleteComment(res, this.getUserId(res), uId);
+        return await itemsRepository.deleteComment(res, this.getUserId(res), uId);
     }
 
     async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[]> {
-        const result = await this.itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
+        const result = await itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
@@ -130,7 +127,7 @@ export class ItemsService extends BaseService {
     }
 
     async getComment(res: Response, ip: string, uId: string): Promise<CommentViewModel> {
-        const result = await this.itemsRepository.getComment(res, this.getUserId(res), ip, uId);
+        const result = await itemsRepository.getComment(res, this.getUserId(res), ip, uId);
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
@@ -140,3 +137,5 @@ export class ItemsService extends BaseService {
         return result;
     }
 }
+
+export const itemsService = new ItemsService();

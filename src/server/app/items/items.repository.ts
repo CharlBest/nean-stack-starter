@@ -8,7 +8,7 @@ import { ItemViewModel } from '../../../shared/view-models/item/item.view-model'
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
-export class ItemsRepository extends BaseRepository {
+class ItemsRepository extends BaseRepository {
 
     constructor() {
         super();
@@ -307,3 +307,5 @@ export class ItemsRepository extends BaseRepository {
         }
     }
 }
+
+export const itemsRepository = new ItemsRepository();
