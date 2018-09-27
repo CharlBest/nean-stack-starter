@@ -4,7 +4,6 @@ import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS, ServerValidator } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
 
@@ -23,7 +22,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -38,7 +37,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -49,7 +48,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -60,7 +59,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -83,7 +82,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'favourite', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -94,7 +93,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -105,7 +104,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -120,7 +119,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;
@@ -131,7 +130,7 @@ class ItemsService extends BaseService {
 
         if (!result) {
             ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return result;

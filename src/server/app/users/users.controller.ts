@@ -9,7 +9,6 @@ import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/updat
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { usersService } from './users.service';
 
@@ -29,7 +28,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(201).json(
@@ -46,7 +45,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -93,7 +92,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -114,7 +113,7 @@ class UsersController extends BaseController {
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'code', Validators.required(viewModel.code));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -128,7 +127,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'code', Validators.required(code));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -159,7 +158,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -186,7 +185,7 @@ class UsersController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'tutorialType', Validators.required(viewModel.tutorialType));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(

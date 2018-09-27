@@ -3,7 +3,6 @@ import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/val
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { generalService } from './general.service';
 
@@ -22,7 +21,7 @@ class GeneralController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(201).json(
@@ -39,7 +38,7 @@ class GeneralController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -54,7 +53,7 @@ class GeneralController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         await generalService.sendFeedback(res, viewModel.content);
@@ -80,7 +79,7 @@ class GeneralController extends BaseController {
         }
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         await generalService.invite(res, viewModel.emails);

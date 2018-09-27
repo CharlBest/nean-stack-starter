@@ -5,7 +5,6 @@ import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { ServerValidator } from '../../../shared/validation/validators';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
@@ -46,7 +45,7 @@ class PaymentsService extends BaseService {
             return await stripeAccount.charges.create(chargeCreationOptions);
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', error);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
     }
 
@@ -84,7 +83,7 @@ class PaymentsService extends BaseService {
 
                 if (!card) {
                     ServerValidator.addGlobalError(res, 'card', { required: true });
-                    throw ValidationUtil.errorResponse(res);
+                    throw new Error();
                 }
 
                 return {
@@ -101,7 +100,7 @@ class PaymentsService extends BaseService {
 
                 if (!card) {
                     ServerValidator.addGlobalError(res, 'card', { required: true });
-                    throw ValidationUtil.errorResponse(res);
+                    throw new Error();
                 }
 
                 return {
@@ -111,7 +110,7 @@ class PaymentsService extends BaseService {
             }
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', error);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
     }
 
@@ -122,7 +121,7 @@ class PaymentsService extends BaseService {
             return await stripeAccount.tokens.retrieve(token);
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', error);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
     }
 
@@ -141,7 +140,7 @@ class PaymentsService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'error', 'User not found');
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const selectedCard = user.userCards.find(x => x.uId === cardUId);
@@ -202,7 +201,7 @@ class PaymentsService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return (await this.createStripeCard(res, user, token)).card;
@@ -213,7 +212,7 @@ class PaymentsService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
@@ -226,15 +225,15 @@ class PaymentsService extends BaseService {
                     return await paymentsRepository.deleteCard(res, this.getUserId(res), card.uId);
                 } else {
                     ServerValidator.addGlobalError(res, 'error', 'Stripe failed deleting card');
-                    throw ValidationUtil.errorResponse(res);
+                    throw new Error();
                 }
             } catch {
                 ServerValidator.addGlobalError(res, 'error', 'Stripe error while deleting card');
-                throw ValidationUtil.errorResponse(res);
+                throw new Error();
             }
         } else {
             ServerValidator.addGlobalError(res, 'error', 'Cannot delete card');
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
     }
 
@@ -243,7 +242,7 @@ class PaymentsService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
@@ -251,7 +250,7 @@ class PaymentsService extends BaseService {
 
         if (!card) {
             ServerValidator.addGlobalError(res, 'user deafult card', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         try {
@@ -263,7 +262,7 @@ class PaymentsService extends BaseService {
             return await paymentsRepository.updateDefaultCard(res, this.getUserId(res), card.uId);
         } catch (error) {
             ServerValidator.addGlobalError(res, 'error', error);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
     }
 

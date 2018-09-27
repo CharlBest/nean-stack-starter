@@ -12,18 +12,29 @@ export class ApiError {
     // development error handler
     // will print stacktrace
     static InternalServerErrorDev(err: any, req: Request, res: Response, next: NextFunction) {
-        res.status(err.status || 500);
+        res.status(err.status || 400);
         res.send({
             message: err.message,
-            error: err
+            error: {
+                error: err,
+                validation: {
+                    formErrors: res.locals.error.formErrors,
+                    globalErrors: res.locals.error.globalErrors
+                }
+            }
         });
     }
 
     static InternalServerErrorProd(err: any, req: Request, res: Response, next: NextFunction) {
-        res.status(err.status || 500);
+        res.status(err.status || 400);
         res.send({
             message: err.message,
-            error: { validation: err.validation }
+            error: {
+                validation: {
+                    formErrors: res.locals.error.formErrors,
+                    globalErrors: res.locals.error.globalErrors
+                }
+            }
         });
     }
 }

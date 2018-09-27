@@ -14,7 +14,6 @@ import { UserProfileViewModel } from '../../../shared/view-models/user/user-prof
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
@@ -56,7 +55,7 @@ class UsersService extends BaseService {
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (!validation) {
             ServerValidator.addGlobalError(res, 'error', true);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
             const salt = await this.generateSalt();
@@ -66,7 +65,7 @@ class UsersService extends BaseService {
 
             if (!user) {
                 ServerValidator.addGlobalError(res, 'user', { required: true });
-                throw ValidationUtil.errorResponse(res);
+                throw new Error();
             }
 
             // Send email
@@ -93,7 +92,7 @@ class UsersService extends BaseService {
             }
 
             if (validation.usernameExist || validation.emailExist) {
-                throw ValidationUtil.errorResponse(res);
+                throw new Error();
             }
         }
     }
@@ -106,7 +105,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return user;
@@ -119,7 +118,7 @@ class UsersService extends BaseService {
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'invalidCredentials', true);
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const viewModel = new TokenViewModel();
@@ -148,7 +147,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const viewModel: UserProfileViewModel = {
@@ -181,7 +180,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         return user;
@@ -192,7 +191,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
@@ -206,7 +205,7 @@ class UsersService extends BaseService {
         if (!user) {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
             ServerValidator.addGlobalError(res, 'email', { notFound: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         Emailer.forgotPasswordEmail(user.email, code);
@@ -222,7 +221,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'password', { error: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         Emailer.passwordUpdated(user.email);
@@ -259,7 +258,7 @@ class UsersService extends BaseService {
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'password', { invalid: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         const salt = await this.generateSalt();
@@ -269,7 +268,7 @@ class UsersService extends BaseService {
 
         if (!updatedUser) {
             ServerValidator.addGlobalError(res, 'password', { error: true });
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         Emailer.passwordUpdated(updatedUser.email);

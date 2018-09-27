@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
 import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { paymentsService } from './payments.service';
 
@@ -21,7 +20,7 @@ class PaymentsController extends BaseController {
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', Validators.required(viewModel.token));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -39,7 +38,7 @@ class PaymentsController extends BaseController {
         const hasCard = ServerValidator.addGlobalError(res, 'cardUId', Validators.required(viewModel.cardUId));
 
         if (hasErrors || (!hasToken && !hasCard)) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -59,7 +58,7 @@ class PaymentsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'token', Validators.required(token));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -73,7 +72,7 @@ class PaymentsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -87,7 +86,7 @@ class PaymentsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(

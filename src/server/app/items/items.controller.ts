@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
 import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
-import { ValidationUtil } from '../../core/utils/validation-util';
 import { BaseController } from '../shared/base-controller';
 import { itemsService } from './items.service';
 
@@ -19,7 +18,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(201).json(
@@ -37,7 +36,7 @@ class ItemsController extends BaseController {
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -51,7 +50,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -74,7 +73,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -88,7 +87,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -102,7 +101,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -127,7 +126,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(201).json(
@@ -145,7 +144,7 @@ class ItemsController extends BaseController {
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -159,7 +158,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -175,7 +174,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
@@ -189,7 +188,7 @@ class ItemsController extends BaseController {
         const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
 
         if (hasErrors) {
-            throw ValidationUtil.errorResponse(res);
+            throw new Error();
         }
 
         res.status(200).json(
