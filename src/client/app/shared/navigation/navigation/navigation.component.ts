@@ -64,17 +64,15 @@ export class NavigationComponent implements OnInit {
         this.loggedInUserId = id;
       });
 
-    // Check if user has gone to primary nav page
-    this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.navigationService.previousUrl = event.url;
-        if (this.activeNavigation === NavigationType.Primary) {
-          this.hasNavigatedToPageWithPrimaryNav = true;
-        }
-      });
+    this.initPrimaryNavWathcer();
+    this.navigationStart();
+    this.navigationEnd();
+    this.configureTopToolbarOnScrollUp();
+    this.checkAllNavItemAssociations();
+  }
 
-    // Navigation Start: remove expired auth token
+  navigationStart() {
+    // Remove expired auth token
     this.router.events
       .pipe(filter(e => e instanceof NavigationStart))
       .subscribe(event => {
@@ -82,8 +80,10 @@ export class NavigationComponent implements OnInit {
           this.authService.removeToken();
         }
       });
+  }
 
-    // Navigation End: Set title, navigation and back route
+  navigationEnd() {
+    // Set title, navigation and back route
     this.router.events
       .pipe(
         filter(e => e instanceof NavigationEnd),
@@ -123,20 +123,18 @@ export class NavigationComponent implements OnInit {
 
         this.updateActiveNavItem();
       });
+  }
 
-    this.bpService.isDesktop$.subscribe(data => {
-      if (data) {
-        this.toolbarHeight = this.desktopTopToolbarHeight;
-      } else {
-        this.toolbarHeight = this.mobileTopToolbarHeight;
-      }
-    });
-
-    // Hide/show top toolbar
-    this.showTopToolbarOnScrollUp();
-
-    // Check if all root routes are set in nav items
-    this.checkAllNavItemAssociations();
+  initPrimaryNavWathcer() {
+    // Check if user has gone to primary nav page
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.navigationService.previousUrl = event.url;
+        if (this.activeNavigation === NavigationType.Primary) {
+          this.hasNavigatedToPageWithPrimaryNav = true;
+        }
+      });
   }
 
   back() {
@@ -152,7 +150,16 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  showTopToolbarOnScrollUp() {
+  configureTopToolbarOnScrollUp() {
+    // Set toolbar height
+    this.bpService.isDesktop$.subscribe(data => {
+      if (data) {
+        this.toolbarHeight = this.desktopTopToolbarHeight;
+      } else {
+        this.toolbarHeight = this.mobileTopToolbarHeight;
+      }
+    });
+
     let prevScrollpos = window.pageYOffset;
     // TODO: this could be a performance bottleneck (Add debounce)
     window.onscroll = () => {

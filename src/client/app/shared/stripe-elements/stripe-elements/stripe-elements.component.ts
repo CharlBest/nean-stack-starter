@@ -26,6 +26,10 @@ export class StripeElementsComponent implements OnInit {
         public themeService: ThemeService) { }
 
     ngOnInit() {
+        this.initialize();
+    }
+
+    initialize() {
         if (this.stripeElementsService.stripeInstance) {
             this.elementsOnInit();
         } else {

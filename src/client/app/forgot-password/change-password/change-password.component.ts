@@ -30,8 +30,15 @@ export class ChangePasswordComponent implements OnInit {
     private passwordStrengthService: PasswordStrengthService) { }
 
   ngOnInit() {
+    this.getParams();
     this.formOnInit();
+  }
 
+  formOnInit() {
+    this.formGroup = this.fb.group(BuildFormGroup.changeForgottenPassword());
+  }
+
+  getParams() {
     this.route.queryParamMap.subscribe(params => {
       if (params.has('code')) {
         this.code = params.get('code');
@@ -40,10 +47,6 @@ export class ChangePasswordComponent implements OnInit {
         this.email = params.get('email');
       }
     });
-  }
-
-  formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.changeForgottenPassword());
   }
 
   onSubmit() {

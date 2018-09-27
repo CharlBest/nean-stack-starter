@@ -27,6 +27,15 @@ export class NewsletterComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.getParams();
+    this.formOnInit();
+  }
+
+  formOnInit() {
+    this.formGroup = this.fb.group(BuildFormGroup.newsletter());
+  }
+
+  getParams() {
     this.route.queryParamMap.subscribe(params => {
       if (params.has('removeEmail')) {
         this.removingEmail = params.get('removeEmail') === 'true';
@@ -34,12 +43,6 @@ export class NewsletterComponent implements OnInit {
         this.removingEmail = false;
       }
     });
-
-    this.formOnInit();
-  }
-
-  formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.newsletter());
   }
 
   add() {

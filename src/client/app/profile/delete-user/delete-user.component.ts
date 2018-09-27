@@ -23,6 +23,10 @@ export class DeleteUserComponent implements OnInit {
         public bpService: BreakpointService) { }
 
     ngOnInit() {
+        this.getParams();
+    }
+
+    getParams() {
         this.route.queryParamMap.subscribe(params => {
             if (params.has('email')) {
                 this.email = params.get('email');

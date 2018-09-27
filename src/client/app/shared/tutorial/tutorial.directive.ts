@@ -17,11 +17,17 @@ export class TutorialDirective implements OnInit {
         private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.initialize();
+        this.getParams();
+    }
+
+    initialize() {
         const elementStyle = (<HTMLElement>this.elementRef.nativeElement).style;
         this.zIndex = elementStyle.zIndex;
         this.backgroundColor = elementStyle.backgroundColor;
+    }
 
-
+    getParams() {
         this.route.queryParamMap
             .subscribe(params => {
                 if (params.has('tut')) {

@@ -28,6 +28,10 @@ export class EditItemComponent implements OnInit {
     private firebaseStorageService: FirebaseStorageService) { }
 
   ngOnInit() {
+    this.getParams();
+  }
+
+  getParams() {
     this.route.paramMap.subscribe(params => {
       if (params.has('uId')) {
         this.itemUId = params.get('uId');

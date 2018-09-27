@@ -37,17 +37,20 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
+    this.getParams();
     this.formOnInit();
+  }
 
+  formOnInit() {
+    this.formGroup = this.fb.group(BuildFormGroup.login());
+  }
+
+  getParams() {
     this.route.queryParamMap.subscribe(params => {
       if (params.has('returnUrl')) {
         this.returnUrl = params.get('returnUrl') || '/profile';
       }
     });
-  }
-
-  formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.login());
   }
 
   onSubmit() {

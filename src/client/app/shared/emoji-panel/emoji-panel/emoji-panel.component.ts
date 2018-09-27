@@ -34,6 +34,10 @@ export class EmojiPanelComponent implements OnInit {
     private preventBackNavigationService: PreventBackNavigationService) { }
 
   ngOnInit() {
+    this.render();
+  }
+
+  render() {
     (<any>emojione).sprites = true;
     (<any>emojione).imagePathSVGSprites = './assets/emoji/';
 

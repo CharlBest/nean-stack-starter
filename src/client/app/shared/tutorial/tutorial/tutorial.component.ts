@@ -44,6 +44,10 @@ export class TutorialComponent implements OnInit {
         this.loggedInUserId = id;
       });
 
+    this.getParams();
+  }
+
+  getParams() {
     this.route.queryParamMap
       .subscribe(params => {
         if (params.has('tut')) {

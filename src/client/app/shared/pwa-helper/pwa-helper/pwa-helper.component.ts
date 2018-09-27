@@ -14,6 +14,10 @@ export class PWAHelperComponent implements OnInit {
     constructor(private deviceService: DeviceDetectorService) { }
 
     ngOnInit() {
+        this.initScreenSizes();
+    }
+
+    initScreenSizes() {
         // TODO: work in progress (need to test individually)
         const deviceInfo: DeviceInfo = this.deviceService.getDeviceInfo();
 

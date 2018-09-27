@@ -21,6 +21,10 @@ export class VerifyComponent implements OnInit {
     public formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
+    this.getParams();
+  }
+
+  getParams() {
     this.route.paramMap
       .subscribe(params => {
         if (params.has('code')) {

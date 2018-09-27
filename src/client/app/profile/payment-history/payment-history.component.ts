@@ -18,6 +18,10 @@ export class PaymentHistoryComponent implements OnInit {
     private formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
+    this.getPaymentHistory();
+  }
+
+  getPaymentHistory() {
     this.profileService.paymentHistory()
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {

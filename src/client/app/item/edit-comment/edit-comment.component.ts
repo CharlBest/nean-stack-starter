@@ -25,6 +25,10 @@ export class EditCommentComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getParams();
+  }
+
+  getParams() {
     this.route.paramMap.subscribe(params => {
       if (params.has('uId')) {
         this.commentUId = params.get('uId');

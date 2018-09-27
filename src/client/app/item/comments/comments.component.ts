@@ -28,6 +28,10 @@ export class CommentsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.getParams();
+  }
+
+  getParams() {
     this.route.paramMap.subscribe(params => {
       if (params.has('uId')) {
         this.itemUId = params.get('uId');

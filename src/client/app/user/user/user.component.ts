@@ -27,6 +27,10 @@ export class UserComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
+    this.getParams();
+  }
+
+  getParams() {
     this.route.paramMap.subscribe(params => {
       if (params.has('id')) {
         const userId = params.get('id');
