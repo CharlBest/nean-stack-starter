@@ -17,7 +17,7 @@ class PaymentsController extends BaseController {
         const formGroup = BuildFormGroup.payment(viewModel.amount);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'token', Validators.required(viewModel.token));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'anonymousPaymentToken', Validators.required(viewModel.token));
 
         if (hasErrors) {
             throw new Error();
@@ -34,11 +34,11 @@ class PaymentsController extends BaseController {
         const formGroup = BuildFormGroup.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        const hasToken = ServerValidator.addGlobalError(res, 'token', Validators.required(viewModel.token));
-        const hasCard = ServerValidator.addGlobalError(res, 'cardUId', Validators.required(viewModel.cardUId));
+        const hasToken = ServerValidator.addGlobalError(res, 'userPaymentToken', Validators.required(viewModel.token));
+        const hasCard = !!Validators.required(viewModel.cardUId);
 
         if (hasErrors || (!hasToken && !hasCard)) {
-            throw new Error();
+            throw new Error('Invalid token or card');
         }
 
         res.status(200).json(
@@ -55,10 +55,10 @@ class PaymentsController extends BaseController {
     async createCard(req: Request, res: Response, next: NextFunction) {
         const token = req.body.token as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'token', Validators.required(token));
+        const hasErrors = !!Validators.required(token);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('Invalid card token');
         }
 
         res.status(200).json(
@@ -69,10 +69,10 @@ class PaymentsController extends BaseController {
     async deleteCard(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('Invalid card uId');
         }
 
         res.status(200).json(
@@ -83,10 +83,10 @@ class PaymentsController extends BaseController {
     async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
         const uId = req.body.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('Invalid card uId');
         }
 
         res.status(200).json(

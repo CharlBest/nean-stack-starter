@@ -10,7 +10,7 @@
       <span>Email verification error</span>
     </div>
 
-    <div *ngIf="formErrorsService.formErrors?.code?.required"
+    <div *ngIf="formErrorsService.globalErrors?.verifyEmailCode?.required"
       class="mat-error">
       Reset code is required
     </div>

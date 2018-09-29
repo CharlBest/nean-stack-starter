@@ -68,7 +68,7 @@
                 <a routerLink="/business/privacy-policy">Privacy Policy</a>
             </div>
 
-            <div *ngIf="formErrorsService.formErrors?.error"
+            <div *ngIf="formErrorsService.globalErrors?.createUserError"
                 class="mat-error">
                 Validation failed for some reason
             </div>

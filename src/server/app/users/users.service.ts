@@ -54,7 +54,7 @@ class UsersService extends BaseService {
 
         const validation = await this.doesUsernameAndEmailExist(res, email, username);
         if (!validation) {
-            ServerValidator.addGlobalError(res, 'error', true);
+            ServerValidator.addGlobalError(res, 'createUserError', true);
             throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
@@ -64,8 +64,7 @@ class UsersService extends BaseService {
             const user = await usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
 
             if (!user) {
-                ServerValidator.addGlobalError(res, 'user', { required: true });
-                throw new Error();
+                throw new Error('User required');
             }
 
             // Send email
@@ -104,8 +103,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.doesUsernameAndEmailExist(res, email, username);
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw new Error();
+            throw new Error('User required');
         }
 
         return user;
@@ -117,7 +115,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
-            ServerValidator.addGlobalError(res, 'invalidCredentials', true);
+            ServerValidator.addGlobalError(res, 'loginInvalidCredentials', true);
             throw new Error();
         }
 
@@ -146,8 +144,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw new Error();
+            throw new Error('User required');
         }
 
         const viewModel: UserProfileViewModel = {
@@ -179,8 +176,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserPublic(res, this.getUserId(res), ip, userId, pageIndex, pageSize);
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw new Error();
+            throw new Error('User required');
         }
 
         return user;
@@ -190,8 +186,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'user', { required: true });
-            throw new Error();
+            throw new Error('User required');
         }
 
         Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
@@ -204,7 +199,7 @@ class UsersService extends BaseService {
 
         if (!user) {
             // TODO: not sure if I should response with this as they can then see what emails are in use.
-            ServerValidator.addGlobalError(res, 'email', { notFound: true });
+            ServerValidator.addGlobalError(res, 'forgotPasswordEmailNotFound', true);
             throw new Error();
         }
 
@@ -220,7 +215,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'password', { error: true });
+            ServerValidator.addGlobalError(res, 'changeForgottenPasswordError', true);
             throw new Error();
         }
 
@@ -257,7 +252,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
-            ServerValidator.addGlobalError(res, 'password', { invalid: true });
+            ServerValidator.addGlobalError(res, 'updatePasswordInvalid', true);
             throw new Error();
         }
 
@@ -267,7 +262,7 @@ class UsersService extends BaseService {
         const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
 
         if (!updatedUser) {
-            ServerValidator.addGlobalError(res, 'password', { error: true });
+            ServerValidator.addGlobalError(res, 'updatePasswordError', true);
             throw new Error();
         }
 

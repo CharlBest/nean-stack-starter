@@ -1,3 +1,5 @@
+import { ErrorEmail, ErrorRequired } from './form-error.model';
+
 export interface ErrorModel {
     globalErrors: GlobalError;
     formErrors: Array<FormError>;
@@ -9,5 +11,22 @@ export interface FormError {
 }
 
 export interface GlobalError {
-    [key: string]: string;
+    // General
+    inviteEmails?: ErrorRequired | ErrorEmail;
+
+    // Payments
+    anonymousPaymentToken?: ErrorRequired;
+    userPaymentToken?: ErrorRequired;
+
+    // Users
+    createUserError?: boolean;
+    changeForgottenPasswordEmail?:
+    { required: boolean } | { email: boolean };
+    changeForgottenPasswordCode?: ErrorRequired;
+    changeForgottenPasswordError?: boolean;
+    forgotPasswordEmailNotFound?: boolean;
+    loginInvalidCredentials?: boolean;
+    updatePasswordInvalid?: boolean;
+    updatePasswordError?: boolean;
+    verifyEmailCode?: ErrorRequired;
 }

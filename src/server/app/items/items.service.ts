@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import { CommentModel } from '../../../shared/models/item/comment.model';
-import { MAX_MEDIA_UPLOADS, ServerValidator } from '../../../shared/validation/validators';
+import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { BaseService } from '../shared/base-service';
@@ -21,8 +21,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw new Error();
+            throw new Error('Error while creating item');
         }
 
         return result;
@@ -36,8 +35,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw new Error();
+            throw new Error('Error while updating item');
         }
 
         return result;
@@ -47,8 +45,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.get(res, this.getOptionalUserId(res), ip, uId);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw new Error();
+            throw new Error('Error while getting item');
         }
 
         return result;
@@ -58,8 +55,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'item', { required: true });
-            throw new Error();
+            throw new Error('Error while getting items');
         }
 
         return result;
@@ -81,8 +77,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'favourite', { required: true });
-            throw new Error();
+            throw new Error('Error while getting favourites');
         }
 
         return result;
@@ -92,8 +87,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.createComment(res, this.getUserId(res), nodeUUId(), itemUId, description);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw new Error();
+            throw new Error('Error while creating comment');
         }
 
         return result;
@@ -103,8 +97,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.updateComment(res, this.getUserId(res), uId, description);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw new Error();
+            throw new Error('Error while updating comment');
         }
 
         return result;
@@ -118,8 +111,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw new Error();
+            throw new Error('Error while getting comments');
         }
 
         return result;
@@ -129,8 +121,7 @@ class ItemsService extends BaseService {
         const result = await itemsRepository.getComment(res, this.getUserId(res), ip, uId);
 
         if (!result) {
-            ServerValidator.addGlobalError(res, 'comment', { required: true });
-            throw new Error();
+            throw new Error('Error while getting comment');
         }
 
         return result;

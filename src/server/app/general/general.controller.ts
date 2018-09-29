@@ -71,11 +71,11 @@ class GeneralController extends BaseController {
         let hasErrors = false;
         if (viewModel.emails && viewModel.emails.length > 0) {
             for (const email of viewModel.emails) {
-                hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'emails', Validators.required(email));
-                hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'emails', Validators.email(email));
+                hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'inviteEmails', Validators.required(email));
+                hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'inviteEmails', Validators.email(email));
             }
         } else {
-            hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'emails', Validators.required(null));
+            hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'inviteEmails', Validators.required(null));
         }
 
         if (hasErrors) {

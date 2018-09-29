@@ -20,9 +20,13 @@
       <mat-error>Invalid email address</mat-error>
     </mat-form-field>
 
-    <div *ngIf="formErrorsService.formErrors?.emails"
+    <div *ngIf="formErrorsService.globalErrors?.inviteEmails?.required"
       class="mat-error">
-      There was an error with the email list
+      Email(s) are required
+    </div>
+    <div *ngIf="formErrorsService.globalErrors?.inviteEmails?.email"
+      class="mat-error">
+      There were an invalid email address
     </div>
   </mat-card-content>
   <mat-card-actions>

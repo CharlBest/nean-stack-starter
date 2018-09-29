@@ -108,9 +108,9 @@ class UsersController extends BaseController {
         const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.password);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', Validators.required(viewModel.email));
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'email', Validators.email(viewModel.email));
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'code', Validators.required(viewModel.code));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'changeForgottenPasswordEmail', Validators.required(viewModel.email));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'changeForgottenPasswordEmail', Validators.email(viewModel.email));
+        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'changeForgottenPasswordCode', Validators.required(viewModel.code));
 
         if (hasErrors) {
             throw new Error();
@@ -124,7 +124,7 @@ class UsersController extends BaseController {
     async verifyEmail(req: Request, res: Response, next: NextFunction) {
         const code = req.body.code;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'code', Validators.required(code));
+        const hasErrors = ServerValidator.addGlobalError(res, 'verifyEmailCode', Validators.required(code));
 
         if (hasErrors) {
             throw new Error();
@@ -182,10 +182,10 @@ class UsersController extends BaseController {
         const viewModel = req.body as CompletedTutorial;
 
         // TODO: no UI element for this error
-        const hasErrors = ServerValidator.addGlobalError(res, 'tutorialType', Validators.required(viewModel.tutorialType));
+        const hasErrors = !!Validators.required(viewModel.tutorialType);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('Tutorial type is required');
         }
 
         res.status(200).json(

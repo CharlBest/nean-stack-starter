@@ -33,10 +33,10 @@ class ItemsController extends BaseController {
         const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        hasErrors = hasErrors || !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -47,10 +47,10 @@ class ItemsController extends BaseController {
     async get(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -70,10 +70,10 @@ class ItemsController extends BaseController {
     async delete(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -84,10 +84,10 @@ class ItemsController extends BaseController {
     async createFavourite(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -98,10 +98,10 @@ class ItemsController extends BaseController {
     async deleteFavourite(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -141,10 +141,10 @@ class ItemsController extends BaseController {
         const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        hasErrors = hasErrors || !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -155,10 +155,10 @@ class ItemsController extends BaseController {
     async deleteComment(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -171,10 +171,10 @@ class ItemsController extends BaseController {
         const pageIndex = +req.query.pageIndex || 0;
         const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(
@@ -185,10 +185,10 @@ class ItemsController extends BaseController {
     async getComment(req: Request, res: Response, next: NextFunction) {
         const uId = req.params.uId as string;
 
-        const hasErrors = ServerValidator.addGlobalError(res, 'uId', Validators.required(uId));
+        const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error();
+            throw new Error('UId is required');
         }
 
         res.status(200).json(

@@ -68,7 +68,7 @@
                 <br>
             </ng-container>
 
-            <div *ngIf="formErrorsService.formErrors?.token?.required"
+            <div *ngIf="formErrorsService.globalErrors?.anonymousPaymentToken?.required || formErrorsService.globalErrors?.userPaymentToken?.required"
                 class="mat-error">
                 Token is required
             </div>

@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ErrorModel } from '../../../../shared/models/shared/error.model';
+import { ErrorModel, GlobalError } from '../../../../shared/models/shared/error.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormErrorsService {
 
-  formErrors: any;
+  globalErrors: GlobalError;
 
   constructor() { }
 
@@ -28,7 +28,7 @@ export class FormErrorsService {
           }
         }
 
-        this.formErrors = errors.globalErrors;
+        this.globalErrors = errors.globalErrors;
       }
     }
   }
