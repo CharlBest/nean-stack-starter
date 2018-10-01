@@ -12,7 +12,7 @@ export interface FormError {
 
 export interface GlobalError {
     // General
-    inviteEmails?: ErrorRequired | ErrorEmail;
+    inviteEmails?: ErrorRequired & ErrorEmail;
 
     // Payments
     anonymousPaymentToken?: ErrorRequired;
@@ -20,8 +20,7 @@ export interface GlobalError {
 
     // Users
     createUserError?: boolean;
-    changeForgottenPasswordEmail?:
-    { required: boolean } | { email: boolean };
+    changeForgottenPasswordEmail?: ErrorRequired & ErrorEmail;
     changeForgottenPasswordCode?: ErrorRequired;
     changeForgottenPasswordError?: boolean;
     forgotPasswordEmailNotFound?: boolean;
