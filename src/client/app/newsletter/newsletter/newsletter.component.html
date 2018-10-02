@@ -27,21 +27,21 @@
         type="submit"
         *ngIf="!removingEmail"
         [disabled]="!formGroup.valid"
-        (click)="add()">Join</button>
+        (click)="add()">Subscribe</button>
       <button mat-raised-button
         color="warn"
         type="submit"
         *ngIf="removingEmail"
         [disabled]="!formGroup.valid"
-        (click)="remove()">Remove</button>
+        (click)="remove()">Unsubscribe</button>
     </mat-card-actions>
   </mat-card>
 </form>
 
 <mat-card *ngIf="!isProcessing && isDone">
   <mat-card-content>
-    <span *ngIf="!removingEmail">Thank you for joining</span>
-    <span *ngIf="removingEmail">You are now removed</span>
+    <span *ngIf="!removingEmail">Thank you for subscribing</span>
+    <span *ngIf="removingEmail">You are now unsubscribed</span>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button
