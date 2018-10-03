@@ -22,10 +22,7 @@ export class TutorialComponent implements OnInit {
     new Tutorial(TutorialType.Feedback, 'Email the team some feedback', TutorialType.None, undefined, true),
 
     // Tutorial 2
-    new Tutorial(TutorialType.ProfileShare, 'Share your profile', TutorialType.ProfileReport, true),
-    new Tutorial(TutorialType.ProfileReport, 'Report the user', TutorialType.DeleteUser),
-    new Tutorial(TutorialType.DeleteUser, 'Delete your account', TutorialType.AvatarUpload),
-    new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword),
+    new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword, true),
     new Tutorial(TutorialType.UpdatePassword, 'Update your password', TutorialType.None, undefined, true)
   ];
   tutorialTypeEnum = TutorialType;

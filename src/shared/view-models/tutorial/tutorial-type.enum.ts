@@ -4,9 +4,6 @@ export enum TutorialType {
     ForgotPassword = 2,
     Feedback = 3,
     Newsletter = 4,
-    ProfileShare = 5,
-    ProfileReport = 6,
-    DeleteUser = 7,
-    AvatarUpload = 8,
-    UpdatePassword = 9,
+    AvatarUpload = 5,
+    UpdatePassword = 6,
 }

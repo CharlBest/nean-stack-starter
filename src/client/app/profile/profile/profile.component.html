@@ -13,13 +13,40 @@
   <mat-card>
     <mat-card-title class="profile-title">
       {{user.username}}
-      <button mat-icon-button
-        (click)="profileTour()"
-        type="button"
-        matTooltip="Info"
-        aria-label="Info">
-        <mat-icon>info_outline</mat-icon>
-      </button>
+
+      <app-context-menu #contextMenu>
+        <mat-nav-list>
+          <mat-list-item (click)="resendEmailVerificationLink()">
+            <mat-icon mat-list-icon>mail</mat-icon>
+            <span mat-line>Resend email verification</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/user/{{user.id}}">
+            <mat-icon mat-list-icon>fiber_manual_record</mat-icon>
+            <span mat-line>Items</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/item/saved">
+            <mat-icon mat-list-icon>star</mat-icon>
+            <span mat-line>Saved</span>
+          </mat-list-item>
+          <mat-list-item (click)="openShareDialog()">
+            <mat-icon mat-list-icon>share</mat-icon>
+            <span mat-line>Share</span>
+          </mat-list-item>
+          <mat-list-item *ngIf="!user.emailVerified"
+            (click)="reportUser()">
+            <mat-icon mat-list-icon>report</mat-icon>
+            <span mat-line>Report</span>
+          </mat-list-item>
+          <mat-list-item (click)="profileTour()">
+            <mat-icon mat-list-icon>info_outline</mat-icon>
+            <span mat-line>Profile Tour</span>
+          </mat-list-item>
+          <mat-list-item (click)="openDeleteAccountDialog()">
+            <mat-icon mat-list-icon>delete</mat-icon>
+            <span mat-line>Delete account</span>
+          </mat-list-item>
+        </mat-nav-list>
+      </app-context-menu>
     </mat-card-title>
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     <mat-card-content>
@@ -33,31 +60,6 @@
       </div>
       <div>Sign-up date: {{user.dateCreated | date}}</div>
     </mat-card-content>
-    <mat-card-actions class="profile-actions">
-      <button mat-raised-button
-        type="button"
-        routerLink="/user/{{user.id}}">Items</button>
-      <button mat-raised-button
-        type="button"
-        routerLink="/item/saved">Saved</button>
-      <button mat-raised-button
-        type="button"
-        (click)="openShareDialog()"
-        [appTutorial]="tutorialTypeEnum.ProfileShare">Share</button>
-      <button mat-raised-button
-        type="button"
-        (click)="reportUser()"
-        [appTutorial]="tutorialTypeEnum.ProfileReport">Report</button>
-      <button mat-raised-button
-        type="button"
-        (click)="resendEmailVerificationLink()"
-        *ngIf="!user.emailVerified">Resend email verification</button>
-      <button mat-raised-button
-        color="warn"
-        type="button"
-        (click)="openDeleteAccountDialog()"
-        [appTutorial]="tutorialTypeEnum.DeleteUser">Delete account</button>
-    </mat-card-actions>
   </mat-card>
 
   <mat-card [appTutorial]="tutorialTypeEnum.AvatarUpload">

@@ -128,6 +128,6 @@ export class ProfileComponent implements OnInit {
   }
 
   profileTour() {
-    this.tutorialService.activateTutorial(TutorialType.ProfileShare);
+    this.tutorialService.activateTutorial(TutorialType.AvatarUpload);
   }
 }

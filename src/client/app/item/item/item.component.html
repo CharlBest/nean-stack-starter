@@ -2,7 +2,8 @@
     <mat-card-content>
         <div class="header">
             <button routerLink="/user/{{item?.user?.id}}"
-                mat-button>
+                mat-button
+                type="button">
                 <div>
                     <div *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
                         mat-card-avatar
@@ -83,7 +84,8 @@
         <div class="more-button-container">
             <button mat-button
                 *ngIf="showMoreButton"
-                (click)="showMoreDescription()">More</button>
+                (click)="showMoreDescription()"
+                type="button">More</button>
         </div>
     </mat-card-content>
     <mat-card-actions>

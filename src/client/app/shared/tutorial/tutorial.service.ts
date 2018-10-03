@@ -41,9 +41,6 @@ export class TutorialService {
                 navigateUrl.push('/feedback');
                 break;
 
-            case TutorialType.ProfileShare:
-            case TutorialType.ProfileReport:
-            case TutorialType.DeleteUser:
             case TutorialType.AvatarUpload:
             case TutorialType.UpdatePassword:
                 navigateUrl.push('/profile');
