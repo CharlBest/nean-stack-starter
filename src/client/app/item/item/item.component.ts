@@ -119,7 +119,9 @@ export class ItemComponent implements OnInit, AfterViewInit {
     }
   }
 
-  favouriteItem() {
+  favouriteItem(event: Event) {
+    event.stopPropagation();
+
     if (this.item.favourite) {
       this.deleteFavourite();
     } else {

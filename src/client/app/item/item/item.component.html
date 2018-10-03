@@ -24,7 +24,7 @@
             <app-context-menu #contextMenu>
                 <mat-nav-list>
                     <mat-list-item *ngIf="loggedInUserId"
-                        (click)="favouriteItem()">
+                        (click)="favouriteItem($event)">
                         <mat-icon mat-list-icon
                             [color]="item?.favourite ? 'accent' : ''">star</mat-icon>
                         <span mat-line>Save</span>
