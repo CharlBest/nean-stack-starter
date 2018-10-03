@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { ShareService } from '../../services/share.service';
 
 @Component({
     selector: 'app-share-dialog',
@@ -8,29 +8,16 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ShareDialogComponent {
 
-    link: string;
+    url: string;
 
-    constructor(private snackBar: MatSnackBar) { }
-
-    onLinkClick() {
-        return false;
-    }
-
-    hasWebShareApi() {
-        if ((<any>navigator).share) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    constructor(public shareService: ShareService) { }
 
     webShare() {
-        if (this.hasWebShareApi()) {
-            (<any>navigator).share({ title: 'Referral link', text: '', url: this.link, });
-        }
+        this.shareService.webShare('Link', this.url);
     }
 
-    openSnackBar() {
-        this.snackBar.open('Copied');
+    copy() {
+        this.shareService.copy(this.url);
+        return false;
     }
 }

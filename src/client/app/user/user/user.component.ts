@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from 'shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
+import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { UserService } from '../user.service';
 
@@ -15,6 +17,7 @@ import { UserService } from '../user.service';
 })
 export class UserComponent implements OnInit {
 
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
   isProcessing = true;
   userId: number | null;
   user: UserPublicViewModel;
@@ -24,7 +27,8 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private formErrorsService: FormErrorsService,
     private shareDialogService: ShareDialogService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private shareService: ShareService) { }
 
   ngOnInit() {
     this.getParams();
@@ -65,7 +69,19 @@ export class UserComponent implements OnInit {
 
   openShareDialog() {
     if (this.userId) {
-      this.shareDialogService.share(['/user', this.userId]);
+      this.contextMenu.close();
+
+      const url = ['/user', this.userId];
+      if (!this.shareService.webShareWithUrl('User', url)) {
+        this.shareDialogService.share(url);
+      }
+    }
+  }
+
+  copyLink() {
+    if (this.userId) {
+      this.shareService.copyWithUrl(['/user', this.userId]);
+      this.contextMenu.close();
     }
   }
 }

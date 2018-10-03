@@ -6,10 +6,12 @@ import { ReportUserViewModel } from '../../../../shared/view-models/profile/repo
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
+import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
+import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 import { ProfileService } from '../profile.service';
@@ -22,6 +24,7 @@ import { ProfileService } from '../profile.service';
 export class ProfileComponent implements OnInit {
 
   @ViewChild('backNavRightPlaceholder') backNavRightPlaceholder: TemplateRef<any>;
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
   user: UserProfileViewModel;
   isProcessing = true;
   tutorialTypeEnum = TutorialType;
@@ -34,7 +37,8 @@ export class ProfileComponent implements OnInit {
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService,
     private router: Router,
-    private navigationService: NavigationService) { }
+    private navigationService: NavigationService,
+    private shareService: ShareService) { }
 
   ngOnInit() {
     this.getUser();
@@ -56,10 +60,6 @@ export class ProfileComponent implements OnInit {
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
-  }
-
-  openShareDialog() {
-    this.shareDialogService.share(['/user', this.user.id]);
   }
 
   reportUser() {
@@ -129,5 +129,19 @@ export class ProfileComponent implements OnInit {
 
   profileTour() {
     this.tutorialService.activateTutorial(TutorialType.AvatarUpload);
+  }
+
+  openShareDialog() {
+    this.contextMenu.close();
+
+    const url = ['/user', this.user.id];
+    if (!this.shareService.webShareWithUrl('User', url)) {
+      this.shareDialogService.share(url);
+    }
+  }
+
+  copyLink() {
+    this.shareService.copyWithUrl(['/user', this.user.id]);
+    this.contextMenu.close();
   }
 }

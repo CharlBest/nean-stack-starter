@@ -1,12 +1,22 @@
 <div [hidden]="isProcessing || !user">
     <mat-card>
-        <mat-card-title>{{user?.username}}</mat-card-title>
+        <mat-card-title class="title">
+            {{user?.username}}
+
+            <app-context-menu #contextMenu>
+                <mat-nav-list>
+                    <mat-list-item (click)="copyLink()">
+                        <mat-icon mat-list-icon>link</mat-icon>
+                        <span mat-line>Copy link to User</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="openShareDialog()">
+                        <mat-icon mat-list-icon>share</mat-icon>
+                        <span mat-line>Share</span>
+                    </mat-list-item>
+                </mat-nav-list>
+            </app-context-menu>
+        </mat-card-title>
         <mat-card-content [innerHTML]="user?.bio"></mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button
-                type="button"
-                (click)="openShareDialog()">Share</button>
-        </mat-card-actions>
     </mat-card>
 
     <app-item *ngFor="let item of user?.items"

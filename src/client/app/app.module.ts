@@ -4,6 +4,7 @@ import { MatDialogConfig, MatProgressSpinnerDefaultOptions, MatSnackBarConfig, M
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ClipboardModule } from 'ngx-clipboard';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     NavigationModule,
     TutorialModule,
     DialogModule,
+    ClipboardModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

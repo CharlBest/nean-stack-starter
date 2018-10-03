@@ -11,7 +11,7 @@
 <div [hidden]="isProcessing"
   *ngIf="user">
   <mat-card>
-    <mat-card-title class="profile-title">
+    <mat-card-title class="title">
       {{user.username}}
 
       <app-context-menu #contextMenu>
@@ -27,6 +27,10 @@
           <mat-list-item routerLink="/item/saved">
             <mat-icon mat-list-icon>star</mat-icon>
             <span mat-line>Saved</span>
+          </mat-list-item>
+          <mat-list-item (click)="copyLink()">
+            <mat-icon mat-list-icon>link</mat-icon>
+            <span mat-line>Copy link to User</span>
           </mat-list-item>
           <mat-list-item (click)="openShareDialog()">
             <mat-icon mat-list-icon>share</mat-icon>

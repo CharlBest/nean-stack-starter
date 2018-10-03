@@ -28,12 +28,33 @@
     </div>
 
     <div>
-        <button mat-icon-button
-            type="button"
-            matTooltip="Menu"
-            aria-label="Menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
+        <app-context-menu #contextMenu>
+            <mat-nav-list>
+                <mat-list-item (click)="copyLink()">
+                    <mat-icon mat-list-icon>link</mat-icon>
+                    <span mat-line>Copy link to Comment</span>
+                </mat-list-item>
+                <mat-list-item (click)="openShareDialog()">
+                    <mat-icon mat-list-icon>share</mat-icon>
+                    <span mat-line>Share</span>
+                </mat-list-item>
+                <mat-list-item *ngIf="itemUserId === loggedInUserId"
+                    routerLink="/item/comment/edit/{{comment.uId}}">
+                    <mat-icon mat-list-icon>edit</mat-icon>
+                    <span mat-line>Edit</span>
+                </mat-list-item>
+                <mat-list-item (click)="deleteComment()"
+                    *ngIf="itemUserId === loggedInUserId">
+                    <mat-icon mat-list-icon
+                        color="warn">delete</mat-icon>
+                    <span mat-line>Delete</span>
+                </mat-list-item>
+                <mat-list-item (click)="reportComment()">
+                    <mat-icon mat-list-icon>report</mat-icon>
+                    <span mat-line>Report</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </app-context-menu>
     </div>
 </div>
 

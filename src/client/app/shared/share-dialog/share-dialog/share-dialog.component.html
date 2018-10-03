@@ -1,23 +1,18 @@
 <h2 mat-dialog-title>Share</h2>
 <mat-dialog-content>
-    <a [href]="link"
-        (click)="onLinkClick()"
-        ngxClipboard
-        [cbContent]="link"
-        (cbOnSuccess)="openSnackBar()">{{link}}</a>
+    <a [href]="url"
+        (click)="copy()">{{url}}</a>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-raised-button
-        type="button"
-        ngxClipboard
-        [cbContent]="link"
-        (cbOnSuccess)="openSnackBar()">COPY</button>
+        (click)="copy()"
+        type="button">COPY</button>
     <button mat-raised-button
         type="button"
         mat-dialog-close>Cancel</button>
     <span class="flex-spacer"></span>
     <button mat-icon-button
-        *ngIf="hasWebShareApi()"
+        *ngIf="shareService.hasWebShareApi()"
         (click)="webShare()"
         type="button"
         matTooltip="Share"

@@ -8,6 +8,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
+import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { ItemService } from '../item.service';
 
@@ -32,7 +33,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     public bpService: BreakpointService,
-    private shareDialogService: ShareDialogService) { }
+    private shareDialogService: ShareDialogService,
+    private shareService: ShareService) { }
 
   ngOnInit() {
   }
@@ -61,18 +63,22 @@ export class ItemComponent implements OnInit, AfterViewInit {
       if (data) {
         this.contextMenu.close();
 
+        this.snackBar.open('Deleting...');
+
         this.itemService.delete(this.item.uId)
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(() => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Deleted');
+            // TODO: very dirty and bad UI but will work for now
+            location.reload();
           }, error => {
+            this.snackBar.dismiss();
+            this.snackBar.open('Delete failed');
             this.formErrorsService.updateFormValidity(error);
           });
       }
     });
-  }
-
-  openShareDialog() {
-    this.shareDialogService.share(['/home', this.item.uId]);
   }
 
   reportItem() {
@@ -145,5 +151,19 @@ export class ItemComponent implements OnInit, AfterViewInit {
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
+  }
+
+  openShareDialog() {
+    this.contextMenu.close();
+
+    const url = ['/item/comments', this.item.uId];
+    if (!this.shareService.webShareWithUrl('Item', url)) {
+      this.shareDialogService.share(url);
+    }
+  }
+
+  copyLink() {
+    this.shareService.copyWithUrl(['/item/comments', this.item.uId]);
+    this.contextMenu.close();
   }
 }

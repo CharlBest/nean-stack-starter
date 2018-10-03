@@ -20,7 +20,7 @@
     <mat-card-content>
         <app-comment *ngFor="let comment of comments"
             [comment]="comment"
-            [itemUserId]="item?.user?.id"></app-comment>
+            [itemUserId]="comment?.user?.id"></app-comment>
     </mat-card-content>
 </mat-card>
 

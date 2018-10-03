@@ -1,6 +1,10 @@
 <app-comment-form #commentForm
-    *ngIf="!isProcessing"
+    *ngIf="!isProcessing && comment"
     [comment]="comment"
     (onSubmit)="onSubmit()"></app-comment-form>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>
+
+<mat-card *ngIf="!isProcessing && !comment">
+    No comment found
+</mat-card>

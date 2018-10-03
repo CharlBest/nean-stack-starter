@@ -24,6 +24,10 @@
 
             <app-context-menu #contextMenu>
                 <mat-nav-list>
+                    <mat-list-item (click)="copyLink()">
+                        <mat-icon mat-list-icon>link</mat-icon>
+                        <span mat-line>Copy link to Item</span>
+                    </mat-list-item>
                     <mat-list-item *ngIf="loggedInUserId"
                         (click)="favouriteItem($event)">
                         <mat-icon mat-list-icon

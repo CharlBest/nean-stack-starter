@@ -62,6 +62,8 @@ export class CommentsComponent implements OnInit {
       this.itemService.getComments(this.itemUId, 0)
         .pipe(finalize(() => this.isProcessingComment = false))
         .subscribe(data => {
+          // TODO: is the the fastest way?
+          data.forEach(x => x.itemUId = this.itemUId);
           this.comments = data;
         }, error => {
           this.formErrorsService.updateFormValidity(error);
