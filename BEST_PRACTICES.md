@@ -13,3 +13,5 @@
 * Zoom browser in/out
 * Test all browsers
 * Check Lighthouse score in Chrome Dev Tools audit
+* Google PageSpeed Insights - https://developers.google.com/speed/pagespeed/insights/
+* Lighthouse Audit via Chrome DevTools
