@@ -2,6 +2,7 @@ import { Application } from 'express';
 import * as http from 'http';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
+import logger from './middleware/logger';
 
 export class Server {
 
@@ -20,7 +21,7 @@ export class Server {
 
     init(app: Application): void {
         this.httpServer.on('listening', () => {
-            console.log(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
+            logger.info(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
         });
 
         // this.httpServer.on('error', (error) => { });
