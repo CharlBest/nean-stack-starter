@@ -18,8 +18,8 @@ export class ApiError {
             error: {
                 error: err,
                 validation: {
-                    formErrors: res.locals.error.formErrors,
-                    globalErrors: res.locals.error.globalErrors
+                    formErrors: res.locals.error && res.locals.error.formErrors ? res.locals.error.formErrors : null,
+                    globalErrors: res.locals.error && res.locals.error.globalErrors ? res.locals.error.globalErrors : null
                 }
             }
         });
@@ -31,8 +31,8 @@ export class ApiError {
             message: err.message,
             error: {
                 validation: {
-                    formErrors: res.locals.error.formErrors,
-                    globalErrors: res.locals.error.globalErrors
+                    formErrors: res.locals.error && res.locals.error.formErrors ? res.locals.error.formErrors : null,
+                    globalErrors: res.locals.error && res.locals.error.globalErrors ? res.locals.error.globalErrors : null
                 }
             }
         });

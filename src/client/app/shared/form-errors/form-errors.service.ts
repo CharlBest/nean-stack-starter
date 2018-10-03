@@ -14,7 +14,9 @@ export class FormErrorsService {
 
   updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup | null = null) {
     if (errorResponse.status === 400) {
-      const errors = errorResponse.error.error.validation as ErrorModel;
+      const errors = errorResponse && errorResponse.error && errorResponse.error.error
+        ? errorResponse.error.error.validation as ErrorModel
+        : null;
 
       if (errors) {
         if (errors.formErrors && form) {
