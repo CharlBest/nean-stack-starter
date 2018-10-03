@@ -4,7 +4,8 @@
 * Remove unused imports especially Angular Material
 * mat-icon should have role and tooltip
 * Remove all inline styles
-* Button type should always be set to button/submit
+* Button type should always be set to button or submit
+* mat-icon-button should always contain a tooltop and aria-label
 
 ### Testing
 * Responsiveness by resizing window

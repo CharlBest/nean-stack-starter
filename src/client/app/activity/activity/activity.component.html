@@ -15,8 +15,8 @@
                 <mat-list-item *ngFor="let message of notificationService.messages; let i = index">
                     <span mat-line>{{message}}</span>
                     <button mat-icon-button
-                        type="button"
                         (click)="removeMessage(i)"
+                        type="button"
                         matTooltip="Mark As Read"
                         aria-label="Mark As Read">
                         <mat-icon>close</mat-icon>

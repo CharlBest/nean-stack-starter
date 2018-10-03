@@ -17,9 +17,9 @@
         mat-dialog-close>Cancel</button>
     <span class="flex-spacer"></span>
     <button mat-icon-button
-        type="button"
         *ngIf="hasWebShareApi()"
         (click)="webShare()"
+        type="button"
         matTooltip="Share"
         aria-label="Share">
         <mat-icon>share</mat-icon>

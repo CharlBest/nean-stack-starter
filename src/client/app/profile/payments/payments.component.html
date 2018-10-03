@@ -36,7 +36,9 @@
                 *ngIf="!card.isDefault || userCards.length === 1"
                 color="warn"
                 (click)="deleteCard(card.uId)"
-                type="button">
+                type="button"
+                matTooltip="Delete"
+                aria-label="Delete">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

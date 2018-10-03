@@ -53,11 +53,17 @@
             <div *ngIf="item?.media?.length > 1">
                 <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
                 <button mat-icon-button
-                    (click)="mediaPrevious()">
+                    (click)="mediaPrevious()"
+                    type="button"
+                    matTooltip="Previous"
+                    aria-label="Previous">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </button>
                 <button mat-icon-button
-                    (click)="mediaNext()">
+                    (click)="mediaNext()"
+                    type="button"
+                    matTooltip="Next"
+                    aria-label="Next">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </button>
             </div>

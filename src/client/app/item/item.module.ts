@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatTooltipModule } from '@angular/material';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { MediaModule } from '../shared/media/media.module';
@@ -27,6 +27,7 @@ const materialModules = [
   MatMenuModule,
   MatListModule,
   MatIconModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

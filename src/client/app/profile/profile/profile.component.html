@@ -1,7 +1,9 @@
 <ng-template #backNavRightPlaceholder>
   <button routerLink="/business/user-data"
     mat-icon-button
-    type="button">
+    type="button"
+    matTooltip="User data"
+    aria-label="User data">
     <mat-icon>graphic_eq</mat-icon>
   </button>
 </ng-template>
@@ -12,8 +14,10 @@
     <mat-card-title class="profile-title">
       {{user.username}}
       <button mat-icon-button
+        (click)="profileTour()"
         type="button"
-        (click)="profileTour()">
+        matTooltip="Info"
+        aria-label="Info">
         <mat-icon>info_outline</mat-icon>
       </button>
     </mat-card-title>
