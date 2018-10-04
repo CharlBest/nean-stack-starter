@@ -1,6 +1,7 @@
 <mat-card [hidden]="isProcessing || isDone">
   <mat-card-content>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Emails</mat-label>
       <mat-chip-list #chipList>
         <mat-chip *ngFor="let email of emails"
           (removed)="remove(email)">
@@ -9,7 +10,6 @@
         </mat-chip>
 
         <input #emailsInput
-          placeholder="emails"
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)"

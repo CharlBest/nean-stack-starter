@@ -11,7 +11,8 @@
                     Zip: Any 5 degit number">info_outline</mat-icon>
             </div>
 
-            <mat-form-field *ngIf="isAuthenticated && userCards?.length > 0">
+            <mat-form-field appearance="fill"
+                *ngIf="isAuthenticated && userCards?.length > 0">
                 <mat-label>Cards</mat-label>
                 <mat-select formControlName="cardUId"
                     [value]="userCards[0]?.uId">
@@ -29,7 +30,7 @@
                 #stripeElements
                 (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
 
-            <mat-form-field>
+            <mat-form-field appearance="fill">
                 <input matInput
                     floatLabel="never"
                     formControlName="amount"
@@ -46,7 +47,7 @@
             <ng-container *ngIf="!isAuthenticated">
                 <br>
 
-                <mat-form-field>
+                <mat-form-field appearance="fill">
                     <input matInput
                         formControlName="email"
                         placeholder="Email"

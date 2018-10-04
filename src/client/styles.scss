@@ -181,3 +181,12 @@ body {
 .dark-theme .stripe-element {
 	border-color: rgba(255, 255, 255, 0.7) !important;
 }
+
+// Override mat-form-field appearance="fill" to remove the bottom field underline
+.mat-form-field-underline {
+	display: none;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+	border-radius: 4px !important;
+}
