@@ -38,13 +38,13 @@
                     <mat-icon mat-list-icon>share</mat-icon>
                     <span mat-line>Share</span>
                 </mat-list-item>
-                <mat-list-item *ngIf="itemUserId === loggedInUserId"
+                <mat-list-item *ngIf="comment?.user?.id === loggedInUserId"
                     routerLink="/item/comment/edit/{{comment.uId}}">
                     <mat-icon mat-list-icon>edit</mat-icon>
                     <span mat-line>Edit</span>
                 </mat-list-item>
                 <mat-list-item (click)="deleteComment()"
-                    *ngIf="itemUserId === loggedInUserId">
+                    *ngIf="comment?.user?.id === loggedInUserId">
                     <mat-icon mat-list-icon
                         color="warn">delete</mat-icon>
                     <span mat-line>Delete</span>
