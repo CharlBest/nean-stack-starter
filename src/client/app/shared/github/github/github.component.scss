@@ -1,3 +1,7 @@
-.github-readme-container ::ng-deep code {
-	white-space: pre-line;
+div {
+	overflow-wrap: break-word;
+
+	::ng-deep code {
+		white-space: pre-line;
+	}
 }

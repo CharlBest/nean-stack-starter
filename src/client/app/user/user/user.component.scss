@@ -1,5 +1,6 @@
 mat-card-content ::ng-deep img {
 	max-width: 100%;
+	overflow-wrap: break-word;
 }
 
 .title {
