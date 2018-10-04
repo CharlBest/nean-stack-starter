@@ -1,8 +1,9 @@
 import { Application } from 'express';
 import * as http from 'http';
+import { environment } from '../environments/environment';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
-import logger from './middleware/logger';
+import logger from './utils/logger';
 
 export class Server {
 
@@ -21,7 +22,12 @@ export class Server {
 
     init(app: Application): void {
         this.httpServer.on('listening', () => {
-            logger.info(`Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`);
+            const message = `Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`;
+            logger.info(message);
+
+            if (environment.production) {
+                console.log(message);
+            }
         });
 
         // this.httpServer.on('error', (error) => { });
