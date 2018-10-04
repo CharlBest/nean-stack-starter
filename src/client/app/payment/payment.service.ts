@@ -18,7 +18,7 @@ export class PaymentService {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${PaymentRoutes.anonymousPayment().client()}`, viewModel);
     }
 
-    userCards(): Observable<CardModel[]> {
+    userCards(): Observable<CardModel[] | null> {
         return this.http.get<CardModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.userCards().client()}`);
     }
 

@@ -35,7 +35,9 @@ export class HomeComponent implements OnInit {
     this.homeService.getItems(0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.items = data;
+        if (data) {
+          this.items = data;
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });

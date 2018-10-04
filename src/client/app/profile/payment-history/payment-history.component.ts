@@ -25,7 +25,9 @@ export class PaymentHistoryComponent implements OnInit {
     this.profileService.paymentHistory()
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.paymentHistory = data;
+        if (data) {
+          this.paymentHistory = data;
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });

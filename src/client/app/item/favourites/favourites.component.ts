@@ -27,7 +27,9 @@ export class FavouritesComponent implements OnInit {
     this.itemService.getFavourites(0)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.items = data;
+        if (data) {
+          this.items = data;
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });

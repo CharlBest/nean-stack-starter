@@ -51,11 +51,13 @@ export class ProfileComponent implements OnInit {
     this.profileService.getUserProfile()
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.user = data;
+        if (data) {
+          // Default card first
+          if (data.userCards) {
+            data.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+          }
 
-        // Default card first
-        if (this.user.userCards) {
-          this.user.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+          this.user = data;
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error);

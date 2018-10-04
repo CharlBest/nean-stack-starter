@@ -16,15 +16,15 @@ export class ItemService {
 
     constructor(private http: HttpClient) { }
 
-    create(viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
+    create(viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel | null> {
         return this.http.post<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.create().client()}`, viewModel);
     }
 
-    update(uId: string, viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel> {
+    update(uId: string, viewModel: CreateOrUpdateItemViewModel): Observable<ItemViewModel | null> {
         return this.http.put<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.update(uId).client()}`, viewModel);
     }
 
-    get(uId: string): Observable<ItemViewModel> {
+    get(uId: string): Observable<ItemViewModel | null> {
         return this.http.get<ItemViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.get(uId).client()}`);
     }
 
@@ -44,16 +44,16 @@ export class ItemService {
         return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteFavourite(uId).client()}`);
     }
 
-    getFavourites(pageIndex: number, pageSize?: number): Observable<ItemViewModel[]> {
+    getFavourites(pageIndex: number, pageSize?: number): Observable<ItemViewModel[] | null> {
         return this.http
             .get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`);
     }
 
-    createComment(itemUId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
+    createComment(itemUId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel | null> {
         return this.http.post<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.createComment(itemUId).client()}`, viewModel);
     }
 
-    updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel> {
+    updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Observable<CommentViewModel | null> {
         return this.http.put<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel);
     }
 
@@ -61,12 +61,12 @@ export class ItemService {
         return this.http.delete<void>(`${environment.apiUrlEndpoint}${ItemRoutes.deleteComment(uId).client()}`);
     }
 
-    getComments(itemUId: string, pageIndex: number, pageSize?: number): Observable<CommentViewModel[]> {
+    getComments(itemUId: string, pageIndex: number, pageSize?: number): Observable<CommentViewModel[] | null> {
         return this.http
             .get<CommentViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getComments(itemUId).client({ pageIndex, pageSize })}`);
     }
 
-    getComment(uId: string): Observable<CommentViewModel> {
+    getComment(uId: string): Observable<CommentViewModel | null> {
         return this.http.get<CommentViewModel>(`${environment.apiUrlEndpoint}${ItemRoutes.getComment(uId).client()}`);
     }
 }

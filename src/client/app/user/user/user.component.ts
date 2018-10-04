@@ -49,18 +49,20 @@ export class UserComponent implements OnInit {
       this.userService.getUserPublic(this.userId, 0)
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(data => {
-          if (this.userId) {
-            const itemsOwner = {
-              id: this.userId,
-              username: data.username,
-              avatarUrl: data.avatarUrl
-            };
+          if (data) {
+            if (this.userId) {
+              const itemsOwner = {
+                id: this.userId,
+                username: data.username,
+                avatarUrl: data.avatarUrl
+              };
 
-            // TODO: This can be optomized
-            data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+              // TODO: This can be optomized
+              data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+            }
+
+            this.user = data;
           }
-
-          this.user = data;
         }, error => {
           this.formErrorsService.updateFormValidity(error);
         });

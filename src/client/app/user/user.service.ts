@@ -12,7 +12,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getUserPublic(userId: number, pageIndex: number, pageSize?: number): Observable<UserPublicViewModel> {
+    getUserPublic(userId: number, pageIndex: number, pageSize?: number): Observable<UserPublicViewModel | null> {
         return this.http
             .get<UserPublicViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserPublic(userId).client({ pageIndex, pageSize })}`);
     }

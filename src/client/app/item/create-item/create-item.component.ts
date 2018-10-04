@@ -34,7 +34,9 @@ export class CreateItemComponent implements OnInit {
     this.itemService.create(viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.router.navigate(['/item/comments', data.uId]);
+        if (data) {
+          this.router.navigate(['/item/comments', data.uId]);
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
       });

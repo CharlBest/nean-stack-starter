@@ -52,13 +52,7 @@ class ItemsService extends BaseService {
     }
 
     async getItems(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        const result = await itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
-
-        if (!result) {
-            throw new Error('Error while getting items');
-        }
-
-        return result;
+        return await itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
     }
 
     async delete(res: Response, uId: string): Promise<boolean> {
@@ -73,14 +67,8 @@ class ItemsService extends BaseService {
         return await itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
     }
 
-    async getFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[]> {
-        const result = await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
-
-        if (!result) {
-            throw new Error('Error while getting favourites');
-        }
-
-        return result;
+    async getFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        return await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
     }
 
     async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {
@@ -107,14 +95,8 @@ class ItemsService extends BaseService {
         return await itemsRepository.deleteComment(res, this.getUserId(res), uId);
     }
 
-    async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[]> {
-        const result = await itemsRepository.getComments(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
-
-        if (!result) {
-            throw new Error('Error while getting comments');
-        }
-
-        return result;
+    async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[] | null> {
+        return await itemsRepository.getComments(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
     }
 
     async getComment(res: Response, ip: string, uId: string): Promise<CommentViewModel> {

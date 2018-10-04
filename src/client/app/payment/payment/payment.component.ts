@@ -47,14 +47,16 @@ export class PaymentComponent implements OnInit {
             this.paymentService.userCards()
                 .pipe(finalize(() => this.isProcessing = false))
                 .subscribe(data => {
-                    this.userCards = data;
-                    // Default card first
-                    if (this.userCards) {
-                        this.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
-                    }
+                    if (data) {
+                        this.userCards = data;
+                        // Default card first
+                        if (this.userCards) {
+                            this.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+                        }
 
-                    const firstCardUId = this.userCards && this.userCards.length > 0 ? this.userCards[0].uId : null;
-                    this.formGroup.controls['cardUId'].setValue(firstCardUId);
+                        const firstCardUId = this.userCards && this.userCards.length > 0 ? this.userCards[0].uId : null;
+                        this.formGroup.controls['cardUId'].setValue(firstCardUId);
+                    }
                 });
         } else {
             this.isProcessing = false;

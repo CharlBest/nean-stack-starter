@@ -47,9 +47,11 @@ export class EditItemComponent implements OnInit {
       this.itemService.get(this.itemUId)
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(data => {
-          this.item = data;
-          if (data.media) {
-            this.savedMedia = [...data.media];
+          if (data) {
+            this.item = data;
+            if (data.media) {
+              this.savedMedia = [...data.media];
+            }
           }
         }, error => {
           this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
@@ -68,8 +70,10 @@ export class EditItemComponent implements OnInit {
     this.itemService.update(this.item.uId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.deleteRemovedImagesFromStorage();
-        this.router.navigate(['/item/comments', data.uId]);
+        if (data) {
+          this.deleteRemovedImagesFromStorage();
+          this.router.navigate(['/item/comments', data.uId]);
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
       });

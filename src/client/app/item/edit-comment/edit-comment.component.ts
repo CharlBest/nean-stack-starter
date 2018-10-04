@@ -44,7 +44,9 @@ export class EditCommentComponent implements OnInit {
       this.itemService.getComment(this.commentUId)
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(data => {
-          this.comment = data;
+          if (data) {
+            this.comment = data;
+          }
         }, error => {
           // TODO: cannot pass in commentForm.formGroup here because the element does not exist
           // because of *ngIf. Hiding it will cause the form to initilize without the data required

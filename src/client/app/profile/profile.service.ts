@@ -19,7 +19,7 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getUserProfile(): Observable<UserProfileViewModel> {
+  getUserProfile(): Observable<UserProfileViewModel | null> {
     return this.http.get<UserProfileViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserProfile().client()}`);
   }
 
@@ -43,19 +43,19 @@ export class ProfileService {
     return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null);
   }
 
-  createCard(token: string): Observable<CardModel> {
+  createCard(token: string): Observable<CardModel | null> {
     return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard().client()}`, { token });
   }
 
-  deleteCard(uId: string): Observable<CardModel> {
+  deleteCard(uId: string): Observable<CardModel | null> {
     return this.http.delete<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard(uId).client()}`);
   }
 
-  updateDefaultCard(uId: string): Observable<CardModel> {
+  updateDefaultCard(uId: string): Observable<CardModel | null> {
     return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
   }
 
-  paymentHistory(): Observable<PaymentModel[]> {
+  paymentHistory(): Observable<PaymentModel[] | null> {
     return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory().client()}`);
   }
 

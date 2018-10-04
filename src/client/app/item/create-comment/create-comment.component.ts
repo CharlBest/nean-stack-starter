@@ -33,8 +33,10 @@ export class CreateCommentComponent implements OnInit {
     this.itemService.createComment(this.itemUId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
-        this.commentForm.formRef.resetForm();
-        this.onSuccess.emit(data);
+        if (data) {
+          this.commentForm.formRef.resetForm();
+          this.onSuccess.emit(data);
+        }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
       });
