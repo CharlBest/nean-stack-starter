@@ -163,7 +163,7 @@ export class NavigationComponent implements OnInit {
 
     let prevScrollpos = window.pageYOffset;
     fromEvent(window, 'scroll')
-      .pipe(debounceTime(100))
+      .pipe(debounceTime(40))
       .subscribe((e: any) => {
         const currentScrollPos = window.pageYOffset;
 
