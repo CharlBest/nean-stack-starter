@@ -39,7 +39,7 @@
                     <span mat-line>Share</span>
                 </mat-list-item>
                 <mat-list-item *ngIf="comment?.user?.id === loggedInUserId"
-                    routerLink="/item/comment/edit/{{comment.uId}}">
+                    (click)="goToEdit()">
                     <mat-icon mat-list-icon>edit</mat-icon>
                     <span mat-line>Edit</span>
                 </mat-list-item>

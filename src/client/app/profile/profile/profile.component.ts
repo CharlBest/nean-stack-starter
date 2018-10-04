@@ -67,6 +67,8 @@ export class ProfileComponent implements OnInit {
   reportUser() {
     this.dialogService.confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
       if (data) {
+        this.contextMenu.close();
+
         const viewModel = new ReportUserViewModel;
         viewModel.uId = this.user.uId;
 
@@ -107,6 +109,8 @@ export class ProfileComponent implements OnInit {
   }
 
   resendEmailVerificationLink() {
+    this.contextMenu.close();
+
     this.snackBar.dismiss();
     this.snackBar.open('Sending...');
 
@@ -125,11 +129,13 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  openDeleteAccountDialog() {
+  goToDeleteAccount() {
+    this.contextMenu.close();
     this.router.navigate(['/profile/delete'], { queryParams: { email: this.user.email }, queryParamsHandling: 'merge' });
   }
 
   profileTour() {
+    this.contextMenu.close();
     this.tutorialService.activateTutorial(TutorialType.AvatarUpload);
   }
 
@@ -145,5 +151,15 @@ export class ProfileComponent implements OnInit {
   copyLink() {
     this.shareService.copyWithUrl(['/user', this.user.id]);
     this.contextMenu.close();
+  }
+
+  goToItems() {
+    this.contextMenu.close();
+    this.router.navigate(['/user', this.user.id]);
+  }
+
+  goToSaved() {
+    this.contextMenu.close();
+    this.router.navigate(['/item/saved']);
   }
 }

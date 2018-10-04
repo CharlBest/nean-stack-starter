@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { ReportCommentViewModel } from '../../../../shared/view-models/item/report-comment.view-model';
@@ -29,7 +30,8 @@ export class CommentComponent implements OnInit {
     private dialogService: DialogService,
     private shareDialogService: ShareDialogService,
     private shareService: ShareService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -95,5 +97,10 @@ export class CommentComponent implements OnInit {
       this.shareService.copyWithUrl(['/item/comments', this.comment.itemUId]);
       this.contextMenu.close();
     }
+  }
+
+  goToEdit() {
+    this.contextMenu.close();
+    this.router.navigate(['/item/comment/edit', this.comment.uId]);
   }
 }

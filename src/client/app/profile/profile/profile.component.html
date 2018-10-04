@@ -20,11 +20,11 @@
             <mat-icon mat-list-icon>mail</mat-icon>
             <span mat-line>Resend email verification</span>
           </mat-list-item>
-          <mat-list-item routerLink="/user/{{user.id}}">
+          <mat-list-item (click)="goToItems()">
             <mat-icon mat-list-icon>fiber_manual_record</mat-icon>
             <span mat-line>Items</span>
           </mat-list-item>
-          <mat-list-item routerLink="/item/saved">
+          <mat-list-item (click)="goToSaved()">
             <mat-icon mat-list-icon>star</mat-icon>
             <span mat-line>Saved</span>
           </mat-list-item>
@@ -45,7 +45,7 @@
             <mat-icon mat-list-icon>info_outline</mat-icon>
             <span mat-line>Profile Tour</span>
           </mat-list-item>
-          <mat-list-item (click)="openDeleteAccountDialog()">
+          <mat-list-item (click)="goToDeleteAccount()">
             <mat-icon mat-list-icon>delete</mat-icon>
             <span mat-line>Delete account</span>
           </mat-list-item>

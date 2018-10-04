@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../../shared/view-models/item/report-item.view-model';
@@ -34,7 +35,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
     public bpService: BreakpointService,
     private shareDialogService: ShareDialogService,
-    private shareService: ShareService) { }
+    private shareService: ShareService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -165,5 +167,10 @@ export class ItemComponent implements OnInit, AfterViewInit {
   copyLink() {
     this.shareService.copyWithUrl(['/item/comments', this.item.uId]);
     this.contextMenu.close();
+  }
+
+  goToComments() {
+    this.contextMenu.close();
+    this.router.navigate(['/item/edit', this.item.uId]);
   }
 }
