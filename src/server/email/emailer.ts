@@ -1,5 +1,6 @@
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import * as sendGridMail from '@sendgrid/mail';
+import logger from '../core/utils/logger';
 import { environment } from '../environments/environment';
 
 sendGridMail.setApiKey(environment.sendGrid.apiKey);
@@ -156,7 +157,7 @@ export class Emailer {
         if (environment.production) {
             sendGridMail.send(data, undefined, (err: Error) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     throw err;
                     // TODO: save against profile that email failed to send (maybe)
                 }

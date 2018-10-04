@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { v1 as neo4j } from 'neo4j-driver';
 import { environment } from '../environments/environment';
+import logger from './utils/logger';
 
 export class Database {
 
@@ -24,7 +25,7 @@ export class Database {
         // Register a callback to know if driver creation failed.
         // This could happen due to wrong credentials or database unavailability:
         driver.onError = (error) => {
-            console.log('Neo4j driver instantiation failed', error);
+            logger.error('Neo4j driver instantiation failed', [error]);
         };
 
         return driver;

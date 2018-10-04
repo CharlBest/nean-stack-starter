@@ -47,16 +47,12 @@ export class Server {
         });
 
         process.on('uncaughtException', (event) => {
-            console.log('Internal: Uncaught exception\n');
-            console.log(event.stack + '\n');
+            logger.error('Internal: Uncaught exception', [event.stack]);
             process.exit(1);
         });
 
         process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
-            console.log('Internal: UnhandledPromiseRejectionWarning\n');
-            console.log(reason + '\n');
-            console.log(reason.stack || reason.messsage || reason);
-
+            logger.error('Internal: UnhandledPromiseRejectionWarning', [reason.messsage || reason.stack, reason]);
             process.exit(1);
         });
     }
