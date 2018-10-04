@@ -259,7 +259,8 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getComments(res: Response, userId: number, uId: string, pageIndex: number, pageSize: number): Promise<CommentViewModel[] | null> {
+    async getComments(res: Response, userId: number | null, uId: string, pageIndex: number, pageSize: number)
+        : Promise<CommentViewModel[] | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComments,
             {
                 userId,
@@ -283,7 +284,7 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getComment(res: Response, userId: number, ip: string, uId: string): Promise<CommentViewModel | null> {
+    async getComment(res: Response, userId: number | null, ip: string, uId: string): Promise<CommentViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.items.getComment,
             {
                 userId,

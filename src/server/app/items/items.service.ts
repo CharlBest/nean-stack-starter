@@ -108,7 +108,7 @@ class ItemsService extends BaseService {
     }
 
     async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[]> {
-        const result = await itemsRepository.getComments(res, this.getUserId(res), uId, pageIndex, pageSize);
+        const result = await itemsRepository.getComments(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
 
         if (!result) {
             throw new Error('Error while getting comments');
@@ -118,7 +118,7 @@ class ItemsService extends BaseService {
     }
 
     async getComment(res: Response, ip: string, uId: string): Promise<CommentViewModel> {
-        const result = await itemsRepository.getComment(res, this.getUserId(res), ip, uId);
+        const result = await itemsRepository.getComment(res, this.getOptionalUserId(res), ip, uId);
 
         if (!result) {
             throw new Error('Error while getting comment');
