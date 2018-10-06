@@ -16,5 +16,5 @@ export const environment = {
   stripe: {
     publishableKey: 'pk_live_ee9MNzGQ4YeBswQ2dt8p4e9k'
   },
-  publicVapidKey: 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs'
+  publicVapidKey: 'BHh0GLT09LUbnWzwX_r3YTmNMeCiDhmCO2KeT35vEcM8CW5DyfP4StRaAWviffMFY7lAK0vLoHl5h1PIubOMp10'
 };
