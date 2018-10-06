@@ -27,7 +27,7 @@ class ItemsController extends BaseController {
     }
 
     async update(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
         const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
@@ -40,12 +40,12 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.update(res, uId, viewModel.title, viewModel.description, viewModel.media)
+            await itemsService.update(res, uId!, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 
     async get(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -54,13 +54,13 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.get(res, req.ip, uId)
+            await itemsService.get(res, req.ip, uId!)
         );
     }
 
     async getItems(req: Request, res: Response, next: NextFunction) {
-        const pageIndex = +req.query.pageIndex || 0;
-        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+        const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
             await itemsService.getItems(res, pageIndex, pageSize)
@@ -68,7 +68,7 @@ class ItemsController extends BaseController {
     }
 
     async delete(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -77,12 +77,12 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.delete(res, uId)
+            await itemsService.delete(res, uId!)
         );
     }
 
     async createFavourite(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -91,12 +91,12 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.createFavourite(res, uId)
+            await itemsService.createFavourite(res, uId!)
         );
     }
 
     async deleteFavourite(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -105,13 +105,13 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.deleteFavourite(res, uId)
+            await itemsService.deleteFavourite(res, uId!)
         );
     }
 
     async getFavourites(req: Request, res: Response, next: NextFunction) {
-        const pageIndex = +req.query.pageIndex || 0;
-        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+        const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
             await itemsService.getFavourites(res, pageIndex, pageSize)
@@ -119,23 +119,25 @@ class ItemsController extends BaseController {
     }
 
     async createComment(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
         const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
-        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || !!Validators.required(uId);
 
         if (hasErrors) {
             throw new Error();
         }
 
         res.status(201).json(
-            await itemsService.createComment(res, uId, viewModel.description)
+            await itemsService.createComment(res, uId!, viewModel.description)
         );
     }
 
     async updateComment(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
         const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
@@ -148,12 +150,12 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.updateComment(res, uId, viewModel.description)
+            await itemsService.updateComment(res, uId!, viewModel.description)
         );
     }
 
     async deleteComment(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -162,14 +164,14 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.deleteComment(res, uId)
+            await itemsService.deleteComment(res, uId!)
         );
     }
 
     async getComments(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
-        const pageIndex = +req.query.pageIndex || 0;
-        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+        const uId = req.params.uId as string | null;
+        const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -178,12 +180,12 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.getComments(res, uId, pageIndex, pageSize)
+            await itemsService.getComments(res, uId!, pageIndex, pageSize)
         );
     }
 
     async getComment(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -192,7 +194,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.getComment(res, req.ip, uId)
+            await itemsService.getComment(res, req.ip, uId!)
         );
     }
 }

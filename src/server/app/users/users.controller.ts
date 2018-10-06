@@ -67,12 +67,18 @@ class UsersController extends BaseController {
     }
 
     async getUserPublic(req: Request, res: Response, next: NextFunction) {
-        const id = +req.params.id;
-        const pageIndex = +req.query.pageIndex || 0;
-        const pageSize = +req.query.pageSize || this.DEFAULT_PAGE_SIZE;
+        const id = req.params.id ? +req.params.id : null;
+        const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+
+        const hasErrors = !!Validators.required(id);
+
+        if (hasErrors) {
+            throw new Error('Id is required');
+        }
 
         res.status(200).json(
-            await usersService.getUserPublic(res, req.ip, id, pageIndex, pageSize)
+            await usersService.getUserPublic(res, req.ip, id!, pageIndex, pageSize)
         );
     }
 
@@ -133,7 +139,7 @@ class UsersController extends BaseController {
     }
 
     async verifyEmail(req: Request, res: Response, next: NextFunction) {
-        const code = req.body.code;
+        const code = req.body.code as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'verifyEmailCode', Validators.required(code));
 

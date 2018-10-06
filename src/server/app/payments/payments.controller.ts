@@ -67,7 +67,7 @@ class PaymentsController extends BaseController {
     }
 
     async deleteCard(req: Request, res: Response, next: NextFunction) {
-        const uId = req.params.uId as string;
+        const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
 
@@ -76,7 +76,7 @@ class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await paymentsService.deleteCard(res, uId)
+            await paymentsService.deleteCard(res, uId!)
         );
     }
 

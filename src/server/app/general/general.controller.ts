@@ -32,7 +32,7 @@ class GeneralController extends BaseController {
     }
 
     async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
-        let email = req.params.email as string;
+        let email = req.params.email as string | null;
 
         if (email) {
             email = email.trim();
@@ -46,7 +46,7 @@ class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await generalService.deleteNewsletterMember(res, email)
+            await generalService.deleteNewsletterMember(res, email!)
         );
     }
 
