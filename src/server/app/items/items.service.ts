@@ -4,6 +4,7 @@ import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
+import logger from '../../core/utils/logger';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
 
@@ -18,10 +19,14 @@ class ItemsService extends BaseService {
             media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
-        const result = await itemsRepository.create(res, this.getUserId(res), nodeUUId(), title, description, media);
+        const userId = this.getUserId(res);
+        const uId = nodeUUId();
+        const result = await itemsRepository.create(res, userId, uId, title, description, media);
 
         if (!result) {
-            throw new Error('Error while creating item');
+            const error = 'Error while creating item';
+            logger.warn(error, [userId, uId, title, description, media]);
+            throw new Error(error);
         }
 
         return result;
@@ -32,10 +37,13 @@ class ItemsService extends BaseService {
             media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
-        const result = await itemsRepository.update(res, this.getUserId(res), uId, title, description, media);
+        const userId = this.getUserId(res);
+        const result = await itemsRepository.update(res, userId, uId, title, description, media);
 
         if (!result) {
-            throw new Error('Error while updating item');
+            const error = 'Error while updating item';
+            logger.warn(error, [userId, uId, title, description, media]);
+            throw new Error(error);
         }
 
         return result;
@@ -72,20 +80,27 @@ class ItemsService extends BaseService {
     }
 
     async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {
-        const result = await itemsRepository.createComment(res, this.getUserId(res), nodeUUId(), itemUId, description);
+        const userId = this.getUserId(res);
+        const uId = nodeUUId();
+        const result = await itemsRepository.createComment(res, userId, uId, itemUId, description);
 
         if (!result) {
-            throw new Error('Error while creating comment');
+            const error = 'Error while creating comment';
+            logger.warn(error, [userId, uId, itemUId, description]);
+            throw new Error(error);
         }
 
         return result;
     }
 
     async updateComment(res: Response, uId: string, description: string): Promise<CommentModel> {
-        const result = await itemsRepository.updateComment(res, this.getUserId(res), uId, description);
+        const userId = this.getUserId(res);
+        const result = await itemsRepository.updateComment(res, userId, uId, description);
 
         if (!result) {
-            throw new Error('Error while updating comment');
+            const error = 'Error while updating comment';
+            logger.warn(error, [userId, uId, description]);
+            throw new Error(error);
         }
 
         return result;

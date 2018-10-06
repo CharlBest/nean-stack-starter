@@ -1,5 +1,6 @@
 import * as http from 'http';
 import * as WebSocket from 'ws';
+import logger from '../utils/logger';
 
 class WebSocketServer {
     private socketServer: WebSocket.Server;
@@ -12,7 +13,9 @@ class WebSocketServer {
         if (this.socketServer) {
             return this.socketServer;
         } else {
-            throw new Error(`WebSocket Server is null or undefined`);
+            const error = `WebSocket Server is null or undefined`;
+            logger.error(error);
+            throw new Error(error);
         }
     }
 }
