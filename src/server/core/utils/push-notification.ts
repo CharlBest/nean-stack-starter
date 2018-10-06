@@ -14,15 +14,18 @@ class PushNotification {
             setVapidDetails('mailto:admin@nean.io', environment.vapidKey.public, environment.vapidKey.private);
             // setGCMAPIKey();
 
+            const notificationOptions: NotificationOptions = {
+                body: body,
+                icon: 'assets/logo-color.png',
+                data: {
+                    dateOfArrival: Date.now()
+                }
+            };
+
+            notificationOptions['title'] = title;
+
             const notificationPayload = {
-                notification: {
-                    title: title,
-                    body: body,
-                    icon: 'assets/logo-color.png',
-                    data: {
-                        dateOfArrival: Date.now()
-                    }
-                } as Notification
+                notification: notificationOptions
             };
 
             // Promise.all(allSubscriptions.map(sub => sendNotification(sub, JSON.stringify(notificationPayload))))
