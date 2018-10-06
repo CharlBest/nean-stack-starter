@@ -35,6 +35,7 @@ export class CreateCommentComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.commentForm.formRef.resetForm();
+          data.itemUId = this.itemUId;
           this.onSuccess.emit(data);
         }
       }, error => {
