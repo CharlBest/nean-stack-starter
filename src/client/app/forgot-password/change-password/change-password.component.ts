@@ -73,6 +73,8 @@ export class ChangePasswordComponent implements OnInit {
         }, error => {
           this.formErrorsService.updateFormValidity(error, this.formGroup);
         });
+    } else {
+      console.error('Email or Code is null');
     }
   }
 }
