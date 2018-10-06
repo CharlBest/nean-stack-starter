@@ -14,4 +14,19 @@ export class PushSubscriptionModel implements PushSubscription {
             auth
         };
     }
+
+    static createFromArray(pushSubscription: PushSubscriptionValues): PushSubscriptionModel | null {
+        if (pushSubscription) {
+            const [endpoint, auth, p256dh] = pushSubscription;
+            return new PushSubscriptionModel(endpoint, auth, p256dh);
+        } else {
+            return null;
+        }
+    }
+
+    static createArray(endpoint: string, auth: string, p256dh: string): PushSubscriptionValues {
+        return [endpoint, auth, p256dh];
+    }
 }
+
+type PushSubscriptionValues = [string, string, string];

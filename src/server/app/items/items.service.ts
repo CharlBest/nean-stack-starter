@@ -1,13 +1,11 @@
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { sendNotification, setVapidDetails } from 'web-push';
 import { CommentModel } from '../../../shared/models/item/comment.model';
-import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import logger from '../../core/utils/logger';
-import { environment } from '../../environments/environment';
+import pushNotification from '../../core/utils/push-notification';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
 
@@ -15,32 +13,6 @@ class ItemsService extends BaseService {
 
     constructor() {
         super();
-    }
-
-    private async setPushNotifications(pushSubscription: PushSubscriptionModel, body: string) {
-        setVapidDetails('mailto:admin@nean.io', environment.vapidKey.public, environment.vapidKey.private);
-
-        const notificationPayload = {
-            notification: {
-                title: 'NEAN - Item Comment',
-                body: body,
-                icon: 'assets/logo-color.png',
-                data: {
-                    dateOfArrival: Date.now()
-                }
-            } as Notification
-        };
-
-        // Promise.all(allSubscriptions.map(sub => sendNotification(sub, JSON.stringify(notificationPayload))))
-        //     .then(() => logger.info('Push notifications sent', [notificationPayload]))
-        //     .catch(err => {
-        //         console.error('Error sending notification, reason: ', err);
-        //     });
-        sendNotification(pushSubscription, JSON.stringify(notificationPayload))
-            .then(() => logger.info('Push notifications sent', [notificationPayload]))
-            .catch(error => {
-                logger.error('Error seding push notifications', [error]);
-            });
     }
 
     async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
@@ -120,9 +92,7 @@ class ItemsService extends BaseService {
         }
 
         // Send push notification to owner
-        if (result.pushSubscription) {
-            this.setPushNotifications(result.pushSubscription, description.substr(0, 30) + (description.length > 30 ? ' ...' : ''));
-        }
+        pushNotification.send(result.pushSubscription, 'NEAN - Item Comment', description);
 
         return result;
     }

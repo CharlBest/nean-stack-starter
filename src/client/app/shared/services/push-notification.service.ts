@@ -14,7 +14,6 @@ export class PushNotificationService {
     private http: HttpClient) { }
 
   private updatePushNotificationDetails(viewModel: PushSubscriptionModel): Observable<void> {
-    console.log(viewModel);
     return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updatePushSubscription().client()}`, viewModel);
   }
 

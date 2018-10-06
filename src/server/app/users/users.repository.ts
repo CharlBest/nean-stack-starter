@@ -271,9 +271,8 @@ class UsersRepository extends BaseRepository {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePushSubscription,
             {
                 userId,
-                pnEndpoint: pushSubscription.endpoint,
-                pnKeysAuth: pushSubscription.keys.auth,
-                pnKeysEncrypt: pushSubscription.keys.p256dh
+                pushSubscription: PushSubscriptionModel.createArray(pushSubscription.endpoint,
+                    pushSubscription.keys.auth, pushSubscription.keys.p256dh),
             }
         );
 
