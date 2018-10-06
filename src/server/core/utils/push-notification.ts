@@ -7,8 +7,7 @@ class PushNotification {
     async send(pushSubscription: PushSubscriptionModel | null | undefined, title: string, body: string): Promise<void> {
         if (pushSubscription) {
             if (body) {
-                // TODO: potentially truncate push notification
-                // body = body.substr(0, 50) + (body.length > 50 ? ' ...' : '');
+                body = body.substr(0, 230) + (body.length > 230 ? ' ...' : '');
             }
 
             setVapidDetails('mailto:admin@nean.io', environment.vapidKey.public, environment.vapidKey.private);
