@@ -10,7 +10,11 @@ import { PushNotificationService } from '../../shared/services/push-notification
 })
 export class NotificationsComponent implements OnInit {
 
-  // TODO: not sure if Notification.permission is supported by all browsers
+  // TODO: At the moment this only supports 1 device which means the user will
+  // receive push notifications on the device the toggle this switch on and it
+  // will override any other devices that are registered to receive push notifications
+  // The toggle state also doesn't represent that it is the current registered device
+  // but only that this user has permitted the use of push notifcations
   pushNotificationPermissionGrandted = (<any>Notification).permission === 'granted';
 
   constructor(private pushNotificationService: PushNotificationService,
@@ -23,22 +27,10 @@ export class NotificationsComponent implements OnInit {
       this.dialogService.confirm('Are you sure you would like to receive push notifications?').subscribe(data => {
         if (data) {
           this.pushNotificationService.subscribeToNotifications();
+        } else {
+          event.source.checked = false;
         }
       });
-      // TODO: nothing is being done with this subscription
-      // Notification.requestPermission().then((result) => {
-      //   if (result === 'denied') {
-      //     console.log('Permission was not granted. Allow a retry.');
-      //     event.source.writeValue(false);
-      //     return;
-      //   }
-      //   if (result === 'default') {
-      //     console.log('The permission request was dismissed.');
-      //     event.source.writeValue(false);
-      //     return;
-      //   }
-      //   // TODO: Do something with the granted permission.
-      // });
     }
   }
 }
