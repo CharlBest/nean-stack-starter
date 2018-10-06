@@ -15,3 +15,4 @@
 * Check Lighthouse score in Chrome Dev Tools audit
 * Google PageSpeed Insights - https://developers.google.com/speed/pagespeed/insights/
 * Lighthouse Audit via Chrome DevTools
+* Load test/scrape test to check load balance
