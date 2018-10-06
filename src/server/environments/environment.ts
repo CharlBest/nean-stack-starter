@@ -1,4 +1,4 @@
-import logger from '../core/utils/logger';
+import { logger } from '../core/utils/logger';
 
 export const environment = {
     production: getEnvironmentVariable('NODE_ENV', <any>'development') === 'production',

@@ -1,7 +1,9 @@
 
 import { Application } from 'express';
+// import * as puppeteer from 'puppeteer';
 
-export class DataFetcher {
+// Add puppeteer-heroku-buildpack to successfuly run on Heroku
+class DataFetcher {
     // dom element selectors
     selectors = {
         LENGTH_SELECTOR_CLASS: '#sr_content div.box',
@@ -84,3 +86,5 @@ export class DataFetcher {
         clearInterval(this.interval);
     }
 }
+
+export const dataFetcher = new DataFetcher();

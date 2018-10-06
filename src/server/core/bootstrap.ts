@@ -11,10 +11,10 @@ import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
-import { DataFetcher } from './middleware/data-fetcher';
 import { Neo4j } from './middleware/neo4j';
 import { webSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
+import { dataFetcher } from './utils/data-fetcher';
 
 const root = './';
 
@@ -174,7 +174,7 @@ class Bootstrap {
 
     setupAutoPeriodicDataFetch(app: Application): void {
         if (app.get('env') !== 'development') {
-            new DataFetcher().init(app);
+            dataFetcher.init(app);
         }
     }
 }

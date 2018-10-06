@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as WebSocket from 'ws';
-import logger from '../utils/logger';
+import { logger } from '../utils/logger';
 
 class WebSocketServer {
     private socketServer: WebSocket.Server;

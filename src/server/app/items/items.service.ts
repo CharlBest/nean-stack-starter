@@ -4,8 +4,8 @@ import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import logger from '../../core/utils/logger';
-import pushNotification from '../../core/utils/push-notification';
+import { logger } from '../../core/utils/logger';
+import { pushNotification } from '../../core/utils/push-notification';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
 

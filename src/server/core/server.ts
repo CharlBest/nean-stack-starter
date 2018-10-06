@@ -3,7 +3,7 @@ import * as http from 'http';
 import { environment } from '../environments/environment';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
-import logger from './utils/logger';
+import { logger } from './utils/logger';
 
 export class Server {
 

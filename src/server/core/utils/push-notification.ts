@@ -1,7 +1,7 @@
 import { sendNotification, setVapidDetails } from 'web-push';
 import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { environment } from '../../environments/environment';
-import logger from './logger';
+import { logger } from './logger';
 
 class PushNotification {
     async send(pushSubscription: PushSubscriptionModel | null | undefined, title: string, body: string): Promise<void> {
@@ -45,4 +45,4 @@ class PushNotification {
     }
 }
 
-export default new PushNotification();
+export const pushNotification = new PushNotification();

@@ -1,6 +1,6 @@
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import * as sendGridMail from '@sendgrid/mail';
-import logger from '../core/utils/logger';
+import { logger } from '../core/utils/logger';
 import { environment } from '../environments/environment';
 
 sendGridMail.setApiKey(environment.sendGrid.apiKey);

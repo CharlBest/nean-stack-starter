@@ -1,6 +1,6 @@
 import { v1 as neo4j } from 'neo4j-driver';
 import { environment } from '../environments/environment';
-import logger from './utils/logger';
+import { logger } from './utils/logger';
 
 export class Database {
 

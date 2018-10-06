@@ -4,7 +4,7 @@ import { v4 as nodeUUId } from 'uuid';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
-import logger from '../../core/utils/logger';
+import { logger } from '../../core/utils/logger';
 import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';

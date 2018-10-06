@@ -1,6 +1,6 @@
 import * as winston from 'winston';
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
     transports: [
         //
         // In production create file called info.log with error, warn and info level logging in
@@ -23,5 +23,3 @@ const logger = winston.createLogger({
 if (process.env.NODE_ENV !== 'production') {
     logger.debug('Logging initialized at debug level');
 }
-
-export default logger;
