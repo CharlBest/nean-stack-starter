@@ -15,7 +15,9 @@ class GeneralController extends BaseController {
     async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NewsletterMemberViewModel;
 
-        viewModel.email = viewModel.email.trim();
+        if (viewModel.email) {
+            viewModel.email = viewModel.email.trim();
+        }
 
         const formGroup = BuildFormGroup.newsletter(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -30,11 +32,13 @@ class GeneralController extends BaseController {
     }
 
     async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as NewsletterMemberViewModel;
+        let email = req.params.email as string;
 
-        viewModel.email = viewModel.email.trim();
+        if (email) {
+            email = email.trim();
+        }
 
-        const formGroup = BuildFormGroup.newsletter(viewModel.email);
+        const formGroup = BuildFormGroup.newsletter(email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -42,7 +46,7 @@ class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await generalService.deleteNewsletterMember(res, viewModel.email)
+            await generalService.deleteNewsletterMember(res, email)
         );
     }
 

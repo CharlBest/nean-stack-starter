@@ -24,15 +24,15 @@ export class ProfileService {
   }
 
   updateAvatar(viewModel: UpdateAvatarViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar().client()}`, viewModel);
+    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar().client()}`, viewModel);
   }
 
   updateBio(viewModel: UpdateBioViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio().client()}`, viewModel);
+    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio().client()}`, viewModel);
   }
 
   updatePassword(viewModel: UpdatePasswordViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword().client()}`, viewModel);
+    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword().client()}`, viewModel);
   }
 
   deleteUser(): Observable<boolean> {
@@ -52,7 +52,7 @@ export class ProfileService {
   }
 
   updateDefaultCard(uId: string): Observable<CardModel | null> {
-    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
+    return this.http.put<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
   }
 
   paymentHistory(): Observable<PaymentModel[] | null> {

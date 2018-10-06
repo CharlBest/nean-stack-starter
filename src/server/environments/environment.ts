@@ -1,32 +1,37 @@
 import logger from '../core/utils/logger';
 
 export const environment = {
-    production: getEnvironmentVariable<string>('NODE_ENV', 'development') === 'production',
-    port: getEnvironmentVariable<number>('PORT', 3000),
+    production: getEnvironmentVariable('NODE_ENV', <any>'development') === 'production',
+    port: getEnvironmentVariable('PORT', 3000),
     database: {
-        uri: getEnvironmentVariable<string>('DATABASE_URI', 'bolt://localhost'),
-        username: getEnvironmentVariable<string>('DATABASE_USERNAME', 'neo4j'),
-        password: getEnvironmentVariable<string>('DATABASE_PASSWORD', '1234')
+        uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),
+        username: getEnvironmentVariable('DATABASE_USERNAME', 'neo4j'),
+        password: getEnvironmentVariable('DATABASE_PASSWORD', '1234')
     },
     stripe: {
-        secretKey: getEnvironmentVariable<string>('STRIPE_KEY', 'sk_test_RKOxhujxxM8c4xIqt6t036Qo')
+        secretKey: getEnvironmentVariable('STRIPE_KEY', 'sk_test_RKOxhujxxM8c4xIqt6t036Qo')
     },
     sendGrid: {
-        apiKey: getEnvironmentVariable<string>('SENDGRID_API_KEY', '***'),
+        apiKey: getEnvironmentVariable('SENDGRID_API_KEY', '***'),
         templates: {
-            welcome: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_WELCOME', 'd-3238c5b0d7504323b0a693b4d1038d26'),
-            forgotPassword: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_FORGOT_PASSWORD', 'd-0a568babd3ee406995b624ae971b442d'),
-            feedback: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_FEEDBACK', 'd-59414b3bf0f34e3bbf005410d0587060'),
+            welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', 'd-3238c5b0d7504323b0a693b4d1038d26'),
+            forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', 'd-0a568babd3ee406995b624ae971b442d'),
+            feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', 'd-59414b3bf0f34e3bbf005410d0587060'),
             resendEmailVerificationLink:
-                getEnvironmentVariable<string>('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', 'd-aba9ca3bff4f4adbbdf7f255cf2dec6c'),
-            paymentSuccessful: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL', 'd-590247b465184d61a718a9948087986d'),
-            passwordUpdated: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_PASSWORD_UPDATED', 'd-d5dc72ebfbcb4750a511ffc7373f4eca'),
-            invite: getEnvironmentVariable<string>('SENDGRID_TEMPLATE_INVITE', 'd-77fe4e3da0cd4cdc8d51ef6c315b2d46'),
+                getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', 'd-aba9ca3bff4f4adbbdf7f255cf2dec6c'),
+            paymentSuccessful: getEnvironmentVariable('SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL', 'd-590247b465184d61a718a9948087986d'),
+            passwordUpdated: getEnvironmentVariable('SENDGRID_TEMPLATE_PASSWORD_UPDATED', 'd-d5dc72ebfbcb4750a511ffc7373f4eca'),
+            invite: getEnvironmentVariable('SENDGRID_TEMPLATE_INVITE', 'd-77fe4e3da0cd4cdc8d51ef6c315b2d46'),
         }
     },
     authentication: {
         // This key can be anything. It can be a name or random characters. It will be used to sign (encrypt) and decrypt the passwords.
         privateKey: getEnvironmentVariable('AUTHENTICATION_KEY', '37LvDSm4XvjYOh9Y')
+    },
+    vapidKey: {
+        // tslint:disable-next-line:max-line-length
+        public: getEnvironmentVariable('PUBLIC_VAPID_KEY', 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs'),
+        private: getEnvironmentVariable('PRIVATE_VAPID_KEY', 'bqghrqfk5AiwPbOyJVSc1RgtaqmfJZAwX4uIDo0l8IA')
     }
 };
 

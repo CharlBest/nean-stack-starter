@@ -16,7 +16,7 @@ export class NewsletterService {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.createNewsletterMember().client()}`, viewModel);
     }
 
-    deleteNewsletterMember(viewModel: NewsletterMemberViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.deleteNewsletterMember().client()}`, viewModel);
+    deleteNewsletterMember(email: string): Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.deleteNewsletterMember(email).client()}`);
     }
 }

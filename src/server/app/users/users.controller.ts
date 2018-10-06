@@ -11,6 +11,7 @@ import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/upd
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { BaseController } from '../shared/base-controller';
 import { usersService } from './users.service';
+import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 
 class UsersController extends BaseController {
 
@@ -21,8 +22,12 @@ class UsersController extends BaseController {
     async createUser(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;
 
-        viewModel.username = viewModel.username.trim();
-        viewModel.email = viewModel.email.trim();
+        if (viewModel.username) {
+            viewModel.username = viewModel.username.trim();
+        }
+        if (viewModel.email) {
+            viewModel.email = viewModel.email.trim();
+        }
 
         const formGroup = BuildFormGroup.createUser(viewModel.email, viewModel.username, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -39,7 +44,9 @@ class UsersController extends BaseController {
     async login(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as LoginViewModel;
 
-        viewModel.emailOrUsername = viewModel.emailOrUsername.trim();
+        if (viewModel.emailOrUsername) {
+            viewModel.emailOrUsername = viewModel.emailOrUsername.trim();
+        }
 
         const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -86,7 +93,9 @@ class UsersController extends BaseController {
     async forgotPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ForgotPasswordViewModel;
 
-        viewModel.email = viewModel.email.trim();
+        if (viewModel.email) {
+            viewModel.email = viewModel.email.trim();
+        }
 
         const formGroup = BuildFormGroup.forgotPassword(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -103,7 +112,9 @@ class UsersController extends BaseController {
     async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as ChangeForgottenPasswordViewModel;
 
-        viewModel.email = viewModel.email.trim();
+        if (viewModel.email) {
+            viewModel.email = viewModel.email.trim();
+        }
 
         const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.password);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
@@ -190,6 +201,22 @@ class UsersController extends BaseController {
 
         res.status(200).json(
             await usersService.completedTutorial(res, viewModel)
+        );
+    }
+
+    async updatePushSubscription(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as PushSubscriptionModel;
+
+        const hasErrors = !!Validators.required(viewModel.endpoint) ||
+            !!Validators.required(viewModel.keys.auth) ||
+            !!Validators.required(viewModel.keys.p256dh);
+
+        if (hasErrors) {
+            throw new Error('All Push Subscription properties are required');
+        }
+
+        res.status(200).json(
+            await usersService.updatePushSubscription(res, viewModel)
         );
     }
 }

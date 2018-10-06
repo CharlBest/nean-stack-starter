@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -260,6 +261,23 @@ class UsersRepository extends BaseRepository {
         );
 
         if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async updatePushSubscription(res: Response, userId: number, pushSubscription: PushSubscriptionModel): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePushSubscription,
+            {
+                userId,
+                pnEndpoint: pushSubscription.endpoint,
+                pnKeysAuth: pushSubscription.keys.auth,
+                pnKeysEncrypt: pushSubscription.keys.p256dh
+            }
+        );
+
+        if (result) {
             return true;
         } else {
             return false;

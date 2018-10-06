@@ -67,6 +67,7 @@ export class Database {
                 updatePassword: (await import(`../database/users/updatePassword.${Database.fileExtension}`)).data,
                 deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
+                updatePushSubscription: (await import(`../database/users/updatePushSubscription.${Database.fileExtension}`)).data,
             },
             payments: {
                 anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
@@ -120,6 +121,7 @@ export interface DbQueries {
         updatePassword: string,
         deleteUser: string,
         completedTutorial: string,
+        updatePushSubscription: string,
     };
 
     payments: {

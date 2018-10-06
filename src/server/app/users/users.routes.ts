@@ -31,11 +31,11 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.getUserProfile(req, res, next).catch(next));
         this.router.post(UserRoutes.verifyEmail().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.verifyEmail(req, res, next).catch(next));
-        this.router.post(UserRoutes.updateAvatar().server(), Authentication.loginRequired,
+        this.router.put(UserRoutes.updateAvatar().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.updateAvatar(req, res, next).catch(next));
-        this.router.post(UserRoutes.updateBio().server(), Authentication.loginRequired,
+        this.router.put(UserRoutes.updateBio().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.updateBio(req, res, next).catch(next));
-        this.router.post(UserRoutes.updatePassword().server(), Authentication.loginRequired,
+        this.router.put(UserRoutes.updatePassword().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.updatePassword(req, res, next).catch(next));
         this.router.post(UserRoutes.resendEmailVerificationLink().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.resendEmailVerificationLink(req, res, next).catch(next));
@@ -43,6 +43,8 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.deleteUser(req, res, next).catch(next));
         this.router.post(UserRoutes.completedTutorial().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.completedTutorial(req, res, next).catch(next));
+        this.router.put(UserRoutes.updatePushSubscription().server(), Authentication.loginRequired,
+            async (req, res, next) => usersController.updatePushSubscription(req, res, next).catch(next));
     }
 }
 

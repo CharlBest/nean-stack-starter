@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
+import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
@@ -275,6 +276,10 @@ class UsersService extends BaseService {
 
     async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
         return await usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
+    }
+
+    async updatePushSubscription(res: Response, viewModel: PushSubscriptionModel): Promise<void> {
+        await usersRepository.updatePushSubscription(res, this.getUserId(res), viewModel);
     }
 }
 

@@ -12,7 +12,7 @@ class GeneralRoutes extends BaseRoute {
     initRoutes() {
         this.router.post(GeneralStaticRoutes.createNewsletterMember().server(),
             async (req, res, next) => generalController.createNewsletterMember(req, res, next).catch(next));
-        this.router.post(GeneralStaticRoutes.deleteNewsletterMember().server(),
+        this.router.delete(GeneralStaticRoutes.deleteNewsletterMember().server(),
             async (req, res, next) => generalController.deleteNewsletterMember(req, res, next).catch(next));
         this.router.post(GeneralStaticRoutes.sendFeedback().server(),
             async (req, res, next) => generalController.sendFeedback(req, res, next).catch(next));

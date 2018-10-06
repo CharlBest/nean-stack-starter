@@ -11,6 +11,7 @@ export class UserModel extends UserLiteModel {
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: Array<string>;
     userCards: CardModel[];
+    pushSubscription: [string, string, string];
 
     // TODO: user role/permission
 }

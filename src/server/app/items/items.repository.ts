@@ -1,5 +1,6 @@
 import { Application, Response } from 'express';
 import { v1 as neo4j } from 'neo4j-driver';
+import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { BaseRepository } from '../shared/base-repository';
@@ -207,6 +208,13 @@ class ItemsRepository extends BaseRepository {
             let viewModel = new CommentViewModel();
             viewModel = x.get('comment');
             viewModel.user = x.get('user');
+
+            const pushSubscription = x.get('pushSubscription');
+            if (pushSubscription) {
+                const [endpoint, auth, encrypt] = pushSubscription;
+                viewModel.pushSubscription = new PushSubscriptionModel(endpoint, auth, encrypt);
+            }
+
             return viewModel;
         });
 

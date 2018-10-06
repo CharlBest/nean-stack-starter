@@ -67,10 +67,9 @@ export class NewsletterComponent implements OnInit {
   remove() {
     this.isProcessing = true;
 
-    const viewModel = new NewsletterMemberViewModel();
-    viewModel.email = this.formGroup.controls['email'].value.trim();
+    const email = this.formGroup.controls['email'].value.trim();
 
-    this.newsletterService.deleteNewsletterMember(viewModel)
+    this.newsletterService.deleteNewsletterMember(email)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(() => {
         this.isDone = true;

@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.747",
+  "version": "0.0.748",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -33,7 +33,8 @@
     "i18n": "./node_modules/.bin/ng-xi18n --i18nFormat xlf",
     "build:en": "ng build --prod --aot --locale en-US --i18n-format xlf --i18n-file src/locale/messages.en-US.xlf --output-path ../web/dist/en-US",
     "build:af": "ng build --prod --aot --locale af-ZA --i18n-format xlf --i18n-file src/locale/messages.af-ZA.xlf --output-path ../web/dist/af-ZA",
-    "build-i18n": "npm run build:en && npm run build:af"
+    "build-i18n": "npm run build:en && npm run build:af",
+    "generate-vapid-keys": "web-push generate-vapid-keys --json"
   },
   "husky": {
     "hooks": {
@@ -86,7 +87,8 @@
     "webpack-node-externals": "^1.7.2",
     "ws": "^6.0.0",
     "zone.js": "^0.8.26",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "web-push": "^3.3.3"
   },
   "devDependencies": {
     "@angular/language-service": "^7.0.0-beta.5",
@@ -109,6 +111,7 @@
     "@types/webpack": "^4.4.11",
     "@types/ws": "^6.0.1",
     "@types/winston": "^2.4.4",
+    "@types/web-push": "^3.3.0",
     "codelyzer": "^4.4.4",
     "jasmine-core": "~3.2.1",
     "jasmine-spec-reporter": "~4.2.1",
