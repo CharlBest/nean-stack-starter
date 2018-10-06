@@ -18,7 +18,7 @@ WITH viewingUser, item, user
 
 OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
 
-RETURN item, user
+RETURN properties(item) as item, user
 {
     id: user.id,
     username: user.username,

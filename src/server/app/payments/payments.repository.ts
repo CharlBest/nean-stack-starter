@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
-import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 class PaymentsRepository extends BaseRepository {
@@ -56,7 +55,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject<CardModel>(x.get('card')));
+        const model = result.records.map(x => x.get('cards'));
 
         if (model && model.length > 0) {
             return model;
@@ -81,7 +80,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject<CardModel>(x.get('card')));
+        const model = result.records.map(x => x.get('card'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -127,7 +126,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.createNodeObject<PaymentModel>(x.get('payments')));
+        const model = result.records.map(x => x.get('payments'));
 
         if (model && model.length > 0) {
             return model;

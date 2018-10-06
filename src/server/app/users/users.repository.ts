@@ -1,12 +1,9 @@
 import { Response } from 'express';
-import { ItemModel } from '../../../shared/models/item/item.model';
-import { CardModel } from '../../../shared/models/payment/card.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
-import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 class UsersRepository extends BaseRepository {
@@ -28,7 +25,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email' | 'username' | 'emailCode'>>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -67,7 +64,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'password' | 'passwordSalt' | 'id'>>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -83,7 +80,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<UserLiteModel>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -101,8 +98,8 @@ class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let localModel = new UserModel();
-            localModel = Database.createNodeObject<UserModel>(x.get('user'));
-            localModel.userCards = Database.createNodeObjectArray<CardModel>(x.get('cards'));
+            localModel = x.get('user');
+            localModel.userCards = x.get('cards');
             return localModel;
         });
 
@@ -113,7 +110,7 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async getUserPublic(res: Response, loggedInUserId: number, ip: string, userId: number, pageIndex: number, pageSize: number)
+    async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number, pageIndex: number, pageSize: number)
         : Promise<UserPublicViewModel | null> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserPublic,
             {
@@ -127,8 +124,8 @@ class UsersRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let localModel = new UserPublicViewModel();
-            localModel = Database.parseValues<UserPublicViewModel>(x.get('user'));
-            localModel.items = Database.createNodeObjectArray<ItemModel>(x.get('items'));
+            localModel = x.get('user');
+            localModel.items = x.get('items');
             return localModel;
         });
 
@@ -147,7 +144,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -167,7 +164,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -230,7 +227,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => Database.parseValues<Pick<UserModel, 'email'>>(x.get('user')));
+        const model = result.records.map(x => x.get('user'));
 
         if (model && model.length > 0) {
             return model[0];

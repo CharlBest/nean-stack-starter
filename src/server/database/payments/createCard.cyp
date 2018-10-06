@@ -24,5 +24,5 @@ FOREACH (o IN CASE WHEN cards IS NULL THEN [1] ELSE [] END |
 
 MERGE (user)-[:HAS_CARD]->(card)
 
-RETURN card
+RETURN properties(card) as card
 `

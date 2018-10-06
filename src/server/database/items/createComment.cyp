@@ -9,7 +9,7 @@ MATCH (user:User { id: {userId} }), (item:Item { uId: {itemUId} })
 
 CREATE (user)-[:MADE_COMMENT]->(comment:Comment { id: nextId, uId: {uId}, description: {description}, dateCreated: timestamp() })<-[:HAS_COMMENT]-(item)
 
-RETURN comment, user
+RETURN properties(comment) as comment, user
 {
     id: user.id,
     username: user.username,

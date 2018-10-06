@@ -3,7 +3,7 @@ MATCH (user:User { id: {userId} })-[:MADE_COMMENT]->(comment:Comment { uId: {uId
 
 SET comment.description = {description}
 
-RETURN comment, user
+RETURN properties(comment) as comment, user
 {
     id: user.id,
     username: user.username,

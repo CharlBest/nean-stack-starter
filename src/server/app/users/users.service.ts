@@ -173,7 +173,7 @@ class UsersService extends BaseService {
     }
 
     async getUserPublic(res: Response, ip: string, userId: number, pageIndex: number, pageSize: number): Promise<UserPublicViewModel> {
-        const user = await usersRepository.getUserPublic(res, this.getUserId(res), ip, userId, pageIndex, pageSize);
+        const user = await usersRepository.getUserPublic(res, this.getOptionalUserId(res), ip, userId, pageIndex, pageSize);
 
         if (!user) {
             throw new Error('User required');

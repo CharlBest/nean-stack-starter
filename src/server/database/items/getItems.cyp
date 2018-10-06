@@ -3,7 +3,7 @@ MATCH (users:User)-[:HAS_ITEM]->(items)
 
 OPTIONAL MATCH (:User { id: {userId} })-[favourite:HAS_FAVOURITE]->(items)
 
-RETURN items, users
+RETURN properties(items) as items, users
 {
     id: users.id,
     username: users.username,

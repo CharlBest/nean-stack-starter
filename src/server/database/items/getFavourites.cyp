@@ -1,7 +1,7 @@
 export const data = `
 MATCH (users:User { id: {userId} })-[rel:HAS_FAVOURITE]->(items)
 
-RETURN items, users
+RETURN properties(items) as items, users
 {
     id: users.id,
     username: users.username,

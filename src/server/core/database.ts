@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { v1 as neo4j } from 'neo4j-driver';
 import { environment } from '../environments/environment';
 import logger from './utils/logger';
@@ -13,7 +12,7 @@ export class Database {
             environment.database.uri,
             neo4j.auth.basic(environment.database.username, environment.database.password),
             {
-                // disableLosslessIntegers: true
+                disableLosslessIntegers: true
             }
         );
 
@@ -44,38 +43,6 @@ export class Database {
         if (this.driver) {
             this.driver.close();
         }
-    }
-
-    static createNodeObject<T>(node: any): T {
-        if (node) {
-            let object = {};
-            _.assign(object, node.properties);
-
-            object = Database.parseValues(object);
-
-            return <T>object;
-        } else {
-            return <any>null;
-        }
-    }
-
-    static createNodeObjectArray<T>(nodes: any[]): T[] {
-        if (nodes) {
-            return nodes.map(x => Database.createNodeObject(x)) as T[];
-        } else {
-            return <any>null;
-        }
-    }
-
-    static parseValues<T>(object: Object): T {
-        for (const key in object) {
-            // check also if property is not inherited from prototype
-            if (object.hasOwnProperty(key) && neo4j.isInt(object[key])) {
-                object[key] = neo4j.integer.toNumber(object[key]);
-            }
-        }
-
-        return <T>object;
     }
 
     static async retrieveQueries() {

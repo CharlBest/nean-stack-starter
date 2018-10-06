@@ -5,7 +5,7 @@ SET item.title = {title}
 SET item.description = {description}
 SET item.media = {media}
 
-RETURN item, user
+RETURN properties(item) as item, user
 {
     id: user.id,
     username: user.username,

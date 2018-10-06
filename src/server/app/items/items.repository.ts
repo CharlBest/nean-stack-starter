@@ -1,11 +1,7 @@
 import { Application, Response } from 'express';
 import { v1 as neo4j } from 'neo4j-driver';
-import { CommentModel } from '../../../shared/models/item/comment.model';
-import { ItemModel } from '../../../shared/models/item/item.model';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
-import { ItemUserViewModel } from '../../../shared/view-models/item/item-user.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 class ItemsRepository extends BaseRepository {
@@ -41,8 +37,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('item');
+            viewModel.user = x.get('user');
             return viewModel;
         });
 
@@ -67,8 +63,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('item');
+            viewModel.user = x.get('user');
             return viewModel;
         });
 
@@ -90,8 +86,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject<ItemModel>(x.get('item'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('item');
+            viewModel.user = x.get('user');
             viewModel.favourite = x.get('favourite');
             return viewModel;
         });
@@ -114,8 +110,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject<ItemModel>(x.get('items'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            viewModel = x.get('items');
+            viewModel.user = x.get('users');
             viewModel.favourite = x.get('favourite');
             return viewModel;
         });
@@ -183,8 +179,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new ItemViewModel();
-            viewModel = Database.createNodeObject<ItemModel>(x.get('items'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            viewModel = x.get('items');
+            viewModel.user = x.get('users');
             viewModel.favourite = true;
             return viewModel;
         });
@@ -209,8 +205,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new CommentViewModel();
-            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('comment');
+            viewModel.user = x.get('user');
             return viewModel;
         });
 
@@ -232,8 +228,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new CommentViewModel();
-            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('comment');
+            viewModel.user = x.get('user');
             return viewModel;
         });
 
@@ -272,8 +268,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new CommentViewModel();
-            viewModel = Database.createNodeObject<CommentModel>(x.get('comments'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('users'));
+            viewModel = x.get('comments');
+            viewModel.user = x.get('users');
             return viewModel;
         });
 
@@ -295,8 +291,8 @@ class ItemsRepository extends BaseRepository {
 
         const model = result.records.map(x => {
             let viewModel = new CommentViewModel();
-            viewModel = Database.createNodeObject<CommentModel>(x.get('comment'));
-            viewModel.user = Database.parseValues<ItemUserViewModel>(x.get('user'));
+            viewModel = x.get('comment');
+            viewModel.user = x.get('user');
             viewModel.itemUId = x.get('itemUId');
             return viewModel;
         });

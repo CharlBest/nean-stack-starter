@@ -1,7 +1,7 @@
 export const data = `
 MATCH (:Item { uId: {uId} })-[:HAS_COMMENT]->(comments:Comment)<-[:MADE_COMMENT]-(users:User)
 
-RETURN comments, users
+RETURN properties(comments) as comments, users
 {
     id: users.id,
     username: users.username,
