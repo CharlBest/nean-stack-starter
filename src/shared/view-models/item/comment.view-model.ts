@@ -4,6 +4,6 @@ import { ItemUserViewModel } from './item-user.view-model';
 
 export class CommentViewModel extends CommentModel {
     itemUId?: string | null;
-    pushSubscription?: PushSubscriptionModel;
+    pushSubscription?: PushSubscriptionModel | null;
     user?: ItemUserViewModel;
 }

@@ -208,12 +208,7 @@ class ItemsRepository extends BaseRepository {
             let viewModel = new CommentViewModel();
             viewModel = x.get('comment');
             viewModel.user = x.get('user');
-
-            const pushSubscription = PushSubscriptionModel.createFromArray(x.get('pushSubscription'));
-            if (pushSubscription) {
-                viewModel.pushSubscription = pushSubscription;
-            }
-
+            viewModel.pushSubscription = PushSubscriptionModel.createFromArray(x.get('pushSubscription'));
             return viewModel;
         });
 
