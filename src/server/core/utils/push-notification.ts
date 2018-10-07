@@ -38,8 +38,6 @@ class PushNotification {
                 .catch(error => {
                     logger.error('Error seding push notifications', [error]);
                 });
-        } else {
-            logger.info('Push subscription was empty', [body]);
         }
     }
 }
