@@ -164,7 +164,7 @@ export class NavigationComponent implements OnInit {
     let prevScrollpos = window.pageYOffset;
     fromEvent(window, 'scroll')
       .pipe(debounceTime(40))
-      .subscribe((e: any) => {
+      .subscribe(() => {
         const currentScrollPos = window.pageYOffset;
 
         if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight ||
