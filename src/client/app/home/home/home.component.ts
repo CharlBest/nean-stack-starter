@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, filter, finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.service';
@@ -13,8 +15,11 @@ import { HomeService } from '../home.service';
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('virtualScroll') virtualScroll: CdkVirtualScrollViewport;
   isProcessing = true;
   items: ItemViewModel[];
+  itemHeight = 320;
+  pageIndex = 0;
 
   constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
@@ -27,12 +32,13 @@ export class HomeComponent implements OnInit {
     });
 
     this.getItems();
+    this.infinityScrollOnInit();
   }
 
   getItems() {
     this.isProcessing = true;
 
-    this.homeService.getItems(0)
+    this.homeService.getItems(this.pageIndex)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data) {
@@ -40,6 +46,25 @@ export class HomeComponent implements OnInit {
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
+      });
+  }
+
+  infinityScrollOnInit() {
+    fromEvent(this.virtualScroll.elementRef.nativeElement, 'scroll')
+      .pipe(
+        debounceTime(40),
+        filter(() => !this.isProcessing)
+      )
+      .subscribe((x: Event) => {
+        const target = x.target as HTMLDivElement;
+        const scrollBottom = target.scrollTop + target.clientHeight || target.offsetHeight;
+        console.log(scrollBottom);
+        console.log(target.scrollHeight);
+        if (scrollBottom + (this.itemHeight * 3) > target.scrollHeight) {
+          console.log('load....');
+          this.pageIndex++;
+          this.getItems();
+        }
       });
   }
 }

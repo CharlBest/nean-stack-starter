@@ -1,19 +1,25 @@
 <mat-card>
-    <mat-card-subtitle>Everything on this demo site is live/working condition. Creating a profile, sending emails, donating
+    <mat-card-subtitle>Everything on this demo site is live/working condition. Creating a profile, sending emails,
+        donating
         money, uploading profile pictures and more.</mat-card-subtitle>
 </mat-card>
 
 <app-github-readme></app-github-readme>
 
 <ng-container *ngIf="!isProcessing">
-    <app-item *ngFor="let item of items"
-        [item]="item"></app-item>
+    <cdk-virtual-scroll-viewport [itemSize]="itemHeight"
+        style="height: 600px;"
+        #virtualScroll>
+        <app-item *cdkVirtualFor="let item of items"
+            [style.height.px]="itemHeight"
+            [item]="item"></app-item>
+    </cdk-virtual-scroll-viewport>
 </ng-container>
+
+<mat-spinner [style.visibility]="isProcessing ? 'visible' : 'hidden'"></mat-spinner>
 
 <mat-card *ngIf="!isProcessing && (!items || items?.length === 0) && networkStatus.isOnline">
     No items exist
 </mat-card>
 
 <app-network-status #networkStatus></app-network-status>
-
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
