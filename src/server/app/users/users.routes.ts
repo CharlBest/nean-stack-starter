@@ -45,6 +45,8 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.completedTutorial(req, res, next).catch(next));
         this.router.put(UserRoutes.updatePushSubscription().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.updatePushSubscription(req, res, next).catch(next));
+        this.router.put(UserRoutes.updateNotificationPreferences().server(), Authentication.loginRequired,
+            async (req, res, next) => usersController.updateNotificationPreferences(req, res, next).catch(next));
     }
 }
 

@@ -1,14 +1,32 @@
-<mat-card>
-    <mat-card-title>Notifications</mat-card-title>
+<form [formGroup]="formGroup">
+    <mat-card>
+        <mat-card-title>Notifications</mat-card-title>
 
-    <div class="header">
-        <span>Push notifications</span>
-        <mat-slide-toggle (change)="toggleChange($event)"
-            [checked]="pushNotificationPermissionGrandted"
-            color="primary"></mat-slide-toggle>
-    </div>
-    <br>
-    <mat-card-subtitle>Get push notifications to find out what's going on. You can turn them off
-        anytime.
-    </mat-card-subtitle>
-</mat-card>
+        <div class="header">
+            <span>Push notifications</span>
+            <mat-slide-toggle (change)="toggleChange($event)"
+                [checked]="pushNotificationPermissionGrandted"
+                color="primary"></mat-slide-toggle>
+        </div>
+        <br>
+        <mat-card-subtitle>Get push notifications to find out what's going on. You can turn them off
+            anytime.
+        </mat-card-subtitle>
+        <mat-card-content>
+            <ng-container *ngIf="user">
+                <mat-checkbox formControlName="nt1">Comment create</mat-checkbox>
+                <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
+
+                <br>
+
+                <mat-checkbox formControlName="nt2">Hot</mat-checkbox>
+                <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
+            </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+                type="submit"
+                (click)="onSubmit()">Update preferences</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

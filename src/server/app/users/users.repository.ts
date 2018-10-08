@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
 import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
@@ -267,12 +268,28 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async updatePushSubscription(res: Response, userId: number, pushSubscription: PushSubscriptionModel): Promise<boolean> {
+    async updatePushSubscription(res: Response, userId: number, viewModel: PushSubscriptionModel): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePushSubscription,
             {
                 userId,
-                pushSubscription: PushSubscriptionModel.createArray(pushSubscription.endpoint,
-                    pushSubscription.keys.auth, pushSubscription.keys.p256dh),
+                pushSubscription: PushSubscriptionModel.createArray(viewModel.endpoint,
+                    viewModel.keys.auth, viewModel.keys.p256dh),
+            }
+        );
+
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    async updateNotificationPreferences(res: Response, userId: number, viewModel: NotificationPreferencesModel): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateNotificationPreferences,
+            {
+                userId,
+                nt1: viewModel.nt1,
+                nt2: viewModel.nt2,
             }
         );
 

@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
+import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
 import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.model';
 import { ServerValidator } from '../../../shared/validation/validators';
@@ -157,6 +158,8 @@ class UsersService extends BaseService {
             bio: user.bio,
             avatarUrl: user.avatarUrl,
             emailVerified: user.emailVerified,
+            nt1: user.nt1,
+            nt2: user.nt2,
             userCards: user.userCards.map(x => {
                 const card: CardViewModel = {
                     uId: x.uId,
@@ -280,6 +283,10 @@ class UsersService extends BaseService {
 
     async updatePushSubscription(res: Response, viewModel: PushSubscriptionModel): Promise<void> {
         await usersRepository.updatePushSubscription(res, this.getUserId(res), viewModel);
+    }
+
+    async updateNotificationPreferences(res: Response, viewModel: NotificationPreferencesModel): Promise<void> {
+        await usersRepository.updateNotificationPreferences(res, this.getUserId(res), viewModel);
     }
 }
 

@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
+import { UserProfileViewModel } from 'shared/view-models/user/user-profile.view-model';
+import { NotificationPreferencesModel } from '../../../../shared/models/user/notification-preferences.model';
+import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PushNotificationService } from '../../shared/services/push-notification.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-notifications',
@@ -16,11 +23,20 @@ export class NotificationsComponent implements OnInit {
   // The toggle state also doesn't represent that it is the current registered device
   // but only that this user has permitted the use of push notifcations
   pushNotificationPermissionGrandted = (<any>Notification).permission === 'granted';
+  @Input() user: UserProfileViewModel;
+  formGroup: FormGroup;
+  isProcessing = false;
 
-  constructor(private pushNotificationService: PushNotificationService,
-    private dialogService: DialogService) { }
+  constructor(private fb: FormBuilder,
+    private pushNotificationService: PushNotificationService,
+    private dialogService: DialogService,
+    private profileService: ProfileService,
+    private formErrorsService: FormErrorsService,
+    private snackBar: MatSnackBar) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.formOnInit();
+  }
 
   toggleChange(event: MatSlideToggleChange) {
     if (event.checked) {
@@ -32,5 +48,32 @@ export class NotificationsComponent implements OnInit {
         }
       });
     }
+  }
+
+  formOnInit() {
+    this.formGroup = this.fb.group(BuildFormGroup.updateNotificationPreferences(this.user.nt1, this.user.nt2));
+  }
+
+  onSubmit() {
+    this.isProcessing = true;
+    const viewModel: NotificationPreferencesModel = {
+      nt1: this.formGroup.controls['nt1'].value || true,
+      nt2: this.formGroup.controls['nt2'].value || true
+    };
+
+    this.snackBar.open('Updating notification preferences...');
+
+    this.profileService.updateNotificationPreferences(viewModel)
+      .pipe(finalize(() => this.isProcessing = false))
+      .subscribe(() => {
+        this.snackBar.dismiss();
+        this.snackBar.open('Updated notification preferences');
+      }, error => {
+        this.snackBar.dismiss();
+        this.snackBar.open('Update failed');
+
+        this.formErrorsService.updateFormValidity(error);
+        this.snackBar.dismiss();
+      });
   }
 }

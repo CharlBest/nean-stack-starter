@@ -13,7 +13,7 @@ WITH user, item, comment
 MATCH (itemUser:User)-[:HAS_ITEM]->(item)
 
 RETURN properties(comment) as comment, 
-itemUser.pushSubscription as pushSubscription,
+CASE WHEN itemUser.nt1 IS NOT NULL THEN itemUser.pushSubscription ELSE null END as pushSubscription,
 user
 {
     id: user.id,

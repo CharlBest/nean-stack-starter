@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
+import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { ReportUserViewModel } from '../../../shared/view-models/profile/report-user.view-model';
@@ -61,5 +62,9 @@ export class ProfileService {
 
   sendReport(viewModel: ReportUserViewModel): Observable<void> {
     return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report().client()}`, viewModel);
+  }
+
+  updateNotificationPreferences(model: NotificationPreferencesModel): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateNotificationPreferences().client()}`, model);
   }
 }

@@ -211,6 +211,17 @@ export class BuildFormGroup {
             ]]
         };
     }
+
+    static updateNotificationPreferences(nt1: boolean | null = null, nt2: boolean | null = null): FormValidator {
+        return {
+            nt1: [nt1, [
+                Validators.required
+            ]],
+            nt2: [nt2, [
+                Validators.required
+            ]]
+        };
+    }
 }
 
 export class ServerValidator {

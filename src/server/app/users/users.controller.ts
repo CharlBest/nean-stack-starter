@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
+import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
+import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
@@ -11,7 +13,6 @@ import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/upd
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { BaseController } from '../shared/base-controller';
 import { usersService } from './users.service';
-import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 
 class UsersController extends BaseController {
 
@@ -223,6 +224,21 @@ class UsersController extends BaseController {
 
         res.status(200).json(
             await usersService.updatePushSubscription(res, viewModel)
+        );
+    }
+
+    async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as NotificationPreferencesModel;
+
+        const formGroup = BuildFormGroup.updateNotificationPreferences(viewModel.nt1, viewModel.nt2);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        if (hasErrors) {
+            throw new Error('All notification types are required');
+        }
+
+        res.status(200).json(
+            await usersService.updateNotificationPreferences(res, viewModel)
         );
     }
 }
