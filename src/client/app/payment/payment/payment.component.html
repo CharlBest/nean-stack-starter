@@ -36,8 +36,7 @@
                     formControlName="amount"
                     placeholder="Amount in euros"
                     type="number"
-                    (keypress)="$event.charCode >= 48 && $event.charCode <= 57"
-                    required>
+                    (keypress)="$event.charCode >= 48 && $event.charCode <= 57">
                 <span matPrefix>€&nbsp;</span>
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['amount']"></app-form-errors>
@@ -52,8 +51,7 @@
                         formControlName="email"
                         placeholder="Email"
                         type="email"
-                        [required]="true"
-                        required>
+                        [required]="true">
                     <mat-error>
                         <app-form-errors [control]="formGroup.controls['email']"></app-form-errors>
                     </mat-error>

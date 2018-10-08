@@ -17,7 +17,6 @@
                     formControlName="email"
                     type="email"
                     autocomplete="email"
-                    required
                     [attr.autofocus]="bpService.isDesktop || null">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['email']">
@@ -34,8 +33,7 @@
                 <mat-label>username</mat-label>
                 <input matInput
                     formControlName="username"
-                    type="text"
-                    required>
+                    type="text">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['username']">
                         <ng-container *ngIf="formGroup.controls['username'].hasError('exists')">
@@ -51,8 +49,7 @@
                 <mat-label>password</mat-label>
                 <input matInput
                     formControlName="password"
-                    type="password"
-                    required>
+                    type="password">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['password']">
                         <ng-container *ngIf="formGroup.controls['password'].hasError('pattern')">

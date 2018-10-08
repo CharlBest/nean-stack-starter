@@ -17,7 +17,6 @@
                     formControlName="emailOrUsername"
                     type="email"
                     autocomplete="email"
-                    required
                     [attr.autofocus]="bpService.isDesktop || null">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['emailOrUsername']"></app-form-errors>
@@ -30,8 +29,7 @@
                 <mat-label>password</mat-label>
                 <input matInput
                     formControlName="password"
-                    type="password"
-                    required>
+                    type="password">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['password']"></app-form-errors>
                 </mat-error>

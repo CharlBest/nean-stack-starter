@@ -14,8 +14,7 @@
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)"
           [attr.autofocus]="bpService.isDesktop || null"
-          type="email"
-          required />
+          type="email" />
       </mat-chip-list>
       <mat-error>Invalid email address</mat-error>
     </mat-form-field>
