@@ -10,6 +10,8 @@
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
     "alwaysStrict": true,
     "target": "es5",
