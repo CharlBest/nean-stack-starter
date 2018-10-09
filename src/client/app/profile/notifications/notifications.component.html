@@ -22,7 +22,7 @@
                 <mat-checkbox formControlName="nt2">Hot</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
 
-                <ng-container *ngIf="formGroup.controls['password'].hasError('required')"
+                <ng-container *ngIf="formGroup.controls['nt1'].hasError('required') || formGroup.controls['nt2'].hasError('required')"
                     class="mat-error">
                     Notification preferences are required
                 </ng-container>
