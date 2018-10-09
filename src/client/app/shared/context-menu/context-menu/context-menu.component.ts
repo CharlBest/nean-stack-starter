@@ -27,10 +27,8 @@ export class ContextMenuComponent {
 
             this.preventBackNavigationService.beforeOpen();
 
-            this.bottomSheet.open(this.bottomSheetContextMenu, {
-                closeOnNavigation: true,
-                autoFocus: false
-            }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
+            this.bottomSheet.open(this.bottomSheetContextMenu).afterDismissed()
+                .subscribe(() => this.preventBackNavigationService.afterClosed());
         }
     }
 
