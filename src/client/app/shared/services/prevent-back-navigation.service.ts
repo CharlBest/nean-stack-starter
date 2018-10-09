@@ -9,7 +9,7 @@ export class PreventBackNavigationService {
     constructor(private location: Location) { }
 
     beforeOpen() {
-        history.pushState(null, undefined, location.href);
+        history.pushState(null, '', location.href);
         window.onpopstate = () => this.location.forward();
     }
 

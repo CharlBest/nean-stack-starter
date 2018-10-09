@@ -54,7 +54,7 @@ export class TutorialDirective implements OnInit {
         if (this.tutorialInUrl === this.appTutorial) {
             element.style.zIndex = '11';
             element.style.backgroundColor = this.tutorialBackgroundColor;
-            window.scroll(undefined, element.offsetTop);
+            window.scroll(0, element.offsetTop);
         }
     }
 
