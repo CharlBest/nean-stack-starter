@@ -1,12 +1,7 @@
 import { Component, OnInit, VERSION as AngularVersion } from '@angular/core';
 import { VERSION as AngularMaterialVersion } from '@angular/material';
+import { version } from '../../../../../package.json';
 import { GitHubService } from '../../shared/github/github.service';
-
-// TODO: Replace require import as soon as Angular supports Typescript 2.9
-// import packageJson from '../../package.json';
-// packageJson.version
-declare function require(moduleName: string): any;
-const { version: appVersion } = require('../../../../../package.json');
 
 @Component({
   selector: 'app-dev',
@@ -18,7 +13,7 @@ export class DevComponent implements OnInit {
   isProcessingChangelog = true;
   dataSource = [
     { description: 'GitHub package.json', version: null },
-    { description: 'App package.json', version: `v${appVersion}` },
+    { description: 'App package.json', version: `v${version}` },
     { description: 'Angular', version: `v${AngularVersion.full}` },
     { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
   ];
