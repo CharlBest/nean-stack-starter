@@ -47,6 +47,24 @@ export class NotificationsComponent implements OnInit {
           event.source.checked = false;
         }
       });
+    } else {
+      event.source.checked = false;
+      this.snackBar.open('Updating notification preferences...');
+
+      this.pushNotificationService.deletePushSubscription()
+        .subscribe(() => {
+          this.user.hasPushSubscription = false;
+          this.snackBar.dismiss();
+          this.snackBar.open('Updated notification preferences');
+        }, error => {
+          event.source.checked = true;
+
+          this.snackBar.dismiss();
+          this.snackBar.open('Update failed');
+
+          this.formErrorsService.updateFormValidity(error);
+          this.snackBar.dismiss();
+        });
     }
   }
 
@@ -57,8 +75,8 @@ export class NotificationsComponent implements OnInit {
   onSubmit() {
     this.isProcessing = true;
     const viewModel: NotificationPreferencesModel = {
-      nt1: this.formGroup.controls['nt1'].value || true,
-      nt2: this.formGroup.controls['nt2'].value || true
+      nt1: this.formGroup.controls['nt1'].value,
+      nt2: this.formGroup.controls['nt2'].value
     };
 
     this.snackBar.open('Updating notification preferences...');

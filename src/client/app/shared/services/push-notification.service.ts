@@ -13,8 +13,12 @@ export class PushNotificationService {
   constructor(private swPush: SwPush,
     private http: HttpClient) { }
 
-  private updatePushNotificationDetails(viewModel: PushSubscriptionModel): Observable<void> {
+  updatePushNotificationDetails(viewModel: PushSubscriptionModel): Observable<void> {
     return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updatePushSubscription().client()}`, viewModel);
+  }
+
+  deletePushSubscription(): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrlEndpoint}${UserRoutes.deletePushSubscription().client()}`);
   }
 
   subscribeToNotifications() {

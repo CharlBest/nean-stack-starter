@@ -268,12 +268,12 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async updatePushSubscription(res: Response, userId: number, viewModel: PushSubscriptionModel): Promise<boolean> {
+    async updatePushSubscription(res: Response, userId: number, viewModel: PushSubscriptionModel | null): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePushSubscription,
             {
                 userId,
-                pushSubscription: PushSubscriptionModel.createArray(viewModel.endpoint,
-                    viewModel.keys.auth, viewModel.keys.p256dh),
+                pushSubscription: viewModel ? PushSubscriptionModel.createArray(viewModel.endpoint,
+                    viewModel.keys.auth, viewModel.keys.p256dh) : null,
             }
         );
 

@@ -158,6 +158,20 @@ body {
 	.mat-nav-list {
 		padding-top: 0;
 	}
+
+	// Override mat-form-field appearance="fill" to remove the bottom field underline
+	.mat-form-field-underline {
+		display: none;
+	}
+
+	.mat-form-field-appearance-fill .mat-form-field-flex {
+		border-radius: 4px !important;
+	}
+
+	.mat-error {
+		font-size: 75%;
+		padding: 0 1em;
+	}
 }
 
 // Override Quill toolbar with white icons when in night mode (Dark theme)
@@ -180,13 +194,4 @@ body {
 // Stripe element override if dark theme
 .dark-theme .stripe-element {
 	border-color: rgba(255, 255, 255, 0.7) !important;
-}
-
-// Override mat-form-field appearance="fill" to remove the bottom field underline
-.mat-form-field-underline {
-	display: none;
-}
-
-.mat-form-field-appearance-fill .mat-form-field-flex {
-	border-radius: 4px !important;
 }

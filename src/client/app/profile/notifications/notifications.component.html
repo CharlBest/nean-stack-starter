@@ -5,7 +5,7 @@
         <div class="header">
             <span>Push notifications</span>
             <mat-slide-toggle (change)="toggleChange($event)"
-                [checked]="pushNotificationPermissionGrandted"
+                [checked]="user?.hasPushSubscription && pushNotificationPermissionGrandted"
                 color="primary"></mat-slide-toggle>
         </div>
         <br>
@@ -13,7 +13,7 @@
             anytime.
         </mat-card-subtitle>
         <mat-card-content>
-            <ng-container *ngIf="user">
+            <ng-container *ngIf="user && user?.hasPushSubscription && pushNotificationPermissionGrandted">
                 <mat-checkbox formControlName="nt1">Comment create</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
 
@@ -21,6 +21,11 @@
 
                 <mat-checkbox formControlName="nt2">Hot</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
+
+                <ng-container *ngIf="formGroup.controls['password'].hasError('required')"
+                    class="mat-error">
+                    Notification preferences are required
+                </ng-container>
             </ng-container>
         </mat-card-content>
         <mat-card-actions>

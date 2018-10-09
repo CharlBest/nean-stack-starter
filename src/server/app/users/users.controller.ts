@@ -227,6 +227,12 @@ class UsersController extends BaseController {
         );
     }
 
+    async deletePushSubscription(req: Request, res: Response, next: NextFunction) {
+        res.status(200).json(
+            await usersService.updatePushSubscription(res, null)
+        );
+    }
+
     async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as NotificationPreferencesModel;
 

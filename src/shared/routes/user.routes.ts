@@ -22,5 +22,6 @@ export class UserRoutes {
     static searchUserStartWith = () => new BaseRoute(UserRoutes.rootRoute, 'searchUserStartWith');
     static completedTutorial = () => new BaseRoute(UserRoutes.rootRoute, 'completedTutorial');
     static updatePushSubscription = () => new BaseRoute(UserRoutes.rootRoute, 'updatePushSubscription');
+    static deletePushSubscription = () => new BaseRoute(UserRoutes.rootRoute, 'deletePushSubscription');
     static updateNotificationPreferences = () => new BaseRoute(UserRoutes.rootRoute, 'updateNotificationPreferences');
 }

@@ -12,5 +12,6 @@ export class UserProfileViewModel implements NotificationPreferencesModel {
     emailVerified: boolean;
     nt1: boolean;
     nt2: boolean;
+    hasPushSubscription: boolean;
     userCards: CardViewModel[];
 }

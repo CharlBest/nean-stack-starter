@@ -160,6 +160,7 @@ class UsersService extends BaseService {
             emailVerified: user.emailVerified,
             nt1: user.nt1,
             nt2: user.nt2,
+            hasPushSubscription: !!user.pushSubscription,
             userCards: user.userCards.map(x => {
                 const card: CardViewModel = {
                     uId: x.uId,
@@ -281,7 +282,7 @@ class UsersService extends BaseService {
         return await usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 
-    async updatePushSubscription(res: Response, viewModel: PushSubscriptionModel): Promise<void> {
+    async updatePushSubscription(res: Response, viewModel: PushSubscriptionModel | null): Promise<void> {
         await usersRepository.updatePushSubscription(res, this.getUserId(res), viewModel);
     }
 
