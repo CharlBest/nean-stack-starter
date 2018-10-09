@@ -1,5 +1,5 @@
+import { Platform } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
-import { BROWSERS, DeviceDetectorService, DeviceInfo, DEVICES } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-pwa-helper',
@@ -11,7 +11,7 @@ export class PWAHelperComponent implements OnInit {
     helperTextSection = HelperTextSection;
     activeHelperTextSection: HelperTextSection;
 
-    constructor(private deviceService: DeviceDetectorService) { }
+    constructor(private platform: Platform) { }
 
     ngOnInit() {
         this.initScreenSizes();
@@ -19,13 +19,12 @@ export class PWAHelperComponent implements OnInit {
 
     initScreenSizes() {
         // TODO: work in progress (need to test individually)
-        const deviceInfo: DeviceInfo = this.deviceService.getDeviceInfo();
 
-        if (deviceInfo.device === DEVICES.UNKNOWN && deviceInfo.browser === BROWSERS.CHROME) { // Desktop + Chrome
+        if (!this.platform.ANDROID && !this.platform.IOS && this.platform.BLINK) { // Desktop + Chrome
             this.activeHelperTextSection = HelperTextSection.DESKTOP_CHROME;
-        } else if (deviceInfo.device === DEVICES.ANDROID && deviceInfo.browser === BROWSERS.CHROME) { // Android Mobile + Chrome
+        } else if (this.platform.ANDROID && this.platform.BLINK) { // Android Mobile + Chrome
             this.activeHelperTextSection = HelperTextSection.ANDROID_MOBILE_CHROME;
-        } else if (deviceInfo.device === DEVICES.ANDROID && deviceInfo.browser === BROWSERS.MS_EDGE) { // Android Mobile + Edge
+        } else if (this.platform.IOS && this.platform.EDGE) { // Android Mobile + Edge
         }
     }
 }
