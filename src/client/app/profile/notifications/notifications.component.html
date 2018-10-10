@@ -30,6 +30,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
+                *ngIf="user && user?.hasPushSubscription && pushNotificationPermissionGrandted"
                 type="submit"
                 (click)="onSubmit()">Update preferences</button>
         </mat-card-actions>

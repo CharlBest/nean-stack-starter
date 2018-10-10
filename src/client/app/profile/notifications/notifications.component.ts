@@ -42,7 +42,9 @@ export class NotificationsComponent implements OnInit {
     if (event.checked) {
       this.dialogService.confirm('Are you sure you would like to receive push notifications?').subscribe(data => {
         if (data) {
-          this.pushNotificationService.subscribeToNotifications();
+          this.pushNotificationService.subscribeToNotifications(() => {
+            this.user.hasPushSubscription = true;
+          });
         } else {
           event.source.checked = false;
         }
@@ -62,7 +64,7 @@ export class NotificationsComponent implements OnInit {
           this.snackBar.dismiss();
           this.snackBar.open('Update failed');
 
-          this.formErrorsService.updateFormValidity(error);
+          this.formErrorsService.updateFormValidity(error, this.formGroup);
           this.snackBar.dismiss();
         });
     }
@@ -90,7 +92,7 @@ export class NotificationsComponent implements OnInit {
         this.snackBar.dismiss();
         this.snackBar.open('Update failed');
 
-        this.formErrorsService.updateFormValidity(error);
+        this.formErrorsService.updateFormValidity(error, this.formGroup);
         this.snackBar.dismiss();
       });
   }

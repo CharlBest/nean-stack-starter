@@ -21,7 +21,7 @@ export class PushNotificationService {
     return this.http.delete<void>(`${environment.apiUrlEndpoint}${UserRoutes.deletePushSubscription().client()}`);
   }
 
-  subscribeToNotifications() {
+  subscribeToNotifications(callback: Function) {
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
         serverPublicKey: environment.publicVapidKey
@@ -30,7 +30,9 @@ export class PushNotificationService {
           const dataJson = data.toJSON();
           if (dataJson && dataJson.endpoint && dataJson.keys) {
             const viewModel = new PushSubscriptionModel(dataJson.endpoint, dataJson.keys['auth'], dataJson.keys['p256dh']);
-            this.updatePushNotificationDetails(viewModel).subscribe();
+            this.updatePushNotificationDetails(viewModel).subscribe(() => {
+              callback();
+            });
           } else {
             console.error('Push subscription data is invalid');
           }
