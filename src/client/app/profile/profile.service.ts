@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
-import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { ReportUserViewModel } from '../../../shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
+import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
+import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { environment } from '../../environments/environment';
 
@@ -64,7 +65,12 @@ export class ProfileService {
     return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report().client()}`, viewModel);
   }
 
-  updateNotificationPreferences(model: NotificationPreferencesModel): Observable<void> {
+  getNotificationPreferences(): Observable<NotificationPreferencesViewModel | null> {
+    return this.http
+      .get<NotificationPreferencesViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getNotificationPreferences().client()}`);
+  }
+
+  updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Observable<void> {
     return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateNotificationPreferences().client()}`, model);
   }
 }

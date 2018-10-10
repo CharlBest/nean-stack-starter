@@ -28,6 +28,10 @@
             <mat-icon mat-list-icon>star</mat-icon>
             <span mat-line>Saved</span>
           </mat-list-item>
+          <mat-list-item (click)="goToNotifications()">
+            <mat-icon mat-list-icon>notifications</mat-icon>
+            <span mat-line>Notification Preferences</span>
+          </mat-list-item>
           <mat-list-item (click)="copyLink()">
             <mat-icon mat-list-icon>link</mat-icon>
             <span mat-line>Copy link to User</span>
@@ -90,8 +94,6 @@
   <app-update-password></app-update-password>
 
   <app-payments [userCards]="user.userCards"></app-payments>
-
-  <app-notifications [user]="user"></app-notifications>
 
   <app-language></app-language>
 </div>

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -24,6 +25,10 @@ import { ProfileComponent } from './profile/profile.component';
             {
                 path: 'delete', component: DeleteUserComponent, pathMatch: 'full',
                 data: { title: 'Delete Account', nav: NavigationType.Back }
+            },
+            {
+                path: 'notifications', component: NotificationsComponent, pathMatch: 'full',
+                data: { title: 'Notifications', nav: NavigationType.Back }
             },
         ])
     ],

@@ -162,4 +162,9 @@ export class ProfileComponent implements OnInit {
     this.contextMenu.close();
     this.router.navigate(['/item/saved']);
   }
+
+  goToNotifications() {
+    this.contextMenu.close();
+    this.router.navigate(['/profile/notifications']);
+  }
 }

@@ -1,38 +1,54 @@
-<form [formGroup]="formGroup">
+<form *ngIf="!isProcessing"
+    [formGroup]="formGroup">
     <mat-card>
-        <mat-card-title>Notifications</mat-card-title>
-
-        <div class="header">
-            <span>Push notifications</span>
-            <mat-slide-toggle (change)="toggleChange($event)"
-                [checked]="user?.hasPushSubscription && pushNotificationPermissionGrandted"
-                color="primary"></mat-slide-toggle>
-        </div>
-        <br>
-        <mat-card-subtitle>Get push notifications to find out what's going on. You can turn them off
-            anytime.
-        </mat-card-subtitle>
         <mat-card-content>
-            <ng-container *ngIf="user && user?.hasPushSubscription && pushNotificationPermissionGrandted">
-                <mat-checkbox formControlName="nt1">Comment create</mat-checkbox>
+            <div class="header">
+                <span>Push notifications</span>
+                <mat-slide-toggle formControlName="pushNotificationEnabled"
+                    color="primary"></mat-slide-toggle>
+            </div>
+            <br>
+            <mat-card-subtitle>Get push notifications to find out what's going on. You can turn them off
+                anytime.
+            </mat-card-subtitle>
+            <ng-container *ngIf="formGroup.controls['pushNotificationEnabled'].value">
+                <mat-checkbox formControlName="pushCommentOnItemToOwner">Comment create</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
 
                 <br>
 
-                <mat-checkbox formControlName="nt2">Hot</mat-checkbox>
+                <mat-checkbox formControlName="pushHot">Hot</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
+            </ng-container>
 
-                <ng-container *ngIf="formGroup.controls['nt1'].hasError('required') || formGroup.controls['nt2'].hasError('required')"
-                    class="mat-error">
-                    Notification preferences are required
-                </ng-container>
+            <br>
+
+            <div class="header">
+                <span>Email</span>
+                <mat-slide-toggle formControlName="emailEnabled"
+                    color="primary"></mat-slide-toggle>
+            </div>
+            <br>
+            <mat-card-subtitle>Get emails to find out what's going on. You can turn them off
+                anytime.
+            </mat-card-subtitle>
+            <ng-container *ngIf="formGroup.controls['emailEnabled'].value">
+                <mat-checkbox formControlName="emailCommentOnItemToOwner">Comment create</mat-checkbox>
+                <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
+
+                <br>
+
+                <mat-checkbox formControlName="emailHot">Hot</mat-checkbox>
+                <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
             </ng-container>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
-                *ngIf="user && user?.hasPushSubscription && pushNotificationPermissionGrandted"
+                *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value"
                 type="submit"
                 (click)="onSubmit()">Update preferences</button>
         </mat-card-actions>
     </mat-card>
 </form>
+
+<mat-spinner *ngIf="isProcessing"></mat-spinner>

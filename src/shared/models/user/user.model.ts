@@ -1,8 +1,7 @@
 ﻿import { CardModel } from '../payment/card.model';
-import { NotificationPreferencesModel } from './notification-preferences.model';
 import { UserLiteModel } from './user-lite.model';
 
-export class UserModel extends UserLiteModel implements NotificationPreferencesModel {
+export class UserModel extends UserLiteModel {
     dateCreated: number;
     isVerified: boolean;
     views: number;
@@ -12,11 +11,14 @@ export class UserModel extends UserLiteModel implements NotificationPreferencesM
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: Array<string>;
     userCards: CardModel[];
-    pushSubscription: [string, string, string];
+    pushSubscription: PushSubscriptionValues;
+    pushNotificationTypes: PushNotificationTypes;
+    emailNotificationTypes: EmailNotificationTypes;
 
     // TODO: user role/permission
-
-    // Notification Types
-    nt1: boolean;
-    nt2: boolean;
 }
+
+export type NotificationType = boolean | null;
+export type PushNotificationTypes = [NotificationType, NotificationType];
+export type EmailNotificationTypes = [NotificationType, NotificationType];
+export type PushSubscriptionValues = [string, string, string];

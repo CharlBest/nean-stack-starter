@@ -1,10 +1,10 @@
 import { sendNotification, setVapidDetails } from 'web-push';
-import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
+import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { environment } from '../../environments/environment';
 import { logger } from './logger';
 
 class PushNotification {
-    async send(pushSubscription: PushSubscriptionModel | null | undefined, title: string, body: string): Promise<void> {
+    async send(pushSubscription: PushSubscriptionViewModel | null | undefined, title: string, body: string): Promise<void> {
         if (pushSubscription) {
             if (body) {
                 body = body.substr(0, 230) + (body.length > 230 ? ' ...' : '');

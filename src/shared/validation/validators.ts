@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
 import { AnyFormError, ErrorCustomFormValidator, ErrorEmail, ErrorMinLength, ErrorPattern, ErrorRequired } from '../models/shared/form-error.model';
+import { NotificationType } from '../models/user/user.model';
 
 function isEmptyInputValue(value: any): boolean {
     // we don't check for string here so it also works with arrays
@@ -212,14 +213,29 @@ export class BuildFormGroup {
         };
     }
 
-    static updateNotificationPreferences(nt1: boolean | null = null, nt2: boolean | null = null): FormValidator {
+    static updateNotificationPreferences(pushNotificationEnabled: NotificationType = null,
+        emailEnabled: NotificationType = null, pushCommentOnItemToOwner: NotificationType = null,
+        pushHot: NotificationType = null, emailCommentOnItemToOwner: NotificationType = null,
+        emailHot: NotificationType = null): FormValidator {
         return {
-            nt1: [nt1, [
+            pushNotificationEnabled: [pushNotificationEnabled, [
                 Validators.required
             ]],
-            nt2: [nt2, [
+            emailEnabled: [emailEnabled, [
                 Validators.required
-            ]]
+            ]],
+            pushCommentOnItemToOwner: [pushCommentOnItemToOwner, [
+                Validators.required
+            ]],
+            pushHot: [pushHot, [
+                Validators.required
+            ]],
+            emailCommentOnItemToOwner: [emailCommentOnItemToOwner, [
+                Validators.required
+            ]],
+            emailHot: [emailHot, [
+                Validators.required
+            ]],
         };
     }
 }

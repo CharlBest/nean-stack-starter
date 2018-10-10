@@ -4,14 +4,14 @@ import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
-import { NotificationPreferencesModel } from '../../../shared/models/user/notification-preferences.model';
-import { PushSubscriptionModel } from '../../../shared/models/user/push-subscription.model';
 import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.model';
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CardViewModel } from '../../../shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
+import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
+import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Authentication } from '../../core/middleware/authentication';
@@ -158,9 +158,6 @@ class UsersService extends BaseService {
             bio: user.bio,
             avatarUrl: user.avatarUrl,
             emailVerified: user.emailVerified,
-            nt1: user.nt1,
-            nt2: user.nt2,
-            hasPushSubscription: !!user.pushSubscription,
             userCards: user.userCards.map(x => {
                 const card: CardViewModel = {
                     uId: x.uId,
@@ -282,11 +279,11 @@ class UsersService extends BaseService {
         return await usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
     }
 
-    async updatePushSubscription(res: Response, viewModel: PushSubscriptionModel | null): Promise<void> {
-        await usersRepository.updatePushSubscription(res, this.getUserId(res), viewModel);
+    async getNotificationPreferences(res: Response): Promise<NotificationPreferencesViewModel | null> {
+        return await usersRepository.getNotificationPreferences(res, this.getUserId(res));
     }
 
-    async updateNotificationPreferences(res: Response, viewModel: NotificationPreferencesModel): Promise<void> {
+    async updateNotificationPreferences(res: Response, viewModel: UpdateNotificationPreferencesViewModel): Promise<void> {
         await usersRepository.updateNotificationPreferences(res, this.getUserId(res), viewModel);
     }
 }

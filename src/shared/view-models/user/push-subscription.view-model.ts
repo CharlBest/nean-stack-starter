@@ -1,6 +1,7 @@
 import { PushSubscription } from 'web-push';
+import { PushSubscriptionValues } from '../../models/user/user.model';
 
-export class PushSubscriptionModel implements PushSubscription {
+export class PushSubscriptionViewModel implements PushSubscription {
     endpoint: string;
     keys: {
         p256dh: string;
@@ -15,10 +16,10 @@ export class PushSubscriptionModel implements PushSubscription {
         };
     }
 
-    static createFromArray(pushSubscription: PushSubscriptionValues): PushSubscriptionModel | null {
+    static createFromArray(pushSubscription: PushSubscriptionValues): PushSubscriptionViewModel | null {
         if (pushSubscription) {
             const [endpoint, auth, p256dh] = pushSubscription;
-            return new PushSubscriptionModel(endpoint, auth, p256dh);
+            return new PushSubscriptionViewModel(endpoint, auth, p256dh);
         } else {
             return null;
         }
@@ -28,5 +29,3 @@ export class PushSubscriptionModel implements PushSubscription {
         return [endpoint, auth, p256dh];
     }
 }
-
-type PushSubscriptionValues = [string, string, string];
