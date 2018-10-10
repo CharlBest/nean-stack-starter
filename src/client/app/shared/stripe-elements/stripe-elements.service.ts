@@ -33,7 +33,6 @@ export class StripeElementsService {
             node.type = 'text/javascript';
             node.async = false;
             node.id = elementId;
-            node.charset = 'utf-8';
             node.onload = () => {
                 if (!this.stripeInstance) {
                     this.stripeInstance = Stripe(environment.stripe.publishableKey);
