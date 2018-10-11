@@ -73,7 +73,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
             this.snackBar.dismiss();
             this.snackBar.open('Deleted');
             // TODO: very dirty and bad UI but will work for now
-            location.reload();
+            this.router.navigate(['']);
           }, error => {
             this.snackBar.dismiss();
             this.snackBar.open('Delete failed');
