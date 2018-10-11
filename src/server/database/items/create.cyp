@@ -9,6 +9,8 @@ MATCH (user:User { id: {userId} })
 
 CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: {uId}, title: {title}, description: {description}, media: {media}, dateCreated: timestamp() })
 
+SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
+
 RETURN properties(item) as item, user
 {
     id: user.id,

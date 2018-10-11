@@ -5,4 +5,6 @@ export class ItemModel {
     media: Array<string>;
     dateCreated: number;
     views: number;
+    itemCommentCount: number;
+    itemFavouriteCount: number;
 }

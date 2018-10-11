@@ -14,6 +14,9 @@ export class UserModel extends UserLiteModel {
     pushSubscription: PushSubscriptionValues;
     pushNotificationTypes: PushNotificationTypes;
     emailNotificationTypes: EmailNotificationTypes;
+    itemCount: number;
+    itemCommentCount: number;
+    itemFavouriteCount: number;
 
     // TODO: user role/permission
 }
