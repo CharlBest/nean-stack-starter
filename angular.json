@@ -58,6 +58,13 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
               "serviceWorker": true
             }
           }
@@ -100,8 +107,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/client/tsconfig.app.json",
-              "src/client/tsconfig.spec.json"
+              "src/client/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"
