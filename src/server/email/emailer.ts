@@ -145,6 +145,25 @@ export class Emailer {
         Emailer.send(data);
     }
 
+    static notification(email: string, title: string, body: string) {
+        const data: MailData = {
+            to: email,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
+            },
+            templateId: environment.sendGrid.templates.notification,
+        };
+
+        data['dynamic_template_data'] = {
+            subject: 'Notification',
+            title,
+            body
+        };
+
+        Emailer.send(data);
+    }
+
     static send(data: MailData) {
         if (!environment.production) {
             data.mailSettings = {

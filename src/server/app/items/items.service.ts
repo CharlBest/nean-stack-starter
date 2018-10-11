@@ -5,7 +5,6 @@ import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { logger } from '../../core/utils/logger';
-import { pushNotification } from '../../core/utils/push-notification';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
 
@@ -92,7 +91,7 @@ class ItemsService extends BaseService {
         }
 
         // Send push notification to owner
-        pushNotification.send(result.pushSubscription, 'NEAN - Item Comment', description);
+        // pushNotification.send(result.pushSubscription, 'NEAN - Item Comment', description);
 
         return result;
     }

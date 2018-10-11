@@ -2,7 +2,6 @@ import { Application, Response } from 'express';
 import { v1 as neo4j } from 'neo4j-driver';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { BaseRepository } from '../shared/base-repository';
 
 class ItemsRepository extends BaseRepository {
@@ -208,7 +207,6 @@ class ItemsRepository extends BaseRepository {
             let viewModel = new CommentViewModel();
             viewModel = x.get('comment');
             viewModel.user = x.get('user');
-            viewModel.pushSubscription = PushSubscriptionViewModel.createFromArray(x.get('pushSubscription'));
             return viewModel;
         });
 

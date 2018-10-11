@@ -22,6 +22,7 @@ export const environment = {
             paymentSuccessful: getEnvironmentVariable('SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL', 'd-590247b465184d61a718a9948087986d'),
             passwordUpdated: getEnvironmentVariable('SENDGRID_TEMPLATE_PASSWORD_UPDATED', 'd-d5dc72ebfbcb4750a511ffc7373f4eca'),
             invite: getEnvironmentVariable('SENDGRID_TEMPLATE_INVITE', 'd-77fe4e3da0cd4cdc8d51ef6c315b2d46'),
+            notification: getEnvironmentVariable('SENDGRID_TEMPLATE_NOTIFICATION', 'd-3e61e949c11348f49fbcdd4bc254705b'),
         }
     },
     authentication: {
