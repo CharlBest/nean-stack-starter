@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.791",
+  "version": "0.0.792",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -87,7 +87,8 @@
     "ws": "^6.1.0",
     "zone.js": "^0.8.26",
     "winston": "^3.1.0",
-    "web-push": "^3.3.3"
+    "web-push": "^3.3.3",
+    "amqplib": "^0.5.2"
   },
   "devDependencies": {
     "@angular/language-service": "^7.0.0-rc.0",
@@ -111,6 +112,7 @@
     "@types/ws": "^6.0.1",
     "@types/winston": "^2.4.4",
     "@types/web-push": "^3.3.0",
+    "@types/amqplib": "^0.5.8",
     "codelyzer": "^4.5.0",
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1",
