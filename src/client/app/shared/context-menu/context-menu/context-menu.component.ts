@@ -27,7 +27,9 @@ export class ContextMenuComponent {
 
             this.preventBackNavigationService.beforeOpen();
 
-            this.bottomSheet.open(this.bottomSheetContextMenu).afterDismissed()
+            this.bottomSheet.open(this.bottomSheetContextMenu, {
+                hasBackdrop: true
+            }).afterDismissed()
                 .subscribe(() => this.preventBackNavigationService.afterClosed());
         }
     }
