@@ -1,18 +1,27 @@
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import * as sendGridMail from '@sendgrid/mail';
-import { logger } from '../core/utils/logger';
-import { environment } from '../environments/environment';
+import { Email } from '../../communication/interfaces/email.interface';
+import { FeedbackCommunicationModel } from '../../communication/models/feedback-communication.model';
+import { ForgotPasswordCommunicationModel } from '../../communication/models/forgot-password-communication.model';
+import { InviteCommunicationModel } from '../../communication/models/invite-communication.model';
+import { NotificationCommunicationModel } from '../../communication/models/notification-communication.model';
+import { PasswordUpdatedCommunicationModel } from '../../communication/models/password-updated-communication.model';
+import { PaymentSuccessfulCommunicationModel } from '../../communication/models/payment-successful-communication.model';
+import { ResendEmailVerificationLinkCommunicationModel } from '../../communication/models/resend-email-verification-link-communication.model';
+// import { logger } from '../core/utils/logger';
+import { WelcomeCommunicationModel } from '../../communication/models/welcome-communication.model';
+import { environment } from '../../environments/environment';
 
 sendGridMail.setApiKey(environment.sendGrid.apiKey);
 sendGridMail.setSubstitutionWrappers('{{', '}}');
 
-export class Emailer {
-    static fromEmail = 'admin@nean.io';
-    static fromName = 'NEAN';
+class Emailer implements Email {
+    fromEmail = 'admin@nean.io';
+    fromName = 'NEAN';
 
-    static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
+    welcome(model: WelcomeCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -25,16 +34,16 @@ export class Emailer {
         // url: /verify/{{emailVerifyCode}}
         data['dynamic_template_data'] = {
             subject: 'Welcome',
-            username,
-            emailVerifyCode,
+            username: model.username,
+            emailVerifyCode: model.emailVerifyCode,
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
+    forgotPassword(model: ForgotPasswordCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -45,14 +54,14 @@ export class Emailer {
         // url: /forgot-password/reset?code={{forgotPasswordCode}}&email={{email}}
         data['dynamic_template_data'] = {
             subject: 'Forgot Password',
-            email,
-            forgotPasswordCode,
+            email: model.email,
+            forgotPasswordCode: model.forgotPasswordCode,
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static feedbackEmail(feedbackContent: string) {
+    feedback(model: FeedbackCommunicationModel) {
         const data: MailData = {
             to: this.fromEmail,
             from: {
@@ -65,15 +74,15 @@ export class Emailer {
         // html: {{feedbackContent}}
         data['dynamic_template_data'] = {
             subject: 'Feedback',
-            feedbackContent,
+            feedbackContent: model.feedbackContent,
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
+    resendEmailVerificationLink(model: ResendEmailVerificationLinkCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -84,15 +93,15 @@ export class Emailer {
         // url: /verify/{{emailVerifyCode}}
         data['dynamic_template_data'] = {
             subject: 'Email verification',
-            emailVerifyCode,
+            emailVerifyCode: model.emailVerifyCode,
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static paymentSuccessfulEmail(email: string, amount: number) {
+    paymentSuccessful(model: PaymentSuccessfulCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -103,15 +112,15 @@ export class Emailer {
         // html: {{amount}}
         data['dynamic_template_data'] = {
             subject: 'Payment Successful',
-            amount,
+            amount: model.amount,
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static passwordUpdated(email: string) {
+    passwordUpdated(model: PasswordUpdatedCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -124,12 +133,12 @@ export class Emailer {
             subject: 'Password Updated',
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static invite(emails: Array<string>) {
+    invite(model: InviteCommunicationModel) {
         const data: MailData = {
-            to: emails,
+            to: model.emails,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -142,12 +151,12 @@ export class Emailer {
             subject: 'Invite',
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static notification(email: string, title: string, body: string) {
+    notification(model: NotificationCommunicationModel) {
         const data: MailData = {
-            to: email,
+            to: model.email,
             from: {
                 email: this.fromEmail,
                 name: this.fromName
@@ -157,14 +166,14 @@ export class Emailer {
 
         data['dynamic_template_data'] = {
             subject: 'Notification',
-            title,
-            body
+            title: model.title,
+            body: model.body
         };
 
-        Emailer.send(data);
+        this.send(data);
     }
 
-    static send(data: MailData) {
+    send(data: MailData) {
         if (!environment.production) {
             data.mailSettings = {
                 sandboxMode: {
@@ -176,7 +185,7 @@ export class Emailer {
         if (environment.production) {
             sendGridMail.send(data, undefined, (err: Error) => {
                 if (err) {
-                    logger.error(err);
+                    // logger.error(err);
                     throw err;
                     // TODO: save against profile that email failed to send (maybe)
                 }
@@ -184,3 +193,5 @@ export class Emailer {
         }
     }
 }
+
+export const emailer = new Emailer();

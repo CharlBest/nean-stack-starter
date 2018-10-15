@@ -4,8 +4,8 @@ import { v4 as nodeUUId } from 'uuid';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
+import { emailer } from '../../communication/emailer';
 import { logger } from '../../core/utils/logger';
-import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
 import { usersRepository } from '../users/users.repository';
@@ -136,7 +136,10 @@ class PaymentsService extends BaseService {
     async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
         const charge = await this.createCharge(res, token, amount);
 
-        Emailer.paymentSuccessfulEmail(email, amount);
+        emailer.paymentSuccessful({
+            email: email,
+            amount: amount
+        });
 
         return await paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
     }
@@ -156,7 +159,10 @@ class PaymentsService extends BaseService {
             // Existing customer and card
             const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
-            Emailer.paymentSuccessfulEmail(user.email, amount);
+            emailer.paymentSuccessful({
+                email: user.email,
+                amount: amount
+            });
 
             return await paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
                 charge.metadata.paymentUId, amount, charge.id, charge.created);
@@ -172,7 +178,10 @@ class PaymentsService extends BaseService {
                 if (existingCard) {
                     const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
-                    Emailer.paymentSuccessfulEmail(user.email, amount);
+                    emailer.paymentSuccessful({
+                        email: user.email,
+                        amount: amount
+                    });
 
                     return await paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId,
                         charge.metadata.paymentUId, amount, charge.id, charge.created);
@@ -181,7 +190,10 @@ class PaymentsService extends BaseService {
 
                     const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
 
-                    Emailer.paymentSuccessfulEmail(user.email, amount);
+                    emailer.paymentSuccessful({
+                        email: user.email,
+                        amount: amount
+                    });
 
                     return await paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId,
                         charge.metadata.paymentUId, amount, charge.id, charge.created);
@@ -190,7 +202,10 @@ class PaymentsService extends BaseService {
                 // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
                 const charge = await this.createCharge(res, token, amount, user.id);
 
-                Emailer.paymentSuccessfulEmail(user.email, amount);
+                emailer.paymentSuccessful({
+                    email: user.email,
+                    amount: amount
+                });
 
                 return await paymentsRepository.userPayment(res, this.getUserId(res), null,
                     charge.metadata.paymentUId, amount, charge.id, charge.created);

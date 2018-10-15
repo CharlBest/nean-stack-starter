@@ -10,6 +10,7 @@ const config = {
     context: path.resolve("./src/server"),
     entry: {
         app: "./main.ts",
+        worker: "./main.worker.ts",
         // vendor: "./vendor.ts"
     },
     target: 'node',

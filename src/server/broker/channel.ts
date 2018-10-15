@@ -1,14 +1,12 @@
-// @ts-check
-
-import * as amqp from 'amqplib/callback_api';
+import { Channel, connect, Connection } from 'amqplib/callback_api';
 
 // TODO: change guest username + password to actual user
 const url = process.env.AMQP_URL || 'amqp://guest:guest@localhost:5672';
 
-export function createQueueChannel(queue: string, cb: (anys: any, channel?: amqp.Channel, conn?: amqp.Connection) => void) {
-    amqp.connect(url, onceConnected);
+export function createQueueChannel(queue: string, cb: (something: any, channel?: Channel, connection?: Connection) => void) {
+    connect(url, onceConnected);
 
-    function onceConnected(err: any, conn: amqp.Connection) {
+    function onceConnected(err: any, conn: Connection) {
         if (err) {
             console.error('Error connecting:', err.stack);
         } else {
@@ -16,7 +14,7 @@ export function createQueueChannel(queue: string, cb: (anys: any, channel?: amqp
             conn.createChannel(onceChannelCreated);
         }
 
-        function onceChannelCreated(error2: any, channel: amqp.Channel) {
+        function onceChannelCreated(error2: any, channel: Channel) {
             if (error2) {
                 cb(error2);
             } else {

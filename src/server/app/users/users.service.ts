@@ -14,9 +14,9 @@ import { NotificationPreferencesViewModel } from '../../../shared/view-models/us
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
+import { emailer } from '../../communication/emailer';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
-import { Emailer } from '../../email/emailer';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
 import { usersRepository } from './users.repository';
@@ -70,7 +70,11 @@ class UsersService extends BaseService {
             }
 
             // Send email
-            Emailer.welcomeEmail(user.email, user.username, user.emailCode);
+            emailer.welcome({
+                email: user.email,
+                username: user.username,
+                emailVerifyCode: user.emailCode
+            });
 
             // Notify everyone there is another sign up
             // TODO: This should be extracted into a single place where it can be called from
@@ -191,7 +195,10 @@ class UsersService extends BaseService {
             throw new Error('User required');
         }
 
-        Emailer.resendEmailVerificationLinkEmail(user.email, user.emailCode);
+        emailer.resendEmailVerificationLink({
+            email: user.email,
+            emailVerifyCode: user.emailCode
+        });
     }
 
     async forgotPassword(res: Response, email: string, code: string): Promise<void> {
@@ -205,7 +212,10 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        Emailer.forgotPasswordEmail(user.email, code);
+        emailer.forgotPassword({
+            email: user.email,
+            forgotPasswordCode: code
+        });
     }
 
     async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
@@ -221,7 +231,9 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        Emailer.passwordUpdated(user.email);
+        emailer.passwordUpdated({
+            email: user.email
+        });
     }
 
     async verifyEmail(res: Response, code: string): Promise<boolean> {
@@ -268,7 +280,9 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        Emailer.passwordUpdated(updatedUser.email);
+        emailer.passwordUpdated({
+            email: updatedUser.email
+        });
     }
 
     async deleteUser(res: Response): Promise<boolean> {
