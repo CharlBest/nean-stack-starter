@@ -1,4 +1,4 @@
-export class ForgotPasswordCommunicationModel {
+export class ForgotPasswordEmailModel {
     email: string;
     forgotPasswordCode: string;
 }

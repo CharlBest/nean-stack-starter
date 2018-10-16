@@ -1,16 +1,16 @@
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import * as sendGridMail from '@sendgrid/mail';
 import { Email } from '../../communication/interfaces/email.interface';
-import { FeedbackCommunicationModel } from '../../communication/models/feedback-communication.model';
-import { ForgotPasswordCommunicationModel } from '../../communication/models/forgot-password-communication.model';
-import { InviteCommunicationModel } from '../../communication/models/invite-communication.model';
-import { NotificationCommunicationModel } from '../../communication/models/notification-communication.model';
-import { PasswordUpdatedCommunicationModel } from '../../communication/models/password-updated-communication.model';
-import { PaymentSuccessfulCommunicationModel } from '../../communication/models/payment-successful-communication.model';
-import { ResendEmailVerificationLinkCommunicationModel } from '../../communication/models/resend-email-verification-link-communication.model';
-// import { logger } from '../core/utils/logger';
-import { WelcomeCommunicationModel } from '../../communication/models/welcome-communication.model';
+import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
+import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
+import { InviteEmailModel } from '../../communication/models/email/invite-email.model';
+import { NotificationEmailModel } from '../../communication/models/email/notification-email.model';
+import { PasswordUpdatedEmailModel } from '../../communication/models/email/password-updated-email.model';
+import { PaymentSuccessfulEmailModel } from '../../communication/models/email/payment-successful-email.model';
+import { ResendEmailVerificationLinkEmailModel } from '../../communication/models/email/resend-email-verification-link-email.model';
+import { WelcomeEmailModel } from '../../communication/models/email/welcome-email.model';
 import { environment } from '../../environments/environment';
+// import { logger } from '../core/utils/logger';
 
 sendGridMail.setApiKey(environment.sendGrid.apiKey);
 sendGridMail.setSubstitutionWrappers('{{', '}}');
@@ -19,7 +19,7 @@ class Emailer implements Email {
     fromEmail = 'admin@nean.io';
     fromName = 'NEAN';
 
-    welcome(model: WelcomeCommunicationModel) {
+    welcome(model: WelcomeEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {
@@ -41,7 +41,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    forgotPassword(model: ForgotPasswordCommunicationModel) {
+    forgotPassword(model: ForgotPasswordEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {
@@ -61,7 +61,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    feedback(model: FeedbackCommunicationModel) {
+    feedback(model: FeedbackEmailModel) {
         const data: MailData = {
             to: this.fromEmail,
             from: {
@@ -80,7 +80,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    resendEmailVerificationLink(model: ResendEmailVerificationLinkCommunicationModel) {
+    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {
@@ -99,7 +99,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    paymentSuccessful(model: PaymentSuccessfulCommunicationModel) {
+    paymentSuccessful(model: PaymentSuccessfulEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {
@@ -118,7 +118,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    passwordUpdated(model: PasswordUpdatedCommunicationModel) {
+    passwordUpdated(model: PasswordUpdatedEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {
@@ -136,7 +136,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    invite(model: InviteCommunicationModel) {
+    invite(model: InviteEmailModel) {
         const data: MailData = {
             to: model.emails,
             from: {
@@ -154,7 +154,7 @@ class Emailer implements Email {
         this.send(data);
     }
 
-    notification(model: NotificationCommunicationModel) {
+    notification(model: NotificationEmailModel) {
         const data: MailData = {
             to: model.email,
             from: {

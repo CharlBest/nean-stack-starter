@@ -1,45 +1,45 @@
 import { broker } from '../broker/broker';
 import { Email } from './interfaces/email.interface';
-import { FeedbackCommunicationModel } from './models/feedback-communication.model';
-import { ForgotPasswordCommunicationModel } from './models/forgot-password-communication.model';
-import { InviteCommunicationModel } from './models/invite-communication.model';
-import { NotificationCommunicationModel } from './models/notification-communication.model';
-import { PasswordUpdatedCommunicationModel } from './models/password-updated-communication.model';
-import { PaymentSuccessfulCommunicationModel } from './models/payment-successful-communication.model';
-import { ResendEmailVerificationLinkCommunicationModel } from './models/resend-email-verification-link-communication.model';
-import { WelcomeCommunicationModel } from './models/welcome-communication.model';
+import { FeedbackEmailModel } from './models/email/feedback-email.model';
+import { ForgotPasswordEmailModel } from './models/email/forgot-password-email.model';
+import { InviteEmailModel } from './models/email/invite-email.model';
+import { NotificationEmailModel } from './models/email/notification-email.model';
+import { PasswordUpdatedEmailModel } from './models/email/password-updated-email.model';
+import { PaymentSuccessfulEmailModel } from './models/email/payment-successful-email.model';
+import { ResendEmailVerificationLinkEmailModel } from './models/email/resend-email-verification-link-email.model';
+import { WelcomeEmailModel } from './models/email/welcome-email.model';
 
 class Emailer implements Email {
 
-    welcome(model: WelcomeCommunicationModel) {
+    welcome(model: WelcomeEmailModel) {
         broker.sendToQueue(model);
     }
 
-    forgotPassword(model: ForgotPasswordCommunicationModel) {
+    forgotPassword(model: ForgotPasswordEmailModel) {
         broker.sendToQueue(model);
     }
 
-    feedback(model: FeedbackCommunicationModel) {
+    feedback(model: FeedbackEmailModel) {
         broker.sendToQueue(model);
     }
 
-    resendEmailVerificationLink(model: ResendEmailVerificationLinkCommunicationModel) {
+    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
         broker.sendToQueue(model);
     }
 
-    paymentSuccessful(model: PaymentSuccessfulCommunicationModel) {
+    paymentSuccessful(model: PaymentSuccessfulEmailModel) {
         broker.sendToQueue(model);
     }
 
-    passwordUpdated(model: PasswordUpdatedCommunicationModel) {
+    passwordUpdated(model: PasswordUpdatedEmailModel) {
         broker.sendToQueue(model);
     }
 
-    invite(model: InviteCommunicationModel) {
+    invite(model: InviteEmailModel) {
         broker.sendToQueue(model);
     }
 
-    notification(model: NotificationCommunicationModel) {
+    notification(model: NotificationEmailModel) {
         broker.sendToQueue(model);
     }
 }

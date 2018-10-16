@@ -1,26 +1,26 @@
-import { FeedbackCommunicationModel } from '../models/feedback-communication.model';
-import { ForgotPasswordCommunicationModel } from '../models/forgot-password-communication.model';
-import { InviteCommunicationModel } from '../models/invite-communication.model';
-import { NotificationCommunicationModel } from '../models/notification-communication.model';
-import { PasswordUpdatedCommunicationModel } from '../models/password-updated-communication.model';
-import { PaymentSuccessfulCommunicationModel } from '../models/payment-successful-communication.model';
-import { ResendEmailVerificationLinkCommunicationModel } from '../models/resend-email-verification-link-communication.model';
-import { WelcomeCommunicationModel } from '../models/welcome-communication.model';
+import { FeedbackEmailModel } from '../models/email/feedback-email.model';
+import { ForgotPasswordEmailModel } from '../models/email/forgot-password-email.model';
+import { InviteEmailModel } from '../models/email/invite-email.model';
+import { NotificationEmailModel } from '../models/email/notification-email.model';
+import { PasswordUpdatedEmailModel } from '../models/email/password-updated-email.model';
+import { PaymentSuccessfulEmailModel } from '../models/email/payment-successful-email.model';
+import { ResendEmailVerificationLinkEmailModel } from '../models/email/resend-email-verification-link-email.model';
+import { WelcomeEmailModel } from '../models/email/welcome-email.model';
 
 export interface Email {
-    welcome(model: WelcomeCommunicationModel): void;
+    welcome(model: WelcomeEmailModel): void;
 
-    forgotPassword(model: ForgotPasswordCommunicationModel): void;
+    forgotPassword(model: ForgotPasswordEmailModel): void;
 
-    feedback(model: FeedbackCommunicationModel): void;
+    feedback(model: FeedbackEmailModel): void;
 
-    resendEmailVerificationLink(model: ResendEmailVerificationLinkCommunicationModel): void;
+    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel): void;
 
-    paymentSuccessful(model: PaymentSuccessfulCommunicationModel): void;
+    paymentSuccessful(model: PaymentSuccessfulEmailModel): void;
 
-    passwordUpdated(model: PasswordUpdatedCommunicationModel): void;
+    passwordUpdated(model: PasswordUpdatedEmailModel): void;
 
-    invite(model: InviteCommunicationModel): void;
+    invite(model: InviteEmailModel): void;
 
-    notification(model: NotificationCommunicationModel): void;
+    notification(model: NotificationEmailModel): void;
 }
