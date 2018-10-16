@@ -1,4 +1,5 @@
-import { broker } from '../broker/broker';
+import { brokerManager } from '../broker/broker-manager';
+import { QueueType } from '../broker/queue-type.enum';
 import { Email } from './interfaces/email.interface';
 import { FeedbackEmailModel } from './models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from './models/email/forgot-password-email.model';
@@ -12,35 +13,35 @@ import { WelcomeEmailModel } from './models/email/welcome-email.model';
 class Emailer implements Email {
 
     welcome(model: WelcomeEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.welcomeEmail, model);
     }
 
     forgotPassword(model: ForgotPasswordEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.forgotPasswordEmail, model);
     }
 
     feedback(model: FeedbackEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.feedbackEmail, model);
     }
 
     resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.resendEmailVerificationLinkEmail, model);
     }
 
     paymentSuccessful(model: PaymentSuccessfulEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.paymentSuccessfulEmail, model);
     }
 
     passwordUpdated(model: PasswordUpdatedEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.passwordUpdatedEmail, model);
     }
 
     invite(model: InviteEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.inviteEmail, model);
     }
 
     notification(model: NotificationEmailModel) {
-        broker.sendToQueue(model);
+        brokerManager.sendToQueue(QueueType.notificationEmail, model);
     }
 }
 

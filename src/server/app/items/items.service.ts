@@ -92,6 +92,11 @@ class ItemsService extends BaseService {
 
         // Send push notification to owner
         // pushNotification.send(result.pushSubscription, 'NEAN - Item Comment', description);
+        // emailer.welcome({
+        //     email: '',
+        //     username: '',
+        //     emailVerifyCode: ''
+        // });
 
         return result;
     }

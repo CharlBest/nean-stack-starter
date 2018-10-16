@@ -1,33 +1,34 @@
-import { createQueueChannel } from './channel';
-const queue = 'queue';
+import { Channel, connect, Connection } from 'amqplib';
+import { logger } from '../core/utils/logger';
+import { environment } from '../environments/environment';
+import { QueueType } from './queue-type.enum';
 
 class Broker {
+    connection: Connection;
+    channel: Channel;
 
-    static encode(data: string) {
-        return Buffer.from(JSON.stringify(data));
-    }
+    async init(): Promise<void> {
+        try {
+            this.connection = await connect(environment.rabbitMQ.amqpUrl);
+            this.channel = await this.connection.createChannel();
 
-    async sendToQueue(data: any): Promise<void> {
-        createQueueChannel(queue, function (err, channel, conn) {
-            if (err) {
-                console.error(err.stack);
-            } else {
-                console.log('channel and queue created');
-                const work = 'make me a sandwich';
-                if (channel) {
-                    const success = channel.sendToQueue(queue, Broker.encode(data), {
-                        persistent: true
-                    });
-
-                    console.log(success);
-
-                    // setImmediate(function () {
-                    //     channel.close(null);
-                    //     conn.close();
-                    // });
+            for (const queueType in QueueType) {
+                if (queueType) {
+                    await this.channel.assertQueue(QueueType[queueType], { durable: true });
                 }
             }
-        });
+
+            logger.info('RabbitMQ channel and queues successfully initialized');
+        } catch (error) {
+            const errorMessage = `Error connecting or creating channels on RabbitMQ`;
+            logger.error(errorMessage, [error]);
+            throw new Error(error);
+        }
+    }
+
+    close() {
+        this.channel.close();
+        this.connection.close();
     }
 }
 

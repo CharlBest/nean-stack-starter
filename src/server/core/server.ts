@@ -1,5 +1,6 @@
 import { Application } from 'express';
 import * as http from 'http';
+import { broker } from '../broker/broker';
 import { environment } from '../environments/environment';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
@@ -33,7 +34,7 @@ export class Server {
         // this.httpServer.on('error', (error) => { });
 
         this.httpServer.on('close', () => {
-            Database.clearDriver();
+            this.destroy();
         });
 
         // process.on('SIGINT', () => { });
@@ -42,7 +43,7 @@ export class Server {
         // process.on('exit', () => { });
 
         process.on('SIGTERM', () => {
-            Database.clearDriver();
+            this.destroy();
             process.exit(0);
         });
 
@@ -55,5 +56,10 @@ export class Server {
             logger.error('Internal: UnhandledPromiseRejectionWarning', [reason.messsage || reason.stack, reason]);
             process.exit(1);
         });
+    }
+
+    destroy() {
+        Database.clearDriver();
+        broker.close();
     }
 }

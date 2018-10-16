@@ -33,6 +33,9 @@ export const environment = {
         // tslint:disable-next-line:max-line-length
         public: getEnvironmentVariable('PUBLIC_VAPID_KEY', 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs'),
         private: getEnvironmentVariable('PRIVATE_VAPID_KEY', 'bqghrqfk5AiwPbOyJVSc1RgtaqmfJZAwX4uIDo0l8IA')
+    },
+    rabbitMQ: {
+        amqpUrl: getEnvironmentVariable('RABBIT_MQ_AMQP_URL', 'amqp://guest:guest@localhost:5672')
     }
 };
 

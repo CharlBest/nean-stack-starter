@@ -35,6 +35,8 @@ class App {
         // bootstrap.setupHerokuPing(this.express);
         // Database data fetcher
         // bootstrap.setupAutoPeriodicDataFetch(this.express);
+        // Broker
+        bootstrap.setupBroker();
 
         // TODO: add logger (maybe morgan (http)) or custom
         // Setup errors

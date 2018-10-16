@@ -7,6 +7,7 @@ import { generalRoutes } from '../app/general/general.routes';
 import { itemsRoutes } from '../app/items/items.routes';
 import { paymentsRoutes } from '../app/payments/payments.routes';
 import { usersRoutes } from '../app/users/users.routes';
+import { broker } from '../broker/broker';
 import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
@@ -176,6 +177,10 @@ class Bootstrap {
         if (app.get('env') !== 'development') {
             dataFetcher.init(app);
         }
+    }
+
+    setupBroker(): void {
+        broker.init();
     }
 }
 

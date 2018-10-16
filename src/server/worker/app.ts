@@ -1,40 +1,57 @@
-import { createQueueChannel } from '../broker/channel';
+import { broker } from '../broker/broker';
+import { QueueType } from '../broker/queue-type.enum';
+import { logger } from '../core/utils/logger';
+import { emailer } from './communication/emailer';
 
 class App {
-    queue = 'queue';
-
     constructor() { }
 
     async bootstrapApp(): Promise<void> {
+        await broker.init();
         this.initMessageBroker();
+
+        process.on('SIGTERM', () => {
+            console.log('close');
+            broker.close();
+            process.exit(0);
+        });
     }
 
-    initMessageBroker() {
-        createQueueChannel(this.queue, (err: any, channel: any, conn: any) => {
-            if (err) {
-                console.error(err.stack);
-            } else {
-                console.log('channel and queue created');
-                consume();
-            }
-            function consume() {
-                channel.get('queue', {}, onConsume);
-                function onConsume(err2: any, msg: any) {
-                    if (err2) {
-                        console.warn(err2.message);
-                    } else if (msg) {
-                        console.log('consuming %j', msg.content.toString());
-                        setTimeout(function () {
-                            channel.ack(msg);
-                            consume();
-                        }, 1e3);
-                    } else {
-                        console.log('no message, waiting...');
-                        setTimeout(consume, 1e3);
-                    }
+    async initMessageBroker(): Promise<void> {
+        try {
+            for (const queueType in QueueType) {
+                if (queueType) {
+                    await broker.channel.consume(QueueType[queueType], (message) => {
+                        if (message) {
+                            try {
+                                const data = JSON.parse(message.content.toString());
+                                this.processTask(<QueueType>queueType, data);
+                                broker.channel.ack(message);
+                            } catch (error) {
+                                const errorMessage = `Error parsing work queue data payload`;
+                                logger.error(errorMessage, [error]);
+                                throw new Error(error);
+                            }
+                        }
+                    }, { noAck: false });
                 }
             }
-        });
+        } catch (error) {
+            const errorMessage = `Error consuming broker channel`;
+            logger.error(errorMessage, [error]);
+            throw new Error(error);
+        }
+    }
+
+    processTask(queueType: QueueType, data: any) {
+        switch (QueueType[queueType]) {
+            case QueueType.welcomeEmail:
+                emailer.welcome(data);
+                break;
+
+            default:
+                break;
+        }
     }
 }
 
