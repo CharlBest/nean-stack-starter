@@ -18,6 +18,7 @@ export class PushSubscriptionViewModel implements PushSubscription {
 
     static createFromArray(pushSubscription: PushSubscriptionValues): PushSubscriptionViewModel | null {
         if (pushSubscription) {
+            // NOTE: The order of this tuple is very important and should not be changed
             const [endpoint, auth, p256dh] = pushSubscription;
             return new PushSubscriptionViewModel(endpoint, auth, p256dh);
         } else {
@@ -26,6 +27,7 @@ export class PushSubscriptionViewModel implements PushSubscription {
     }
 
     static createArray(endpoint: string, auth: string, p256dh: string): PushSubscriptionValues {
+        // NOTE: The order of this tuple is very important and should not be changed
         return [endpoint, auth, p256dh];
     }
 }
