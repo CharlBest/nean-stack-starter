@@ -19,6 +19,10 @@ class App {
 
     async initMessageBroker(): Promise<void> {
         try {
+            // Only dispatch 1 at a time to a consumer
+            // TODO: according to the RabbitMQ docs: 100 through 300 range usually offer optimal throughput
+            broker.channel.prefetch(1);
+
             for (const queueType in QueueType) {
                 if (queueType) {
                     await broker.channel.consume(QueueType[queueType], (message) => {
