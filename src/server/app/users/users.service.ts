@@ -14,7 +14,7 @@ import { NotificationPreferencesViewModel } from '../../../shared/view-models/us
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
-import { emailer } from '../../communication/emailer';
+import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
 import { environment } from '../../environments/environment';
@@ -70,7 +70,7 @@ class UsersService extends BaseService {
             }
 
             // Send email
-            emailer.welcome({
+            emailBroker.welcome({
                 email: user.email,
                 username: user.username,
                 emailVerifyCode: user.emailCode
@@ -195,7 +195,7 @@ class UsersService extends BaseService {
             throw new Error('User required');
         }
 
-        emailer.resendEmailVerificationLink({
+        emailBroker.resendEmailVerificationLink({
             email: user.email,
             emailVerifyCode: user.emailCode
         });
@@ -212,7 +212,7 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        emailer.forgotPassword({
+        emailBroker.forgotPassword({
             email: user.email,
             forgotPasswordCode: code
         });
@@ -231,7 +231,7 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        emailer.passwordUpdated({
+        emailBroker.passwordUpdated({
             email: user.email
         });
     }
@@ -280,7 +280,7 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        emailer.passwordUpdated({
+        emailBroker.passwordUpdated({
             email: updatedUser.email
         });
     }

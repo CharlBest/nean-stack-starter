@@ -1,3 +1,5 @@
+import { CommentCreationPushNotificationModel } from '../models/push-notification/comment-creation-push-notification.model';
+
 export interface PushNotification {
-    hot(): void;
+    commentCreation(model: CommentCreationPushNotificationModel): void;
 }

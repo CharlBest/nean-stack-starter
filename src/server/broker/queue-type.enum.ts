@@ -7,4 +7,7 @@ export enum QueueType {
     passwordUpdatedEmail = 'communication.email.password-updated',
     inviteEmail = 'communication.email.invite',
     notificationEmail = 'communication.email.notification',
+    systemEmail = 'communication.email.system',
+
+    commentCreationPushNotification = 'communication.push.comment-creation',
 }

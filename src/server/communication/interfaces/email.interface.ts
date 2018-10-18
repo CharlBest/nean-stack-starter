@@ -9,18 +9,12 @@ import { WelcomeEmailModel } from '../models/email/welcome-email.model';
 
 export interface Email {
     welcome(model: WelcomeEmailModel): void;
-
     forgotPassword(model: ForgotPasswordEmailModel): void;
-
     feedback(model: FeedbackEmailModel): void;
-
     resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel): void;
-
     paymentSuccessful(model: PaymentSuccessfulEmailModel): void;
-
     passwordUpdated(model: PasswordUpdatedEmailModel): void;
-
     invite(model: InviteEmailModel): void;
-
     notification(model: NotificationEmailModel): void;
+    system(data: any): void;
 }

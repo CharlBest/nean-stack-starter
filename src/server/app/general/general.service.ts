@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { emailer } from '../../communication/emailer';
+import { emailBroker } from '../../communication/emailer-broker';
 import { BaseService } from '../shared/base-service';
 import { generalRepository } from './general.repository';
 
@@ -20,13 +20,13 @@ class GeneralService extends BaseService {
     }
 
     async sendFeedback(res: Response, content: string): Promise<void> {
-        emailer.feedback({
+        emailBroker.feedback({
             feedbackContent: content
         });
     }
 
     async invite(res: Response, emails: Array<string>): Promise<void> {
-        emailer.invite({
+        emailBroker.invite({
             emails: emails
         });
     }

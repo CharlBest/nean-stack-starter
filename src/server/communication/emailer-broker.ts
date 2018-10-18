@@ -10,7 +10,7 @@ import { PaymentSuccessfulEmailModel } from './models/email/payment-successful-e
 import { ResendEmailVerificationLinkEmailModel } from './models/email/resend-email-verification-link-email.model';
 import { WelcomeEmailModel } from './models/email/welcome-email.model';
 
-class Emailer implements Email {
+class EmailBroker implements Email {
 
     welcome(model: WelcomeEmailModel) {
         brokerManager.sendToQueue(QueueType.welcomeEmail, model);
@@ -43,6 +43,10 @@ class Emailer implements Email {
     notification(model: NotificationEmailModel) {
         brokerManager.sendToQueue(QueueType.notificationEmail, model);
     }
+
+    system(data: any) {
+        brokerManager.sendToQueue(QueueType.systemEmail, data);
+    }
 }
 
-export const emailer = new Emailer();
+export const emailBroker = new EmailBroker();

@@ -4,7 +4,7 @@ import { v4 as nodeUUId } from 'uuid';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
-import { emailer } from '../../communication/emailer';
+import { emailBroker } from '../../communication/emailer-broker';
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 import { BaseService } from '../shared/base-service';
@@ -136,7 +136,7 @@ class PaymentsService extends BaseService {
     async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
         const charge = await this.createCharge(res, token, amount);
 
-        emailer.paymentSuccessful({
+        emailBroker.paymentSuccessful({
             email: email,
             amount: amount
         });
@@ -159,7 +159,7 @@ class PaymentsService extends BaseService {
             // Existing customer and card
             const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
-            emailer.paymentSuccessful({
+            emailBroker.paymentSuccessful({
                 email: user.email,
                 amount: amount
             });
@@ -178,7 +178,7 @@ class PaymentsService extends BaseService {
                 if (existingCard) {
                     const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
-                    emailer.paymentSuccessful({
+                    emailBroker.paymentSuccessful({
                         email: user.email,
                         amount: amount
                     });
@@ -190,7 +190,7 @@ class PaymentsService extends BaseService {
 
                     const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
 
-                    emailer.paymentSuccessful({
+                    emailBroker.paymentSuccessful({
                         email: user.email,
                         amount: amount
                     });
@@ -202,7 +202,7 @@ class PaymentsService extends BaseService {
                 // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
                 const charge = await this.createCharge(res, token, amount, user.id);
 
-                emailer.paymentSuccessful({
+                emailBroker.paymentSuccessful({
                     email: user.email,
                     amount: amount
                 });

@@ -1,4 +1,5 @@
 import * as winston from 'winston';
+import { emailBroker } from '../../communication/emailer-broker';
 
 export const logger = winston.createLogger({
     transports: [
@@ -18,6 +19,10 @@ export const logger = winston.createLogger({
             format: winston.format.simple()
         })
     ]
+});
+
+logger.on('error', (error) => {
+    emailBroker.system(error);
 });
 
 if (process.env.NODE_ENV !== 'production') {

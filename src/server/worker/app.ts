@@ -2,6 +2,7 @@ import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
 import { logger } from '../core/utils/logger';
 import { emailer } from './communication/emailer';
+import { pushNotification } from './communication/push-notification';
 
 class App {
     constructor() { }
@@ -25,12 +26,17 @@ class App {
 
             for (const queueType in QueueType) {
                 if (queueType) {
-                    await broker.channel.consume(QueueType[queueType], (message) => {
+                    await broker.channel.consume(QueueType[queueType], async (message) => {
                         if (message) {
                             try {
                                 const data = JSON.parse(message.content.toString());
-                                this.processTask(<QueueType>queueType, data);
-                                broker.channel.ack(message);
+
+                                const success = await this.processTask(<QueueType>queueType, data);
+                                if (success) {
+                                    broker.channel.ack(message);
+                                } else {
+                                    broker.channel.nack(message);
+                                }
                             } catch (error) {
                                 const errorMessage = `Error parsing work queue data payload`;
                                 logger.error(errorMessage, [error]);
@@ -47,14 +53,40 @@ class App {
         }
     }
 
-    processTask(queueType: QueueType, data: any) {
+    async processTask(queueType: QueueType, data: any): Promise<boolean> {
         switch (QueueType[queueType]) {
             case QueueType.welcomeEmail:
-                emailer.welcome(data);
-                break;
+                return emailer.welcome(data);
+
+            case QueueType.forgotPasswordEmail:
+                return emailer.forgotPassword(data);
+
+            case QueueType.feedbackEmail:
+                return emailer.feedback(data);
+
+            case QueueType.resendEmailVerificationLinkEmail:
+                return emailer.resendEmailVerificationLink(data);
+
+            case QueueType.paymentSuccessfulEmail:
+                return emailer.paymentSuccessful(data);
+
+            case QueueType.passwordUpdatedEmail:
+                return emailer.passwordUpdated(data);
+
+            case QueueType.inviteEmail:
+                return emailer.invite(data);
+
+            case QueueType.notificationEmail:
+                return emailer.notification(data);
+
+            case QueueType.systemEmail:
+                return emailer.system(data);
+
+            case QueueType.commentCreationPushNotification:
+                return pushNotification.commentCreation(data);
 
             default:
-                break;
+                return false;
         }
     }
 }

@@ -19,7 +19,7 @@ class Emailer implements Email {
     fromEmail = 'admin@nean.io';
     fromName = 'NEAN';
 
-    welcome(model: WelcomeEmailModel) {
+    async welcome(model: WelcomeEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -38,10 +38,10 @@ class Emailer implements Email {
             emailVerifyCode: model.emailVerifyCode,
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    forgotPassword(model: ForgotPasswordEmailModel) {
+    async forgotPassword(model: ForgotPasswordEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -58,10 +58,10 @@ class Emailer implements Email {
             forgotPasswordCode: model.forgotPasswordCode,
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    feedback(model: FeedbackEmailModel) {
+    async feedback(model: FeedbackEmailModel): Promise<boolean> {
         const data: MailData = {
             to: this.fromEmail,
             from: {
@@ -77,10 +77,10 @@ class Emailer implements Email {
             feedbackContent: model.feedbackContent,
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
+    async resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -96,10 +96,10 @@ class Emailer implements Email {
             emailVerifyCode: model.emailVerifyCode,
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    paymentSuccessful(model: PaymentSuccessfulEmailModel) {
+    async paymentSuccessful(model: PaymentSuccessfulEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -115,10 +115,10 @@ class Emailer implements Email {
             amount: model.amount,
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    passwordUpdated(model: PasswordUpdatedEmailModel) {
+    async passwordUpdated(model: PasswordUpdatedEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -133,10 +133,10 @@ class Emailer implements Email {
             subject: 'Password Updated',
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    invite(model: InviteEmailModel) {
+    async invite(model: InviteEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.emails,
             from: {
@@ -151,10 +151,10 @@ class Emailer implements Email {
             subject: 'Invite',
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    notification(model: NotificationEmailModel) {
+    async notification(model: NotificationEmailModel): Promise<boolean> {
         const data: MailData = {
             to: model.email,
             from: {
@@ -170,10 +170,44 @@ class Emailer implements Email {
             body: model.body
         };
 
-        this.send(data);
+        return this.send(data);
     }
 
-    send(data: MailData) {
+    async system(payloadData: any): Promise<boolean> {
+        const data: MailData = {
+            to: this.fromEmail,
+            from: {
+                email: this.fromEmail,
+                name: this.fromName
+            },
+            templateId: environment.sendGrid.templates.system,
+        };
+
+        let content = '';
+        try {
+            if (payloadData) {
+                content = JSON.stringify(payloadData);
+            } else {
+                content = 'Error payload data was empty';
+            }
+        } catch (error) {
+            try {
+                if (error) {
+                    content = `Error while stringifying error payload data: ${JSON.stringify(error)}`;
+                }
+            } finally { }
+        }
+
+        // html: {{data}}
+        data['dynamic_template_data'] = {
+            subject: 'System',
+            data: content,
+        };
+
+        return this.send(data);
+    }
+
+    async send(data: MailData): Promise<boolean> {
         if (!environment.production) {
             data.mailSettings = {
                 sandboxMode: {
@@ -183,14 +217,31 @@ class Emailer implements Email {
         }
 
         if (environment.production) {
-            sendGridMail.send(data, undefined, (err: Error) => {
-                if (err) {
-                    // logger.error(err);
-                    throw err;
-                    // TODO: save against profile that email failed to send (maybe)
-                }
-            });
+            // return from(sendGridMail.send(data, undefined, (error: Error) => {
+            //     if (error) {
+            //         // logger.error(err);
+            //         throw new Error('Error while trying to send the email');
+            //         // TODO: save against profile that email failed to send (maybe)
+            //     }
+            // })).pipe(map(x => x && x[0] && x[0].statusCode >= 200 && x[0].statusCode < 300));
+
+            try {
+                const response = await sendGridMail.send(data, undefined, (error: Error) => {
+                    if (error) {
+                        // logger.error(err);
+                        throw new Error('Error while trying to send the email');
+                        // TODO: save against profile that email failed to send (maybe)
+                    }
+                });
+
+                return response && response[0] && response[0].statusCode >= 200 && response[0].statusCode < 300;
+            } catch (error) {
+                // logger.error(err);
+                return false;
+            }
         }
+
+        return true;
     }
 }
 
