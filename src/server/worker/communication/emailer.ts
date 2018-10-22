@@ -216,7 +216,7 @@ class Emailer implements Email {
             };
         }
 
-        if (!environment.production) {
+        if (environment.production) {
             try {
                 const response = await sendGridMail.send(data);
 
