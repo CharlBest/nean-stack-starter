@@ -28,10 +28,13 @@
     ],
     "interface-over-type-literal": true,
     "label-position": true,
-    "max-line-length": [
-      true,
-      150
-    ],
+    "max-line-length": {
+      "options": {
+        "limit": 140,
+        "ignore-pattern": "^import .+ from"
+      },
+      "severity": "warn"
+    },
     "member-access": [
       true,
       "no-public"

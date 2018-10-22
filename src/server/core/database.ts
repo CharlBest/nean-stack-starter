@@ -94,12 +94,15 @@ export class Database {
                 getComment: (await import(`../database/items/getComment.${Database.fileExtension}`)).data,
             },
             notifications: {
-                getNotificationPreferences: (await import(`../database/notifications/getNotificationPreferences.${Database.fileExtension}`)).data,
-                updateNotificationPreferences: (await import(`../database/notifications/updateNotificationPreferences.${Database.fileExtension}`)).data,
+                getNotificationPreferences:
+                    (await import(`../database/notifications/getNotificationPreferences.${Database.fileExtension}`)).data,
+                updateNotificationPreferences:
+                    (await import(`../database/notifications/updateNotificationPreferences.${Database.fileExtension}`)).data,
                 createSubscription: (await import(`../database/notifications/createSubscription.${Database.fileExtension}`)).data,
                 deleteSubscription: (await import(`../database/notifications/deleteSubscription.${Database.fileExtension}`)).data,
                 getSubscriptions: (await import(`../database/notifications/getSubscriptions.${Database.fileExtension}`)).data,
-                getNewCommentNotification: (await import(`../database/notifications/getNewCommentNotification.${Database.fileExtension}`)).data,
+                getNewCommentNotification:
+                    (await import(`../database/notifications/getNewCommentNotification.${Database.fileExtension}`)).data,
             },
         };
     }
