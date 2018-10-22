@@ -2,6 +2,7 @@ import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
 import { Database } from '../core/database';
 import { logger } from '../core/utils/logger';
+import { environment } from '../environments/environment';
 import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
 
@@ -16,7 +17,11 @@ class App {
         await broker.init();
         this.initMessageBroker();
 
-        this.destroy();
+        this.onDestroy();
+
+        if (environment.production) {
+            console.log(`Aloha, your worker is ready on PORT: ${environment.port}`);
+        }
     }
 
     async initMessageBroker(): Promise<void> {
@@ -101,7 +106,7 @@ class App {
         }
     }
 
-    destroy() {
+    onDestroy() {
         process.on('SIGTERM', () => {
             Database.clearDriver();
             broker.close();
