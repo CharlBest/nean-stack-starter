@@ -1,3 +1,4 @@
 export class CommentCreationPushNotificationModel {
-    content: string;
+    itemUId: string;
+    description: string;
 }

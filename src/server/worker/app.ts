@@ -31,16 +31,26 @@ class App {
                             try {
                                 const data = JSON.parse(message.content.toString());
 
-                                const success = await this.processTask(<QueueType>queueType, data);
+                                const success = await this.processTask(queueType, data);
                                 if (success) {
                                     broker.channel.ack(message);
                                 } else {
-                                    broker.channel.nack(message);
+                                    if (message.fields.redelivered) {
+                                        logger.error('Error processing message in work queue', [message]);
+                                        // Message will be lost
+                                        broker.channel.nack(message, undefined, false);
+                                    } else {
+                                        broker.channel.nack(message);
+                                    }
                                 }
                             } catch (error) {
-                                const errorMessage = `Error parsing work queue data payload`;
-                                logger.error(errorMessage, [error]);
-                                throw new Error(error);
+                                if (message.fields.redelivered) {
+                                    logger.error('Exception processing message in work queue', [error]);
+                                    // Message will be lost
+                                    broker.channel.nack(message, undefined, false);
+                                } else {
+                                    broker.channel.nack(message);
+                                }
                             }
                         }
                     }, { noAck: false });
@@ -53,7 +63,7 @@ class App {
         }
     }
 
-    async processTask(queueType: QueueType, data: any): Promise<boolean> {
+    async processTask(queueType: string, data: any): Promise<boolean> {
         switch (QueueType[queueType]) {
             case QueueType.welcomeEmail:
                 return emailer.welcome(data);

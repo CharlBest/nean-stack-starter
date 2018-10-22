@@ -216,28 +216,13 @@ class Emailer implements Email {
             };
         }
 
-        if (environment.production) {
-            // return from(sendGridMail.send(data, undefined, (error: Error) => {
-            //     if (error) {
-            //         // logger.error(err);
-            //         throw new Error('Error while trying to send the email');
-            //         // TODO: save against profile that email failed to send (maybe)
-            //     }
-            // })).pipe(map(x => x && x[0] && x[0].statusCode >= 200 && x[0].statusCode < 300));
-
+        if (!environment.production) {
             try {
-                const response = await sendGridMail.send(data, undefined, (error: Error) => {
-                    if (error) {
-                        // logger.error(err);
-                        throw new Error('Error while trying to send the email');
-                        // TODO: save against profile that email failed to send (maybe)
-                    }
-                });
+                const response = await sendGridMail.send(data);
 
                 return response && response[0] && response[0].statusCode >= 200 && response[0].statusCode < 300;
             } catch (error) {
-                // logger.error(err);
-                return false;
+                throw error;
             }
         }
 

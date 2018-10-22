@@ -4,6 +4,7 @@ import { CommentModel } from '../../../shared/models/item/comment.model';
 import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
+import { pushNotificationBroker } from '../../communication/push-notification-broker';
 import { logger } from '../../core/utils/logger';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
@@ -90,13 +91,11 @@ class ItemsService extends BaseService {
             throw new Error(error);
         }
 
-        // Send push notification to owner
-        // pushNotification.send(result.pushSubscription, 'NEAN - Item Comment', description);
-        // emailer.welcome({
-        //     email: '',
-        //     username: '',
-        //     emailVerifyCode: ''
-        // });
+        // Send push notification
+        pushNotificationBroker.commentCreation({
+            itemUId,
+            description
+        });
 
         return result;
     }

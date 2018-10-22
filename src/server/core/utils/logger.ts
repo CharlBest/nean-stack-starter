@@ -22,6 +22,7 @@ export const logger = winston.createLogger({
 });
 
 logger.on('error', (error) => {
+    // TODO: This could potentially cause an infinite loop if this method (emailer) causes an error
     emailBroker.system(error);
 });
 

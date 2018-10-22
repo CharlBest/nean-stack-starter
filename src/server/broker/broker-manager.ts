@@ -8,12 +8,17 @@ class BrokerManager {
     }
 
     async sendToQueue(queueType: QueueType, data: any): Promise<void> {
+        const errorMessage = `Error sending to queue on RabbitMQ`;
+
         try {
-            broker.channel.sendToQueue(queueType, this.encode(data), {
+            const success = broker.channel.sendToQueue(queueType, this.encode(data), {
                 persistent: true
             });
+
+            if (!success) {
+                throw new Error(errorMessage);
+            }
         } catch (error) {
-            const errorMessage = `Error sending to queue on RabbitMQ`;
             logger.error(errorMessage, [error]);
             throw new Error(error);
         }
