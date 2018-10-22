@@ -53,7 +53,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
-                *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value"
+                *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value || (formGroup.controls['autoSubscribeToItem'].value !== notificationPreferences?.autoSubscribeToItem)"
                 type="submit"
                 (click)="onSubmit()">Update preferences</button>
         </mat-card-actions>
