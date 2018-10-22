@@ -80,7 +80,7 @@ class ItemsService extends BaseService {
         return await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
     }
 
-    async createComment(res: Response, itemUId: string, description: string): Promise<CommentModel> {
+    async createComment(res: Response, itemUId: string, description: string): Promise<CommentViewModel> {
         const userId = this.getUserId(res);
         const uId = nodeUUId();
         const result = await itemsRepository.createComment(res, userId, uId, itemUId, description);
@@ -92,15 +92,14 @@ class ItemsService extends BaseService {
         }
 
         // Send push notification
-        pushNotificationBroker.commentCreation({
-            itemUId,
-            description
+        pushNotificationBroker.newComment({
+            commentUId: result.uId
         });
 
         return result;
     }
 
-    async updateComment(res: Response, uId: string, description: string): Promise<CommentModel> {
+    async updateComment(res: Response, uId: string, description: string): Promise<CommentViewModel> {
         const userId = this.getUserId(res);
         const result = await itemsRepository.updateComment(res, userId, uId, description);
 

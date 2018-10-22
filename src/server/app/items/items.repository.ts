@@ -209,6 +209,7 @@ class ItemsRepository extends BaseRepository {
             let viewModel = new CommentViewModel();
             viewModel = x.get('comment');
             viewModel.user = x.get('user');
+            viewModel.itemUId = itemUId;
             return viewModel;
         });
 

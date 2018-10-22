@@ -4,8 +4,8 @@ import { PushNotification } from './interfaces/push-notification.interface';
 import { CommentCreationPushNotificationModel } from './models/push-notification/comment-creation-push-notification.model';
 
 class PushNotificationBroker implements PushNotification {
-    commentCreation(model: CommentCreationPushNotificationModel) {
-        brokerManager.sendToQueue(QueueType.commentCreationPushNotification, model);
+    newComment(model: CommentCreationPushNotificationModel) {
+        brokerManager.sendToQueue(QueueType.newCommentPushNotification, model);
     }
 }
 

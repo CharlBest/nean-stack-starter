@@ -1,15 +1,28 @@
-import { sendNotification, setVapidDetails } from 'web-push';
+import { setVapidDetails } from 'web-push';
 import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
+import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
 import { CommentCreationPushNotificationModel } from '../../communication/models/push-notification/comment-creation-push-notification.model';
 import { environment } from '../../environments/environment';
 
 class PushNotification implements PushNotificationInterface {
-    async commentCreation(model: CommentCreationPushNotificationModel): Promise<boolean> {
-        return false;
+    async newComment(model: CommentCreationPushNotificationModel): Promise<boolean> {
+        const res = {
+            locals: {
+                neo4jSession: 123
+            }
+        };
+
+        const result = await notificationsService.getNewCommentNotification(<any>res, model.commentUId);
+
+        if (result) {
+            return this.send(result.pushSubscriptions, result.title ? result.title : 'Item - Comment', result.body);
+        } else {
+            return true;
+        }
     }
 
-    async send(pushSubscription: PushSubscriptionViewModel | null | undefined, title: string, body: string): Promise<boolean> {
+    async send(pushSubscription: Array<PushSubscriptionViewModel | null | undefined>, title: string, body: string): Promise<boolean> {
         if (pushSubscription) {
             if (body) {
                 body = body.substr(0, 230) + (body.length > 230 ? ' ...' : '');
@@ -39,7 +52,8 @@ class PushNotification implements PushNotificationInterface {
             //     });
 
             try {
-                const response = await sendNotification(pushSubscription, JSON.stringify(notificationPayload));
+                // const response = await sendNotification(pushSubscription, JSON.stringify(notificationPayload));
+                const response: any = null;
 
                 return response && response.statusCode >= 200 && response.statusCode < 300;
             } catch (error) {

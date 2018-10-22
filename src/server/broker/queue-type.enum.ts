@@ -9,5 +9,5 @@ export enum QueueType {
     notificationEmail = 'communication.email.notification',
     systemEmail = 'communication.email.system',
 
-    commentCreationPushNotification = 'communication.push.comment-creation',
+    newCommentPushNotification = 'communication.push.comment-creation',
 }

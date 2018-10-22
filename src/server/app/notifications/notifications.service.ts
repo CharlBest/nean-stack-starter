@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseService } from '../shared/base-service';
 import { notificationsRepository } from './notifications.repository';
 
@@ -29,6 +30,10 @@ class NotificationsService extends BaseService {
 
     async getSubscriptions(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
         return await notificationsRepository.getSubscriptions(res, this.getUserId(res), pageIndex, pageSize);
+    }
+
+    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel | null> {
+        return await notificationsRepository.getNewCommentNotification(res, commentUId);
     }
 }
 

@@ -4,6 +4,7 @@ import { NotificationPreferencesViewModel } from '../../../shared/view-models/us
 import { NotificationsViewModel } from '../../../shared/view-models/user/notifications.view-model';
 import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseRepository } from '../shared/base-repository';
 
 class NotificationsRepository extends BaseRepository {
@@ -112,6 +113,27 @@ class NotificationsRepository extends BaseRepository {
 
         if (model && model.length > 0) {
             return model;
+        } else {
+            return null;
+        }
+    }
+
+    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel | null> {
+        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.getNewCommentNotification,
+            {
+                commentUId
+            }
+        );
+
+        const model = result.records.map(x => {
+            const viewModel = new PushNotificationModel();
+            viewModel.pushSubscriptions = x.get('pushSubscriptions');
+            viewModel.body = x.get('content');
+            return viewModel;
+        });
+
+        if (model && model.length > 0) {
+            return model[0];
         } else {
             return null;
         }

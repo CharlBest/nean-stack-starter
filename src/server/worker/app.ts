@@ -92,8 +92,8 @@ class App {
             case QueueType.systemEmail:
                 return emailer.system(data);
 
-            case QueueType.commentCreationPushNotification:
-                return pushNotification.commentCreation(data);
+            case QueueType.newCommentPushNotification:
+                return pushNotification.newComment(data);
 
             default:
                 return false;

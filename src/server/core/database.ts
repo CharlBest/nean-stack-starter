@@ -98,6 +98,7 @@ export class Database {
                 createSubscription: (await import(`../database/notifications/createSubscription.${Database.fileExtension}`)).data,
                 deleteSubscription: (await import(`../database/notifications/deleteSubscription.${Database.fileExtension}`)).data,
                 getSubscriptions: (await import(`../database/notifications/getSubscriptions.${Database.fileExtension}`)).data,
+                getNewCommentNotification: (await import(`../database/notifications/getNewCommentNotification.${Database.fileExtension}`)).data,
             },
         };
 
@@ -161,5 +162,6 @@ export interface DbQueries {
         createSubscription: string,
         deleteSubscription: string,
         getSubscriptions: string,
+        getNewCommentNotification: string,
     };
 }
