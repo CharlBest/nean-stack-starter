@@ -10,4 +10,5 @@ export class NotificationPreferencesViewModel extends NotificationsViewModel {
     hasPushSubscription: boolean;
     pushNotificationEnabled: boolean;
     emailEnabled: boolean;
+    autoSubscribeToItem: boolean;
 }

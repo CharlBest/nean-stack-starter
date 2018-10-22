@@ -1,25 +1,35 @@
-import { setVapidDetails } from 'web-push';
+import { sendNotification, setVapidDetails } from 'web-push';
 import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
 import { CommentCreationPushNotificationModel } from '../../communication/models/push-notification/comment-creation-push-notification.model';
+import { Database } from '../../core/database';
 import { environment } from '../../environments/environment';
 
 class PushNotification implements PushNotificationInterface {
-    async newComment(model: CommentCreationPushNotificationModel): Promise<boolean> {
+
+    async callDb(service: (res: any) => Promise<any>, title: string): Promise<boolean> {
         const res = {
             locals: {
-                neo4jSession: 123
+                neo4jSession: Database.createSession()
             }
         };
 
-        const result = await notificationsService.getNewCommentNotification(<any>res, model.commentUId);
+        const result = await service(res);
+
+        res.locals.neo4jSession.close();
 
         if (result) {
-            return this.send(result.pushSubscriptions, result.title ? result.title : 'Item - Comment', result.body);
+            return this.send(result.pushSubscriptions, result.title ? result.title : title, result.body);
         } else {
             return true;
         }
+    }
+
+    async newComment(model: CommentCreationPushNotificationModel): Promise<boolean> {
+        return this.callDb(async res => {
+            return await notificationsService.getNewCommentNotification(res, model.commentUId);
+        }, 'Item - Comment');
     }
 
     async send(pushSubscription: Array<PushSubscriptionViewModel | null | undefined>, title: string, body: string): Promise<boolean> {
@@ -45,17 +55,19 @@ class PushNotification implements PushNotificationInterface {
                 notification: notificationOptions
             };
 
-            // Promise.all(allSubscriptions.map(sub => sendNotification(sub, JSON.stringify(notificationPayload))))
-            //     .then(() => logger.info('Push notifications sent', [notificationPayload]))
-            //     .catch(err => {
-            //         console.error('Error sending notification, reason: ', err);
-            //     });
-
             try {
-                // const response = await sendNotification(pushSubscription, JSON.stringify(notificationPayload));
-                const response: any = null;
+                console.log(pushSubscription.filter(sub => sub !== null && sub !== undefined));
 
-                return response && response.statusCode >= 200 && response.statusCode < 300;
+                const response = await Promise.all(
+                    pushSubscription
+                        .filter(sub => sub !== null && sub !== undefined)
+                        .map((sub: PushSubscriptionViewModel) => sendNotification(sub, JSON.stringify(notificationPayload)))
+                );
+
+                console.log(response);
+
+                // TODO: if one push notification fails it will cause a resend to all other receivers/users
+                return response && response.every(x => x.statusCode >= 200) && response.every(x => x.statusCode < 300);
             } catch (error) {
                 throw error;
             }

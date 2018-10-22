@@ -1,14 +1,7 @@
 export const data = `
-MATCH (users:User { id: {userId} })-[rel:SUBSCRIBED]->(items)
+MATCH (users)-[rel:SUBSCRIBED]->(items)-[:HAS_COMMENT]->(comment: Comment { uId: {commentUId} }) 
+WHERE users.pushSubscription IS NOT NULL AND users.pushNotificationEnabled = true AND users.pushNotificationTypes[0] = true
 
-RETURN properties(items) as items, users
-{
-    id: users.id,
-    username: users.username,
-    avatarUrl: users.avatarUrl
-}
-
-ORDER BY rel.dateCreated DESC
-SKIP {pageIndex}*{pageSize}
-LIMIT {pageSize}
+RETURN collect(users.pushSubscription) as pushSubscriptions,
+comment.description as description
 `

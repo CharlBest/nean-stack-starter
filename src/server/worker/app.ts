@@ -1,5 +1,6 @@
 import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
+import { Database } from '../core/database';
 import { logger } from '../core/utils/logger';
 import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
@@ -8,14 +9,14 @@ class App {
     constructor() { }
 
     async bootstrapApp(): Promise<void> {
+        // Database
+        await Database.getQueries();
+
+        // Broker
         await broker.init();
         this.initMessageBroker();
 
-        process.on('SIGTERM', () => {
-            console.log('close');
-            broker.close();
-            process.exit(0);
-        });
+        this.destroy();
     }
 
     async initMessageBroker(): Promise<void> {
@@ -98,6 +99,14 @@ class App {
             default:
                 return false;
         }
+    }
+
+    destroy() {
+        process.on('SIGTERM', () => {
+            Database.clearDriver();
+            broker.close();
+            process.exit(0);
+        });
     }
 }
 

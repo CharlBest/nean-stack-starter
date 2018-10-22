@@ -23,6 +23,7 @@ FOREACH (o IN CASE WHEN (user.emailEnabled IS NULL OR user.emailEnabled = true) 
 
 SET user.pushNotificationEnabled = {pushNotificationEnabled}
 SET user.emailEnabled = {emailEnabled}
+SET user.autoSubscribeToItem = {autoSubscribeToItem}
 
 SET user.pushNotificationTypes = {pushNotificationTypes}
 SET user.emailNotificationTypes = {emailNotificationTypes}

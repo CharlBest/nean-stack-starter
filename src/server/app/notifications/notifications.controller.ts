@@ -22,9 +22,10 @@ class NotificationsController extends BaseController {
         const formGroup = BuildFormGroup.updateNotificationPreferences(
             viewModel.notificationPreferences.pushNotificationEnabled,
             viewModel.notificationPreferences.emailEnabled,
-            viewModel.notificationPreferences.pushCommentOnItemToOwner,
+            viewModel.notificationPreferences.autoSubscribeToItem,
+            viewModel.notificationPreferences.pushNewComment,
             viewModel.notificationPreferences.pushHot,
-            viewModel.notificationPreferences.emailCommentOnItemToOwner,
+            viewModel.notificationPreferences.emailNewComment,
             viewModel.notificationPreferences.emailHot);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 

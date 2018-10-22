@@ -1,4 +1,4 @@
-<form *ngIf="!isProcessing"
+<form *ngIf="!isProcessing && notificationPreferences"
     [formGroup]="formGroup">
     <mat-card>
         <mat-card-content>
@@ -12,8 +12,8 @@
                 anytime.
             </mat-card-subtitle>
             <ng-container *ngIf="formGroup.controls['pushNotificationEnabled'].value">
-                <mat-checkbox formControlName="pushCommentOnItemToOwner">Comment create</mat-checkbox>
-                <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
+                <mat-checkbox formControlName="pushNewComment">New comment</mat-checkbox>
+                <mat-card-subtitle>Receive push notifications when a comment was made on subscribed items</mat-card-subtitle>
 
                 <br>
 
@@ -33,7 +33,7 @@
                 anytime.
             </mat-card-subtitle>
             <ng-container *ngIf="formGroup.controls['emailEnabled'].value">
-                <mat-checkbox formControlName="emailCommentOnItemToOwner">Comment create</mat-checkbox>
+                <mat-checkbox formControlName="emailNewComment">Comment create</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications when a comment was made on your item</mat-card-subtitle>
 
                 <br>
@@ -41,6 +41,15 @@
                 <mat-checkbox formControlName="emailHot">Hot</mat-checkbox>
                 <mat-card-subtitle>Receive push notifications daily of the trending items</mat-card-subtitle>
             </ng-container>
+
+            <br>
+
+            <div class="header">
+                <span>Advanced</span>
+            </div>
+            <br>
+            <mat-checkbox formControlName="autoSubscribeToItem">Auto subscribe to your items</mat-checkbox>
+            <mat-card-subtitle>Automatically subscribe to your new items</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button

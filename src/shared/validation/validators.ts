@@ -214,9 +214,9 @@ export class BuildFormGroup {
     }
 
     static updateNotificationPreferences(pushNotificationEnabled: NotificationType = null,
-        emailEnabled: NotificationType = null, pushCommentOnItemToOwner: NotificationType = null,
-        pushHot: NotificationType = null, emailCommentOnItemToOwner: NotificationType = null,
-        emailHot: NotificationType = null): FormValidator {
+        emailEnabled: NotificationType = null, autoSubscribeToItem: NotificationType = null,
+        pushNewComment: NotificationType = null, pushHot: NotificationType = null,
+        emailNewComment: NotificationType = null, emailHot: NotificationType = null): FormValidator {
         return {
             pushNotificationEnabled: [pushNotificationEnabled, [
                 Validators.required
@@ -224,13 +224,16 @@ export class BuildFormGroup {
             emailEnabled: [emailEnabled, [
                 Validators.required
             ]],
-            pushCommentOnItemToOwner: [pushCommentOnItemToOwner, [
+            autoSubscribeToItem: [autoSubscribeToItem, [
+                Validators.required
+            ]],
+            pushNewComment: [pushNewComment, [
                 Validators.required
             ]],
             pushHot: [pushHot, [
                 Validators.required
             ]],
-            emailCommentOnItemToOwner: [emailCommentOnItemToOwner, [
+            emailNewComment: [emailNewComment, [
                 Validators.required
             ]],
             emailHot: [emailHot, [

@@ -6,5 +6,6 @@ CASE WHEN user.pushSubscription IS NOT NULL THEN true ELSE false END as hasPushS
 user.pushNotificationEnabled as pushNotificationEnabled,
 user.emailEnabled as emailEnabled,
 user.pushNotificationTypes as pushNotificationTypes,
-user.emailNotificationTypes as emailNotificationTypes
+user.emailNotificationTypes as emailNotificationTypes,
+user.autoSubscribeToItem as autoSubscribeToItem
 `

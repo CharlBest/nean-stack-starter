@@ -26,6 +26,7 @@ class NotificationsRepository extends BaseRepository {
             localModel.hasPushSubscription = x.get('hasPushSubscription');
             localModel.pushNotificationEnabled = x.get('pushNotificationEnabled');
             localModel.emailEnabled = x.get('emailEnabled');
+            localModel.autoSubscribeToItem = x.get('autoSubscribeToItem');
             return localModel;
         });
 
@@ -47,12 +48,13 @@ class NotificationsRepository extends BaseRepository {
                     viewModel.pushSubscription.keys.p256dh) : null,
                 pushNotificationEnabled: viewModel.notificationPreferences.pushNotificationEnabled,
                 emailEnabled: viewModel.notificationPreferences.emailEnabled,
+                autoSubscribeToItem: viewModel.notificationPreferences.autoSubscribeToItem,
                 pushNotificationTypes: NotificationsViewModel.createPushNotificationArray(
-                    viewModel.notificationPreferences.pushCommentOnItemToOwner,
+                    viewModel.notificationPreferences.pushNewComment,
                     viewModel.notificationPreferences.pushHot
                 ),
                 emailNotificationTypes: NotificationsViewModel.createEmailNotificationArray(
-                    viewModel.notificationPreferences.emailCommentOnItemToOwner,
+                    viewModel.notificationPreferences.emailNewComment,
                     viewModel.notificationPreferences.emailHot
                 ),
             }
@@ -126,10 +128,22 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = (<any>result).records.map((x: any) => {
             const viewModel = new PushNotificationModel();
-            viewModel.pushSubscriptions = x.get('pushSubscriptions');
-            viewModel.body = x.get('content');
+
+            const pushSubscriptions = x.get('pushSubscriptions');
+            if (pushSubscriptions && pushSubscriptions.length > 0) {
+                pushSubscriptions.forEach((element: any) => {
+                    const sub = PushSubscriptionViewModel.createFromArray(element);
+                    if (sub) {
+                        element = sub;
+                    }
+                });
+            }
+            console.log(pushSubscriptions);
+            viewModel.pushSubscriptions = pushSubscriptions;
+
+            viewModel.body = x.get('description');
             return viewModel;
         });
 

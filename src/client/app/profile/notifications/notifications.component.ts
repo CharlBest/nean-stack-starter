@@ -57,9 +57,11 @@ export class NotificationsComponent implements OnInit {
       this.notificationPreferences.pushNotificationEnabled ? true : false,
       this.notificationPreferences.emailEnabled ? true : false,
 
-      this.notificationPreferences.pushCommentOnItemToOwner === false ? false : true,
+      this.notificationPreferences.autoSubscribeToItem === false ? false : true,
+
+      this.notificationPreferences.pushNewComment === false ? false : true,
       this.notificationPreferences.pushHot === false ? false : true,
-      this.notificationPreferences.emailCommentOnItemToOwner === false ? false : true,
+      this.notificationPreferences.emailNewComment === false ? false : true,
       this.notificationPreferences.emailHot === false ? false : true
     ));
 
@@ -99,9 +101,10 @@ export class NotificationsComponent implements OnInit {
         hasPushSubscription: true,
         pushNotificationEnabled: this.formGroup.controls['pushNotificationEnabled'].value,
         emailEnabled: this.formGroup.controls['emailEnabled'].value,
-        pushCommentOnItemToOwner: this.formGroup.controls['pushCommentOnItemToOwner'].value,
+        autoSubscribeToItem: this.formGroup.controls['autoSubscribeToItem'].value,
+        pushNewComment: this.formGroup.controls['pushNewComment'].value,
         pushHot: this.formGroup.controls['pushHot'].value,
-        emailCommentOnItemToOwner: this.formGroup.controls['emailCommentOnItemToOwner'].value,
+        emailNewComment: this.formGroup.controls['emailNewComment'].value,
         emailHot: this.formGroup.controls['emailHot'].value
       }
     };

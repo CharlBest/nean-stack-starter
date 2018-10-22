@@ -5,33 +5,33 @@ export class NotificationsViewModel {
     constructor(pushNotificationTypes: PushNotificationTypes, emailNotificationTypes: EmailNotificationTypes) {
         if (pushNotificationTypes) {
             // NOTE: The order of this tuple is very important and should not be changed
-            const [pushCommentOnItemToOwner, pushHot] = pushNotificationTypes;
-            this.pushCommentOnItemToOwner = pushCommentOnItemToOwner;
+            const [pushNewComment, pushHot] = pushNotificationTypes;
+            this.pushNewComment = pushNewComment;
             this.pushHot = pushHot;
         }
 
         if (emailNotificationTypes) {
             // NOTE: The order of this tuple is very important and should not be changed
-            const [emailCommentOnItemToOwner, emailHot] = emailNotificationTypes;
-            this.emailCommentOnItemToOwner = emailCommentOnItemToOwner;
+            const [emailNewComment, emailHot] = emailNotificationTypes;
+            this.emailNewComment = emailNewComment;
             this.emailHot = emailHot;
         }
     }
 
-    pushCommentOnItemToOwner: NotificationType;
+    pushNewComment: NotificationType;
     pushHot: NotificationType;
 
-    emailCommentOnItemToOwner: NotificationType;
+    emailNewComment: NotificationType;
     emailHot: NotificationType;
 
-    static createPushNotificationArray(pushCommentOnItemToOwner: NotificationType, pushHot: NotificationType) {
+    static createPushNotificationArray(pushNewComment: NotificationType, pushHot: NotificationType) {
         // NOTE: The order of this tuple is very important and should not be changed
-        return [pushCommentOnItemToOwner, pushHot];
+        return [pushNewComment, pushHot];
     }
 
-    static createEmailNotificationArray(emailCommentOnItemToOwner: NotificationType, emailHot: NotificationType) {
+    static createEmailNotificationArray(emailNewComment: NotificationType, emailHot: NotificationType) {
         // NOTE: The order of this tuple is very important and should not be changed
-        return [emailCommentOnItemToOwner, emailHot];
+        return [emailNewComment, emailHot];
     }
 }
 
