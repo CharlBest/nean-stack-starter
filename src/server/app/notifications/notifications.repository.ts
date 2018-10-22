@@ -133,15 +133,8 @@ class NotificationsRepository extends BaseRepository {
 
             const pushSubscriptions = x.get('pushSubscriptions');
             if (pushSubscriptions && pushSubscriptions.length > 0) {
-                pushSubscriptions.forEach((element: any) => {
-                    const sub = PushSubscriptionViewModel.createFromArray(element);
-                    if (sub) {
-                        element = sub;
-                    }
-                });
+                viewModel.pushSubscriptions = pushSubscriptions.map((y: any) => PushSubscriptionViewModel.createFromArray(y));
             }
-            console.log(pushSubscriptions);
-            viewModel.pushSubscriptions = pushSubscriptions;
 
             viewModel.body = x.get('description');
             return viewModel;

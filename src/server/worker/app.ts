@@ -46,7 +46,7 @@ class App {
                                 }
                             } catch (error) {
                                 if (message.fields.redelivered) {
-                                    logger.error('Exception processing message in work queue', [error]);
+                                    logger.error('Exception processing message in work queue', [error.toString()]);
                                     // Message will be lost
                                     broker.channel.nack(message, undefined, false);
                                 } else {

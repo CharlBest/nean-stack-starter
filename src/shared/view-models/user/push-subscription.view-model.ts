@@ -17,7 +17,7 @@ export class PushSubscriptionViewModel implements PushSubscription {
     }
 
     static createFromArray(pushSubscription: PushSubscriptionValues): PushSubscriptionViewModel | null {
-        if (pushSubscription) {
+        if (pushSubscription && pushSubscription.length === 3) {
             // NOTE: The order of this tuple is very important and should not be changed
             const [endpoint, auth, p256dh] = pushSubscription;
             return new PushSubscriptionViewModel(endpoint, auth, p256dh);
