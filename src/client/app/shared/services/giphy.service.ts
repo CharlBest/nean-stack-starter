@@ -1,3 +1,4 @@
+// https://github.com/ndelvalle/ng-giphy/blob/master/src/services/giphy.service.js
 // import { HttpClient } from '@angular/common/http';
 // import { Injectable } from '@angular/core';
 // import { Observable } from 'rxjs';
