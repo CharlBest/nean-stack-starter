@@ -116,6 +116,9 @@ export class NotificationsComponent implements OnInit {
       .subscribe(() => {
         this.snackBar.dismiss();
         this.snackBar.open('Updated notification preferences');
+
+        // TODO: little hack. Update view model
+        this.notificationPreferences.autoSubscribeToItem = viewModel.notificationPreferences.autoSubscribeToItem;
       }, error => {
         this.snackBar.dismiss();
         this.snackBar.open('Update failed');
