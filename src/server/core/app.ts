@@ -26,7 +26,7 @@ class App {
         // Auth
         bootstrap.setupAuthentication(this.express);
         // Setup DB
-        bootstrap.setupDatabase(this.express);
+        await bootstrap.setupDatabase(this.express);
         // Setup routes
         bootstrap.setupRoutes(this.express);
         // Setup core tools

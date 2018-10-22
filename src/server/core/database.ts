@@ -6,6 +6,7 @@ export class Database {
 
     static driver: neo4j.Driver;
     static fileExtension = 'cyp';
+    static queries: DbQueries;
 
     private static createDriver() {
         const driver = neo4j.driver(
@@ -45,8 +46,8 @@ export class Database {
         }
     }
 
-    static async retrieveQueries() {
-        const dbQueries: DbQueries = {
+    static async getQueries() {
+        this.queries = {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
@@ -101,8 +102,6 @@ export class Database {
                 getNewCommentNotification: (await import(`../database/notifications/getNewCommentNotification.${Database.fileExtension}`)).data,
             },
         };
-
-        return dbQueries;
     }
 }
 

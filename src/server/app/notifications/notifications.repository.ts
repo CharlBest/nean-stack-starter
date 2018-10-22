@@ -4,6 +4,7 @@ import { NotificationPreferencesViewModel } from '../../../shared/view-models/us
 import { NotificationsViewModel } from '../../../shared/view-models/user/notifications.view-model';
 import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { Database } from '../../core/database';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseRepository } from '../shared/base-repository';
 
@@ -14,7 +15,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getNotificationPreferences(res: Response, userId: number): Promise<NotificationPreferencesViewModel | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.getNotificationPreferences,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getNotificationPreferences,
             {
                 userId
             }
@@ -37,7 +38,7 @@ class NotificationsRepository extends BaseRepository {
 
     async updateNotificationPreferences(res: Response, userId: number, viewModel: UpdateNotificationPreferencesViewModel)
         : Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.updateNotificationPreferences,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.updateNotificationPreferences,
             {
                 userId,
                 pushSubscription: viewModel.pushSubscription ? PushSubscriptionViewModel.createArray(
@@ -65,7 +66,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async createSubscription(res: Response, userId: number, uId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.createSubscription,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.createSubscription,
             {
                 userId,
                 uId
@@ -80,7 +81,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async deleteSubscription(res: Response, userId: number, uId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.deleteSubscription,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.deleteSubscription,
             {
                 userId,
                 uId
@@ -95,7 +96,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getSubscriptions(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.getSubscriptions,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getSubscriptions,
             {
                 userId,
                 pageIndex,
@@ -119,7 +120,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.notifications.getNewCommentNotification,
+        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getNewCommentNotification,
             {
                 commentUId
             }

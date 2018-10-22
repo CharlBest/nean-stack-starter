@@ -131,12 +131,9 @@ class Bootstrap {
         }
     }
 
-    setupDatabase(app: Application): void {
+    async setupDatabase(app: Application): Promise<void> {
         // Retrieve all queries
-        // TODO: not sure if .then is wrong because queries is empty until then (should be await)
-        Database.retrieveQueries().then(queries => {
-            app.locals.dbQueries = queries;
-        });
+        await Database.getQueries();
 
         app.use(Neo4j.setNeo4jSession);
 

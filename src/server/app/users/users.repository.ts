@@ -4,6 +4,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
+import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
 class UsersRepository extends BaseRepository {
@@ -14,7 +15,7 @@ class UsersRepository extends BaseRepository {
 
     async createUser(res: Response, uId: string, email: string, username: string, password: string, passwordSalt: string, emailCode: string)
         : Promise<Pick<UserModel, 'email' | 'username' | 'emailCode'> | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.createUser,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.createUser,
             {
                 uId,
                 email,
@@ -35,7 +36,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.doesUsernameAndEmailExist,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.doesUsernameAndEmailExist,
             {
                 email,
                 username
@@ -58,7 +59,7 @@ class UsersRepository extends BaseRepository {
 
     async getUserByEmailOrUsername(res: Response, emailOrUsername: string)
         : Promise<Pick<UserModel, 'password' | 'passwordSalt' | 'id'> | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserByEmailOrUsername,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserByEmailOrUsername,
             {
                 emailOrUsername
             }
@@ -74,7 +75,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async getLiteUserById(res: Response, userId: number): Promise<UserLiteModel | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getLiteUserById,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getLiteUserById,
             {
                 userId
             }
@@ -90,7 +91,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async getUserById(res: Response, userId: number): Promise<UserModel | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserById,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserById,
             {
                 userId
             }
@@ -112,7 +113,7 @@ class UsersRepository extends BaseRepository {
 
     async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number, pageIndex: number, pageSize: number)
         : Promise<UserPublicViewModel | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.getUserPublic,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublic,
             {
                 userId,
                 loggedInUserId,
@@ -137,7 +138,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async forgotPassword(res: Response, email: string, code: string): Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.addForgottenPasswordCode,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.addForgottenPasswordCode,
             {
                 email,
                 code
@@ -155,7 +156,7 @@ class UsersRepository extends BaseRepository {
 
     async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string)
         : Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.changeForgottenPassword,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.changeForgottenPassword,
             {
                 email,
                 code,
@@ -174,7 +175,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async verifyEmail(res: Response, userId: number, code: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.verifyEmail,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.verifyEmail,
             {
                 userId,
                 code
@@ -189,7 +190,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async updateAvatar(res: Response, userId: number, avatarUrl: string | null): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateAvatar,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.updateAvatar,
             {
                 userId,
                 avatarUrl
@@ -204,7 +205,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async updateBio(res: Response, userId: number, bio: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updateBio,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.updateBio,
             {
                 userId,
                 bio
@@ -219,7 +220,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async updatePassword(res: Response, userId: number, password: string, passwordSalt: string): Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.updatePassword,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.updatePassword,
             {
                 userId,
                 password,
@@ -237,7 +238,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async deleteUser(res: Response, userId: number): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.deleteUser,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.deleteUser,
             {
                 userId
             }
@@ -251,7 +252,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async completedTutorial(res: Response, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(res.app.locals.dbQueries.users.completedTutorial,
+        const result = await res.locals.neo4jSession.run(Database.queries.users.completedTutorial,
             {
                 userId,
                 tutorialType: viewModel.tutorialType,
