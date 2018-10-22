@@ -67,8 +67,6 @@ export class Database {
                 updatePassword: (await import(`../database/users/updatePassword.${Database.fileExtension}`)).data,
                 deleteUser: (await import(`../database/users/deleteUser.${Database.fileExtension}`)).data,
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
-                getNotificationPreferences: (await import(`../database/users/getNotificationPreferences.${Database.fileExtension}`)).data,
-                updateNotificationPreferences: (await import(`../database/users/updateNotificationPreferences.${Database.fileExtension}`)).data,
             },
             payments: {
                 anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
@@ -93,6 +91,13 @@ export class Database {
                 deleteComment: (await import(`../database/items/deleteComment.${Database.fileExtension}`)).data,
                 getComments: (await import(`../database/items/getComments.${Database.fileExtension}`)).data,
                 getComment: (await import(`../database/items/getComment.${Database.fileExtension}`)).data,
+            },
+            notifications: {
+                getNotificationPreferences: (await import(`../database/notifications/getNotificationPreferences.${Database.fileExtension}`)).data,
+                updateNotificationPreferences: (await import(`../database/notifications/updateNotificationPreferences.${Database.fileExtension}`)).data,
+                createSubscription: (await import(`../database/notifications/createSubscription.${Database.fileExtension}`)).data,
+                deleteSubscription: (await import(`../database/notifications/deleteSubscription.${Database.fileExtension}`)).data,
+                getSubscriptions: (await import(`../database/notifications/getSubscriptions.${Database.fileExtension}`)).data,
             },
         };
 
@@ -122,8 +127,6 @@ export interface DbQueries {
         updatePassword: string,
         deleteUser: string,
         completedTutorial: string,
-        getNotificationPreferences: string,
-        updateNotificationPreferences: string,
     };
 
     payments: {
@@ -150,5 +153,13 @@ export interface DbQueries {
         deleteComment: string,
         getComments: string,
         getComment: string,
+    };
+
+    notifications: {
+        getNotificationPreferences: string,
+        updateNotificationPreferences: string,
+        createSubscription: string,
+        deleteSubscription: string,
+        getSubscriptions: string,
     };
 }

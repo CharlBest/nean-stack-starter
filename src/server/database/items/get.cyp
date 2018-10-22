@@ -17,6 +17,7 @@ SET item.views = SIZE(()-[:VIEWED]->(item))
 WITH viewingUser, item, user
 
 OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
+OPTIONAL MATCH (viewingUser)-[subscribed:SUBSCRIBED]->(item)
 
 RETURN properties(item) as item, user
 {
@@ -24,5 +25,6 @@ RETURN properties(item) as item, user
     username: user.username,
     avatarUrl: user.avatarUrl
 },
-CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite
+CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
+CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
 `

@@ -21,6 +21,4 @@ export class UserRoutes {
     static search = () => new BaseRoute(UserRoutes.rootRoute, 'search');
     static searchUserStartWith = () => new BaseRoute(UserRoutes.rootRoute, 'searchUserStartWith');
     static completedTutorial = () => new BaseRoute(UserRoutes.rootRoute, 'completedTutorial');
-    static getNotificationPreferences = () => new BaseRoute(UserRoutes.rootRoute, 'getNotificationPreferences');
-    static updateNotificationPreferences = () => new BaseRoute(UserRoutes.rootRoute, 'updateNotificationPreferences');
 }

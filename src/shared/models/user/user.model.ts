@@ -17,6 +17,7 @@ export class UserModel extends UserLiteModel {
     itemCount: number;
     itemCommentCount: number;
     itemFavouriteCount: number;
+    itemSubscriptionCount: number;
 
     // TODO: user role/permission
 }

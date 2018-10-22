@@ -127,6 +127,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // #region Favourties
+
   favouriteItem(event: Event) {
     event.stopPropagation();
 
@@ -155,6 +157,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
       });
   }
 
+  // #endregion
+
   openShareDialog() {
     this.contextMenu.close();
 
@@ -173,4 +177,36 @@ export class ItemComponent implements OnInit, AfterViewInit {
     this.contextMenu.close();
     this.router.navigate(['/item/edit', this.item.uId]);
   }
+
+  // #region Subscription
+
+  subscribeToItem(event: Event) {
+    event.stopPropagation();
+
+    if (this.item.subscribed) {
+      this.deleteSubscription();
+    } else {
+      this.createSubscription();
+    }
+  }
+
+  createSubscription() {
+    this.itemService.createSubscription(this.item.uId)
+      .subscribe(() => {
+        this.item.subscribed = true;
+      }, error => {
+        this.formErrorsService.updateFormValidity(error);
+      });
+  }
+
+  deleteSubscription() {
+    this.itemService.deleteSubscription(this.item.uId)
+      .subscribe(() => {
+        this.item.subscribed = false;
+      }, error => {
+        this.formErrorsService.updateFormValidity(error);
+      });
+  }
+
+  // #endregion
 }

@@ -89,6 +89,7 @@ class ItemsRepository extends BaseRepository {
             viewModel = x.get('item');
             viewModel.user = x.get('user');
             viewModel.favourite = x.get('favourite');
+            viewModel.subscribed = x.get('subscribed');
             return viewModel;
         });
 
@@ -113,6 +114,7 @@ class ItemsRepository extends BaseRepository {
             viewModel = x.get('items');
             viewModel.user = x.get('users');
             viewModel.favourite = x.get('favourite');
+            viewModel.subscribed = x.get('subscribed');
             return viewModel;
         });
 

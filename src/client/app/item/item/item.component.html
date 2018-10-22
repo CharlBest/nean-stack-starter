@@ -29,6 +29,15 @@
                         <span mat-line>Copy link to Item</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="loggedInUserId"
+                        (click)="subscribeToItem($event)">
+                        <mat-icon mat-list-icon
+                            *ngIf="!item?.subscribed">notifications</mat-icon>
+                        <mat-icon mat-list-icon
+                            *ngIf="item?.subscribed"
+                            color="accent">notifications_active</mat-icon>
+                        <span mat-line>Subscribe</span>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="loggedInUserId"
                         (click)="favouriteItem($event)">
                         <mat-icon mat-list-icon
                             [color]="item?.favourite ? 'accent' : ''">star</mat-icon>

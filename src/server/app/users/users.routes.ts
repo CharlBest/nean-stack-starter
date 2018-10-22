@@ -43,10 +43,6 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.deleteUser(req, res, next).catch(next));
         this.router.post(UserRoutes.completedTutorial().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.completedTutorial(req, res, next).catch(next));
-        this.router.get(UserRoutes.getNotificationPreferences().server(), Authentication.loginRequired,
-            async (req, res, next) => usersController.getNotificationPreferences(req, res, next).catch(next));
-        this.router.put(UserRoutes.updateNotificationPreferences().server(), Authentication.loginRequired,
-            async (req, res, next) => usersController.updateNotificationPreferences(req, res, next).catch(next));
     }
 }
 

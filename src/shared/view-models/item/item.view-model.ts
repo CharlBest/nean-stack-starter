@@ -4,4 +4,5 @@ import { ItemUserViewModel } from './item-user.view-model';
 export class ItemViewModel extends ItemModel {
     user?: ItemUserViewModel;
     favourite?: boolean;
+    subscribed?: boolean;
 }

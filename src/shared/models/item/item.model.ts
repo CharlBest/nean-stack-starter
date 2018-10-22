@@ -7,4 +7,5 @@ export class ItemModel {
     views: number;
     itemCommentCount: number;
     itemFavouriteCount: number;
+    itemSubscriptionCount: number;
 }

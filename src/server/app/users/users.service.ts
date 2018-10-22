@@ -10,8 +10,6 @@ import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-us
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
 import { CardViewModel } from '../../../shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { emailBroker } from '../../communication/emailer-broker';
@@ -291,14 +289,6 @@ class UsersService extends BaseService {
 
     async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
         return await usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
-    }
-
-    async getNotificationPreferences(res: Response): Promise<NotificationPreferencesViewModel | null> {
-        return await usersRepository.getNotificationPreferences(res, this.getUserId(res));
-    }
-
-    async updateNotificationPreferences(res: Response, viewModel: UpdateNotificationPreferencesViewModel): Promise<void> {
-        await usersRepository.updateNotificationPreferences(res, this.getUserId(res), viewModel);
     }
 }
 

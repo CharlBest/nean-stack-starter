@@ -5,6 +5,7 @@ import * as WebSocket from 'ws';
 import { SocketDataModel } from '../../shared/models/web-socket/socket-data.model';
 import { generalRoutes } from '../app/general/general.routes';
 import { itemsRoutes } from '../app/items/items.routes';
+import { notificationsRoutes } from '../app/notifications/notifications.routes';
 import { paymentsRoutes } from '../app/payments/payments.routes';
 import { usersRoutes } from '../app/users/users.routes';
 import { broker } from '../broker/broker';
@@ -46,6 +47,7 @@ class Bootstrap {
         app.use('/api', usersRoutes);
         app.use('/api', paymentsRoutes);
         app.use('/api', itemsRoutes);
+        app.use('/api', notificationsRoutes);
 
         // Not sure if this is the best way of doing it
         // This is to serve web app sub routes

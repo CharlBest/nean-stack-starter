@@ -9,7 +9,6 @@ import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/updat
 import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { BaseController } from '../shared/base-controller';
 import { usersService } from './users.service';
 
@@ -207,33 +206,6 @@ class UsersController extends BaseController {
 
         res.status(200).json(
             await usersService.completedTutorial(res, viewModel)
-        );
-    }
-
-    async getNotificationPreferences(req: Request, res: Response, next: NextFunction) {
-        res.status(200).json(
-            await usersService.getNotificationPreferences(res)
-        );
-    }
-
-    async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
-        const viewModel = req.body as UpdateNotificationPreferencesViewModel;
-
-        const formGroup = BuildFormGroup.updateNotificationPreferences(
-            viewModel.notificationPreferences.pushNotificationEnabled,
-            viewModel.notificationPreferences.emailEnabled,
-            viewModel.notificationPreferences.pushCommentOnItemToOwner,
-            viewModel.notificationPreferences.pushHot,
-            viewModel.notificationPreferences.emailCommentOnItemToOwner,
-            viewModel.notificationPreferences.emailHot);
-        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
-
-        if (hasErrors) {
-            throw new Error('All notification types are required');
-        }
-
-        res.status(200).json(
-            await usersService.updateNotificationPreferences(res, viewModel)
         );
     }
 }
