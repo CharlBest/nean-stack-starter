@@ -1,6 +1,5 @@
-import { Application, NextFunction, Request, Response, static as expressStatic } from 'express';
+import { Application, NextFunction, Request, Response } from 'express';
 import * as http from 'http';
-import * as path from 'path';
 import * as WebSocket from 'ws';
 import { SocketDataModel } from '../../shared/models/web-socket/socket-data.model';
 import { generalRoutes } from '../app/general/general.routes';
@@ -40,7 +39,7 @@ class Bootstrap {
     }
 
     setupRoutes(app: Application): void {
-        app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
+        // app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 
         // serving api routes
         app.use('/api', generalRoutes);
@@ -51,23 +50,23 @@ class Bootstrap {
 
         // Not sure if this is the best way of doing it
         // This is to serve web app sub routes
-        app.get('*', (req, res) => {
-            const webClientUrl = 'dist/nean-stack-starter';
-            if (app.get('env') === 'development') {
-                res.sendFile(`${webClientUrl}/index.html`, { root });
-            }
+        // app.get('*', (req, res) => {
+        //     const webClientUrl = 'dist/nean-stack-starter';
+        //     if (app.get('env') === 'development') {
+        //         res.sendFile(`${webClientUrl}/index.html`, { root });
+        //     }
 
-            if (app.get('env') !== 'development') {
-                const lang = req.headers['lang'];
-                if (lang === 'af-ZA') {
-                    res.sendFile(`${webClientUrl}/af-ZA/index.html`, { root });
-                } else if (lang === 'en-US') {
-                    res.sendFile(`${webClientUrl}/en-US/index.html`, { root });
-                } else {
-                    res.sendFile(`${webClientUrl}/index.html`, { root });
-                }
-            }
-        });
+        //     if (app.get('env') !== 'development') {
+        //         const lang = req.headers['lang'];
+        //         if (lang === 'af-ZA') {
+        //             res.sendFile(`${webClientUrl}/af-ZA/index.html`, { root });
+        //         } else if (lang === 'en-US') {
+        //             res.sendFile(`${webClientUrl}/en-US/index.html`, { root });
+        //         } else {
+        //             res.sendFile(`${webClientUrl}/index.html`, { root });
+        //         }
+        //     }
+        // });
     }
 
     setupWebSockets(server: http.Server): void {
@@ -168,14 +167,6 @@ class Bootstrap {
             res.header('Access-Control-Allow-Credentials', 'true');
             next();
         });
-    }
-
-    setupHerokuPing(app: Application): void {
-        if (app.get('env') !== 'development') {
-            setInterval(function () {
-                http.get('http://nean.io');
-            }, 1740000);
-        }
     }
 
     setupAutoPeriodicDataFetch(app: Application): void {
