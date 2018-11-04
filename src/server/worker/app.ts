@@ -19,9 +19,7 @@ class App {
 
         this.onDestroy();
 
-        if (environment.production) {
-            console.log(`Aloha, your worker is ready on PORT: ${environment.port}`);
-        }
+        logger.info(`Aloha, your worker is ready on PORT:${environment.port}`);
     }
 
     async initMessageBroker(): Promise<void> {

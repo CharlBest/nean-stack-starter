@@ -1,7 +1,6 @@
 import { Application } from 'express';
 import * as http from 'http';
 import { broker } from '../broker/broker';
-import { environment } from '../environments/environment';
 // import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
 import { logger } from './utils/logger';
@@ -23,12 +22,7 @@ export class Server {
 
     init(app: Application): void {
         this.httpServer.on('listening', () => {
-            const message = `Aloha, your app is ready on ${app.get('host') || 'localhost'}:${app.get('port')}`;
-            logger.info(message);
-
-            if (environment.production) {
-                console.log(message);
-            }
+            logger.info(`Aloha, your app is ready on PORT:${app.get('port')}`);
         });
 
         // this.httpServer.on('error', (error) => { });
