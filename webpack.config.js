@@ -9,7 +9,7 @@ const config = {
     devtool: isProduction ? "source-map" : "cheap-module-eval-source-map",
     context: path.resolve("./src/server"),
     entry: {
-        app: "./main.ts",
+        web: "./main.web.ts",
         worker: "./main.worker.ts",
         // vendor: "./vendor.ts"
     },
@@ -17,8 +17,8 @@ const config = {
     externals: [nodeExternals()],
     output: {
         path: path.resolve("./dist/server"),
-        filename: "[name].bundle.js",
-        sourceMapFilename: "[name].bundle.map"
+        filename: "[name]/[name].bundle.js",
+        sourceMapFilename: "[name]/[name].bundle.map"
     },
     module: {
         rules: [
