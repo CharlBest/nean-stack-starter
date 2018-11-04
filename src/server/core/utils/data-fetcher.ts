@@ -2,7 +2,6 @@
 import { Application } from 'express';
 // import * as puppeteer from 'puppeteer';
 
-// Add puppeteer-heroku-buildpack to successfuly run on Heroku
 class DataFetcher {
     // dom element selectors
     selectors = {

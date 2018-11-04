@@ -31,8 +31,6 @@ class App {
         bootstrap.setupRoutes(this.express);
         // Setup core tools
         bootstrap.setupCoreTools(this.express);
-        // Setup Heroku ping to prevent free tier sleeping
-        // bootstrap.setupHerokuPing(this.express);
         // Database data fetcher
         // bootstrap.setupAutoPeriodicDataFetch(this.express);
         // Broker

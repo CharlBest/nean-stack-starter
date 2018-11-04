@@ -16,3 +16,8 @@
 * Google PageSpeed Insights - https://developers.google.com/speed/pagespeed/insights/
 * Lighthouse Audit via Chrome DevTools
 * Load test/scrape test to check load balance
+
+### Run Node
+* --max_executable_size=192
+* --optimize_for_size 
+* --gc_interval=100
