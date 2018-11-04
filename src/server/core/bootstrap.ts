@@ -23,7 +23,7 @@ const root = './';
 class Bootstrap {
 
     defineExpressApp(app: Application) {
-        app.set('port', process.env.PORT || Server.normalizePort(environment.port));
+        app.set('port', Server.normalizePort(environment.port));
     }
 
     startServer(app: Application): http.Server {
@@ -150,7 +150,13 @@ class Bootstrap {
                     'http://localhost:8000' /*IOS client*/,
                     'http://10.0.0.10:3000' /*Phone client*/
                 ]
-                : ['https://nean.io'];
+                : [
+                    'https://nean.io',
+                    'https://dev.nean.io',
+                    // TODO: remove!
+                    'http://dev.nean.io',
+                    'https://staging.nean.io'
+                ];
             const origin = req.headers.origin as string;
             if (allowedOrigins.indexOf(origin) > -1) {
                 res.setHeader('Access-Control-Allow-Origin', origin);
