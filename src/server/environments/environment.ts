@@ -36,7 +36,7 @@ export const environment = {
         private: getEnvironmentVariable('VAPID_PRIVATE_KEY', 'bqghrqfk5AiwPbOyJVSc1RgtaqmfJZAwX4uIDo0l8IA')
     },
     rabbitMQ: {
-        amqpUrl: getEnvironmentVariable('CLOUDAMQP_URL', 'amqp://guest:guest@localhost:5672')
+        amqpUrl: getEnvironmentVariable('AMQP_URL', 'amqp://guest:guest@localhost:5672')
     }
 };
 
