@@ -39,14 +39,16 @@ class Bootstrap {
     }
 
     setupRoutes(app: Application): void {
-        // app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
-
         // serving api routes
         app.use('/api', generalRoutes);
         app.use('/api', usersRoutes);
         app.use('/api', paymentsRoutes);
         app.use('/api', itemsRoutes);
         app.use('/api', notificationsRoutes);
+    }
+
+    setupStaticFiles() {
+        // app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 
         // Not sure if this is the best way of doing it
         // This is to serve web app sub routes
