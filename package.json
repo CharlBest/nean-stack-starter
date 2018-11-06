@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.832",
+  "version": "0.0.833",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -15,9 +15,10 @@
   "scripts": {
     "dev": "concurrently \"npm run start:client:watch\" \"npm run build:server:watch\" \"npm run start:server:watch\"",
     "build": "ng build --prod && webpack --mode=production",
-    "build:client:prod": "ng build --prod",
+    "build:client:prod": "ng build --configuration=production",
+    "build:client:dev": "ng build --configuration=development",
     "build:server:prod": "webpack --mode=production",
-    "build:server": "webpack --mode=development",
+    "build:server:dev": "webpack --mode=development",
     "build:server:watch": "webpack --mode=development --watch",
     "start": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/app.bundle.js",
     "start:worker": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/worker.bundle.js",
