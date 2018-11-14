@@ -2,7 +2,6 @@ import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
 import { Database } from '../core/database';
 import { logger } from '../core/utils/logger';
-import { environment } from '../environments/environment';
 import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
 
@@ -19,7 +18,7 @@ class App {
 
         this.onDestroy();
 
-        logger.info(`Aloha, your worker is ready on PORT:${environment.port}`);
+        logger.info(`Worker is running`);
     }
 
     async initMessageBroker(): Promise<void> {
