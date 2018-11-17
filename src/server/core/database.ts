@@ -13,7 +13,11 @@ export class Database {
             environment.database.uri,
             neo4j.auth.basic(environment.database.username, environment.database.password),
             {
-                disableLosslessIntegers: true
+                disableLosslessIntegers: true,
+                logging: {
+                    level: 'warn',
+                    logger: (level, message) => { logger.log(level, `Neo4j - ${message}`); }
+                }
             }
         );
 
