@@ -23,55 +23,55 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   getUserProfile(): Observable<UserProfileViewModel | null> {
-    return this.http.get<UserProfileViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserProfile().client()}`);
+    return this.http.get<UserProfileViewModel>(`${environment.httpDomain}${UserRoutes.getUserProfile().client()}`);
   }
 
   updateAvatar(viewModel: UpdateAvatarViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateAvatar().client()}`, viewModel);
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateAvatar().client()}`, viewModel);
   }
 
   updateBio(viewModel: UpdateBioViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updateBio().client()}`, viewModel);
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateBio().client()}`, viewModel);
   }
 
   updatePassword(viewModel: UpdatePasswordViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.apiUrlEndpoint}${UserRoutes.updatePassword().client()}`, viewModel);
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updatePassword().client()}`, viewModel);
   }
 
   deleteUser(): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.deleteUser().client()}`);
+    return this.http.delete<boolean>(`${environment.httpDomain}${UserRoutes.deleteUser().client()}`);
   }
 
   resendEmailVerificationLink(): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null);
+    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.resendEmailVerificationLink().client()}`, null);
   }
 
   createCard(token: string): Observable<CardModel | null> {
-    return this.http.post<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.createCard().client()}`, { token });
+    return this.http.post<CardModel>(`${environment.httpDomain}${PaymentRoutes.createCard().client()}`, { token });
   }
 
   deleteCard(uId: string): Observable<CardModel | null> {
-    return this.http.delete<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.deleteCard(uId).client()}`);
+    return this.http.delete<CardModel>(`${environment.httpDomain}${PaymentRoutes.deleteCard(uId).client()}`);
   }
 
   updateDefaultCard(uId: string): Observable<CardModel | null> {
-    return this.http.put<CardModel>(`${environment.apiUrlEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
+    return this.http.put<CardModel>(`${environment.httpDomain}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
   }
 
   paymentHistory(): Observable<PaymentModel[] | null> {
-    return this.http.get<PaymentModel[]>(`${environment.apiUrlEndpoint}${PaymentRoutes.paymentHistory().client()}`);
+    return this.http.get<PaymentModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentHistory().client()}`);
   }
 
   sendReport(viewModel: ReportUserViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrlEndpoint}${UserRoutes.report().client()}`, viewModel);
+    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.report().client()}`, viewModel);
   }
 
   getNotificationPreferences(): Observable<NotificationPreferencesViewModel | null> {
     return this.http
-      .get<NotificationPreferencesViewModel>(`${environment.apiUrlEndpoint}${NotificationRoutes.getNotificationPreferences().client()}`);
+      .get<NotificationPreferencesViewModel>(`${environment.httpDomain}${NotificationRoutes.getNotificationPreferences().client()}`);
   }
 
   updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.apiUrlEndpoint}${NotificationRoutes.updateNotificationPreferences().client()}`, model);
+    return this.http.put<void>(`${environment.httpDomain}${NotificationRoutes.updateNotificationPreferences().client()}`, model);
   }
 }

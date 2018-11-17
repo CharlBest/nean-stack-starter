@@ -73,7 +73,7 @@ export class TutorialService {
     }
 
     completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel);
+        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.completedTutorial().client()}`, viewModel);
     }
 
     checkHasVisited() {

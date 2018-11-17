@@ -12,14 +12,13 @@
 
 export const environment = {
   production: false,
-  webSocketUrlEndpoint: 'ws://localhost:3000/',
-  apiUrlEndpoint: 'http://localhost:3000',
+  domain: 'localhost:3000',
+  httpDomain: '',
   googleAnalytics: {
     web: 'UA-107304143-1',
     ios: 'UA-102909242-6',
     chromeExtension: 'UA-102909242-7'
   },
-  hostUrlForSharingToWeb: 'http://localhost:3000',
   firebase: {
     projectId: 'nean-dev',
     storageBucket: 'gs://nean-dev.appspot.com/',
@@ -30,3 +29,5 @@ export const environment = {
   },
   publicVapidKey: 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs'
 };
+
+environment.httpDomain = `http${environment.production ? 's' : ''}://${environment.domain}`;

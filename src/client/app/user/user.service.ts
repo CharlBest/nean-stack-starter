@@ -14,6 +14,6 @@ export class UserService {
 
     getUserPublic(userId: number, pageIndex: number, pageSize?: number): Observable<UserPublicViewModel | null> {
         return this.http
-            .get<UserPublicViewModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUserPublic(userId).client({ pageIndex, pageSize })}`);
+            .get<UserPublicViewModel>(`${environment.httpDomain}${UserRoutes.getUserPublic(userId).client({ pageIndex, pageSize })}`);
     }
 }

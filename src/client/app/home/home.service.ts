@@ -13,6 +13,6 @@ export class HomeService {
     constructor(private http: HttpClient) { }
 
     getItems(pageIndex: number, pageSize?: number): Observable<ItemViewModel[] | null> {
-        return this.http.get<ItemViewModel[]>(`${environment.apiUrlEndpoint}${ItemRoutes.getItems().client({ pageIndex, pageSize })}`);
+        return this.http.get<ItemViewModel[]>(`${environment.httpDomain}${ItemRoutes.getItems().client({ pageIndex, pageSize })}`);
     }
 }

@@ -47,7 +47,7 @@ export class StripeElementsComponent implements OnInit {
             locale: 'en',
             fonts: [
                 {
-                    src: environment.production ? `url("${environment.apiUrlEndpoint}/assets/open-sans-v15-latin-regular.woff2")` : '',
+                    src: environment.production ? `url("${environment.httpDomain}/assets/open-sans-v15-latin-regular.woff2")` : '',
                     family: 'Open Sans'
                 }
             ]

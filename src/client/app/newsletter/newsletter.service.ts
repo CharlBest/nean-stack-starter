@@ -13,10 +13,10 @@ export class NewsletterService {
     constructor(private http: HttpClient) { }
 
     createNewsletterMember(viewModel: NewsletterMemberViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.createNewsletterMember().client()}`, viewModel);
+        return this.http.post<boolean>(`${environment.httpDomain}${GeneralRoutes.createNewsletterMember().client()}`, viewModel);
     }
 
     deleteNewsletterMember(email: string): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${GeneralRoutes.deleteNewsletterMember(email).client()}`);
+        return this.http.delete<boolean>(`${environment.httpDomain}${GeneralRoutes.deleteNewsletterMember(email).client()}`);
     }
 }

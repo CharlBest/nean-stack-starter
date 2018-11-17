@@ -18,7 +18,7 @@ export class WebSocketService implements OnDestroy {
 
     init() {
         this.webSocketSubject = new WebSocketSubject({
-            url: environment.webSocketUrlEndpoint
+            url: `ws${environment.production ? 's' : ''}://${environment.domain}/api/`
         });
 
         this.webSocketSubject.subscribe(

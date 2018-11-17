@@ -12,6 +12,6 @@ export class VerifyService {
     constructor(private http: HttpClient) { }
 
     verifyEmail(code: string): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.verifyEmail().client()}`, { code });
+        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.verifyEmail().client()}`, { code });
     }
 }

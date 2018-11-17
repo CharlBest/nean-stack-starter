@@ -13,6 +13,6 @@ export class InviteService {
     constructor(private http: HttpClient) { }
 
     sendInvites(viewModel: InviteViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrlEndpoint}${GeneralRoutes.invite().client()}`, viewModel);
+        return this.http.post<void>(`${environment.httpDomain}${GeneralRoutes.invite().client()}`, viewModel);
     }
 }
