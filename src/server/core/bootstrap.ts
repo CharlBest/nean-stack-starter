@@ -152,11 +152,6 @@ class Bootstrap {
                     'http://10.0.0.10:3000' /*Phone client*/
                 ]
                 : [
-                    // TODO: remove!
-                    'http://nean.io',
-                    'http://dev.nean.io',
-                    'http://staging.nean.io',
-
                     'https://nean.io',
                     'https://dev.nean.io',
                     'https://staging.nean.io'
