@@ -289,12 +289,16 @@ Buy a domain name and set the name servers to cloudflare
 * Setup DNS
   1. Create Cloudflare account
   2. DNS section (Domain name system)
-  3. Create A record (root domain) eg. nean.io, www.nean.io
+  3. Create A record (root domain) eg. nean.io
      * Name = @
      * IPv4 address = 35.225.150.147
-  4. Create A record (sub domain) eg. dev.nean.io
+  4. Create cname record
+     * name = www
+     * Domain name = nean.io
+  5. Create A record (sub domain) eg. dev.nean.io
      * Name = dev
      * IPv4 address = 35.225.150.147
+
 
 ## Setup Nginx Web Server
 
