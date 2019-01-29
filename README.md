@@ -46,6 +46,13 @@ Client pages
 * tutorials
 * verify email
 * terms and conditions, privacy policy and help
+* invite a friend
+* 404 error page
+* items
+    * create
+    * edit
+    * comment
+    * favourites
 
 ## In-progress or coming soon
 * Angular localization
