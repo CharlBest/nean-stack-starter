@@ -33,6 +33,20 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Stripe Payment integration
 * Custom Material theme + font (Night Mode)
 * Progressive Web App (PWA)
+* Complete server setup guide via GCP
+* Backend logger (Node + Neo4j)
+* Content Security Policy
+* CORS
+* Notifications via email and/or push notifications (Seperate NodeJS message broker/queue via RabbitMQ)
+* Typescript best practises flags (strictNullChecks, strictFunctionTypes, strictPropertyInitialization, noImplicitAny, noImplicitThis, noImplicitReturns)
+* Predefined dialog components/services
+* Auto package versioning (Husky)
+* Puppeteer scraper script to test infinite scroller
+* Social media meta tags
+* Password difficulty tester
+* GDPR/Cookie prompts
+* Offline network message (PWA)
+
 
 Client pages
 
