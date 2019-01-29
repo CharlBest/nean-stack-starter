@@ -75,14 +75,16 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
 3. Create accounts for services
    1. Firebase account (Images)
    2. Google Analytics
-   3. Heroku (App Hosting)
-   4. Stripe (Payments)
-   5. GCP Neo4j Instance (Database Hosting)
+   3. Stripe (Payments)
+   4. Google Cloud Platform
       1. Create VM instance in Compute Engine (f1-micro)
-      2. 
-   6. Cloudflare (DNS)
-   7. Namecheap Domain
-   8. SendGrid (Emails)
+      2. Neo4j Instance (Database Hosting)
+      3. RabbitMQ Instance (Message queue)
+      4. Nginx reverse proxy
+      5. PM2 Node manager
+   5. Cloudflare (DNS)
+   6. Namecheap Domain
+   7. SendGrid (Emails)
       1. Welcome
       2. Forgot password
       3. Feedback
@@ -96,14 +98,6 @@ npm run dev
 ```
 
 Your app should now be running on [localhost:4200](http://localhost:4200/)
-
-## Why Heroku, GrapheneDB and Firebase for demo app hosting
-Its free ;)
-
-## Procfile & Heroku
-This file is [Heroku](https://www.heroku.com/) specific for hosting the [nean demo app](https://www.nean.io/). Delete it if you're not using Heroku.
-
-You will also notice in the package.json file there is a "heroku-postbuild" script. This is for the continuous build and deployment specific for Heroku. This can be replaced with npm's preinstall script if you want something standard.
 
 ## Environment variables
 Change to yours.
