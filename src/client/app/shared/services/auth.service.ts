@@ -58,12 +58,7 @@ export class AuthService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.hasToken()) {
-            return true;
-        } else {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url }, queryParamsHandling: 'merge' });
-            return false;
-        }
+        return this.hasToken() || this.router.navigate(['login'], { queryParams: { returnUrl: state.url }, queryParamsHandling: 'merge' });
     }
 
     updateLoggedInUser() {
