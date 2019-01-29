@@ -53,7 +53,7 @@ Client pages
 * sign up
 * login
 * forgot password/reset password
-* header navigation/footer
+* header nav for desktop and bottom nav for mobile
 * newsletter sign up
 * email feedback
 * profile
