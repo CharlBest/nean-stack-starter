@@ -59,7 +59,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     },
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
-      useValue: <MatBottomSheetConfig>{ closeOnNavigation: true, autoFocus: false }
+      useValue: <MatBottomSheetConfig>{ closeOnNavigation: true, autoFocus: false, restoreFocus: false }
     },
   ],
   bootstrap: [
