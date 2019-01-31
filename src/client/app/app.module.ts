@@ -31,6 +31,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
   ],
   providers: [
     Title,
+    // Interceptors
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
@@ -41,6 +42,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
       useClass: AuthInterceptor,
       multi: true
     },
+    // Material defaults
     {
       provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
       useValue: <MatTooltipDefaultOptions>{ showDelay: 700 }

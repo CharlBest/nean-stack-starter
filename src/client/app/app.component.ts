@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
 import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
 import { NetworkStatusService } from './shared/network-status/network-status.service';
+import { PWAService } from './shared/pwa-helper/pwa.service';
 import { ASCIIArtService } from './shared/services/ascii-art.service';
 import { AuthService } from './shared/services/auth.service';
 import { GaService } from './shared/services/ga.service';
@@ -21,7 +22,8 @@ export class AppComponent {
     private notificationService: NotificationService,
     private asciiArtService: ASCIIArtService,
     private cookieConsentSnackbarService: CookieConsentSnackbarService,
-    private networkStatusService: NetworkStatusService) {
+    private networkStatusService: NetworkStatusService,
+    private pwaService: PWAService) {
     // Authentication
     this.authService.init();
 
@@ -42,6 +44,9 @@ export class AppComponent {
 
     // Initialize network status event
     this.networkStatusService.init();
+
+    // Start PWA helper (needed for before intall prompt event)
+    this.pwaService.init();
 
     // Firebase
     initializeApp({
