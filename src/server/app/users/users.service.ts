@@ -50,9 +50,8 @@ class UsersService extends BaseService {
 
     async createUser(res: Response, email: string, username: string, password: string): Promise<void> {
         email = email.toLowerCase();
-        username = username.toLowerCase();
 
-        const validation = await this.doesUsernameAndEmailExist(res, email, username);
+        const validation = await this.doesUsernameAndEmailExist(res, email, username.toLowerCase());
         if (!validation) {
             ServerValidator.addGlobalError(res, 'createUserError', true);
             throw new Error();
