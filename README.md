@@ -313,6 +313,12 @@ Buy a domain name and set the name servers to cloudflare
   5. Create A record (sub domain) eg. dev.nean.io
      * Name = dev
      * IPv4 address = 35.225.150.147
+  6. Create Page Rule for LetsEncrypt auto renew (first)
+     * URL: http://*nean.io/.well-known/acme-challenge/*
+     * Setting: Cache Level: Standard
+  7. Create Page Role for redirecting to HTTPS (second)
+     * URL: http://*nean.io/*
+     * Setting: Always Use HTTPS
 
 
 ## Setup Nginx Web Server
@@ -545,7 +551,7 @@ function generate(environment, server, env, port = 0, instances = 1) {
         // Number of times a script is restarted when it exits in less than min_uptime
         max_restarts: 10,
         // Minimum uptime of the app to be considered started
-        min_uptime: 7000
+        min_uptime: 1000
     }
 }
 
@@ -730,8 +736,20 @@ services:
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
-      NEO4J_AUTH: "neo4j/<PASSWORD>"
+      NEO4J_AUTH: "neo4j/neo4j"
     restart: unless-stopped
+
+  rabbitmq.nean.io:
+      container_name: rabbitmq.nean.io
+      image: rabbitmq:3.7-management
+      hostname:  rabbitmq.nean.io
+      environment:
+        - RABBITMQ_DEFAULT_USER = guest
+        - RABBITMQ_DEFAULT_PASS = guest
+      ports:
+        - "15672:15672"       ## Management Plugin
+        - "5672:5672"         ## AMQP connection
+      restart: unless-stopped
 
   neo4j.dev.nean.io:
     container_name: neo4j.dev.nean.io
@@ -746,20 +764,8 @@ services:
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
-      NEO4J_AUTH: "neo4j/<PASSWORD>"
+      NEO4J_AUTH: "neo4j/neo4j"
     restart: unless-stopped
-
-  rabbitmq.nean.io:
-      container_name: rabbitmq.nean.io
-      image: rabbitmq:3.7-management
-      hostname:  rabbitmq.nean.io
-      environment:
-        - RABBITMQ_DEFAULT_USER = guest
-        - RABBITMQ_DEFAULT_PASS = guest
-      ports:
-        - "15672:15672"       ## Management Plugin
-        - "5672:5672"         ## AMQP connection
-      restart: unless-stopped
 
   rabbitmq.dev.nean.io:
       container_name: rabbitmq.dev.nean.io
@@ -800,7 +806,7 @@ docker-compose up -d
 * up: Download images from docker hub and create container instances
 * -d: detached mode: Container starts up and run in background. Console is not attached to the container's process.
 
-3. Create new users
+3. <a id="createnewusers">Create new users</a>
 
     3.1 Neo4j
     * Go to localhost:7474 in your browser
@@ -813,6 +819,7 @@ docker-compose up -d
     * Go to localhost:15672 in your browser
     * Change guest user password
     * Open "Admin" > Click on "guest" > "Update this user" > choose new password
+    * Log out and then log back in
     * Open "Admin" > "Add user"
     * Username = "server_web", Tags = None (empty)
     * Username = "server_worker", Tags = None (empty)
@@ -948,3 +955,66 @@ gcloud compute scp --recurse <FROM_DIR> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/n
 ## Top things to check
 
 Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs-in-production-cisab2fyu0s9oth5341faywcw
+
+
+# Steps to creating a new project/instance
+
+## Create new project
+* Create GitHub repo
+* git clone repo
+* cd repo
+* git remote add upstream https://github.com/CharlBest/nean-stack-starter.git
+* git fetch upstream
+* Rename all NEAN words to new project name
+
+## Cloudflare
+* Add A record for subdomain pointing to server IP
+
+## NGINX
+* /etc/nginx/sites-available --> copy example of subdomain
+* change subdomain in new copy
+* change node api server port
+* change ssl (443) to 80 and ** comment out certificates **
+* create sym link in sites-enabled
+* create log folder (sudo mkdir /var/log/subdomain.domain.com)
+* sudo service nginx restart
+* sudo certbot certonly -d subdomain.domain.com
+* uncomment certificate links/certificates in conf file
+
+## Git clone project
+* Commit latest version to GitHub
+```sh
+cd /var/www/nean.io
+git clone https://github.com/CharlBest/nean-stack-starter.git
+cd gitProjectName
+npm install
+```
+
+## Deploy initial version/dist
+* go to local version
+* npm run build
+```sh
+gcloud compute scp --recurse <FROM_DIR> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain/
+```
+
+## Docker
+### Edit docker-compose.yml
+* add neo4j and rabbitmq service
+* change domain
+* change ports
+```sh
+cd /var/www/nean.io/
+docker-compose up --detach --no-recreate
+```
+* [Create new users](#createnewusers)
+
+## PM2
+### Edit ecosystem.config.js
+* add web and worker apps
+* change name, node server port, neo4j port and rabbitmq port
+```sh
+cd /var/www/nean.io/
+pm2 reload ecosystem.config.js --update-env
+# save the process list
+pm2 save
+```
