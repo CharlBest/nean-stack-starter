@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, SecurityContext, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, SecurityContext, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
@@ -17,6 +17,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
     @Input() containsEmoji = false;
+    @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
@@ -59,6 +60,10 @@ export class HTMLEditorComponent implements AfterViewInit {
             },
             placeholder: this.placeholder,
             theme: 'snow'
+        });
+
+        this.editor.on('text-change', (delta, oldDelta, source) => {
+            this.onChange.emit(this.getInnerHTML());
         });
 
         if (this.htmlContent) {
