@@ -998,7 +998,7 @@ npm install
 * go to local version
 * npm run build
 ```sh
-gcloud compute scp --recurse <FROM_DIR> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain/
+gcloud compute scp --recurse <FROM_DIR_ENDING_IN_BACK_SLASH> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain
 ```
 
 ## Docker
@@ -1021,4 +1021,25 @@ cd /var/www/nean.io/
 pm2 reload ecosystem.config.js --update-env
 # save the process list
 pm2 save
+```
+
+# Steps to update code on prod/server
+Local
+```sh
+# Get latest code from base
+git fetch upstream
+git merge upstream/master
+npm run build
+```
+
+Remote server
+```sh
+cd /var/www/nean.io/appname
+rm -rf dist
+mkdir dist
+```
+
+Local
+```sh
+gcloud compute scp --recurse <FROM_DIR_ENDING_IN_BACK_SLASH> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain
 ```
