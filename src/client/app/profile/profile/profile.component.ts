@@ -152,19 +152,4 @@ export class ProfileComponent implements OnInit {
     this.shareService.copyWithUrl(['/user', this.user.id]);
     this.contextMenu.close();
   }
-
-  goToItems() {
-    this.contextMenu.close();
-    this.router.navigate(['/user', this.user.id]);
-  }
-
-  goToSaved() {
-    this.contextMenu.close();
-    this.router.navigate(['/item/saved']);
-  }
-
-  goToNotifications() {
-    this.contextMenu.close();
-    this.router.navigate(['/profile/notifications']);
-  }
 }

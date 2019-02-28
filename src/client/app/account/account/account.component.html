@@ -6,11 +6,24 @@
                 <mat-icon mat-list-icon>lock</mat-icon>
                 <span mat-line>Login</span>
             </mat-list-item>
-            <mat-list-item routerLink="/profile"
-                *ngIf="loggedInUserId">
-                <mat-icon mat-list-icon>account_circle</mat-icon>
-                <span mat-line>Profile</span>
-            </mat-list-item>
+            <ng-container *ngIf="loggedInUserId">
+                <mat-list-item routerLink="/user/{{loggedInUserId}}">
+                    <mat-icon mat-list-icon>fiber_manual_record</mat-icon>
+                    <span mat-line>Items</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/item/saved">
+                    <mat-icon mat-list-icon>star</mat-icon>
+                    <span mat-line>Saved</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/profile">
+                    <mat-icon mat-list-icon>account_circle</mat-icon>
+                    <span mat-line>Profile</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/profile/notifications">
+                    <mat-icon mat-list-icon>notifications</mat-icon>
+                    <span mat-line>Notification Preferences</span>
+                </mat-list-item>
+            </ng-container>
             <mat-divider></mat-divider>
             <mat-list-item routerLink="/payment">
                 <mat-icon mat-list-icon>credit_card</mat-icon>
