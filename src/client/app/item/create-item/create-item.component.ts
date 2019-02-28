@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { PushNotificationService } from '../../shared/services/push-notification.service';
 import { ItemFormComponent } from '../item-form/item-form.component';
 import { ItemService } from '../item.service';
 
@@ -18,7 +20,9 @@ export class CreateItemComponent implements OnInit {
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService,
-    private router: Router) { }
+    private router: Router,
+    private pushNotificationService: PushNotificationService,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
   }
@@ -35,7 +39,16 @@ export class CreateItemComponent implements OnInit {
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data) {
-          this.router.navigate(['/item/comments', data.uId]);
+          if (!this.pushNotificationService.isPushNotificationPermissionGrandted()) {
+            this.dialogService.confirm('Give permission to get notifications for comments?')
+              .subscribe(confirm => {
+                if (confirm) {
+                  this.router.navigate(['/profile/notifications']);
+                } else {
+                  this.router.navigate(['/item/comments', data.uId]);
+                }
+              });
+          }
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
