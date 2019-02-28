@@ -965,7 +965,11 @@ Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs
 * cd repo
 * git remote add upstream https://github.com/CharlBest/nean-stack-starter.git
 * git fetch upstream
+
+## Update project
 * Rename all NEAN words to new project name
+* Change theme colors in material theme, manifest.json, index.html icons, index.html loading screen bg
+* Change icon/logo
 
 ## Cloudflare
 * Add A record for subdomain pointing to server IP
