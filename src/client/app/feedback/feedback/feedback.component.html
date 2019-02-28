@@ -14,7 +14,7 @@
           cdkAutosizeMaxRows="8"
           [attr.autofocus]="bpService.isDesktop || null"></textarea>
         <mat-hint *ngIf="formGroup.controls['content'].value?.length < 10">Minimum of
-          {{formGroup.controls['content'].value?.length}}/10
+          {{formGroup.controls['content'].value?.length > 0 ? formGroup.controls['content'].value?.length + '/' : ''}}10
           characters
         </mat-hint>
         <mat-error>
