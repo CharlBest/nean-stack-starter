@@ -2,6 +2,11 @@ export const data = `
 MATCH (user:User { id: {userId} })
 OPTIONAL MATCH (user)-[:HAS_ITEM]->(items: Item)
 
+WITH user, items
+ORDER BY items.dateCreated DESC
+SKIP {pageIndex}*{pageSize}
+LIMIT {pageSize}
+
 // Capture views (only once per user or IP address)
 OPTIONAL MATCH (viewingUser:User { id: {loggedInUserId} })
 FOREACH (o IN CASE WHEN viewingUser IS NOT NULL THEN [viewingUser] ELSE [] END |
@@ -21,6 +26,5 @@ RETURN user {
     isVerified: user.isVerified,
     bio: user.bio,
     avatarUrl: user.avatarUrl
-}, collect(properties(items))[{pageIndex}*{pageSize}..({pageIndex}+1)*{pageSize}] as items
+}, collect(properties(items)) as items
 `
-// pageIndex & pageSize as used above is slow I think. Rahter use apoc.cypher.run for sub query support
