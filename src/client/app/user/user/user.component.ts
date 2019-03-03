@@ -57,7 +57,7 @@ export class UserComponent implements OnInit {
                 avatarUrl: data.avatarUrl
               };
 
-              // TODO: This can be optomized
+              // TODO: This can be optimized
               data.items.map((x: ItemViewModel) => x.user = itemsOwner);
             }
 

@@ -2,7 +2,11 @@ export const data = `
 MATCH (user:User { id: {userId} })
 OPTIONAL MATCH (user)-[:HAS_ITEM]->(items: Item)
 
-WITH user, items
+OPTIONAL MATCH (user)-[favourite:HAS_FAVOURITE]->(items)
+OPTIONAL MATCH (user)-[subscribed:SUBSCRIBED]->(items)
+
+// Include favourite and subscribed in the item object
+WITH user, items { .*, favourite, subscribed }
 ORDER BY items.dateCreated DESC
 SKIP {pageIndex}*{pageSize}
 LIMIT {pageSize}
