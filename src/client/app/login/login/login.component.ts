@@ -48,7 +48,10 @@ export class LoginComponent implements OnInit {
   getParams() {
     this.route.queryParamMap.subscribe(params => {
       if (params.has('returnUrl')) {
-        this.returnUrl = params.get('returnUrl') || '/profile';
+        const returnUrl = params.get('returnUrl');
+        if (returnUrl) {
+          this.returnUrl = returnUrl;
+        }
       }
     });
   }
