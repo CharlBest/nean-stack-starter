@@ -18,8 +18,8 @@ export class PaymentService {
         return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.anonymousPayment().client()}`, viewModel);
     }
 
-    userCards(): Observable<CardModel[] | null> {
-        return this.http.get<CardModel[]>(`${environment.httpDomain}${PaymentRoutes.userCards().client()}`);
+    paymentCards(): Observable<CardModel[] | null> {
+        return this.http.get<CardModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentCards().client()}`);
     }
 
     userPayment(viewModel: UserPaymentViewModel): Observable<boolean> {

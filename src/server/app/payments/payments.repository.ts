@@ -49,8 +49,8 @@ class PaymentsRepository extends BaseRepository {
         }
     }
 
-    async userCards(res: Response, userId: number): Promise<CardModel[] | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.userCards,
+    async paymentCards(res: Response, userId: number): Promise<CardModel[] | null> {
+        const result = await res.locals.neo4jSession.run(Database.queries.payments.paymentCards,
             {
                 userId
             }

@@ -9,5 +9,5 @@ export class UserProfileViewModel {
     bio: string;
     avatarUrl: string | null | undefined;
     emailVerified: boolean;
-    userCards: CardViewModel[];
+    paymentCards: CardViewModel[];
 }

@@ -46,9 +46,9 @@ class PaymentsController extends BaseController {
         );
     }
 
-    async userCards(req: Request, res: Response, next: NextFunction) {
+    async paymentCards(req: Request, res: Response, next: NextFunction) {
         res.status(200).json(
-            await paymentsService.userCards(res)
+            await paymentsService.paymentCards(res)
         );
     }
 

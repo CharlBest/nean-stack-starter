@@ -159,7 +159,7 @@ class UsersService extends BaseService {
             bio: user.bio,
             avatarUrl: user.avatarUrl,
             emailVerified: user.emailVerified,
-            userCards: user.userCards.map(card => {
+            paymentCards: user.paymentCards.map(card => {
                 const cardViewModel: CardViewModel = {
                     uId: card.uId,
                     expireMonth: card.expireMonth,

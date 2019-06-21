@@ -12,11 +12,11 @@
             </div>
 
             <mat-form-field appearance="fill"
-                *ngIf="isAuthenticated && userCards?.length > 0">
+                *ngIf="isAuthenticated && paymentCards?.length > 0">
                 <mat-label>Cards</mat-label>
                 <mat-select formControlName="cardUId"
-                    [value]="userCards[0]?.uId">
-                    <mat-option *ngFor="let card of userCards"
+                    [value]="paymentCards[0]?.uId">
+                    <mat-option *ngFor="let card of paymentCards"
                         [value]="card.uId">
                         **** {{card.last4}}
                     </mat-option>
@@ -26,7 +26,8 @@
 
             <br>
 
-            <app-stripe-elements [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
+            <app-stripe-elements
+                [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
                 #stripeElements
                 (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
 
@@ -58,7 +59,8 @@
                 </mat-form-field>
             </ng-container>
 
-            <ng-container *ngIf="isAuthenticated && (formGroup.controls['cardUId'].value === null || formGroup.controls['cardUId'].value === 'new')">
+            <ng-container
+                *ngIf="isAuthenticated && (formGroup.controls['cardUId'].value === null || formGroup.controls['cardUId'].value === 'new')">
                 <br>
                 <br>
 

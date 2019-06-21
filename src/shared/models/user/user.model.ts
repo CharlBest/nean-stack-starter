@@ -10,7 +10,7 @@ export class UserModel extends UserLiteModel {
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: Array<string>;
-    userCards: CardModel[];
+    paymentCards: CardModel[];
     pushSubscription: PushSubscriptionValues;
     pushNotificationTypes: PushNotificationTypes;
     emailNotificationTypes: EmailNotificationTypes;

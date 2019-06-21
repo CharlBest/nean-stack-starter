@@ -100,7 +100,7 @@ class UsersRepository extends BaseRepository {
         const model = result.records.map(record => {
             let localModel = new UserModel();
             localModel = record.get('user');
-            localModel.userCards = record.get('cards');
+            localModel.paymentCards = record.get('cards');
             return localModel;
         });
 

@@ -154,7 +154,7 @@ class PaymentsService extends BaseService {
             throw new Error(errorMessage);
         }
 
-        const selectedCard = user.userCards.find(card => card.uId === cardUId);
+        const selectedCard = user.paymentCards.find(card => card.uId === cardUId);
         if (selectedCard) {
             // Existing customer and card
             const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
@@ -172,7 +172,7 @@ class PaymentsService extends BaseService {
                 const cardDetails = await this.getStripeCardDetails(res, token);
 
                 // TODO: check expire date
-                const existingCard = user.userCards
+                const existingCard = user.paymentCards
                     .find(card => cardDetails.card ? card.stripeFingerprint === cardDetails.card.fingerprint : false);
 
                 if (existingCard) {
@@ -217,8 +217,8 @@ class PaymentsService extends BaseService {
         }
     }
 
-    async userCards(res: Response): Promise<CardModel[] | null> {
-        return await paymentsRepository.userCards(res, this.getUserId(res));
+    async paymentCards(res: Response): Promise<CardModel[] | null> {
+        return await paymentsRepository.paymentCards(res, this.getUserId(res));
     }
 
     async createCard(res: Response, token: string): Promise<CardModel> {
@@ -240,9 +240,9 @@ class PaymentsService extends BaseService {
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        const card = user.userCards.find(userCard => userCard.uId === uId);
+        const card = user.paymentCards.find(userCard => userCard.uId === uId);
 
-        if (card && (!card.isDefault || user.userCards.length === 1)) {
+        if (card && (!card.isDefault || user.paymentCards.length === 1)) {
             try {
                 const deleteConfirmation = await stripeAccount.customers.deleteCard(user.stripeCustomerId, card.stripeCardId);
                 if (deleteConfirmation.deleted) {
@@ -273,7 +273,7 @@ class PaymentsService extends BaseService {
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        const card = user.userCards.find(userCard => userCard.uId === uId);
+        const card = user.paymentCards.find(userCard => userCard.uId === uId);
 
         if (!card) {
             const errorMessage = 'User default card could not be found';

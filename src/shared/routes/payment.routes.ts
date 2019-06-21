@@ -6,7 +6,7 @@ export class PaymentRoutes {
 
     static anonymousPayment = () => new BaseRoute(PaymentRoutes.root, 'anonymousPayment');
     static userPayment = () => new BaseRoute(PaymentRoutes.root, 'userPayment');
-    static userCards = () => new BaseRoute(PaymentRoutes.root, 'userCards');
+    static paymentCards = () => new BaseRoute(PaymentRoutes.root, 'paymentCards');
     static createCard = () => new BaseRoute(PaymentRoutes.root, 'createCard');
     static deleteCard = (uId?: string) => new BaseRoute(PaymentRoutes.root, 'deleteCard', { uId });
     static updateDefaultCard = () => new BaseRoute(PaymentRoutes.root, 'updateDefaultCard');

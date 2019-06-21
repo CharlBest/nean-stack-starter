@@ -16,8 +16,8 @@ class PaymentsRoutes extends BaseRoute {
 
         this.router.post(PaymentRoutes.userPayment().server(), Authentication.loginRequired,
             async (req, res, next) => paymentsController.userPayment(req, res, next).catch(next));
-        this.router.get(PaymentRoutes.userCards().server(), Authentication.loginRequired,
-            async (req, res, next) => paymentsController.userCards(req, res, next).catch(next));
+        this.router.get(PaymentRoutes.paymentCards().server(), Authentication.loginRequired,
+            async (req, res, next) => paymentsController.paymentCards(req, res, next).catch(next));
         this.router.post(PaymentRoutes.createCard().server(), Authentication.loginRequired,
             async (req, res, next) => paymentsController.createCard(req, res, next).catch(next));
         this.router.delete(PaymentRoutes.deleteCard().server(), Authentication.loginRequired,

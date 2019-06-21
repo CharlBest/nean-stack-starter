@@ -53,8 +53,8 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           // Default card first
-          if (data.userCards) {
-            data.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+          if (data.paymentCards) {
+            data.paymentCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
           }
 
           this.user = data;

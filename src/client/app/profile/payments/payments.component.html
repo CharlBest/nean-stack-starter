@@ -5,7 +5,7 @@
     <mat-radio-group [(ngModel)]="newDefaultCardUId">
       <table>
         <tbody>
-          <tr *ngFor="let card of userCards">
+          <tr *ngFor="let card of paymentCards">
             <td>
               <ng-container *ngIf="!isChangingDefault && card.isDefault">
                 <mat-chip-list>
@@ -34,7 +34,7 @@
             </td>
             <td *ngIf="!isChangingDefault">
               <button mat-icon-button
-                *ngIf="!card.isDefault || userCards.length === 1"
+                *ngIf="!card.isDefault || paymentCards.length === 1"
                 color="warn"
                 (click)="deleteCard(card.uId)"
                 type="button"
@@ -55,15 +55,15 @@
       routerLink="/profile/create-card"
       type="button">Add payment method</button>
     <button mat-raised-button
-      *ngIf="!isChangingDefault && userCards?.length > 1"
+      *ngIf="!isChangingDefault && paymentCards?.length > 1"
       (click)="isChangingDefault = true"
       type="button">Change default method</button>
     <button mat-raised-button
-      *ngIf="isChangingDefault && userCards?.length > 0"
+      *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="changeDefaultCard()"
       type="button">Save default method</button>
     <button mat-raised-button
-      *ngIf="isChangingDefault && userCards?.length > 0"
+      *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="this.isChangingDefault = false; newDefaultCardUId = null"
       type="button">Cancel</button>
     <span class="flex-spacer"></span>

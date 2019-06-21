@@ -24,7 +24,7 @@ export class PaymentComponent implements OnInit {
     isProcessingStripeElements = true;
     formGroup: FormGroup;
     paymentSuccess = false;
-    userCards: CardModel[];
+    paymentCards: CardModel[];
 
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
@@ -34,27 +34,27 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit() {
         this.formOnInit();
-        this.getUserCards();
+        this.getpaymentCards();
     }
 
     formOnInit() {
         this.formGroup = this.fb.group(BuildFormGroup.payment());
     }
 
-    getUserCards() {
+    getpaymentCards() {
         if (this.isAuthenticated) {
             this.authService.preventLogoutOnNextRequest();
-            this.paymentService.userCards()
+            this.paymentService.paymentCards()
                 .pipe(finalize(() => this.isProcessing = false))
                 .subscribe(data => {
                     if (data) {
-                        this.userCards = data;
+                        this.paymentCards = data;
                         // Default card first
-                        if (this.userCards) {
-                            this.userCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+                        if (this.paymentCards) {
+                            this.paymentCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
                         }
 
-                        const firstCardUId = this.userCards && this.userCards.length > 0 ? this.userCards[0].uId : null;
+                        const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
                         this.formGroup.controls['cardUId'].setValue(firstCardUId);
                     }
                 });

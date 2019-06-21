@@ -12,7 +12,7 @@ import { ProfileService } from '../profile.service';
 })
 export class PaymentsComponent implements OnInit {
 
-  @Input() userCards: CardViewModel[] = [];
+  @Input() paymentCards: CardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
   newDefaultCardUId: string | null;
@@ -31,11 +31,11 @@ export class PaymentsComponent implements OnInit {
           .pipe(finalize(() => this.isProcessing = false))
           .subscribe(data => {
             if (data) {
-              if (!this.userCards) {
-                this.userCards = [];
+              if (!this.paymentCards) {
+                this.paymentCards = [];
               }
 
-              this.userCards = this.userCards.filter(card => card.uId !== uId);
+              this.paymentCards = this.paymentCards.filter(card => card.uId !== uId);
             }
           }, error => {
             this.formErrorsService.updateFormValidity(error);
@@ -46,7 +46,7 @@ export class PaymentsComponent implements OnInit {
 
   changeDefaultCard() {
     this.isProcessing = true;
-    const currentDefaultCard = this.userCards.find(card => card.isDefault);
+    const currentDefaultCard = this.paymentCards.find(card => card.isDefault);
 
     if (!currentDefaultCard) {
       console.error('No default card could be found');
@@ -61,7 +61,7 @@ export class PaymentsComponent implements OnInit {
         }))
         .subscribe(data => {
           if (data) {
-            this.userCards.forEach(card => {
+            this.paymentCards.forEach(card => {
               if (card.uId !== this.newDefaultCardUId) {
                 card.isDefault = false;
               } else {
