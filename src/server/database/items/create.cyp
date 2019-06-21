@@ -14,8 +14,8 @@ SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
 // Subscribe to notifications
 FOREACH (o IN CASE WHEN user.autoSubscribeToItem = true OR user.autoSubscribeToItem IS NULL THEN [1] ELSE [] END |
     MERGE (user)-[:SUBSCRIBED { dateCreated: timestamp() }]->(item)
-    SET user.itemSubscriptionCount = SIZE((user)-[:SUBSCRIBED]->())
-    SET item.itemSubscriptionCount = SIZE((item)<-[:SUBSCRIBED]-())
+    SET user.subscriptionCount = SIZE((user)-[:SUBSCRIBED]->())
+    SET item.subscriptionCount = SIZE((item)<-[:SUBSCRIBED]-())
 )
 
 RETURN properties(item) as item, user

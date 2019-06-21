@@ -3,8 +3,8 @@ MATCH (user:User { id: {userId} })-[rel:HAS_FAVOURITE]->(item:Item { uId: {uId} 
 
 DELETE rel
 
-SET user.itemFavouriteCount = SIZE((user)-[:HAS_FAVOURITE]->())
-SET item.itemFavouriteCount = SIZE((item)<-[:HAS_FAVOURITE]-())
+SET user.favouriteCount = SIZE((user)-[:HAS_FAVOURITE]->())
+SET item.favouriteCount = SIZE((item)<-[:HAS_FAVOURITE]-())
 
 RETURN item.uId
 `

@@ -9,8 +9,8 @@ MATCH (user:User { id: {userId} }), (item:Item { uId: {itemUId} })
 
 CREATE (user)-[:MADE_COMMENT]->(comment:Comment { id: nextId, uId: {uId}, description: {description}, dateCreated: timestamp() })<-[:HAS_COMMENT]-(item)
 
-SET user.itemCommentCount = SIZE((user)-[:MADE_COMMENT]->())
-SET item.itemCommentCount = SIZE((item)-[:HAS_COMMENT]->())
+SET user.commentCount = SIZE((user)-[:MADE_COMMENT]->())
+SET item.commentCount = SIZE((item)-[:HAS_COMMENT]->())
 
 WITH user, item, comment
 MATCH (itemUser:User)-[:HAS_ITEM]->(item)
