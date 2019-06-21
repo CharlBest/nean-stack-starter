@@ -129,15 +129,16 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = (<any>result).records.map((x: any) => {
+        const model = (<any>result).records.map((record: any) => {
             const viewModel = new PushNotificationModel();
 
-            const pushSubscriptions = x.get('pushSubscriptions');
+            const pushSubscriptions = record.get('pushSubscriptions');
             if (pushSubscriptions && pushSubscriptions.length > 0) {
-                viewModel.pushSubscriptions = pushSubscriptions.map((y: any) => PushSubscriptionViewModel.createFromArray(y));
+                viewModel.pushSubscriptions = pushSubscriptions
+                    .map((pushNotification: any) => PushSubscriptionViewModel.createFromArray(pushNotification));
             }
 
-            viewModel.body = x.get('description');
+            viewModel.body = record.get('description');
             return viewModel;
         });
 

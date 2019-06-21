@@ -58,7 +58,7 @@ export class UserComponent implements OnInit {
               };
 
               // TODO: This can be optimized
-              data.items.map((x: ItemViewModel) => x.user = itemsOwner);
+              data.items.map((item: ItemViewModel) => item.user = itemsOwner);
             }
 
             this.user = data;

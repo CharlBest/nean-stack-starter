@@ -197,7 +197,7 @@ export class NavigationComponent implements OnInit {
   updateActiveNavItem() {
     for (const key in this.navItems) {
       if (this.navItems.hasOwnProperty(key)) {
-        if (this.navItems[key].paths.some(y => this.router.isActive(y.path, y.exact !== undefined ? y.exact : true))) {
+        if (this.navItems[key].paths.some(path => this.router.isActive(path.path, path.exact !== undefined ? path.exact : true))) {
           this.navItems[key].active = true;
         } else {
           this.navItems[key].active = false;

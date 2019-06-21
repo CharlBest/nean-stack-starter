@@ -273,7 +273,7 @@ export class ServerValidator {
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
-            const savedError = res.locals.error.formErrors.find((x: FormError) => x.field === error.field);
+            const savedError = res.locals.error.formErrors.find((formError: FormError) => formError.field === error.field);
             if (savedError) {
                 Object.assign(savedError.errors, error.errors);
             } else {
@@ -292,7 +292,7 @@ export class ServerValidator {
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
-            const savedError = res.locals.error.formErrors.find((x: FormError) => x.field === field);
+            const savedError = res.locals.error.formErrors.find((formError: FormError) => formError.field === field);
             if (savedError) {
                 Object.assign(savedError.errors, error);
             } else {
