@@ -5,7 +5,7 @@ import { NotificationType } from '../models/user/user.model';
 
 function isEmptyInputValue(value: any): boolean {
     // we don't check for string here so it also works with arrays
-    return value == null || value.length === 0;
+    return value === undefined || value === null || value.length === 0;
 }
 
 // tslint:disable-next-line:max-line-length

@@ -6,7 +6,7 @@
   (click)="preventClick($event)"></div>
 
 <div *ngFor="let tut of tuts">
-  <div *ngIf="tutorialInUrl == tut.tutorialType"
+  <div *ngIf="tutorialInUrl === tut.tutorialType"
     class="tutorial-box">
     <div class="tutorial-container mat-elevation-z4">
       <div class="tutorial-text">{{tut.text}}</div>
