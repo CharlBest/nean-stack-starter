@@ -17,7 +17,7 @@ import { UserService } from '../user.service';
 })
 export class UserComponent implements OnInit {
 
-  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
+  @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
   isProcessing = true;
   userId: number | null;
   user: UserPublicViewModel;

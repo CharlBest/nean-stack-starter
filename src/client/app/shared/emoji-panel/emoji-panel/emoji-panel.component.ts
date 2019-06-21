@@ -15,7 +15,7 @@ export class EmojiPanelComponent implements OnInit {
   file: Array<EmojiData> = require('../../../../../../node_modules/emojione-assets/emoji.json');
   @Input() closeOnInsert = false;
   @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('bottomSheet') bottomSheetRef: TemplateRef<any>;
+  @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
   isPanelForWebOpen = false;
 
   emojiCategories = [

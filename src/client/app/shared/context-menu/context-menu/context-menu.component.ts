@@ -9,8 +9,8 @@ import { PreventBackNavigationService } from '../../services/prevent-back-naviga
     styleUrls: ['./context-menu.component.scss']
 })
 export class ContextMenuComponent {
-    @ViewChild('bottomSheetContextMenu') bottomSheetContextMenu: TemplateRef<any>;
-    @ViewChild('contextMenuTrigger') contextMenuTrigger: MatMenuTrigger;
+    @ViewChild('bottomSheetContextMenu', { static: true }) bottomSheetContextMenu: TemplateRef<any>;
+    @ViewChild('contextMenuTrigger', { static: true }) contextMenuTrigger: MatMenuTrigger;
 
     constructor(public bottomSheet: MatBottomSheet,
         public bpService: BreakpointService,

@@ -14,7 +14,7 @@ import { ItemService } from '../item.service';
 })
 export class EditCommentComponent implements OnInit {
 
-  @ViewChild('commentForm') commentForm: CommentFormComponent;
+  @ViewChild('commentForm', { static: false }) commentForm: CommentFormComponent;
   commentUId: string | null;
   isProcessing = true;
   comment: CommentViewModel;

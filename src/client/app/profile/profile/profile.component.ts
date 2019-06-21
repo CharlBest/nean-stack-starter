@@ -23,8 +23,8 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileComponent implements OnInit {
 
-  @ViewChild('backNavRightPlaceholder') backNavRightPlaceholder: TemplateRef<any>;
-  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
+  @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<any>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
   user: UserProfileViewModel;
   isProcessing = true;
   tutorialTypeEnum = TutorialType;

@@ -17,7 +17,7 @@ import { PaymentService } from '../payment.service';
     styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-    @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
+    @ViewChild('stripeElements', { static: true }) stripeElementsComponent: StripeElementsComponent;
 
     isAuthenticated: boolean = this.authService.hasToken();
     isProcessing = true;

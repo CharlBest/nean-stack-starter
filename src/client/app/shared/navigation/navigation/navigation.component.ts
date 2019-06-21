@@ -18,7 +18,7 @@ import { NavigationService } from '../navigation.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  @ViewChild('navbar') navbar: ElementRef<HTMLDivElement>;
+  @ViewChild('navbar', { static: true }) navbar: ElementRef<HTMLDivElement>;
 
   loggedInUserId = this.authService.getLoggedInUserId();
   activeNavigation: NavigationType;

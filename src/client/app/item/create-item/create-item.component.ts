@@ -15,7 +15,7 @@ import { ItemService } from '../item.service';
 })
 export class CreateItemComponent implements OnInit {
 
-  @ViewChild('itemForm') itemForm: ItemFormComponent;
+  @ViewChild('itemForm', { static: true }) itemForm: ItemFormComponent;
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,

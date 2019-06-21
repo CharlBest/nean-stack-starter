@@ -19,8 +19,8 @@ import { ItemService } from '../item.service';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit, AfterViewInit {
-  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
-  @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
+  @ViewChild('description', { static: false }) description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
   loggedInUserId = this.authService.getLoggedInUserId();

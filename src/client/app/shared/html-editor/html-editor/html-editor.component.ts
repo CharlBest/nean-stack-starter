@@ -12,7 +12,7 @@ import { FirebaseStorageService } from '../../services/firebase-storage.service'
 })
 export class HTMLEditorComponent implements AfterViewInit {
 
-    @ViewChild('editor') editorDomElement: ElementRef<HTMLDivElement>;
+    @ViewChild('editor', { static: true }) editorDomElement: ElementRef<HTMLDivElement>;
     @Input() htmlContent: string;
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';

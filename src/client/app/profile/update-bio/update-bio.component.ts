@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdateBioComponent {
 
-  @ViewChild('htmlEditor') htmlEditor: HTMLEditorComponent;
+  @ViewChild('htmlEditor', { static: true }) htmlEditor: HTMLEditorComponent;
   isProcessing = false;
   @Input() content = '';
 

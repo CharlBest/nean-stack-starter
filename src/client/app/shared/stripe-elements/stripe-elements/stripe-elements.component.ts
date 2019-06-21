@@ -13,9 +13,9 @@ export class StripeElementsComponent implements OnInit {
 
     @Output() isDoneRendering: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('cardNumber') cardNumber: ElementRef<HTMLDivElement>;
-    @ViewChild('cardExpiry') cardExpiry: ElementRef<HTMLDivElement>;
-    @ViewChild('cardCvc') cardCvc: ElementRef<HTMLDivElement>;
+    @ViewChild('cardNumber', { static: true }) cardNumber: ElementRef<HTMLDivElement>;
+    @ViewChild('cardExpiry', { static: true }) cardExpiry: ElementRef<HTMLDivElement>;
+    @ViewChild('cardCvc', { static: true }) cardCvc: ElementRef<HTMLDivElement>;
 
     elementsWrapper = new ElementsWrapper();
     cardBrandType = CardBrandType;

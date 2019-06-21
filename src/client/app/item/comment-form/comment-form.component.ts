@@ -12,7 +12,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 })
 export class CommentFormComponent implements OnInit {
 
-  @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
+  @ViewChild(FormGroupDirective, { static: true }) formRef: FormGroupDirective;
   @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
   @Input() comment: CommentViewModel;
   formGroup: FormGroup;

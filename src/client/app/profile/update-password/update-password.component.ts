@@ -16,7 +16,7 @@ import { ProfileService } from '../profile.service';
 })
 export class UpdatePasswordComponent implements OnInit {
 
-  @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
+  @ViewChild(FormGroupDirective, { static: true }) formRef: FormGroupDirective;
   formGroup: FormGroup;
   isProcessing = false;
   tutorialTypeEnum = TutorialType;

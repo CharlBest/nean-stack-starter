@@ -13,7 +13,7 @@ import { ProfileService } from '../profile.service';
 })
 export class CreateCardComponent {
 
-    @ViewChild('stripeElements') stripeElementsComponent: StripeElementsComponent;
+    @ViewChild('stripeElements', { static: true }) stripeElementsComponent: StripeElementsComponent;
     isProcessing = true;
 
     constructor(private profileService: ProfileService,

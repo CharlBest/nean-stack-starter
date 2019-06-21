@@ -15,7 +15,7 @@ import { InviteService } from '../invite.service';
 })
 export class InviteComponent implements OnInit {
 
-  @ViewChild(MatChipList) chipList: MatChipList;
+  @ViewChild(MatChipList, { static: true }) chipList: MatChipList;
   isProcessing = false;
   isDone = false;
   emails: Array<string> = [];

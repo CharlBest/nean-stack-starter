@@ -13,7 +13,7 @@ import { ItemService } from '../item.service';
 })
 export class CreateCommentComponent implements OnInit {
 
-  @ViewChild('commentForm') commentForm: CommentFormComponent;
+  @ViewChild('commentForm', { static: true }) commentForm: CommentFormComponent;
   @Input() itemUId: string;
   @Output() onSuccess: EventEmitter<CommentViewModel> = new EventEmitter();
   isProcessing = false;
