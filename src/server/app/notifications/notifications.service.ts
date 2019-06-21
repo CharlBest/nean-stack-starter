@@ -16,8 +16,8 @@ class NotificationsService extends BaseService {
         return await notificationsRepository.getNotificationPreferences(res, this.getUserId(res));
     }
 
-    async updateNotificationPreferences(res: Response, viewModel: UpdateNotificationPreferencesViewModel): Promise<void> {
-        await notificationsRepository.updateNotificationPreferences(res, this.getUserId(res), viewModel);
+    async updateNotificationPreferences(res: Response, viewModel: UpdateNotificationPreferencesViewModel): Promise<boolean> {
+        return await notificationsRepository.updateNotificationPreferences(res, this.getUserId(res), viewModel);
     }
 
     async createSubscription(res: Response, uId: string): Promise<boolean> {

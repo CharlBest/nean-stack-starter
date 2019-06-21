@@ -21,7 +21,7 @@ class GeneralService extends BaseService {
 
     async sendFeedback(res: Response, content: string): Promise<void> {
         emailBroker.feedback({
-            feedbackContent: content
+            content: content
         });
     }
 

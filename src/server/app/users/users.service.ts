@@ -53,7 +53,7 @@ class UsersService extends BaseService {
 
         const validation = await this.doesUsernameAndEmailExist(res, email, username.toLowerCase());
         if (!validation) {
-            ServerValidator.addGlobalError(res, 'createUserError', true);
+            ServerValidator.addGlobalError(res, 'createUser', true);
             throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
@@ -70,7 +70,7 @@ class UsersService extends BaseService {
             emailBroker.welcome({
                 email: user.email,
                 username: user.username,
-                emailVerifyCode: user.emailCode
+                verifyCode: user.emailCode
             });
 
             // Notify everyone there is another sign up
@@ -194,7 +194,7 @@ class UsersService extends BaseService {
 
         emailBroker.resendEmailVerificationLink({
             email: user.email,
-            emailVerifyCode: user.emailCode
+            verifyCode: user.emailCode
         });
     }
 
@@ -211,7 +211,7 @@ class UsersService extends BaseService {
 
         emailBroker.forgotPassword({
             email: user.email,
-            forgotPasswordCode: code
+            verifyCode: code
         });
     }
 
@@ -224,7 +224,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
 
         if (!user) {
-            ServerValidator.addGlobalError(res, 'changeForgottenPasswordError', true);
+            ServerValidator.addGlobalError(res, 'changeForgottenPassword', true);
             throw new Error();
         }
 
@@ -273,7 +273,7 @@ class UsersService extends BaseService {
         const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
 
         if (!updatedUser) {
-            ServerValidator.addGlobalError(res, 'updatePasswordError', true);
+            ServerValidator.addGlobalError(res, 'updatePassword', true);
             throw new Error();
         }
 

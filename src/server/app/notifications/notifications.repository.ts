@@ -47,16 +47,16 @@ class NotificationsRepository extends BaseRepository {
                     viewModel.pushSubscription.endpoint,
                     viewModel.pushSubscription.keys.auth,
                     viewModel.pushSubscription.keys.p256dh) : null,
-                pushNotificationEnabled: viewModel.notificationPreferences.pushNotificationEnabled,
-                emailEnabled: viewModel.notificationPreferences.emailEnabled,
-                autoSubscribeToItem: viewModel.notificationPreferences.autoSubscribeToItem,
+                pushNotificationEnabled: viewModel.preferences.pushNotificationEnabled,
+                emailEnabled: viewModel.preferences.emailEnabled,
+                autoSubscribeToItem: viewModel.preferences.autoSubscribeToItem,
                 pushNotificationTypes: NotificationsViewModel.createPushNotificationArray(
-                    viewModel.notificationPreferences.pushNewComment,
-                    viewModel.notificationPreferences.pushHot
+                    viewModel.preferences.pushNewComment,
+                    viewModel.preferences.pushHot
                 ),
                 emailNotificationTypes: NotificationsViewModel.createEmailNotificationArray(
-                    viewModel.notificationPreferences.emailNewComment,
-                    viewModel.notificationPreferences.emailHot
+                    viewModel.preferences.emailNewComment,
+                    viewModel.preferences.emailHot
                 ),
             }
         );

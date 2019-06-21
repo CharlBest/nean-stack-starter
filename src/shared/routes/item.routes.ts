@@ -2,20 +2,20 @@ import { BaseRoute } from './base.route';
 
 export class ItemRoutes {
 
-    private static rootRoute = 'item';
+    private static root = 'item';
 
-    static create = () => new BaseRoute(ItemRoutes.rootRoute, 'create');
-    static update = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'update', { uId });
-    static get = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'get', { uId });
-    static getItems = () => new BaseRoute(ItemRoutes.rootRoute, 'getItems');
-    static delete = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'delete', { uId });
-    static report = () => new BaseRoute(ItemRoutes.rootRoute, 'report');
-    static createFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'createFavourite', { uId });
-    static deleteFavourite = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'deleteFavourite', { uId });
-    static getFavourites = () => new BaseRoute(ItemRoutes.rootRoute, 'getFavourites');
-    static createComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'createComment', { uId });
-    static updateComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'updateComment', { uId });
-    static deleteComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'deleteComment', { uId });
-    static getComments = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'getComments', { uId });
-    static getComment = (uId?: string) => new BaseRoute(ItemRoutes.rootRoute, 'getComment', { uId });
+    static create = () => new BaseRoute(ItemRoutes.root, 'create');
+    static update = (uId?: string) => new BaseRoute(ItemRoutes.root, 'update', { uId });
+    static get = (uId?: string) => new BaseRoute(ItemRoutes.root, 'get', { uId });
+    static getItems = () => new BaseRoute(ItemRoutes.root, 'getItems');
+    static delete = (uId?: string) => new BaseRoute(ItemRoutes.root, 'delete', { uId });
+    static report = () => new BaseRoute(ItemRoutes.root, 'report');
+    static createFavourite = (uId?: string) => new BaseRoute(ItemRoutes.root, 'createFavourite', { uId });
+    static deleteFavourite = (uId?: string) => new BaseRoute(ItemRoutes.root, 'deleteFavourite', { uId });
+    static getFavourites = () => new BaseRoute(ItemRoutes.root, 'getFavourites');
+    static createComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'createComment', { uId });
+    static updateComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'updateComment', { uId });
+    static deleteComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'deleteComment', { uId });
+    static getComments = (uId?: string) => new BaseRoute(ItemRoutes.root, 'getComments', { uId });
+    static getComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'getComment', { uId });
 }

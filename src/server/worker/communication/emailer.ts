@@ -35,7 +35,7 @@ class Emailer implements Email {
         data['dynamic_template_data'] = {
             subject: 'Welcome',
             username: model.username,
-            emailVerifyCode: model.emailVerifyCode,
+            emailVerifyCode: model.verifyCode,
         };
 
         return this.send(data);
@@ -51,11 +51,11 @@ class Emailer implements Email {
             templateId: environment.sendGrid.templates.forgotPassword,
         };
 
-        // url: /forgot-password/reset?code={{forgotPasswordCode}}&email={{email}}
+        // url: /forgot-password/reset?code={{verifyCode}}&email={{email}}
         data['dynamic_template_data'] = {
             subject: 'Forgot Password',
             email: model.email,
-            forgotPasswordCode: model.forgotPasswordCode,
+            verifyCode: model.verifyCode,
         };
 
         return this.send(data);
@@ -71,10 +71,10 @@ class Emailer implements Email {
             templateId: environment.sendGrid.templates.feedback,
         };
 
-        // html: {{feedbackContent}}
+        // html: {{content}}
         data['dynamic_template_data'] = {
             subject: 'Feedback',
-            feedbackContent: model.feedbackContent,
+            content: model.content,
         };
 
         return this.send(data);
@@ -90,10 +90,10 @@ class Emailer implements Email {
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
         };
 
-        // url: /verify/{{emailVerifyCode}}
+        // url: /verify/{{verifyCode}}
         data['dynamic_template_data'] = {
             subject: 'Email verification',
-            emailVerifyCode: model.emailVerifyCode,
+            verifyCode: model.verifyCode,
         };
 
         return this.send(data);

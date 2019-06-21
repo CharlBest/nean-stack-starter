@@ -20,13 +20,13 @@ class NotificationsController extends BaseController {
         const viewModel = req.body as UpdateNotificationPreferencesViewModel;
 
         const formGroup = BuildFormGroup.updateNotificationPreferences(
-            viewModel.notificationPreferences.pushNotificationEnabled,
-            viewModel.notificationPreferences.emailEnabled,
-            viewModel.notificationPreferences.autoSubscribeToItem,
-            viewModel.notificationPreferences.pushNewComment,
-            viewModel.notificationPreferences.pushHot,
-            viewModel.notificationPreferences.emailNewComment,
-            viewModel.notificationPreferences.emailHot);
+            viewModel.preferences.pushNotificationEnabled,
+            viewModel.preferences.emailEnabled,
+            viewModel.preferences.autoSubscribeToItem,
+            viewModel.preferences.pushNewComment,
+            viewModel.preferences.pushHot,
+            viewModel.preferences.emailNewComment,
+            viewModel.preferences.emailHot);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {

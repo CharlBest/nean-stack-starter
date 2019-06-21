@@ -19,13 +19,13 @@ export interface GlobalError {
     userPaymentToken?: ErrorRequired;
 
     // Users
-    createUserError?: boolean;
+    createUser?: boolean;
     changeForgottenPasswordEmail?: ErrorRequired & ErrorEmail;
     changeForgottenPasswordCode?: ErrorRequired;
-    changeForgottenPasswordError?: boolean;
+    changeForgottenPassword?: boolean;
     forgotPasswordEmailNotFound?: boolean;
     loginInvalidCredentials?: boolean;
     updatePasswordInvalid?: boolean;
-    updatePasswordError?: boolean;
+    updatePassword?: boolean;
     verifyEmailCode?: ErrorRequired;
 }

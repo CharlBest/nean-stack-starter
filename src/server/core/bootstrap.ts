@@ -35,7 +35,7 @@ class Bootstrap {
     }
 
     setupAuthentication(app: Application): void {
-        app.use(Authentication.setAuthUser);
+        app.use(Authentication.setUser);
     }
 
     setupRoutes(app: Application): void {
@@ -123,12 +123,12 @@ class Bootstrap {
     }
 
     setupErrors(app: Application): void {
-        app.use(ApiError.NotFoundError);
+        app.use(ApiError.NotFound);
 
         if (app.get('env') === 'development') {
-            app.use(ApiError.InternalServerErrorDev);
+            app.use(ApiError.InternalServerDev);
         } else if (app.get('env') === 'production') {
-            app.use(ApiError.InternalServerErrorProd);
+            app.use(ApiError.InternalServerProd);
         }
     }
 
@@ -136,7 +136,7 @@ class Bootstrap {
         // Retrieve all queries
         await Database.getQueries();
 
-        app.use(Neo4j.setNeo4jSession);
+        app.use(Neo4j.sessionSetup);
 
         app.use(Neo4j.sessionCleanup);
     }

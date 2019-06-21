@@ -2,6 +2,6 @@ import { NotificationPreferencesViewModel } from './notification-preferences.vie
 import { PushSubscriptionViewModel } from './push-subscription.view-model';
 
 export class UpdateNotificationPreferencesViewModel {
-    notificationPreferences: NotificationPreferencesViewModel;
+    preferences: NotificationPreferencesViewModel;
     pushSubscription: PushSubscriptionViewModel | null;
 }

@@ -92,7 +92,7 @@ export class NotificationsComponent implements OnInit {
 
     const viewModel: UpdateNotificationPreferencesViewModel = {
       pushSubscription: pushSubscription,
-      notificationPreferences: {
+      preferences: {
         hasPushSubscription: true,
         pushNotificationEnabled: this.formGroup.controls['pushNotificationEnabled'].value,
         emailEnabled: this.formGroup.controls['emailEnabled'].value,
@@ -113,7 +113,7 @@ export class NotificationsComponent implements OnInit {
         this.snackBar.open('Updated notification preferences');
 
         // TODO: little hack. Update view model
-        this.notificationPreferences.autoSubscribeToItem = viewModel.notificationPreferences.autoSubscribeToItem;
+        this.notificationPreferences.autoSubscribeToItem = viewModel.preferences.autoSubscribeToItem;
       }, error => {
         this.snackBar.dismiss();
         this.snackBar.open('Update failed');

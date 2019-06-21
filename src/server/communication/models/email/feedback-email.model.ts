@@ -1,3 +1,3 @@
 export class FeedbackEmailModel {
-    feedbackContent: string;
+    content: string;
 }

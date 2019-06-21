@@ -3,7 +3,7 @@ import { Database } from '../database';
 
 export class Neo4j {
 
-    static setNeo4jSession(req: Request, res: Response, next: NextFunction): void {
+    static sessionSetup(req: Request, res: Response, next: NextFunction): void {
         if (!res.locals.neo4jSession) {
             res.locals.neo4jSession = Database.createSession();
         }

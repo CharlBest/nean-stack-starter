@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 export class ApiError {
     // catch 404 and forward to error handler
-    static NotFoundError(req: Request, res: Response, next: NextFunction) {
+    static NotFound(req: Request, res: Response, next: NextFunction) {
         const err: any = new Error('Not Found');
         err.status = 404;
         next(err);
@@ -11,7 +11,7 @@ export class ApiError {
     // error handlers
     // development error handler
     // will print stacktrace
-    static InternalServerErrorDev(err: any, req: Request, res: Response, next: NextFunction) {
+    static InternalServerDev(err: any, req: Request, res: Response, next: NextFunction) {
         res.status(err.status || 400);
         res.send({
             message: err.message,
@@ -25,7 +25,7 @@ export class ApiError {
         });
     }
 
-    static InternalServerErrorProd(err: any, req: Request, res: Response, next: NextFunction) {
+    static InternalServerProd(err: any, req: Request, res: Response, next: NextFunction) {
         res.status(err.status || 400);
         res.send({
             message: err.message,

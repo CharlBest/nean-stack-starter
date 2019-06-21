@@ -334,6 +334,6 @@ interface FormValidator {
 
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;
 
-abstract class AbstractControl {
+interface AbstractControl {
     value: any;
 }

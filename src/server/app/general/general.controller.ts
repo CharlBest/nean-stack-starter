@@ -60,7 +60,7 @@ class GeneralController extends BaseController {
             throw new Error();
         }
 
-        await generalService.sendFeedback(res, viewModel.content);
+        generalService.sendFeedback(res, viewModel.content);
 
         res.status(200).json();
     }
@@ -86,7 +86,7 @@ class GeneralController extends BaseController {
             throw new Error();
         }
 
-        await generalService.invite(res, viewModel.emails);
+        generalService.invite(res, viewModel.emails);
 
         res.status(200).json();
     }

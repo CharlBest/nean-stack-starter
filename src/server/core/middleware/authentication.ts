@@ -13,7 +13,7 @@ export class Authentication {
         next();
     }
 
-    static setAuthUser(req: Request, res: Response, next: NextFunction): void {
+    static setUser(req: Request, res: Response, next: NextFunction): void {
         const token = Authentication.getTokenInHeader(req);
 
         if (!token) {

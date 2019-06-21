@@ -2,10 +2,10 @@ import { BaseRoute } from './base.route';
 
 export class GeneralRoutes {
 
-    private static rootRoute = 'general';
+    private static root = 'general';
 
-    static createNewsletterMember = () => new BaseRoute(GeneralRoutes.rootRoute, 'createNewsletterMember');
-    static deleteNewsletterMember = (email?: string) => new BaseRoute(GeneralRoutes.rootRoute, 'deleteNewsletterMember', { email });
-    static sendFeedback = () => new BaseRoute(GeneralRoutes.rootRoute, 'sendFeedback');
-    static invite = () => new BaseRoute(GeneralRoutes.rootRoute, 'invite');
+    static createNewsletterMember = () => new BaseRoute(GeneralRoutes.root, 'createNewsletterMember');
+    static deleteNewsletterMember = (email?: string) => new BaseRoute(GeneralRoutes.root, 'deleteNewsletterMember', { email });
+    static sendFeedback = () => new BaseRoute(GeneralRoutes.root, 'sendFeedback');
+    static invite = () => new BaseRoute(GeneralRoutes.root, 'invite');
 }
