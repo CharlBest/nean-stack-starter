@@ -63,7 +63,7 @@ class PushNotification implements PushNotificationInterface {
                 );
 
                 // TODO: if one push notification fails it will cause a resend to all other receivers/users
-                return response && response.every(x => x.statusCode >= 200) && response.every(x => x.statusCode < 300);
+                return response && response.every(result => result.statusCode >= 200) && response.every(result => result.statusCode < 300);
             } catch (error) {
                 throw error;
             }

@@ -21,12 +21,13 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
-            const localModel = new NotificationPreferencesViewModel(x.get('pushNotificationTypes'), x.get('emailNotificationTypes'));
-            localModel.hasPushSubscription = x.get('hasPushSubscription');
-            localModel.pushNotificationEnabled = x.get('pushNotificationEnabled');
-            localModel.emailEnabled = x.get('emailEnabled');
-            localModel.autoSubscribeToItem = x.get('autoSubscribeToItem');
+        const model = result.records.map(record => {
+            const localModel = new NotificationPreferencesViewModel(
+                record.get('pushNotificationTypes'), record.get('emailNotificationTypes'));
+            localModel.hasPushSubscription = record.get('hasPushSubscription');
+            localModel.pushNotificationEnabled = record.get('pushNotificationEnabled');
+            localModel.emailEnabled = record.get('emailEnabled');
+            localModel.autoSubscribeToItem = record.get('autoSubscribeToItem');
             return localModel;
         });
 
@@ -106,10 +107,10 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('items');
-            viewModel.user = x.get('users');
+            viewModel = record.get('items');
+            viewModel.user = record.get('users');
             viewModel.subscribed = true;
             return viewModel;
         });

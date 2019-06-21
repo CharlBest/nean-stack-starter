@@ -26,7 +26,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -43,10 +43,10 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             const localModel = new DoesUsernameAndEmailExist();
-            localModel.emailExist = x.get('emailExist');
-            localModel.usernameExist = x.get('usernameExist');
+            localModel.emailExist = record.get('emailExist');
+            localModel.usernameExist = record.get('usernameExist');
             return localModel;
         });
 
@@ -65,7 +65,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -81,7 +81,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -97,10 +97,10 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let localModel = new UserModel();
-            localModel = x.get('user');
-            localModel.userCards = x.get('cards');
+            localModel = record.get('user');
+            localModel.userCards = record.get('cards');
             return localModel;
         });
 
@@ -123,10 +123,10 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let localModel = new UserPublicViewModel();
-            localModel = x.get('user');
-            localModel.items = x.get('items');
+            localModel = record.get('user');
+            localModel.items = record.get('items');
             return localModel;
         });
 
@@ -145,7 +145,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -165,7 +165,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -228,7 +228,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('user'));
+        const model = result.records.map(record => record.get('user'));
 
         if (model && model.length > 0) {
             return model[0];

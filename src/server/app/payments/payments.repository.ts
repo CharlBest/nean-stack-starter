@@ -56,7 +56,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('cards'));
+        const model = result.records.map(record => record.get('cards'));
 
         if (model && model.length > 0) {
             return model;
@@ -81,7 +81,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('card'));
+        const model = result.records.map(record => record.get('card'));
 
         if (model && model.length > 0) {
             return model[0];
@@ -127,7 +127,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => x.get('payments'));
+        const model = result.records.map(record => record.get('payments'));
 
         if (model && model.length > 0) {
             return model;

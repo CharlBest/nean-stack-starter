@@ -66,7 +66,7 @@ export class CommentsComponent implements OnInit {
         .subscribe(data => {
           if (data) {
             // TODO: is the the fastest way?
-            data.forEach(x => x.itemUId = this.itemUId);
+            data.forEach(comment => comment.itemUId = this.itemUId);
             this.comments = data;
           }
         }, error => {

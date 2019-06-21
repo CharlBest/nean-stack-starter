@@ -22,7 +22,7 @@ export class FormErrorsService {
         if (errors.formErrors && form) {
           for (const key in form.controls) {
             if (form.controls.hasOwnProperty(key)) {
-              const fieldError = errors.formErrors.find(x => x.field === key);
+              const fieldError = errors.formErrors.find(formError => formError.field === key);
               if (fieldError) {
                 form.controls[key].setErrors(fieldError.errors);
               }

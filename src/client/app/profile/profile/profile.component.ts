@@ -123,7 +123,7 @@ export class ProfileComponent implements OnInit {
         const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
           duration: 5000
         });
-        sendingBar.onAction().subscribe(x => {
+        sendingBar.onAction().subscribe(() => {
           this.resendEmailVerificationLink();
         });
       });

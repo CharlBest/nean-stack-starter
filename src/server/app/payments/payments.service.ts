@@ -154,7 +154,7 @@ class PaymentsService extends BaseService {
             throw new Error(errorMessage);
         }
 
-        const selectedCard = user.userCards.find(x => x.uId === cardUId);
+        const selectedCard = user.userCards.find(card => card.uId === cardUId);
         if (selectedCard) {
             // Existing customer and card
             const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
@@ -173,7 +173,7 @@ class PaymentsService extends BaseService {
 
                 // TODO: check expire date
                 const existingCard = user.userCards
-                    .find(x => cardDetails.card ? x.stripeFingerprint === cardDetails.card.fingerprint : false);
+                    .find(card => cardDetails.card ? card.stripeFingerprint === cardDetails.card.fingerprint : false);
 
                 if (existingCard) {
                     const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
@@ -240,7 +240,7 @@ class PaymentsService extends BaseService {
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        const card = user.userCards.find(x => x.uId === uId);
+        const card = user.userCards.find(userCard => userCard.uId === uId);
 
         if (card && (!card.isDefault || user.userCards.length === 1)) {
             try {
@@ -273,7 +273,7 @@ class PaymentsService extends BaseService {
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
-        const card = user.userCards.find(x => x.uId === uId);
+        const card = user.userCards.find(userCard => userCard.uId === uId);
 
         if (!card) {
             const errorMessage = 'User default card could not be found';

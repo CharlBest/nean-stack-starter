@@ -183,23 +183,27 @@ export class NavigationComponent implements OnInit {
 
   checkAllNavItemAssociations() {
     if (!environment.production) {
-      const allNavItems = (<Array<string>>[]).concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(x => x.path)));
-      this.router.config.forEach(x => {
-        if (x.path && !allNavItems.includes(x.path) && x.path !== '**' && x.path !== '404') {
-          alert(x.path);
+      const allNavItems = (<Array<string>>[])
+        .concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(path => path.path)));
+
+      this.router.config.forEach(route => {
+        if (route.path && !allNavItems.includes(route.path) && route.path !== '**' && route.path !== '404') {
+          alert(route.path);
         }
       });
     }
   }
 
   updateActiveNavItem() {
-    Object.keys(this.navItems).forEach(x => {
-      if (this.navItems[x].paths.some(y => this.router.isActive(y.path, y.exact !== undefined ? y.exact : true))) {
-        this.navItems[x].active = true;
-      } else {
-        this.navItems[x].active = false;
+    for (const key in this.navItems) {
+      if (this.navItems.hasOwnProperty(key)) {
+        if (this.navItems[key].paths.some(y => this.router.isActive(y.path, y.exact !== undefined ? y.exact : true))) {
+          this.navItems[key].active = true;
+        } else {
+          this.navItems[key].active = false;
+        }
       }
-    });
+    }
   }
 }
 

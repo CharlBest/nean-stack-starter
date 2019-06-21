@@ -28,7 +28,7 @@ class App {
             broker.channel.prefetch(1);
 
             for (const queueType in QueueType) {
-                if (queueType) {
+                if (QueueType.hasOwnProperty(queueType) && queueType) {
                     await broker.channel.consume(QueueType[queueType], async (message) => {
                         if (message) {
                             try {

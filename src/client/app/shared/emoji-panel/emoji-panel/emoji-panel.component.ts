@@ -42,8 +42,9 @@ export class EmojiPanelComponent implements OnInit {
     (<any>emojione).imagePathSVGSprites = './assets/emoji/';
 
     for (const key in this.file) {
-      if (this.file[key].diversity === null && this.file[key].category !== 'regional' && this.file[key].category !== 'modifier') {
-        const tab = this.emojiCategories.find(x => x.category === this.file[key].category);
+      if (this.file.hasOwnProperty(key) && this.file[key].diversity === null && this.file[key].category !== 'regional' &&
+        this.file[key].category !== 'modifier') {
+        const tab = this.emojiCategories.find(emoji => emoji.category === this.file[key].category);
         if (tab) {
           tab.emojiData.push({
             key,
@@ -55,7 +56,7 @@ export class EmojiPanelComponent implements OnInit {
       }
     }
 
-    this.emojiCategories.forEach(x => x.emojiData.sort((a, b) => a.value.order - b.value.order));
+    this.emojiCategories.forEach(emoji => emoji.emojiData.sort((a, b) => a.value.order - b.value.order));
   }
 
   onClick(shortname: string) {

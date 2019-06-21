@@ -13,7 +13,7 @@ class Broker {
             this.channel = await this.connection.createChannel();
 
             for (const queueType in QueueType) {
-                if (queueType) {
+                if (QueueType.hasOwnProperty(queueType) && queueType) {
                     await this.channel.assertQueue(QueueType[queueType], { durable: true });
                 }
             }

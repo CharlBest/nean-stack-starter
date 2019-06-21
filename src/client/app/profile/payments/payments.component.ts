@@ -35,7 +35,7 @@ export class PaymentsComponent implements OnInit {
                 this.userCards = [];
               }
 
-              this.userCards = this.userCards.filter(x => x.uId !== uId);
+              this.userCards = this.userCards.filter(card => card.uId !== uId);
             }
           }, error => {
             this.formErrorsService.updateFormValidity(error);
@@ -46,7 +46,7 @@ export class PaymentsComponent implements OnInit {
 
   changeDefaultCard() {
     this.isProcessing = true;
-    const currentDefaultCard = this.userCards.find(x => x.isDefault);
+    const currentDefaultCard = this.userCards.find(card => card.isDefault);
 
     if (!currentDefaultCard) {
       console.error('No default card could be found');
@@ -61,11 +61,11 @@ export class PaymentsComponent implements OnInit {
         }))
         .subscribe(data => {
           if (data) {
-            this.userCards.forEach(x => {
-              if (x.uId !== this.newDefaultCardUId) {
-                x.isDefault = false;
+            this.userCards.forEach(card => {
+              if (card.uId !== this.newDefaultCardUId) {
+                card.isDefault = false;
               } else {
-                x.isDefault = true;
+                card.isDefault = true;
               }
             });
           }

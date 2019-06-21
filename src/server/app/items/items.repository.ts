@@ -36,10 +36,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('item');
-            viewModel.user = x.get('user');
+            viewModel = record.get('item');
+            viewModel.user = record.get('user');
             return viewModel;
         });
 
@@ -62,10 +62,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('item');
-            viewModel.user = x.get('user');
+            viewModel = record.get('item');
+            viewModel.user = record.get('user');
             return viewModel;
         });
 
@@ -85,12 +85,12 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('item');
-            viewModel.user = x.get('user');
-            viewModel.favourite = x.get('favourite');
-            viewModel.subscribed = x.get('subscribed');
+            viewModel = record.get('item');
+            viewModel.user = record.get('user');
+            viewModel.favourite = record.get('favourite');
+            viewModel.subscribed = record.get('subscribed');
             return viewModel;
         });
 
@@ -110,12 +110,12 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('items');
-            viewModel.user = x.get('users');
-            viewModel.favourite = x.get('favourite');
-            viewModel.subscribed = x.get('subscribed');
+            viewModel = record.get('items');
+            viewModel.user = record.get('users');
+            viewModel.favourite = record.get('favourite');
+            viewModel.subscribed = record.get('subscribed');
             return viewModel;
         });
 
@@ -180,10 +180,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new ItemViewModel();
-            viewModel = x.get('items');
-            viewModel.user = x.get('users');
+            viewModel = record.get('items');
+            viewModel.user = record.get('users');
             viewModel.favourite = true;
             return viewModel;
         });
@@ -206,10 +206,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new CommentViewModel();
-            viewModel = x.get('comment');
-            viewModel.user = x.get('user');
+            viewModel = record.get('comment');
+            viewModel.user = record.get('user');
             viewModel.itemUId = itemUId;
             return viewModel;
         });
@@ -230,10 +230,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new CommentViewModel();
-            viewModel = x.get('comment');
-            viewModel.user = x.get('user');
+            viewModel = record.get('comment');
+            viewModel.user = record.get('user');
             return viewModel;
         });
 
@@ -270,10 +270,10 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new CommentViewModel();
-            viewModel = x.get('comments');
-            viewModel.user = x.get('users');
+            viewModel = record.get('comments');
+            viewModel.user = record.get('users');
             return viewModel;
         });
 
@@ -293,11 +293,11 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(x => {
+        const model = result.records.map(record => {
             let viewModel = new CommentViewModel();
-            viewModel = x.get('comment');
-            viewModel.user = x.get('user');
-            viewModel.itemUId = x.get('itemUId');
+            viewModel = record.get('comment');
+            viewModel.user = record.get('user');
+            viewModel.itemUId = record.get('itemUId');
             return viewModel;
         });
 
