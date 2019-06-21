@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { CardBrandComponent } from './card-brand/card-brand.component';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
 

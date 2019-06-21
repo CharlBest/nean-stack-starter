@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatTableModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
 import { GitHubModule } from '../shared/github/github.module';
 import { PWAHelperModule } from '../shared/pwa-helper/pwa-helper.module';
 import { BusinessRoutingModule } from './business-routing.module';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BreakpointService } from './breakpoint.service';
 import { WebSocketService } from './websocket.service';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, VERSION as AngularVersion } from '@angular/core';
-import { VERSION as AngularMaterialVersion } from '@angular/material';
+import { VERSION as AngularMaterialVersion } from '@angular/material/core';
 import { version } from '../../../../../package.json';
 import { GitHubService } from '../../shared/github/github.service';
 

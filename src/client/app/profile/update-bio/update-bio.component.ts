@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';

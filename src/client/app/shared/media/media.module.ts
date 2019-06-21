@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ImgErrorDirective } from './img-error.directive';
 import { MediaComponent } from './media/media.component';
 import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';

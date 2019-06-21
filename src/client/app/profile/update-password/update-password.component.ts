@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';

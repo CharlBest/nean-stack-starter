@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatChipInputEvent, MatChipList } from '@angular/material';
+import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { finalize } from 'rxjs/operators';
 import { Validators } from '../../../../shared/validation/validators';
 import { InviteViewModel } from '../../../../shared/view-models/invite/invite.view-model';
