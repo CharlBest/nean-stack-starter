@@ -27,7 +27,7 @@
 * --optimize_for_size 
 * --gc_interval=100
 
-### Tooles
+### Tools
 * Site color examples: https://dribbble.com/colors/8930e8
 * Site font examples: https://fontsinuse.com/
 * Compress PNG size: https://pngquant.org/
