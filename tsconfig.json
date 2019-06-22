@@ -5,9 +5,10 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "moduleResolution": "node",
     "strictNullChecks": true,
     // "strictFunctionTypes": true,
     // "strictPropertyInitialization": true,
@@ -17,7 +18,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
-    "target": "es5",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
