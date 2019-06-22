@@ -32,7 +32,7 @@ export class EmojiPanelDirective implements OnInit {
     emojiPanel() {
         this.appEmojiPanel.inserted
             .subscribe((data: string) => {
-                (<any>emojione).ascii = true;
+                (emojione as any).ascii = true;
                 const output = emojione.toImage(data);
 
                 const element = this.el.nativeElement as HTMLElement;

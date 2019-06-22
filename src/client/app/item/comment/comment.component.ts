@@ -64,7 +64,7 @@ export class CommentComponent implements OnInit {
       if (data) {
         this.contextMenu.close();
 
-        const viewModel = new ReportCommentViewModel;
+        const viewModel = new ReportCommentViewModel();
         viewModel.uId = this.comment.uId;
 
         this.snackBar.open('Sending...');

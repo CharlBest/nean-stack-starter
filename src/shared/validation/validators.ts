@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
-import { AnyFormError, ErrorCustomFormValidator, ErrorEmail, ErrorMinLength, ErrorPattern, ErrorRequired } from '../models/shared/form-error.model';
+import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required } from '../models/shared/form-error.model';
 import { NotificationType } from '../models/user/user.model';
 
 function isEmptyInputValue(value: any): boolean {
@@ -20,17 +20,17 @@ const PASSWORD_LENGTH = 6;
 export class Validators {
     private static nullValidator(c: AbstractControl): null { return null; }
 
-    private static wrapControl(control: AbstractControl | Object | string | number | null): AbstractControl {
+    private static wrapControl(control: AbstractControl | object | string | number | null): AbstractControl {
         // Warning if this method starts allowing booleans
-        return control && (<any>control).value !== undefined ? control : <any>{ value: control };
+        return control && (control as any).value !== undefined ? control : { value: control } as any;
     }
 
-    static required(control: AbstractControl | string | number | null): ErrorRequired | null {
+    static required(control: AbstractControl | string | number | null): Required | null {
         control = Validators.wrapControl(control);
         return isEmptyInputValue(control.value) ? { required: true } : null;
     }
 
-    static email(control: AbstractControl | string): ErrorEmail | null {
+    static email(control: AbstractControl | string): Email | null {
         control = Validators.wrapControl(control);
         if (isEmptyInputValue(control.value)) {
             return null;  // don't validate empty values to allow optional controls
@@ -39,7 +39,7 @@ export class Validators {
     }
 
     static minLength(minLength: number): ValidatorFn {
-        return (control: AbstractControl | any): ErrorMinLength | null => {
+        return (control: AbstractControl | any): MinLength | null => {
             control = Validators.wrapControl(control);
             if (isEmptyInputValue(control.value)) {
                 return null;  // don't validate empty values to allow optional controls
@@ -75,7 +75,7 @@ export class Validators {
             regexStr = pattern.toString();
             regex = pattern;
         }
-        return (control: AbstractControl): ErrorPattern | null => {
+        return (control: AbstractControl): Pattern | null => {
             if (isEmptyInputValue(control.value)) {
                 return null;  // don't validate empty values to allow optional controls
             }
@@ -85,7 +85,7 @@ export class Validators {
         };
     }
 
-    static customFormValidator(control: AbstractControl): ErrorCustomFormValidator | null {
+    static customFormValidator(control: AbstractControl): CustomFormValidator | null {
         control = Validators.wrapControl(control);
         if (isEmptyInputValue(control.value)) {
             return null;  // don't validate empty values to allow optional controls
@@ -244,31 +244,37 @@ export class BuildFormGroup {
 }
 
 export class ServerValidator {
-    static setErrorsAndSave(res: Response, form: FormValidator): boolean {
+    static setErrorsAndSave(res: Response, formGroup: FormValidator): boolean {
         const validationErrors = [];
-        for (const field in form) {
-            if (form.hasOwnProperty(field)) {
-                if (form[field] && form[field].length > 1) {
+        for (const formField in formGroup) {
+            if (formGroup.hasOwnProperty(formField)) {
+                if (formGroup[formField] && formGroup[formField].length > 1) {
                     const errors = {};
-                    for (let i = 0; i < form[field][1].length; i++) {
-                        const error = form[field][1][i](form[field][0]);
-                        if (error) {
-                            Object.assign(errors, error);
+                    const formFieldValue = formGroup[formField][0];
+                    const formFieldValidators = formGroup[formField][1];
+
+                    if (formFieldValidators) {
+                        for (const formFieldValidator of formFieldValidators) {
+                            const error = formFieldValidator(formFieldValue);
+                            if (error) {
+                                Object.assign(errors, error);
+                            }
                         }
                     }
 
                     if (Object.keys(errors).length > 0) {
                         validationErrors.push({
-                            field,
+                            field: formField,
                             errors
                         });
                     }
                 }
             }
         }
+
         validationErrors.forEach((error) => {
             if (!res.locals.error) {
-                res.locals.error = <any>{};
+                res.locals.error = {} as any;
             }
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
@@ -287,7 +293,7 @@ export class ServerValidator {
     static addFormError(res: Response, field: string, error: AnyFormError | any | null): boolean {
         if (error) {
             if (!res.locals.error) {
-                res.locals.error = <any>{};
+                res.locals.error = {} as any;
             }
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
@@ -310,7 +316,7 @@ export class ServerValidator {
         field: T, error: null | GlobalError[T]): boolean {
         if (error) {
             if (!res.locals.error) {
-                res.locals.error = <any>{};
+                res.locals.error = {} as any;
             }
             if (!res.locals.error.globalErrors) {
                 res.locals.error.globalErrors = {};
@@ -329,7 +335,7 @@ export class ServerValidator {
 }
 
 interface FormValidator {
-    [key: string]: any;
+    [key: string]: [any, Array<ValidatorFn>?];
 }
 
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;

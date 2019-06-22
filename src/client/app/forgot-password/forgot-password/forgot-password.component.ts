@@ -38,7 +38,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new ForgotPasswordViewModel();
-    viewModel.email = this.formGroup.controls['email'].value.trim();
+    viewModel.email = this.formGroup.controls.email.value.trim();
 
     this.forgotPasswordService.forgotPassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

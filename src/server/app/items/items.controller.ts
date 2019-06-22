@@ -40,7 +40,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.update(res, uId!, viewModel.title, viewModel.description, viewModel.media)
+            await itemsService.update(res, uId as string, viewModel.title, viewModel.description, viewModel.media)
         );
     }
 
@@ -54,7 +54,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.get(res, req.ip, uId!)
+            await itemsService.get(res, req.ip, uId as string)
         );
     }
 
@@ -77,7 +77,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.delete(res, uId!)
+            await itemsService.delete(res, uId as string)
         );
     }
 
@@ -91,7 +91,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.createFavourite(res, uId!)
+            await itemsService.createFavourite(res, uId as string)
         );
     }
 
@@ -105,7 +105,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.deleteFavourite(res, uId!)
+            await itemsService.deleteFavourite(res, uId as string)
         );
     }
 
@@ -132,7 +132,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await itemsService.createComment(res, uId!, viewModel.description)
+            await itemsService.createComment(res, uId as string, viewModel.description)
         );
     }
 
@@ -150,7 +150,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.updateComment(res, uId!, viewModel.description)
+            await itemsService.updateComment(res, uId as string, viewModel.description)
         );
     }
 
@@ -164,7 +164,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.deleteComment(res, uId!)
+            await itemsService.deleteComment(res, uId as string)
         );
     }
 
@@ -180,7 +180,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.getComments(res, uId!, pageIndex, pageSize)
+            await itemsService.getComments(res, uId as string, pageIndex, pageSize)
         );
     }
 
@@ -194,7 +194,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.getComment(res, req.ip, uId!)
+            await itemsService.getComment(res, req.ip, uId as string)
         );
     }
 }

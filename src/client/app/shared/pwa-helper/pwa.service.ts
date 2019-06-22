@@ -23,7 +23,7 @@ export class PWAService {
 
     openInstallPrompt() {
         if (this.beforeInstallPromptEvent) {
-            (<any>this.beforeInstallPromptEvent).prompt();
+            (this.beforeInstallPromptEvent as any).prompt();
         }
     }
 }

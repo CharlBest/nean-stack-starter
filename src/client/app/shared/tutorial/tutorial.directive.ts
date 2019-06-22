@@ -22,7 +22,7 @@ export class TutorialDirective implements OnInit {
     }
 
     initialize() {
-        const elementStyle = (<HTMLElement>this.elementRef.nativeElement).style;
+        const elementStyle = (this.elementRef.nativeElement as HTMLElement).style;
         this.zIndex = elementStyle.zIndex;
         this.backgroundColor = elementStyle.backgroundColor;
     }
@@ -43,7 +43,7 @@ export class TutorialDirective implements OnInit {
     }
 
     process() {
-        const element = (<HTMLElement>this.elementRef.nativeElement);
+        const element = (this.elementRef.nativeElement as HTMLElement);
 
         // Hidden tutorial item
         if (this.tutorialInUrl !== this.appTutorial) {
@@ -59,7 +59,7 @@ export class TutorialDirective implements OnInit {
     }
 
     reset() {
-        const element = (<HTMLElement>this.elementRef.nativeElement);
+        const element = (this.elementRef.nativeElement as HTMLElement);
         element.style.zIndex = this.zIndex;
         element.style.backgroundColor = this.backgroundColor;
     }

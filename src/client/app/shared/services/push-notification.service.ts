@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class PushNotificationService {
   constructor(private swPush: SwPush) { }
 
-  subscribeToNotifications(callback: Function) {
+  subscribeToNotifications(callback: (viewModel: PushSubscriptionViewModel) => void) {
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
         serverPublicKey: environment.publicVapidKey
@@ -17,7 +17,7 @@ export class PushNotificationService {
         .then(data => {
           const dataJson = data.toJSON();
           if (dataJson && dataJson.endpoint && dataJson.keys) {
-            const viewModel = new PushSubscriptionViewModel(dataJson.endpoint, dataJson.keys['auth'], dataJson.keys['p256dh']);
+            const viewModel = new PushSubscriptionViewModel(dataJson.endpoint, dataJson.keys.auth, dataJson.keys.p256dh);
             callback(viewModel);
           } else {
             console.error('Push subscription data is invalid');
@@ -35,6 +35,6 @@ export class PushNotificationService {
     // will override any other devices that are registered to receive push notifications
     // The toggle state also doesn't represent that it is the current registered device
     // but only that this user has permitted the use of push notifcations
-    return (<any>Notification).permission === 'granted';
+    return (Notification as any).permission === 'granted';
   }
 }

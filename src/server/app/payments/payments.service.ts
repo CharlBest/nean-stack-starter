@@ -27,18 +27,18 @@ class PaymentsService extends BaseService {
             amount: amount * 100,
             currency: 'EUR',
             description: 'Donation',
-            source: source,
+            source,
             metadata: {
                 paymentUId: nodeUUId()
             }
         };
         if (userId) {
             if (chargeCreationOptions.metadata) {
-                chargeCreationOptions.metadata['userId'] = userId;
+                chargeCreationOptions.metadata.userId = userId;
             }
         }
         if (customerId) {
-            chargeCreationOptions['customer'] = customerId;
+            chargeCreationOptions.customer = customerId;
         }
 
         try {
@@ -74,12 +74,12 @@ class PaymentsService extends BaseService {
                     this.getUserId(res),
                     customer.id,
                     nodeUUId(),
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).id,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).fingerprint,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).brand,
-                    (<stripe.cards.ICard>retrievedCustomer.default_source).last4,
-                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_month,
-                    +(<stripe.cards.ICard>retrievedCustomer.default_source).exp_year
+                    (retrievedCustomer.default_source as stripe.cards.ICard).id,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).fingerprint,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).brand,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).last4,
+                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_month,
+                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_year
                 );
 
                 if (!card) {
@@ -137,8 +137,8 @@ class PaymentsService extends BaseService {
         const charge = await this.createCharge(res, token, amount);
 
         emailBroker.paymentSuccessful({
-            email: email,
-            amount: amount
+            email,
+            amount
         });
 
         return await paymentsRepository.anonymousPayment(res, charge.metadata.paymentUId, charge.id, charge.created, amount, email);
@@ -161,7 +161,7 @@ class PaymentsService extends BaseService {
 
             emailBroker.paymentSuccessful({
                 email: user.email,
-                amount: amount
+                amount
             });
 
             return await paymentsRepository.userPayment(res, this.getUserId(res), selectedCard.uId,
@@ -180,7 +180,7 @@ class PaymentsService extends BaseService {
 
                     emailBroker.paymentSuccessful({
                         email: user.email,
-                        amount: amount
+                        amount
                     });
 
                     return await paymentsRepository.userPayment(res, this.getUserId(res), existingCard.uId,
@@ -192,7 +192,7 @@ class PaymentsService extends BaseService {
 
                     emailBroker.paymentSuccessful({
                         email: user.email,
-                        amount: amount
+                        amount
                     });
 
                     return await paymentsRepository.userPayment(res, this.getUserId(res), newCard.card.uId,
@@ -204,7 +204,7 @@ class PaymentsService extends BaseService {
 
                 emailBroker.paymentSuccessful({
                     email: user.email,
-                    amount: amount
+                    amount
                 });
 
                 return await paymentsRepository.userPayment(res, this.getUserId(res), null,

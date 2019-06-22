@@ -48,7 +48,7 @@ class NotificationsController extends BaseController {
         }
 
         res.status(200).json(
-            await notificationsService.createSubscription(res, uId!)
+            await notificationsService.createSubscription(res, uId as string)
         );
     }
 
@@ -62,7 +62,7 @@ class NotificationsController extends BaseController {
         }
 
         res.status(200).json(
-            await notificationsService.deleteSubscription(res, uId!)
+            await notificationsService.deleteSubscription(res, uId as string)
         );
     }
 

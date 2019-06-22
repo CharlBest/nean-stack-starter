@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
         if (data) {
           // Default card first
           if (data.paymentCards) {
-            data.paymentCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+            data.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
           }
 
           this.user = data;
@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit {
       if (data) {
         this.contextMenu.close();
 
-        const viewModel = new ReportUserViewModel;
+        const viewModel = new ReportUserViewModel();
         viewModel.uId = this.user.uId;
 
         this.snackBar.open('Sending...');
@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateAvatar(downloadURL: string | null) {
-    const viewModel = new UpdateAvatarViewModel;
+    const viewModel = new UpdateAvatarViewModel();
     viewModel.avatarUrl = downloadURL;
 
     this.profileService.updateAvatar(viewModel)

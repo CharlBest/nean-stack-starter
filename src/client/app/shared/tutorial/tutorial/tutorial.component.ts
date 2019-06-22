@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CompletedTutorial } from '../../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { AuthService } from '../../services/auth.service';
+import { Tutorial } from '../tutorial.model';
 import { TutorialService } from '../tutorial.service';
 
 @Component({
@@ -95,19 +96,5 @@ export class TutorialComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     return false;
-  }
-}
-
-class Tutorial {
-  constructor(public tutorialType: TutorialType,
-    public text: string,
-    public nextTutorial: TutorialType,
-    public isFirst: boolean = false,
-    public isLast: boolean = false) {
-    this.tutorialType = tutorialType;
-    this.text = text;
-    this.nextTutorial = nextTutorial;
-    this.isFirst = isFirst;
-    this.isLast = isLast;
   }
 }

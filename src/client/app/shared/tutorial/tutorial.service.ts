@@ -67,7 +67,7 @@ export class TutorialService {
         }
 
         // TODO: this is not ideal. Will prevent tutorials from returning to any page with back nav which is a lot!
-        if (route.snapshot.data['nav'] as NavigationType === NavigationType.Back) {
+        if (route.snapshot.data.nav as NavigationType === NavigationType.Back) {
             this.router.navigate(['/']);
         }
     }

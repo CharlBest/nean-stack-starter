@@ -59,7 +59,7 @@ export class EditCommentComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
-    viewModel.description = this.commentForm.formGroup.controls['description'].value;
+    viewModel.description = this.commentForm.formGroup.controls.description.value;
 
     this.itemService.updateComment(this.comment.uId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))

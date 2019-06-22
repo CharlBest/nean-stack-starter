@@ -21,6 +21,7 @@ export class GitHubReadMeComponent implements OnInit {
       const container = document.getElementsByClassName('github-readme-container');
       if (container && container[0]) {
         const anchorLinks = container[0].getElementsByTagName('a');
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < anchorLinks.length; i++) {
           if (anchorLinks[i].href === 'https://nean.io/') {
             anchorLinks[i].remove();

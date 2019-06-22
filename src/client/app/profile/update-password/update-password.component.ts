@@ -34,10 +34,10 @@ export class UpdatePasswordComponent implements OnInit {
   formOnInit() {
     this.formGroup = this.fb.group(BuildFormGroup.updatePassword());
 
-    const confirmPasswordControl = this.formGroup.controls['confirmPassword'];
+    const confirmPasswordControl = this.formGroup.controls.confirmPassword;
     confirmPasswordControl.statusChanges.subscribe(data => {
       if (!confirmPasswordControl.errors) {
-        if (this.formGroup.controls['newPassword'].value !== confirmPasswordControl.value) {
+        if (this.formGroup.controls.newPassword.value !== confirmPasswordControl.value) {
           confirmPasswordControl.setErrors([{ passwordCompare: true }]);
         }
       }
@@ -45,11 +45,11 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formGroup.controls['newPassword'].value !== this.formGroup.controls['confirmPassword'].value) {
+    if (this.formGroup.controls.newPassword.value !== this.formGroup.controls.confirmPassword.value) {
       return;
     }
 
-    this.passwordStrengthService.init(this.formGroup.controls['newPassword'].value).subscribe(data => {
+    this.passwordStrengthService.init(this.formGroup.controls.newPassword.value).subscribe(data => {
       if (data) {
         this.updatePassword();
       }
@@ -62,8 +62,8 @@ export class UpdatePasswordComponent implements OnInit {
     this.snackBar.open('Updating password...');
 
     const viewModel = new UpdatePasswordViewModel();
-    viewModel.password = this.formGroup.controls['password'].value;
-    viewModel.newPassword = this.formGroup.controls['newPassword'].value;
+    viewModel.password = this.formGroup.controls.password.value;
+    viewModel.newPassword = this.formGroup.controls.newPassword.value;
 
     this.profileService.updatePassword(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

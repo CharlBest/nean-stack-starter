@@ -35,7 +35,7 @@ export class FirebaseStorageService {
             }
         }, (error) => {
             // https://firebase.google.com/docs/storage/web/handle-errors
-            switch ((<any>error).code) {
+            switch ((error as any).code) {
                 case 'storage/unauthorized':
                     break;
 

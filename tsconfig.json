@@ -9,6 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
+    "module": "esNext",
     "strictNullChecks": true,
     // "strictFunctionTypes": true,
     // "strictPropertyInitialization": true,

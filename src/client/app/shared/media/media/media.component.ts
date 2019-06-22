@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ViewMediaDialogComponent } from '../view-media-dialog/view-media-dialog.component';
+import { MediaType } from './media.enum';
 
 @Component({
   selector: 'app-media',
@@ -68,10 +69,4 @@ export class MediaComponent implements OnChanges {
       dialog.componentInstance.src = this.src;
     }
   }
-}
-
-enum MediaType {
-  Image = 1,
-  YouTube = 2,
-  Vimeo = 3
 }

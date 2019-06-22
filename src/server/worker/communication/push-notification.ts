@@ -2,6 +2,7 @@ import { sendNotification, setVapidDetails } from 'web-push';
 import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
 import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
+// tslint:disable-next-line:max-line-length
 import { CommentCreationPushNotificationModel } from '../../communication/models/push-notification/comment-creation-push-notification.model';
 import { Database } from '../../core/database';
 import { environment } from '../../environments/environment';
@@ -42,14 +43,14 @@ class PushNotification implements PushNotificationInterface {
             // setGCMAPIKey();
 
             const notificationOptions: NotificationOptions = {
-                body: body,
+                body,
                 icon: 'assets/logo-color.png',
                 data: {
                     dateOfArrival: Date.now()
                 }
             };
 
-            notificationOptions['title'] = title;
+            (notificationOptions as any).title = title;
 
             const notificationPayload = {
                 notification: notificationOptions

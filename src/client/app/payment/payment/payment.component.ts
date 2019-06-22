@@ -51,11 +51,11 @@ export class PaymentComponent implements OnInit {
                         this.paymentCards = data;
                         // Default card first
                         if (this.paymentCards) {
-                            this.paymentCards.sort((a, b) => <any>b.isDefault - <any>a.isDefault);
+                            this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
                         }
 
                         const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
-                        this.formGroup.controls['cardUId'].setValue(firstCardUId);
+                        this.formGroup.controls.cardUId.setValue(firstCardUId);
                     }
                 });
         } else {
@@ -66,7 +66,7 @@ export class PaymentComponent implements OnInit {
     async onSubmit() {
         this.isProcessing = true;
 
-        if (this.formGroup.controls['cardUId'].value === null || this.formGroup.controls['cardUId'].value === 'new') {
+        if (this.formGroup.controls.cardUId.value === null || this.formGroup.controls.cardUId.value === 'new') {
             const token = await this.stripeElementsComponent.generateToken();
             if (token) {
                 this.sendPaymentToServer(token.id);
@@ -83,9 +83,9 @@ export class PaymentComponent implements OnInit {
         if (this.isAuthenticated) {
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;
-            viewModel.cardUId = this.formGroup.controls['cardUId'].value;
-            viewModel.amount = +this.formGroup.controls['amount'].value;
-            viewModel.saveCard = this.formGroup.controls['saveCard'].value === true;
+            viewModel.cardUId = this.formGroup.controls.cardUId.value;
+            viewModel.amount = +this.formGroup.controls.amount.value;
+            viewModel.saveCard = this.formGroup.controls.saveCard.value === true;
 
             this.paymentService.userPayment(viewModel)
                 .pipe(finalize(() => this.isProcessing = false))
@@ -98,8 +98,8 @@ export class PaymentComponent implements OnInit {
             if (token) {
                 const viewModel = new AnonymousPaymentViewModel();
                 viewModel.token = token;
-                viewModel.email = this.formGroup.controls['email'].value;
-                viewModel.amount = +this.formGroup.controls['amount'].value;
+                viewModel.email = this.formGroup.controls.email.value;
+                viewModel.amount = +this.formGroup.controls.amount.value;
 
                 this.paymentService.anonymousPayment(viewModel)
                     .pipe(finalize(() => this.isProcessing = false))
@@ -119,13 +119,13 @@ export class PaymentComponent implements OnInit {
         }
 
         // Email is requried if anonymous payment
-        if (!this.isAuthenticated && (this.formGroup.controls['email'].value === null || this.formGroup.controls['email'].value === '')) {
+        if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
             return false;
         }
 
         // Stripe element valid when adding new card by user
         if (this.isAuthenticated && !this.stripeElementsComponent.isValid &&
-            (this.formGroup.controls['cardUId'].value === null || this.formGroup.controls['cardUId'].value === 'new')) {
+            (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === 'new')) {
             return false;
         }
 

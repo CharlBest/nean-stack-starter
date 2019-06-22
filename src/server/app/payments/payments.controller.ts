@@ -76,7 +76,7 @@ class PaymentsController extends BaseController {
         }
 
         res.status(200).json(
-            await paymentsService.deleteCard(res, uId!)
+            await paymentsService.deleteCard(res, uId as string)
         );
     }
 

@@ -1,7 +1,7 @@
 import { logger } from '../core/utils/logger';
 
 export const environment = {
-    production: getEnvironmentVariable('NODE_ENV', <any>'development') === 'production',
+    production: getEnvironmentVariable('NODE_ENV', 'development' as any) === 'production',
     port: getEnvironmentVariable('PORT', 3000),
     database: {
         uri: getEnvironmentVariable('DATABASE_URI', 'bolt://localhost'),

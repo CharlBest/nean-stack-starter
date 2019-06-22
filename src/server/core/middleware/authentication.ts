@@ -25,8 +25,8 @@ export class Authentication {
                     res.locals.user = null;
                     // TODO: not sure if removing this is the right thing to do.
                     // return res.status(401).json({ message: 'Unauthorized user' });
-                } else if (decode['data']) {
-                    res.locals.user = decode['data'];
+                } else if ((decode as any).data) {
+                    res.locals.user = (decode as any).data;
                 }
 
                 next();

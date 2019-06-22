@@ -46,7 +46,7 @@ class GeneralController extends BaseController {
         }
 
         res.status(200).json(
-            await generalService.deleteNewsletterMember(res, email!)
+            await generalService.deleteNewsletterMember(res, email as string)
         );
     }
 

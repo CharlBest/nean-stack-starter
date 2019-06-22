@@ -1,5 +1,6 @@
 import { Platform } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
+import { HelperTextSection } from './pwa-helper.enum';
 
 @Component({
     selector: 'app-pwa-helper',
@@ -27,9 +28,4 @@ export class PWAHelperComponent implements OnInit {
         } else if (this.platform.IOS && this.platform.EDGE) { // Android Mobile + Edge
         }
     }
-}
-
-enum HelperTextSection {
-    DESKTOP_CHROME,
-    ANDROID_MOBILE_CHROME,
 }

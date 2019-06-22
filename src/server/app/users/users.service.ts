@@ -245,8 +245,8 @@ class UsersService extends BaseService {
         const sanitizedHTMLContent = sanitizedHTML(content, {
             allowedTags: ['p', 'br', 'strong', 'em', 'h2', 'ul', 'ol', 'li', 'a', 'img'],
             allowedAttributes: {
-                'a': ['href', 'target'],
-                'img': ['src']
+                a: ['href', 'target'],
+                img: ['src']
             },
             selfClosing: ['img', 'br'],
             allowedSchemes: ['https', 'mailto'],

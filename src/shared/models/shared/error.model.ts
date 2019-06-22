@@ -1,4 +1,4 @@
-import { ErrorEmail, ErrorRequired } from './form-error.model';
+import { Email, Required } from './form-error.model';
 
 export interface ErrorModel {
     globalErrors: GlobalError;
@@ -7,25 +7,25 @@ export interface ErrorModel {
 
 export interface FormError {
     field: string;
-    errors: Object;
+    errors: object;
 }
 
 export interface GlobalError {
     // General
-    inviteEmails?: ErrorRequired & ErrorEmail;
+    inviteEmails?: Required & Email;
 
     // Payments
-    anonymousPaymentToken?: ErrorRequired;
-    userPaymentToken?: ErrorRequired;
+    anonymousPaymentToken?: Required;
+    userPaymentToken?: Required;
 
     // Users
     createUser?: boolean;
-    changeForgottenPasswordEmail?: ErrorRequired & ErrorEmail;
-    changeForgottenPasswordCode?: ErrorRequired;
+    changeForgottenPasswordEmail?: Required & Email;
+    changeForgottenPasswordCode?: Required;
     changeForgottenPassword?: boolean;
     forgotPasswordEmailNotFound?: boolean;
     loginInvalidCredentials?: boolean;
     updatePasswordInvalid?: boolean;
     updatePassword?: boolean;
-    verifyEmailCode?: ErrorRequired;
+    verifyEmailCode?: Required;
 }

@@ -4,6 +4,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import * as emojione from 'emojione';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
+import { EmojiCategory, EmojiData } from './emoji.model';
 
 declare function require(moduleName: string): any;
 
@@ -39,8 +40,8 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   render() {
-    (<any>emojione).sprites = true;
-    (<any>emojione).imagePathSVGSprites = './assets/emoji/';
+    (emojione as any).sprites = true;
+    (emojione as any).imagePathSVGSprites = './assets/emoji/';
 
     for (const key in this.file) {
       if (this.file.hasOwnProperty(key) && this.file[key].diversity === null && this.file[key].category !== 'regional' &&
@@ -91,41 +92,3 @@ export class EmojiPanelComponent implements OnInit {
   }
 }
 
-class EmojiCategory {
-  category: string;
-  tabLabelText: string;
-  tabLabelIcon: string;
-  emojiData: Array<{ key: string, value: EmojiData }>;
-
-  constructor(category: string, tabLabelText: string, tabLabelIcon: string) {
-    this.category = category;
-    this.tabLabelText = tabLabelText;
-    this.tabLabelIcon = tabLabelIcon;
-    this.emojiData = [];
-  }
-}
-
-interface EmojiData {
-  ascii: Array<string>;
-  category: string;
-  code_points: {
-    base: string;
-    decimal: string;
-    fully_qualified: string;
-    non_fully_qualified: string;
-    output: string;
-    default_matches: Array<string>;
-    greedy_matches: Array<string>;
-  };
-  display: number;
-  diversities: Array<string>;
-  diversity: string;
-  gender: string;
-  genders: Array<string>;
-  keywords: Array<string>;
-  name: string;
-  order: number;
-  shortname: string;
-  shortname_alternates: Array<string>;
-  unicode_version: number;
-}

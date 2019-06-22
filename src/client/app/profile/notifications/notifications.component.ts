@@ -60,10 +60,10 @@ export class NotificationsComponent implements OnInit {
       this.notificationPreferences.emailHot === false ? false : true
     ));
 
-    this.formGroup.controls['pushNotificationEnabled'].valueChanges.subscribe(data => {
+    this.formGroup.controls.pushNotificationEnabled.valueChanges.subscribe(data => {
       this.togglePushNotification(data);
     });
-    this.formGroup.controls['emailEnabled'].valueChanges.subscribe(() => this.update());
+    this.formGroup.controls.emailEnabled.valueChanges.subscribe(() => this.update());
   }
 
   togglePushNotification(checked: boolean) {
@@ -74,11 +74,11 @@ export class NotificationsComponent implements OnInit {
             this.update(pushSubscription);
           });
         } else {
-          this.formGroup.controls['pushNotificationEnabled'].setValue(false, { emitEvent: false });
+          this.formGroup.controls.pushNotificationEnabled.setValue(false, { emitEvent: false });
         }
       });
     } else {
-      this.formGroup.controls['pushNotificationEnabled'].setValue(false, { emitEvent: false });
+      this.formGroup.controls.pushNotificationEnabled.setValue(false, { emitEvent: false });
       this.update();
     }
   }
@@ -91,16 +91,16 @@ export class NotificationsComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel: UpdateNotificationPreferencesViewModel = {
-      pushSubscription: pushSubscription,
+      pushSubscription,
       preferences: {
         hasPushSubscription: true,
-        pushNotificationEnabled: this.formGroup.controls['pushNotificationEnabled'].value,
-        emailEnabled: this.formGroup.controls['emailEnabled'].value,
-        autoSubscribeToItem: this.formGroup.controls['autoSubscribeToItem'].value,
-        pushNewComment: this.formGroup.controls['pushNewComment'].value,
-        pushHot: this.formGroup.controls['pushHot'].value,
-        emailNewComment: this.formGroup.controls['emailNewComment'].value,
-        emailHot: this.formGroup.controls['emailHot'].value
+        pushNotificationEnabled: this.formGroup.controls.pushNotificationEnabled.value,
+        emailEnabled: this.formGroup.controls.emailEnabled.value,
+        autoSubscribeToItem: this.formGroup.controls.autoSubscribeToItem.value,
+        pushNewComment: this.formGroup.controls.pushNewComment.value,
+        pushHot: this.formGroup.controls.pushHot.value,
+        emailNewComment: this.formGroup.controls.emailNewComment.value,
+        emailHot: this.formGroup.controls.emailHot.value
       }
     };
 

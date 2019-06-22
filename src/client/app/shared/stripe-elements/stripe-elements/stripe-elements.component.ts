@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { environment } from '../../../../environments/environment';
 import { ThemeService } from '../../services/theme.service';
 import { CardBrandType } from '../card-brand.enum';
+import { ElementsWrapper, ElementWrapper } from '../stripe-element.model';
 import { StripeElementsService } from '../stripe-elements.service';
 
 @Component({
@@ -153,31 +154,4 @@ export class StripeElementsComponent implements OnInit {
             return token;
         }
     }
-}
-
-class ElementsWrapper {
-    isRendering = true;
-    readyCount = 0;
-
-    cardNumber: ElementWrapper = {
-        type: 'cardNumber',
-        valid: false,
-        cardBrand: CardBrandType.Unknown
-    };
-    cardExpiry: ElementWrapper = {
-        type: 'cardExpiry',
-        valid: false,
-    };
-    cardCvc: ElementWrapper = {
-        type: 'cardCvc',
-        valid: false,
-    };
-}
-
-interface ElementWrapper {
-    type: 'cardNumber' | 'cardExpiry' | 'cardCvc';
-    cardBrand?: CardBrandType;
-    element?: any; /*stripe.elements.Element*/
-    error?: string | null;
-    valid: boolean;
 }

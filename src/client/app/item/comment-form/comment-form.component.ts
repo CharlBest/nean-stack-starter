@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { BuildFormGroup } from '../../../../shared/validation/validators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
@@ -13,7 +13,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 export class CommentFormComponent implements OnInit {
 
   @ViewChild(FormGroupDirective, { static: true }) formRef: FormGroupDirective;
-  @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
   @Input() comment: CommentViewModel;
   formGroup: FormGroup;
   showCommentSubmitButton = false;

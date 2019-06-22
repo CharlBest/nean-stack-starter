@@ -13,10 +13,10 @@ export class AuthService implements CanActivate {
     private loggedInUserId = new BehaviorSubject<number | null>(0);
     loggedInUserId$ = this.loggedInUserId.asObservable();
 
-    private _preventLogoutOnNextRequest: boolean;
+    private preventLogoutOnNextRequestFlag: boolean;
     get shouldPreventLogoutOnNextRequest() {
-        if (this._preventLogoutOnNextRequest) {
-            this._preventLogoutOnNextRequest = false;
+        if (this.preventLogoutOnNextRequestFlag) {
+            this.preventLogoutOnNextRequestFlag = false;
             return true;
         } else {
             return false;
@@ -97,7 +97,7 @@ export class AuthService implements CanActivate {
     }
 
     preventLogoutOnNextRequest() {
-        this._preventLogoutOnNextRequest = true;
+        this.preventLogoutOnNextRequestFlag = true;
     }
 
     hasTokenExpired() {

@@ -1,32 +1,32 @@
 export type AnyFormError =
-    ErrorRequired |
-    ErrorEmail |
-    ErrorMinLength |
-    ErrorPattern |
-    ErrorCustomFormValidator;
+    Required |
+    Email |
+    MinLength |
+    Pattern |
+    CustomFormValidator;
 
-export interface ErrorRequired {
+export interface Required {
     required?: boolean;
 }
 
-export interface ErrorEmail {
+export interface Email {
     email?: boolean;
 }
 
-export interface ErrorMinLength {
+export interface MinLength {
     minlength: {
         requiredLength: number,
         actualLength: number
     };
 }
 
-export interface ErrorPattern {
+export interface Pattern {
     pattern: {
         requiredPattern: string,
         actualValue: string
     };
 }
 
-export interface ErrorCustomFormValidator {
+export interface CustomFormValidator {
     customFormValidator: boolean;
 }

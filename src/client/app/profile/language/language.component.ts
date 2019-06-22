@@ -1,4 +1,5 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Language } from './language.model';
 
 @Component({
   selector: 'app-language',
@@ -35,15 +36,5 @@ export class LanguageComponent implements OnInit {
       .map(cookie => {
         return decodeURIComponent(cookie.substring(nameLenPlus));
       })[0] || null;
-  }
-}
-
-class Language {
-  code: string;
-  title: string;
-
-  constructor(code: 'en-US' | 'af-ZA', title: string) {
-    this.code = code;
-    this.title = title;
   }
 }

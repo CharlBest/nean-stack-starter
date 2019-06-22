@@ -88,7 +88,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       if (data) {
         this.contextMenu.close();
 
-        const viewModel = new ReportItemViewModel;
+        const viewModel = new ReportItemViewModel();
         viewModel.uId = this.item.uId;
 
         this.snackBar.open('Sending...');

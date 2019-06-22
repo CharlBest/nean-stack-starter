@@ -129,7 +129,7 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = (<any>result).records.map((record: any) => {
+        const model = (result as any).records.map((record: any) => {
             const viewModel = new PushNotificationModel();
 
             const pushSubscriptions = record.get('pushSubscriptions');

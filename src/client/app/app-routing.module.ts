@@ -5,7 +5,7 @@ import { AuthService } from './shared/services/auth.service';
 
 // Preload defined module routes
 export class CustomPreloading implements PreloadingStrategy {
-  preload(route: Route, preload: Function): Observable<any> {
+  preload(route: Route, preload: () => Observable<any>): Observable<any> {
     return route.data && route.data.preload ? preload() : of(null);
   }
 }

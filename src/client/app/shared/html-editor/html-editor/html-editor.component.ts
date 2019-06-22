@@ -17,7 +17,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
     @Input() containsEmoji = false;
-    @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() change: EventEmitter<string> = new EventEmitter<string>();
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
@@ -36,24 +36,24 @@ export class HTMLEditorComponent implements AfterViewInit {
             return `<mat-icon class="mat-icon material-icons" title="${title}">${iconName}</mat-icon>`;
         }
 
-        icons['bold'] = `${buildMatIconTagText('format_bold', 'Bold')}`;
-        icons['italic'] = `${buildMatIconTagText('format_italic', 'Italic')}`;
-        icons['header'] = {
-            '2': `${buildMatIconTagText('format_size', 'Heading')}`
+        icons.bold = `${buildMatIconTagText('format_bold', 'Bold')}`;
+        icons.italic = `${buildMatIconTagText('format_italic', 'Italic')}`;
+        icons.header = {
+            2: `${buildMatIconTagText('format_size', 'Heading')}`
         };
-        icons['list'] = {
-            'ordered': `${buildMatIconTagText('format_list_numbered', 'Numbered list')}`,
-            'bullet': `${buildMatIconTagText('format_list_bulleted', 'Bullet list')}`
+        icons.list = {
+            ordered: `${buildMatIconTagText('format_list_numbered', 'Numbered list')}`,
+            bullet: `${buildMatIconTagText('format_list_bulleted', 'Bullet list')}`
         };
-        icons['link'] = `${buildMatIconTagText('insert_link', 'Insert link')}`;
-        icons['image'] = `${buildMatIconTagText('insert_photo', 'Insert image')}`;
+        icons.link = `${buildMatIconTagText('insert_link', 'Insert link')}`;
+        icons.image = `${buildMatIconTagText('insert_photo', 'Insert image')}`;
 
         // Initialize
         this.editor = new Quill(this.editorDomElement.nativeElement, {
             modules: {
                 toolbar: [
                     ['bold', 'italic'],
-                    [{ 'header': 2 }],
+                    [{ header: 2 }],
                     [{ list: 'bullet' }, { list: 'ordered' }],
                     ['link', 'image']
                 ]
@@ -63,7 +63,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         });
 
         this.editor.on('text-change', (delta, oldDelta, source) => {
-            this.onChange.emit(this.getInnerHTML());
+            this.change.emit(this.getInnerHTML());
         });
 
         if (this.htmlContent) {
@@ -81,7 +81,7 @@ export class HTMLEditorComponent implements AfterViewInit {
 
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
             if (document.activeElement) {
-                (<any>document.activeElement).blur();
+                (document.activeElement as any).blur();
                 window.scrollTo(0, 0);
             }
         }
@@ -162,13 +162,13 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     renderHTMLWithEmoji(html: string) {
         // (<any>emojione).ascii = true;
-        (<any>emojione).sprites = true;
-        (<any>emojione).imagePathSVGSprites = './assets/emoji/';
+        (emojione as any).sprites = true;
+        (emojione as any).imagePathSVGSprites = './assets/emoji/';
         return emojione.shortnameToImage(html);
     }
 
     getInnerHTML() {
-        return (<HTMLDivElement>this.editorDomElement.nativeElement.firstChild).innerHTML;
+        return (this.editorDomElement.nativeElement.firstChild as HTMLDivElement).innerHTML;
     }
 
     getUrls(content: string): Array<string> {
@@ -197,9 +197,9 @@ export class HTMLEditorComponent implements AfterViewInit {
         const oldUrls = this.getUrls(this.htmlContent);
         const newUrls = this.getUrls(this.getInnerHTML());
 
-        for (let i = 0; i < oldUrls.length; i++) {
-            if (!newUrls.includes(oldUrls[i])) {
-                this.firebaseStorageService.delete(oldUrls[i]).subscribe();
+        for (const oldUrl of oldUrls) {
+            if (!newUrls.includes(oldUrl)) {
+                this.firebaseStorageService.delete(oldUrl).subscribe();
             }
         }
     }

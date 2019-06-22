@@ -98,17 +98,17 @@ export class NavigationComponent implements OnInit {
       )
       .subscribe(event => {
         if (event.snapshot.data) {
-          const title = event.snapshot.data['title'];
+          const title = event.snapshot.data.title;
           if (title) {
             this.titleService.setTitle(title);
             this.headerBackTitle = title;
           }
 
-          const nav = event.snapshot.data['nav'] as NavigationType;
+          const nav = event.snapshot.data.nav as NavigationType;
           if (nav) {
             this.activeNavigation = nav;
           }
-          const backRouterPath = event.snapshot.data['backRouterPath'] || this.navigationService.backRouterPath;
+          const backRouterPath = event.snapshot.data.backRouterPath || this.navigationService.backRouterPath;
           if (backRouterPath) {
             this.backRouterPath = backRouterPath;
           } else {
@@ -183,7 +183,7 @@ export class NavigationComponent implements OnInit {
 
   checkAllNavItemAssociations() {
     if (!environment.production) {
-      const allNavItems = (<Array<string>>[])
+      const allNavItems = ([] as Array<string>)
         .concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(path => path.path)));
 
       this.router.config.forEach(route => {

@@ -15,7 +15,7 @@ export class CreateCommentComponent implements OnInit {
 
   @ViewChild('commentForm', { static: true }) commentForm: CommentFormComponent;
   @Input() itemUId: string;
-  @Output() onSuccess: EventEmitter<CommentViewModel> = new EventEmitter();
+  @Output() success: EventEmitter<CommentViewModel> = new EventEmitter();
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,
@@ -28,7 +28,7 @@ export class CreateCommentComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
-    viewModel.description = this.commentForm.formGroup.controls['description'].value;
+    viewModel.description = this.commentForm.formGroup.controls.description.value;
 
     this.itemService.createComment(this.itemUId, viewModel)
       .pipe(finalize(() => this.isProcessing = false))
@@ -36,7 +36,7 @@ export class CreateCommentComponent implements OnInit {
         if (data) {
           this.commentForm.formRef.resetForm();
           data.itemUId = this.itemUId;
-          this.onSuccess.emit(data);
+          this.success.emit(data);
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);

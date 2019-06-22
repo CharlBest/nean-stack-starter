@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuildFormGroup, MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -13,7 +13,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 })
 export class ItemFormComponent implements OnInit {
 
-  @Output() onSubmit: EventEmitter<void> = new EventEmitter<void>();
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
   readonly MAX_MEDIA_UPLOADS = MAX_MEDIA_UPLOADS;
@@ -36,7 +35,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   addItemMedia(downloadURL: string) {
-    const control = this.formGroup.controls['media'];
+    const control = this.formGroup.controls.media;
     if (control.value && control.value.length > 0) {
       control.value.push(downloadURL);
     } else {
@@ -47,7 +46,7 @@ export class ItemFormComponent implements OnInit {
   removeMedia(index: number) {
     this.dialogService.confirm('Are you sure?').subscribe(data => {
       if (data) {
-        this.formGroup.controls['media'].value.splice(index, 1);
+        this.formGroup.controls.media.value.splice(index, 1);
       }
     });
   }

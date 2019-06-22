@@ -77,7 +77,7 @@ class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await usersService.getUserPublic(res, req.ip, id!, pageIndex, pageSize)
+            await usersService.getUserPublic(res, req.ip, id as number, pageIndex, pageSize)
         );
     }
 

@@ -10,7 +10,7 @@ export class GitHubService {
     const req = new XMLHttpRequest();
     const req$ = fromEvent(req, 'load')
       .pipe(
-        map(event => (<XMLHttpRequest>event.target).responseText)
+        map(event => (event.target as XMLHttpRequest).responseText)
       );
 
     req.open('GET', `https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/${filePath}`);

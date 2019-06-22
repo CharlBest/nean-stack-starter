@@ -43,7 +43,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit() {
-    this.passwordStrengthService.init(this.formGroup.controls['password'].value).subscribe(data => {
+    this.passwordStrengthService.init(this.formGroup.controls.password.value).subscribe(data => {
       if (data) {
         this.createUser();
       }
@@ -54,9 +54,9 @@ export class CreateUserComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
-    viewModel.email = this.formGroup.controls['email'].value.trim();
-    viewModel.username = this.formGroup.controls['username'].value.trim();
-    viewModel.password = this.formGroup.controls['password'].value;
+    viewModel.email = this.formGroup.controls.email.value.trim();
+    viewModel.username = this.formGroup.controls.username.value.trim();
+    viewModel.password = this.formGroup.controls.password.value;
 
     this.createUserService.createUser(viewModel)
       .subscribe(() => {
@@ -71,8 +71,8 @@ export class CreateUserComponent implements OnInit {
     this.isProcessing = true;
 
     const model = new LoginViewModel();
-    model.emailOrUsername = this.formGroup.controls['email'].value;
-    model.password = this.formGroup.controls['password'].value;
+    model.emailOrUsername = this.formGroup.controls.email.value;
+    model.password = this.formGroup.controls.password.value;
 
     this.loginService.login(model)
       .pipe(finalize(() => this.isProcessing = false))

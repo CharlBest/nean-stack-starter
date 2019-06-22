@@ -9,7 +9,7 @@ export class RefreshSameUrlService implements OnDestroy {
     private routerEventsSubscription: Subscription;
     constructor(private router: Router) { }
 
-    init(callback: Function) {
+    init(callback: () => void) {
         this.router.onSameUrlNavigation = 'reload';
 
         this.routerEventsSubscription = this.router.events

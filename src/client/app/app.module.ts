@@ -49,23 +49,23 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     // Material defaults
     {
       provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-      useValue: <MatTooltipDefaultOptions>{ showDelay: 700 }
+      useValue: { showDelay: 700 } as MatTooltipDefaultOptions
     },
     {
       provide: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
-      useValue: <MatProgressSpinnerDefaultOptions>{ diameter: 25, strokeWidth: 2 }
+      useValue: { diameter: 25, strokeWidth: 2 } as MatProgressSpinnerDefaultOptions
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: <MatDialogConfig>{ closeOnNavigation: true, autoFocus: false, restoreFocus: false, hasBackdrop: true }
+      useValue: { closeOnNavigation: true, autoFocus: false, restoreFocus: false, hasBackdrop: true } as MatDialogConfig
     },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: <MatSnackBarConfig>{ duration: 2000 }
+      useValue: { duration: 2000 } as MatSnackBarConfig
     },
     {
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
-      useValue: <MatBottomSheetConfig>{ closeOnNavigation: true, autoFocus: false, restoreFocus: false }
+      useValue: { closeOnNavigation: true, autoFocus: false, restoreFocus: false } as MatBottomSheetConfig
     },
   ],
   bootstrap: [

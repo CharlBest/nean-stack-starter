@@ -39,7 +39,7 @@ export class FeedbackComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new FeedbackViewModel();
-    viewModel.content = this.formGroup.controls['content'].value;
+    viewModel.content = this.formGroup.controls.content.value;
 
     this.feedbackService.sendFeedback(viewModel)
       .pipe(finalize(() => this.isProcessing = false))

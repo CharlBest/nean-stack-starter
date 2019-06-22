@@ -50,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.passwordStrengthService.init(this.formGroup.controls['password'].value).subscribe(data => {
+    this.passwordStrengthService.init(this.formGroup.controls.password.value).subscribe(data => {
       if (data) {
         this.changeForgottenPassword();
       }
@@ -61,10 +61,10 @@ export class ChangePasswordComponent implements OnInit {
     if (this.email && this.code) {
       this.isProcessing = true;
 
-      const viewModel = new ChangeForgottenPasswordViewModel;
+      const viewModel = new ChangeForgottenPasswordViewModel();
       viewModel.email = this.email.trim();
       viewModel.code = this.code;
-      viewModel.password = this.formGroup.controls['password'].value;
+      viewModel.password = this.formGroup.controls.password.value;
 
       this.forgotPasswordService.changeForgottenPassword(viewModel)
         .pipe(finalize(() => this.isProcessing = false))

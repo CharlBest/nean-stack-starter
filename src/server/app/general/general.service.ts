@@ -21,13 +21,13 @@ class GeneralService extends BaseService {
 
     async sendFeedback(res: Response, content: string): Promise<void> {
         emailBroker.feedback({
-            content: content
+            content
         });
     }
 
     async invite(res: Response, emails: Array<string>): Promise<void> {
         emailBroker.invite({
-            emails: emails
+            emails
         });
     }
 }
