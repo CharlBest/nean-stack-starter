@@ -5,6 +5,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-raised-button
+        *ngxClipboardIfSupported
         (click)="copy()"
         type="button">COPY</button>
     <button mat-raised-button
