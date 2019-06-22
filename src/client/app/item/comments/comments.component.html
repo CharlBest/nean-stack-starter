@@ -4,7 +4,7 @@
 
     <app-create-comment [hidden]="!isAuthenticated"
         [itemUId]="item?.uId"
-        (success)="insertComment($event)"></app-create-comment>
+        (createSuccess)="insertComment($event)"></app-create-comment>
 
     <mat-card *ngIf="!isAuthenticated">
         <mat-card-content>

@@ -45,7 +45,7 @@
                 type="submit"
                 color="primary"
                 [disabled]="!formGroup.valid"
-                (click)="onSubmit.emit()">{{item ? 'Update' : 'Create'}}</button>
+                (click)="submitForm.emit()">{{item ? 'Update' : 'Create'}}</button>
             <!-- TODO: don't think update and create are the best words here. Same with comment -->
 
             <app-upload-button (uploadComplete)="addItemMedia($event)"

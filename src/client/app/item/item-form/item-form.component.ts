@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BuildFormGroup, MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -13,6 +13,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 })
 export class ItemFormComponent implements OnInit {
 
+  @Output() submitForm: EventEmitter<void> = new EventEmitter<void>();
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
   readonly MAX_MEDIA_UPLOADS = MAX_MEDIA_UPLOADS;

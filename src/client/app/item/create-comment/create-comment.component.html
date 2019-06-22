@@ -1,5 +1,5 @@
 <app-comment-form #commentForm
     [hidden]="isProcessing"
-    (onSubmit)="onSubmit()"></app-comment-form>
+    (submitForm)="onSubmit()"></app-comment-form>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
     "module": "esnext",
-    "types": []
+    "types": [],
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts"

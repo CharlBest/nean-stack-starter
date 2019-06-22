@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import * as marked from 'marked';
+import { parse } from 'marked';
 import { environment } from '../../../../environments/environment';
 import { GitHubService } from '../github.service';
 
@@ -27,7 +27,7 @@ export class GitHubComponent implements OnInit {
 
   getMarkdownPage() {
     this.gitHubService.getFile(this.filePath).subscribe(data => {
-      this.readmeText = marked(data);
+      this.readmeText = parse(data);
       this.doneLoading.emit();
     });
   }

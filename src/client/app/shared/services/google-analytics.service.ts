@@ -29,7 +29,7 @@ export class GoogleAnalyticsService {
   // These gyrations are necessary to make the service e2e testable
   // and to disable ga tracking during e2e tests.
   private initializeGa() {
-    const ga = (window as any);
+    const ga = (window as any).ga;
     if (ga) {
       // Queue commands until GA analytics script has loaded.
       const gaQueue: any[][] = [];
@@ -39,7 +39,7 @@ export class GoogleAnalyticsService {
       // after waiting to allow possible e2e test to replace global ga function
       ga(() => setTimeout(() => {
         // this.logger.log('GA fn:', (window as any).toString());
-        this.ga = (window as any);
+        this.ga = (window as any).ga;
         gaQueue.forEach((command) => this.ga.apply(null, command));
       }, this.initializeDelay));
 

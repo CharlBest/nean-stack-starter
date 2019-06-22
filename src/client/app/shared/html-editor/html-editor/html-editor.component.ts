@@ -17,7 +17,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
     @Input() containsEmoji = false;
-    @Output() change: EventEmitter<string> = new EventEmitter<string>();
+    @Output() textChange: EventEmitter<string> = new EventEmitter<string>();
 
     editor: Quill;
     imageUploadProgressPercentage: Observable<number>;
@@ -63,7 +63,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         });
 
         this.editor.on('text-change', (delta, oldDelta, source) => {
-            this.change.emit(this.getInnerHTML());
+            this.textChange.emit(this.getInnerHTML());
         });
 
         if (this.htmlContent) {

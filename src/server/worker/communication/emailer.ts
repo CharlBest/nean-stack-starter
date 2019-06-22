@@ -32,7 +32,7 @@ class Emailer implements Email {
         // TODO: fix sendgrid bug with declaring substitution variables
         // html: {{username}}
         // url: /verify/{{emailVerifyCode}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Welcome',
             username: model.username,
             emailVerifyCode: model.verifyCode,
@@ -52,7 +52,7 @@ class Emailer implements Email {
         };
 
         // url: /forgot-password/reset?code={{verifyCode}}&email={{email}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Forgot Password',
             email: model.email,
             verifyCode: model.verifyCode,
@@ -72,7 +72,7 @@ class Emailer implements Email {
         };
 
         // html: {{content}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Feedback',
             content: model.content,
         };
@@ -91,7 +91,7 @@ class Emailer implements Email {
         };
 
         // url: /verify/{{verifyCode}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Email verification',
             verifyCode: model.verifyCode,
         };
@@ -110,7 +110,7 @@ class Emailer implements Email {
         };
 
         // html: {{amount}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Payment Successful',
             amount: model.amount,
         };
@@ -129,7 +129,7 @@ class Emailer implements Email {
         };
 
         // html: {{email}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Password Updated',
         };
 
@@ -147,7 +147,7 @@ class Emailer implements Email {
             isMultiple: true,
         };
 
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Invite',
         };
 
@@ -164,7 +164,7 @@ class Emailer implements Email {
             templateId: environment.sendGrid.templates.notification,
         };
 
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'Notification',
             title: model.title,
             body: model.body
@@ -199,7 +199,7 @@ class Emailer implements Email {
         }
 
         // html: {{data}}
-        data['dynamic_template_data'] = {
+        data.dynamicTemplateData = {
             subject: 'System',
             data: content,
         };
