@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -18,6 +17,7 @@ import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
+import { IconsModule } from '../shared/icons/icons.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
@@ -38,7 +38,6 @@ const materialModules = [
   MatButtonModule,
   MatCardModule,
   MatProgressSpinnerModule,
-  MatIconModule,
   MatSnackBarModule,
   MatTooltipModule,
   MatInputModule,
@@ -65,6 +64,7 @@ const materialModules = [
     HTMLEditorModule,
     StripeElementsModule,
     ContextMenuModule,
+    IconsModule,
     ...materialModules
   ],
   declarations: [

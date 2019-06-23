@@ -4,9 +4,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import * as emojione from 'emojione';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
-import { EmojiCategory, EmojiData } from './emoji.model';
-
-declare function require(moduleName: string): any;
+import { EmojiCategory, EmojiCategoryName, EmojiData, EmojiJsonFile } from './emoji.model';
 
 @Component({
   selector: 'app-emoji-panel',
@@ -14,37 +12,40 @@ declare function require(moduleName: string): any;
   styleUrls: ['./emoji-panel.component.scss']
 })
 export class EmojiPanelComponent implements OnInit {
-  file: Array<EmojiData> = require('../../../../../../node_modules/emojione-assets/emoji.json');
+  file: EmojiJsonFile;
   @Input() closeOnInsert = false;
   @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
   isPanelForWebOpen = false;
+  emojiCategoryName = EmojiCategoryName;
 
   emojiCategories = [
-    new EmojiCategory('people', 'Smileys & People', 'tag_faces'),
-    new EmojiCategory('nature', 'Animals & Nature', 'pets'),
-    new EmojiCategory('food', 'Food & Drink', 'free_breakfast'),
-    new EmojiCategory('activity', 'Activity', 'beach_access'),
-    new EmojiCategory('travel', 'Travel & Places', 'directions_car'),
-    new EmojiCategory('objects', 'Objects', 'lightbulb_outline'),
-    new EmojiCategory('symbols', 'Symbols', 'priority_high'),
-    new EmojiCategory('flags', 'Flags', 'flag'),
+    new EmojiCategory(EmojiCategoryName.PEOPLE),
+    new EmojiCategory(EmojiCategoryName.NATURE),
+    new EmojiCategory(EmojiCategoryName.FOOD),
+    new EmojiCategory(EmojiCategoryName.ACTIVITY),
+    new EmojiCategory(EmojiCategoryName.TRAVEL),
+    new EmojiCategory(EmojiCategoryName.OBJECTS),
+    new EmojiCategory(EmojiCategoryName.SYMBOLS),
+    new EmojiCategory(EmojiCategoryName.FLAGS)
   ];
 
   constructor(public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
     private preventBackNavigationService: PreventBackNavigationService) { }
 
-  ngOnInit() {
-    this.render();
-  }
+  ngOnInit() { }
 
-  render() {
+  async render() {
     (emojione as any).sprites = true;
     (emojione as any).imagePathSVGSprites = './assets/emoji/';
 
+    // TODO: this should potentially move to a service as well as all in memory data like emojiData for when this comp
+    // is used on more than one page so that it can be reused rather than loading it again.
+    this.file = await import('../../../../../../node_modules/emojione-assets/emoji.json');
+
     for (const key in this.file) {
-      if (this.file.hasOwnProperty(key) && this.file[key].diversity === null && this.file[key].category !== 'regional' &&
+      if (this.file[key].diversity === null && this.file[key].category !== 'regional' &&
         this.file[key].category !== 'modifier') {
         const tab = this.emojiCategories.find(emoji => emoji.category === this.file[key].category);
         if (tab) {
@@ -70,6 +71,10 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   openPanel() {
+    if (!this.file) {
+      this.render();
+    }
+
     if (this.bpService.isDesktop) {
       this.isPanelForWebOpen = true;
     } else {

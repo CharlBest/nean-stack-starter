@@ -4,7 +4,7 @@
     type="button"
     matTooltip="User data"
     aria-label="User data">
-    <mat-icon>graphic_eq</mat-icon>
+    <app-icon-graphic-eq></app-icon-graphic-eq>
   </button>
 </ng-template>
 
@@ -17,28 +17,28 @@
       <app-context-menu #contextMenu>
         <mat-nav-list>
           <mat-list-item (click)="resendEmailVerificationLink()">
-            <mat-icon mat-list-icon>mail</mat-icon>
+            <app-icon-mail mat-list-icon></app-icon-mail>
             <span mat-line>Resend email verification</span>
           </mat-list-item>
           <mat-list-item (click)="copyLink()">
-            <mat-icon mat-list-icon>link</mat-icon>
+            <app-icon-link mat-list-icon></app-icon-link>
             <span mat-line>Copy link to User</span>
           </mat-list-item>
           <mat-list-item (click)="openShareDialog()">
-            <mat-icon mat-list-icon>share</mat-icon>
+            <app-icon-share mat-list-icon></app-icon-share>
             <span mat-line>Share</span>
           </mat-list-item>
           <mat-list-item *ngIf="!user.emailVerified"
             (click)="reportUser()">
-            <mat-icon mat-list-icon>report</mat-icon>
+            <app-icon-report mat-list-icon></app-icon-report>
             <span mat-line>Report</span>
           </mat-list-item>
           <mat-list-item (click)="profileTour()">
-            <mat-icon mat-list-icon>info_outline</mat-icon>
+            <app-icon-info mat-list-icon></app-icon-info>
             <span mat-line>Profile Tour</span>
           </mat-list-item>
           <mat-list-item (click)="goToDeleteAccount()">
-            <mat-icon mat-list-icon>delete</mat-icon>
+            <app-icon-delete mat-list-icon></app-icon-delete>
             <span mat-line>Delete account</span>
           </mat-list-item>
         </mat-nav-list>
@@ -47,12 +47,12 @@
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     <mat-card-content>
       <div>Email verified:
-        <mat-icon *ngIf="user.emailVerified"
+        <app-icon-done *ngIf="user.emailVerified"
           [inline]="true"
-          class="email-verified">done</mat-icon>
-        <mat-icon *ngIf="!user.emailVerified"
+          class="email-verified"></app-icon-done>
+        <app-icon-close *ngIf="!user.emailVerified"
           [inline]="true"
-          color="warn">close</mat-icon>
+          color="warn"></app-icon-close>
       </div>
       <div>Sign-up date: {{user.dateCreated | date}}</div>
     </mat-card-content>

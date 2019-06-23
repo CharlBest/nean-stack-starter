@@ -7,7 +7,7 @@
         <ng-template #defaultAvatar>
             <span mat-card-avatar
                 class="default-avatar">
-                <mat-icon>account_circle</mat-icon>
+                <app-icon-account-circle></app-icon-account-circle>
             </span>
         </ng-template>
     </span>
@@ -17,8 +17,8 @@
             <a class="username"
                 routerLink="/user/{{comment?.user?.id}}">
                 {{comment?.user?.username}}
-                <mat-icon [inline]="true"
-                    *ngIf="itemUserId === comment?.user?.id">done</mat-icon>
+                <app-icon-done [inline]="true"
+                    *ngIf="itemUserId === comment?.user?.id"></app-icon-done>
                 &nbsp;&middot;&nbsp;
             </a>
             <span class="date">{{comment.dateCreated | date:'HH:mm MMM d, y'}}</span>
@@ -31,26 +31,26 @@
         <app-context-menu #contextMenu>
             <mat-nav-list>
                 <mat-list-item (click)="copyLink()">
-                    <mat-icon mat-list-icon>link</mat-icon>
+                    <app-icon-link mat-list-icon></app-icon-link>
                     <span mat-line>Copy link to Comment</span>
                 </mat-list-item>
                 <mat-list-item (click)="openShareDialog()">
-                    <mat-icon mat-list-icon>share</mat-icon>
+                    <app-icon-share mat-list-icon></app-icon-share>
                     <span mat-line>Share</span>
                 </mat-list-item>
                 <mat-list-item *ngIf="comment?.user?.id === loggedInUserId"
                     (click)="goToEdit()">
-                    <mat-icon mat-list-icon>edit</mat-icon>
+                    <app-icon-edit mat-list-icon></app-icon-edit>
                     <span mat-line>Edit</span>
                 </mat-list-item>
                 <mat-list-item (click)="deleteComment()"
                     *ngIf="comment?.user?.id === loggedInUserId">
-                    <mat-icon mat-list-icon
-                        color="warn">delete</mat-icon>
+                    <app-icon-delete mat-list-icon
+                        color="warn"></app-icon-delete>
                     <span mat-line>Delete</span>
                 </mat-list-item>
                 <mat-list-item (click)="reportComment()">
-                    <mat-icon mat-list-icon>report</mat-icon>
+                    <app-icon-report mat-list-icon></app-icon-report>
                     <span mat-line>Report</span>
                 </mat-list-item>
             </mat-nav-list>
@@ -65,7 +65,7 @@
         (click)="openContextMenu($event)"
         matTooltip="Menu"
         aria-label="Menu">
-        <mat-icon>more_vert</mat-icon>
+        <app-icon-more-vert></app-icon-more-vert>
 </button> -->
 
 <mat-spinner *ngIf="isProcessing && !comment"></mat-spinner>

@@ -3,12 +3,12 @@
         <mat-card-content>
 
             <div class="info-tooltip-container">
-                <mat-icon matTooltipClass="info-tooltip"
+                <app-icon-info matTooltipClass="info-tooltip"
                     matTooltip="Demo:
                     Card number: 4242 4242 4242 4242
                     Expire date: Any future date 
                     CVC: Any 3 degit number
-                    Zip: Any 5 degit number">info_outline</mat-icon>
+                    Zip: Any 5 degit number"></app-icon-info>
             </div>
 
             <mat-form-field appearance="fill"
@@ -91,7 +91,7 @@
 <mat-card *ngIf="!isProcessing && paymentSuccess">
     <mat-card-content>
         <div class="payment-successful-container">
-            <mat-icon>check_circle</mat-icon>
+            <app-icon-check-circle></app-icon-check-circle>
             <br>
             <p>Payment successful</p>
         </div>

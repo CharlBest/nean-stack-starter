@@ -6,7 +6,7 @@
         <mat-chip *ngFor="let email of emails"
           (removed)="remove(email)">
           {{email}}
-          <mat-icon matChipRemove>cancel</mat-icon>
+          <app-icon-cancel matChipRemove></app-icon-cancel>
         </mat-chip>
 
         <input #emailsInput

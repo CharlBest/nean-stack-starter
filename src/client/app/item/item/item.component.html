@@ -11,7 +11,7 @@
                     <ng-template #defaultAvatar>
                         <div mat-card-avatar
                             class="default-avatar">
-                            <mat-icon>account_circle</mat-icon>
+                            <app-icon-account-circle></app-icon-account-circle>
                         </div>
                     </ng-template>
 
@@ -25,37 +25,37 @@
             <app-context-menu #contextMenu>
                 <mat-nav-list>
                     <mat-list-item (click)="copyLink()">
-                        <mat-icon mat-list-icon>link</mat-icon>
+                        <app-icon-link mat-list-icon></app-icon-link>
                         <span mat-line>Copy link to Item</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="loggedInUserId"
                         (click)="subscribeToItem($event)">
-                        <mat-icon mat-list-icon
-                            *ngIf="!item?.subscribed">notifications</mat-icon>
-                        <mat-icon mat-list-icon
+                        <app-icon-notifications mat-list-icon
+                            *ngIf="!item?.subscribed"></app-icon-notifications>
+                        <app-icon-notifications-active mat-list-icon
                             *ngIf="item?.subscribed"
-                            color="accent">notifications_active</mat-icon>
+                            color="accent"></app-icon-notifications-active>
                         <span mat-line>Subscribe</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="loggedInUserId"
                         (click)="favouriteItem($event)">
-                        <mat-icon mat-list-icon
-                            [color]="item?.favourite ? 'accent' : ''">star</mat-icon>
+                        <app-icon-star mat-list-icon
+                            [color]="item?.favourite ? 'accent' : ''"></app-icon-star>
                         <span mat-line>Save</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="item?.user?.id === loggedInUserId"
                         (click)="goToComments()">
-                        <mat-icon mat-list-icon>edit</mat-icon>
+                        <app-icon-edit mat-list-icon></app-icon-edit>
                         <span mat-line>Edit</span>
                     </mat-list-item>
                     <mat-list-item (click)="deleteItem()"
                         *ngIf="item?.user?.id === loggedInUserId">
-                        <mat-icon mat-list-icon
-                            color="warn">delete</mat-icon>
+                        <app-icon-delete mat-list-icon
+                            color="warn"></app-icon-delete>
                         <span mat-line>Delete</span>
                     </mat-list-item>
                     <mat-list-item (click)="reportItem()">
-                        <mat-icon mat-list-icon>report</mat-icon>
+                        <app-icon-report mat-list-icon></app-icon-report>
                         <span mat-line>Report</span>
                     </mat-list-item>
                 </mat-nav-list>
@@ -71,14 +71,14 @@
                     type="button"
                     matTooltip="Previous"
                     aria-label="Previous">
-                    <mat-icon>keyboard_arrow_left</mat-icon>
+                    <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
                 </button>
                 <button mat-icon-button
                     (click)="mediaNext()"
                     type="button"
                     matTooltip="Next"
                     aria-label="Next">
-                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
                 </button>
             </div>
 
@@ -106,13 +106,13 @@
             routerLink="/item/comments/{{item.uId}}"
             *ngIf="!isViewingComments"
             type="button">
-            <mat-icon>mode_comment</mat-icon>
+            <app-icon-mode-comment></app-icon-mode-comment>
             Comment
         </button>
         <button mat-button
             (click)="openShareDialog()"
             type="button">
-            <mat-icon>share</mat-icon>
+            <app-icon-share></app-icon-share>
             Share
         </button>
     </mat-card-actions>

@@ -5,16 +5,15 @@ import { NgModule } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { IconsModule } from '../icons/icons.module';
 import { EmojiPanelDirective } from './emoji-panel.directive';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
 const materialModules = [
   MatTabsModule,
-  MatIconModule,
   MatButtonModule,
   MatTooltipModule,
   MatCardModule,
@@ -27,6 +26,7 @@ const materialModules = [
     CommonModule,
     OverlayModule,
     A11yModule,
+    IconsModule,
     ...materialModules
   ],
   declarations: [

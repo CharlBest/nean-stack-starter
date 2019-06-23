@@ -1,20 +1,29 @@
-export class EmojiCategory {
-    category: string;
-    tabLabelText: string;
-    tabLabelIcon: string;
-    emojiData: Array<{ key: string, value: EmojiData }>;
+export interface EmojiJsonFile {
+    [key: string]: EmojiData | any;
+}
 
-    constructor(category: string, tabLabelText: string, tabLabelIcon: string) {
-        this.category = category;
-        this.tabLabelText = tabLabelText;
-        this.tabLabelIcon = tabLabelIcon;
-        this.emojiData = [];
-    }
+export enum EmojiCategoryName {
+    PEOPLE = 'people',
+    NATURE = 'nature',
+    FOOD = 'food',
+    ACTIVITY = 'activity',
+    TRAVEL = 'travel',
+    OBJECTS = 'objects',
+    SYMBOLS = 'symbols',
+    FLAGS = 'flags',
+    REGIONAL = 'regional',
+    MODIFIER = 'modifier',
+}
+
+export class EmojiCategory {
+    emojiData: Array<{ key: string, value: EmojiData }> = [];
+
+    constructor(public category: EmojiCategoryName) { }
 }
 
 export interface EmojiData {
     ascii: Array<string>;
-    category: string;
+    category: EmojiCategoryName;
     code_points: {
         base: string;
         decimal: string;

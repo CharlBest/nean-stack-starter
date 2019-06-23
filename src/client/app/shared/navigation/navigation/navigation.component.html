@@ -29,7 +29,7 @@
         type="button"
         matTooltip="Back"
         aria-label="Back">
-        <mat-icon>arrow_back</mat-icon>
+        <app-icon-arrow-back></app-icon-arrow-back>
       </button>
 
       <a mat-button>
@@ -53,34 +53,33 @@
   <a mat-button
     routerLink="/"
     [ngClass]="navItems['home'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <mat-icon>home</mat-icon>
+    <app-icon-home></app-icon-home>
     <div>Home</div>
   </a>
   <a mat-button
     routerLink="/search"
     [ngClass]="navItems['search'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <mat-icon>search</mat-icon>
+    <app-icon-search></app-icon-search>
     <div>Seach</div>
   </a>
   <a mat-button
     routerLink="/item/create"
     [ngClass]="navItems['createItem'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <mat-icon>edit</mat-icon>
+    <app-icon-edit></app-icon-edit>
     <div>Create</div>
   </a>
   <a mat-button
     routerLink="/activity"
     [ngClass]="navItems['activity'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <mat-icon matBadge="{{notificationService.messages?.length}}"
+    <app-icon-notifications matBadge="{{notificationService.messages?.length}}"
       matBadgeColor="warn"
-      [matBadgeHidden]="notificationService.messages?.length <= 0">
-      notifications</mat-icon>
+      [matBadgeHidden]="notificationService.messages?.length <= 0"></app-icon-notifications>
     <div>Activity</div>
   </a>
   <a mat-button
     routerLink="/account"
     [ngClass]="navItems['account'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <mat-icon>person</mat-icon>
+    <app-icon-person></app-icon-person>
     <div>Account</div>
   </a>
 </ng-template>

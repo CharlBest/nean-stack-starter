@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -11,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
+import { IconsModule } from '../shared/icons/icons.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
@@ -33,7 +33,6 @@ const materialModules = [
   MatProgressSpinnerModule,
   MatMenuModule,
   MatListModule,
-  MatIconModule,
   MatTooltipModule,
 ];
 
@@ -47,6 +46,7 @@ const materialModules = [
     ReactiveFormsModule,
     FormErrorsModule,
     ContextMenuModule,
+    IconsModule,
     ...materialModules
   ],
   declarations: [

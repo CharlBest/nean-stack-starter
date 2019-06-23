@@ -172,21 +172,27 @@ body {
 		font-size: 75%;
 		padding: 0 1em;
 	}
-}
 
-// Override Quill toolbar with white icons when in night mode (Dark theme)
-.dark-theme app-html-editor {
-	.ql-editor.ql-blank::before {
-		color: white;
-	}
+	.app-icon {
+		display: inline-block;
+		fill: currentColor;
+		height: 24px;
+		width: 24px;
 
-	.ql-toolbar button {
-		mat-icon {
-			color: #fff;
+		circle {
+			fill: currentColor;
 		}
 
-		&.ql-active mat-icon {
-			color: #06c;
+		&.primary svg {
+			fill: $primary-color;
+		}
+
+		&.accent svg {
+			fill: $accent-color;
+		}
+
+		&.warn svg {
+			fill: $warn-color;
 		}
 	}
 }

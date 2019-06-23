@@ -2,11 +2,11 @@
   *ngIf="verifyResult !== null">
   <mat-card-content>
     <div *ngIf="verifyResult">
-      <mat-icon>done</mat-icon>
+      <app-icon-done></app-icon-done>
       <span>Email verification successful</span>
     </div>
     <div *ngIf="!verifyResult">
-      <mat-icon>error_outline</mat-icon>
+      <app-icon-error-outline></app-icon-error-outline>
       <span>Email verification error</span>
     </div>
 

@@ -21,7 +21,7 @@
               <app-card-brand *ngIf="card.brand"
                 [cardBrandString]="card.brand"></app-card-brand>
 
-              <mat-icon *ngIf="!card.brand">credit_card</mat-icon>
+              <app-icon-credit-card *ngIf="!card.brand"></app-icon-credit-card>
             </td>
             <td>**** {{card.last4}}</td>
             <td>
@@ -40,7 +40,7 @@
                 type="button"
                 matTooltip="Delete"
                 aria-label="Delete">
-                <mat-icon>delete</mat-icon>
+                <app-icon-delete></app-icon-delete>
               </button>
             </td>
           </tr>

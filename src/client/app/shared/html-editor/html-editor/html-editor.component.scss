@@ -1,5 +1,35 @@
 @import 'quill/dist/quill.snow.css';
+$quillToolbarIconHoverColor: #06c;
 
-:host ::ng-deep .ql-tooltip {
-	z-index: 2;
+// Light theme
+app-html-editor .ql-toolbar button {
+	&:hover .html-editor-toolbar-icon svg {
+		fill: rgb(68, 68, 68);
+	}
+
+	&.ql-active .html-editor-toolbar-icon svg {
+		fill: $quillToolbarIconHoverColor;
+	}
+}
+
+
+// Dark theme
+.dark-theme app-html-editor {
+	.ql-editor.ql-blank::before {
+		color: white;
+	}
+
+	.ql-toolbar button {
+		.html-editor-toolbar-icon svg {
+			fill: #fff;
+		}
+
+		&:hover .html-editor-toolbar-icon svg {
+			fill: rgb(200, 200, 200);
+		}
+
+		&.ql-active .html-editor-toolbar-icon svg {
+			fill: $quillToolbarIconHoverColor;
+		}
+	}
 }
