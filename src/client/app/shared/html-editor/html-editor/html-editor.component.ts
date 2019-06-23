@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, SecurityContext, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, SecurityContext, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
@@ -8,7 +8,8 @@ import { FirebaseStorageService } from '../../services/firebase-storage.service'
 @Component({
     selector: 'app-html-editor',
     templateUrl: './html-editor.component.html',
-    styleUrls: ['./html-editor.component.scss']
+    styleUrls: ['./html-editor.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class HTMLEditorComponent implements AfterViewInit {
 
