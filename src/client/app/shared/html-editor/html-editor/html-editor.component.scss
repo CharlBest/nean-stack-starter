@@ -1,14 +1,9 @@
 @import 'quill/dist/quill.snow.css';
-$quillToolbarIconHoverColor: #06c;
 
 // Light theme
 app-html-editor .ql-toolbar button {
-	&:hover .html-editor-toolbar-icon svg {
-		fill: rgb(68, 68, 68);
-	}
-
-	&.ql-active .html-editor-toolbar-icon svg {
-		fill: $quillToolbarIconHoverColor;
+	&:hover svg {
+		opacity: 0.5;
 	}
 }
 
@@ -16,20 +11,12 @@ app-html-editor .ql-toolbar button {
 // Dark theme
 .dark-theme app-html-editor {
 	.ql-editor.ql-blank::before {
-		color: white;
+		color: #fff;
 	}
 
 	.ql-toolbar button {
-		.html-editor-toolbar-icon svg {
+		svg {
 			fill: #fff;
-		}
-
-		&:hover .html-editor-toolbar-icon svg {
-			fill: rgb(200, 200, 200);
-		}
-
-		&.ql-active .html-editor-toolbar-icon svg {
-			fill: $quillToolbarIconHoverColor;
 		}
 	}
 }

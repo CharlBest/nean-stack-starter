@@ -197,6 +197,15 @@ body {
 	}
 }
 
+// Quill overrides
+app-html-editor .ql-toolbar button.ql-active svg {
+	fill: $primary-color;
+}
+
+.dark-theme app-html-editor .ql-toolbar button.ql-active svg {
+	fill: $primary-color;
+}
+
 // Stripe element override if dark theme
 .dark-theme .stripe-element {
 	border-color: rgba(255, 255, 255, 0.7) !important;

@@ -51,7 +51,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         // Override toolbar icons
         const icons = Quill.import('ui/icons');
         function buildToolbarIcon(svg: string, title: string): string {
-            return `<span class="html-editor-toolbar-icon" title="${title}">${svg}</span>`;
+            return `<span title="${title}">${svg}</span>`;
         }
         // tslint:disable-next-line: max-line-length
         icons.bold = buildToolbarIcon(this.svgIconBold, 'Bold');
