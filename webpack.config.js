@@ -14,7 +14,8 @@ const config = {
         // vendor: './vendor.ts'
     },
     target: 'node',
-    externals: [nodeExternals()],
+    // Uncomment if you want to exclude node_modules and commonjs libs
+    // externals: [nodeExternals()],
     output: {
         path: path.resolve('./dist/server'),
         filename: '[name]/[name].bundle.js',
