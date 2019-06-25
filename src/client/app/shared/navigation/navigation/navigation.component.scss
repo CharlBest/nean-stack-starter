@@ -15,18 +15,18 @@ header {
 }
 
 .navigation {
-	padding: 0;
 	width: 100%;
 	display: flex;
-	margin: 0;
 	justify-content: space-around;
-	border-radius: 0;
 	z-index: 2;
 	align-items: center;
 
 	&.bottom {
+		background-color: var(--background-color);
+		color: var(--foreground-color);
 		position: fixed;
 		bottom: 0;
+		border: 1px solid #ececec;
 	}
 
 	a {

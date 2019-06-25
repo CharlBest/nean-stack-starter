@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,7 +13,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 const materialModules = [
   MatButtonModule,
   MatSnackBarModule,
-  MatCardModule,
   MatToolbarModule,
   MatTooltipModule,
   MatBadgeModule,

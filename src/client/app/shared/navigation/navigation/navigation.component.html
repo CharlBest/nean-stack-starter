@@ -43,10 +43,10 @@
 <div [style.height.px]="toolbarHeight"></div>
 
 <!-- Bottom Nav -->
-<mat-card *ngIf="!bpService.isDesktop"
+<div *ngIf="!bpService.isDesktop"
   class="navigation bottom">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
-</mat-card>
+</div>
 
 <!-- Nav links -->
 <ng-template #navLinks>

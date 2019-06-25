@@ -2,6 +2,10 @@
 
 // Light theme
 app-html-editor .ql-toolbar button {
+	&.ql-active svg {
+		fill: var(--primary-color);
+	}
+
 	&:hover svg {
 		opacity: 0.5;
 	}
@@ -12,6 +16,10 @@ app-html-editor .ql-toolbar button {
 .dark-theme app-html-editor {
 	.ql-editor.ql-blank::before {
 		color: #fff;
+	}
+
+	&.ql-active svg {
+		fill: var(--primary-color);
 	}
 
 	.ql-toolbar button {

@@ -20,6 +20,24 @@
 	src: local('Open Sans Bold'), local('OpenSans-Bold'), url('assets/open-sans-v15-latin-700.woff2') format('woff2'), url('assets/open-sans-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+// Global color variables
+:root {
+	--primary-color: #{$app-primary-color};
+	--accent-color: #{$app-accent-color};
+	--warn-color: #{$app-warn-color};
+	--background-color: #{$app-background-color};
+	--foreground-color: #{$app-foreground-color};
+}
+
+// Global color variables for dark theme
+.dark-theme {
+	--primary-color: #{$dark-primary-color};
+	--accent-color: #{$dark-accent-color};
+	--warn-color: #{$dark-warn-color};
+	--background-color: #{$dark-background-color};
+	--foreground-color: #{$dark-foreground-color};
+}
+
 // Body rule
 body {
 	margin: 0;
@@ -32,7 +50,7 @@ body {
 
 		// Validation
 		.validation-message {
-			color: red;
+			color: var(--warn-color);
 		}
 
 		app-show-errors ul {
@@ -70,11 +88,6 @@ body {
 		mat-spinner {
 			margin: 0 auto;
 		}
-
-		// Change color of visited links to primary theme color
-		// a:visited {
-		//     color: mat-color($app-primary);
-		// }
 
 		// Styling for all injected emoji
 		.emoji-input {
@@ -184,26 +197,17 @@ body {
 		}
 
 		&.primary svg {
-			fill: $primary-color;
+			fill: var(--primary-color);
 		}
 
 		&.accent svg {
-			fill: $accent-color;
+			fill: var(--accent-color);
 		}
 
 		&.warn svg {
-			fill: $warn-color;
+			fill: var(--warn-color);
 		}
 	}
-}
-
-// Quill overrides
-app-html-editor .ql-toolbar button.ql-active svg {
-	fill: $primary-color;
-}
-
-.dark-theme app-html-editor .ql-toolbar button.ql-active svg {
-	fill: $primary-color;
 }
 
 // Stripe element override if dark theme
