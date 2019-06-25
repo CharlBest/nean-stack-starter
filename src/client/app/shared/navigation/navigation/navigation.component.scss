@@ -9,6 +9,22 @@ header {
 	transition: top 0.3s;
 	z-index: 2;
 
+	.toolbar {
+		background-color: var(--primary-color);
+		color: var(--background-color);
+		display: flex;
+		box-sizing: border-box;
+		padding: 0 16px;
+		width: 100%;
+		flex-direction: row;
+		align-items: center;
+		white-space: nowrap;
+
+		&.bottom {
+			color: var(--foreground-color);
+		}
+	}
+
 	a {
 		font-weight: bold;
 	}

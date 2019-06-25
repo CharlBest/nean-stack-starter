@@ -2,9 +2,9 @@
   [style.height.px]="toolbarHeight">
 
   <!-- Main nav -->
-  <mat-toolbar *ngIf="navigationType.Primary === activeNavigation"
+  <div *ngIf="navigationType.Primary === activeNavigation"
     [style.height.px]="toolbarHeight"
-    color="primary">
+    class="toolbar">
     <a mat-button
       routerLink="/">
       <img class="logo"
@@ -18,16 +18,15 @@
         <ng-container *ngTemplateOutlet="navLinks"></ng-container>
       </div>
     </ng-container>
-  </mat-toolbar>
+  </div>
 
   <!-- Back nav -->
-  <mat-toolbar *ngIf="navigationType.Back === activeNavigation"
+  <div *ngIf="navigationType.Back === activeNavigation"
     [style.height.px]="toolbarHeight"
-    color="primary">
+    class="toolbar">
     <div (click)="back()">
       <button mat-icon-button
         type="button"
-        matTooltip="Back"
         aria-label="Back">
         <app-icon-arrow-back></app-icon-arrow-back>
       </button>
@@ -38,7 +37,7 @@
     </div>
     <span class="flex-spacer"></span>
     <ng-container *ngTemplateOutlet="navigationService.navigationPlaceholderTemplate"></ng-container>
-  </mat-toolbar>
+  </div>
 </header>
 <div [style.height.px]="toolbarHeight"></div>
 
