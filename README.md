@@ -939,6 +939,13 @@ Navigate to localhost:15672 in your browser
 * docker logs (/var/lib/docker/containers/<CONTAINER_ID>/<CONTAINER_ID>-json.log)
 
 ## Copy file to VM
+#### WinSCP
+https://winscp.net/eng/download.php
+
+#### OR
+
+#### GCloud CLI
+
 ```sh
 gcloud compute scp --recurse <FROM_DIR> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/nean.io/
 ```
@@ -997,9 +1004,7 @@ npm install
 ## Deploy initial version/dist
 * go to local version
 * npm run build
-```sh
-gcloud compute scp --recurse <FROM_DIR_ENDING_IN_BACK_SLASH> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain
-```
+* copy over dist folder via WinSCP
 
 ## Docker
 ### Edit docker-compose.yml
@@ -1032,14 +1037,9 @@ git merge upstream/master
 npm run build
 ```
 
-Remote server
-```sh
-cd /var/www/nean.io/appname
-rm -rf dist
-mkdir dist
-```
-
-Local
-```sh
-gcloud compute scp --recurse <FROM_DIR_ENDING_IN_BACK_SLASH> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/domain.com/subdomain
-```
+Server
+* Open WinSCP
+* Rename local dist to newdist
+* copy over newdist to server next to dist
+* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && rm -rf olddist
+* pm2 restart all
