@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   formGroup: FormGroup;
   isProcessing = false;
-  returnUrl = '/profile';
+  returnUrl = '/';
   tutorialTypeEnum = TutorialType;
 
   constructor(private fb: FormBuilder,
