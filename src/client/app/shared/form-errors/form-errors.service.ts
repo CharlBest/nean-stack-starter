@@ -1,16 +1,26 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ErrorModel, GlobalError } from '../../../../shared/models/shared/error.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormErrorsService {
+export class FormErrorsService implements OnDestroy {
 
-  globalErrors: GlobalError;
+  private routerEventsSubscription: Subscription;
+  globalErrors: GlobalError | null;
 
-  constructor() { }
+  constructor(private router: Router) {
+    this.routerEventsSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.globalErrors = null;
+      });
+  }
 
   updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup | null = null) {
     if (errorResponse.status === 400) {
@@ -32,6 +42,12 @@ export class FormErrorsService {
 
         this.globalErrors = errors.globalErrors;
       }
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
     }
   }
 }
