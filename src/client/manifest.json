@@ -21,8 +21,8 @@
   "description": "NEAN stack starter",
   "share_target": {
     "action": "create/item",
-    "enctype": "application/x-www-form-urlencoded",
-    "method": "GET",
+    "enctype": "multipart/form-data",
+    "method": "POST",
     "params": {
       "title": "title",
       "text": "text",
