@@ -35,7 +35,8 @@
                         <app-icon-notifications-active mat-list-icon
                             *ngIf="item?.subscribed"
                             color="accent"></app-icon-notifications-active>
-                        <span mat-line>Subscribe</span>
+                        <span mat-line>Subscribe
+                            {{item?.subscriptionCount > 0 ? '(' + item?.subscriptionCount + ')' : '' }}</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="loggedInUserId"
                         (click)="favouriteItem($event)">
@@ -107,7 +108,7 @@
             *ngIf="!isViewingComments"
             type="button">
             <app-icon-mode-comment></app-icon-mode-comment>
-            Comment
+            Comment {{item?.commentCount > 0 ? '(' + item?.commentCount + ')' : '' }}
         </button>
         <button mat-button
             (click)="openShareDialog()"
