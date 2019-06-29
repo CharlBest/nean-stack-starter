@@ -14,13 +14,13 @@
 
     <div class="content">
         <div>
-            <a class="username"
+            <div class="username"
                 routerLink="/user/{{comment?.user?.id}}">
                 {{comment?.user?.username}}
                 <app-icon-done [inline]="true"
                     *ngIf="itemUserId === comment?.user?.id"></app-icon-done>
                 &nbsp;&middot;&nbsp;
-            </a>
+            </div>
             <span class="date">{{comment.dateCreated | date:'HH:mm MMM d, y'}}</span>
         </div>
 

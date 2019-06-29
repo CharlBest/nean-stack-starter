@@ -87,12 +87,12 @@
                 alt="item image">
         </div>
 
-        <a routerLink="/item/comments/{{item.uId}}"
+        <div routerLink="/item/comments/{{item.uId}}"
             class="body">
             <h3>{{item.title}}</h3>
 
             <p #description>{{item.description}}</p>
-        </a>
+        </div>
 
         <div class="more-button-container">
             <button mat-button
