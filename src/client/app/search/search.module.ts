@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
+import { IconsModule } from '../shared/icons/icons.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
 
@@ -22,6 +23,7 @@ const materialModules = [
     SearchRoutingModule,
     ReactiveFormsModule,
     FormErrorsModule,
+    IconsModule,
     ...materialModules
   ],
   declarations: [

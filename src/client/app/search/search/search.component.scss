@@ -1,0 +1,17 @@
+:host {
+	display: flex;
+	align-items: center;
+}
+
+button {
+	margin-top: -20px;
+}
+
+form {
+	display: inline-block;
+	width: 100%;
+
+	mat-form-field {
+		width: 100%;
+	}
+}

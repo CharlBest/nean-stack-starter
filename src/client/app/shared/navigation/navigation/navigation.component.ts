@@ -21,7 +21,7 @@ export class NavigationComponent implements OnInit {
   @ViewChild('navbar', { static: true }) navbar: ElementRef<HTMLDivElement>;
 
   loggedInUserId = this.authService.getLoggedInUserId();
-  activeNavigation: NavigationType;
+  activeNavigation: NavigationType | undefined;
   navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string | null;
@@ -104,10 +104,7 @@ export class NavigationComponent implements OnInit {
             this.headerBackTitle = title;
           }
 
-          const nav = event.snapshot.data.nav as NavigationType;
-          if (nav) {
-            this.activeNavigation = nav;
-          }
+          this.activeNavigation = event.snapshot.data.nav as NavigationType;
           const backRouterPath = event.snapshot.data.backRouterPath || this.navigationService.backRouterPath;
           if (backRouterPath) {
             this.backRouterPath = backRouterPath;

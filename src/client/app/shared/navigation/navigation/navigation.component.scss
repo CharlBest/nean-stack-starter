@@ -1,7 +1,3 @@
-:host {
-	margin-bottom: 10px;
-}
-
 header {
 	position: fixed;
 	top: 0;
@@ -28,6 +24,10 @@ header {
 	a {
 		font-weight: bold;
 	}
+}
+
+.header-push {
+	margin-bottom: 10px;
 }
 
 .navigation {

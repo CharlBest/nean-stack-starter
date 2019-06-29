@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -16,7 +17,8 @@ export class SearchComponent implements OnInit {
   constructor(public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
     private fb: FormBuilder,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+    private location: Location) { }
 
   ngOnInit() {
     this.formOnInit();
@@ -30,5 +32,9 @@ export class SearchComponent implements OnInit {
 
   onSubmit() {
     this.dialogService.alert('This feature is not yet implemented');
+  }
+
+  back() {
+    this.location.back();
   }
 }

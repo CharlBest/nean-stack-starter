@@ -39,7 +39,9 @@
     <ng-container *ngTemplateOutlet="navigationService.navigationPlaceholderTemplate"></ng-container>
   </div>
 </header>
-<div [style.height.px]="toolbarHeight"></div>
+<div *ngIf="activeNavigation"
+  [style.height.px]="toolbarHeight"
+  class="header-push"></div>
 
 <!-- Bottom Nav -->
 <div *ngIf="!bpService.isDesktop"
