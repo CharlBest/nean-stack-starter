@@ -116,21 +116,27 @@ export class StripeElementsComponent implements OnInit {
                     case 'visa':
                         elementWrapper.cardBrand = CardBrandType.Visa;
                         break;
+
                     case 'mastercard':
                         elementWrapper.cardBrand = CardBrandType.MasterCard;
                         break;
+
                     case 'amex':
                         elementWrapper.cardBrand = CardBrandType.AmericanExpress;
                         break;
+
                     case 'discover':
                         elementWrapper.cardBrand = CardBrandType.Discover;
                         break;
+
                     case 'diners':
                         elementWrapper.cardBrand = CardBrandType.DinnersClub;
                         break;
+
                     case 'jcb':
                         elementWrapper.cardBrand = CardBrandType.JCB;
                         break;
+
                     case 'unionpay':
                         elementWrapper.cardBrand = CardBrandType.UnionPay;
                         break;

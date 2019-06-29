@@ -30,6 +30,7 @@ export class FirebaseStorageService {
             switch (snapshot.state) {
                 case storage.TaskState.PAUSED:
                     break;
+
                 case storage.TaskState.RUNNING:
                     break;
             }
