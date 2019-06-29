@@ -17,7 +17,7 @@ export class EditItemComponent implements OnInit {
 
   @ViewChild('itemForm', { static: false }) itemForm: ItemFormComponent;
   itemUId: string | null;
-  isProcessing = true;
+  isProcessing = false;
   item: ItemViewModel;
   savedMedia: Array<string>;
 
@@ -28,6 +28,9 @@ export class EditItemComponent implements OnInit {
     private firebaseStorageService: FirebaseStorageService) { }
 
   ngOnInit() {
+    // TODO: not sure if there is a maximum stack size for state on browser history. Investigate?
+    this.item = history.state.item;
+
     this.getParams();
   }
 
@@ -35,7 +38,9 @@ export class EditItemComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params.has('uId')) {
         this.itemUId = params.get('uId');
-        this.getItem();
+        if (!this.item) {
+          this.getItem();
+        }
       }
     });
   }

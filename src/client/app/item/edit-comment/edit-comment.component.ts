@@ -16,7 +16,7 @@ export class EditCommentComponent implements OnInit {
 
   @ViewChild('commentForm', { static: false }) commentForm: CommentFormComponent;
   commentUId: string | null;
-  isProcessing = true;
+  isProcessing = false;
   comment: CommentViewModel;
 
   constructor(public formErrorsService: FormErrorsService,
@@ -25,6 +25,8 @@ export class EditCommentComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.comment = history.state.comment;
+
     this.getParams();
   }
 
@@ -32,7 +34,9 @@ export class EditCommentComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params.has('uId')) {
         this.commentUId = params.get('uId');
-        this.getComment();
+        if (!this.comment) {
+          this.getComment();
+        }
       }
     });
   }

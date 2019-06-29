@@ -101,6 +101,6 @@ export class CommentComponent implements OnInit {
 
   goToEdit() {
     this.contextMenu.close();
-    this.router.navigate(['/item/comment/edit', this.comment.uId]);
+    this.router.navigate(['/item/comment/edit', this.comment.uId], { state: { comment: this.comment } });
   }
 }

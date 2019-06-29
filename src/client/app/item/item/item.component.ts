@@ -175,7 +175,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
 
   goToComments() {
     this.contextMenu.close();
-    this.router.navigate(['/item/edit', this.item.uId]);
+    this.router.navigate(['/item/edit', this.item.uId], { state: { item: this.item } });
   }
 
   // #region Subscription
