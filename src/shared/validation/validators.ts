@@ -198,9 +198,7 @@ export class BuildFormGroup {
             title: [title, [
                 Validators.required
             ]],
-            description: [description, [
-                Validators.required
-            ]],
+            description: [description],
             media: [media]
         };
     }
