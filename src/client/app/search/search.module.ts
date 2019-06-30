@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ItemModule } from '../item/item.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { SearchRoutingModule } from './search-routing.module';
@@ -24,6 +25,7 @@ const materialModules = [
     ReactiveFormsModule,
     FormErrorsModule,
     IconsModule,
+    ItemModule,
     ...materialModules
   ],
   declarations: [

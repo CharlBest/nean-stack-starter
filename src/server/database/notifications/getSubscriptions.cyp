@@ -1,5 +1,5 @@
 export const data = `
-MATCH (users:User { id: {userId} })-[rel:SUBSCRIBED]->(items)
+MATCH (users:User { id: {userId} })-[rel:SUBSCRIBED]->(items:Item)
 
 RETURN properties(items) as items, users
 {

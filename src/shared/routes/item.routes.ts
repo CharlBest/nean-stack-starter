@@ -18,4 +18,5 @@ export class ItemRoutes {
     static deleteComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'deleteComment', { uId });
     static getComments = (uId?: string) => new BaseRoute(ItemRoutes.root, 'getComments', { uId });
     static getComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'getComment', { uId });
+    static search = () => new BaseRoute(ItemRoutes.root, 'search');
 }

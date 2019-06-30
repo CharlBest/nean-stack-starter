@@ -38,6 +38,8 @@ class ItemsRoutes extends BaseRoute {
             async (req, res, next) => itemsController.getComments(req, res, next).catch(next));
         this.router.get(ItemRoutes.getComment().server(),
             async (req, res, next) => itemsController.getComment(req, res, next).catch(next));
+        this.router.post(ItemRoutes.search().server(),
+            async (req, res, next) => itemsController.search(req, res, next).catch(next));
     }
 }
 

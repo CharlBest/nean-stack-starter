@@ -138,6 +138,13 @@ class Bootstrap {
 
         app.use(Neo4j.sessionSetup);
 
+        // Run setup queries (hack to run Lucene fulltext index creators but will throw error if they already exist)
+        // TODO: this might fill up the logs quickly as it will log this on every app startup
+        const session = Database.createSession();
+        try { await session.run(Database.queries.startup.itemTitleAndDescriptionIndex); } catch (e) { }
+        try { await session.run(Database.queries.startup.userEmailAndUsernameIndex); } catch (e) { }
+        session.close();
+
         app.use(Neo4j.sessionCleanup);
     }
 

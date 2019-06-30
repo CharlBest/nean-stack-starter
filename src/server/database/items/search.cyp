@@ -1,5 +1,7 @@
 export const data = `
-MATCH (users:User)-[:HAS_ITEM]->(items:Item)
+CALL db.index.fulltext.queryNodes('itemTitleAndDescription', {term}) YIELD node as items
+
+MATCH (users:User)-[:HAS_ITEM]->(items)
 
 OPTIONAL MATCH (:User { id: {userId} })-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (:User { id: {userId} })-[subscribed:SUBSCRIBED]->(items)

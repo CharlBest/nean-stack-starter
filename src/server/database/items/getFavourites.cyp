@@ -1,5 +1,5 @@
 export const data = `
-MATCH (users:User { id: {userId} })-[rel:HAS_FAVOURITE]->(items)
+MATCH (users:User { id: {userId} })-[rel:HAS_FAVOURITE]->(items:Item)
 
 RETURN properties(items) as items, users
 {

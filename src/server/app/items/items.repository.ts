@@ -307,6 +307,32 @@ class ItemsRepository extends BaseRepository {
             return null;
         }
     }
+
+    async search(res: Response, userId: number | null, term: string, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        const result = await res.locals.neo4jSession.run(Database.queries.items.search,
+            {
+                userId,
+                term,
+                pageIndex,
+                pageSize
+            }
+        );
+
+        const model = result.records.map(record => {
+            let viewModel = new ItemViewModel();
+            viewModel = record.get('items');
+            viewModel.user = record.get('users');
+            viewModel.favourite = record.get('favourite');
+            viewModel.subscribed = record.get('subscribed');
+            return viewModel;
+        });
+
+        if (model && model.length > 0) {
+            return model;
+        } else {
+            return null;
+        }
+    }
 }
 
 export const itemsRepository = new ItemsRepository();

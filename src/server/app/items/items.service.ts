@@ -129,6 +129,10 @@ class ItemsService extends BaseService {
 
         return result;
     }
+
+    async search(res: Response, term: string, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        return await itemsRepository.search(res, this.getOptionalUserId(res), term, pageIndex, pageSize);
+    }
 }
 
 export const itemsService = new ItemsService();

@@ -52,6 +52,11 @@ export class Database {
 
     static async getQueries() {
         this.queries = {
+            startup: {
+                itemTitleAndDescriptionIndex:
+                    (await import(`../database/startup/itemTitleAndDescriptionIndex.${Database.fileExtension}`)).data,
+                userEmailAndUsernameIndex: (await import(`../database/startup/userEmailAndUsernameIndex.${Database.fileExtension}`)).data,
+            },
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
@@ -96,6 +101,7 @@ export class Database {
                 deleteComment: (await import(`../database/items/deleteComment.${Database.fileExtension}`)).data,
                 getComments: (await import(`../database/items/getComments.${Database.fileExtension}`)).data,
                 getComment: (await import(`../database/items/getComment.${Database.fileExtension}`)).data,
+                search: (await import(`../database/items/search.${Database.fileExtension}`)).data,
             },
             notifications: {
                 getNotificationPreferences:
@@ -113,6 +119,11 @@ export class Database {
 }
 
 export interface DbQueries {
+    startup: {
+        itemTitleAndDescriptionIndex: string,
+        userEmailAndUsernameIndex: string,
+    };
+
     general: {
         createNewsletterMember: string,
         deleteNewsletterMember: string,
@@ -160,6 +171,7 @@ export interface DbQueries {
         deleteComment: string,
         getComments: string,
         getComment: string,
+        search: string,
     };
 
     notifications: {

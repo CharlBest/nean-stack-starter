@@ -1,17 +1,17 @@
-:host {
+header {
 	display: flex;
 	align-items: center;
-}
 
-button {
-	margin-top: -20px;
-}
+	button {
+		margin-top: -20px;
+	}
 
-form {
-	display: inline-block;
-	width: 100%;
-
-	mat-form-field {
+	form {
+		display: inline-block;
 		width: 100%;
+
+		mat-form-field {
+			width: 100%;
+		}
 	}
 }

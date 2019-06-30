@@ -1,22 +1,33 @@
-<button mat-icon-button
-    (click)="back()"
-    type="button">
-    <app-icon-arrow-back></app-icon-arrow-back>
-</button>
+<header>
+    <button mat-icon-button
+        (click)="back()"
+        type="button">
+        <app-icon-arrow-back></app-icon-arrow-back>
+    </button>
 
-<form [hidden]="isProcessing"
-    [formGroup]="formGroup">
-    <mat-form-field appearance="fill"
-        (keyup.enter)="onSubmit()">
-        <mat-label>Search</mat-label>
-        <span matPrefix>
-            <app-icon-search></app-icon-search>
-            &nbsp;&nbsp;
-        </span>
-        <input matInput
-            formControlName="term"
-            [attr.autofocus]="bpService.isDesktop || null" />
-    </mat-form-field>
-</form>
+    <form [hidden]="isProcessing"
+        [formGroup]="formGroup">
+        <mat-form-field appearance="fill"
+            (keyup.enter)="onSubmit()">
+            <mat-label>Search</mat-label>
+            <span matPrefix>
+                <app-icon-search></app-icon-search>
+                &nbsp;&nbsp;
+            </span>
+            <input matInput
+                formControlName="term"
+                [attr.autofocus]="bpService.isDesktop || null" />
+        </mat-form-field>
+    </form>
+</header>
+
+<ng-container *ngIf="!isProcessing">
+    <app-item *ngFor="let item of items"
+        [item]="item"></app-item>
+</ng-container>
+
+<mat-card *ngIf="!isProcessing && items?.length === 0">
+    No items were found
+</mat-card>
 
 <mat-spinner *ngIf="isProcessing"></mat-spinner>

@@ -239,6 +239,14 @@ export class BuildFormGroup {
             ]],
         };
     }
+
+    static search(term: string | null = null): FormValidator {
+        return {
+            term: [term, [
+                Validators.required
+            ]]
+        };
+    }
 }
 
 export class ServerValidator {

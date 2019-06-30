@@ -1,5 +1,5 @@
 <header #navbar
-  [style.height.px]="toolbarHeight">
+  [style.height.px]="activeNavigation ? toolbarHeight : 0">
 
   <!-- Main nav -->
   <div *ngIf="navigationType.Primary === activeNavigation"

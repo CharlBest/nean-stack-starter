@@ -1,5 +1,5 @@
 export const data = `
-//Auto increment user ids
+// Auto increment user ids
 OPTIONAL MATCH (nextItem:Item)
 WITH nextItem, CASE WHEN nextItem IS NULL THEN 1 ELSE nextItem.id + 1 END as nextId
 ORDER BY nextItem.id DESC
