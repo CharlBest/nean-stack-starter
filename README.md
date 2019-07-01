@@ -725,7 +725,7 @@ version: '3'
 services:
   neo4j.nean.io:
     container_name: neo4j.nean.io
-    image: graphfoundation/ongdb-enterprise:3.4.9
+    image: neo4j/3.5.6-enterprise
     ports:
       - "7474:7474"             ## Browser
       - "7687:7687"             ## Bolt connection
@@ -753,7 +753,7 @@ services:
 
   neo4j.dev.nean.io:
     container_name: neo4j.dev.nean.io
-    image: graphfoundation/ongdb-enterprise:3.4.9
+    image: neo4j/3.5.6-enterprise
     ports:
       - "7475:7474"             ## Browser
       - "7688:7687"             ## Bolt connection
@@ -1041,5 +1041,5 @@ Server
 * Open WinSCP
 * Rename local dist to newdist
 * copy over newdist to server next to dist
-* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && rm -rf olddist
-* pm2 restart all
+* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && rm -rf /var/www/nean.io/prod/olddist
+* pm2 reload all
