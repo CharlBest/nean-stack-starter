@@ -11,7 +11,6 @@ import { ShareDialogService } from '../../shared/share-dialog/share-dialog.servi
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })

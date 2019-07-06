@@ -9,7 +9,6 @@ import { ItemFormComponent } from '../item-form/item-form.component';
 import { ItemService } from '../item.service';
 
 @Component({
-  selector: 'app-create-item',
   templateUrl: './create-item.component.html',
   styleUrls: ['./create-item.component.scss']
 })

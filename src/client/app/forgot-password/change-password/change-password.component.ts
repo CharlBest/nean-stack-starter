@@ -10,7 +10,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ForgotPasswordService } from '../forgot-password.service';
 
 @Component({
-  selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })

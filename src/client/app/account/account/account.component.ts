@@ -5,7 +5,6 @@ import { ThemeService } from '../../shared/services/theme.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 
 @Component({
-  selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })

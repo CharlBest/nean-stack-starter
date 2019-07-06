@@ -9,7 +9,6 @@ import { ItemFormComponent } from '../item-form/item-form.component';
 import { ItemService } from '../item.service';
 
 @Component({
-  selector: 'app-edit-item',
   templateUrl: './edit-item.component.html',
   styleUrls: ['./edit-item.component.scss']
 })

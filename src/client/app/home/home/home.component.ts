@@ -6,7 +6,6 @@ import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.se
 import { HomeService } from '../home.service';
 
 @Component({
-  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [RefreshSameUrlService]

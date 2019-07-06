@@ -4,7 +4,6 @@ import { version } from '../../../../../package.json';
 import { GitHubService } from '../../shared/github/github.service';
 
 @Component({
-  selector: 'app-dev',
   templateUrl: './dev.component.html',
   styleUrls: ['./dev.component.scss']
 })

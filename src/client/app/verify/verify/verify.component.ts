@@ -5,7 +5,6 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { VerifyService } from '../verify.service';
 
 @Component({
-  selector: 'app-verify',
   templateUrl: './verify.component.html',
   styleUrls: ['./verify.component.scss']
 })

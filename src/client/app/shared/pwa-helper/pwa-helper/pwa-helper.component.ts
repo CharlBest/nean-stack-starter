@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { HelperTextSection } from './pwa-helper.enum';
 
 @Component({
-    selector: 'app-pwa-helper',
     templateUrl: './pwa-helper.component.html',
     styleUrls: ['./pwa-helper.component.scss']
 })

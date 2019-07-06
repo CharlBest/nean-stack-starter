@@ -7,7 +7,6 @@ import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-ele
 import { ProfileService } from '../profile.service';
 
 @Component({
-    selector: 'app-create-card',
     templateUrl: './create-card.component.html',
     styleUrls: ['./create-card.component.scss']
 })

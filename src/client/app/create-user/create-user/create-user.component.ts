@@ -15,7 +15,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { CreateUserService } from '../create-user.service';
 
 @Component({
-  selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })

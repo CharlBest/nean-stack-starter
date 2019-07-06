@@ -12,7 +12,6 @@ import { PushNotificationService } from '../../shared/services/push-notification
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })

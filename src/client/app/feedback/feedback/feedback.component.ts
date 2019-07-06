@@ -10,7 +10,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { FeedbackService } from '../feedback.service';
 
 @Component({
-  selector: 'app-feedback',
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss']
 })

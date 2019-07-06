@@ -8,7 +8,6 @@ import { AuthService } from '../../shared/services/auth.service';
 import { ItemService } from '../item.service';
 
 @Component({
-  selector: 'app-comments',
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss']
 })

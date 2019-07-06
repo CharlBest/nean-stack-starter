@@ -5,7 +5,6 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { ItemService } from '../item.service';
 
 @Component({
-  selector: 'app-favourites',
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.scss']
 })

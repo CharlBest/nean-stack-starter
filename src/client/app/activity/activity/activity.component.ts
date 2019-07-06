@@ -4,7 +4,6 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { WebSocketService } from '../../shared/services/websocket.service';
 
 @Component({
-  selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })

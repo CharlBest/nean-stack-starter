@@ -5,7 +5,6 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-payment-history',
   templateUrl: './payment-history.component.html',
   styleUrls: ['./payment-history.component.scss']
 })

@@ -12,7 +12,6 @@ import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-ele
 import { PaymentService } from '../payment.service';
 
 @Component({
-    selector: 'app-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss']
 })

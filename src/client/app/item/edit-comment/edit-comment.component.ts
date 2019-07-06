@@ -8,7 +8,6 @@ import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { ItemService } from '../item.service';
 
 @Component({
-  selector: 'app-edit-comment',
   templateUrl: './edit-comment.component.html',
   styleUrls: ['./edit-comment.component.scss']
 })

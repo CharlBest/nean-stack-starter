@@ -9,7 +9,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { InviteService } from '../invite.service';
 
 @Component({
-  selector: 'app-invite',
   templateUrl: './invite.component.html',
   styleUrls: ['./invite.component.scss']
 })

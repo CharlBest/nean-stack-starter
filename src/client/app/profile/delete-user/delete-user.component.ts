@@ -7,7 +7,6 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ProfileService } from '../profile.service';
 
 @Component({
-    selector: 'app-delete-user',
     templateUrl: './delete-user.component.html',
     styleUrls: ['./delete-user.component.scss']
 })
