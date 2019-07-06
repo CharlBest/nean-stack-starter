@@ -8,7 +8,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 
 * Angular (client), Node (API), Neo4j (database)
 * NodeJS in Typescript
-* Basic Webpack build for Node (API)
+* Webpack build bundle for Node (API)
 * Angular CLI
 * Chrome extension build output
 * JWT (JSON web token) authentication
@@ -22,16 +22,17 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Shared strongly typed API endpoints
 * Google analytics - automatic page tracking
 * Client share actions
-* Lazy load routes with preloaded parts 
+* Lazy load routes with preloaded parts
 * Image uploader to Firebase storage
 * Tutorial/on-boading/tour framework
 * Emoji picker (Material CDK)
+* WYSIWYG editor (Quill)
 * Media (Image, YouTube, Vimeo) display component
 * Web share API
 * Basic web socket connection
 * Notifications area/panel
 * Stripe Payment integration
-* Custom Material theme + font (Night Mode)
+* Custom Material theme + font (Night Mode, Global CSS variable colors)
 * Progressive Web App (PWA)
 * Complete server setup guide via GCP
 * Backend logger (Node + Neo4j)
@@ -43,9 +44,11 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Auto package versioning (Husky)
 * Puppeteer scraper script to test infinite scroller
 * Social media meta tags
-* Password difficulty tester
+* Common password checker
 * GDPR/Cookie prompts
 * Offline network message (PWA)
+* Apache Lucene fulltext search
+* Lazy load icon pack
 
 
 Client pages
