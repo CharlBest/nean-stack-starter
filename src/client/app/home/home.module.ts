@@ -6,6 +6,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ItemModule } from '../item/item.module';
 import { GitHubModule } from '../shared/github/github.module';
+import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { NetworkStatusModule } from '../shared/network-status/network-status.module';
 import { GitHubReadMeComponent } from './github-readme/github-readme.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -25,6 +26,7 @@ const materialModules = [
     ItemModule,
     GitHubModule,
     NetworkStatusModule,
+    InfiniteScrollModule,
     ...materialModules
   ],
   declarations: [

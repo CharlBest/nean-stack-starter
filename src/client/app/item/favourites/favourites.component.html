@@ -1,10 +1,12 @@
-<ng-container *ngIf="!isProcessing">
+<app-infinite-scroll (scrolled)="onScroll()"
+    [isProcessing]="isProcessing"
+    *ngIf="items?.length > 0">
+
     <app-item *ngFor="let item of items"
         [item]="item"></app-item>
-</ng-container>
+
+</app-infinite-scroll>
 
 <mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
     You have nothing saved
 </mat-card>
-
-<mat-spinner *ngIf="isProcessing"></mat-spinner>

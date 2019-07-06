@@ -19,9 +19,14 @@ export class UserComponent implements OnInit {
 
   @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
   isProcessing = true;
+  isProcessingItems = true;
   userId: number | null;
   user: UserPublicViewModel;
+  items: ItemViewModel[] = [];
   loggedInUserId = this.authService.getLoggedInUserId();
+  pageIndex = 0;
+  listEnd = false;
+  userHasNoItems = false;
 
   constructor(private userService: UserService,
     private route: ActivatedRoute,
@@ -46,22 +51,45 @@ export class UserComponent implements OnInit {
 
   getUser() {
     if (this.userId) {
-      this.userService.getUserPublic(this.userId, 0)
+      this.userService.getUserPublic(this.userId)
         .pipe(finalize(() => this.isProcessing = false))
+        .subscribe(data => {
+          if (data) {
+            this.user = data;
+            if (this.user.haveItems) {
+              this.getItems();
+            } else {
+              this.userHasNoItems = true;
+            }
+          }
+        }, error => {
+          this.formErrorsService.updateFormValidity(error);
+        });
+    }
+  }
+
+  getItems() {
+    if (this.userId) {
+      this.isProcessingItems = true;
+
+      this.userService.getUserPublicItems(this.userId, this.pageIndex)
+        .pipe(finalize(() => this.isProcessingItems = false))
         .subscribe(data => {
           if (data) {
             if (this.userId) {
               const itemsOwner = {
                 id: this.userId,
-                username: data.username,
-                avatarUrl: data.avatarUrl
+                username: this.user.username,
+                avatarUrl: this.user.avatarUrl
               };
 
               // TODO: This can be optimized
-              data.items.map((item: ItemViewModel) => item.user = itemsOwner);
+              data.map((item: ItemViewModel) => item.user = itemsOwner);
             }
 
-            this.user = data;
+            this.items.push(...data);
+          } else {
+            this.listEnd = true;
           }
         }, error => {
           this.formErrorsService.updateFormValidity(error);
@@ -84,6 +112,13 @@ export class UserComponent implements OnInit {
     if (this.userId) {
       this.shareService.copyWithUrl(['/user', this.userId]);
       this.contextMenu.close();
+    }
+  }
+
+  onScroll() {
+    if (!this.listEnd) {
+      this.pageIndex++;
+      this.getItems();
     }
   }
 }

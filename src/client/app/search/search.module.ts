@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ItemModule } from '../item/item.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
+import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
 
@@ -26,6 +27,7 @@ const materialModules = [
     FormErrorsModule,
     IconsModule,
     ItemModule,
+    InfiniteScrollModule,
     ...materialModules
   ],
   declarations: [

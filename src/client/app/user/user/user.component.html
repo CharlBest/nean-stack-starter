@@ -16,13 +16,23 @@
                 </mat-nav-list>
             </app-context-menu>
         </mat-card-title>
-        <mat-card-content [innerHTML]="user?.bio"></mat-card-content>
+        <mat-card-content>
+            <app-media [src]="user?.avatarUrl"
+                *ngIf="user?.avatarUrl"
+                class="avatar"></app-media>
+
+            <div [innerHTML]="user?.bio"></div>
+        </mat-card-content>
     </mat-card>
 
-    <app-item *ngFor="let item of user?.items"
-        [item]="item"></app-item>
+    <app-infinite-scroll (scrolled)="onScroll()"
+        [isProcessing]="isProcessingItems"
+        *ngIf="user">
+        <app-item *ngFor="let item of items"
+            [item]="item"></app-item>
+    </app-infinite-scroll>
 
-    <mat-card *ngIf="!user?.items || user?.items?.length === 0">
+    <mat-card *ngIf="userHasNoItems">
         <mat-card-content>
             No items exist
         </mat-card-content>
@@ -38,4 +48,4 @@
     No user found
 </mat-card>
 
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
+<mat-spinner *ngIf="isProcessing && !user"></mat-spinner>

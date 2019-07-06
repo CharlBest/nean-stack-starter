@@ -8,7 +8,7 @@
     <form [hidden]="isProcessing"
         [formGroup]="formGroup">
         <mat-form-field appearance="fill"
-            (keyup.enter)="onSubmit()">
+            (keyup.enter)="search()">
             <mat-label>Search</mat-label>
             <span matPrefix>
                 <app-icon-search></app-icon-search>
@@ -21,13 +21,15 @@
     </form>
 </header>
 
-<ng-container *ngIf="!isProcessing">
+<app-infinite-scroll (scrolled)="onScroll()"
+    [isProcessing]="isProcessing"
+    *ngIf="items?.length > 0">
+
     <app-item *ngFor="let item of items"
         [item]="item"></app-item>
-</ng-container>
+
+</app-infinite-scroll>
 
 <mat-card *ngIf="!isProcessing && items?.length === 0">
     No items were found
 </mat-card>
-
-<mat-spinner *ngIf="isProcessing"></mat-spinner>

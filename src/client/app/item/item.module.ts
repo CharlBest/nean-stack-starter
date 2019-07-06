@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
+import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { MediaModule } from '../shared/media/media.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
@@ -47,6 +48,7 @@ const materialModules = [
     FormErrorsModule,
     ContextMenuModule,
     IconsModule,
+    InfiniteScrollModule,
     ...materialModules
   ],
   declarations: [

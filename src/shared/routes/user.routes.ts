@@ -11,6 +11,7 @@ export class UserRoutes {
     static login = () => new BaseRoute(UserRoutes.root, 'login');
     static getUserProfile = () => new BaseRoute(UserRoutes.root, 'getUserProfile');
     static getUserPublic = (id?: number) => new BaseRoute(UserRoutes.root, 'getUserPublic', { id });
+    static getUserPublicItems = (id?: number) => new BaseRoute(UserRoutes.root, 'getUserPublicItems', { id });
     static updateAvatar = () => new BaseRoute(UserRoutes.root, 'updateAvatar');
     static updateBio = () => new BaseRoute(UserRoutes.root, 'updateBio');
     static updatePassword = () => new BaseRoute(UserRoutes.root, 'updatePassword');

@@ -16,7 +16,9 @@ import { SearchService } from '../search.service';
 export class SearchComponent implements OnInit {
   formGroup: FormGroup;
   isProcessing = false;
-  items: ItemViewModel[];
+  items: ItemViewModel[] | null;
+  pageIndex = 0;
+  listEnd = false;
 
   constructor(public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
@@ -32,20 +34,32 @@ export class SearchComponent implements OnInit {
     this.formGroup = this.fb.group(BuildFormGroup.search());
   }
 
-  onSubmit() {
+  search(newSearch = true) {
     let term = this.formGroup.controls.term.value;
     if (term) {
       this.isProcessing = true;
 
       term = term.trim();
 
-      this.searchService.search(term, 0)
+      // Reset
+      if (newSearch) {
+        this.pageIndex = 0;
+        this.listEnd = false;
+        this.items = null;
+      }
+
+      this.searchService.search(term, this.pageIndex)
         .pipe(finalize(() => this.isProcessing = false))
         .subscribe(data => {
           if (data) {
-            this.items = data;
+            if (!this.items) {
+              this.items = [];
+            }
+
+            this.items.push(...data);
           } else {
             this.items = [];
+            this.listEnd = true;
           }
         }, error => {
           this.formErrorsService.updateFormValidity(error);
@@ -55,5 +69,12 @@ export class SearchComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+
+  onScroll() {
+    if (!this.listEnd) {
+      this.pageIndex++;
+      this.search(false);
+    }
   }
 }

@@ -12,7 +12,9 @@ import { ItemService } from '../item.service';
 export class FavouritesComponent implements OnInit {
 
   isProcessing = true;
-  items: ItemViewModel[];
+  items: ItemViewModel[] = [];
+  pageIndex = 0;
+  listEnd = false;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService) { }
@@ -24,14 +26,23 @@ export class FavouritesComponent implements OnInit {
   getFavourites() {
     this.isProcessing = true;
 
-    this.itemService.getFavourites(0)
+    this.itemService.getFavourites(this.pageIndex)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data) {
-          this.items = data;
+          this.items.push(...data);
+        } else {
+          this.listEnd = true;
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
+  }
+
+  onScroll() {
+    if (!this.listEnd) {
+      this.pageIndex++;
+      this.getFavourites();
+    }
   }
 }

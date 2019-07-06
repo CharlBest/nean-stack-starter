@@ -25,6 +25,8 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.report(req, res, next).catch(next));
         this.router.get(UserRoutes.getUserPublic().server(),
             async (req, res, next) => usersController.getUserPublic(req, res, next).catch(next));
+        this.router.get(UserRoutes.getUserPublicItems().server(),
+            async (req, res, next) => usersController.getUserPublicItems(req, res, next).catch(next));
 
         // Authentication - Login required
         this.router.get(UserRoutes.getUserProfile().server(), Authentication.loginRequired,

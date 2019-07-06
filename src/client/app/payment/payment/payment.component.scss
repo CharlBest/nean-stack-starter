@@ -9,9 +9,7 @@
 .payment-successful-container {
 	text-align: center;
 
-	mat-icon {
-		color: #4caf50;
-		font-size: 3em;
-		width: 100%;
+	app-icon-check-circle ::ng-deep svg {
+		color: var(--primary-color);
 	}
 }

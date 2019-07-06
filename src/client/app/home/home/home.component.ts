@@ -14,7 +14,9 @@ import { HomeService } from '../home.service';
 export class HomeComponent implements OnInit {
 
   isProcessing = true;
-  items: ItemViewModel[];
+  items: ItemViewModel[] = [];
+  pageIndex = 0;
+  listEnd = false;
 
   constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
@@ -23,6 +25,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.refreshSameUrlService.init(() => {
       window.scrollTo(0, 0);
+      this.pageIndex = 0;
+      this.items = [];
       this.getItems();
     });
 
@@ -32,14 +36,23 @@ export class HomeComponent implements OnInit {
   getItems() {
     this.isProcessing = true;
 
-    this.homeService.getItems(0)
+    this.homeService.getItems(this.pageIndex)
       .pipe(finalize(() => this.isProcessing = false))
       .subscribe(data => {
         if (data) {
-          this.items = data;
+          this.items.push(...data);
+        } else {
+          this.listEnd = true;
         }
       }, error => {
         this.formErrorsService.updateFormValidity(error);
       });
+  }
+
+  onScroll() {
+    if (!this.listEnd) {
+      this.pageIndex++;
+      this.getItems();
+    }
   }
 }

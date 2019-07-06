@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
+import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserPublicViewModel } from '../../../shared/view-models/user/user-public.view-model';
 import { Database } from '../../core/database';
@@ -111,27 +112,47 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number, pageIndex: number, pageSize: number)
+    async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number)
         : Promise<UserPublicViewModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublic,
             {
                 userId,
                 loggedInUserId,
-                ip,
+                ip
+            }
+        );
+
+        const model = result.records.map(record => record.get('user'));
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
+    async getUserPublicItems(res: Response, loggedInUserId: number | null, userId: number, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublicItems,
+            {
+                userId,
+                loggedInUserId,
                 pageIndex,
                 pageSize
             }
         );
 
         const model = result.records.map(record => {
-            let localModel = new UserPublicViewModel();
-            localModel = record.get('user');
-            localModel.items = record.get('items');
-            return localModel;
+            let viewModel = new ItemViewModel();
+            viewModel = record.get('items');
+            viewModel.user = record.get('users');
+            viewModel.favourite = record.get('favourite');
+            viewModel.subscribed = record.get('subscribed');
+            return viewModel;
         });
 
         if (model && model.length > 0) {
-            return model[0];
+            return model;
         } else {
             return null;
         }

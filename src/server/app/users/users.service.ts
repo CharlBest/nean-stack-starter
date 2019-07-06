@@ -8,6 +8,7 @@ import { SocketDataModel } from '../../../shared/models/web-socket/socket-data.m
 import { ServerValidator } from '../../../shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '../../../shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
+import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
 import { CardViewModel } from '../../../shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
@@ -175,14 +176,19 @@ class UsersService extends BaseService {
         return viewModel;
     }
 
-    async getUserPublic(res: Response, ip: string, userId: number, pageIndex: number, pageSize: number): Promise<UserPublicViewModel> {
-        const user = await usersRepository.getUserPublic(res, this.getOptionalUserId(res), ip, userId, pageIndex, pageSize);
+    async getUserPublic(res: Response, ip: string, userId: number): Promise<UserPublicViewModel> {
+        const user = await usersRepository.getUserPublic(res, this.getOptionalUserId(res), ip, userId);
 
         if (!user) {
             throw new Error('User required');
         }
 
         return user;
+    }
+
+    async getUserPublicItems(res: Response, userId: number, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
+        return await usersRepository.getUserPublicItems(res, this.getOptionalUserId(res), userId, pageIndex, pageSize);
     }
 
     async resendEmailVerificationLink(res: Response): Promise<void> {

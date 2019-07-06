@@ -20,6 +20,8 @@ export class CommentsComponent implements OnInit {
   isProcessingComment = false;
   item: ItemViewModel;
   comments: CommentViewModel[] = [];
+  pageIndex = 0;
+  listEnd = false;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
@@ -61,13 +63,15 @@ export class CommentsComponent implements OnInit {
     if (this.itemUId) {
       this.isProcessingComment = true;
 
-      this.itemService.getComments(this.itemUId, 0)
+      this.itemService.getComments(this.itemUId, this.pageIndex)
         .pipe(finalize(() => this.isProcessingComment = false))
         .subscribe(data => {
           if (data) {
             // TODO: is the the fastest way?
             data.forEach(comment => comment.itemUId = this.itemUId);
-            this.comments = data;
+            this.comments.push(...data);
+          } else {
+            this.listEnd = true;
           }
         }, error => {
           this.formErrorsService.updateFormValidity(error);
@@ -85,5 +89,12 @@ export class CommentsComponent implements OnInit {
 
   goToLogin() {
     this.router.navigate(['login'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
+  }
+
+  onScroll() {
+    if (!this.listEnd) {
+      this.pageIndex++;
+      this.getComments();
+    }
   }
 }

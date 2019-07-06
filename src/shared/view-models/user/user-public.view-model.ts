@@ -1,4 +1,3 @@
-import { ItemViewModel } from '../item/item.view-model';
 
 export class UserPublicViewModel {
     uId: string;
@@ -6,5 +5,5 @@ export class UserPublicViewModel {
     isVerified: boolean;
     bio: string;
     avatarUrl: string;
-    items: Array<ItemViewModel>;
+    haveItems: boolean;
 }

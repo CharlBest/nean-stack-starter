@@ -67,6 +67,20 @@ class UsersController extends BaseController {
 
     async getUserPublic(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id ? +req.params.id : null;
+
+        const hasErrors = !!Validators.required(id);
+
+        if (hasErrors) {
+            throw new Error('Id is required');
+        }
+
+        res.status(200).json(
+            await usersService.getUserPublic(res, req.ip, id as number)
+        );
+    }
+
+    async getUserPublicItems(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id ? +req.params.id : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
 
@@ -77,7 +91,7 @@ class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await usersService.getUserPublic(res, req.ip, id as number, pageIndex, pageSize)
+            await usersService.getUserPublicItems(res, id as number, pageIndex, pageSize)
         );
     }
 
