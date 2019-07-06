@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { ForgotPasswordViewModel } from '../../../../shared/view-models/forgot-password/forgot-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -31,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.forgotPassword());
+    this.formGroup = this.fb.group(FormGroupBuilder.forgotPassword());
   }
 
   onSubmit() {

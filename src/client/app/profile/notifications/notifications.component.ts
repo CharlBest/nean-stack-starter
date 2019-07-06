@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { NotificationPreferencesViewModel } from '../../../../shared/view-models/user/notification-preferences.view-model';
 import { PushSubscriptionViewModel } from '../../../../shared/view-models/user/push-subscription.view-model';
 import { UpdateNotificationPreferencesViewModel } from '../../../../shared/view-models/user/update-notification-preferences.view-model';
@@ -47,7 +47,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.updateNotificationPreferences(
+    this.formGroup = this.fb.group(FormGroupBuilder.updateNotificationPreferences(
       this.notificationPreferences.pushNotificationEnabled &&
         this.pushNotificationService.isPushNotificationPermissionGrandted() ? true : false,
       this.notificationPreferences.emailEnabled ? true : false,

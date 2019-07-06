@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.search());
+    this.formGroup = this.fb.group(FormGroupBuilder.search());
   }
 
   search(newSearch = true) {

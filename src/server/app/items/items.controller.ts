@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '../../../shared/validation/validators';
 import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
 import { SearchViewModel } from '../../../shared/view-models/item/search.view-model';
@@ -15,7 +16,7 @@ class ItemsController extends BaseController {
     async create(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
+        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -31,7 +32,7 @@ class ItemsController extends BaseController {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = BuildFormGroup.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
+        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.media);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || !!Validators.required(uId);
@@ -123,7 +124,7 @@ class ItemsController extends BaseController {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
-        const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
+        const formGroup = FormGroupBuilder.createOrUpdateComment(viewModel.description);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || !!Validators.required(uId);
@@ -141,7 +142,7 @@ class ItemsController extends BaseController {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
-        const formGroup = BuildFormGroup.createOrUpdateComment(viewModel.description);
+        const formGroup = FormGroupBuilder.createOrUpdateComment(viewModel.description);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || !!Validators.required(uId);
@@ -204,7 +205,7 @@ class ItemsController extends BaseController {
         const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
         const viewModel = req.body as SearchViewModel;
 
-        const formGroup = BuildFormGroup.search(viewModel.term);
+        const formGroup = FormGroupBuilder.search(viewModel.term);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {

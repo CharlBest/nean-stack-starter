@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -32,7 +32,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.feedback());
+    this.formGroup = this.fb.group(FormGroupBuilder.feedback());
   }
 
   onSubmit() {

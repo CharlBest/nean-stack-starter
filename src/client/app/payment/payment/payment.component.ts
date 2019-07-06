@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../shared/models/payment/card.model';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../../shared/view-models/payment/user-payment.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -38,7 +38,7 @@ export class PaymentComponent implements OnInit {
     }
 
     formOnInit() {
-        this.formGroup = this.fb.group(BuildFormGroup.payment());
+        this.formGroup = this.fb.group(FormGroupBuilder.payment());
     }
 
     getpaymentCards() {

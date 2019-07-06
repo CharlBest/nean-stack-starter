@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '../../../shared/validation/validators';
 import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
 import { BaseController } from '../shared/base-controller';
 import { notificationsService } from './notifications.service';
@@ -19,7 +20,7 @@ class NotificationsController extends BaseController {
     async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateNotificationPreferencesViewModel;
 
-        const formGroup = BuildFormGroup.updateNotificationPreferences(
+        const formGroup = FormGroupBuilder.updateNotificationPreferences(
             viewModel.preferences.pushNotificationEnabled,
             viewModel.preferences.emailEnabled,
             viewModel.preferences.autoSubscribeToItem,

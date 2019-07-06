@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -32,7 +32,7 @@ export class NewsletterComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.newsletter());
+    this.formGroup = this.fb.group(FormGroupBuilder.newsletter());
   }
 
   getParams() {

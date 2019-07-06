@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '../../../shared/validation/validators';
 import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
 import { BaseController } from '../shared/base-controller';
@@ -14,7 +15,7 @@ class PaymentsController extends BaseController {
     async anonymousPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as AnonymousPaymentViewModel;
 
-        const formGroup = BuildFormGroup.payment(viewModel.amount);
+        const formGroup = FormGroupBuilder.payment(viewModel.amount);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'anonymousPaymentToken', Validators.required(viewModel.token));
@@ -31,7 +32,7 @@ class PaymentsController extends BaseController {
     async userPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UserPaymentViewModel;
 
-        const formGroup = BuildFormGroup.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
+        const formGroup = FormGroupBuilder.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         const hasToken = ServerValidator.addGlobalError(res, 'userPaymentToken', Validators.required(viewModel.token));

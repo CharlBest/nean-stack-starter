@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '../../../shared/validation/validators';
 import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -28,7 +29,7 @@ class UsersController extends BaseController {
             viewModel.email = viewModel.email.trim();
         }
 
-        const formGroup = BuildFormGroup.createUser(viewModel.email, viewModel.username, viewModel.password);
+        const formGroup = FormGroupBuilder.createUser(viewModel.email, viewModel.username, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -47,7 +48,7 @@ class UsersController extends BaseController {
             viewModel.emailOrUsername = viewModel.emailOrUsername.trim();
         }
 
-        const formGroup = BuildFormGroup.login(viewModel.emailOrUsername, viewModel.password);
+        const formGroup = FormGroupBuilder.login(viewModel.emailOrUsername, viewModel.password);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -116,7 +117,7 @@ class UsersController extends BaseController {
             viewModel.email = viewModel.email.trim();
         }
 
-        const formGroup = BuildFormGroup.forgotPassword(viewModel.email);
+        const formGroup = FormGroupBuilder.forgotPassword(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -135,7 +136,7 @@ class UsersController extends BaseController {
             viewModel.email = viewModel.email.trim();
         }
 
-        const formGroup = BuildFormGroup.changeForgottenPassword(viewModel.password);
+        const formGroup = FormGroupBuilder.changeForgottenPassword(viewModel.password);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'changeForgottenPasswordEmail', Validators.required(viewModel.email));
@@ -184,7 +185,7 @@ class UsersController extends BaseController {
     async updatePassword(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdatePasswordViewModel;
 
-        const formGroup = BuildFormGroup.updatePassword(viewModel.password, viewModel.newPassword, viewModel.newPassword);
+        const formGroup = FormGroupBuilder.updatePassword(viewModel.password, viewModel.newPassword, viewModel.newPassword);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {

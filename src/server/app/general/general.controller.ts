@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { BuildFormGroup, ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '../../../shared/validation/validators';
 import { FeedbackViewModel } from '../../../shared/view-models/feedback/feedback.view-model';
 import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
@@ -19,7 +20,7 @@ class GeneralController extends BaseController {
             viewModel.email = viewModel.email.trim();
         }
 
-        const formGroup = BuildFormGroup.newsletter(viewModel.email);
+        const formGroup = FormGroupBuilder.newsletter(viewModel.email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -38,7 +39,7 @@ class GeneralController extends BaseController {
             email = email.trim();
         }
 
-        const formGroup = BuildFormGroup.newsletter(email);
+        const formGroup = FormGroupBuilder.newsletter(email);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -53,7 +54,7 @@ class GeneralController extends BaseController {
     async sendFeedback(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as FeedbackViewModel;
 
-        const formGroup = BuildFormGroup.feedback(viewModel.content);
+        const formGroup = FormGroupBuilder.feedback(viewModel.content);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {

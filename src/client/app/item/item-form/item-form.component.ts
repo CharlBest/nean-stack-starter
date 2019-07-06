@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BuildFormGroup, MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
+import { MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -28,7 +29,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.createOrUpdateItem(
+    this.formGroup = this.fb.group(FormGroupBuilder.createOrUpdateItem(
       this.item ? this.item.title : null,
       this.item ? this.item.description : null,
       this.item ? this.item.media : null

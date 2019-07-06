@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
-import { BuildFormGroup } from '../../../../shared/validation/validators';
+import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -32,7 +32,7 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   formOnInit() {
-    this.formGroup = this.fb.group(BuildFormGroup.updatePassword());
+    this.formGroup = this.fb.group(FormGroupBuilder.updatePassword());
 
     const confirmPasswordControl = this.formGroup.controls.confirmPassword;
     confirmPasswordControl.statusChanges.subscribe(data => {

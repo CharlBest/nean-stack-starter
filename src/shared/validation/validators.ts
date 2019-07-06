@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
 import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required } from '../models/shared/form-error.model';
-import { NotificationType } from '../models/user/user.model';
 
 function isEmptyInputValue(value: any): boolean {
     // we don't check for string here so it also works with arrays
@@ -12,8 +11,8 @@ function isEmptyInputValue(value: any): boolean {
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 export const MAX_MEDIA_UPLOADS = 5;
 
-const PASSWORD_REFEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]+$/;
-const PASSWORD_LENGTH = 6;
+export const PASSWORD_REFEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]+$/;
+export const PASSWORD_LENGTH = 6;
 
 
 // Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
@@ -91,161 +90,6 @@ export class Validators {
             return null;  // don't validate empty values to allow optional controls
         }
         return control.value === '4' ? { customFormValidator: true } : null;
-    }
-}
-
-export class BuildFormGroup {
-    static createUser(email: string | null = null, username: string | null = null, password: string | null = null): FormValidator {
-        return {
-            email: [email, [
-                Validators.required,
-                Validators.email
-            ]],
-            username: [username, [
-                Validators.required
-            ]],
-            password: [password, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
-            ]]
-        };
-    }
-
-    static feedback(content: string | null = null): FormValidator {
-        return {
-            content: [content, [
-                Validators.required,
-                Validators.minLength(10)
-            ]]
-        };
-    }
-
-    static login(emailOrUsername: string | null = null, password: string | null = null): FormValidator {
-        return {
-            emailOrUsername: [emailOrUsername, [
-                Validators.required
-            ]],
-            password: [password, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
-            ]]
-        };
-    }
-
-    static changeForgottenPassword(password: string | null = null): FormValidator {
-        return {
-            password: [password, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
-            ]]
-        };
-    }
-
-    static forgotPassword(email: string | null = null): FormValidator {
-        return {
-            email: [email, [
-                Validators.required,
-                Validators.email
-            ]]
-        };
-    }
-
-    static updatePassword(password: string | null = null, newPassword: string | null = null, confirmPassword: string | null = null)
-        : FormValidator {
-        return {
-            password: [password, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
-            ]],
-            newPassword: [newPassword, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
-            ]],
-            confirmPassword: [confirmPassword, [
-                Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
-            ]]
-        };
-    }
-
-    static payment(amount: number | null = null, cardUId: string | null = null,
-        saveCard: boolean | null = null, email: string | null = null): FormValidator {
-        return {
-            amount: [amount, [
-                Validators.required
-            ]],
-            cardUId: [cardUId, []],
-            saveCard: [saveCard, []],
-            email: [email, []],
-        };
-    }
-
-    static newsletter(email: string | null = null): FormValidator {
-        return {
-            email: [email, [
-                Validators.required,
-                Validators.email
-            ]]
-        };
-    }
-
-    static createOrUpdateItem(title: string | null = null, description: string | null = null, media: Array<string> | null = null)
-        : FormValidator {
-        return {
-            title: [title, [
-                Validators.required
-            ]],
-            description: [description],
-            media: [media]
-        };
-    }
-
-    static createOrUpdateComment(description: string | null = null): FormValidator {
-        return {
-            description: [description, [
-                Validators.required
-            ]]
-        };
-    }
-
-    static updateNotificationPreferences(pushNotificationEnabled: NotificationType = null,
-        emailEnabled: NotificationType = null, autoSubscribeToItem: NotificationType = null,
-        pushNewComment: NotificationType = null, pushHot: NotificationType = null,
-        emailNewComment: NotificationType = null, emailHot: NotificationType = null): FormValidator {
-        return {
-            pushNotificationEnabled: [pushNotificationEnabled, [
-                Validators.required
-            ]],
-            emailEnabled: [emailEnabled, [
-                Validators.required
-            ]],
-            autoSubscribeToItem: [autoSubscribeToItem, [
-                Validators.required
-            ]],
-            pushNewComment: [pushNewComment, [
-                Validators.required
-            ]],
-            pushHot: [pushHot, [
-                Validators.required
-            ]],
-            emailNewComment: [emailNewComment, [
-                Validators.required
-            ]],
-            emailHot: [emailHot, [
-                Validators.required
-            ]],
-        };
-    }
-
-    static search(term: string | null = null): FormValidator {
-        return {
-            term: [term, [
-                Validators.required
-            ]]
-        };
     }
 }
 
@@ -340,7 +184,7 @@ export class ServerValidator {
     }
 }
 
-interface FormValidator {
+export interface FormValidator {
     [key: string]: [any, Array<ValidatorFn>?];
 }
 
