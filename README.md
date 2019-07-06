@@ -725,18 +725,19 @@ version: '3'
 services:
   neo4j.nean.io:
     container_name: neo4j.nean.io
-    image: neo4j/3.5.6-enterprise
+    image: neo4j/3.5-enterprise
     ports:
       - "7474:7474"             ## Browser
       - "7687:7687"             ## Bolt connection
     volumes:
       - $HOME/neo4j/nean.io/data:/data
       - $HOME/neo4j/nean.io/backup:/backup
-      ## TODO - $HOME/neo4j/nean.io/logs:/logs
+      ## - $HOME/neo4j/nean.io/logs:/logs
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
-      NEO4J_AUTH: "neo4j/neo4j"
+      NEO4J_AUTH: "neo4j/password"
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
     restart: unless-stopped
 
   rabbitmq.nean.io:
@@ -753,18 +754,19 @@ services:
 
   neo4j.dev.nean.io:
     container_name: neo4j.dev.nean.io
-    image: neo4j/3.5.6-enterprise
+    image: neo4j/3.5-enterprise
     ports:
       - "7475:7474"             ## Browser
       - "7688:7687"             ## Bolt connection
     volumes:
       - $HOME/neo4j/dev.nean.io/data:/data
       - $HOME/neo4j/dev.nean.io/backup:/backup
-      ## TODO - $HOME/neo4j/dev.nean.io/logs:/logs
+      ## - $HOME/neo4j/dev.nean.io/logs:/logs
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
-      NEO4J_AUTH: "neo4j/neo4j"
+      NEO4J_AUTH: "neo4j/password"
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
     restart: unless-stopped
 
   rabbitmq.dev.nean.io:
@@ -810,10 +812,12 @@ docker-compose up -d
 
     3.1 Neo4j
     * Go to localhost:7474 in your browser
-    * Open "Database Information" sidebar > "Connected as" > "Admin" > ":server user add"
+    * :server user add
     * Username = "server_web", Roles = "Publisher"
     * Username = "server_worker", Roles = "Publisher"
     * Do the same for other db instance on localhost:7475
+        * :server  disconnect
+        * :server user add
 
     3.2 RabbitMQ
     * Go to localhost:15672 in your browser
@@ -928,15 +932,16 @@ Navigate to localhost:15672 in your browser
 ## Setup Reddis
 
 ## Logs retention
-* .pm2 folder in $HOME for pm2 logs
+* $HOME/.pm2/logs
 * web + worker logs in dist > server
-* neo4j logs
-* rabbitmq logs
+* $HOME/neo4j/<app_name>/logs
+* /var/log/rabbitmq
 * nginx logs
   * /var/log/nginx/access.log
   * /var/log/nginx/error.log
-* vnc logs (.vnc/HOSTNAME:1.log)
-* docker logs (/var/lib/docker/containers/<CONTAINER_ID>/<CONTAINER_ID>-json.log)
+  * /var/log/<app_name>
+* $HOME/.vnc
+* /var/lib/docker/containers/<CONTAINER_ID>/<CONTAINER_ID>-json.log
 
 ## Copy file to VM
 #### WinSCP
