@@ -196,6 +196,16 @@ body {
 			fill: currentColor;
 		}
 
+		&.inline {
+			height: 1em;
+			width: 1em;
+
+			svg {
+				height: 1em;
+				width: 1em;
+			}
+		}
+
 		&.primary svg {
 			fill: var(--primary-color);
 		}

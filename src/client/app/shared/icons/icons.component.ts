@@ -13,6 +13,10 @@ export class BaseIconComponent {
     return true;
   }
 
+  @HostBinding('class.inline') get isInline() {
+    return this.inline;
+  }
+
   @HostBinding('class.primary') get isPrimary() {
     return this.color === 'primary';
   }
