@@ -813,6 +813,16 @@ docker-compose up -d
 * up: Download images from docker hub and create container instances
 * -d: detached mode: Container starts up and run in background. Console is not attached to the container's process.
 
+#### Optional
+```sh
+# terminal within container
+docker exec -it <container_name> bash
+# process monitoring for containers
+docker stats
+# process monitoring for specific container
+docker top <container_name>
+```
+
 3. <a id="createnewusers">Create new users</a>
 
     3.1 Neo4j
