@@ -88,7 +88,7 @@ export class TutorialService {
             localStorage.setItem(this.hasVisitedStorageKey, 'true');
 
             this.snackBar.open('Take the tour', 'Go', {
-                duration: 20000,
+                duration: 4000,
             }).onAction()
                 .subscribe(() => {
                     this.activateTutorial(TutorialType.SignUp);
