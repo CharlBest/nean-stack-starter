@@ -5,10 +5,12 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <app-github [filePath]="'README.md'"
-        (doneLoading)="doneLoading()"></app-github>
+    <ng-template matExpansionPanelContent>
+        <app-github [filePath]="'README.md'"
+            (doneLoading)="doneLoading()"></app-github>
 
-    <mat-spinner *ngIf="isProcessing"></mat-spinner>
+        <mat-spinner *ngIf="isProcessing"></mat-spinner>
+    </ng-template>
 
     <mat-action-row>
         <a mat-button
