@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { ThemeService } from './theme.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ASCIIArtService {
   // https://www.ascii-art-generator.org/
-  styles = 'font-family: monospace;';
+  styles = `font-family: monospace; font-size: large; color: ${this.themeService.primaryColor};`;
+
+  constructor(private themeService: ThemeService) { }
 
   banner() {
     console.log(`%c

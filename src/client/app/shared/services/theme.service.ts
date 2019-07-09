@@ -11,6 +11,27 @@ export class ThemeService {
         return this.darkTheme;
     }
 
+    // Colors
+    get primaryColor(): string {
+        return window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    }
+
+    get accentColor(): string {
+        return window.getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+    }
+
+    get warnColor(): string {
+        return window.getComputedStyle(document.documentElement).getPropertyValue('--warn-color');
+    }
+
+    get backgroundColor(): string {
+        return window.getComputedStyle(document.documentElement).getPropertyValue('--background-color');
+    }
+
+    get foregroundColor(): string {
+        return window.getComputedStyle(document.documentElement).getPropertyValue('--foreground-color');
+    }
+
     constructor() { }
 
     private updateTheme() {
