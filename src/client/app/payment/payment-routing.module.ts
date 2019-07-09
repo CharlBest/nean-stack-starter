@@ -8,7 +8,7 @@ import { PaymentComponent } from './payment/payment.component';
         RouterModule.forChild([
             {
                 path: '', component: PaymentComponent, pathMatch: 'full',
-                data: { title: 'Payment', nav: NavigationType.Back }
+                data: { title: 'Payment', nav: NavigationType.BACK }
             }
         ])
     ],

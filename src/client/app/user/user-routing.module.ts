@@ -8,7 +8,7 @@ import { UserComponent } from './user/user.component';
         RouterModule.forChild([
             {
                 path: ':id', component: UserComponent, pathMatch: 'full',
-                data: { title: 'User', nav: NavigationType.Back }
+                data: { title: 'User', nav: NavigationType.BACK }
             }
         ])
     ],

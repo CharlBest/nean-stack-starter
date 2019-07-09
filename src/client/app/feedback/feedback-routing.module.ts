@@ -8,7 +8,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
         RouterModule.forChild([
             {
                 path: '', component: FeedbackComponent, pathMatch: 'full',
-                data: { title: 'Feedback', nav: NavigationType.Back }
+                data: { title: 'Feedback', nav: NavigationType.BACK }
             }
         ])
     ],

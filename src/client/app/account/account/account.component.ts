@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
   }
 
   takeTour() {
-    this.tutorialService.activateTutorial(TutorialType.SignUp);
+    this.tutorialService.activateTutorial(TutorialType.SIGN_UP);
   }
 
   logout() {

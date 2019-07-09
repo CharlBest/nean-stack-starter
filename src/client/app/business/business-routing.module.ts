@@ -13,27 +13,27 @@ import { UserDataComponent } from './user-data/user-data.component';
         RouterModule.forChild([
             {
                 path: 'terms-and-conditions', component: TermsAndConditionsComponent, pathMatch: 'full',
-                data: { title: 'Terms and Conditions', nav: NavigationType.Back }
+                data: { title: 'Terms and Conditions', nav: NavigationType.BACK }
             },
             {
                 path: 'privacy-policy', component: PrivacyPolicyComponent, pathMatch: 'full',
-                data: { title: 'Privacy Policy', nav: NavigationType.Back }
+                data: { title: 'Privacy Policy', nav: NavigationType.BACK }
             },
             {
                 path: 'help', component: HelpComponent, pathMatch: 'full',
-                data: { title: 'Help', nav: NavigationType.Back }
+                data: { title: 'Help', nav: NavigationType.BACK }
             },
             {
                 path: 'dev', component: DevComponent, pathMatch: 'full',
-                data: { title: 'Developer', nav: NavigationType.Back }
+                data: { title: 'Developer', nav: NavigationType.BACK }
             },
             {
                 path: 'user-data', component: UserDataComponent, pathMatch: 'full',
-                data: { title: 'Your Data', nav: NavigationType.Back }
+                data: { title: 'Your Data', nav: NavigationType.BACK }
             },
             {
                 path: 'cookie-policy', component: CookiePolicyComponent, pathMatch: 'full',
-                data: { title: 'Cookie Policy', nav: NavigationType.Back }
+                data: { title: 'Cookie Policy', nav: NavigationType.BACK }
             },
         ])
     ],

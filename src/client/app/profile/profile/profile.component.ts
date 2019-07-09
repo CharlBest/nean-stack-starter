@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit {
 
   profileTour() {
     this.contextMenu.close();
-    this.tutorialService.activateTutorial(TutorialType.AvatarUpload);
+    this.tutorialService.activateTutorial(TutorialType.AVATAR_UPLOAD);
   }
 
   openShareDialog() {

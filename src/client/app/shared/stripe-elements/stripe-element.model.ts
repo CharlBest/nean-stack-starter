@@ -7,7 +7,7 @@ export class ElementsWrapper {
     cardNumber: ElementWrapper = {
         type: 'cardNumber',
         valid: false,
-        cardBrand: CardBrandType.Unknown
+        cardBrand: CardBrandType.UNKNOWN
     };
     cardExpiry: ElementWrapper = {
         type: 'cardExpiry',

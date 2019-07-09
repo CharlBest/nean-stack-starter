@@ -8,7 +8,7 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
         RouterModule.forChild([
             {
                 path: '', component: NewsletterComponent, pathMatch: 'full',
-                data: { title: 'Newsletter', nav: NavigationType.Back }
+                data: { title: 'Newsletter', nav: NavigationType.BACK }
             }
         ])
     ],

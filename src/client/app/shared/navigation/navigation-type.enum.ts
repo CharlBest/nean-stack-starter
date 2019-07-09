@@ -1,4 +1,4 @@
 export enum NavigationType {
-  Primary = 1,
-  Back = 2
+  PRIMARY = 1,
+  BACK = 2
 }

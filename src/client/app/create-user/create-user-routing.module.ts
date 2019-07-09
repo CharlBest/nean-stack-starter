@@ -8,7 +8,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
         RouterModule.forChild([
             {
                 path: '', component: CreateUserComponent, pathMatch: 'full',
-                data: { title: 'Sign Up', nav: NavigationType.Back }
+                data: { title: 'Sign Up', nav: NavigationType.BACK }
             }
         ])
     ],

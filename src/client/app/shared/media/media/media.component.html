@@ -1,7 +1,7 @@
 <ng-container *ngIf="safeSrc">
 
   <div [class.thumbnail-container]="thumbnail"
-    *ngIf="mediaTypeEnum.Image === mediaType">
+    *ngIf="mediaTypeEnum.IMAGE === mediaType">
     <img class="image"
       appImgError
       [class.thumbnail]="thumbnail"
@@ -12,7 +12,7 @@
       alt="image">
   </div>
 
-  <div *ngIf="mediaTypeEnum.YouTube === mediaType">
+  <div *ngIf="mediaTypeEnum.YOUTUBE === mediaType">
     <div *ngIf="thumbnail"
       class="thumbnail-container">
       <img class="img thumbnail"
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div *ngIf="mediaTypeEnum.Vimeo === mediaType"
+  <div *ngIf="mediaTypeEnum.VIMEO === mediaType"
     [class.thumbnail-container]="thumbnail">
     <iframe [class.thumbnail]="thumbnail"
       [src]="safeSrc"

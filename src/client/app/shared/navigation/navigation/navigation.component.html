@@ -2,7 +2,7 @@
   [style.height.px]="activeNavigation ? toolbarHeight : 0">
 
   <!-- Main nav -->
-  <div *ngIf="navigationType.Primary === activeNavigation"
+  <div *ngIf="navigationType.PRIMARY === activeNavigation"
     [style.height.px]="toolbarHeight"
     class="toolbar">
     <a mat-button
@@ -21,7 +21,7 @@
   </div>
 
   <!-- Back nav -->
-  <div *ngIf="navigationType.Back === activeNavigation"
+  <div *ngIf="navigationType.BACK === activeNavigation"
     [style.height.px]="toolbarHeight"
     class="toolbar">
     <div (click)="back()">

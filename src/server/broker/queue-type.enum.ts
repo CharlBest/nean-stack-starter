@@ -1,13 +1,13 @@
 export enum QueueType {
-    welcomeEmail = 'communication.email.welcome-email',
-    forgotPasswordEmail = 'communication.email.forgot-password',
-    feedbackEmail = 'communication.email.feedback',
-    resendEmailVerificationLinkEmail = 'communication.email.resend-email-verification-link',
-    paymentSuccessfulEmail = 'communication.email.payment-successful',
-    passwordUpdatedEmail = 'communication.email.password-updated',
-    inviteEmail = 'communication.email.invite',
-    notificationEmail = 'communication.email.notification',
-    systemEmail = 'communication.email.system',
+    WELCOME_EMAIL = 'communication.email.welcome-email',
+    FORGOT_PASSWORD_EMAIL = 'communication.email.forgot-password',
+    FEEDBACK_EMAIL = 'communication.email.feedback',
+    RESEND_EMAIL_VERIFICATION_LINK_EMAIL = 'communication.email.resend-email-verification-link',
+    PAYMENT_SUCCESSFUL_EMAIL = 'communication.email.payment-successful',
+    PASSWORD_UPDATED_EMAIL = 'communication.email.password-updated',
+    INVITE_EMAIL = 'communication.email.invite',
+    NOTIFICATION_EMAIL = 'communication.email.notification',
+    SYSTEM_EMAIL = 'communication.email.system',
 
-    newCommentPushNotification = 'communication.push.new-comment',
+    NEW_COMMENT_PUSH_NOTIFICATION = 'communication.push.new-comment',
 }

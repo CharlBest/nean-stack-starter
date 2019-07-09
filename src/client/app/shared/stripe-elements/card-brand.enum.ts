@@ -1,10 +1,10 @@
 export enum CardBrandType {
-    Unknown = 1,
-    Visa = 2,
-    MasterCard = 3,
-    DinnersClub = 4,
-    Discover = 5,
-    AmericanExpress = 6,
+    UNKNOWN = 1,
+    VISA = 2,
+    MASTER_CARD = 3,
+    DINERS_CLUB = 4,
+    DISCOVER = 5,
+    AMERICAN_EXPRESS = 6,
     JCB = 7,
-    UnionPay = 8,
+    UNION_PAY = 8,
 }

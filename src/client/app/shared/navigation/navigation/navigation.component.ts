@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
-import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
@@ -25,7 +24,6 @@ export class NavigationComponent implements OnInit {
   navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string | null;
-  tutorialTypeEnum = TutorialType;
   hasNavigatedToPageWithPrimaryNav = false;
   readonly desktopTopToolbarHeight = 64;
   readonly mobileTopToolbarHeight = 56;
@@ -129,7 +127,7 @@ export class NavigationComponent implements OnInit {
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.navigationService.previousUrl = event.url;
-        if (this.activeNavigation === NavigationType.Primary) {
+        if (this.activeNavigation === NavigationType.PRIMARY) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }
       });
@@ -165,7 +163,7 @@ export class NavigationComponent implements OnInit {
         const currentScrollPos = window.pageYOffset;
 
         if (prevScrollpos > currentScrollPos || currentScrollPos < this.desktopTopToolbarHeight ||
-          this.activeNavigation === NavigationType.Back) {
+          this.activeNavigation === NavigationType.BACK) {
           if (this.navbar.nativeElement.style.top !== '0px') {
             this.navbar.nativeElement.style.top = '0';
           }

@@ -13,39 +13,39 @@ import { WelcomeEmailModel } from './models/email/welcome-email.model';
 class EmailBroker implements Email {
 
     welcome(model: WelcomeEmailModel) {
-        brokerManager.sendToQueue(QueueType.welcomeEmail, model);
+        brokerManager.sendToQueue(QueueType.WELCOME_EMAIL, model);
     }
 
     forgotPassword(model: ForgotPasswordEmailModel) {
-        brokerManager.sendToQueue(QueueType.forgotPasswordEmail, model);
+        brokerManager.sendToQueue(QueueType.FORGOT_PASSWORD_EMAIL, model);
     }
 
     feedback(model: FeedbackEmailModel) {
-        brokerManager.sendToQueue(QueueType.feedbackEmail, model);
+        brokerManager.sendToQueue(QueueType.FEEDBACK_EMAIL, model);
     }
 
     resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
-        brokerManager.sendToQueue(QueueType.resendEmailVerificationLinkEmail, model);
+        brokerManager.sendToQueue(QueueType.RESEND_EMAIL_VERIFICATION_LINK_EMAIL, model);
     }
 
     paymentSuccessful(model: PaymentSuccessfulEmailModel) {
-        brokerManager.sendToQueue(QueueType.paymentSuccessfulEmail, model);
+        brokerManager.sendToQueue(QueueType.PAYMENT_SUCCESSFUL_EMAIL, model);
     }
 
     passwordUpdated(model: PasswordUpdatedEmailModel) {
-        brokerManager.sendToQueue(QueueType.passwordUpdatedEmail, model);
+        brokerManager.sendToQueue(QueueType.PASSWORD_UPDATED_EMAIL, model);
     }
 
     invite(model: InviteEmailModel) {
-        brokerManager.sendToQueue(QueueType.inviteEmail, model);
+        brokerManager.sendToQueue(QueueType.INVITE_EMAIL, model);
     }
 
     notification(model: NotificationEmailModel) {
-        brokerManager.sendToQueue(QueueType.notificationEmail, model);
+        brokerManager.sendToQueue(QueueType.NOTIFICATION_EMAIL, model);
     }
 
     system(data: any) {
-        brokerManager.sendToQueue(QueueType.systemEmail, data);
+        brokerManager.sendToQueue(QueueType.SYSTEM_EMAIL, data);
     }
 }
 

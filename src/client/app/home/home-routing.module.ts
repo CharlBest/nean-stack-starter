@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
         RouterModule.forChild([
             {
                 path: '', component: HomeComponent, pathMatch: 'full',
-                data: { title: 'Home', nav: NavigationType.Primary }
+                data: { title: 'Home', nav: NavigationType.PRIMARY }
             },
         ])
     ],

@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
         RouterModule.forChild([
             {
                 path: '', component: LoginComponent, pathMatch: 'full',
-                data: { title: 'Login', nav: NavigationType.Back }
+                data: { title: 'Login', nav: NavigationType.BACK }
             }
         ])
     ],

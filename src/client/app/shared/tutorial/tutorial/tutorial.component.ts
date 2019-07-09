@@ -17,16 +17,15 @@ export class TutorialComponent implements OnInit {
   private loggedInUserId = this.authService.getLoggedInUserId();
   tuts = [
     // Tutorial 1
-    new Tutorial(TutorialType.SignUp, 'Sign up here!', TutorialType.ForgotPassword, true),
-    new Tutorial(TutorialType.ForgotPassword, 'Forgot your password?', TutorialType.Newsletter),
-    new Tutorial(TutorialType.Newsletter, 'Newsletter sign up to stay up to date', TutorialType.Feedback),
-    new Tutorial(TutorialType.Feedback, 'Email the team some feedback', TutorialType.None, undefined, true),
+    new Tutorial(TutorialType.SIGN_UP, 'Sign up here!', TutorialType.FORGOT_PASSWORD, true),
+    new Tutorial(TutorialType.FORGOT_PASSWORD, 'Forgot your password?', TutorialType.NEWSLETTER),
+    new Tutorial(TutorialType.NEWSLETTER, 'Newsletter sign up to stay up to date', TutorialType.FEEDBACK),
+    new Tutorial(TutorialType.FEEDBACK, 'Email the team some feedback', TutorialType.NONE, undefined, true),
 
     // Tutorial 2
-    new Tutorial(TutorialType.AvatarUpload, 'Upload your avatar', TutorialType.UpdatePassword, true),
-    new Tutorial(TutorialType.UpdatePassword, 'Update your password', TutorialType.None, undefined, true)
+    new Tutorial(TutorialType.AVATAR_UPLOAD, 'Upload your avatar', TutorialType.UPDATE_PASSWORD, true),
+    new Tutorial(TutorialType.UPDATE_PASSWORD, 'Update your password', TutorialType.NONE, undefined, true)
   ];
-  tutorialTypeEnum = TutorialType;
   tutorialInUrl: TutorialType | null;
   active: boolean;
   returnUrl: string | null;
@@ -73,7 +72,7 @@ export class TutorialComponent implements OnInit {
   }
 
   skip(tutorial: Tutorial) {
-    this.tutorialService.activateTutorial(TutorialType.None, this.returnUrl);
+    this.tutorialService.activateTutorial(TutorialType.NONE, this.returnUrl);
 
     this.logTutorial(tutorial, true);
   }

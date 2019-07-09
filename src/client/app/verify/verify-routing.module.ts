@@ -8,7 +8,7 @@ import { VerifyComponent } from './verify/verify.component';
         RouterModule.forChild([
             {
                 path: ':code', component: VerifyComponent, pathMatch: 'full',
-                data: { title: 'Verify email', nav: NavigationType.Back }
+                data: { title: 'Verify email', nav: NavigationType.BACK }
             }
         ])
     ],

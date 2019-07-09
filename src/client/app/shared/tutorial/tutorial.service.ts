@@ -24,28 +24,28 @@ export class TutorialService {
     async activateTutorial(tutorialType: TutorialType, returnUrl: string | null = '/') {
         const navigateUrl = [];
         switch (tutorialType) {
-            case TutorialType.None:
+            case TutorialType.NONE:
                 navigateUrl.push(returnUrl);
                 break;
 
-            case TutorialType.SignUp:
+            case TutorialType.SIGN_UP:
                 navigateUrl.push('/login');
                 break;
 
-            case TutorialType.ForgotPassword:
+            case TutorialType.FORGOT_PASSWORD:
                 navigateUrl.push('/forgot-password');
                 break;
 
-            case TutorialType.Newsletter:
+            case TutorialType.NEWSLETTER:
                 navigateUrl.push('/newsletter');
                 break;
 
-            case TutorialType.Feedback:
+            case TutorialType.FEEDBACK:
                 navigateUrl.push('/feedback');
                 break;
 
-            case TutorialType.AvatarUpload:
-            case TutorialType.UpdatePassword:
+            case TutorialType.AVATAR_UPLOAD:
+            case TutorialType.UPDATE_PASSWORD:
                 navigateUrl.push('/profile');
                 break;
 
@@ -54,11 +54,11 @@ export class TutorialService {
         }
 
         await this.router.navigate(navigateUrl, {
-            queryParams: { tut: tutorialType === TutorialType.None ? null : tutorialType },
+            queryParams: { tut: tutorialType === TutorialType.NONE ? null : tutorialType },
             queryParamsHandling: 'merge'
         });
 
-        if (tutorialType === TutorialType.None) {
+        if (tutorialType === TutorialType.NONE) {
             this.checkIfAfterTutPageHasBackNav();
         }
     }
@@ -70,7 +70,7 @@ export class TutorialService {
         }
 
         // TODO: this is not ideal. Will prevent tutorials from returning to any page with back nav which is a lot!
-        if (route.snapshot.data.nav as NavigationType === NavigationType.Back) {
+        if (route.snapshot.data.nav as NavigationType === NavigationType.BACK) {
             this.router.navigate(['/']);
         }
     }
@@ -91,7 +91,7 @@ export class TutorialService {
                 duration: 4000,
             }).onAction()
                 .subscribe(() => {
-                    this.activateTutorial(TutorialType.SignUp);
+                    this.activateTutorial(TutorialType.SIGN_UP);
                 });
         }
     }

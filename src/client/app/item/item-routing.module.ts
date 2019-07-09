@@ -13,23 +13,23 @@ import { FavouritesComponent } from './favourites/favourites.component';
         RouterModule.forChild([
             {
                 path: 'create', component: CreateItemComponent, pathMatch: 'full',
-                data: { title: 'Create Item', nav: NavigationType.Primary }, canActivate: [AuthService]
+                data: { title: 'Create Item', nav: NavigationType.PRIMARY }, canActivate: [AuthService]
             },
             {
                 path: 'edit/:uId', component: EditItemComponent, pathMatch: 'full',
-                data: { title: 'Edit Item', nav: NavigationType.Back }, canActivate: [AuthService]
+                data: { title: 'Edit Item', nav: NavigationType.BACK }, canActivate: [AuthService]
             },
             {
                 path: 'comments/:uId', component: CommentsComponent, pathMatch: 'full',
-                data: { title: 'Comments', nav: NavigationType.Back }
+                data: { title: 'Comments', nav: NavigationType.BACK }
             },
             {
                 path: 'comment/edit/:uId', component: EditCommentComponent, pathMatch: 'full',
-                data: { title: 'Edit Comment', nav: NavigationType.Back }
+                data: { title: 'Edit Comment', nav: NavigationType.BACK }
             },
             {
                 path: 'saved', component: FavouritesComponent, pathMatch: 'full',
-                data: { title: 'Saved', nav: NavigationType.Back }, canActivate: [AuthService]
+                data: { title: 'Saved', nav: NavigationType.BACK }, canActivate: [AuthService]
             },
         ])
     ],

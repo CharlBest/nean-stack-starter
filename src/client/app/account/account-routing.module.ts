@@ -8,7 +8,7 @@ import { AccountComponent } from './account/account.component';
         RouterModule.forChild([
             {
                 path: '', component: AccountComponent, pathMatch: 'full',
-                data: { title: 'Account', nav: NavigationType.Primary }
+                data: { title: 'Account', nav: NavigationType.PRIMARY }
             },
         ])
     ],

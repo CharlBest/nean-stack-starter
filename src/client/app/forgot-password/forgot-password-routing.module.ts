@@ -9,11 +9,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
         RouterModule.forChild([
             {
                 path: '', component: ForgotPasswordComponent, pathMatch: 'full',
-                data: { title: 'Request forgotten password', nav: NavigationType.Back }
+                data: { title: 'Request forgotten password', nav: NavigationType.BACK }
             },
             {
                 path: 'reset', component: ChangePasswordComponent, pathMatch: 'full',
-                data: { title: 'Change password', nav: NavigationType.Back }
+                data: { title: 'Change password', nav: NavigationType.BACK }
             }
         ])
     ],

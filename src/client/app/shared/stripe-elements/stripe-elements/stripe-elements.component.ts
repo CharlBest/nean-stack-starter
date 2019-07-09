@@ -114,23 +114,23 @@ export class StripeElementsComponent implements OnInit {
             if (data && data.elementType === 'cardNumber' && data.brand) {
                 switch (data.brand) {
                     case 'visa':
-                        elementWrapper.cardBrand = CardBrandType.Visa;
+                        elementWrapper.cardBrand = CardBrandType.VISA;
                         break;
 
                     case 'mastercard':
-                        elementWrapper.cardBrand = CardBrandType.MasterCard;
+                        elementWrapper.cardBrand = CardBrandType.MASTER_CARD;
                         break;
 
                     case 'amex':
-                        elementWrapper.cardBrand = CardBrandType.AmericanExpress;
+                        elementWrapper.cardBrand = CardBrandType.AMERICAN_EXPRESS;
                         break;
 
                     case 'discover':
-                        elementWrapper.cardBrand = CardBrandType.Discover;
+                        elementWrapper.cardBrand = CardBrandType.DISCOVER;
                         break;
 
                     case 'diners':
-                        elementWrapper.cardBrand = CardBrandType.DinnersClub;
+                        elementWrapper.cardBrand = CardBrandType.DINERS_CLUB;
                         break;
 
                     case 'jcb':
@@ -138,11 +138,11 @@ export class StripeElementsComponent implements OnInit {
                         break;
 
                     case 'unionpay':
-                        elementWrapper.cardBrand = CardBrandType.UnionPay;
+                        elementWrapper.cardBrand = CardBrandType.UNION_PAY;
                         break;
 
                     default:
-                        elementWrapper.cardBrand = CardBrandType.Unknown;
+                        elementWrapper.cardBrand = CardBrandType.UNKNOWN;
                         break;
                 }
             }

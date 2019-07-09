@@ -12,23 +12,23 @@ import { ProfileComponent } from './profile/profile.component';
         RouterModule.forChild([
             {
                 path: '', component: ProfileComponent, pathMatch: 'full',
-                data: { title: 'Profile', nav: NavigationType.Back }
+                data: { title: 'Profile', nav: NavigationType.BACK }
             },
             {
                 path: 'payment-history', component: PaymentHistoryComponent, pathMatch: 'full',
-                data: { title: 'Payment History', nav: NavigationType.Back }
+                data: { title: 'Payment History', nav: NavigationType.BACK }
             },
             {
                 path: 'create-card', component: CreateCardComponent, pathMatch: 'full',
-                data: { title: 'Create Card', nav: NavigationType.Back }
+                data: { title: 'Create Card', nav: NavigationType.BACK }
             },
             {
                 path: 'delete', component: DeleteUserComponent, pathMatch: 'full',
-                data: { title: 'Delete Account', nav: NavigationType.Back }
+                data: { title: 'Delete Account', nav: NavigationType.BACK }
             },
             {
                 path: 'notifications', component: NotificationsComponent, pathMatch: 'full',
-                data: { title: 'Notifications', nav: NavigationType.Back }
+                data: { title: 'Notifications', nav: NavigationType.BACK }
             },
         ])
     ],

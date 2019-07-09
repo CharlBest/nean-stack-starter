@@ -8,7 +8,7 @@ import { InviteComponent } from './invite/invite.component';
         RouterModule.forChild([
             {
                 path: '', component: InviteComponent, pathMatch: 'full',
-                data: { title: 'Invite Friends', nav: NavigationType.Back }
+                data: { title: 'Invite Friends', nav: NavigationType.BACK }
             }
         ])
     ],

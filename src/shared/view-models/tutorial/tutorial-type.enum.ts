@@ -1,9 +1,9 @@
 export enum TutorialType {
-    None = 0,
-    SignUp = 1,
-    ForgotPassword = 2,
-    Feedback = 3,
-    Newsletter = 4,
-    AvatarUpload = 5,
-    UpdatePassword = 6,
+    NONE = 0,
+    SIGN_UP = 1,
+    FORGOT_PASSWORD = 2,
+    FEEDBACK = 3,
+    NEWSLETTER = 4,
+    AVATAR_UPLOAD = 5,
+    UPDATE_PASSWORD = 6,
 }

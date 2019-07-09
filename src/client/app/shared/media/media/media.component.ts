@@ -51,14 +51,14 @@ export class MediaComponent implements OnChanges {
         this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src) as string;
       }
 
-      this.mediaType = MediaType.YouTube;
+      this.mediaType = MediaType.YOUTUBE;
     } else if (this.src.substr(0, 25).indexOf('vimeo.com') > -1) {
       this.src = this.src.replace('vimeo.com/', 'player.vimeo.com/video/');
       // TODO: this is dangerous and should be looked at again
       this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src) as string;
-      this.mediaType = MediaType.Vimeo;
+      this.mediaType = MediaType.VIMEO;
     } else {
-      this.mediaType = MediaType.Image;
+      this.mediaType = MediaType.IMAGE;
       this.safeSrc = this.src;
     }
   }

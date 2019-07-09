@@ -68,34 +68,34 @@ class App {
 
     async processTask(queueType: string, data: any): Promise<boolean> {
         switch (QueueType[queueType]) {
-            case QueueType.welcomeEmail:
+            case QueueType.WELCOME_EMAIL:
                 return emailer.welcome(data);
 
-            case QueueType.forgotPasswordEmail:
+            case QueueType.FORGOT_PASSWORD_EMAIL:
                 return emailer.forgotPassword(data);
 
-            case QueueType.feedbackEmail:
+            case QueueType.FEEDBACK_EMAIL:
                 return emailer.feedback(data);
 
-            case QueueType.resendEmailVerificationLinkEmail:
+            case QueueType.RESEND_EMAIL_VERIFICATION_LINK_EMAIL:
                 return emailer.resendEmailVerificationLink(data);
 
-            case QueueType.paymentSuccessfulEmail:
+            case QueueType.PAYMENT_SUCCESSFUL_EMAIL:
                 return emailer.paymentSuccessful(data);
 
-            case QueueType.passwordUpdatedEmail:
+            case QueueType.PASSWORD_UPDATED_EMAIL:
                 return emailer.passwordUpdated(data);
 
-            case QueueType.inviteEmail:
+            case QueueType.INVITE_EMAIL:
                 return emailer.invite(data);
 
-            case QueueType.notificationEmail:
+            case QueueType.NOTIFICATION_EMAIL:
                 return emailer.notification(data);
 
-            case QueueType.systemEmail:
+            case QueueType.SYSTEM_EMAIL:
                 return emailer.system(data);
 
-            case QueueType.newCommentPushNotification:
+            case QueueType.NEW_COMMENT_PUSH_NOTIFICATION:
                 return pushNotification.newComment(data);
 
             default:

@@ -8,7 +8,7 @@ import { ActivityComponent } from './activity/activity.component';
         RouterModule.forChild([
             {
                 path: '', component: ActivityComponent, pathMatch: 'full',
-                data: { title: 'Activity', nav: NavigationType.Primary }
+                data: { title: 'Activity', nav: NavigationType.PRIMARY }
             },
         ])
     ],

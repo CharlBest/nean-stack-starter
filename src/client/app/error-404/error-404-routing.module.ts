@@ -8,7 +8,7 @@ import { Error404Component } from './error-404/error-404.component';
         RouterModule.forChild([
             {
                 path: '', component: Error404Component, pathMatch: 'full',
-                data: { title: 'Error 404', nav: NavigationType.Back }
+                data: { title: 'Error 404', nav: NavigationType.BACK }
             }
         ])
     ],
