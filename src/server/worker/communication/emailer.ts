@@ -31,11 +31,11 @@ class Emailer implements Email {
 
         // TODO: fix sendgrid bug with declaring substitution variables
         // html: {{username}}
-        // url: /verify/{{emailVerifyCode}}
+        // url: /verify/{{verifyCode}}
         data.dynamicTemplateData = {
             subject: 'Welcome',
             username: model.username,
-            emailVerifyCode: model.verifyCode,
+            verifyCode: model.verifyCode,
         };
 
         return this.send(data);
@@ -218,6 +218,8 @@ class Emailer implements Email {
 
         if (environment.production) {
             try {
+                // TODO: This will fail until we upgrade to something newer than sendgrid
+                // version 6.4.0 (https://github.com/sendgrid/sendgrid-nodejs/pull/935)
                 const response = await sendGridMail.send(data);
 
                 return response && response[0] && response[0].statusCode >= 200 && response[0].statusCode < 300;
