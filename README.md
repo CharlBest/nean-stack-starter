@@ -737,7 +737,7 @@ services:
     volumes:
       - $HOME/neo4j/nean.io/data:/data
       - $HOME/neo4j/nean.io/backup:/backup
-      ## - $HOME/neo4j/nean.io/logs:/logs
+      - $HOME/neo4j/nean.io/logs:/logs
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
@@ -766,7 +766,7 @@ services:
     volumes:
       - $HOME/neo4j/dev.nean.io/data:/data
       - $HOME/neo4j/dev.nean.io/backup:/backup
-      ## - $HOME/neo4j/dev.nean.io/logs:/logs
+      - $HOME/neo4j/dev.nean.io/logs:/logs
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
