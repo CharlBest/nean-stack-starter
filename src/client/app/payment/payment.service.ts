@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
@@ -14,15 +13,15 @@ export class PaymentService {
 
     constructor(private http: HttpClient) { }
 
-    anonymousPayment(viewModel: AnonymousPaymentViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.anonymousPayment().client()}`, viewModel);
+    anonymousPayment(viewModel: AnonymousPaymentViewModel): Promise<boolean> {
+        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.anonymousPayment().client()}`, viewModel).toPromise();
     }
 
-    paymentCards(): Observable<CardModel[] | null> {
-        return this.http.get<CardModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentCards().client()}`);
+    paymentCards(): Promise<CardModel[] | null> {
+        return this.http.get<CardModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentCards().client()}`).toPromise();
     }
 
-    userPayment(viewModel: UserPaymentViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.userPayment().client()}`, viewModel);
+    userPayment(viewModel: UserPaymentViewModel): Promise<boolean> {
+        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.userPayment().client()}`, viewModel).toPromise();
     }
 }

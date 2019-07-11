@@ -25,10 +25,13 @@ export class GitHubComponent implements OnInit {
     }
   }
 
-  getMarkdownPage() {
-    this.gitHubService.getFile(this.filePath).subscribe(data => {
-      this.readmeText = parse(data);
+  async getMarkdownPage() {
+    try {
+      const response = await this.gitHubService.getFile(this.filePath);
+      this.readmeText = parse(response);
       this.doneLoading.emit();
-    });
+    } catch (error) {
+      // TODO: error handling
+    }
   }
 }

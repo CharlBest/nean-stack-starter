@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ItemService } from '../item.service';
@@ -22,20 +21,21 @@ export class FavouritesComponent implements OnInit {
     this.getFavourites();
   }
 
-  getFavourites() {
+  async getFavourites() {
     this.isProcessing = true;
 
-    this.itemService.getFavourites(this.pageIndex)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          this.items.push(...data);
-        } else {
-          this.listEnd = true;
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+    try {
+      const response = await this.itemService.getFavourites(this.pageIndex);
+      if (response) {
+        this.items.push(...response);
+      } else {
+        this.listEnd = true;
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
   onScroll() {

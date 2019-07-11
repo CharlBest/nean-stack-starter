@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { CreateUserViewModel } from '../../../../shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
@@ -41,15 +40,14 @@ export class CreateUserComponent implements OnInit {
     this.formGroup = this.fb.group(FormGroupBuilder.createUser());
   }
 
-  onSubmit() {
-    this.passwordStrengthService.init(this.formGroup.controls.password.value).subscribe(data => {
-      if (data) {
-        this.createUser();
-      }
-    });
+  async onSubmit() {
+    const passedCommonlyUsedTest = await this.passwordStrengthService.passCommonlyUsedTest(this.formGroup.controls.password.value);
+    if (passedCommonlyUsedTest) {
+      this.createUser();
+    }
   }
 
-  createUser() {
+  async createUser() {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
@@ -57,34 +55,34 @@ export class CreateUserComponent implements OnInit {
     viewModel.username = this.formGroup.controls.username.value.trim();
     viewModel.password = this.formGroup.controls.password.value;
 
-    this.createUserService.createUser(viewModel)
-      .subscribe(() => {
-        this.setUserToken();
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-        this.isProcessing = false;
-      });
+    try {
+      await this.createUserService.createUser(viewModel);
+      this.setUserToken();
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.formGroup);
+      this.isProcessing = false;
+    }
   }
 
-  setUserToken() {
+  async setUserToken() {
     this.isProcessing = true;
 
     const model = new LoginViewModel();
     model.emailOrUsername = this.formGroup.controls.email.value;
     model.password = this.formGroup.controls.password.value;
 
-    this.loginService.login(model)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data && data.token) {
-          this.authService.setToken(data.token);
-
-          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
-        } else {
-          this.dialogService.alert('Authentication failed');
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-      });
+    try {
+      const response = await this.loginService.login(model);
+      if (response && response.token) {
+        this.authService.setToken(response.token);
+        this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
+      } else {
+        this.dialogService.alert('Authentication failed');
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.formGroup);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

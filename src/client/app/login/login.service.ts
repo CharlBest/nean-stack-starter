@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { LoginViewModel } from '../../../shared/view-models/create-user/login.view-model';
 import { TokenViewModel } from '../../../shared/view-models/create-user/token.view-model';
@@ -13,7 +12,7 @@ export class LoginService {
 
     constructor(private http: HttpClient) { }
 
-    login(viewModel: LoginViewModel): Observable<TokenViewModel | null> {
-        return this.http.post<TokenViewModel>(`${environment.httpDomain}${UserRoutes.login().client()}`, viewModel);
+    login(viewModel: LoginViewModel): Promise<TokenViewModel | null> {
+        return this.http.post<TokenViewModel>(`${environment.httpDomain}${UserRoutes.login().client()}`, viewModel).toPromise();
     }
 }

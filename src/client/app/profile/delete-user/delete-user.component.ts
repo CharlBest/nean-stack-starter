@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../shared/services/auth.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { ProfileService } from '../profile.service';
@@ -33,23 +32,25 @@ export class DeleteUserComponent implements OnInit {
         });
     }
 
-    delete(email: string) {
+    async delete(email: string) {
         if (this.email && email === this.email) {
             this.isProcessing = true;
 
             this.snackBar.open('Deleting...');
 
-            this.profileService.deleteUser()
-                .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(() => {
-                    this.authService.removeTokenAndNavigateToLogin();
-                    this.snackBar.dismiss();
+            try {
+                await this.profileService.deleteUser();
 
-                    this.snackBar.open('Deleted');
-                }, error => {
-                    this.snackBar.dismiss();
-                    this.snackBar.open('Deleting failed');
-                });
+                this.authService.removeTokenAndNavigateToLogin();
+                this.snackBar.dismiss();
+
+                this.snackBar.open('Deleted');
+            } catch (error) {
+                this.snackBar.dismiss();
+                this.snackBar.open('Deleting failed');
+            } finally {
+                this.isProcessing = false;
+            }
         }
     }
 }

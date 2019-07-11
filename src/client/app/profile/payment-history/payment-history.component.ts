@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { PaymentModel } from '../../../../shared/models/payment/payment.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
@@ -20,15 +19,16 @@ export class PaymentHistoryComponent implements OnInit {
     this.getPaymentHistory();
   }
 
-  getPaymentHistory() {
-    this.profileService.paymentHistory()
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          this.paymentHistory = data;
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+  async getPaymentHistory() {
+    try {
+      const response = await this.profileService.paymentHistory();
+      if (response) {
+        this.paymentHistory = response;
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

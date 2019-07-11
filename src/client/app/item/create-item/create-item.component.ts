@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
+import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PushNotificationService } from '../../shared/services/push-notification.service';
@@ -26,7 +26,7 @@ export class CreateItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateItemViewModel();
@@ -34,23 +34,26 @@ export class CreateItemComponent implements OnInit {
     viewModel.description = this.itemForm.formGroup.controls.description.value;
     viewModel.media = this.itemForm.formGroup.controls.media.value;
 
-    this.itemService.create(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          if (!this.pushNotificationService.isPushNotificationPermissionGrandted()) {
-            this.dialogService.confirm('Give permission to get notifications for comments?')
-              .subscribe(confirm => {
-                if (confirm) {
-                  this.router.navigate(['/profile/notifications']);
-                } else {
-                  this.router.navigate(['/item/comments', data.uId]);
-                }
-              });
-          }
+    try {
+      const response = await this.itemService.create(viewModel);
+      if (response) {
+        if (!this.pushNotificationService.isPushNotificationPermissionGrandted()) {
+          this.askForNotificationPermission(response);
         }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-      });
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
+    } finally {
+      this.isProcessing = false;
+    }
+  }
+
+  async askForNotificationPermission(item: ItemViewModel) {
+    const hasConfirmed = await this.dialogService.confirm('Give permission to get notifications for comments?');
+    if (hasConfirmed) {
+      this.router.navigate(['/profile/notifications']);
+    } else {
+      this.router.navigate(['/item/comments', item.uId]);
+    }
   }
 }

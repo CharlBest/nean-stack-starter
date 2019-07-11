@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
 import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -75,8 +74,8 @@ export class TutorialService {
         }
     }
 
-    completedTutorial(viewModel: CompletedTutorial): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.completedTutorial().client()}`, viewModel);
+    completedTutorial(viewModel: CompletedTutorial): Promise<boolean> {
+        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
     }
 
     hasUserVisited() {

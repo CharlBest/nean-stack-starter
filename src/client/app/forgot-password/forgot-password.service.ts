@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { UserRoutes } from '../../../shared/routes/user.routes';
 import { ChangeForgottenPasswordViewModel } from '../../../shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { ForgotPasswordViewModel } from '../../../shared/view-models/forgot-password/forgot-password.view-model';
@@ -13,11 +12,11 @@ export class ForgotPasswordService {
 
     constructor(private http: HttpClient) { }
 
-    forgotPassword(viewModel: ForgotPasswordViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.httpDomain}${UserRoutes.forgotPassword().client()}`, viewModel);
+    forgotPassword(viewModel: ForgotPasswordViewModel): Promise<void> {
+        return this.http.post<void>(`${environment.httpDomain}${UserRoutes.forgotPassword().client()}`, viewModel).toPromise();
     }
 
-    changeForgottenPassword(viewModel: ChangeForgottenPasswordViewModel): Observable<void> {
-        return this.http.post<void>(`${environment.httpDomain}${UserRoutes.changeForgottenPassword().client()}`, viewModel);
+    changeForgottenPassword(viewModel: ChangeForgottenPasswordViewModel): Promise<void> {
+        return this.http.post<void>(`${environment.httpDomain}${UserRoutes.changeForgottenPassword().client()}`, viewModel).toPromise();
     }
 }

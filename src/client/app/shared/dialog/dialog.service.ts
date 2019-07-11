@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
@@ -15,7 +14,7 @@ export class DialogService {
         dialogRef.componentInstance.message = message;
     }
 
-    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null): Observable<boolean> {
+    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null): Promise<boolean> {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: true
         });
@@ -27,6 +26,6 @@ export class DialogService {
             dialogRef.componentInstance.closeButtonText = closeButtonText;
         }
 
-        return dialogRef.afterClosed();
+        return dialogRef.afterClosed().toPromise();
     }
 }

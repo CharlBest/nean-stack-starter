@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -42,39 +41,41 @@ export class CommentsComponent implements OnInit {
     });
   }
 
-  getItem() {
+  async getItem() {
     if (this.itemUId) {
       this.isProcessing = true;
 
-      this.itemService.get(this.itemUId)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(data => {
-          if (data) {
-            this.item = data;
-          }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+      try {
+        const response = await this.itemService.get(this.itemUId);
+        if (response) {
+          this.item = response;
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
+      }
     }
   }
 
-  getComments() {
+  async getComments() {
     if (this.itemUId) {
       this.isProcessingComment = true;
 
-      this.itemService.getComments(this.itemUId, this.pageIndex)
-        .pipe(finalize(() => this.isProcessingComment = false))
-        .subscribe(data => {
-          if (data) {
-            // TODO: is the the fastest way?
-            data.forEach(comment => comment.itemUId = this.itemUId);
-            this.comments.push(...data);
-          } else {
-            this.listEnd = true;
-          }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+      try {
+        const response = await this.itemService.getComments(this.itemUId, this.pageIndex);
+        if (response) {
+          // TODO: is the the fastest way?
+          response.forEach(comment => comment.itemUId = this.itemUId);
+          this.comments.push(...response);
+        } else {
+          this.listEnd = true;
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessingComment = false;
+      }
     }
   }
 

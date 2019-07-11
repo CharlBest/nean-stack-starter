@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { NewsletterMemberViewModel } from '../../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -50,28 +49,34 @@ export class NewsletterComponent implements OnInit {
     });
   }
 
-  add() {
+  async add() {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
     viewModel.email = this.formGroup.controls.email.value.trim();
 
-    this.newsletterService.createNewsletterMember(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(() => {
-        this.isDone = true;
-      });
+    try {
+      await this.newsletterService.createNewsletterMember(viewModel);
+      this.isDone = true;
+    } catch (error) {
+      // TODO: error handling
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
-  remove() {
+  async remove() {
     this.isProcessing = true;
 
     const email = this.formGroup.controls.email.value.trim();
 
-    this.newsletterService.deleteNewsletterMember(email)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(() => {
-        this.isDone = true;
-      });
+    try {
+      await this.newsletterService.deleteNewsletterMember(email);
+      this.isDone = true;
+    } catch (error) {
+      // TODO: error handling
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

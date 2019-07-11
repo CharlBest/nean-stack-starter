@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -44,19 +43,18 @@ export class UpdatePasswordComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.formGroup.controls.newPassword.value !== this.formGroup.controls.confirmPassword.value) {
       return;
     }
 
-    this.passwordStrengthService.init(this.formGroup.controls.newPassword.value).subscribe(data => {
-      if (data) {
-        this.updatePassword();
-      }
-    });
+    const passedCommonlyUsedTest = await this.passwordStrengthService.passCommonlyUsedTest(this.formGroup.controls.newPassword.value);
+    if (passedCommonlyUsedTest) {
+      this.updatePassword();
+    }
   }
 
-  updatePassword() {
+  async updatePassword() {
     this.isProcessing = true;
 
     this.snackBar.open('Updating password...');
@@ -65,19 +63,20 @@ export class UpdatePasswordComponent implements OnInit {
     viewModel.password = this.formGroup.controls.password.value;
     viewModel.newPassword = this.formGroup.controls.newPassword.value;
 
-    this.profileService.updatePassword(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(() => {
-        this.formRef.resetForm();
+    try {
+      const response = await this.profileService.updatePassword(viewModel);
+      this.formRef.resetForm();
 
-        this.snackBar.dismiss();
-        this.snackBar.open('Updated password');
-      }, error => {
-        this.snackBar.dismiss();
-        this.snackBar.open('Update failed');
+      this.snackBar.dismiss();
+      this.snackBar.open('Updated password');
+    } catch (error) {
+      this.snackBar.dismiss();
+      this.snackBar.open('Update failed');
 
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-        this.snackBar.dismiss();
-      });
+      this.formErrorsService.updateFormValidity(error, this.formGroup);
+      this.snackBar.dismiss();
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

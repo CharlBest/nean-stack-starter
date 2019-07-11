@@ -23,11 +23,14 @@ export class DevComponent implements OnInit {
     this.getCurrentVersionInGitHubPackageJson();
   }
 
-  getCurrentVersionInGitHubPackageJson() {
-    this.gitHubService.getFile('package.json').subscribe(data => {
-      const startIndex = data.indexOf('"version"');
-      const endIndex = data.indexOf('",', startIndex);
-      this.dataSource[0].version = `v${data.substring(startIndex + 12, endIndex)}`;
-    });
+  async getCurrentVersionInGitHubPackageJson() {
+    try {
+      const response = await this.gitHubService.getFile('package.json');
+      const startIndex = response.indexOf('"version"');
+      const endIndex = response.indexOf('",', startIndex);
+      this.dataSource[0].version = `v${response.substring(startIndex + 12, endIndex)}`;
+    } catch (error) {
+      // TODO: error handling
+    }
   }
 }

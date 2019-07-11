@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { ReportCommentViewModel } from '../../../../shared/view-models/item/report-comment.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -36,49 +35,49 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteComment() {
-    this.dialogService.confirm('Are you sure you want to delete this comment?').subscribe(data => {
-      if (data) {
-        this.contextMenu.close();
+  async deleteComment() {
+    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this comment?');
+    if (hasConfirmed) {
+      this.contextMenu.close();
 
-        this.snackBar.open('Deleting...');
+      this.snackBar.open('Deleting...');
 
-        this.itemService.deleteComment(this.comment.uId)
-          .pipe(finalize(() => this.isProcessing = false))
-          .subscribe(() => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Deleted');
-            // TODO: very dirty and bad UI but will work for now
-            location.reload();
-          }, error => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Delete failed');
-            this.formErrorsService.updateFormValidity(error);
-          });
+      try {
+        await this.itemService.deleteComment(this.comment.uId);
+        this.snackBar.dismiss();
+        this.snackBar.open('Deleted');
+        // TODO: very dirty and bad UI but will work for now
+        location.reload();
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Delete failed');
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
       }
-    });
+    }
   }
 
-  reportComment() {
-    this.dialogService.confirm('This comment is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
-      if (data) {
-        this.contextMenu.close();
+  async reportComment() {
+    const hasConfirmed = await this.dialogService
+      .confirm('This comment is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+    if (hasConfirmed) {
+      this.contextMenu.close();
 
-        const viewModel = new ReportCommentViewModel();
-        viewModel.uId = this.comment.uId;
+      const viewModel = new ReportCommentViewModel();
+      viewModel.uId = this.comment.uId;
 
-        this.snackBar.open('Sending...');
+      this.snackBar.open('Sending...');
 
-        this.itemService.sendReport(viewModel)
-          .subscribe(() => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sent');
-          }, error => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sending failed');
-          });
+      try {
+        await this.itemService.sendReport(viewModel);
+        this.snackBar.dismiss();
+        this.snackBar.open('Sent');
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Sending failed');
       }
-    });
+    }
   }
 
   openShareDialog() {

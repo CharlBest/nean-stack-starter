@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -24,27 +23,29 @@ export class PaymentsComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteCard(uId: string) {
-    this.dialogService.confirm('Are you sure you want to delete this payment method?').subscribe(hasConfirmed => {
-      if (hasConfirmed) {
-        this.profileService.deleteCard(uId)
-          .pipe(finalize(() => this.isProcessing = false))
-          .subscribe(data => {
-            if (data) {
-              if (!this.paymentCards) {
-                this.paymentCards = [];
-              }
+  async deleteCard(uId: string) {
+    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this payment method?');
+    if (hasConfirmed) {
 
-              this.paymentCards = this.paymentCards.filter(card => card.uId !== uId);
-            }
-          }, error => {
-            this.formErrorsService.updateFormValidity(error);
-          });
+      try {
+        const response = await this.profileService.deleteCard(uId);
+        if (response) {
+          if (!this.paymentCards) {
+            this.paymentCards = [];
+          }
+
+          this.paymentCards = this.paymentCards.filter(card => card.uId !== uId);
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
       }
-    });
+
+    }
   }
 
-  changeDefaultCard() {
+  async changeDefaultCard() {
     this.isProcessing = true;
     const currentDefaultCard = this.paymentCards.find(card => card.isDefault);
 
@@ -54,24 +55,25 @@ export class PaymentsComponent implements OnInit {
     }
 
     if (this.newDefaultCardUId && this.newDefaultCardUId !== currentDefaultCard.uId) {
-      this.profileService.updateDefaultCard(this.newDefaultCardUId)
-        .pipe(finalize(() => {
-          this.isProcessing = false;
-          this.isChangingDefault = false;
-        }))
-        .subscribe(data => {
-          if (data) {
-            this.paymentCards.forEach(card => {
-              if (card.uId !== this.newDefaultCardUId) {
-                card.isDefault = false;
-              } else {
-                card.isDefault = true;
-              }
-            });
-          }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+
+      try {
+        const response = await this.profileService.updateDefaultCard(this.newDefaultCardUId);
+        if (response) {
+          this.paymentCards.forEach(card => {
+            if (card.uId !== this.newDefaultCardUId) {
+              card.isDefault = false;
+            } else {
+              card.isDefault = true;
+            }
+          });
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
+        this.isChangingDefault = false;
+      }
+
     } else {
       this.isProcessing = false;
       this.isChangingDefault = false;

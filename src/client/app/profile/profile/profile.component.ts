@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -46,55 +45,56 @@ export class ProfileComponent implements OnInit {
     this.navigationService.navigationPlaceholderTemplate = this.backNavRightPlaceholder;
   }
 
-  getUser() {
-    this.profileService.getUserProfile()
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          // Default card first
-          if (data.paymentCards) {
-            data.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
-          }
-
-          this.user = data;
+  async getUser() {
+    try {
+      const response = await this.profileService.getUserProfile();
+      if (response) {
+        // Default card first
+        if (response.paymentCards) {
+          response.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
         }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
-  }
 
-  reportUser() {
-    this.dialogService.confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
-      if (data) {
-        this.contextMenu.close();
-
-        const viewModel = new ReportUserViewModel();
-        viewModel.uId = this.user.uId;
-
-        this.snackBar.open('Sending...');
-
-        this.profileService.sendReport(viewModel)
-          .subscribe(() => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sent');
-          }, error => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sending failed');
-          });
+        this.user = response;
       }
-    });
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
-  updateAvatar(downloadURL: string | null) {
+  async reportUser() {
+    const hasConfirmed = await this.dialogService
+      .confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+    if (hasConfirmed) {
+      this.contextMenu.close();
+
+      const viewModel = new ReportUserViewModel();
+      viewModel.uId = this.user.uId;
+
+      this.snackBar.open('Sending...');
+
+      try {
+        await this.profileService.sendReport(viewModel);
+        this.snackBar.dismiss();
+        this.snackBar.open('Sent');
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Sending failed');
+      }
+    }
+  }
+
+  async updateAvatar(downloadURL: string | null) {
     const viewModel = new UpdateAvatarViewModel();
     viewModel.avatarUrl = downloadURL;
 
-    this.profileService.updateAvatar(viewModel)
-      .subscribe(() => {
-        this.user.avatarUrl = viewModel.avatarUrl;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+    try {
+      await this.profileService.updateAvatar(viewModel);
+      this.user.avatarUrl = viewModel.avatarUrl;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    }
   }
 
   removeAvatar() {
@@ -107,25 +107,25 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  resendEmailVerificationLink() {
+  async resendEmailVerificationLink() {
     this.contextMenu.close();
 
     this.snackBar.dismiss();
     this.snackBar.open('Sending...');
 
-    this.profileService.resendEmailVerificationLink()
-      .subscribe(() => {
-        this.snackBar.dismiss();
-        this.snackBar.open('Sent');
-      }, error => {
-        this.snackBar.dismiss();
-        const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
-          duration: 5000
-        });
-        sendingBar.onAction().subscribe(() => {
-          this.resendEmailVerificationLink();
-        });
+    try {
+      await this.profileService.resendEmailVerificationLink();
+      this.snackBar.dismiss();
+      this.snackBar.open('Sent');
+    } catch (error) {
+      this.snackBar.dismiss();
+      const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
+        duration: 5000
       });
+      sendingBar.onAction().subscribe(() => {
+        this.resendEmailVerificationLink();
+      });
+    }
   }
 
   goToDeleteAccount() {

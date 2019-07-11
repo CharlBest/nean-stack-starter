@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { GeneralRoutes } from '../../../shared/routes/general.routes';
 import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
 import { environment } from '../../environments/environment';
@@ -12,11 +11,13 @@ export class NewsletterService {
 
     constructor(private http: HttpClient) { }
 
-    createNewsletterMember(viewModel: NewsletterMemberViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${GeneralRoutes.createNewsletterMember().client()}`, viewModel);
+    createNewsletterMember(viewModel: NewsletterMemberViewModel): Promise<boolean> {
+        return this.http
+            .post<boolean>(`${environment.httpDomain}${GeneralRoutes.createNewsletterMember().client()}`, viewModel)
+            .toPromise();
     }
 
-    deleteNewsletterMember(email: string): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.httpDomain}${GeneralRoutes.deleteNewsletterMember(email).client()}`);
+    deleteNewsletterMember(email: string): Promise<boolean> {
+        return this.http.delete<boolean>(`${environment.httpDomain}${GeneralRoutes.deleteNewsletterMember(email).client()}`).toPromise();
     }
 }

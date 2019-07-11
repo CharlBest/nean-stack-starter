@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from 'shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -48,51 +47,53 @@ export class UserComponent implements OnInit {
     });
   }
 
-  getUser() {
+  async getUser() {
     if (this.userId) {
-      this.userService.getUserPublic(this.userId)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(data => {
-          if (data) {
-            this.user = data;
-            if (this.user.haveItems) {
-              this.getItems();
-            } else {
-              this.userHasNoItems = true;
-            }
+      try {
+        const response = await this.userService.getUserPublic(this.userId);
+        if (response) {
+          this.user = response;
+          if (this.user.haveItems) {
+            this.getItems();
+          } else {
+            this.userHasNoItems = true;
           }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
+      }
     }
   }
 
-  getItems() {
+  async getItems() {
     if (this.userId) {
       this.isProcessingItems = true;
 
-      this.userService.getUserPublicItems(this.userId, this.pageIndex)
-        .pipe(finalize(() => this.isProcessingItems = false))
-        .subscribe(data => {
-          if (data) {
-            if (this.userId) {
-              const itemsOwner = {
-                id: this.userId,
-                username: this.user.username,
-                avatarUrl: this.user.avatarUrl
-              };
+      try {
+        const response = await this.userService.getUserPublicItems(this.userId, this.pageIndex);
+        if (response) {
+          if (this.userId) {
+            const itemsOwner = {
+              id: this.userId,
+              username: this.user.username,
+              avatarUrl: this.user.avatarUrl
+            };
 
-              // TODO: This can be optimized
-              data.map((item: ItemViewModel) => item.user = itemsOwner);
-            }
-
-            this.items.push(...data);
-          } else {
-            this.listEnd = true;
+            // TODO: This can be optimized
+            response.map((item: ItemViewModel) => item.user = itemsOwner);
           }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+
+          this.items.push(...response);
+        } else {
+          this.listEnd = true;
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessingItems = false;
+      }
     }
   }
 

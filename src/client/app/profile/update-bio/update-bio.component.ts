@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
 import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { HTMLEditorComponent } from '../../shared/html-editor/html-editor/html-editor.component';
@@ -25,7 +24,7 @@ export class UpdateBioComponent {
     this.htmlEditor.insertText(shortname, true);
   }
 
-  onSubmit() {
+  async onSubmit() {
     const viewModel = new UpdateBioViewModel();
     viewModel.content = this.htmlEditor.getInnerHTML();
 
@@ -34,21 +33,23 @@ export class UpdateBioComponent {
 
       this.snackBar.open('Updating bio...');
 
-      this.profileService.updateBio(viewModel)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(() => {
-          this.htmlEditor.updateFileStorageWithUrls();
-          this.content = viewModel.content;
+      try {
+        await this.profileService.updateBio(viewModel);
 
-          this.snackBar.dismiss();
-          this.snackBar.open('Updated bio');
-        }, error => {
-          this.snackBar.dismiss();
-          this.snackBar.open('Update failed');
+        this.htmlEditor.updateFileStorageWithUrls();
+        this.content = viewModel.content;
 
-          this.formErrorsService.updateFormValidity(error);
-          this.snackBar.dismiss();
-        });
+        this.snackBar.dismiss();
+        this.snackBar.open('Updated bio');
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Update failed');
+
+        this.formErrorsService.updateFormValidity(error);
+        this.snackBar.dismiss();
+      } finally {
+        this.isProcessing = false;
+      }
     }
   }
 }

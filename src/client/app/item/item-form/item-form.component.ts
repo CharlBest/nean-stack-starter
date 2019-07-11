@@ -45,11 +45,10 @@ export class ItemFormComponent implements OnInit {
     }
   }
 
-  removeMedia(index: number) {
-    this.dialogService.confirm('Are you sure?').subscribe(data => {
-      if (data) {
-        this.formGroup.controls.media.value.splice(index, 1);
-      }
-    });
+  async removeMedia(index: number) {
+    const hasConfirmed = await this.dialogService.confirm('Are you sure?');
+    if (hasConfirmed) {
+      this.formGroup.controls.media.value.splice(index, 1);
+    }
   }
 }

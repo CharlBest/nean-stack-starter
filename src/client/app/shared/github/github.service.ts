@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GitHubService {
-  getFile(filePath: string) {
-    const req = new XMLHttpRequest();
-    const req$ = fromEvent(req, 'load')
-      .pipe(
-        map(event => (event.target as XMLHttpRequest).responseText)
-      );
+  getFile(filePath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const req = new XMLHttpRequest();
 
-    req.open('GET', `https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/${filePath}`);
-    req.send();
+      req.onload = () => {
+        if (req.status === 200) {
+          resolve(req.response as string);
+        } else {
+          reject(status.toString());
+        }
+      };
 
-    return req$;
+      req.open('GET', `https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/${filePath}`);
+      req.send();
+    });
   }
 }

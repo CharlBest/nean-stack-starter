@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { VerifyService } from '../verify.service';
 
@@ -10,7 +9,6 @@ import { VerifyService } from '../verify.service';
 })
 export class VerifyComponent implements OnInit {
 
-  code: string | null;
   verifyResult: boolean;
   isProcessing = true;
 
@@ -27,24 +25,27 @@ export class VerifyComponent implements OnInit {
     this.route.paramMap
       .subscribe(params => {
         if (params.has('code')) {
-          this.code = params.get('code');
-
-          if (this.code && this.code !== '') {
-            this.verifyService.verifyEmail(this.code)
-              .pipe(finalize(() => this.isProcessing = false))
-              .subscribe(data => {
-                if (data === true) {
-                  this.verifyResult = true;
-                } else {
-                  this.verifyResult = false;
-                }
-              }, error => {
-                this.formErrorsService.updateFormValidity(error);
-                this.verifyResult = false;
-              });
-          }
+          this.verifyEmail(params.get('code'));
         }
       });
+  }
+
+  async verifyEmail(code: string | null) {
+    if (code && code !== '') {
+      try {
+        const response = await this.verifyService.verifyEmail(code);
+        if (response === true) {
+          this.verifyResult = true;
+        } else {
+          this.verifyResult = false;
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+        this.verifyResult = false;
+      } finally {
+        this.isProcessing = false;
+      }
+    }
   }
 
   goToHome() {

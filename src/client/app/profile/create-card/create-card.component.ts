@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-elements/stripe-elements.component';
@@ -25,13 +24,14 @@ export class CreateCardComponent {
         const token = await this.stripeElementsComponent.generateToken();
 
         if (token) {
-            this.profileService.createCard(token.id)
-                .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(() => {
-                    this.router.navigate(['/profile']);
-                }, error => {
-                    this.formErrorsService.updateFormValidity(error);
-                });
+            try {
+                await this.profileService.createCard(token.id);
+                this.router.navigate(['/profile']);
+            } catch (error) {
+                this.formErrorsService.updateFormValidity(error);
+            } finally {
+                this.isProcessing = false;
+            }
         } else {
             this.dialogService.alert('Invalid card details');
             this.isProcessing = false;

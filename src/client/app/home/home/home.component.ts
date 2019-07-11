@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.service';
@@ -32,20 +31,21 @@ export class HomeComponent implements OnInit {
     this.getItems();
   }
 
-  getItems() {
+  async getItems() {
     this.isProcessing = true;
 
-    this.homeService.getItems(this.pageIndex)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          this.items.push(...data);
-        } else {
-          this.listEnd = true;
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+    try {
+      const response = await this.homeService.getItems(this.pageIndex);
+      if (response) {
+        this.items.push(...response);
+      } else {
+        this.listEnd = true;
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
   onScroll() {

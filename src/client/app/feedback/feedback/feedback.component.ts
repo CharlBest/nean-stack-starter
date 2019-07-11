@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -34,18 +33,19 @@ export class FeedbackComponent implements OnInit {
     this.formGroup = this.fb.group(FormGroupBuilder.feedback());
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new FeedbackViewModel();
     viewModel.content = this.formGroup.controls.content.value;
 
-    this.feedbackService.sendFeedback(viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(() => {
-        this.isDone = true;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
-      });
+    try {
+      await this.feedbackService.sendFeedback(viewModel);
+      this.isDone = true;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.formGroup);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

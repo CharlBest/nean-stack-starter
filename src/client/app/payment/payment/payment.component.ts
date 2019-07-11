@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 import { CardModel } from '../../../../shared/models/payment/card.model';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
@@ -40,23 +39,26 @@ export class PaymentComponent implements OnInit {
         this.formGroup = this.fb.group(FormGroupBuilder.payment());
     }
 
-    getpaymentCards() {
+    async getpaymentCards() {
         if (this.isAuthenticated) {
             this.authService.preventLogoutOnNextRequest();
-            this.paymentService.paymentCards()
-                .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(data => {
-                    if (data) {
-                        this.paymentCards = data;
-                        // Default card first
-                        if (this.paymentCards) {
-                            this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
-                        }
-
-                        const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
-                        this.formGroup.controls.cardUId.setValue(firstCardUId);
+            try {
+                const response = await this.paymentService.paymentCards();
+                if (response) {
+                    this.paymentCards = response;
+                    // Default card first
+                    if (this.paymentCards) {
+                        this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
                     }
-                });
+
+                    const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
+                    this.formGroup.controls.cardUId.setValue(firstCardUId);
+                }
+            } catch (error) {
+                // TODO: error handling
+            } finally {
+                this.isProcessing = false;
+            }
         } else {
             this.isProcessing = false;
         }
@@ -78,7 +80,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    sendPaymentToServer(token: string | null = null) {
+    async sendPaymentToServer(token: string | null = null) {
         if (this.isAuthenticated) {
             const viewModel = new UserPaymentViewModel();
             viewModel.token = token;
@@ -86,13 +88,14 @@ export class PaymentComponent implements OnInit {
             viewModel.amount = +this.formGroup.controls.amount.value;
             viewModel.saveCard = this.formGroup.controls.saveCard.value === true;
 
-            this.paymentService.userPayment(viewModel)
-                .pipe(finalize(() => this.isProcessing = false))
-                .subscribe(() => {
-                    this.paymentSuccess = true;
-                }, error => {
-                    this.formErrorsService.updateFormValidity(error, this.formGroup);
-                });
+            try {
+                await this.paymentService.userPayment(viewModel);
+                this.paymentSuccess = true;
+            } catch (error) {
+                this.formErrorsService.updateFormValidity(error, this.formGroup);
+            } finally {
+                this.isProcessing = false;
+            }
         } else {
             if (token) {
                 const viewModel = new AnonymousPaymentViewModel();
@@ -100,13 +103,14 @@ export class PaymentComponent implements OnInit {
                 viewModel.email = this.formGroup.controls.email.value;
                 viewModel.amount = +this.formGroup.controls.amount.value;
 
-                this.paymentService.anonymousPayment(viewModel)
-                    .pipe(finalize(() => this.isProcessing = false))
-                    .subscribe(() => {
-                        this.paymentSuccess = true;
-                    }, error => {
-                        this.formErrorsService.updateFormValidity(error, this.formGroup);
-                    });
+                try {
+                    await this.paymentService.anonymousPayment(viewModel);
+                    this.paymentSuccess = true;
+                } catch (error) {
+                    this.formErrorsService.updateFormValidity(error, this.formGroup);
+                } finally {
+                    this.isProcessing = false;
+                }
             }
         }
     }

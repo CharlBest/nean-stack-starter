@@ -77,13 +77,17 @@ export class TutorialComponent implements OnInit {
     this.logTutorial(tutorial, true);
   }
 
-  logTutorial(tutorial: Tutorial, didSkip: boolean = false) {
+  async logTutorial(tutorial: Tutorial, didSkip: boolean = false) {
     if (this.loggedInUserId) {
       const viewModel = new CompletedTutorial();
       viewModel.tutorialType = tutorial.tutorialType;
       viewModel.didSkip = didSkip;
 
-      this.tutorialService.completedTutorial(viewModel).subscribe();
+      try {
+        this.tutorialService.completedTutorial(viewModel);
+      } catch (error) {
+        // TODO: error handling
+      }
     }
   }
 

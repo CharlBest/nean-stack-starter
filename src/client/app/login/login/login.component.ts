@@ -55,26 +55,26 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new LoginViewModel();
     viewModel.emailOrUsername = this.formGroup.controls.emailOrUsername.value.trim();
     viewModel.password = this.formGroup.controls.password.value;
 
-    this.loginService.login(viewModel)
-      .subscribe(data => {
-        if (data && data.token) {
-          this.authService.setToken(data.token);
+    try {
+      const response = await this.loginService.login(viewModel);
+      if (response && response.token) {
+        this.authService.setToken(response.token);
 
-          this.router.navigateByUrl(this.returnUrl);
-        } else {
-          this.dialogService.alert('Authentication failed');
-          this.isProcessing = false;
-        }
-      }, (error) => {
-        this.formErrorsService.updateFormValidity(error, this.formGroup);
+        this.router.navigateByUrl(this.returnUrl);
+      } else {
+        this.dialogService.alert('Authentication failed');
         this.isProcessing = false;
-      });
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.formGroup);
+      this.isProcessing = false;
+    }
   }
 }

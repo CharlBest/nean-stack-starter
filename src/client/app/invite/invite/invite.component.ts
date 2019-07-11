@@ -1,7 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
-import { finalize } from 'rxjs/operators';
 import { Validators } from '../../../../shared/validation/validators';
 import { InviteViewModel } from '../../../../shared/view-models/invite/invite.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -51,7 +50,7 @@ export class InviteComponent implements OnInit {
     }
   }
 
-  onSubmit(emailsInput: HTMLInputElement) {
+  async onSubmit(emailsInput: HTMLInputElement) {
     this.isProcessing = true;
 
     const viewModel = new InviteViewModel();
@@ -65,13 +64,14 @@ export class InviteComponent implements OnInit {
     }
 
     if (viewModel.emails) {
-      this.inviteService.sendInvites(viewModel)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(() => {
-          this.isDone = true;
-        }, error => {
-          this.formErrorsService.updateFormValidity(error);
-        });
+      try {
+        await this.inviteService.sendInvites(viewModel);
+        this.isDone = true;
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
+      }
     }
   }
 }

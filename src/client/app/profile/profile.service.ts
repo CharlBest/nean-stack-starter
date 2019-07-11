@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { CardModel } from '../../../shared/models/payment/card.model';
 import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { NotificationRoutes } from '../../../shared/routes/notification.routes';
@@ -22,56 +21,58 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getUserProfile(): Observable<UserProfileViewModel | null> {
-    return this.http.get<UserProfileViewModel>(`${environment.httpDomain}${UserRoutes.getUserProfile().client()}`);
+  getUserProfile(): Promise<UserProfileViewModel | null> {
+    return this.http.get<UserProfileViewModel>(`${environment.httpDomain}${UserRoutes.getUserProfile().client()}`).toPromise();
   }
 
-  updateAvatar(viewModel: UpdateAvatarViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateAvatar().client()}`, viewModel);
+  updateAvatar(viewModel: UpdateAvatarViewModel): Promise<void> {
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateAvatar().client()}`, viewModel).toPromise();
   }
 
-  updateBio(viewModel: UpdateBioViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateBio().client()}`, viewModel);
+  updateBio(viewModel: UpdateBioViewModel): Promise<void> {
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateBio().client()}`, viewModel).toPromise();
   }
 
-  updatePassword(viewModel: UpdatePasswordViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updatePassword().client()}`, viewModel);
+  updatePassword(viewModel: UpdatePasswordViewModel): Promise<void> {
+    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updatePassword().client()}`, viewModel).toPromise();
   }
 
-  deleteUser(): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.httpDomain}${UserRoutes.deleteUser().client()}`);
+  deleteUser(): Promise<boolean> {
+    return this.http.delete<boolean>(`${environment.httpDomain}${UserRoutes.deleteUser().client()}`).toPromise();
   }
 
-  resendEmailVerificationLink(): Observable<void> {
-    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.resendEmailVerificationLink().client()}`, null);
+  resendEmailVerificationLink(): Promise<void> {
+    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.resendEmailVerificationLink().client()}`, null).toPromise();
   }
 
-  createCard(token: string): Observable<CardModel | null> {
-    return this.http.post<CardModel>(`${environment.httpDomain}${PaymentRoutes.createCard().client()}`, { token });
+  createCard(token: string): Promise<CardModel | null> {
+    return this.http.post<CardModel>(`${environment.httpDomain}${PaymentRoutes.createCard().client()}`, { token }).toPromise();
   }
 
-  deleteCard(uId: string): Observable<CardModel | null> {
-    return this.http.delete<CardModel>(`${environment.httpDomain}${PaymentRoutes.deleteCard(uId).client()}`);
+  deleteCard(uId: string): Promise<CardModel | null> {
+    return this.http.delete<CardModel>(`${environment.httpDomain}${PaymentRoutes.deleteCard(uId).client()}`).toPromise();
   }
 
-  updateDefaultCard(uId: string): Observable<CardModel | null> {
-    return this.http.put<CardModel>(`${environment.httpDomain}${PaymentRoutes.updateDefaultCard().client()}`, { uId });
+  updateDefaultCard(uId: string): Promise<CardModel | null> {
+    return this.http.put<CardModel>(`${environment.httpDomain}${PaymentRoutes.updateDefaultCard().client()}`, { uId }).toPromise();
   }
 
-  paymentHistory(): Observable<PaymentModel[] | null> {
-    return this.http.get<PaymentModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentHistory().client()}`);
+  paymentHistory(): Promise<PaymentModel[] | null> {
+    return this.http.get<PaymentModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentHistory().client()}`).toPromise();
   }
 
-  sendReport(viewModel: ReportUserViewModel): Observable<void> {
-    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.report().client()}`, viewModel);
+  sendReport(viewModel: ReportUserViewModel): Promise<void> {
+    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.report().client()}`, viewModel).toPromise();
   }
 
-  getNotificationPreferences(): Observable<NotificationPreferencesViewModel | null> {
+  getNotificationPreferences(): Promise<NotificationPreferencesViewModel | null> {
     return this.http
-      .get<NotificationPreferencesViewModel>(`${environment.httpDomain}${NotificationRoutes.getNotificationPreferences().client()}`);
+      .get<NotificationPreferencesViewModel>(`${environment.httpDomain}${NotificationRoutes.getNotificationPreferences().client()}`)
+      .toPromise();
   }
 
-  updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Observable<void> {
-    return this.http.put<void>(`${environment.httpDomain}${NotificationRoutes.updateNotificationPreferences().client()}`, model);
+  updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Promise<void> {
+    return this.http.put<void>(`${environment.httpDomain}${NotificationRoutes.updateNotificationPreferences().client()}`, model)
+      .toPromise();
   }
 }

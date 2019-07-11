@@ -18,6 +18,8 @@ export class PushNotificationService {
           const dataJson = data.toJSON();
           if (dataJson && dataJson.endpoint && dataJson.keys) {
             const viewModel = new PushSubscriptionViewModel(dataJson.endpoint, dataJson.keys.auth, dataJson.keys.p256dh);
+
+            // Execute callback
             callback(viewModel);
           } else {
             console.error('Push subscription data is invalid');

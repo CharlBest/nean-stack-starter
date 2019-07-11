@@ -1,7 +1,6 @@
 // https://github.com/ndelvalle/ng-giphy/blob/master/src/services/giphy.service.js
 // import { HttpClient } from '@angular/common/http';
 // import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
 // @Injectable({
@@ -57,7 +56,7 @@
 //         });
 //     }
 
-//     private get(url: string, data?): Observable<any> {
+//     private get(url: string, data?): Promise<any> {
 //         const params = data || {};
 //         params.api_key = this.apiKey;
 //         return this.http.get(url, { params: params })
@@ -68,7 +67,7 @@
 //             );
 //     }
 
-//     find(tags, limit, offset, rating): Observable<any> {
+//     find(tags, limit, offset, rating): Promise<any> {
 //         return this.get(this.url.find, this.paramsMapper(tags, limit, offset, rating))
 //             .pipe(
 //                 map((x: any) => {
@@ -78,7 +77,7 @@
 //     }
 
 
-//     findUrl(tags, limit, offset, rating): Observable<any> {
+//     findUrl(tags, limit, offset, rating): Promise<any> {
 //         return this.get(this.url.find, this.paramsMapper(tags, limit, offset, rating))
 //             .pipe(
 //                 map((x: any) => {
@@ -87,11 +86,11 @@
 //             );
 //     }
 
-//     findById(id): Observable<any> {
+//     findById(id): Promise<any> {
 //         return this.get(this.url.findById.replace('%s', id));
 //     }
 
-//     findUrlById(id): Observable<any> {
+//     findUrlById(id): Promise<any> {
 //         return this.get(this.url.findById.replace('%s', id))
 //             .pipe(
 //                 map((x: any) => {
@@ -100,11 +99,11 @@
 //             );
 //     }
 
-//     findRandom(tags, rating): Observable<any> {
+//     findRandom(tags, rating): Promise<any> {
 //         return this.get(this.url.random, this.paramsMapper(tags, rating));
 //     }
 
-//     findRandomUrl(tags, rating): Observable<any> {
+//     findRandomUrl(tags, rating): Promise<any> {
 //         return this.get(this.url.random, this.paramsMapper(tags, rating))
 //             .pipe(
 //                 map((x: any) => {
@@ -113,7 +112,7 @@
 //             );
 //     }
 
-//     findTrending(limit, offset, rating): Observable<any> {
+//     findTrending(limit, offset, rating): Promise<any> {
 //         return this.get(this.url.trending, this.paramsMapper(undefined, limit, offset, rating))
 //             .pipe(
 //                 map((x: any) => {
@@ -122,7 +121,7 @@
 //             );
 //     }
 
-//     findTrendingUrl(limit, offset, rating): Observable<any> {
+//     findTrendingUrl(limit, offset, rating): Promise<any> {
 //         return this.get(this.url.trending, this.paramsMapper(undefined, limit, offset, rating))
 //             .pipe(
 //                 map((x: any) => {

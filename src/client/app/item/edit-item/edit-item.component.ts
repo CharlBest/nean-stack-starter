@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -44,26 +43,27 @@ export class EditItemComponent implements OnInit {
     });
   }
 
-  getItem() {
+  async getItem() {
     if (this.itemUId) {
       this.isProcessing = true;
 
-      this.itemService.get(this.itemUId)
-        .pipe(finalize(() => this.isProcessing = false))
-        .subscribe(data => {
-          if (data) {
-            this.item = data;
-            if (data.media) {
-              this.savedMedia = [...data.media];
-            }
+      try {
+        const response = await this.itemService.get(this.itemUId);
+        if (response) {
+          this.item = response;
+          if (response.media) {
+            this.savedMedia = [...response.media];
           }
-        }, error => {
-          this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-        });
+        }
+      } catch (error) {
+        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
+      } finally {
+        this.isProcessing = false;
+      }
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateItemViewModel();
@@ -71,16 +71,17 @@ export class EditItemComponent implements OnInit {
     viewModel.description = this.itemForm.formGroup.controls.description.value;
     viewModel.media = this.itemForm.formGroup.controls.media.value;
 
-    this.itemService.update(this.item.uId, viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          this.deleteRemovedImagesFromStorage();
-          this.router.navigate(['/item/comments', data.uId]);
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-      });
+    try {
+      const response = await this.itemService.update(this.item.uId, viewModel);
+      if (response) {
+        this.deleteRemovedImagesFromStorage();
+        this.router.navigate(['/item/comments', response.uId]);
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
   deleteRemovedImagesFromStorage() {

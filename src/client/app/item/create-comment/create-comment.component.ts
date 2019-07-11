@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -24,22 +23,23 @@ export class CreateCommentComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
     viewModel.description = this.commentForm.formGroup.controls.description.value;
 
-    this.itemService.createComment(this.itemUId, viewModel)
-      .pipe(finalize(() => this.isProcessing = false))
-      .subscribe(data => {
-        if (data) {
-          this.commentForm.formRef.resetForm();
-          data.itemUId = this.itemUId;
-          this.createSuccess.emit(data);
-        }
-      }, error => {
-        this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
-      });
+    try {
+      const response = await this.itemService.createComment(this.itemUId, viewModel);
+      if (response) {
+        this.commentForm.formRef.resetForm();
+        response.itemUId = this.itemUId;
+        this.createSuccess.emit(response);
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
+    } finally {
+      this.isProcessing = false;
+    }
   }
 }

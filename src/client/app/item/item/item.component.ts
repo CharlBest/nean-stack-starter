@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { ReportItemViewModel } from '../../../../shared/view-models/item/report-item.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -60,49 +59,49 @@ export class ItemComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deleteItem() {
-    this.dialogService.confirm('Are you sure you want to delete this item?').subscribe(data => {
-      if (data) {
-        this.contextMenu.close();
+  async deleteItem() {
+    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this item?');
+    if (hasConfirmed) {
+      this.contextMenu.close();
 
-        this.snackBar.open('Deleting...');
+      this.snackBar.open('Deleting...');
 
-        this.itemService.delete(this.item.uId)
-          .pipe(finalize(() => this.isProcessing = false))
-          .subscribe(() => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Deleted');
-            // TODO: very dirty and bad UI but will work for now
-            this.router.navigate(['']);
-          }, error => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Delete failed');
-            this.formErrorsService.updateFormValidity(error);
-          });
+      try {
+        await this.itemService.delete(this.item.uId);
+        this.snackBar.dismiss();
+        this.snackBar.open('Deleted');
+        // TODO: very dirty and bad UI but will work for now
+        this.router.navigate(['']);
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Delete failed');
+        this.formErrorsService.updateFormValidity(error);
+      } finally {
+        this.isProcessing = false;
       }
-    });
+    }
   }
 
-  reportItem() {
-    this.dialogService.confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.').subscribe(data => {
-      if (data) {
-        this.contextMenu.close();
+  async reportItem() {
+    const hasConfirmed = await this.dialogService
+      .confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+    if (hasConfirmed) {
+      this.contextMenu.close();
 
-        const viewModel = new ReportItemViewModel();
-        viewModel.uId = this.item.uId;
+      const viewModel = new ReportItemViewModel();
+      viewModel.uId = this.item.uId;
 
-        this.snackBar.open('Sending...');
+      this.snackBar.open('Sending...');
 
-        this.itemService.sendReport(viewModel)
-          .subscribe(() => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sent');
-          }, error => {
-            this.snackBar.dismiss();
-            this.snackBar.open('Sending failed');
-          });
+      try {
+        await this.itemService.sendReport(viewModel);
+        this.snackBar.dismiss();
+        this.snackBar.open('Sent');
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Sending failed');
       }
-    });
+    }
   }
 
   showMoreDescription() {
@@ -139,22 +138,22 @@ export class ItemComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createFavourite() {
-    this.itemService.createFavourite(this.item.uId)
-      .subscribe(() => {
-        this.item.favourite = true;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+  async createFavourite() {
+    try {
+      await this.itemService.createFavourite(this.item.uId);
+      this.item.favourite = true;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    }
   }
 
-  deleteFavourite() {
-    this.itemService.deleteFavourite(this.item.uId)
-      .subscribe(() => {
-        this.item.favourite = false;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+  async deleteFavourite() {
+    try {
+      await this.itemService.deleteFavourite(this.item.uId);
+      this.item.favourite = false;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    }
   }
 
   // #endregion
@@ -190,22 +189,22 @@ export class ItemComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createSubscription() {
-    this.itemService.createSubscription(this.item.uId)
-      .subscribe(() => {
-        this.item.subscribed = true;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+  async createSubscription() {
+    try {
+      await this.itemService.createSubscription(this.item.uId);
+      this.item.subscribed = true;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    }
   }
 
-  deleteSubscription() {
-    this.itemService.deleteSubscription(this.item.uId)
-      .subscribe(() => {
-        this.item.subscribed = false;
-      }, error => {
-        this.formErrorsService.updateFormValidity(error);
-      });
+  async deleteSubscription() {
+    try {
+      await this.itemService.deleteSubscription(this.item.uId);
+      this.item.subscribed = false;
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error);
+    }
   }
 
   // #endregion
