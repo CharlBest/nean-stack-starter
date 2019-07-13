@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GoogleAnalyticsService {
+export class GoogleAnalyticsService implements OnDestroy {
 
+  private routerEventsSubscription: Subscription;
   private initializeDelay = 1000;
   private previousUrl: string;
   private ga: (...rest: any[]) => void;
@@ -50,7 +52,7 @@ export class GoogleAnalyticsService {
   }
 
   private trackRouterNavigation() {
-    this.router.events
+    this.routerEventsSubscription = this.router.events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
           this.locationChanged(event.urlAfterRedirects);
@@ -79,5 +81,11 @@ export class GoogleAnalyticsService {
       eventAction,
       eventValue
     });
+  }
+
+  ngOnDestroy() {
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
+    }
   }
 }

@@ -1,12 +1,15 @@
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { PWAHelperComponent } from './pwa-helper/pwa-helper.component';
 
 @Injectable()
-export class PWAHelperService {
+export class PWAHelperService implements OnDestroy {
+
+    private routerEventsSubscription: Subscription;
 
     constructor(private overlay: Overlay,
         private router: Router) { }
@@ -25,7 +28,7 @@ export class PWAHelperService {
         });
 
         // Close on navigate
-        this.router.events.pipe(
+        this.routerEventsSubscription = this.router.events.pipe(
             filter((event: RouterEvent) => event instanceof NavigationStart),
             tap(() => overlayRef.dispose()),
             take(1)
@@ -33,5 +36,11 @@ export class PWAHelperService {
 
         const userProfilePortal = new ComponentPortal(PWAHelperComponent);
         overlayRef.attach(userProfilePortal);
+    }
+
+    ngOnDestroy() {
+        if (this.routerEventsSubscription) {
+            this.routerEventsSubscription.unsubscribe();
+        }
     }
 }
