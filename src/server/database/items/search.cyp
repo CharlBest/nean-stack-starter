@@ -1,5 +1,5 @@
 export const data = `
-CALL db.index.fulltext.queryNodes('itemTitleAndDescription', {term}) YIELD node as items
+CALL db.index.fulltext.queryNodes('itemTitleAndDescriptionIndex', {term}) YIELD node as items
 
 MATCH (users:User)-[:HAS_ITEM]->(items)
 
