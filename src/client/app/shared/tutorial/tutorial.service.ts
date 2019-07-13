@@ -82,16 +82,15 @@ export class TutorialService {
         return localStorage.getItem(this.hasVisitedStorageKey) === 'true';
     }
 
-    checkHasVisited() {
+    async checkHasVisited() {
         if (!this.hasUserVisited()) {
             localStorage.setItem(this.hasVisitedStorageKey, 'true');
 
-            this.snackBar.open('Take the tour', 'Go', {
+            await this.snackBar.open('Take the tour', 'Go', {
                 duration: 4000,
-            }).onAction()
-                .subscribe(() => {
-                    this.activateTutorial(TutorialType.SIGN_UP);
-                });
+            }).onAction().toPromise();
+
+            this.activateTutorial(TutorialType.SIGN_UP);
         }
     }
 }

@@ -17,7 +17,7 @@ export class ContextMenuComponent {
         public bpService: BreakpointService,
         private preventBackNavigationService: PreventBackNavigationService) { }
 
-    open(event: Event) {
+    async open(event: Event) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -28,9 +28,11 @@ export class ContextMenuComponent {
 
             this.preventBackNavigationService.beforeOpen();
 
-            this.bottomSheet.open(this.bottomSheetContextMenu, {
+            await this.bottomSheet.open(this.bottomSheetContextMenu, {
                 hasBackdrop: true
-            }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
+            }).afterDismissed().toPromise();
+
+            this.preventBackNavigationService.afterClosed();
         }
     }
 

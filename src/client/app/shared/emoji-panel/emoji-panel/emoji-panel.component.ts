@@ -70,7 +70,7 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  openPanel() {
+  async openPanel() {
     if (!this.file) {
       this.render();
     }
@@ -80,10 +80,12 @@ export class EmojiPanelComponent implements OnInit {
     } else {
       this.preventBackNavigationService.beforeOpen();
 
-      this.bottomSheet.open(this.bottomSheetRef, {
+      await this.bottomSheet.open(this.bottomSheetRef, {
         backdropClass: 'cdk-overlay-transparent-backdrop',
         panelClass: 'emoji-panel'
-      }).afterDismissed().subscribe(() => this.preventBackNavigationService.afterClosed());
+      }).afterDismissed().toPromise();
+
+      this.preventBackNavigationService.afterClosed();
     }
   }
 
