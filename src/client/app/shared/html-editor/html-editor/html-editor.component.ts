@@ -3,7 +3,6 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Secu
 import { DomSanitizer } from '@angular/platform-browser';
 import * as emojione from 'emojione';
 import Quill from 'quill';
-import { Observable } from 'rxjs';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Output() textChange: EventEmitter<string> = new EventEmitter<string>();
 
     editor: Quill;
-    imageUploadProgressPercentage: Observable<number>;
+    imageUploadProgressPercentage: number;
 
     // Toolbar icons (can't use internal icon pack as quill loads the editor dynamically)
     // Can be found in node_modules\material-design-icons
@@ -154,13 +153,18 @@ export class HTMLEditorComponent implements AfterViewInit {
         };
     }
 
-    saveFileToServer(file: File) {
-        const { onProgress, onUpload } = this.firebaseStorageService.upload(file);
-        onUpload.subscribe(data => {
-            this.insertEmbedImage(data);
-        });
+    async saveFileToServer(file: File) {
+        try {
+            const url = await this.firebaseStorageService.upload(file, (progress) => {
+                this.imageUploadProgressPercentage = progress;
+            });
 
-        this.imageUploadProgressPercentage = onProgress;
+            this.insertEmbedImage(url);
+        } catch (error) {
+            // TODO: error handling
+        } finally {
+            // TODO: show progress spinner
+        }
     }
 
     insertEmbedImage(url: string, blurAfterInsert: boolean = false) {

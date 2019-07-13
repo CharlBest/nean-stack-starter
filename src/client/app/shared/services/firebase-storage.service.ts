@@ -13,47 +13,44 @@ export class FirebaseStorageService {
 
     constructor() { }
 
-    upload(file: File, folderName?: string) {
-        const onProgress = new Subject<number>();
-        const onUpload = new Subject<string>();
+    async upload(file: File, progressCallback: (progress: number) => void, folderName?: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            // Create a storage ref
+            const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
+            const storageRef = app(environment.firebase.projectId).storage().ref(`${folderName || this.folderName}/${fileName}`);
 
-        // Create a storage ref
-        const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
-        const storageRef = app(environment.firebase.projectId).storage().ref(`${folderName || this.folderName}/${fileName}`);
+            // Upload file
+            const task: storage.UploadTask = storageRef.put(file);
 
-        // Upload file
-        const task: storage.UploadTask = storageRef.put(file);
+            task.on(storage.TaskEvent.STATE_CHANGED, (snapshot: storage.UploadTaskSnapshot) => {
+                progressCallback(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
 
-        task.on(storage.TaskEvent.STATE_CHANGED, (snapshot: storage.UploadTaskSnapshot) => {
-            onProgress.next(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
+                switch (snapshot.state) {
+                    case storage.TaskState.PAUSED:
+                        break;
 
-            switch (snapshot.state) {
-                case storage.TaskState.PAUSED:
-                    break;
+                    case storage.TaskState.RUNNING:
+                        break;
+                }
+            }, (error) => {
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch ((error as any).code) {
+                    case 'storage/unauthorized':
+                        break;
 
-                case storage.TaskState.RUNNING:
-                    break;
-            }
-        }, (error) => {
-            // https://firebase.google.com/docs/storage/web/handle-errors
-            switch ((error as any).code) {
-                case 'storage/unauthorized':
-                    break;
+                    case 'storage/canceled':
+                        break;
 
-                case 'storage/canceled':
-                    break;
-
-                case 'storage/unknown':
-                    break;
-            }
-            console.log(error);
-        }, () => {
-            task.snapshot.ref.getDownloadURL().then(downloadUrl => {
-                onUpload.next(downloadUrl);
+                    case 'storage/unknown':
+                        break;
+                }
+                console.log(error);
+                reject(error);
+            }, async () => {
+                const downloadUrl = await task.snapshot.ref.getDownloadURL();
+                resolve(downloadUrl);
             });
         });
-
-        return { onProgress, onUpload };
     }
 
     delete(url: string) {

@@ -22,7 +22,7 @@ export class UploadButtonComponent {
 
     constructor(private firebaseStorageService: FirebaseStorageService) { }
 
-    handleChange(event: Event) {
+    async handleChange(event: Event) {
         this.showProgressBar = true;
         this.isProcessing = true;
 
@@ -48,19 +48,21 @@ export class UploadButtonComponent {
             return;
         }
 
-        const { onProgress, onUpload } = this.firebaseStorageService.upload(file);
-        onUpload.subscribe(data => {
-            this.uploadComplete.emit(data);
-            this.previewImgUrl = data;
-            this.error = null;
-            this.isProcessing = false;
-        }, () => this.isProcessing = false);
+        try {
+            const url = await this.firebaseStorageService.upload(file, (progress) => {
+                this.progressPercentage = progress;
+                if (this.hideProgressBarAfterUpload && progress === 100) {
+                    this.showProgressBar = false;
+                }
+            });
 
-        onProgress.subscribe(progress => {
-            this.progressPercentage = progress;
-            if (this.hideProgressBarAfterUpload && progress === 100) {
-                this.showProgressBar = false;
-            }
-        });
+            this.uploadComplete.emit(url);
+            this.previewImgUrl = url;
+            this.error = null;
+        } catch (error) {
+            // TODO: error handling
+        } finally {
+            this.isProcessing = false;
+        }
     }
 }
