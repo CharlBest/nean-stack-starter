@@ -9,11 +9,10 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  loggedInUserId = this.authService.getLoggedInUserId();
 
   constructor(public themeService: ThemeService,
     private tutorialService: TutorialService,
-    private authService: AuthService) { }
+    public authService: AuthService) { }
 
   ngOnInit() {
   }

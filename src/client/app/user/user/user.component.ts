@@ -21,7 +21,6 @@ export class UserComponent implements OnInit {
   userId: number | null;
   user: UserPublicViewModel;
   items: ItemViewModel[] = [];
-  loggedInUserId = this.authService.getLoggedInUserId();
   pageIndex = 0;
   listEnd = false;
   userHasNoItems = false;
@@ -30,7 +29,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private formErrorsService: FormErrorsService,
     private shareDialogService: ShareDialogService,
-    private authService: AuthService,
+    public authService: AuthService,
     private shareService: ShareService) { }
 
   ngOnInit() {

@@ -14,7 +14,6 @@ import { TutorialService } from '../tutorial.service';
 })
 export class TutorialComponent implements OnInit {
 
-  private loggedInUserId = this.authService.getLoggedInUserId();
   tuts = [
     // Tutorial 1
     new Tutorial(TutorialType.SIGN_UP, 'Sign up here!', TutorialType.FORGOT_PASSWORD, true),
@@ -36,11 +35,6 @@ export class TutorialComponent implements OnInit {
     private tutorialService: TutorialService) { }
 
   ngOnInit() {
-    this.authService.loggedInUserId$
-      .subscribe(id => {
-        this.loggedInUserId = id;
-      });
-
     this.getParams();
   }
 
@@ -78,7 +72,7 @@ export class TutorialComponent implements OnInit {
   }
 
   async logTutorial(tutorial: Tutorial, didSkip: boolean = false) {
-    if (this.loggedInUserId) {
+    if (this.authService.loggedInUserId) {
       const viewModel = new CompletedTutorial();
       viewModel.tutorialType = tutorial.tutorialType;
       viewModel.didSkip = didSkip;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { UserTokenModel } from '../../../../shared/models/shared/user-token.model';
 
 @Injectable({
@@ -10,8 +9,10 @@ import { UserTokenModel } from '../../../../shared/models/shared/user-token.mode
 export class AuthService implements CanActivate {
     private readonly tokenStorageKey = 'token';
 
-    private loggedInUserId = new BehaviorSubject<number | null>(0);
-    loggedInUserId$ = this.loggedInUserId.asObservable();
+    private storedLoggedInUserId: number | null | undefined;
+    get loggedInUserId(): number | null | undefined {
+        return this.storedLoggedInUserId;
+    }
 
     private preventLogoutOnNextRequestFlag: boolean;
     get shouldPreventLogoutOnNextRequest() {
@@ -63,12 +64,8 @@ export class AuthService implements CanActivate {
 
     updateLoggedInUser() {
         const { id, expireDate } = this.getDataFromJWT();
-        this.loggedInUserId.next(id);
+        this.storedLoggedInUserId = id;
         this.tokenExpireDateInSeconds = expireDate;
-    }
-
-    getLoggedInUserId(): number | null {
-        return this.loggedInUserId.getValue();
     }
 
     setToken(token: string) {

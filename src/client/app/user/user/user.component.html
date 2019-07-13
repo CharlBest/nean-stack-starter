@@ -36,7 +36,7 @@
         <mat-card-content>
             No items exist
         </mat-card-content>
-        <mat-card-actions *ngIf="loggedInUserId === userId">
+        <mat-card-actions *ngIf="authService.loggedInUserId === userId">
             <button mat-raised-button
                 routerLink="/item/create"
                 type="button">Create Item</button>

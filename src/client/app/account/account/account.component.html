@@ -2,12 +2,12 @@
     <mat-card-content>
         <mat-nav-list>
             <mat-list-item routerLink="/login"
-                *ngIf="!loggedInUserId">
+                *ngIf="!authService.loggedInUserId">
                 <app-icon-lock mat-list-icon></app-icon-lock>
                 <span mat-line>Login</span>
             </mat-list-item>
-            <ng-container *ngIf="loggedInUserId">
-                <mat-list-item routerLink="/user/{{loggedInUserId}}">
+            <ng-container *ngIf="authService.loggedInUserId">
+                <mat-list-item routerLink="/user/{{authService.loggedInUserId}}">
                     <app-icon-fiber-manual-record mat-list-icon></app-icon-fiber-manual-record>
                     <span mat-line>Items</span>
                 </mat-list-item>
@@ -53,7 +53,7 @@
                 <app-icon-code mat-list-icon></app-icon-code>
                 <span mat-line>Developer</span>
             </mat-list-item>
-            <mat-list-item *ngIf="loggedInUserId"
+            <mat-list-item *ngIf="authService.loggedInUserId"
                 (click)="logout()">
                 <app-icon-exit-to-app mat-list-icon></app-icon-exit-to-app>
                 <span mat-line>Logout</span>

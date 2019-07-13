@@ -22,14 +22,13 @@ export class ItemComponent implements OnInit, AfterViewInit {
   @ViewChild('description', { static: false }) description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
-  loggedInUserId = this.authService.getLoggedInUserId();
   isProcessing = false;
   showMoreButton = false;
   activeMediaIndex = 0;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
-    private authService: AuthService,
+    public authService: AuthService,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     public bpService: BreakpointService,

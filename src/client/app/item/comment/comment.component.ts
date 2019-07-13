@@ -20,12 +20,11 @@ export class CommentComponent implements OnInit {
   @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
   @Input() comment: CommentViewModel;
   @Input() itemUserId: number;
-  loggedInUserId = this.authService.getLoggedInUserId();
   isProcessing = false;
 
   constructor(private itemService: ItemService,
     private formErrorsService: FormErrorsService,
-    private authService: AuthService,
+    public authService: AuthService,
     private dialogService: DialogService,
     private shareDialogService: ShareDialogService,
     private shareService: ShareService,

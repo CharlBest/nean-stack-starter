@@ -19,7 +19,6 @@ import { NavigationService } from '../navigation.service';
 export class NavigationComponent implements OnInit {
   @ViewChild('navbar', { static: true }) navbar: ElementRef<HTMLDivElement>;
 
-  loggedInUserId = this.authService.getLoggedInUserId();
   activeNavigation: NavigationType | undefined;
   navigationType = NavigationType;
   headerBackTitle = '';
@@ -58,11 +57,6 @@ export class NavigationComponent implements OnInit {
     public navigationService: NavigationService) { }
 
   ngOnInit() {
-    this.authService.loggedInUserId$
-      .subscribe(id => {
-        this.loggedInUserId = id;
-      });
-
     this.initPrimaryNavWathcer();
     this.navigationStart();
     this.navigationEnd();

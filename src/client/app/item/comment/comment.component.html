@@ -38,13 +38,13 @@
                     <app-icon-share mat-list-icon></app-icon-share>
                     <span mat-line>Share</span>
                 </mat-list-item>
-                <mat-list-item *ngIf="comment?.user?.id === loggedInUserId"
+                <mat-list-item *ngIf="comment?.user?.id === authService.loggedInUserId"
                     (click)="goToEdit()">
                     <app-icon-edit mat-list-icon></app-icon-edit>
                     <span mat-line>Edit</span>
                 </mat-list-item>
                 <mat-list-item (click)="deleteComment()"
-                    *ngIf="comment?.user?.id === loggedInUserId">
+                    *ngIf="comment?.user?.id === authService.loggedInUserId">
                     <app-icon-delete mat-list-icon
                         color="warn"></app-icon-delete>
                     <span mat-line>Delete</span>

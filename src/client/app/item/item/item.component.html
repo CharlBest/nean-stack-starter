@@ -28,7 +28,7 @@
                         <app-icon-link mat-list-icon></app-icon-link>
                         <span mat-line>Copy link to Item</span>
                     </mat-list-item>
-                    <mat-list-item *ngIf="loggedInUserId"
+                    <mat-list-item *ngIf="authService.loggedInUserId"
                         (click)="subscribeToItem($event)">
                         <app-icon-notifications mat-list-icon
                             *ngIf="!item?.subscribed"></app-icon-notifications>
@@ -38,19 +38,19 @@
                         <span mat-line>Subscribe
                             {{item?.subscriptionCount > 0 ? '(' + item?.subscriptionCount + ')' : '' }}</span>
                     </mat-list-item>
-                    <mat-list-item *ngIf="loggedInUserId"
+                    <mat-list-item *ngIf="authService.loggedInUserId"
                         (click)="favouriteItem($event)">
                         <app-icon-star mat-list-icon
                             [color]="item?.favourite ? 'accent' : ''"></app-icon-star>
                         <span mat-line>Save</span>
                     </mat-list-item>
-                    <mat-list-item *ngIf="item?.user?.id === loggedInUserId"
+                    <mat-list-item *ngIf="item?.user?.id === authService.loggedInUserId"
                         (click)="goToComments()">
                         <app-icon-edit mat-list-icon></app-icon-edit>
                         <span mat-line>Edit</span>
                     </mat-list-item>
                     <mat-list-item (click)="deleteItem()"
-                        *ngIf="item?.user?.id === loggedInUserId">
+                        *ngIf="item?.user?.id === authService.loggedInUserId">
                         <app-icon-delete mat-list-icon
                             color="warn"></app-icon-delete>
                         <span mat-line>Delete</span>
