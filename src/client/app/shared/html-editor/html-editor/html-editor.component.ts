@@ -245,7 +245,11 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         for (const oldUrl of oldUrls) {
             if (!newUrls.includes(oldUrl)) {
-                this.firebaseStorageService.delete(oldUrl).subscribe();
+                try {
+                    this.firebaseStorageService.delete(oldUrl);
+                } catch (error) {
+                    // TODO: error handling
+                }
             }
         }
     }

@@ -97,13 +97,14 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  removeAvatar() {
+  async removeAvatar() {
     if (this.user.avatarUrl) {
-      this.firebaseStorageService.delete(this.user.avatarUrl).subscribe(data => {
-        if (data) {
-          this.updateAvatar(null);
-        }
-      });
+      try {
+        await this.firebaseStorageService.delete(this.user.avatarUrl);
+        this.updateAvatar(null);
+      } catch (error) {
+        // TODO: error handling
+      }
     }
   }
 

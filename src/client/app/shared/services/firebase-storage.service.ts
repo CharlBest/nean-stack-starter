@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { app, storage } from 'firebase/app';
 import 'firebase/storage';
-import { Subject } from 'rxjs';
 import { v4 as randomStringGenerator } from 'uuid';
 import { environment } from '../../../environments/environment';
 
@@ -53,17 +52,7 @@ export class FirebaseStorageService {
         });
     }
 
-    delete(url: string) {
-        const onDelete = new Subject<boolean>();
-        const imageRef = app(environment.firebase.projectId).storage().refFromURL(url);
-
-        imageRef.delete().then(() => {
-            onDelete.next(true);
-        }).catch((error) => {
-            onDelete.next(false);
-            console.log(error);
-        });
-
-        return onDelete;
+    delete(url: string): Promise<void> {
+        return app(environment.firebase.projectId).storage().refFromURL(url).delete();
     }
 }
