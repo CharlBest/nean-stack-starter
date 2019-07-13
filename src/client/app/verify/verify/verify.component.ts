@@ -22,12 +22,8 @@ export class VerifyComponent implements OnInit {
   }
 
   getParams() {
-    this.route.paramMap
-      .subscribe(params => {
-        if (params.has('code')) {
-          this.verifyEmail(params.get('code'));
-        }
-      });
+    const code = this.route.snapshot.params.code;
+    this.verifyEmail(code);
   }
 
   async verifyEmail(code: string | null) {

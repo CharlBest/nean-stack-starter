@@ -32,13 +32,9 @@ export class CommentsComponent implements OnInit {
   }
 
   getParams() {
-    this.route.paramMap.subscribe(params => {
-      if (params.has('uId')) {
-        this.itemUId = params.get('uId');
-        this.getItem();
-        this.getComments();
-      }
-    });
+    this.itemUId = this.route.snapshot.params.uId;
+    this.getItem();
+    this.getComments();
   }
 
   async getItem() {

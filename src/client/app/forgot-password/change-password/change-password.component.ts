@@ -37,14 +37,8 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   getParams() {
-    this.route.queryParamMap.subscribe(params => {
-      if (params.has('code')) {
-        this.code = params.get('code');
-      }
-      if (params.has('email')) {
-        this.email = params.get('email');
-      }
-    });
+    this.code = this.route.snapshot.queryParams.code;
+    this.email = this.route.snapshot.queryParams.email;
   }
 
   async onSubmit() {

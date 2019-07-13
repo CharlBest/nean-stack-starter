@@ -29,14 +29,10 @@ export class EditCommentComponent implements OnInit {
   }
 
   getParams() {
-    this.route.paramMap.subscribe(params => {
-      if (params.has('uId')) {
-        this.commentUId = params.get('uId');
-        if (!this.comment) {
-          this.getComment();
-        }
-      }
-    });
+    this.commentUId = this.route.snapshot.params.uId;
+    if (!this.comment) {
+      this.getComment();
+    }
   }
 
   async getComment() {

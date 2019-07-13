@@ -33,14 +33,10 @@ export class EditItemComponent implements OnInit {
   }
 
   getParams() {
-    this.route.paramMap.subscribe(params => {
-      if (params.has('uId')) {
-        this.itemUId = params.get('uId');
-        if (!this.item) {
-          this.getItem();
-        }
-      }
-    });
+    this.itemUId = this.route.snapshot.params.uId;
+    if (!this.item) {
+      this.getItem();
+    }
   }
 
   async getItem() {

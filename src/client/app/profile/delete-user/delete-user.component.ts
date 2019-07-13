@@ -25,11 +25,7 @@ export class DeleteUserComponent implements OnInit {
     }
 
     getParams() {
-        this.route.queryParamMap.subscribe(params => {
-            if (params.has('email')) {
-                this.email = params.get('email');
-            }
-        });
+        this.email = this.route.snapshot.queryParams.email;
     }
 
     async delete(email: string) {

@@ -34,19 +34,11 @@ export class NewsletterComponent implements OnInit {
   }
 
   getParams() {
-    this.route.queryParamMap.subscribe(params => {
-      if (params.has('removeEmail')) {
-        this.removingEmail = params.get('removeEmail') === 'true';
-      } else {
-        this.removingEmail = false;
-      }
+    this.removingEmail = this.route.snapshot.queryParams.removeEmail === 'true';
 
-      if (params.has('email')) {
-        const email = params.get('email');
-        this.formGroup.controls.email.setValue(email);
-        this.removingEmail = true;
-      }
-    });
+    const email = this.route.snapshot.queryParams.email;
+    this.formGroup.controls.email.setValue(email);
+    this.removingEmail = true;
   }
 
   async add() {

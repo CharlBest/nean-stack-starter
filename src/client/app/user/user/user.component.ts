@@ -38,13 +38,9 @@ export class UserComponent implements OnInit {
   }
 
   getParams() {
-    this.route.paramMap.subscribe(params => {
-      if (params.has('id')) {
-        const userId = params.get('id');
-        this.userId = userId ? +userId : null;
-        this.getUser();
-      }
-    });
+    const userId = this.route.snapshot.params.id;
+    this.userId = userId ? +userId : null;
+    this.getUser();
   }
 
   async getUser() {
