@@ -80,37 +80,45 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    async sendPaymentToServer(token: string | null = null) {
+    sendPaymentToServer(token: string | null = null) {
         if (this.isAuthenticated) {
-            const viewModel = new UserPaymentViewModel();
+            this.sendViaAuthenticatedUser(token);
+        } else {
+            this.sendViaAnonymousUser(token);
+        }
+    }
+
+    async sendViaAuthenticatedUser(token: string | null) {
+        const viewModel = new UserPaymentViewModel();
+        viewModel.token = token;
+        viewModel.cardUId = this.formGroup.controls.cardUId.value;
+        viewModel.amount = +this.formGroup.controls.amount.value;
+        viewModel.saveCard = this.formGroup.controls.saveCard.value === true;
+
+        try {
+            await this.paymentService.userPayment(viewModel);
+            this.paymentSuccess = true;
+        } catch (error) {
+            this.formErrorsService.updateFormValidity(error, this.formGroup);
+        } finally {
+            this.isProcessing = false;
+        }
+    }
+
+    async sendViaAnonymousUser(token: string | null) {
+        if (token) {
+            const viewModel = new AnonymousPaymentViewModel();
             viewModel.token = token;
-            viewModel.cardUId = this.formGroup.controls.cardUId.value;
+            viewModel.email = this.formGroup.controls.email.value;
             viewModel.amount = +this.formGroup.controls.amount.value;
-            viewModel.saveCard = this.formGroup.controls.saveCard.value === true;
 
             try {
-                await this.paymentService.userPayment(viewModel);
+                await this.paymentService.anonymousPayment(viewModel);
                 this.paymentSuccess = true;
             } catch (error) {
                 this.formErrorsService.updateFormValidity(error, this.formGroup);
             } finally {
                 this.isProcessing = false;
-            }
-        } else {
-            if (token) {
-                const viewModel = new AnonymousPaymentViewModel();
-                viewModel.token = token;
-                viewModel.email = this.formGroup.controls.email.value;
-                viewModel.amount = +this.formGroup.controls.amount.value;
-
-                try {
-                    await this.paymentService.anonymousPayment(viewModel);
-                    this.paymentSuccess = true;
-                } catch (error) {
-                    this.formErrorsService.updateFormValidity(error, this.formGroup);
-                } finally {
-                    this.isProcessing = false;
-                }
             }
         }
     }

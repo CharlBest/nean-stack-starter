@@ -14,7 +14,6 @@ import { ItemService } from '../item.service';
 export class EditItemComponent implements OnInit {
 
   @ViewChild('itemForm', { static: false }) itemForm: ItemFormComponent;
-  itemUId: string | null;
   isProcessing = false;
   item: ItemViewModel;
   savedMedia: Array<string>;
@@ -33,18 +32,18 @@ export class EditItemComponent implements OnInit {
   }
 
   getParams() {
-    this.itemUId = this.route.snapshot.params.uId;
+    const itemUId = this.route.snapshot.params.uId;
     if (!this.item) {
-      this.getItem();
+      this.getItem(itemUId);
     }
   }
 
-  async getItem() {
-    if (this.itemUId) {
+  async getItem(itemUId: string | null) {
+    if (itemUId) {
       this.isProcessing = true;
 
       try {
-        const response = await this.itemService.get(this.itemUId);
+        const response = await this.itemService.get(itemUId);
         if (response) {
           this.item = response;
           if (response.media) {

@@ -69,16 +69,14 @@ export class UserComponent implements OnInit {
       try {
         const response = await this.userService.getUserPublicItems(this.userId, this.pageIndex);
         if (response) {
-          if (this.userId) {
-            const itemsOwner = {
-              id: this.userId,
-              username: this.user.username,
-              avatarUrl: this.user.avatarUrl
-            };
+          const itemsOwner = {
+            id: this.userId,
+            username: this.user.username,
+            avatarUrl: this.user.avatarUrl
+          };
 
-            // TODO: This can be optimized
-            response.map((item: ItemViewModel) => item.user = itemsOwner);
-          }
+          // TODO: This can be optimized
+          response.map((item: ItemViewModel) => item.user = itemsOwner);
 
           this.items.push(...response);
         } else {

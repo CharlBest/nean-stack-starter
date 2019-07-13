@@ -13,7 +13,6 @@ import { ItemService } from '../item.service';
 export class EditCommentComponent implements OnInit {
 
   @ViewChild('commentForm', { static: false }) commentForm: CommentFormComponent;
-  commentUId: string | null;
   isProcessing = false;
   comment: CommentViewModel;
 
@@ -29,18 +28,18 @@ export class EditCommentComponent implements OnInit {
   }
 
   getParams() {
-    this.commentUId = this.route.snapshot.params.uId;
+    const commentUId = this.route.snapshot.params.uId;
     if (!this.comment) {
-      this.getComment();
+      this.getComment(commentUId);
     }
   }
 
-  async getComment() {
-    if (this.commentUId) {
+  async getComment(commentUId: string | null) {
+    if (commentUId) {
       this.isProcessing = true;
 
       try {
-        const response = await this.itemService.getComment(this.commentUId);
+        const response = await this.itemService.getComment(commentUId);
         if (response) {
           this.comment = response;
         }

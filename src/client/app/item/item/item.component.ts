@@ -122,6 +122,25 @@ export class ItemComponent implements AfterViewInit {
     }
   }
 
+  openShareDialog() {
+    this.contextMenu.close();
+
+    const url = ['/item/comments', this.item.uId];
+    if (!this.shareService.webShareWithUrl('Item', url)) {
+      this.shareDialogService.share(url);
+    }
+  }
+
+  copyLink() {
+    this.shareService.copyWithUrl(['/item/comments', this.item.uId]);
+    this.contextMenu.close();
+  }
+
+  goToComments() {
+    this.contextMenu.close();
+    this.router.navigate(['/item/edit', this.item.uId], { state: { item: this.item } });
+  }
+
   // #region Favourties
 
   favouriteItem(event: Event) {
@@ -153,25 +172,6 @@ export class ItemComponent implements AfterViewInit {
   }
 
   // #endregion
-
-  openShareDialog() {
-    this.contextMenu.close();
-
-    const url = ['/item/comments', this.item.uId];
-    if (!this.shareService.webShareWithUrl('Item', url)) {
-      this.shareDialogService.share(url);
-    }
-  }
-
-  copyLink() {
-    this.shareService.copyWithUrl(['/item/comments', this.item.uId]);
-    this.contextMenu.close();
-  }
-
-  goToComments() {
-    this.contextMenu.close();
-    this.router.navigate(['/item/edit', this.item.uId], { state: { item: this.item } });
-  }
 
   // #region Subscription
 
