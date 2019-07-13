@@ -472,9 +472,9 @@ sudo chmod -R 755 /var/www/nean.io
 
 Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04
 
-Install NVM (Node version manager: https://github.com/creationix/nvm)
+Install & Update NVM (Node version manager: https://github.com/creationix/nvm)
 ```sh
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 ```
 
 Test NVM
@@ -491,6 +491,7 @@ Install Node
 ```sh
 nvm install v10.13.0
 ```
+Important: when installing a new Node version you need to reinstall the global packages like pm2
 
 Test Node
 ```sh
@@ -849,12 +850,23 @@ docker top <container_name>
 
 1) Create crontab for user
 ```sh
-crontab -e
+export VISUAL=nano; crontab -e
 ```
 
 2) Set backup commands every 1 hour
+
+Short codes
+* @reboot – Run once, at startup
+* @yearly – Run once a year, “0 0 1 1 *”.</>
+* @annually – same as @yearly
+* @monthly – Run once a month, “0 0 1 * *”
+* @weekly – Run once a week, “0 0 * * 0”
+* @daily – Run once a day, “0 0 * * *”
+* @midnight – same as @daily
+* @hourly – Run once an hour, “0 * * * *”
+
 ```sh
-0 * * * * docker exec neo4j.nean.io bin/neo4j-admin backup --from=localhost:6362 --backup-dir=/backup --name=graph.db-backup --fallback-to-full=true --check-consistency=true --pagecache=2G
+@hourly docker exec neo4j.nean.io bin/neo4j-admin backup --from=localhost:6362 --backup-dir=/backup --name=graph.db-backup --fallback-to-full=true --check-consistency=true --pagecache=2G
 ```
 
 3) Save file
