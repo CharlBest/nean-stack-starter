@@ -28,7 +28,8 @@ export class ApiError {
     static InternalServerProd(err: any, req: Request, res: Response, next: NextFunction) {
         res.status(err.status || 400);
         res.send({
-            message: err.message,
+            // Hide this from the public as it can potentially expose sensitive data
+            // message: err.message,
             error: {
                 validation: {
                     formErrors: res.locals.error && res.locals.error.formErrors ? res.locals.error.formErrors : null,
