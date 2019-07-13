@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { PWAService } from '../../pwa-helper/pwa.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
@@ -27,6 +28,8 @@ export class NavigationComponent implements OnInit {
   readonly desktopTopToolbarHeight = 64;
   readonly mobileTopToolbarHeight = 56;
   toolbarHeight: number;
+  totalToolbarHeight: number;
+  showInstallBanner = this.pwaService.canInstallAndNotInPWA;
   navItems: NavItem = {
     home: {
       paths: [
@@ -54,7 +57,8 @@ export class NavigationComponent implements OnInit {
     private location: Location,
     public bpService: BreakpointService,
     public notificationService: NotificationService,
-    public navigationService: NavigationService) { }
+    public navigationService: NavigationService,
+    public pwaService: PWAService) { }
 
   ngOnInit() {
     this.initPrimaryNavWathcer();
@@ -148,6 +152,15 @@ export class NavigationComponent implements OnInit {
       } else {
         this.toolbarHeight = this.mobileTopToolbarHeight;
       }
+
+      this.totalToolbarHeight = this.pwaService.canInstallAndNotInPWA ? this.toolbarHeight * 2 : this.toolbarHeight;
+    });
+
+    // Watch for before install prompt to show install banner
+    this.pwaService.beforeInstallPromptChange.subscribe(() => {
+      if (this.pwaService.canInstallAndNotInPWA) {
+        this.updateInstallBanner(true, this.toolbarHeight * 2);
+      }
     });
 
     let prevScrollpos = window.pageYOffset;
@@ -162,8 +175,8 @@ export class NavigationComponent implements OnInit {
             this.navbar.nativeElement.style.top = '0';
           }
         } else {
-          if (this.navbar.nativeElement.style.top !== `-${this.toolbarHeight}px`) {
-            this.navbar.nativeElement.style.top = `-${this.toolbarHeight}px`;
+          if (this.navbar.nativeElement.style.top !== `-${this.totalToolbarHeight}px`) {
+            this.navbar.nativeElement.style.top = `-${this.totalToolbarHeight}px`;
           }
         }
         prevScrollpos = currentScrollPos;
@@ -193,6 +206,11 @@ export class NavigationComponent implements OnInit {
         }
       }
     }
+  }
+
+  updateInstallBanner(showInstallBanner: boolean, totalToolbarHeight: number) {
+    this.showInstallBanner = showInstallBanner;
+    this.totalToolbarHeight = totalToolbarHeight;
   }
 }
 

@@ -1,5 +1,31 @@
 <header #navbar
-  [style.height.px]="activeNavigation ? toolbarHeight : 0">
+  [style.height.px]="activeNavigation ? totalToolbarHeight : 0">
+
+  <!-- Install banner -->
+  <div [style.height.px]="toolbarHeight"
+    *ngIf="showInstallBanner"
+    class="install-banner">
+    <button mat-icon-button
+      (click)="updateInstallBanner(false, toolbarHeight)"
+      type="button">
+      <app-icon-close></app-icon-close>
+    </button>
+
+    <img src="assets/logo-color.png"
+      alt="logo">
+
+    <div>
+      <div>NEAN</div>
+      <div>App Development Base</div>
+    </div>
+
+    <span class="flex-spacer"></span>
+
+    <button mat-stroked-button
+      type="button"
+      (click)="pwaService.openInstallPrompt()"
+      color="primary">Install</button>
+  </div>
 
   <!-- Main nav -->
   <div *ngIf="navigationType.PRIMARY === activeNavigation"
@@ -40,7 +66,7 @@
   </div>
 </header>
 <div *ngIf="activeNavigation"
-  [style.height.px]="toolbarHeight"
+  [style.height.px]="totalToolbarHeight"
   class="header-push"></div>
 
 <!-- Bottom Nav -->

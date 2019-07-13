@@ -4,6 +4,8 @@ header {
 	width: 100%;
 	transition: top 0.3s;
 	z-index: 2;
+	background-color: var(--background-color);
+	color: var(--foreground-color);
 
 	.toolbar {
 		background-color: var(--primary-color);
@@ -39,7 +41,6 @@ header {
 
 	&.bottom {
 		background-color: var(--background-color);
-		color: var(--foreground-color);
 		position: fixed;
 		bottom: 0;
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
@@ -55,5 +56,21 @@ header {
 		display: flex;
 		justify-content: center;
 		font-size: 0.8em;
+	}
+}
+
+.install-banner {
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+	max-width: 600px;
+
+	img {
+		height: 40px;
+		margin-right: 12px;
+	}
+
+	button:last-child {
+		margin-right: 12px;
 	}
 }

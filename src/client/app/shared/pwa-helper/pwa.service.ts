@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PWAService {
 
-    beforeInstallPromptEvent: Event;
+    @Output() beforeInstallPromptChange: EventEmitter<void> = new EventEmitter<void>();
+    private beforeInstallPromptEvent: Event;
+    get canInstallAndNotInPWA(): boolean {
+        return !!this.beforeInstallPromptEvent && !this.isWithinPWA;
+    }
+    readonly isWithinPWA: boolean = window.matchMedia('(display-mode: standalone)').matches;
 
     init() {
         this.addEventForBeforeInstallPrompt();
@@ -16,6 +21,7 @@ export class PWAService {
             // Prevents immediate prompt display
             beforeInstallPromptEvent.preventDefault();
             this.beforeInstallPromptEvent = beforeInstallPromptEvent;
+            this.beforeInstallPromptChange.emit();
         });
     }
 

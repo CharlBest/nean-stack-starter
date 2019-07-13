@@ -2,14 +2,8 @@
     <mat-card-content>
         <button mat-raised-button
             type="button"
-            *ngIf="!pwaService.beforeInstallPromptEvent"
-            (click)="pwaHelperService.open()">Activate function to teach users how to install PWA</button>
-        <button mat-raised-button
-            type="button"
-            *ngIf="pwaService.beforeInstallPromptEvent"
-            (click)="pwaService.openInstallPrompt()"
-            color="warn">Install</button>
-
+            *ngIf="pwaService.canInstallAndNotInPWA"
+            (click)="pwaHelperService.open()">PWA install helper</button>
         <br>
         <br> Created by Charl Best. Find me on
         <a href="https://twitter.com/charl_best"
