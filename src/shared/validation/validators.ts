@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
 import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required } from '../models/shared/form-error.model';
+import { PasswordRegexBuilder } from './password-regex-builder';
 
 function isEmptyInputValue(value: any): boolean {
     // we don't check for string here so it also works with arrays
@@ -11,9 +12,8 @@ function isEmptyInputValue(value: any): boolean {
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 export const MAX_MEDIA_UPLOADS = 5;
 
-export const PASSWORD_REFEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]+$/;
-export const PASSWORD_LENGTH = 6;
-
+export const PASSWORD_LENGTH = 8;
+export const PASSWORD_REGEX = new PasswordRegexBuilder(PASSWORD_LENGTH).oneUpperCase().oneLowerCase().oneDigit().value;
 
 // Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
 export class Validators {

@@ -1,5 +1,6 @@
 import { NotificationType } from '../models/user/user.model';
-import { FormValidator, PASSWORD_LENGTH, PASSWORD_REFEXP, Validators } from './validators';
+import { FormValidator, PASSWORD_LENGTH, PASSWORD_REGEX, Validators } from './validators';
+
 export class FormGroupBuilder {
     static createUser(email: string | null = null, username: string | null = null, password: string | null = null): FormValidator {
         return {
@@ -13,7 +14,7 @@ export class FormGroupBuilder {
             password: [password, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
+                Validators.pattern(PASSWORD_REGEX)
             ]]
         };
     }
@@ -41,7 +42,7 @@ export class FormGroupBuilder {
             password: [password, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
+                Validators.pattern(PASSWORD_REGEX)
             ]]
         };
     }
@@ -63,7 +64,7 @@ export class FormGroupBuilder {
             newPassword: [newPassword, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REFEXP)
+                Validators.pattern(PASSWORD_REGEX)
             ]],
             confirmPassword: [confirmPassword, [
                 Validators.required,
