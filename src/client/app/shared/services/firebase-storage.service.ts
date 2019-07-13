@@ -10,8 +10,6 @@ import { environment } from '../../../environments/environment';
 export class FirebaseStorageService {
     folderName = 'images';
 
-    constructor() { }
-
     async upload(file: File, progressCallback: (progress: number) => void, folderName?: string): Promise<string> {
         return new Promise((resolve, reject) => {
             // Create a storage ref

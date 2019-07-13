@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../../shared/services/notification.service';
 import { WebSocketService } from '../../shared/services/websocket.service';
@@ -7,13 +7,10 @@ import { WebSocketService } from '../../shared/services/websocket.service';
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent implements OnInit {
+export class ActivityComponent {
   constructor(public notificationService: NotificationService,
     private webSocketService: WebSocketService,
     private snackBar: MatSnackBar) { }
-
-  ngOnInit() {
-  }
 
   removeMessage(index: number) {
     this.notificationService.removeMessage(index);

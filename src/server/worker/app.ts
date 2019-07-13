@@ -6,7 +6,6 @@ import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
 
 class App {
-    constructor() { }
 
     async bootstrapApp(): Promise<void> {
         // Database

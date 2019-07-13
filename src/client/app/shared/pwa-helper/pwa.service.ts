@@ -7,8 +7,6 @@ export class PWAService {
 
     beforeInstallPromptEvent: Event;
 
-    constructor() { }
-
     init() {
         this.addEventForBeforeInstallPrompt();
     }

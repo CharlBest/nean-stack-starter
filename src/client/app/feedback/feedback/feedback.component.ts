@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { FeedbackViewModel } from '../../../../shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
@@ -20,7 +19,6 @@ export class FeedbackComponent implements OnInit {
   tutorialTypeEnum = TutorialType;
 
   constructor(private feedbackService: FeedbackService,
-    private router: Router,
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
     private fb: FormBuilder) { }

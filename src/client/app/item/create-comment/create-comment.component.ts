@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -10,7 +10,7 @@ import { ItemService } from '../item.service';
   templateUrl: './create-comment.component.html',
   styleUrls: ['./create-comment.component.scss']
 })
-export class CreateCommentComponent implements OnInit {
+export class CreateCommentComponent {
 
   @ViewChild('commentForm', { static: true }) commentForm: CommentFormComponent;
   @Input() itemUId: string;
@@ -19,9 +19,6 @@ export class CreateCommentComponent implements OnInit {
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService) { }
-
-  ngOnInit() {
-  }
 
   async onSubmit() {
     this.isProcessing = true;

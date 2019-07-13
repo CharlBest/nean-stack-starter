@@ -5,9 +5,6 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-    constructor() { }
-
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             tap((event: HttpEvent<any>) => {

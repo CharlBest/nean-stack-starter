@@ -1,15 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   templateUrl: './view-media-dialog.component.html',
   styleUrls: ['./view-media-dialog.component.scss']
 })
-export class ViewMediaDialogComponent implements OnInit {
+export class ViewMediaDialogComponent {
 
   @Input() src: string;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 }

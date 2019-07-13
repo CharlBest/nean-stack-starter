@@ -32,8 +32,6 @@ export class ThemeService {
         return window.getComputedStyle(document.documentElement).getPropertyValue('--foreground-color');
     }
 
-    constructor() { }
-
     private updateTheme() {
         const bodyElement = document.querySelector('body');
         if (bodyElement) {

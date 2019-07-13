@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
@@ -16,7 +16,7 @@ import { ItemService } from '../item.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent {
   @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
   @Input() comment: CommentViewModel;
   @Input() itemUserId: number;
@@ -30,9 +30,6 @@ export class CommentComponent implements OnInit {
     private shareService: ShareService,
     private snackBar: MatSnackBar,
     private router: Router) { }
-
-  ngOnInit() {
-  }
 
   async deleteComment() {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this comment?');

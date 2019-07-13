@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -17,7 +17,7 @@ import { ItemService } from '../item.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-export class ItemComponent implements OnInit, AfterViewInit {
+export class ItemComponent implements AfterViewInit {
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
   @ViewChild('description', { static: false }) description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
@@ -35,9 +35,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
     private shareDialogService: ShareDialogService,
     private shareService: ShareService,
     private router: Router) { }
-
-  ngOnInit() {
-  }
 
   ngAfterViewInit() {
     this.processDescription();

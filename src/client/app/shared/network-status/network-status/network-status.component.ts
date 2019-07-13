@@ -8,7 +8,9 @@ import { NetworkStatusService } from '../network-status.service';
 })
 export class NetworkStatusComponent implements OnInit {
     isOnline: boolean;
+
     constructor(public networkStatusService: NetworkStatusService) { }
+
     ngOnInit() {
         this.networkStatusService.isOffline$.subscribe(data => this.isOnline = !data);
     }

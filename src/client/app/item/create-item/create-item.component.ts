@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
@@ -12,7 +12,7 @@ import { ItemService } from '../item.service';
   templateUrl: './create-item.component.html',
   styleUrls: ['./create-item.component.scss']
 })
-export class CreateItemComponent implements OnInit {
+export class CreateItemComponent {
 
   @ViewChild('itemForm', { static: true }) itemForm: ItemFormComponent;
   isProcessing = false;
@@ -22,9 +22,6 @@ export class CreateItemComponent implements OnInit {
     private router: Router,
     private pushNotificationService: PushNotificationService,
     private dialogService: DialogService) { }
-
-  ngOnInit() {
-  }
 
   async onSubmit() {
     this.isProcessing = true;

@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { Validators } from '../../../../shared/validation/validators';
 import { InviteViewModel } from '../../../../shared/view-models/invite/invite.view-model';
@@ -11,7 +11,7 @@ import { InviteService } from '../invite.service';
   templateUrl: './invite.component.html',
   styleUrls: ['./invite.component.scss']
 })
-export class InviteComponent implements OnInit {
+export class InviteComponent {
 
   @ViewChild(MatChipList, { static: true }) chipList: MatChipList;
   isProcessing = false;
@@ -23,9 +23,6 @@ export class InviteComponent implements OnInit {
   constructor(private inviteService: InviteService,
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) { }
-
-  ngOnInit() {
-  }
 
   add(event: MatChipInputEvent): void {
     const { input, value } = event;

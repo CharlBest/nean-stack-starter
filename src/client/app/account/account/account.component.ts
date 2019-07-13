@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { AuthService } from '../../shared/services/auth.service';
 import { ThemeService } from '../../shared/services/theme.service';
@@ -8,14 +8,11 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent {
 
   constructor(public themeService: ThemeService,
     private tutorialService: TutorialService,
     public authService: AuthService) { }
-
-  ngOnInit() {
-  }
 
   takeTour() {
     this.tutorialService.activateTutorial(TutorialType.SIGN_UP);

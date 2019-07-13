@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -9,7 +9,7 @@ import { ProfileService } from '../profile.service';
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.scss']
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent {
 
   @Input() paymentCards: CardViewModel[] = [];
   isProcessing = false;
@@ -19,9 +19,6 @@ export class PaymentsComponent implements OnInit {
   constructor(private profileService: ProfileService,
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService) { }
-
-  ngOnInit() {
-  }
 
   async deleteCard(uId: string) {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this payment method?');

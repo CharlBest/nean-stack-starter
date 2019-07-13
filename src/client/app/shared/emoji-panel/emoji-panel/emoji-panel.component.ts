@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatMenuTrigger } from '@angular/material/menu';
 import * as emojione from 'emojione';
@@ -11,7 +11,7 @@ import { EmojiCategory, EmojiCategoryName, EmojiData, EmojiJsonFile } from './em
   templateUrl: './emoji-panel.component.html',
   styleUrls: ['./emoji-panel.component.scss']
 })
-export class EmojiPanelComponent implements OnInit {
+export class EmojiPanelComponent {
   file: EmojiJsonFile;
   @Input() closeOnInsert = false;
   @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
@@ -33,8 +33,6 @@ export class EmojiPanelComponent implements OnInit {
   constructor(public bottomSheet: MatBottomSheet,
     public bpService: BreakpointService,
     private preventBackNavigationService: PreventBackNavigationService) { }
-
-  ngOnInit() { }
 
   async render() {
     (emojione as any).sprites = true;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
@@ -6,14 +6,11 @@ import { ThemeService } from '../../shared/services/theme.service';
   templateUrl: './github-readme.component.html',
   styleUrls: ['./github-readme.component.scss']
 })
-export class GitHubReadMeComponent implements OnInit {
+export class GitHubReadMeComponent {
 
   isProcessing = true;
 
   constructor(public themeService: ThemeService) { }
-
-  ngOnInit() {
-  }
 
   doneLoading() {
     // Remove DEMO link in text

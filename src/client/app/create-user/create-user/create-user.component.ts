@@ -65,8 +65,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   async setUserToken() {
-    this.isProcessing = true;
-
     const model = new LoginViewModel();
     model.emailOrUsername = this.formGroup.controls.email.value;
     model.password = this.formGroup.controls.password.value;

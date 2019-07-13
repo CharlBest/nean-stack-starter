@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { Language } from './language.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { Language } from './language.model';
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss']
 })
-export class LanguageComponent implements OnInit {
+export class LanguageComponent {
 
   languages = [
     new Language('en-US', 'English'),
@@ -14,9 +14,6 @@ export class LanguageComponent implements OnInit {
   ];
 
   constructor(@Inject(LOCALE_ID) public activeLanguage: string) { }
-
-  ngOnInit() {
-  }
 
   chooseLanguage(language: Language) {
     if (language.code !== this.activeLanguage) {
