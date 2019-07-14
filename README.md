@@ -1071,7 +1071,5 @@ npm run build
 
 Server
 * Open WinSCP
-* Rename local dist to newdist
 * copy over newdist to server next to dist
-* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && rm -rf /var/www/nean.io/prod/olddist
-* pm2 reload all
+* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && pm2 reload all && rm -rf /var/www/nean.io/prod/olddist
