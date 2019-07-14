@@ -35,12 +35,10 @@
             ],
             "styles": [
               {
-                "input": "src/client/styles.scss",
-                "lazy": true
+                "input": "src/client/styles.scss"
               },
               {
-                "input": "src/client/app-theme.scss",
-                "lazy": true
+                "input": "src/client/app-theme.scss"
               }
             ],
             "scripts": []
