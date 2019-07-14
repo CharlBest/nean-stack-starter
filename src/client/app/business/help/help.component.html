@@ -1,11 +1,13 @@
 <mat-card>
     <mat-card-content>
-        <button mat-raised-button
-            type="button"
-            *ngIf="pwaService.canInstallAndNotInPWA"
-            (click)="pwaHelperService.open()">PWA install helper</button>
-        <br>
-        <br> Created by Charl Best. Find me on
+        <ng-container *ngIf="pwaService.canInstallAndNotInPWA">
+            <button mat-raised-button
+                type="button"
+                (click)="pwaHelperService.open()">PWA install helper</button>
+            <br>
+            <br>
+        </ng-container>
+        Created by Charl Best. Find me on
         <a href="https://twitter.com/charl_best"
             target="_blank"
             rel="noopener">Twitter</a>. Code licensed under an MIT License.
