@@ -34,8 +34,14 @@
               }
             ],
             "styles": [
-              "src/client/styles.scss",
-              "src/client/app-theme.scss"
+              {
+                "input": "src/client/styles.scss",
+                "lazy": true
+              },
+              {
+                "input": "src/client/app-theme.scss",
+                "lazy": true
+              }
             ],
             "scripts": []
           },
