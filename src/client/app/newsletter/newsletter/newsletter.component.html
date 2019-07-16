@@ -21,13 +21,13 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         type="submit"
         *ngIf="!removingEmail"
         [disabled]="!formGroup.valid"
         (click)="add()">Subscribe</button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         type="submit"
         *ngIf="removingEmail"
@@ -43,7 +43,7 @@
     <span *ngIf="removingEmail">You are now unsubscribed</span>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button
+    <button mat-stroked-button
       routerLink="/"
       type="button">Home</button>
   </mat-card-actions>

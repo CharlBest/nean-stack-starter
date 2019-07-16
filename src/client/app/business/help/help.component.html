@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <ng-container *ngIf="pwaService.canInstallAndNotInPWA">
-            <button mat-raised-button
+            <button mat-stroked-button
                 type="button"
                 (click)="pwaHelperService.open()">PWA install helper</button>
             <br>
@@ -46,9 +46,9 @@
         </ol>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button
+        <button mat-stroked-button
             routerLink="/business/terms-and-conditions">Terms and Conditions</button>
-        <button mat-raised-button
+        <button mat-stroked-button
             routerLink="/business/privacy-policy">Privacy Policy</button>
     </mat-card-actions>
 </mat-card>

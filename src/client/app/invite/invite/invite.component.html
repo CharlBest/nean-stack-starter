@@ -29,7 +29,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button
+    <button mat-stroked-button
       color="primary"
       type="submit"
       [disabled]="emailsInput?.value?.length < 5 && emails?.length === 0"
@@ -42,7 +42,7 @@
     Email list has been sent
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button
+    <button mat-stroked-button
       routerLink="/"
       type="button">Home</button>
   </mat-card-actions>

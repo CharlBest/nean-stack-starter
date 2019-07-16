@@ -69,7 +69,7 @@
       <app-upload-button (uploadComplete)="updateAvatar($event)"
         [folderName]="'avatars'"
         [buttonText]="user.avatarUrl ? 'Replace avatar' : 'Upload avatar'"></app-upload-button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         type="button"
         (click)="removeAvatar()"

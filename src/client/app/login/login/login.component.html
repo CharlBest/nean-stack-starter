@@ -2,7 +2,7 @@
     [formGroup]="formGroup">
     <mat-card>
         <mat-card-content>
-            <button mat-raised-button
+            <button mat-stroked-button
                 [appTutorial]="tutorialTypeEnum.SIGN_UP"
                 color="accent"
                 type="button"
@@ -41,12 +41,12 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button
+            <button mat-stroked-button
                 color="primary"
                 type="submit"
                 [disabled]="!formGroup.valid"
                 (click)="onSubmit()">Log in</button>
-            <button mat-raised-button
+            <button mat-stroked-button
                 [appTutorial]="tutorialTypeEnum.FORGOT_PASSWORD"
                 type="button"
                 routerLink="/forgot-password">Forgot password</button>

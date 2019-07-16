@@ -50,24 +50,24 @@
 
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-raised-button
+    <button mat-stroked-button
       *ngIf="!isChangingDefault"
       routerLink="/profile/create-card"
       type="button">Add payment method</button>
-    <button mat-raised-button
+    <button mat-stroked-button
       *ngIf="!isChangingDefault && paymentCards?.length > 1"
       (click)="isChangingDefault = true"
       type="button">Change default method</button>
-    <button mat-raised-button
+    <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="changeDefaultCard()"
       type="button">Save default method</button>
-    <button mat-raised-button
+    <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="this.isChangingDefault = false; newDefaultCardUId = null"
       type="button">Cancel</button>
     <span class="flex-spacer"></span>
-    <button mat-raised-button
+    <button mat-stroked-button
       routerLink="/profile/payment-history"
       type="button">Payment history</button>
   </mat-card-actions>

@@ -52,7 +52,7 @@
             <mat-card-subtitle>Automatically subscribe to your new items</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button
+            <button mat-stroked-button
                 *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value || (formGroup.controls['autoSubscribeToItem'].value !== notificationPreferences?.autoSubscribeToItem)"
                 type="submit"
                 (click)="onSubmit()">Update preferences</button>

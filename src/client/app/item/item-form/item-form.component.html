@@ -33,7 +33,7 @@
                     <app-media [src]="media"
                         *ngIf="media"></app-media>
 
-                    <button mat-raised-button
+                    <button mat-stroked-button
                         type="button"
                         color="warn"
                         (click)="removeMedia(i)">Remove</button>
@@ -41,7 +41,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button
+            <button mat-stroked-button
                 type="submit"
                 color="primary"
                 [disabled]="!formGroup.valid"

@@ -13,18 +13,18 @@
 
       <br>
 
-      <button mat-raised-button
+      <button mat-stroked-button
         type="button"
         (click)="back()"
         *ngIf="!tut.isFirst"
         class="previous-button">Previous</button>
-      <button mat-raised-button
+      <button mat-stroked-button
         *ngIf="!tut.isLast"
         (click)="goToTutorial(tut)"
         type="button">
         Next
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         *ngIf="tut.isLast"
         (click)="goToTutorial(tut)"
         color="primary"
@@ -36,7 +36,7 @@
       <br>
 
       <button *ngIf="!tut.isLast"
-        mat-raised-button
+        mat-stroked-button
         type="button"
         color="warn"
         (click)="skip(tut)">Skip tour</button>
