@@ -9,9 +9,7 @@ export class BaseIconComponent {
   @Input() color: 'primary' | 'accent' | 'warn';
   @Input() inline = false;
 
-  @HostBinding('class.app-icon') get appIcon() {
-    return true;
-  }
+  @HostBinding('class.app-icon') appIcon = true;
 
   @HostBinding('class.inline') get isInline() {
     return this.inline;
