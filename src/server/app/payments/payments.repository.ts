@@ -1,6 +1,6 @@
+import { CardModel } from '@shared/models/payment/card.model';
+import { PaymentModel } from '@shared/models/payment/payment.model';
 import { Response } from 'express';
-import { CardModel } from '../../../shared/models/payment/card.model';
-import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 

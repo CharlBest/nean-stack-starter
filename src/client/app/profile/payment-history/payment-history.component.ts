@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentModel } from '../../../../shared/models/payment/payment.model';
+import { PaymentModel } from '@shared/models/payment/payment.model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
 

@@ -1,9 +1,9 @@
-import { Response } from 'express';
-import { v4 as nodeUUId } from 'uuid';
-import { CommentModel } from '../../../shared/models/item/comment.model';
-import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
+import { CommentModel } from '@shared/models/item/comment.model';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { Response } from 'express';
+import { v4 as nodeUUId } from 'uuid';
+import { MAX_MEDIA_UPLOADS } from '../../../shared/validation/validators';
 import { pushNotificationBroker } from '../../communication/push-notification-broker';
 import { logger } from '../../core/utils/logger';
 import { BaseService } from '../shared/base-service';

@@ -1,7 +1,7 @@
+import { SocketDataModel } from '@shared/models/web-socket/socket-data.model';
 import { Application, NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
-import { SocketDataModel } from '../../shared/models/web-socket/socket-data.model';
 import { generalRoutes } from '../app/general/general.routes';
 import { itemsRoutes } from '../app/items/items.routes';
 import { notificationsRoutes } from '../app/notifications/notifications.routes';

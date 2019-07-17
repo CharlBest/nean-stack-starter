@@ -1,10 +1,10 @@
-import { Response } from 'express';
-import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
-import { UserModel } from '../../../shared/models/user/user.model';
+import { UserLiteModel } from '@shared/models/user/user-lite.model';
+import { UserModel } from '@shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
+import { Response } from 'express';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 

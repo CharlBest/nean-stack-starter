@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { UserTokenModel } from '../../../../shared/models/shared/user-token.model';
+import { UserTokenModel } from '@shared/models/shared/user-token.model';
 
 @Injectable({
     providedIn: 'root'

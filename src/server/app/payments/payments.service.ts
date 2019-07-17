@@ -1,9 +1,9 @@
+import { CardModel } from '@shared/models/payment/card.model';
+import { PaymentModel } from '@shared/models/payment/payment.model';
+import { UserLiteModel } from '@shared/models/user/user-lite.model';
 import { Response } from 'express';
 import * as stripe from 'stripe';
 import { v4 as nodeUUId } from 'uuid';
-import { CardModel } from '../../../shared/models/payment/card.model';
-import { PaymentModel } from '../../../shared/models/payment/payment.model';
-import { UserLiteModel } from '../../../shared/models/user/user-lite.model';
 import { emailBroker } from '../../communication/emailer-broker';
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';

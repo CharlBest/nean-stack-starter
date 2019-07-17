@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { ErrorModel, GlobalError } from '@shared/models/shared/error.model';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ErrorModel, GlobalError } from '../../../../shared/models/shared/error.model';
 
 @Injectable({
   providedIn: 'root'
