@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AnonymousPaymentViewModel } from '@shared/view-models/payment/anonymous-payment.view-model';
+import { UserPaymentViewModel } from '@shared/view-models/payment/user-payment.view-model';
 import { CardModel } from '../../../../shared/models/payment/card.model';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
-import { AnonymousPaymentViewModel } from '../../../../shared/view-models/payment/anonymous-payment.view-model';
-import { UserPaymentViewModel } from '../../../../shared/view-models/payment/user-payment.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';

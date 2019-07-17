@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
-import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
+import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ItemFormComponent } from '../item-form/item-form.component';

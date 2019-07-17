@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoginViewModel } from '@shared/view-models/create-user/login.view-model';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
-import { LoginViewModel } from '../../../../shared/view-models/create-user/login.view-model';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { LoginService } from '../../login/login.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';

@@ -1,7 +1,7 @@
 import { Application, Response } from 'express';
 import { v1 as neo4j } from 'neo4j-driver';
-import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
-import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
+import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 

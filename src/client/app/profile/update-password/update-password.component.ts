@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
-import { UpdatePasswordViewModel } from '../../../../shared/view-models/profile/update-password.view-model';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
 import { ProfileService } from '../profile.service';

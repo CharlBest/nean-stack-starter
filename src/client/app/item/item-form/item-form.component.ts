@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { MAX_MEDIA_UPLOADS } from '../../../../shared/validation/validators';
-import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';

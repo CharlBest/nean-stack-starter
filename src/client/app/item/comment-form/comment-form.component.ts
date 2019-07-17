@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
+import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
-import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 

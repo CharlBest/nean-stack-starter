@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
 import { ServerValidator, Validators } from '../../../shared/validation/validators';
-import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
-import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
-import { SearchViewModel } from '../../../shared/view-models/item/search.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
+import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
+import { SearchViewModel } from '@shared/view-models/item/search.view-model';
 import { BaseController } from '../shared/base-controller';
 import { itemsService } from './items.service';
 

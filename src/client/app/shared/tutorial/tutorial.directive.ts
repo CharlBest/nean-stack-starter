@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 
 @Directive({
     selector: '[appTutorial]'

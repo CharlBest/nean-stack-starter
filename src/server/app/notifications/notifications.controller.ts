@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
 import { ServerValidator, Validators } from '../../../shared/validation/validators';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { BaseController } from '../shared/base-controller';
 import { notificationsService } from './notifications.service';
 

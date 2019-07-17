@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ReportUserViewModel } from '../../../../shared/view-models/profile/report-user.view-model';
-import { UpdateAvatarViewModel } from '../../../../shared/view-models/profile/update-avatar.view-model';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
-import { UserProfileViewModel } from '../../../../shared/view-models/user/user-profile.view-model';
+import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
+import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
+import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';

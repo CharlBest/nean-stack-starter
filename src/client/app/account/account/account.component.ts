@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { AuthService } from '../../shared/services/auth.service';
 import { ThemeService } from '../../shared/services/theme.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';

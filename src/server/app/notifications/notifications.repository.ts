@@ -1,9 +1,9 @@
 import { Response } from 'express';
-import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
-import { NotificationsViewModel } from '../../../shared/view-models/user/notifications.view-model';
-import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
+import { NotificationsViewModel } from '@shared/view-models/user/notifications.view-model';
+import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
+import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { Database } from '../../core/database';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseRepository } from '../shared/base-repository';

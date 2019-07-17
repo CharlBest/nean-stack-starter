@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
+import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseService } from '../shared/base-service';
 import { notificationsRepository } from './notifications.repository';

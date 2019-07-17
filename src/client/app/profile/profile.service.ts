@@ -5,13 +5,13 @@ import { PaymentModel } from '../../../shared/models/payment/payment.model';
 import { NotificationRoutes } from '../../../shared/routes/notification.routes';
 import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { UserRoutes } from '../../../shared/routes/user.routes';
-import { ReportUserViewModel } from '../../../shared/view-models/profile/report-user.view-model';
-import { UpdateAvatarViewModel } from '../../../shared/view-models/profile/update-avatar.view-model';
-import { UpdateBioViewModel } from '../../../shared/view-models/profile/update-bio.view-model';
-import { UpdatePasswordViewModel } from '../../../shared/view-models/profile/update-password.view-model';
-import { NotificationPreferencesViewModel } from '../../../shared/view-models/user/notification-preferences.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../shared/view-models/user/update-notification-preferences.view-model';
-import { UserProfileViewModel } from '../../../shared/view-models/user/user-profile.view-model';
+import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
+import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
+import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
+import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
+import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
+import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
+import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

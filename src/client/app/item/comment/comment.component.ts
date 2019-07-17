@@ -1,8 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
-import { ReportCommentViewModel } from '../../../../shared/view-models/item/report-comment.view-model';
+import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { ReportCommentViewModel } from '@shared/view-models/item/report-comment.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';

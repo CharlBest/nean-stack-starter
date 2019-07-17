@@ -1,4 +1,4 @@
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 
 export class Tutorial {
     constructor(public tutorialType: TutorialType,

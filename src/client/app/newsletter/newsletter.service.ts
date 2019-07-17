@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GeneralRoutes } from '../../../shared/routes/general.routes';
-import { NewsletterMemberViewModel } from '../../../shared/view-models/newsletter/newsletter-member.view-model';
+import { NewsletterMemberViewModel } from '@shared/view-models/newsletter/newsletter-member.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

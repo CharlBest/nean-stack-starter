@@ -1,8 +1,8 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ViewChild } from '@angular/core';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
+import { InviteViewModel } from '@shared/view-models/invite/invite.view-model';
 import { Validators } from '../../../../shared/validation/validators';
-import { InviteViewModel } from '../../../../shared/view-models/invite/invite.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { InviteService } from '../invite.service';

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
 import { ServerValidator, Validators } from '../../../shared/validation/validators';
-import { AnonymousPaymentViewModel } from '../../../shared/view-models/payment/anonymous-payment.view-model';
-import { UserPaymentViewModel } from '../../../shared/view-models/payment/user-payment.view-model';
+import { AnonymousPaymentViewModel } from '@shared/view-models/payment/anonymous-payment.view-model';
+import { UserPaymentViewModel } from '@shared/view-models/payment/user-payment.view-model';
 import { BaseController } from '../shared/base-controller';
 import { paymentsService } from './payments.service';
 

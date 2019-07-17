@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ItemService } from '../item.service';
 

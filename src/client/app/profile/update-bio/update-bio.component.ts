@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpdateBioViewModel } from '../../../../shared/view-models/profile/update-bio.view-model';
+import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { HTMLEditorComponent } from '../../shared/html-editor/html-editor/html-editor.component';
 import { ProfileService } from '../profile.service';

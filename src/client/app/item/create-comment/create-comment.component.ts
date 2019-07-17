@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { CommentViewModel } from '../../../../shared/view-models/item/comment.view-model';
-import { CreateOrUpdateCommentViewModel } from '../../../../shared/view-models/item/create-or-update-comment.view-model';
+import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { ItemService } from '../item.service';

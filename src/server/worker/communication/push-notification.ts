@@ -1,5 +1,5 @@
 import { sendNotification, setVapidDetails } from 'web-push';
-import { PushSubscriptionViewModel } from '../../../shared/view-models/user/push-subscription.view-model';
+import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
 import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
 // tslint:disable-next-line:max-line-length

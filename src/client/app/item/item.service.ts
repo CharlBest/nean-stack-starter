@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ItemRoutes } from '../../../shared/routes/item.routes';
 import { NotificationRoutes } from '../../../shared/routes/notification.routes';
-import { CommentViewModel } from '../../../shared/view-models/item/comment.view-model';
-import { CreateOrUpdateCommentViewModel } from '../../../shared/view-models/item/create-or-update-comment.view-model';
-import { CreateOrUpdateItemViewModel } from '../../../shared/view-models/item/create-or-update-item.view-model';
-import { ItemViewModel } from '../../../shared/view-models/item/item.view-model';
-import { ReportItemViewModel } from '../../../shared/view-models/item/report-item.view-model';
+import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
+import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { ReportItemViewModel } from '@shared/view-models/item/report-item.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

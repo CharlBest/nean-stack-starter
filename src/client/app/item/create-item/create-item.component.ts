@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { CreateOrUpdateItemViewModel } from '../../../../shared/view-models/item/create-or-update-item.view-model';
-import { ItemViewModel } from '../../../../shared/view-models/item/item.view-model';
+import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PushNotificationService } from '../../shared/services/push-notification.service';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserRoutes } from '../../../shared/routes/user.routes';
-import { CreateUserViewModel } from '../../../shared/view-models/create-user/create-user.view-model';
+import { CreateUserViewModel } from '@shared/view-models/create-user/create-user.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

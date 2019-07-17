@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
+import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
+import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
-import { NotificationPreferencesViewModel } from '../../../../shared/view-models/user/notification-preferences.view-model';
-import { PushSubscriptionViewModel } from '../../../../shared/view-models/user/push-subscription.view-model';
-import { UpdateNotificationPreferencesViewModel } from '../../../../shared/view-models/user/update-notification-preferences.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PushNotificationService } from '../../shared/services/push-notification.service';

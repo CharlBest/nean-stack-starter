@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CardViewModel } from '../../../../shared/view-models/payment/card.view-model';
+import { CardViewModel } from '@shared/view-models/payment/card.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';

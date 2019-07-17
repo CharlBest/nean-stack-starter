@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GeneralRoutes } from '../../../shared/routes/general.routes';
-import { InviteViewModel } from '../../../shared/view-models/invite/invite.view-model';
+import { InviteViewModel } from '@shared/view-models/invite/invite.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

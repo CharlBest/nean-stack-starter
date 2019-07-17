@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CompletedTutorial } from '../../../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { TutorialType } from '../../../../../shared/view-models/tutorial/tutorial-type.enum';
+import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { AuthService } from '../../services/auth.service';
 import { Tutorial } from '../tutorial.model';
 import { TutorialService } from '../tutorial.service';

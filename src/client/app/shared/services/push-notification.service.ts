@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
-import { PushSubscriptionViewModel } from '../../../../shared/view-models/user/push-subscription.view-model';
+import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

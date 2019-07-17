@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { UserRoutes } from '../../../../shared/routes/user.routes';
-import { CompletedTutorial } from '../../../../shared/view-models/tutorial/completed-tutorial.view-model';
-import { TutorialType } from '../../../../shared/view-models/tutorial/tutorial-type.enum';
 import { environment } from '../../../environments/environment';
 import { NavigationType } from '../navigation/navigation-type.enum';
 
