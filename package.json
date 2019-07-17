@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.959",
+  "version": "0.0.960",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -81,7 +81,8 @@
     "webpack-cli": "^3.3.5",
     "winston": "^3.2.1",
     "ws": "^7.1.0",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
   },
   "devDependencies": {
     "@angular/language-service": "^8.1.1",

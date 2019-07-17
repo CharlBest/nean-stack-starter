@@ -1,5 +1,6 @@
 // const webpack = require('webpack');
 const path = require('path');
+const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 // const DashboardPlugin = require('webpack-dashboard/plugin');
 const isProduction = process.env.NODE_ENV === 'production'
@@ -37,7 +38,8 @@ const config = {
         tls: 'empty'
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        plugins: [new TsConfigPathsPlugin()]
     },
     plugins: [
         // new webpack.DefinePlugin({
