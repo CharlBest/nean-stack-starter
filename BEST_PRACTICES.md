@@ -6,6 +6,7 @@
 * Remove all inline styles
 * Button type should always be set to button or submit
 * mat-icon-button should always contain a tooltop and aria-label
+* Use this regex ]="[a-zA-Z$]*\((\$event)?\)" in VSCode to test templates to see if methods are being used to evaluate values
 
 ### Testing
 * Responsiveness by resizing window
