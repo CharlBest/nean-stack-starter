@@ -1,4 +1,4 @@
-import { UserRoutes } from '../../../shared/routes/user.routes';
+import { UserRoutes } from '@shared/routes/user.routes';
 import { Authentication } from '../../core/middleware/authentication';
 import { BaseRoute } from '../shared/base-route';
 import { usersController } from './users.controller';

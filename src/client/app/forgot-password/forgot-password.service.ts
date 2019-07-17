@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserRoutes } from '../../../shared/routes/user.routes';
+import { UserRoutes } from '@shared/routes/user.routes';
 import { ChangeForgottenPasswordViewModel } from '@shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { ForgotPasswordViewModel } from '@shared/view-models/forgot-password/forgot-password.view-model';
 import { environment } from '../../environments/environment';

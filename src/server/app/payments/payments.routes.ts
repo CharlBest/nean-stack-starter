@@ -1,4 +1,4 @@
-import { PaymentRoutes } from '../../../shared/routes/payment.routes';
+import { PaymentRoutes } from '@shared/routes/payment.routes';
 import { Authentication } from '../../core/middleware/authentication';
 import { BaseRoute } from '../shared/base-route';
 import { paymentsController } from './payments.controller';

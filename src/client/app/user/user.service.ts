@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserRoutes } from '../../../shared/routes/user.routes';
+import { UserRoutes } from '@shared/routes/user.routes';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { environment } from '../../environments/environment';

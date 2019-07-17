@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CardModel } from '@shared/models/payment/card.model';
+import { PaymentRoutes } from '@shared/routes/payment.routes';
 import { AnonymousPaymentViewModel } from '@shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '@shared/view-models/payment/user-payment.view-model';
-import { PaymentRoutes } from '../../../shared/routes/payment.routes';
 import { environment } from '../../environments/environment';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserRoutes } from '../../../shared/routes/user.routes';
+import { UserRoutes } from '@shared/routes/user.routes';
 import { environment } from '../../environments/environment';
 
 @Injectable({

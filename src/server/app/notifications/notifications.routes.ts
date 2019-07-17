@@ -1,4 +1,4 @@
-import { NotificationRoutes } from '../../../shared/routes/notification.routes';
+import { NotificationRoutes } from '@shared/routes/notification.routes';
 import { Authentication } from '../../core/middleware/authentication';
 import { BaseRoute } from '../shared/base-route';
 import { notificationsController } from './notifications.controller';

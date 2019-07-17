@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GeneralRoutes } from '../../../shared/routes/general.routes';
+import { GeneralRoutes } from '@shared/routes/general.routes';
 import { FeedbackViewModel } from '@shared/view-models/feedback/feedback.view-model';
 import { environment } from '../../environments/environment';
 

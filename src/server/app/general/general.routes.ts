@@ -1,4 +1,4 @@
-import { GeneralRoutes as GeneralStaticRoutes } from '../../../shared/routes/general.routes';
+import { GeneralRoutes as GeneralStaticRoutes } from '@shared/routes/general.routes';
 import { BaseRoute } from '../shared/base-route';
 import { generalController } from './general.controller';
 

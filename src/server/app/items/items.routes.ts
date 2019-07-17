@@ -1,4 +1,4 @@
-import { ItemRoutes } from '../../../shared/routes/item.routes';
+import { ItemRoutes } from '@shared/routes/item.routes';
 import { Authentication } from '../../core/middleware/authentication';
 import { BaseRoute } from '../shared/base-route';
 import { itemsController } from './items.controller';
