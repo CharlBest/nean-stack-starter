@@ -1,4 +1,5 @@
 import { SocketDataModel } from '@shared/models/web-socket/socket-data.model';
+import { ServerValidator } from '@shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
@@ -12,7 +13,6 @@ import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
-import { ServerValidator } from '../../../shared/validation/validators';
 import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';

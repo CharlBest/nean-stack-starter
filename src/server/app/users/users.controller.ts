@@ -1,7 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import { v4 as nodeUUId } from 'uuid';
-import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
-import { ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '@shared/validation/validators';
 import { CreateUserViewModel } from '@shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '@shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '@shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -10,6 +8,8 @@ import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar
 import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { NextFunction, Request, Response } from 'express';
+import { v4 as nodeUUId } from 'uuid';
 import { BaseController } from '../shared/base-controller';
 import { usersService } from './users.service';
 

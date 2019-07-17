@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { FeedbackViewModel } from '@shared/view-models/feedback/feedback.view-model';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
-import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { FeedbackService } from '../feedback.service';

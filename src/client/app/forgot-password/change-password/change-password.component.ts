@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { ChangeForgottenPasswordViewModel } from '@shared/view-models/forgot-password/change-forgotten-password.view-model';
-import { FormGroupBuilder } from '../../../../shared/validation/form-group-builder';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';

@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
-import { FormGroupBuilder } from '../../../shared/validation/form-group-builder';
-import { ServerValidator, Validators } from '../../../shared/validation/validators';
+import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { ServerValidator, Validators } from '@shared/validation/validators';
 import { FeedbackViewModel } from '@shared/view-models/feedback/feedback.view-model';
 import { InviteViewModel } from '@shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '@shared/view-models/newsletter/newsletter-member.view-model';
+import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../shared/base-controller';
 import { generalService } from './general.service';
 
