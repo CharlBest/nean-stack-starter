@@ -7,24 +7,51 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class NetworkStatusService {
 
-  isOffline$: Subject<boolean> = new BehaviorSubject<boolean>(false);
+  isOffline$: Subject<boolean> = new BehaviorSubject<boolean>(navigator.onLine);
+  isConnectionFast$: Subject<boolean> = new BehaviorSubject<boolean>(true);
 
   constructor(private snackBar: MatSnackBar) { }
 
   init() {
     window.onload = () => {
-      const handleNetworkChange = () => {
-        if (!navigator.onLine) {
-          this.snackBar.open('Offline');
-        }
-
-        this.isOffline$.next(!navigator.onLine);
-      };
-
-      handleNetworkChange();
-
-      window.addEventListener('online', handleNetworkChange);
-      window.addEventListener('offline', handleNetworkChange);
+      this.handleOnlineStatus();
+      this.handleConnectionSpeed();
     };
+  }
+
+  handleOnlineStatus() {
+    const onNetworkChange = () => {
+      if (!navigator.onLine) {
+        this.snackBar.open('Offline');
+      }
+
+      this.isOffline$.next(!navigator.onLine);
+    };
+
+    onNetworkChange();
+
+    window.addEventListener('online', onNetworkChange);
+    window.addEventListener('offline', onNetworkChange);
+  }
+
+  // TODO: use to blur images when connection is slow or lazy load more things
+  handleConnectionSpeed() {
+    const onConnectionChange = () => {
+      const { effectiveType } = (navigator as any).connection;
+      let isFast = true;
+
+      if (/\slow-2g|2g|3g/.test(effectiveType)) {
+        isFast = false;
+        this.snackBar.open('Slow connection');
+      }
+
+      this.isConnectionFast$.next(isFast);
+    };
+
+    onConnectionChange();
+
+    if ((navigator as any).connection) {
+      (navigator as any).connection.addEventListener('change', onConnectionChange);
+    }
   }
 }
