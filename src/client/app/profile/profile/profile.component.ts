@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
@@ -21,7 +21,7 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileComponent implements OnInit {
 
-  @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<any>;
+  @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<ElementRef>;
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
   user: UserProfileViewModel;
   isProcessing = true;
@@ -123,8 +123,7 @@ export class ProfileComponent implements OnInit {
       const sendingBar = this.snackBar.open('Sending failed', 'Resend', {
         duration: 5000
       });
-      await sendingBar.onAction().toPromise();
-      this.resendEmailVerificationLink();
+      await sendingBar.onAction().subscribe(() => this.resendEmailVerificationLink());
     }
   }
 

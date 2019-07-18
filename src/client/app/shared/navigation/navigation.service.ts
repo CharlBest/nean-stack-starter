@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { ElementRef, Injectable, TemplateRef } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -6,5 +6,5 @@ import { Injectable, TemplateRef } from '@angular/core';
 export class NavigationService {
     backRouterPath: string | null;
     previousUrl = '';
-    navigationPlaceholderTemplate: TemplateRef<any> | null;
+    navigationPlaceholderTemplate: TemplateRef<ElementRef> | null;
 }
