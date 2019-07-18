@@ -4,6 +4,11 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoggerService } from './logger.service';
 
+class CustomWindow extends Window {
+  ga: any;
+  appType: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +36,7 @@ export class GoogleAnalyticsService implements OnDestroy {
   // These gyrations are necessary to make the service e2e testable
   // and to disable ga tracking during e2e tests.
   private initializeGa() {
-    const ga = (window as any).ga;
+    const ga = (window as CustomWindow).ga;
     if (ga) {
       // Queue commands until GA analytics script has loaded.
       const gaQueue: any[][] = [];
@@ -40,8 +45,8 @@ export class GoogleAnalyticsService implements OnDestroy {
       // Then send queued commands to either real or e2e test ga();
       // after waiting to allow possible e2e test to replace global ga function
       ga(() => setTimeout(() => {
-        // this.logger.log('GA fn:', (window as any).toString());
-        this.ga = (window as any).ga;
+        // this.logger.log('GA fn:', (window as CustomWindow).toString());
+        this.ga = (window as CustomWindow).ga;
         gaQueue.forEach((command) => this.ga.apply(null, command));
       }, this.initializeDelay));
 
@@ -63,11 +68,11 @@ export class GoogleAnalyticsService implements OnDestroy {
   init() {
     this.initializeGa();
 
-    if ((window as any).appType === 'web') {
+    if ((window as CustomWindow).appType === 'web') {
       this.ga('create', environment.googleAnalytics.web, 'auto');
-    } else if ((window as any).appType === 'ios') {
+    } else if ((window as CustomWindow).appType === 'ios') {
       this.ga('create', environment.googleAnalytics.ios, 'auto');
-    } else if ((window as any).appType === 'chromeextension') {
+    } else if ((window as CustomWindow).appType === 'chromeextension') {
       this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
     }
 

@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { BreakpointService } from '../../services/breakpoint.service';
@@ -10,7 +10,7 @@ import { PreventBackNavigationService } from '../../services/prevent-back-naviga
     styleUrls: ['./context-menu.component.scss']
 })
 export class ContextMenuComponent {
-    @ViewChild('bottomSheetContextMenu', { static: true }) bottomSheetContextMenu: TemplateRef<any>;
+    @ViewChild('bottomSheetContextMenu', { static: true }) bottomSheetContextMenu: TemplateRef<ElementRef>;
     @ViewChild('contextMenuTrigger', { static: true }) contextMenuTrigger: MatMenuTrigger;
 
     constructor(public bottomSheet: MatBottomSheet,

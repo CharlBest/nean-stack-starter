@@ -18,7 +18,7 @@ export class ShareService {
     }
 
     hasWebShareApi() {
-        if ((navigator as any).share) {
+        if ((navigator as any /*Navigator*/).share) {
             return true;
         } else {
             return false;
@@ -27,7 +27,7 @@ export class ShareService {
 
     webShare(title: string, fullUrl: string): boolean {
         if (this.hasWebShareApi()) {
-            (navigator as any).share({ title, text: '', url: fullUrl });
+            (navigator as any /*Navigator*/).share({ title, text: '', url: fullUrl });
             return true;
         } else {
             return false;

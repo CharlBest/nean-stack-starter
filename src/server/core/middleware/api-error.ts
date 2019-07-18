@@ -3,16 +3,18 @@ import { NextFunction, Request, Response } from 'express';
 export class ApiError {
     // catch 404 and forward to error handler
     static NotFound(req: Request, res: Response, next: NextFunction) {
-        const err: any = new Error('Not Found');
-        err.status = 404;
+        const err: Error = new Error('Not Found');
+        res.status(404);
         next(err);
     }
 
     // error handlers
     // development error handler
     // will print stacktrace
-    static InternalServerDev(err: any, req: Request, res: Response, next: NextFunction) {
-        res.status(err.status || 400);
+    static InternalServerDev(err: Error, req: Request, res: Response, next: NextFunction) {
+        if (!res.status) {
+            res.status(400);
+        }
         res.send({
             message: err.message,
             error: {
@@ -25,8 +27,10 @@ export class ApiError {
         });
     }
 
-    static InternalServerProd(err: any, req: Request, res: Response, next: NextFunction) {
-        res.status(err.status || 400);
+    static InternalServerProd(err: Error, req: Request, res: Response, next: NextFunction) {
+        if (!res.status) {
+            res.status(400);
+        }
         res.send({
             // Hide this from the public as it can potentially expose sensitive data
             // message: err.message,

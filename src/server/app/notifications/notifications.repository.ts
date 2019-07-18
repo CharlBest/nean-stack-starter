@@ -1,9 +1,10 @@
-import { Response } from 'express';
+import { PushSubscriptionValues } from '@shared/models/user/user.model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
 import { NotificationsViewModel } from '@shared/view-models/user/notifications.view-model';
 import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
 import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
+import { Response } from 'express';
 import { Database } from '../../core/database';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { BaseRepository } from '../shared/base-repository';
@@ -129,13 +130,13 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = (result as any).records.map((record: any) => {
+        const model = result.records.map(record => {
             const viewModel = new PushNotificationModel();
 
             const pushSubscriptions = record.get('pushSubscriptions');
             if (pushSubscriptions && pushSubscriptions.length > 0) {
                 viewModel.pushSubscriptions = pushSubscriptions
-                    .map((pushNotification: any) => PushSubscriptionViewModel.createFromArray(pushNotification));
+                    .map((pushNotification: PushSubscriptionValues) => PushSubscriptionViewModel.createFromArray(pushNotification));
             }
 
             viewModel.body = record.get('description');

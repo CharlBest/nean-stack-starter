@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { app, storage } from 'firebase/app';
+import { app, FirebaseError, storage } from 'firebase/app';
 import 'firebase/storage';
 import { v4 as randomStringGenerator } from 'uuid';
 import { environment } from '../../../environments/environment';
@@ -29,9 +29,9 @@ export class FirebaseStorageService {
                     case storage.TaskState.RUNNING:
                         break;
                 }
-            }, (error) => {
+            }, (error: FirebaseError) => {
                 // https://firebase.google.com/docs/storage/web/handle-errors
-                switch ((error as any).code) {
+                switch (error.code) {
                     case 'storage/unauthorized':
                         break;
 

@@ -37,6 +37,6 @@ export class PushNotificationService {
     // will override any other devices that are registered to receive push notifications
     // The toggle state also doesn't represent that it is the current registered device
     // but only that this user has permitted the use of push notifcations
-    return (Notification as any).permission === 'granted';
+    return (Notification as any /*Notification*/).permission === 'granted';
   }
 }

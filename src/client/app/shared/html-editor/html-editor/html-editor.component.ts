@@ -124,7 +124,7 @@ export class HTMLEditorComponent implements AfterViewInit {
 
             // Workaround for Quill editor focussing on input after pasteHTML (HACK)
             if (document.activeElement) {
-                (document.activeElement as any).blur();
+                (document.activeElement as HTMLBodyElement).blur();
                 window.scrollTo(0, 0);
             }
         }
