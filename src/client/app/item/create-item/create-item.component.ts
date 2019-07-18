@@ -4,6 +4,7 @@ import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { PushNotificationService } from '../../shared/services/push-notification.service';
 import { ItemFormComponent } from '../item-form/item-form.component';
 import { ItemService } from '../item.service';
@@ -22,7 +23,8 @@ export class CreateItemComponent implements OnInit {
     private router: Router,
     private pushNotificationService: PushNotificationService,
     private dialogService: DialogService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     const itemViewModel = new ItemViewModel();
@@ -46,8 +48,13 @@ export class CreateItemComponent implements OnInit {
     try {
       const response = await this.itemService.create(viewModel);
       if (response) {
+        // TODO: should actually go to previous page before this.
+        this.navigationService.backRouterPath = '/';
+
         if (!this.pushNotificationService.isPushNotificationPermissionGrandted()) {
           this.askForNotificationPermission(response);
+        } else {
+          this.router.navigate(['/item/comments', response.uId]);
         }
       }
     } catch (error) {
