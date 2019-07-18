@@ -30,7 +30,9 @@ export class CreateItemComponent implements OnInit {
     itemViewModel.description = this.route.snapshot.queryParams.text;
     // const url = this.route.snapshot.queryParams.url;
 
-    this.itemForm.item = itemViewModel;
+    if (itemViewModel.title || itemViewModel.description) {
+      this.itemForm.item = itemViewModel;
+    }
   }
 
   async onSubmit() {
