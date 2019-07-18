@@ -89,7 +89,8 @@
         </div>
 
         <div routerLink="/item/comments/{{item.uId}}"
-            class="body">
+            class="body"
+            [class.cursor-pointer]="!isViewingComments">
             <h3>{{item.title}}</h3>
 
             <p #description>{{item.description}}</p>
