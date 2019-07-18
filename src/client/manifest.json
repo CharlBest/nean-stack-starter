@@ -20,25 +20,13 @@
   "theme_color": "#673ab7",
   "description": "NEAN stack starter",
   "share_target": {
-    "action": "create/item",
-    "enctype": "multipart/form-data",
-    "method": "POST",
+    "action": "/create/item/",
+    "enctype": "application/x-www-form-urlencoded",
+    "method": "GET",
     "params": {
       "title": "title",
       "text": "text",
-      "url": "url",
-      "files": [
-        {
-          "name": "externalMedia",
-          "accept": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "video/quicktime",
-            "video/mp4"
-          ]
-        }
-      ]
+      "url": "url"
     }
   }
 }

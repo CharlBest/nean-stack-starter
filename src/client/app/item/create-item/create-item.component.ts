@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -12,7 +12,7 @@ import { ItemService } from '../item.service';
   templateUrl: './create-item.component.html',
   styleUrls: ['./create-item.component.scss']
 })
-export class CreateItemComponent {
+export class CreateItemComponent implements OnInit {
 
   @ViewChild('itemForm', { static: true }) itemForm: ItemFormComponent;
   isProcessing = false;
@@ -21,7 +21,17 @@ export class CreateItemComponent {
     private itemService: ItemService,
     private router: Router,
     private pushNotificationService: PushNotificationService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+    private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    const itemViewModel = new ItemViewModel();
+    itemViewModel.title = this.route.snapshot.queryParams.title;
+    itemViewModel.description = this.route.snapshot.queryParams.text;
+    // const url = this.route.snapshot.queryParams.url;
+
+    this.itemForm.item = itemViewModel;
+  }
 
   async onSubmit() {
     this.isProcessing = true;
