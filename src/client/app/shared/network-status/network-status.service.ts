@@ -7,7 +7,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class NetworkStatusService {
 
-  isOffline$: Subject<boolean> = new BehaviorSubject<boolean>(navigator.onLine);
+  isOffline$: Subject<boolean> = new BehaviorSubject<boolean>(false);
   isConnectionFast$: Subject<boolean> = new BehaviorSubject<boolean>(true);
 
   constructor(private snackBar: MatSnackBar) { }
