@@ -19,8 +19,7 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
-          "/*.woff2"
+          "/assets/**"
         ]
       }
     }
