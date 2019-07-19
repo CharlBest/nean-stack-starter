@@ -114,4 +114,8 @@ export class UserComponent implements OnInit {
       this.getItems();
     }
   }
+
+  trackByFn(index: number, item: ItemViewModel) {
+    return item.id;
+  }
 }

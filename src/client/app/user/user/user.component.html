@@ -28,7 +28,7 @@
     <app-infinite-scroll (scrolled)="onScroll()"
         [isProcessing]="isProcessingItems"
         *ngIf="user">
-        <app-item *ngFor="let item of items"
+        <app-item *ngFor="let item of items; trackBy: trackByFn"
             [item]="item"></app-item>
     </app-infinite-scroll>
 

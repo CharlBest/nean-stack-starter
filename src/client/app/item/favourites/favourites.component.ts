@@ -44,4 +44,8 @@ export class FavouritesComponent implements OnInit {
       this.getFavourites();
     }
   }
+
+  trackByFn(index: number, item: ItemViewModel) {
+    return item.id;
+  }
 }

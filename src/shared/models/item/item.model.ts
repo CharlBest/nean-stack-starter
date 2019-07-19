@@ -1,4 +1,5 @@
 export class ItemModel {
+    id: number;
     uId: string;
     title: string;
     description: string;

@@ -76,4 +76,8 @@ export class SearchComponent implements OnInit {
       this.search(false);
     }
   }
+
+  trackByFn(index: number, item: ItemViewModel) {
+    return item.id;
+  }
 }

@@ -93,4 +93,8 @@ export class CommentsComponent implements OnInit {
       this.getComments();
     }
   }
+
+  trackByFn(index: number, comment: CommentViewModel) {
+    return comment.id;
+  }
 }

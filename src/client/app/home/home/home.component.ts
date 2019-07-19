@@ -54,4 +54,8 @@ export class HomeComponent implements OnInit {
       this.getItems();
     }
   }
+
+  trackByFn(index: number, item: ItemViewModel) {
+    return item.id;
+  }
 }
