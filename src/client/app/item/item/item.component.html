@@ -1,4 +1,5 @@
-<mat-card *ngIf="!isProcessing && item">
+<mat-card *ngIf="!isProcessing && item"
+    [appRightClickContextMenu]="contextMenu">
     <mat-card-content>
         <div class="header">
             <button routerLink="/user/{{item?.user?.id}}"

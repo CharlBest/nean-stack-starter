@@ -9,7 +9,8 @@
 </ng-template>
 
 <div [hidden]="isProcessing"
-  *ngIf="user">
+  *ngIf="user"
+  [appRightClickContextMenu]="contextMenu">
   <mat-card>
     <mat-card-title class="title">
       {{user.username}}

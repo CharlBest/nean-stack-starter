@@ -1,5 +1,5 @@
 <div [hidden]="isProcessing || !user">
-    <mat-card>
+    <mat-card [appRightClickContextMenu]="contextMenu">
         <mat-card-title class="title">
             {{user?.username}}
 

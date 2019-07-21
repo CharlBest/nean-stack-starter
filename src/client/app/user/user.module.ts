@@ -9,6 +9,7 @@ import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { MediaModule } from '../shared/media/media.module';
+import { RightClickContextMenuModule } from '../shared/right-click-context-menu/right-click-context-menu.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user/user.component';
@@ -30,6 +31,7 @@ const materialModules = [
     IconsModule,
     InfiniteScrollModule,
     MediaModule,
+    RightClickContextMenuModule,
     ...materialModules
   ],
   declarations: [

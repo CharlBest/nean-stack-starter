@@ -1,5 +1,6 @@
 <div [hidden]="isProcessing"
-    class="container">
+    class="container"
+    [appRightClickContextMenu]="contextMenu">
     <span routerLink="/user/{{comment?.user?.id}}">
         <div *ngIf="comment.user?.avatarUrl && comment.user?.avatarUrl !== ''; else defaultAvatar"
             mat-card-avatar
