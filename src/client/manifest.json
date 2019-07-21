@@ -20,7 +20,7 @@
   "theme_color": "#673ab7",
   "description": "NEAN stack starter",
   "share_target": {
-    "action": "/create/item/",
+    "action": "/item/create/",
     "enctype": "application/x-www-form-urlencoded",
     "method": "GET",
     "params": {
