@@ -3,7 +3,7 @@
     <mat-card>
         <mat-card-content>
             <button mat-stroked-button
-                [appTutorial]="tutorialTypeEnum.SIGN_UP"
+                appTutorial="SIGN_UP"
                 color="accent"
                 type="button"
                 routerLink="/create-user">Sign up</button>
@@ -47,7 +47,7 @@
                 [disabled]="!formGroup.valid"
                 (click)="onSubmit()">Log in</button>
             <button mat-stroked-button
-                [appTutorial]="tutorialTypeEnum.FORGOT_PASSWORD"
+                appTutorial="FORGOT_PASSWORD"
                 type="button"
                 routerLink="/forgot-password">Forgot password</button>
         </mat-card-actions>

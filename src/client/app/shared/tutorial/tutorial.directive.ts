@@ -6,7 +6,7 @@ import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
     selector: '[appTutorial]'
 })
 export class TutorialDirective implements OnInit {
-    @Input() appTutorial: TutorialType;
+    @Input() appTutorial: keyof typeof TutorialType;
     @Input() tutorialBackgroundColor = 'none';
 
     private tutorialInUrl: TutorialType | null;
@@ -46,12 +46,12 @@ export class TutorialDirective implements OnInit {
         const element = (this.elementRef.nativeElement as HTMLElement);
 
         // Hidden tutorial item
-        if (this.tutorialInUrl !== this.appTutorial) {
+        if (this.tutorialInUrl !== TutorialType[this.appTutorial]) {
             this.reset();
         }
 
         // Shown tutorial item
-        if (this.tutorialInUrl === this.appTutorial) {
+        if (this.tutorialInUrl === TutorialType[this.appTutorial]) {
             element.style.zIndex = '11';
             element.style.backgroundColor = this.tutorialBackgroundColor;
             window.scroll(0, element.offsetTop);

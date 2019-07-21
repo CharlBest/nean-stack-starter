@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
   user: UserProfileViewModel;
   isProcessing = true;
-  tutorialTypeEnum = TutorialType;
 
   constructor(private profileService: ProfileService,
     private shareDialogService: ShareDialogService,
