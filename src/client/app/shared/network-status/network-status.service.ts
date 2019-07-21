@@ -40,7 +40,8 @@ export class NetworkStatusService {
       const { effectiveType } = (navigator as any).connection;
       let isFast = true;
 
-      if (/\slow-2g|2g|3g/.test(effectiveType)) {
+      // Add 3g to test if 3G is considered to be slow
+      if (/\slow-2g|2g/.test(effectiveType)) {
         isFast = false;
         this.snackBar.open('Slow connection');
       }
