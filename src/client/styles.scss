@@ -225,3 +225,14 @@ body {
 .dark-theme .stripe-element {
 	background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
+// Angular Material bug. Workaround:
+// Remove when fixed: https://github.com/angular/components/issues/16546
+.mat-card-actions .mat-stroked-button {
+	margin: 0 8px;
+}
+
+.mat-card-actions .mat-stroked-button:first-child {
+	margin-left: 0;
+	margin-right: 0;
+}
