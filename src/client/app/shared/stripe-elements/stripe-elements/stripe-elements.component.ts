@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { ThemeService } from '../../services/theme.service';
 import { CardBrandType } from '../card-brand.enum';
 import { ElementsWrapper, ElementWrapper } from '../stripe-element.model';
@@ -43,17 +42,6 @@ export class StripeElementsComponent implements OnInit {
     }
 
     elementsOnInit() {
-        // Initialize elements
-        const elements = this.stripeElementsService.stripe.elements({
-            locale: 'en',
-            fonts: [
-                {
-                    src: environment.production ? `url("${environment.httpDomain}/assets/open-sans-v15-latin-regular.woff2")` : '',
-                    family: 'Open Sans'
-                }
-            ]
-        });
-
         const elementStyles = {
             base: {
                 color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255)' : 'rgba(0, 0, 0, 0.87)',
@@ -64,19 +52,19 @@ export class StripeElementsComponent implements OnInit {
         };
 
         // Card number
-        this.elementsWrapper.cardNumber.element = elements.create(this.elementsWrapper.cardNumber.type, {
+        this.elementsWrapper.cardNumber.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardNumber.type, {
             placeholder: 'Card Number *',
             style: elementStyles
         });
 
         // Card expiry
-        this.elementsWrapper.cardExpiry.element = elements.create(this.elementsWrapper.cardExpiry.type, {
+        this.elementsWrapper.cardExpiry.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardExpiry.type, {
             placeholder: 'MM / YY *',
             style: elementStyles
         });
 
         // Card CVC
-        this.elementsWrapper.cardCvc.element = elements.create(this.elementsWrapper.cardCvc.type, {
+        this.elementsWrapper.cardCvc.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardCvc.type, {
             placeholder: 'CVC *',
             style: elementStyles
         });

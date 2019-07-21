@@ -9,7 +9,8 @@ declare var Stripe: any;
 export class StripeElementsService {
 
     @Output() stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
-    stripeInstance: any;
+    stripeInstance: any; /*stripe.Stripe*/
+    elementsInstance: any;
 
     constructor() {
         this.initializeStripe();
@@ -36,6 +37,7 @@ export class StripeElementsService {
             node.onload = () => {
                 if (!this.stripeInstance) {
                     this.stripeInstance = Stripe(environment.stripe.publishableKey);
+                    this.initializeElements();
                     this.stripeInitialized.emit(true);
                 }
             };
@@ -43,5 +45,17 @@ export class StripeElementsService {
         } else {
             this.stripeInitialized.emit(true);
         }
+    }
+
+    initializeElements() {
+        this.elementsInstance = this.stripe.elements({
+            locale: 'en',
+            fonts: [
+                {
+                    src: environment.production ? `url("${environment.httpDomain}/assets/open-sans-v15-latin-regular.woff2")` : '',
+                    family: 'Open Sans'
+                }
+            ]
+        });
     }
 }

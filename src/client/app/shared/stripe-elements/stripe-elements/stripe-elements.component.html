@@ -1,5 +1,6 @@
 <div [hidden]="elementsWrapper.isRendering"
     class="container">
+    <!-- Card Number -->
     <div class="mat-form-field card-number-container">
         <div class="stripe-element"
             (click)="elementsWrapper.cardNumber.element.focus()">
@@ -11,12 +12,14 @@
         <div class="mat-error">{{elementsWrapper.cardNumber.error}}</div>
     </div>
     <br>
+    <!-- Expiry Date -->
     <div class="mat-form-field card-expiry-container">
         <div #cardExpiry
             class="stripe-element"></div>
         <div class="mat-error">{{elementsWrapper.cardExpiry.error}}</div>
     </div>
     <br>
+    <!-- CVV -->
     <div class="mat-form-field card-cvc-container">
         <div #cardCvc
             class="stripe-element"></div>

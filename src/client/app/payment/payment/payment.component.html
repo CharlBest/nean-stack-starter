@@ -26,6 +26,10 @@
 
             <br>
 
+            <app-stripe-payment-request-button #stripePaymentRequestButton
+                (paymentComplete)="paymentRequestButtonComplete($event)"
+                [amount]="formGroup.controls['amount'].value"></app-stripe-payment-request-button>
+
             <app-stripe-elements
                 [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
                 #stripeElements

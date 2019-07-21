@@ -142,4 +142,10 @@ export class PaymentComponent implements OnInit {
 
         return true;
     }
+
+    paymentRequestButtonComplete(data: any) {
+        if (data) {
+            alert(JSON.stringify(data));
+        }
+    }
 }
