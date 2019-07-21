@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ItemModule } from '../item/item.module';
 import { GitHubModule } from '../shared/github/github.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
@@ -17,6 +18,7 @@ const materialModules = [
   MatCardModule,
   MatProgressSpinnerModule,
   MatExpansionModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

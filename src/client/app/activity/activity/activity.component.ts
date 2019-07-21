@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NewSignUpWebSocketModel } from '../../../../shared/models/web-socket/new-sign-up-web-socket.model';
 import { NotificationService } from '../../shared/services/notification.service';
 import { WebSocketService } from '../../shared/services/websocket.service';
 
@@ -17,7 +18,9 @@ export class ActivityComponent {
   }
 
   manualWebSocketBroadcast() {
-    this.webSocketService.send({ message: 'hello from somewhere' });
+    const model = new NewSignUpWebSocketModel();
+    model.message = 'hello from somewhere';
+    this.webSocketService.send(model);
     this.snackBar.open('Sent');
   }
 }

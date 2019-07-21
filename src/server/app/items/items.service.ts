@@ -1,10 +1,13 @@
 import { CommentModel } from '@shared/models/item/comment.model';
+import { NewItemWebSocketModel } from '@shared/models/web-socket/new-item-web-socket.model';
+import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { MAX_MEDIA_UPLOADS } from '@shared/validation/validators';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import { pushNotificationBroker } from '../../communication/push-notification-broker';
+import { webSocketServer } from '../../core/middleware/web-socket-server';
 import { logger } from '../../core/utils/logger';
 import { BaseService } from '../shared/base-service';
 import { itemsRepository } from './items.repository';
@@ -29,6 +32,11 @@ class ItemsService extends BaseService {
             logger.warn(error, [userId, uId, title, description, media]);
             throw new Error(error);
         }
+
+        // Notify everyone there is another sign up
+        const model = new NewItemWebSocketModel();
+        model.type = WebSocketType.NEW_ITEM;
+        webSocketServer.send(model);
 
         return result;
     }

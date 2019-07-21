@@ -1,4 +1,5 @@
-import { SocketDataModel } from '@shared/models/web-socket/socket-data.model';
+import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { ServerValidator } from '@shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
@@ -12,7 +13,6 @@ import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
-import * as WebSocket from 'ws';
 import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
@@ -75,17 +75,10 @@ class UsersService extends BaseService {
             });
 
             // Notify everyone there is another sign up
-            // TODO: This should be extracted into a single place where it can be called from
-            const wss = webSocketServer.getSocketServer();
-            const dataModel = new SocketDataModel();
-            dataModel.message = 'New sign up just now';
-            const payload = JSON.stringify(dataModel);
-
-            wss.clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(payload);
-                }
-            });
+            const model = new NewSignUpWebSocketModel();
+            model.message = 'New sign up just now';
+            model.type = WebSocketType.NEW_SIGN_UP;
+            webSocketServer.send(model);
         } else {
             if (validation.usernameExist) {
                 ServerValidator.addFormError(res, 'username', { exists: true });
