@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-title>Two Factor Authentication</mat-card-title>
+    <mat-card-content>
+        <div class="header">
+            <span>Google Authenticator <a
+                    href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                    target="_blank"
+                    rel="noopener"
+                    class="download-link">(download)</a>
+            </span>
+            <mat-slide-toggle color="primary"></mat-slide-toggle>
+        </div>
+
+        <canvas #canvas></canvas>
+
+        <div>{{secret}}</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-stroked-button
+            type="button"
+            (click)="revealCode()">Reveal Code</button>
+    </mat-card-actions>
+</mat-card>

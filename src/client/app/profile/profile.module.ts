@@ -32,6 +32,7 @@ import { PaymentHistoryComponent } from './payment-history/payment-history.compo
 import { PaymentsComponent } from './payments/payments.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 import { UpdateBioComponent } from './update-bio/update-bio.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 
@@ -79,6 +80,7 @@ const materialModules = [
     CreateCardComponent,
     NotificationsComponent,
     LanguageComponent,
+    TwoFactorAuthenticationComponent,
   ]
 })
 export class ProfileModule { }
