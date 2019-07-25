@@ -11,74 +11,94 @@
                     Zip: Any 5 degit number"></app-icon-info>
             </div>
 
-            <mat-form-field appearance="fill"
-                *ngIf="isAuthenticated && paymentCards?.length > 0">
-                <mat-label>Cards</mat-label>
-                <mat-select formControlName="cardUId"
-                    [value]="paymentCards[0]?.uId">
-                    <mat-option *ngFor="let card of paymentCards"
-                        [value]="card.uId">
-                        **** {{card.last4}}
-                    </mat-option>
-                    <mat-option value="new">Use new card</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <br>
-
-            <app-stripe-payment-request-button #stripePaymentRequestButton
-                (paymentComplete)="paymentRequestButtonComplete($event)"
-                [amount]="formGroup.controls['amount'].value"></app-stripe-payment-request-button>
-
-            <app-stripe-elements
-                [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
-                #stripeElements
-                (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
-
             <mat-form-field appearance="fill">
                 <input matInput
                     floatLabel="never"
                     formControlName="amount"
                     placeholder="Amount in euros"
                     type="number"
-                    (keypress)="$event.charCode >= 48 && $event.charCode <= 57">
+                    (keypress)="$event.charCode >= 48 && $event.charCode <= 57"
+                    required>
                 <span matPrefix>€&nbsp;</span>
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['amount']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 
-            <ng-container *ngIf="!isAuthenticated">
+            <br>
+            <br>
+
+            <mat-chip-list class="payment-options-list">
+                <mat-chip [selected]="useCardPayment"
+                    [color]="useCardPayment ? 'primary' : ''"
+                    (click)="selectPaymentType(true)">Card</mat-chip>
+                <mat-chip [selected]="!useCardPayment"
+                    [color]="!useCardPayment ? 'primary' : ''"
+                    (click)="selectPaymentType(false)"
+                    [disabled]="stripePaymentRequestButton.canMakePayment === null || !stripePaymentRequestButton.canMakePayment">
+                    Mobile
+                </mat-chip>
+                <mat-chip [disabled]="true">PayPal</mat-chip>
+            </mat-chip-list>
+
+            <!-- Card Payment -->
+            <div [hidden]="!useCardPayment">
+
                 <br>
 
-                <mat-form-field appearance="fill">
-                    <input matInput
-                        formControlName="email"
-                        placeholder="Email"
-                        type="email"
-                        [required]="true">
-                    <mat-error>
-                        <app-form-errors [control]="formGroup.controls['email']"></app-form-errors>
-                    </mat-error>
+                <mat-form-field appearance="fill"
+                    *ngIf="isAuthenticated && paymentCards?.length > 0">
+                    <mat-label>Cards</mat-label>
+                    <mat-select formControlName="cardUId"
+                        [value]="paymentCards[0]?.uId">
+                        <mat-option *ngFor="let card of paymentCards"
+                            [value]="card.uId">
+                            **** {{card.last4}}
+                        </mat-option>
+                        <mat-option value="new">Use new card</mat-option>
+                    </mat-select>
                 </mat-form-field>
-            </ng-container>
-
-            <ng-container
-                *ngIf="isAuthenticated && (formGroup.controls['cardUId'].value === null || formGroup.controls['cardUId'].value === 'new')">
-                <br>
-                <br>
-
-                <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
 
                 <br>
-            </ng-container>
+
+                <app-stripe-payment-request-button #stripePaymentRequestButton
+                    (paymentComplete)="paymentRequestButtonComplete($event)"
+                    [amount]="formGroup.controls['amount'].value"></app-stripe-payment-request-button>
+
+                <app-stripe-elements
+                    [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
+                    #stripeElements
+                    (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
+
+                <ng-container *ngIf="!isAuthenticated">
+                    <mat-form-field appearance="fill">
+                        <input matInput
+                            formControlName="email"
+                            placeholder="Email"
+                            type="email"
+                            [required]="true">
+                        <mat-error>
+                            <app-form-errors [control]="formGroup.controls['email']"></app-form-errors>
+                        </mat-error>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container
+                    *ngIf="isAuthenticated && (formGroup.controls['cardUId'].value === null || formGroup.controls['cardUId'].value === 'new')">
+                    <br>
+                    <br>
+
+                    <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
+
+                    <br>
+                </ng-container>
+
+            </div>
 
             <div *ngIf="formErrorsService.globalErrors?.anonymousPaymentToken?.required || formErrorsService.globalErrors?.userPaymentToken?.required"
                 class="mat-error">
                 Token is required
             </div>
-
-            <br>
         </mat-card-content>
         <mat-card-actions>
             <button mat-stroked-button

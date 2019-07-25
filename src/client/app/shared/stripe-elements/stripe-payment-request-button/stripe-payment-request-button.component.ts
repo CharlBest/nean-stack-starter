@@ -10,9 +10,10 @@ import { StripeElementsService } from '../stripe-elements.service';
 export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
 
     @Input() amount: number;
+    @Input() showButton = false;
     @Output() paymentComplete: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
-
+    canMakePayment = null;
     showPaymentRequestButton = false;
     paymentRequestButtonInstance: any;
     paymentRequestButtonOptions = {
@@ -44,14 +45,27 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.amount && this.paymentRequestButtonInstance) {
             this.paymentRequestButtonOptions.total.amount = this.amount;
-            this.paymentRequestButtonInstance.update(this.paymentRequestButtonOptions);
+            const newOptions = {
+                currency: this.paymentRequestButtonOptions.currency,
+                total: {
+                    label: this.paymentRequestButtonOptions.total.label,
+                    amount: this.paymentRequestButtonOptions.total.amount,
+                },
+            };
+            this.paymentRequestButtonInstance.update(newOptions);
         }
     }
 
-    initialize() {
+    async initialize() {
         this.paymentRequestButtonInstance = this.stripeElementsService.stripe.paymentRequest(this.paymentRequestButtonOptions);
+        // Check the availability of the Payment Request API first.
+        this.canMakePayment = await this.paymentRequestButtonInstance.canMakePayment();
 
-        this.createAndMountButton();
+        if (this.showButton && this.canMakePayment) {
+            this.createAndMountButton();
+        } else {
+            // TODO: payment button not available
+        }
 
         this.paymentRequestButtonInstance.on('token', (event: any) => this.paymentComplete.emit(event));
     }
@@ -68,15 +82,11 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
             },
         });
 
-        (async () => {
-            // Check the availability of the Payment Request API first.
-            const result = await this.paymentRequestButtonInstance.canMakePayment();
-            if (result) {
-                element.mount(this.paymentRequestButton.nativeElement);
-                this.showPaymentRequestButton = true;
-            } else {
-                // TODO: payment button not available
-            }
-        })();
+        element.mount(this.paymentRequestButton.nativeElement);
+        this.showPaymentRequestButton = true;
+    }
+
+    activatePaymentRequestButton() {
+        this.paymentRequestButtonInstance.show();
     }
 }

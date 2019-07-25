@@ -13,3 +13,8 @@
 		color: var(--primary-color);
 	}
 }
+
+.payment-options-list mat-chip {
+	cursor: pointer;
+	user-select: none;
+}

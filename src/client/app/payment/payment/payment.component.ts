@@ -8,6 +8,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-elements/stripe-elements.component';
+import { StripePaymentRequestButtonComponent } from '../../shared/stripe-elements/stripe-payment-request-button/stripe-payment-request-button.component';
 import { PaymentService } from '../payment.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { PaymentService } from '../payment.service';
     styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
+    @ViewChild('stripePaymentRequestButton', { static: true }) stripePaymentRequestButton: StripePaymentRequestButtonComponent;
     @ViewChild('stripeElements', { static: true }) stripeElementsComponent: StripeElementsComponent;
 
     isAuthenticated: boolean = this.authService.hasToken();
@@ -23,6 +25,7 @@ export class PaymentComponent implements OnInit {
     formGroup: FormGroup;
     paymentSuccess = false;
     paymentCards: CardModel[];
+    useCardPayment = true;
 
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
@@ -65,22 +68,26 @@ export class PaymentComponent implements OnInit {
     }
 
     async onSubmit() {
-        this.isProcessing = true;
+        if (this.useCardPayment) {
 
-        if (this.formGroup.controls.cardUId.value === null || this.formGroup.controls.cardUId.value === 'new') {
-            const token = await this.stripeElementsComponent.generateToken();
-            if (token) {
-                this.sendPaymentToServer(token.id);
+            if (this.formGroup.controls.cardUId.value === null || this.formGroup.controls.cardUId.value === 'new') {
+                const token = await this.stripeElementsComponent.generateToken();
+                if (token) {
+                    this.sendPaymentToServer(token.id);
+                } else {
+                    this.dialogService.alert('Invalid card details');
+                }
             } else {
-                this.dialogService.alert('Invalid card details');
-                this.isProcessing = false;
+                this.sendPaymentToServer();
             }
         } else {
-            this.sendPaymentToServer();
+            this.stripePaymentRequestButton.activatePaymentRequestButton();
         }
     }
 
     sendPaymentToServer(token: string | null = null) {
+        this.isProcessing = true;
+
         if (this.isAuthenticated) {
             this.sendViaAuthenticatedUser(token);
         } else {
@@ -124,28 +131,54 @@ export class PaymentComponent implements OnInit {
     }
 
     isFormValid(): boolean {
-        // Form validity (Amount is required)
-        if (!this.formGroup.valid) {
-            return false;
-        }
+        // Card payment
+        if (this.useCardPayment) {
+            // Form validity (Amount is required)
+            if (!this.formGroup.valid) {
+                return false;
+            }
 
-        // Email is requried if anonymous payment
-        if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
-            return false;
-        }
+            // Email is requried if anonymous payment
+            if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
+                return false;
+            }
 
-        // Stripe element valid when adding new card by user
-        if (this.isAuthenticated && !this.stripeElementsComponent.isValid &&
-            (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === 'new')) {
-            return false;
+            // Stripe element valid when adding new card by user
+            if (this.isAuthenticated && !this.stripeElementsComponent.isValid &&
+                (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === 'new')) {
+                return false;
+            }
+        } else {
+            // Mobile payment
+            return !!this.stripePaymentRequestButton.canMakePayment;
         }
 
         return true;
     }
 
-    paymentRequestButtonComplete(data: any) {
-        if (data) {
-            alert(JSON.stringify(data));
+    paymentRequestButtonComplete(event: any) {
+        if (event && event.token && (event.payerEmail || this.isAuthenticated)) {
+            if (!this.isAuthenticated) {
+                this.formGroup.controls.email.setValue(event.payerEmail);
+            }
+
+            this.sendPaymentToServer(event.token.id);
+        } else {
+            this.dialogService.alert('Invalid card details');
+        }
+
+        if (event) {
+            alert(JSON.stringify(event));
+        }
+    }
+
+    selectPaymentType(useCardPayment: boolean) {
+        if (useCardPayment) {
+            this.useCardPayment = true;
+        } else {
+            if (this.stripePaymentRequestButton.canMakePayment !== null && this.stripePaymentRequestButton.canMakePayment) {
+                this.useCardPayment = false;
+            }
         }
     }
 }
