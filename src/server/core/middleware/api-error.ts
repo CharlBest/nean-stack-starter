@@ -12,7 +12,7 @@ export class ApiError {
     // development error handler
     // will print stacktrace
     static InternalServerDev(err: Error, req: Request, res: Response, next: NextFunction) {
-        if (!res.status) {
+        if (!res.statusCode || (res.statusCode && res.statusCode >= 200 && res.statusCode < 300)) {
             res.status(400);
         }
         res.send({
@@ -28,7 +28,7 @@ export class ApiError {
     }
 
     static InternalServerProd(err: Error, req: Request, res: Response, next: NextFunction) {
-        if (!res.status) {
+        if (!res.statusCode || (res.statusCode && res.statusCode >= 200 && res.statusCode < 300)) {
             res.status(400);
         }
         res.send({
