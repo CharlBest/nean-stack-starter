@@ -21,7 +21,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         currency: 'eur',
         total: {
             label: 'Donation',
-            amount: this.amount ? this.amount : 0,
+            amount: this.amount ? this.amount * 100 : 0,
         },
         requestPayerName: false,
         requestPayerEmail: true,
@@ -44,7 +44,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.amount && this.paymentRequestButtonInstance) {
-            this.paymentRequestButtonOptions.total.amount = this.amount;
+            this.paymentRequestButtonOptions.total.amount = this.amount * 100;
             const newOptions = {
                 currency: this.paymentRequestButtonOptions.currency,
                 total: {
