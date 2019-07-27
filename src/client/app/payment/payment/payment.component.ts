@@ -167,10 +167,6 @@ export class PaymentComponent implements OnInit {
         } else {
             this.dialogService.alert('Invalid card details');
         }
-
-        if (event) {
-            alert(JSON.stringify(event));
-        }
     }
 
     selectPaymentType(useCardPayment: boolean) {
