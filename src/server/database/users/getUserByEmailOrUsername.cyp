@@ -6,6 +6,8 @@ RETURN user
 { 
     id: user.id,
     password: user.password,
-    passwordSalt: user.passwordSalt
+    passwordSalt: user.passwordSalt,
+    twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
+    twoFactorAuthenticationSecret: user.twoFactorAuthenticationSecret
 }
 `

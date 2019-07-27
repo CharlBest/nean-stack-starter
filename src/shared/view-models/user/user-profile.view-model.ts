@@ -9,5 +9,6 @@ export class UserProfileViewModel {
     bio: string;
     avatarUrl: string | null | undefined;
     emailVerified: boolean;
+    twoFactorAuthenticationEnabled: boolean;
     paymentCards: CardViewModel[];
 }

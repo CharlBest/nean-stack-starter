@@ -1,5 +1,5 @@
 export interface UserTokenModel {
     i: number; // user ID
-    u: string; // username
-    r: string; // role
+    u?: string; // username
+    r?: string; // role
 }

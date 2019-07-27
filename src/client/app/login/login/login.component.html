@@ -35,6 +35,22 @@
                 </mat-error>
             </mat-form-field>
 
+            <br>
+
+            <mat-form-field appearance="fill"
+                *ngIf="showTwoFactorAuthentication">
+                <mat-label>two factor auth code</mat-label>
+                <input matInput
+                    formControlName="twoFactorAuthenticationCode">
+                <mat-error>
+                    <app-form-errors [control]="formGroup.controls['twoFactorAuthenticationCode']">
+                        <ng-container *ngIf="formGroup.controls['twoFactorAuthenticationCode'].hasError('invalid')">
+                            Code is invalid
+                        </ng-container>
+                    </app-form-errors>
+                </mat-error>
+            </mat-form-field>
+
             <div *ngIf="formErrorsService.globalErrors?.loginInvalidCredentials"
                 class="mat-error">
                 Invalid username or password

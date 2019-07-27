@@ -10,7 +10,9 @@ import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar
 import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
+import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
+import { UpdateTwoFactorAuthenticationViewModel } from '@shared/view-models/user/update-two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { environment } from '../../environments/environment';
 
@@ -73,6 +75,12 @@ export class ProfileService {
 
   updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Promise<void> {
     return this.http.put<void>(`${environment.httpDomain}${NotificationRoutes.updateNotificationPreferences().client()}`, model)
+      .toPromise();
+  }
+
+  updateTwoFactorAuthentication(model: UpdateTwoFactorAuthenticationViewModel): Promise<TwoFactorAuthenticationViewModel> {
+    return this.http
+      .put<TwoFactorAuthenticationViewModel>(`${environment.httpDomain}${UserRoutes.updateTwoFactorAuthentication().client()}`, model)
       .toPromise();
   }
 }

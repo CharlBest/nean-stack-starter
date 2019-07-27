@@ -59,7 +59,8 @@ class UsersRepository extends BaseRepository {
     }
 
     async getUserByEmailOrUsername(res: Response, emailOrUsername: string)
-        : Promise<Pick<UserModel, 'password' | 'passwordSalt' | 'id'> | null> {
+        : Promise<Pick<UserModel, 'password' | 'passwordSalt' | 'id'
+            | 'twoFactorAuthenticationEnabled' | 'twoFactorAuthenticationSecret'> | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.getUserByEmailOrUsername,
             {
                 emailOrUsername
@@ -285,6 +286,25 @@ class UsersRepository extends BaseRepository {
             return true;
         } else {
             return false;
+        }
+    }
+
+    async updateTwoFactorAuthentication(res: Response, userId: number, isEnabled: boolean, generatedSecret: string | null)
+        : Promise<Pick<UserModel, 'email' | 'twoFactorAuthenticationSecret'> | null> {
+        const result = await res.locals.neo4jSession.run(Database.queries.users.updateTwoFactorAuthentication,
+            {
+                userId,
+                isEnabled,
+                generatedSecret
+            }
+        );
+
+        const model = result.records.map(record => record.get('user'));
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
         }
     }
 }

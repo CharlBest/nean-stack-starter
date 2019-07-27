@@ -62,7 +62,7 @@ export class UpdatePasswordComponent implements OnInit {
     viewModel.newPassword = this.formGroup.controls.newPassword.value;
 
     try {
-      const response = await this.profileService.updatePassword(viewModel);
+      await this.profileService.updatePassword(viewModel);
       this.formRef.resetForm();
 
       this.snackBar.dismiss();

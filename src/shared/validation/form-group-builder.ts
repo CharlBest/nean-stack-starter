@@ -18,6 +18,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static feedback(content: string | null = null): FormValidator {
         return {
             content: [content, [
@@ -26,7 +27,9 @@ export class FormGroupBuilder {
             ]]
         };
     }
-    static login(emailOrUsername: string | null = null, password: string | null = null): FormValidator {
+
+    static login(emailOrUsername: string | null = null, password: string | null = null, twoFactorAuthenticationCode: string | null = null)
+        : FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
                 Validators.required
@@ -34,9 +37,13 @@ export class FormGroupBuilder {
             password: [password, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH)
+            ]],
+            twoFactorAuthenticationCode: [twoFactorAuthenticationCode, [
+                Validators.minLength(6)
             ]]
         };
     }
+
     static changeForgottenPassword(password: string | null = null): FormValidator {
         return {
             password: [password, [
@@ -46,6 +53,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static forgotPassword(email: string | null = null): FormValidator {
         return {
             email: [email, [
@@ -54,6 +62,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static updatePassword(password: string | null = null, newPassword: string | null = null, confirmPassword: string | null = null)
         : FormValidator {
         return {
@@ -72,6 +81,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static payment(amount: number | null = null, cardUId: string | null = null, saveCard: boolean | null = null,
         email: string | null = null): FormValidator {
         return {
@@ -83,6 +93,7 @@ export class FormGroupBuilder {
             email: [email, []],
         };
     }
+
     static newsletter(email: string | null = null): FormValidator {
         return {
             email: [email, [
@@ -91,6 +102,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static createOrUpdateItem(title: string | null = null, description: string | null = null, media: Array<string> | null = null)
         : FormValidator {
         return {
@@ -101,6 +113,7 @@ export class FormGroupBuilder {
             media: [media]
         };
     }
+
     static createOrUpdateComment(description: string | null = null): FormValidator {
         return {
             description: [description, [
@@ -108,6 +121,7 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
     static updateNotificationPreferences(pushNotificationEnabled: NotificationType = null, emailEnabled: NotificationType = null,
         autoSubscribeToItem: NotificationType = null, pushNewComment: NotificationType = null, pushHot: NotificationType = null,
         emailNewComment: NotificationType = null, emailHot: NotificationType = null): FormValidator {
@@ -135,9 +149,18 @@ export class FormGroupBuilder {
             ]],
         };
     }
+
     static search(term: string | null = null): FormValidator {
         return {
             term: [term, [
+                Validators.required
+            ]]
+        };
+    }
+
+    static updateTwoFactorAuthentication(twoFactorAuthenticationEnabled: boolean | null = null): FormValidator {
+        return {
+            twoFactorAuthenticationEnabled: [twoFactorAuthenticationEnabled, [
                 Validators.required
             ]]
         };

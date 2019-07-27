@@ -1,3 +1,4 @@
+import { UserTokenModel } from '@shared/models/shared/user-token.model';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { ServerValidator } from '@shared/validation/validators';
@@ -6,11 +7,13 @@ import { TokenViewModel } from '@shared/view-models/create-user/token.view-model
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { CardViewModel } from '@shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
+import { authenticator } from 'otplib';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import { emailBroker } from '../../communication/emailer-broker';
@@ -106,18 +109,44 @@ class UsersService extends BaseService {
         return user;
     }
 
-    async login(res: Response, emailOrUsername: string, password: string): Promise<TokenViewModel> {
+    async login(res: Response, emailOrUsername: string, password: string, twoFactorAuthenticationCode: string | undefined)
+        : Promise<TokenViewModel> {
         emailOrUsername = emailOrUsername.toLowerCase();
 
         const user = await usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
 
+        // Check password
         if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
             ServerValidator.addGlobalError(res, 'loginInvalidCredentials', true);
             throw new Error();
         }
 
         const viewModel = new TokenViewModel();
-        const tokenData = {
+        viewModel.twoFactorAuthenticationEnabled = user.twoFactorAuthenticationEnabled;
+
+        // Check two factor authentication
+        if (user.twoFactorAuthenticationEnabled) {
+            if (!twoFactorAuthenticationCode) {
+                // Return to client asking for code
+                return viewModel;
+            } else {
+                let isCodeValid = false;
+                try {
+                    isCodeValid = authenticator.check(twoFactorAuthenticationCode, user.twoFactorAuthenticationSecret);
+                } catch (err) {
+                    // Error possibly thrown by the thirty-two package
+                    // 'Invalid input - it is not base32 encoded string'
+                    // TODO: error handling?
+                }
+
+                if (!isCodeValid) {
+                    ServerValidator.addFormError(res, 'twoFactorAuthenticationCode', { invalid: true });
+                    throw new Error();
+                }
+            }
+        }
+
+        const tokenData: UserTokenModel = {
             i: user.id,
             // u: user.username,
             // r: 'role'
@@ -153,6 +182,7 @@ class UsersService extends BaseService {
             bio: user.bio,
             avatarUrl: user.avatarUrl,
             emailVerified: user.emailVerified,
+            twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
             paymentCards: user.paymentCards.map(card => {
                 const cardViewModel: CardViewModel = {
                     uId: card.uId,
@@ -287,6 +317,24 @@ class UsersService extends BaseService {
 
     async completedTutorial(res: Response, viewModel: CompletedTutorial): Promise<boolean> {
         return await usersRepository.completedTutorial(res, this.getUserId(res), viewModel);
+    }
+
+    async updateTwoFactorAuthentication(res: Response, isEnabled: boolean): Promise<TwoFactorAuthenticationViewModel | null> {
+        let generatedSecret = null;
+        if (isEnabled) {
+            generatedSecret = authenticator.generateSecret();
+        }
+
+        const user = await usersRepository.updateTwoFactorAuthentication(res, this.getUserId(res), isEnabled, generatedSecret);
+
+        if (!user) {
+            ServerValidator.addGlobalError(res, 'updateTwoFactorAuthentication', true);
+            throw new Error();
+        }
+
+        const viewModel = new TwoFactorAuthenticationViewModel();
+        viewModel.qrCodeKeyUri = authenticator.keyuri(user.email, 'NEAN', user.twoFactorAuthenticationSecret);
+        return viewModel;
     }
 }
 

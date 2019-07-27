@@ -8,6 +8,7 @@ import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar
 import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { UpdateTwoFactorAuthenticationViewModel } from '@shared/view-models/user/update-two-factor-authentication.view-model';
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import { BaseController } from '../shared/base-controller';
@@ -48,7 +49,7 @@ class UsersController extends BaseController {
             viewModel.emailOrUsername = viewModel.emailOrUsername.trim();
         }
 
-        const formGroup = FormGroupBuilder.login(viewModel.emailOrUsername, viewModel.password);
+        const formGroup = FormGroupBuilder.login(viewModel.emailOrUsername, viewModel.password, viewModel.twoFactorAuthenticationCode);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -56,7 +57,7 @@ class UsersController extends BaseController {
         }
 
         res.status(200).json(
-            await usersService.login(res, viewModel.emailOrUsername, viewModel.password)
+            await usersService.login(res, viewModel.emailOrUsername, viewModel.password, viewModel.twoFactorAuthenticationCode)
         );
     }
 
@@ -221,6 +222,21 @@ class UsersController extends BaseController {
 
         res.status(200).json(
             await usersService.completedTutorial(res, viewModel)
+        );
+    }
+
+    async updateTwoFactorAuthentication(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UpdateTwoFactorAuthenticationViewModel;
+
+        const formGroup = FormGroupBuilder.updateTwoFactorAuthentication(viewModel.isEnabled);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        if (hasErrors) {
+            throw new Error();
+        }
+
+        res.status(200).json(
+            await usersService.updateTwoFactorAuthentication(res, viewModel.isEnabled)
         );
     }
 }

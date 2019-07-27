@@ -57,14 +57,14 @@ export class CreateUserComponent implements OnInit {
 
     try {
       await this.createUserService.createUser(viewModel);
-      this.setUserToken();
+      this.automaticLogin();
     } catch (error) {
       this.formErrorsService.updateFormValidity(error, this.formGroup);
       this.isProcessing = false;
     }
   }
 
-  async setUserToken() {
+  async automaticLogin() {
     const model = new LoginViewModel();
     model.emailOrUsername = this.formGroup.controls.email.value;
     model.password = this.formGroup.controls.password.value;

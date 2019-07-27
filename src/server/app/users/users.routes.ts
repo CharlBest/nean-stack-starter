@@ -45,6 +45,8 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.deleteUser(req, res, next).catch(next));
         this.router.post(UserRoutes.completedTutorial().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.completedTutorial(req, res, next).catch(next));
+        this.router.put(UserRoutes.updateTwoFactorAuthentication().server(), Authentication.loginRequired,
+            async (req, res, next) => usersController.updateTwoFactorAuthentication(req, res, next).catch(next));
     }
 }
 

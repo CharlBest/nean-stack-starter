@@ -28,4 +28,5 @@ export interface GlobalError {
     updatePasswordInvalid?: boolean;
     updatePassword?: boolean;
     verifyEmailCode?: Required;
+    updateTwoFactorAuthentication?: boolean;
 }

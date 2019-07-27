@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   formGroup: FormGroup;
   isProcessing = false;
   returnUrl = '/';
+  showTwoFactorAuthentication = false;
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,
@@ -55,10 +56,16 @@ export class LoginComponent implements OnInit {
     const viewModel = new LoginViewModel();
     viewModel.emailOrUsername = this.formGroup.controls.emailOrUsername.value.trim();
     viewModel.password = this.formGroup.controls.password.value;
+    viewModel.twoFactorAuthenticationCode = this.formGroup.controls.twoFactorAuthenticationCode.value;
 
     try {
       const response = await this.loginService.login(viewModel);
-      if (response && response.token) {
+      if (response && !response.token && response.twoFactorAuthenticationEnabled) {
+        this.dialogService.alert('Please provide your two factor authentication code from Google Authenticator');
+        this.showTwoFactorAuthentication = true;
+        this.isProcessing = false;
+      } else if (response && response.token) {
+        // Login successful
         this.authService.setToken(response.token);
 
         this.router.navigateByUrl(this.returnUrl);

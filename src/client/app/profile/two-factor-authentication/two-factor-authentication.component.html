@@ -1,23 +1,38 @@
 <mat-card>
     <mat-card-title>Two Factor Authentication</mat-card-title>
     <mat-card-content>
-        <div class="header">
-            <span>Google Authenticator <a
-                    href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
-                    target="_blank"
-                    rel="noopener"
-                    class="download-link">(download)</a>
-            </span>
-            <mat-slide-toggle color="primary"></mat-slide-toggle>
+        <div [hidden]="isProcessing">
+            <div class="header">
+                <span>Google Authenticator <a
+                        href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                        target="_blank"
+                        rel="noopener"
+                        class="download-link">(download)</a>
+                </span>
+                <form [formGroup]="formGroup">
+                    <mat-slide-toggle formControlName="twoFactorAuthenticationEnabled"
+                        (change)="getAndUpdateTwoFactorAuthentication()"
+                        color="primary"></mat-slide-toggle>
+
+                    <div *ngIf="formErrorsService.globalErrors?.updateTwoFactorAuthentication"
+                        class="mat-error">
+                        Error with two factor authentication
+                    </div>
+                </form>
+            </div>
+
+            <div [hidden]="!shouldRevealCode">
+                <canvas #canvas></canvas>
+
+                <div>{{secret}}</div>
+            </div>
         </div>
 
-        <canvas #canvas></canvas>
-
-        <div>{{secret}}</div>
+        <mat-spinner *ngIf="isProcessing"></mat-spinner>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="formGroup.controls['twoFactorAuthenticationEnabled'].value && !shouldRevealCode">
         <button mat-stroked-button
             type="button"
-            (click)="revealCode()">Reveal Code</button>
+            (click)="getAndUpdateTwoFactorAuthentication()">Reveal Code</button>
     </mat-card-actions>
 </mat-card>
