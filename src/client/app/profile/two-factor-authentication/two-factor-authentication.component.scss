@@ -12,3 +12,23 @@
 		}
 	}
 }
+
+.secret-data {
+	.qr-code {
+		position: relative;
+		display: inline-block;
+
+		a {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+	}
+
+	.secret {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}

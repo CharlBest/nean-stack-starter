@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     try {
       const response = await this.loginService.login(viewModel);
       if (response && !response.token && response.twoFactorAuthenticationEnabled) {
-        this.dialogService.alert('Please provide your two factor authentication code from Google Authenticator');
+        this.dialogService.alert('Please provide your two factor authentication code from your Authenticator/One Time Pin app');
         this.showTwoFactorAuthentication = true;
         this.isProcessing = false;
       } else if (response && response.token) {

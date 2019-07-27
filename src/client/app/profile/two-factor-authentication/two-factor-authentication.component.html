@@ -3,11 +3,11 @@
     <mat-card-content>
         <div [hidden]="isProcessing">
             <div class="header">
-                <span>Google Authenticator <a
+                <span>One Time Pin App <a
                         href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
                         target="_blank"
                         rel="noopener"
-                        class="download-link">(download)</a>
+                        class="download-link">(download Google Authenticator)</a>
                 </span>
                 <form [formGroup]="formGroup">
                     <mat-slide-toggle formControlName="twoFactorAuthenticationEnabled"
@@ -21,10 +21,20 @@
                 </form>
             </div>
 
-            <div [hidden]="!shouldRevealCode">
-                <canvas #canvas></canvas>
+            <div [hidden]="!shouldRevealCode"
+                class="secret-data">
+                <div class="qr-code">
+                    <a [href]="sanitizedQRCodeKeyUri"
+                        *ngIf="!bpService.isDesktop"
+                        target="_blank"
+                        rel="noopener">
+                    </a>
+                    <canvas #canvas></canvas>
+                </div>
 
-                <div>{{secret}}</div>
+
+                <div (click)="copy()"
+                    class="secret">{{secret}}</div>
             </div>
         </div>
 
