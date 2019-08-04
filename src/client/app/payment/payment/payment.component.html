@@ -2,28 +2,26 @@
     <mat-card [hidden]="isProcessing || paymentSuccess || isProcessingStripeElements">
         <mat-card-content>
 
-            <div class="info-tooltip-container">
-                <app-icon-info matTooltipClass="info-tooltip"
-                    matTooltip="Demo:
-                    Card number: 4242 4242 4242 4242
-                    Expire date: Any future date 
-                    CVC: Any 3 degit number
-                    Zip: Any 5 degit number"></app-icon-info>
-            </div>
-
             <mat-form-field appearance="fill">
                 <input matInput
-                    floatLabel="never"
                     formControlName="amount"
                     placeholder="Amount in euros"
                     type="number"
                     (keypress)="$event.charCode >= 48 && $event.charCode <= 57"
+                    min="0"
                     required>
                 <span matPrefix>€&nbsp;</span>
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['amount']"></app-form-errors>
                 </mat-error>
             </mat-form-field>
+
+            <br>
+
+            <mat-slider [value]="formGroup.controls['amount'].value"
+                (input)="formGroup.controls['amount'].setValue($event.value)"
+                [max]="50"
+                [min]="1"></mat-slider>
 
             <br>
             <br>

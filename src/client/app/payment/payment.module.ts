@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
@@ -23,7 +24,8 @@ const materialModules = [
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSliderModule
 ];
 
 @NgModule({

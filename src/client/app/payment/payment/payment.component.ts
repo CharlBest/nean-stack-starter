@@ -12,6 +12,14 @@ import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-ele
 import { StripePaymentRequestButtonComponent } from '../../shared/stripe-elements/stripe-payment-request-button/stripe-payment-request-button.component';
 import { PaymentService } from '../payment.service';
 
+/*
+Stripe Testing Card:
+Card number: 4242 4242 4242 4242
+Expire date: Any future date
+CVC: Any 3 degit number
+Zip: Any 5 degit number
+*/
+
 export enum Section {
     CARD = 1,
     MOBILE = 2,
@@ -47,7 +55,7 @@ export class PaymentComponent implements OnInit {
     }
 
     formOnInit() {
-        this.formGroup = this.fb.group(FormGroupBuilder.payment());
+        this.formGroup = this.fb.group(FormGroupBuilder.payment(2));
     }
 
     async getpaymentCards() {

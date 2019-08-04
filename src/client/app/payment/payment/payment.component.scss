@@ -1,11 +1,3 @@
-.info-tooltip-container {
-	text-align: right;
-
-	::ng-deep .info-tooltip {
-		white-space: pre-line;
-	}
-}
-
 .payment-successful-container {
 	text-align: center;
 
@@ -17,4 +9,8 @@
 .payment-options-list mat-chip {
 	cursor: pointer;
 	user-select: none;
+}
+
+mat-slider {
+	width: 212px;
 }
