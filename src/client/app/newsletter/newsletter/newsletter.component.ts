@@ -32,11 +32,11 @@ export class NewsletterComponent implements OnInit {
   }
 
   getParams() {
-    this.removingEmail = this.route.snapshot.queryParams.removeEmail === 'true';
-
     const email = this.route.snapshot.queryParams.email;
-    this.formGroup.controls.email.setValue(email);
-    this.removingEmail = true;
+    if (email) {
+      this.formGroup.controls.email.setValue(email);
+      this.removingEmail = true;
+    }
   }
 
   async add() {
