@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class PushNotificationService {
   constructor(private swPush: SwPush) { }
 
-  subscribeToNotifications(callback: (viewModel: PushSubscriptionViewModel) => void) {
+  subscribeToNotifications(onSuccess: (viewModel: PushSubscriptionViewModel) => void) {
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
         serverPublicKey: environment.publicVapidKey
@@ -20,7 +20,7 @@ export class PushNotificationService {
             const viewModel = new PushSubscriptionViewModel(dataJson.endpoint, dataJson.keys.auth, dataJson.keys.p256dh);
 
             // Execute callback
-            callback(viewModel);
+            onSuccess(viewModel);
           } else {
             console.error('Push subscription data is invalid');
           }

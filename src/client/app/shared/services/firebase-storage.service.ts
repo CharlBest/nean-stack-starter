@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class FirebaseStorageService {
     folderName = 'images';
 
-    async upload(file: File, progressCallback: (progress: number) => void, folderName?: string): Promise<string> {
+    async upload(file: File, onProgress: (progress: number) => void, folderName?: string): Promise<string> {
         return new Promise((resolve, reject) => {
             // Create a storage ref
             const fileName = `${file.name.split('.')[0]}-${randomStringGenerator()}.${file.name.split('.')[1]}`;
@@ -20,7 +20,7 @@ export class FirebaseStorageService {
             const task: storage.UploadTask = storageRef.put(file);
 
             task.on(storage.TaskEvent.STATE_CHANGED, (snapshot: storage.UploadTaskSnapshot) => {
-                progressCallback(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
+                onProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
 
                 switch (snapshot.state) {
                     case storage.TaskState.PAUSED:
