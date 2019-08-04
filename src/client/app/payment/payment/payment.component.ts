@@ -132,13 +132,13 @@ export class PaymentComponent implements OnInit {
     }
 
     isFormValid(): boolean {
+        // Form validity (Amount is required)
+        if (!this.formGroup.valid) {
+            return false;
+        }
+
         // Card payment
         if (this.useCardPayment) {
-            // Form validity (Amount is required)
-            if (!this.formGroup.valid) {
-                return false;
-            }
-
             // Email is requried if anonymous payment
             if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
                 return false;
