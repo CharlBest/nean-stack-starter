@@ -29,12 +29,12 @@
             <br>
 
             <mat-chip-list class="payment-options-list">
-                <mat-chip [selected]="useCardPayment"
-                    [color]="useCardPayment ? 'primary' : ''"
-                    (click)="selectPaymentType(true)">Card</mat-chip>
-                <mat-chip [selected]="!useCardPayment"
-                    [color]="!useCardPayment ? 'primary' : ''"
-                    (click)="selectPaymentType(false)"
+                <mat-chip [selected]="activeSection === sections.CARD"
+                    [color]="activeSection === sections.CARD ? 'primary' : ''"
+                    (click)="selectSection(sections.CARD)">Card</mat-chip>
+                <mat-chip [selected]="activeSection === sections.MOBILE"
+                    [color]="activeSection === sections.MOBILE ? 'primary' : ''"
+                    (click)="selectSection(sections.MOBILE)"
                     [disabled]="stripePaymentRequestButton.canMakePayment === null || !stripePaymentRequestButton.canMakePayment">
                     Mobile
                 </mat-chip>
@@ -42,7 +42,7 @@
             </mat-chip-list>
 
             <!-- Card Payment -->
-            <div [hidden]="!useCardPayment">
+            <div [hidden]="!(activeSection === sections.CARD)">
 
                 <br>
 
@@ -100,7 +100,7 @@
                 Token is required
             </div>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions *ngIf="activeSection">
             <button mat-stroked-button
                 color="primary"
                 type="submit"

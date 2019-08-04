@@ -12,6 +12,12 @@ import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-ele
 import { StripePaymentRequestButtonComponent } from '../../shared/stripe-elements/stripe-payment-request-button/stripe-payment-request-button.component';
 import { PaymentService } from '../payment.service';
 
+export enum Section {
+    CARD = 1,
+    MOBILE = 2,
+    PAYPAL = 3
+}
+
 @Component({
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss']
@@ -26,7 +32,8 @@ export class PaymentComponent implements OnInit {
     formGroup: FormGroup;
     paymentSuccess = false;
     paymentCards: CardModel[];
-    useCardPayment = true;
+    sections = Section;
+    activeSection: Section;
 
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
@@ -69,8 +76,7 @@ export class PaymentComponent implements OnInit {
     }
 
     async onSubmit() {
-        if (this.useCardPayment) {
-
+        if (this.activeSection === Section.CARD) {
             if (this.formGroup.controls.cardUId.value === null || this.formGroup.controls.cardUId.value === 'new') {
                 const token = await this.stripeElementsComponent.generateToken();
                 if (token) {
@@ -81,7 +87,7 @@ export class PaymentComponent implements OnInit {
             } else {
                 this.sendPaymentToServer();
             }
-        } else {
+        } else if (this.activeSection === Section.MOBILE) {
             this.stripePaymentRequestButton.activatePaymentRequestButton();
         }
     }
@@ -138,7 +144,7 @@ export class PaymentComponent implements OnInit {
         }
 
         // Card payment
-        if (this.useCardPayment) {
+        if (this.activeSection === Section.CARD) {
             // Email is requried if anonymous payment
             if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
                 return false;
@@ -149,7 +155,7 @@ export class PaymentComponent implements OnInit {
                 (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === 'new')) {
                 return false;
             }
-        } else {
+        } else if (this.activeSection === Section.MOBILE) {
             // Mobile payment
             return !!this.stripePaymentRequestButton.canMakePayment;
         }
@@ -169,13 +175,11 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    selectPaymentType(useCardPayment: boolean) {
-        if (useCardPayment) {
-            this.useCardPayment = true;
-        } else {
-            if (this.stripePaymentRequestButton.canMakePayment !== null && this.stripePaymentRequestButton.canMakePayment) {
-                this.useCardPayment = false;
-            }
+    selectSection(section: Section) {
+        if (section === Section.MOBILE &&
+            (this.stripePaymentRequestButton.canMakePayment === null || !this.stripePaymentRequestButton.canMakePayment)) {
+            return;
         }
+        this.activeSection = section;
     }
 }
