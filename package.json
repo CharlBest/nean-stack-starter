@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.995",
+  "version": "0.0.996",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -63,6 +63,7 @@
     "emojione-assets": "^4.5.0",
     "express": "^4.17.1",
     "firebase": "^6.3.0",
+    "hammerjs": "^2.0.8",
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "marked": "^0.7.0",
