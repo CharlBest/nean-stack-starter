@@ -13,7 +13,8 @@
             </mat-card-subtitle>
             <ng-container *ngIf="formGroup.controls['pushNotificationEnabled'].value">
                 <mat-checkbox formControlName="pushNewComment">New comment</mat-checkbox>
-                <mat-card-subtitle>Receive push notifications when a comment was made on subscribed items</mat-card-subtitle>
+                <mat-card-subtitle>Receive push notifications when a comment was made on subscribed items
+                </mat-card-subtitle>
 
                 <br>
 
@@ -55,7 +56,7 @@
             <button mat-stroked-button
                 *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value || (formGroup.controls['autoSubscribeToItem'].value !== notificationPreferences?.autoSubscribeToItem)"
                 type="submit"
-                (click)="onSubmit()">Update preferences</button>
+                (click)="onSubmit()">Update Preferences</button>
         </mat-card-actions>
     </mat-card>
 </form>

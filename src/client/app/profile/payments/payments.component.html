@@ -53,15 +53,15 @@
     <button mat-stroked-button
       *ngIf="!isChangingDefault"
       routerLink="/profile/create-card"
-      type="button">Add payment method</button>
+      type="button">Add Payment Method</button>
     <button mat-stroked-button
       *ngIf="!isChangingDefault && paymentCards?.length > 1"
       (click)="isChangingDefault = true"
-      type="button">Change default method</button>
+      type="button">Change Default Method</button>
     <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="changeDefaultCard()"
-      type="button">Save default method</button>
+      type="button">Save Default Method</button>
     <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
       (click)="this.isChangingDefault = false; newDefaultCardUId = null"
@@ -69,7 +69,7 @@
     <span class="flex-spacer"></span>
     <button mat-stroked-button
       routerLink="/profile/payment-history"
-      type="button">Payment history</button>
+      type="button">Payment History</button>
   </mat-card-actions>
 </mat-card>
 
