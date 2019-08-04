@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NewSignUpWebSocketModel } from '../../../../shared/models/web-socket/new-sign-up-web-socket.model';
+import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
 import { BreakpointService } from './breakpoint.service';
 import { WebSocketService } from './websocket.service';
 
