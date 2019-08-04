@@ -19,8 +19,8 @@ class PaymentsService extends BaseService {
 
     // #region Private
 
-    private async createCharge(res: Response, source: string, amount: number,
-        userId: null | number = null, customerId: null | string = null) {
+    private async createCharge(source: string, amount: number, userId: number | null = null,
+        customerId: string | null = null, email: string | null = null) {
         const stripeAccount = new stripe(environment.stripe.secretKey);
 
         const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
@@ -32,11 +32,16 @@ class PaymentsService extends BaseService {
                 paymentUId: nodeUUId()
             }
         };
-        if (userId) {
-            if (chargeCreationOptions.metadata) {
+
+        if (chargeCreationOptions.metadata) {
+            if (userId) {
                 chargeCreationOptions.metadata.userId = userId;
             }
+            if (email) {
+                chargeCreationOptions.metadata.email = email;
+            }
         }
+
         if (customerId) {
             chargeCreationOptions.customer = customerId;
         }
@@ -134,7 +139,7 @@ class PaymentsService extends BaseService {
     // #endregion
 
     async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
-        const charge = await this.createCharge(res, token, amount);
+        const charge = await this.createCharge(token, amount, null, null, email);
 
         emailBroker.paymentSuccessful({
             email,
@@ -157,7 +162,7 @@ class PaymentsService extends BaseService {
         const selectedCard = user.paymentCards.find(card => card.uId === cardUId);
         if (selectedCard) {
             // Existing customer and card
-            const charge = await this.createCharge(res, selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
+            const charge = await this.createCharge(selectedCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
             emailBroker.paymentSuccessful({
                 email: user.email,
@@ -176,7 +181,7 @@ class PaymentsService extends BaseService {
                     .find(card => cardDetails.card ? card.stripeFingerprint === cardDetails.card.fingerprint : false);
 
                 if (existingCard) {
-                    const charge = await this.createCharge(res, existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
+                    const charge = await this.createCharge(existingCard.stripeCardId, amount, user.id, user.stripeCustomerId);
 
                     emailBroker.paymentSuccessful({
                         email: user.email,
@@ -188,7 +193,7 @@ class PaymentsService extends BaseService {
                 } else {
                     const newCard = await this.createStripeCard(res, user, token);
 
-                    const charge = await this.createCharge(res, newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
+                    const charge = await this.createCharge(newCard.card.stripeCardId, amount, user.id, newCard.stripeCustomerId);
 
                     emailBroker.paymentSuccessful({
                         email: user.email,
@@ -200,7 +205,7 @@ class PaymentsService extends BaseService {
                 }
             } else {
                 // TODO: This could be associated with a stripe customer but don't know how without saving the card which I don't want to do
-                const charge = await this.createCharge(res, token, amount, user.id);
+                const charge = await this.createCharge(token, amount, user.id);
 
                 emailBroker.paymentSuccessful({
                     email: user.email,
