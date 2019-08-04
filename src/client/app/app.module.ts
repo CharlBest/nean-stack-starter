@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { MatBottomSheetConfig, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
 import { GestureConfig } from '@angular/material/core';
 import { MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { MatProgressSpinnerDefaultOptions, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS } from '@angular/material/progress-spinner';
 import { MatSnackBarConfig, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { BrowserModule, HAMMER_GESTURE_CONFIG, Title } from '@angular/platform-browser';
@@ -56,10 +55,6 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     {
       provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
       useValue: { showDelay: 700 } as MatTooltipDefaultOptions
-    },
-    {
-      provide: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
-      useValue: { diameter: 25, strokeWidth: 2 } as MatProgressSpinnerDefaultOptions
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
