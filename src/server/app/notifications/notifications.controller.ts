@@ -20,6 +20,8 @@ class NotificationsController extends BaseController {
     async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateNotificationPreferencesViewModel;
 
+        // TODO: this will break if body is empty because access properties on empty preferences object
+        // Solution: wait for elvis operator to land in Typescript 3.7 rather than if else shorthand syntax
         const formGroup = FormGroupBuilder.updateNotificationPreferences(
             viewModel.preferences.pushNotificationEnabled,
             viewModel.preferences.emailEnabled,
