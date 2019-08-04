@@ -3,7 +3,7 @@
     [item]="item"
     (submitForm)="onSubmit()"></app-item-form>
 
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
+<app-preloader *ngIf="isProcessing"></app-preloader>
 
 <mat-card *ngIf="!isProcessing && !item">
     No item found

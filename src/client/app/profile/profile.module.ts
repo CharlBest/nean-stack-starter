@@ -7,7 +7,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,6 +18,7 @@ import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { MediaModule } from '../shared/media/media.module';
+import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { RightClickContextMenuModule } from '../shared/right-click-context-menu/right-click-context-menu.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
@@ -39,7 +39,6 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 const materialModules = [
   MatButtonModule,
   MatCardModule,
-  MatProgressSpinnerModule,
   MatSnackBarModule,
   MatTooltipModule,
   MatInputModule,
@@ -68,6 +67,7 @@ const materialModules = [
     ContextMenuModule,
     IconsModule,
     RightClickContextMenuModule,
+    PreloaderModule,
     ...materialModules
   ],
   declarations: [

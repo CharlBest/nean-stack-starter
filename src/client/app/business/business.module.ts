@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { GitHubModule } from '../shared/github/github.module';
+import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { PWAHelperModule } from '../shared/pwa-helper/pwa-helper.module';
 import { BusinessRoutingModule } from './business-routing.module';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
@@ -22,7 +22,6 @@ const materialModules = [
   MatRadioModule,
   MatTableModule,
   MatListModule,
-  MatProgressSpinnerModule,
 ];
 
 @NgModule({
@@ -31,6 +30,7 @@ const materialModules = [
     BusinessRoutingModule,
     PWAHelperModule,
     GitHubModule,
+    PreloaderModule,
     ...materialModules
   ],
   declarations: [

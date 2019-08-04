@@ -108,7 +108,7 @@
     </mat-card>
 </form>
 
-<mat-spinner *ngIf="isProcessing || isProcessingStripeElements"></mat-spinner>
+<app-preloader *ngIf="isProcessing || isProcessingStripeElements"></app-preloader>
 
 <mat-card *ngIf="!isProcessing && paymentSuccess">
     <mat-card-content>

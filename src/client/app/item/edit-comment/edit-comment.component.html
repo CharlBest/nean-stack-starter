@@ -3,7 +3,7 @@
     [comment]="comment"
     (submitForm)="onSubmit()"></app-comment-form>
 
-<mat-spinner *ngIf="isProcessing"></mat-spinner>
+<app-preloader *ngIf="isProcessing"></app-preloader>
 
 <mat-card *ngIf="!isProcessing && !comment">
     No comment found

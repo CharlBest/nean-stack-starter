@@ -4,11 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ItemModule } from '../item/item.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
+import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
 
@@ -16,7 +16,6 @@ const materialModules = [
   MatButtonModule,
   MatCardModule,
   MatInputModule,
-  MatProgressSpinnerModule,
 ];
 
 @NgModule({
@@ -28,6 +27,7 @@ const materialModules = [
     IconsModule,
     ItemModule,
     InfiniteScrollModule,
+    PreloaderModule,
     ...materialModules
   ],
   declarations: [

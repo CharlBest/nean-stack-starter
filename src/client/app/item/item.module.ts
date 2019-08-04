@@ -6,13 +6,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { MediaModule } from '../shared/media/media.module';
+import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { RightClickContextMenuModule } from '../shared/right-click-context-menu/right-click-context-menu.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
@@ -32,7 +32,6 @@ const materialModules = [
   MatButtonModule,
   MatCardModule,
   MatInputModule,
-  MatProgressSpinnerModule,
   MatMenuModule,
   MatListModule,
   MatTooltipModule,
@@ -51,6 +50,7 @@ const materialModules = [
     IconsModule,
     InfiniteScrollModule,
     RightClickContextMenuModule,
+    PreloaderModule,
     ...materialModules
   ],
   declarations: [

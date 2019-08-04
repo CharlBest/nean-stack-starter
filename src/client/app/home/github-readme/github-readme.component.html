@@ -9,7 +9,7 @@
         <app-github [filePath]="'README.md'"
             (doneLoading)="doneLoading()"></app-github>
 
-        <mat-spinner *ngIf="isProcessing"></mat-spinner>
+        <app-preloader *ngIf="isProcessing"></app-preloader>
     </ng-template>
 
     <mat-action-row>

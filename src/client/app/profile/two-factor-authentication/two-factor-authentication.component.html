@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <mat-spinner *ngIf="isProcessing"></mat-spinner>
+        <app-preloader *ngIf="isProcessing"></app-preloader>
     </mat-card-content>
     <mat-card-actions *ngIf="formGroup.controls['twoFactorAuthenticationEnabled'].value && !shouldRevealCode">
         <button mat-stroked-button
