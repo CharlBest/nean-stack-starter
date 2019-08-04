@@ -16,8 +16,6 @@ class App {
         this.initMessageBroker();
 
         this.onDestroy();
-
-        logger.info(`Worker is running`);
     }
 
     async initMessageBroker(): Promise<void> {

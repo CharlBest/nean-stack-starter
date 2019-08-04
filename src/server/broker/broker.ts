@@ -17,8 +17,6 @@ class Broker {
                     await this.channel.assertQueue(QueueType[queueType], { durable: true });
                 }
             }
-
-            logger.info('RabbitMQ channel and queues successfully initialized');
         } catch (error) {
             const errorMessage = `Error connecting or creating channels on RabbitMQ`;
             logger.error(errorMessage, [error]);
