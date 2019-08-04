@@ -69,12 +69,12 @@ export class AuthService implements CanActivate {
     }
 
     setToken(token: string) {
-        sessionStorage.setItem(this.tokenStorageKey, token);
+        localStorage.setItem(this.tokenStorageKey, token);
         this.updateLoggedInUser();
     }
 
     removeToken() {
-        sessionStorage.removeItem(this.tokenStorageKey);
+        localStorage.removeItem(this.tokenStorageKey);
         this.updateLoggedInUser();
     }
 
@@ -90,7 +90,7 @@ export class AuthService implements CanActivate {
     }
 
     getLocalToken(): string | null {
-        return sessionStorage.getItem(this.tokenStorageKey);
+        return localStorage.getItem(this.tokenStorageKey);
     }
 
     preventLogoutOnNextRequest() {
