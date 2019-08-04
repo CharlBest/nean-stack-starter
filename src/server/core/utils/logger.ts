@@ -1,5 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 import { emailBroker } from '../../communication/emailer-broker';
+import { environment } from '../../environments/environment';
 
 export const logger = createLogger({
     format: format.combine(
@@ -12,14 +13,14 @@ export const logger = createLogger({
         // Else create file called debug.log with error, warn, info, verbose and debug level logging in
         //
         new transports.File({
-            filename: process.env.NODE_ENV === 'production' ? 'info.log' : 'src/server/logs/debug.log',
-            level: process.env.NODE_ENV === 'production' ? 'info' : 'debug'
+            filename: environment.production ? 'info.log' : 'src/server/logs/debug.log',
+            level: environment.production ? 'info' : 'debug'
         }),
         //
         // Set logging to ouput debug (all) to console if not in prod else only error console logs
         //
         new (transports.Console)({
-            level: process.env.NODE_ENV === 'production' ? 'error' : 'debug'
+            level: environment.production ? 'error' : 'debug'
         })
     ]
 });
@@ -29,6 +30,6 @@ logger.on('error', (error) => {
     emailBroker.system(error);
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (!environment.production) {
     logger.debug('Logging initialized at debug level');
 }
