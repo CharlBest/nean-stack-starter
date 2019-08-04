@@ -58,9 +58,7 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async getUserByEmailOrUsername(res: Response, emailOrUsername: string)
-        : Promise<Pick<UserModel, 'password' | 'passwordSalt' | 'id'
-            | 'twoFactorAuthenticationEnabled' | 'twoFactorAuthenticationSecret'> | null> {
+    async getUserByEmailOrUsername(res: Response, emailOrUsername: string): Promise<UserLiteModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.getUserByEmailOrUsername,
             {
                 emailOrUsername
@@ -100,10 +98,10 @@ class UsersRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let localModel = new UserModel();
-            localModel = record.get('user');
-            localModel.paymentCards = record.get('cards');
-            return localModel;
+            return {
+                ...record.get('user'),
+                paymentCards: record.get('cards'),
+            } as UserModel;
         });
 
         if (model && model.length > 0) {
@@ -144,12 +142,12 @@ class UsersRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('items');
-            viewModel.user = record.get('users');
-            viewModel.favourite = record.get('favourite');
-            viewModel.subscribed = record.get('subscribed');
-            return viewModel;
+            return {
+                ...record.get('items'),
+                user: record.get('users'),
+                favourite: record.get('favourite'),
+                subscribed: record.get('subscribed'),
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {

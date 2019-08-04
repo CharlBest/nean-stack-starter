@@ -26,6 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
                         // This will redirect to the login page
                         this.authService.removeTokenAndNavigateToLogin();
                     }
+                    if (err.status === 500) {
+                        // server down
+                    }
                 }
             })
         );

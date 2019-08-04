@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
           };
 
           // TODO: This can be optimized
-          response.map((item: ItemViewModel) => item.user = itemsOwner);
+          response.forEach((item: ItemViewModel) => item.user = itemsOwner);
 
           this.items.push(...response);
         } else {

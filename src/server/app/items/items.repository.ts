@@ -1,10 +1,10 @@
-import { Application, Response } from 'express';
-import { v1 as neo4j } from 'neo4j-driver';
+// tslint:disable: no-identical-functions
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { Application, Response } from 'express';
+import { v1 as neo4j } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
-
 class ItemsRepository extends BaseRepository {
 
     constructor() {
@@ -12,7 +12,7 @@ class ItemsRepository extends BaseRepository {
     }
 
     async createItemFromDataFetcher(neo4jSession: neo4j.Session, app: Application, userId: number, uId: string,
-        title: string, description: string, media: Array<string>): Promise<void> {
+        title: string, description: string, media: Array<string> | null): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
@@ -37,10 +37,10 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('item');
-            viewModel.user = record.get('user');
-            return viewModel;
+            return {
+                ...record.get('item'),
+                user: record.get('user')
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {
@@ -63,10 +63,10 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('item');
-            viewModel.user = record.get('user');
-            return viewModel;
+            return {
+                ...record.get('item'),
+                user: record.get('user')
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {
@@ -86,12 +86,12 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('item');
-            viewModel.user = record.get('user');
-            viewModel.favourite = record.get('favourite');
-            viewModel.subscribed = record.get('subscribed');
-            return viewModel;
+            return {
+                ...record.get('item'),
+                user: record.get('user'),
+                favourite: record.get('favourite'),
+                subscribed: record.get('subscribed'),
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {
@@ -111,12 +111,12 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('items');
-            viewModel.user = record.get('users');
-            viewModel.favourite = record.get('favourite');
-            viewModel.subscribed = record.get('subscribed');
-            return viewModel;
+            return {
+                ...record.get('items'),
+                user: record.get('users'),
+                favourite: record.get('favourite'),
+                subscribed: record.get('subscribed'),
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {
@@ -181,11 +181,11 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('items');
-            viewModel.user = record.get('users');
-            viewModel.favourite = true;
-            return viewModel;
+            return {
+                ...record.get('items'),
+                user: record.get('users'),
+                favourite: true,
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {
@@ -207,11 +207,11 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new CommentViewModel();
-            viewModel = record.get('comment');
-            viewModel.user = record.get('user');
-            viewModel.itemUId = itemUId;
-            return viewModel;
+            return {
+                ...record.get('comment'),
+                user: record.get('user'),
+                itemUId,
+            } as CommentViewModel;
         });
 
         if (model && model.length > 0) {
@@ -231,10 +231,10 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new CommentViewModel();
-            viewModel = record.get('comment');
-            viewModel.user = record.get('user');
-            return viewModel;
+            return {
+                ...record.get('comment'),
+                user: record.get('user'),
+            } as CommentViewModel;
         });
 
         if (model && model.length > 0) {
@@ -271,10 +271,10 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new CommentViewModel();
-            viewModel = record.get('comments');
-            viewModel.user = record.get('users');
-            return viewModel;
+            return {
+                ...record.get('comments'),
+                user: record.get('users'),
+            } as CommentViewModel;
         });
 
         if (model && model.length > 0) {
@@ -294,11 +294,11 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new CommentViewModel();
-            viewModel = record.get('comment');
-            viewModel.user = record.get('user');
-            viewModel.itemUId = record.get('itemUId');
-            return viewModel;
+            return {
+                ...record.get('comment'),
+                user: record.get('user'),
+                itemUId: record.get('itemUId'),
+            } as CommentViewModel;
         });
 
         if (model && model.length > 0) {
@@ -319,12 +319,12 @@ class ItemsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('items');
-            viewModel.user = record.get('users');
-            viewModel.favourite = record.get('favourite');
-            viewModel.subscribed = record.get('subscribed');
-            return viewModel;
+            return {
+                ...record.get('items'),
+                user: record.get('users'),
+                favourite: record.get('favourite'),
+                subscribed: record.get('subscribed'),
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {

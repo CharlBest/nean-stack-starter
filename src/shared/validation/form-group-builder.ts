@@ -1,3 +1,4 @@
+// tslint:disable: no-identical-functions
 import { NotificationType } from '../models/user/user.model';
 import { FormValidator, PASSWORD_LENGTH, PASSWORD_REGEX, Validators } from './validators';
 

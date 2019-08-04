@@ -22,10 +22,8 @@ export class MediaComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
-      if (changes.hasOwnProperty(propName) && propName === 'src') {
-        if (this.src) {
-          this.processMediaType();
-        }
+      if (changes.hasOwnProperty(propName) && propName === 'src' && this.src) {
+        this.processMediaType();
       }
     }
   }

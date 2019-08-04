@@ -7,7 +7,7 @@ export class UserProfileViewModel {
     username: string;
     dateCreated: number;
     bio: string;
-    avatarUrl: string | null | undefined;
+    avatarUrl?: string | null;
     emailVerified: boolean;
     twoFactorAuthenticationEnabled: boolean;
     paymentCards: CardViewModel[];

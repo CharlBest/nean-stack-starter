@@ -13,6 +13,8 @@ import { paymentsRepository } from './payments.repository';
 
 class PaymentsService extends BaseService {
 
+    readonly userRequiredError = 'User required';
+
     constructor() {
         super();
     }
@@ -230,7 +232,7 @@ class PaymentsService extends BaseService {
         const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         return (await this.createStripeCard(res, user, token)).card;
@@ -241,7 +243,7 @@ class PaymentsService extends BaseService {
         const user = await usersRepository.getUserById(res, userId);
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);
@@ -274,7 +276,7 @@ class PaymentsService extends BaseService {
         const user = await usersRepository.getUserById(res, userId);
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         const stripeAccount = new stripe(environment.stripe.secretKey);

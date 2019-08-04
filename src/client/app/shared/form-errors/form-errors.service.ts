@@ -29,18 +29,22 @@ export class FormErrorsService implements OnDestroy {
         : null;
 
       if (errors) {
+        // Set form errors
         if (errors.formErrors && form) {
-          for (const key in form.controls) {
-            if (form.controls.hasOwnProperty(key)) {
-              const fieldError = errors.formErrors.find(formError => formError.field === key);
-              if (fieldError) {
-                form.controls[key].setErrors(fieldError.errors);
-              }
-            }
-          }
+          this.setErrorsOnControls(errors, form);
         }
-
         this.globalErrors = errors.globalErrors;
+      }
+    }
+  }
+
+  setErrorsOnControls(errors: ErrorModel, form: FormGroup) {
+    for (const key in form.controls) {
+      if (form.controls.hasOwnProperty(key)) {
+        const fieldError = errors.formErrors.find(formError => formError.field === key);
+        if (fieldError) {
+          form.controls[key].setErrors(fieldError.errors);
+        }
       }
     }
   }

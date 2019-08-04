@@ -19,12 +19,12 @@ export const PASSWORD_REGEX = new PasswordRegexBuilder(PASSWORD_LENGTH).oneUpper
 export class Validators {
     private static nullValidator(c: AbstractControl): null { return null; }
 
-    private static wrapControl(control: AbstractControl | object | string | number | null): AbstractControl {
+    private static wrapControl(control: WrapControlType): AbstractControl {
         // Warning if this method starts allowing booleans
         return control && (control as any).value !== undefined ? control : { value: control } as any;
     }
 
-    static required(control: AbstractControl | string | number | null): Required | null {
+    static required(control: AbstractControl | StringNumber | null): Required | null {
         control = Validators.wrapControl(control);
         return isEmptyInputValue(control.value) ? { required: true } : null;
     }
@@ -94,60 +94,62 @@ export class Validators {
 }
 
 export class ServerValidator {
-    static setErrorsAndSave(res: Response, formGroup: FormValidator): boolean {
-        const validationErrors = [];
-        for (const formField in formGroup) {
-            if (formGroup.hasOwnProperty(formField)) {
-                if (formGroup[formField] && formGroup[formField].length > 1) {
-                    const errors = {};
-                    const formFieldValue = formGroup[formField][0];
-                    const formFieldValidators = formGroup[formField][1];
 
-                    if (formFieldValidators) {
-                        for (const formFieldValidator of formFieldValidators) {
-                            const error = formFieldValidator(formFieldValue);
-                            if (error) {
-                                Object.assign(errors, error);
-                            }
-                        }
-                    }
+    private static executeFormControlValidator(formGroup: FormValidator, formField: string) {
+        const errors = {};
+        const formFieldValue = formGroup[formField][0];
+        const formFieldValidators = formGroup[formField][1];
 
-                    if (Object.keys(errors).length > 0) {
-                        validationErrors.push({
-                            field: formField,
-                            errors
-                        });
-                    }
+        if (formFieldValidators) {
+            for (const formFieldValidator of formFieldValidators) {
+                const error = formFieldValidator(formFieldValue);
+                if (error) {
+                    Object.assign(errors, error);
                 }
             }
         }
 
-        validationErrors.forEach((error) => {
-            if (!res.locals.error) {
-                res.locals.error = {} as any;
-            }
-            if (!res.locals.error.formErrors) {
-                res.locals.error.formErrors = [];
-            }
-            const savedError = res.locals.error.formErrors.find((formError: FormError) => formError.field === error.field);
-            if (savedError) {
-                Object.assign(savedError.errors, error.errors);
-            } else {
-                res.locals.error.formErrors.push(error);
-            }
-        });
+        if (Object.keys(errors).length > 0) {
+            return {
+                field: formField,
+                errors
+            };
+        } else {
+            return null;
+        }
+    }
 
-        return validationErrors.length > 0 ? true : false;
+    static setErrorsAndSave(res: Response, formGroup: FormValidator): boolean {
+        const validationErrors: FormError[] = [];
+
+        for (const formField in formGroup) {
+            if (formGroup.hasOwnProperty(formField) && formGroup[formField] && formGroup[formField].length > 1) {
+                const error = ServerValidator.executeFormControlValidator(formGroup, formField);
+                if (error) {
+                    validationErrors.push(error);
+                }
+            }
+        }
+
+        // Set form errors
+        validationErrors.forEach((error) => this.addFormError(res, error.field, error.errors));
+
+        return validationErrors.length > 0;
     }
 
     static addFormError(res: Response, field: string, error: AnyFormError | any | null): boolean {
         if (error) {
             if (!res.locals.error) {
-                res.locals.error = {} as any;
+                res.locals.error = {
+                    globalErrors: {},
+                    formErrors: []
+                };
             }
+
             if (!res.locals.error.formErrors) {
                 res.locals.error.formErrors = [];
             }
+
             const savedError = res.locals.error.formErrors.find((formError: FormError) => formError.field === field);
             if (savedError) {
                 Object.assign(savedError.errors, error);
@@ -159,7 +161,7 @@ export class ServerValidator {
             }
         }
 
-        return error ? true : false;
+        return !!error;
     }
 
     static addGlobalError<T extends keyof GlobalError>(res: Response,
@@ -180,7 +182,7 @@ export class ServerValidator {
             }
         }
 
-        return error ? true : false;
+        return !!error;
     }
 }
 
@@ -189,6 +191,8 @@ export interface FormValidator {
 }
 
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;
+type WrapControlType = AbstractControl | object | StringNumber | null;
+type StringNumber = string | number;
 
 interface AbstractControl {
     value: any;

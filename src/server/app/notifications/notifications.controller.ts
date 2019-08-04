@@ -45,7 +45,7 @@ class NotificationsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -59,7 +59,7 @@ class NotificationsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(

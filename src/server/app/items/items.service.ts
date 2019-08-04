@@ -20,7 +20,7 @@ class ItemsService extends BaseService {
 
     async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         if (media && Array.isArray(media)) {
-            media.slice(0, MAX_MEDIA_UPLOADS);
+            media = media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
         const userId = this.getUserId(res);
@@ -43,7 +43,7 @@ class ItemsService extends BaseService {
 
     async update(res: Response, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
         if (media && Array.isArray(media)) {
-            media.slice(0, MAX_MEDIA_UPLOADS);
+            media = media.slice(0, MAX_MEDIA_UPLOADS);
         }
 
         const userId = this.getUserId(res);

@@ -1,10 +1,11 @@
-import { sendNotification, setVapidDetails } from 'web-push';
 import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
+import { sendNotification, setVapidDetails } from 'web-push';
 import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
 // tslint:disable-next-line:max-line-length
 import { CommentCreationPushNotificationModel } from '../../communication/models/push-notification/comment-creation-push-notification.model';
 import { Database } from '../../core/database';
+import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 
 class PushNotification implements PushNotificationInterface {
@@ -40,7 +41,7 @@ class PushNotification implements PushNotificationInterface {
             }
 
             setVapidDetails('mailto:admin@nean.io', environment.vapidKey.public, environment.vapidKey.private);
-            // setGCMAPIKey();
+            // TODO: not sure if this should be set setGCMAPIKey();
 
             const notificationOptions: NotificationOptions = {
                 body,
@@ -66,6 +67,8 @@ class PushNotification implements PushNotificationInterface {
                 // TODO: if one push notification fails it will cause a resend to all other receivers/users
                 return response && response.every(result => result.statusCode >= 200) && response.every(result => result.statusCode < 300);
             } catch (error) {
+                // TODO: this will potentially log errors to devices it can't send to which isn't that bug a deal or even an error
+                logger.error('Error sending push notification', error);
                 throw error;
             }
         } else {

@@ -209,6 +209,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     }
 
     renderHTMLWithEmoji(html: string) {
+        // Maybe allow ascii emoji as well
         // (<any>emojione).ascii = true;
         (emojione as any).sprites = true;
         (emojione as any).imagePathSVGSprites = './assets/emoji/';
@@ -247,23 +248,24 @@ export class HTMLEditorComponent implements AfterViewInit {
 
         for (const oldUrl of oldUrls) {
             if (!newUrls.includes(oldUrl)) {
-                try {
-                    this.firebaseStorageService.delete(oldUrl);
-                } catch (error) {
-                    // TODO: error handling
-                }
+                this.firebaseStorageService.delete(oldUrl)
+                    .catch(error => {
+                        // TODO: error handling
+                    });
             }
         }
     }
 
     @HostListener('keydown.control.z') undoSnackBar() {
-        this.snackBar.open('Undo', undefined, {
-            duration: 600
-        });
+        this.showSnackBar('Undo');
     }
 
     @HostListener('keydown.control.y') redoSnackBar() {
-        this.snackBar.open('Redo', undefined, {
+        this.showSnackBar('Redo');
+    }
+
+    showSnackBar(message: string) {
+        this.snackBar.open(message, undefined, {
             duration: 600
         });
     }

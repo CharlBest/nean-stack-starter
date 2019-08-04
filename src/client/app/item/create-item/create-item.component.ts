@@ -30,6 +30,8 @@ export class CreateItemComponent implements OnInit {
     const itemViewModel = new ItemViewModel();
     itemViewModel.title = this.route.snapshot.queryParams.title;
     itemViewModel.description = this.route.snapshot.queryParams.text;
+
+    // TODO: Future: use url to track where it was shared from
     // const url = this.route.snapshot.queryParams.url;
 
     if (itemViewModel.title || itemViewModel.description) {

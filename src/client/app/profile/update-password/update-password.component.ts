@@ -33,10 +33,8 @@ export class UpdatePasswordComponent implements OnInit {
 
     const confirmPasswordControl = this.formGroup.controls.confirmPassword;
     confirmPasswordControl.statusChanges.subscribe(data => {
-      if (!confirmPasswordControl.errors) {
-        if (this.formGroup.controls.newPassword.value !== confirmPasswordControl.value) {
-          confirmPasswordControl.setErrors([{ passwordCompare: true }]);
-        }
+      if (!confirmPasswordControl.errors && this.formGroup.controls.newPassword.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors([{ passwordCompare: true }]);
       }
     });
   }

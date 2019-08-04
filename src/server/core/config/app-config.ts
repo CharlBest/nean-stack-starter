@@ -1,8 +1,8 @@
 import * as bodyParser from 'body-parser';
 import { Application } from 'express';
-// import * as cors from 'cors';
-// import * as morgan from 'morgan';
 import * as helmet from 'helmet';
+// TODO: potentially implement these packages
+// import * as cors from 'cors';
 // import * as compression from 'compression';
 
 class AppConfig {

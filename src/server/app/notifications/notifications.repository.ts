@@ -109,11 +109,11 @@ class NotificationsRepository extends BaseRepository {
         );
 
         const model = result.records.map(record => {
-            let viewModel = new ItemViewModel();
-            viewModel = record.get('items');
-            viewModel.user = record.get('users');
-            viewModel.subscribed = true;
-            return viewModel;
+            return {
+                ...record.get('items'),
+                user: record.get('users'),
+                subscribed: true,
+            } as ItemViewModel;
         });
 
         if (model && model.length > 0) {

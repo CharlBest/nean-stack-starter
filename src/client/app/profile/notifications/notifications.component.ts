@@ -47,16 +47,15 @@ export class NotificationsComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(FormGroupBuilder.updateNotificationPreferences(
-      this.notificationPreferences.pushNotificationEnabled &&
-        this.pushNotificationService.isPushNotificationPermissionGrandted() ? true : false,
-      this.notificationPreferences.emailEnabled ? true : false,
+      !!(this.notificationPreferences.pushNotificationEnabled && this.pushNotificationService.isPushNotificationPermissionGrandted()),
+      !!this.notificationPreferences.emailEnabled,
 
-      this.notificationPreferences.autoSubscribeToItem === false ? false : true,
+      typeof this.notificationPreferences.autoSubscribeToItem === 'boolean' ? this.notificationPreferences.autoSubscribeToItem : true,
 
-      this.notificationPreferences.pushNewComment === false ? false : true,
-      this.notificationPreferences.pushHot === false ? false : true,
-      this.notificationPreferences.emailNewComment === false ? false : true,
-      this.notificationPreferences.emailHot === false ? false : true
+      typeof this.notificationPreferences.pushNewComment === 'boolean' ? this.notificationPreferences.pushNewComment : true,
+      typeof this.notificationPreferences.pushHot === 'boolean' ? this.notificationPreferences.pushHot : true,
+      typeof this.notificationPreferences.emailNewComment === 'boolean' ? this.notificationPreferences.emailNewComment : true,
+      typeof this.notificationPreferences.emailHot === 'boolean' ? this.notificationPreferences.emailHot : true,
     ));
 
     this.formGroup.controls.pushNotificationEnabled.valueChanges.subscribe(data => {

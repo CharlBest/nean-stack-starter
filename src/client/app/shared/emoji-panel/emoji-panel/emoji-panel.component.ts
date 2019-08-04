@@ -57,7 +57,9 @@ export class EmojiPanelComponent {
       }
     }
 
-    this.emojiCategories.forEach(emoji => emoji.emojiData.sort((a, b) => a.value.order - b.value.order));
+    this.emojiCategories.forEach(emoji => {
+      emoji.emojiData.sort((a, b) => a.value.order - b.value.order);
+    });
   }
 
   onClick(shortname: string) {

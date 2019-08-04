@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 
@@ -10,8 +10,7 @@ export class UrlDataService {
     private miliSecondsBeforeSave = 3000;
 
     constructor(private router: Router,
-        private route: ActivatedRoute,
-        private fb: FormBuilder) { }
+        private route: ActivatedRoute) { }
 
     private save(formGroup: FormGroup) {
         const encodedData = this.b64EncodeUnicode(JSON.stringify(formGroup.value));
@@ -42,29 +41,33 @@ export class UrlDataService {
             this.save(formGroup);
         });
 
-        const formData = this.route.snapshot.queryParams.data || null;
+        const formData: string = this.route.snapshot.queryParams.data || null;
         if (formData) {
-            try {
-                const data = JSON.parse(this.b64DecodeUnicode(formData));
+            return this.buildForm(formGroup, formData);
+        } else {
+            return false;
+        }
+    }
 
-                for (const field in data) {
-                    if (data.hasOwnProperty(field) && data[field]) {
-                        const control = formGroup.get(field);
-                        if (control && !control.value) {
-                            const newControl = formGroup.get(field);
-                            if (newControl) {
-                                newControl.setValue(data[field]);
-                            }
+    buildForm(formGroup: FormGroup, formData: string): boolean {
+        try {
+            const data = JSON.parse(this.b64DecodeUnicode(formData));
+
+            for (const field in data) {
+                if (data.hasOwnProperty(field) && data[field]) {
+                    const control = formGroup.get(field);
+                    if (control && !control.value) {
+                        const newControl = formGroup.get(field);
+                        if (newControl) {
+                            newControl.setValue(data[field]);
                         }
                     }
                 }
-
-                return true;
-            } catch (error) {
-                console.log('Error parsing form data from url', error);
-                return false;
             }
-        } else {
+
+            return true;
+        } catch (error) {
+            console.log('Error parsing form data from url', error);
             return false;
         }
     }

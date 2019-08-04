@@ -20,7 +20,7 @@ import { NavigationService } from '../navigation.service';
 export class NavigationComponent implements OnInit {
   @ViewChild('navbar', { static: true }) navbar: ElementRef<HTMLDivElement>;
 
-  activeNavigation: NavigationType | undefined;
+  activeNavigation?: NavigationType;
   navigationType = NavigationType;
   headerBackTitle = '';
   backRouterPath: string | null;
@@ -163,7 +163,12 @@ export class NavigationComponent implements OnInit {
       }
     });
 
+    this.addEventListenerOnScroll();
+  }
+
+  addEventListenerOnScroll() {
     let prevScrollpos = window.pageYOffset;
+
     fromEvent(window, 'scroll')
       .pipe(debounceTime(40))
       .subscribe(() => {

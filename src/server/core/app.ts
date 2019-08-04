@@ -1,7 +1,6 @@
 import * as express from 'express';
 import { bootstrap } from './bootstrap';
 import { appConfig } from './config/app-config';
-// import * as dotenv from 'dotenv';
 import { Server } from './server';
 
 class App {

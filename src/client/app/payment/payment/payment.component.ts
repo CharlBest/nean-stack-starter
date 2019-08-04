@@ -51,35 +51,37 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit() {
         this.formOnInit();
-        this.getpaymentCards();
+        this.checkAuthenticationAndGetCards();
     }
 
     formOnInit() {
         this.formGroup = this.fb.group(FormGroupBuilder.payment(2));
     }
 
-    async getpaymentCards() {
+    checkAuthenticationAndGetCards() {
         if (this.isAuthenticated) {
             this.authService.preventLogoutOnNextRequest();
-            try {
-                const response = await this.paymentService.paymentCards();
-                if (response) {
-                    this.paymentCards = response;
-                    // Default card first
-                    if (this.paymentCards) {
-                        this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
-                    }
-
-                    const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
-                    this.formGroup.controls.cardUId.setValue(firstCardUId);
-                }
-            } catch (error) {
-                // TODO: error handling
-            } finally {
-                this.isProcessing = false;
-            }
+            this.getPaymentCards()
+                .catch(error => {
+                    // TODO: error handling
+                })
+                .finally(() => this.isProcessing = false);
         } else {
             this.isProcessing = false;
+        }
+    }
+
+    async getPaymentCards() {
+        const response = await this.paymentService.paymentCards();
+        if (response) {
+            this.paymentCards = response;
+            // Default card first
+            if (this.paymentCards) {
+                this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
+            }
+
+            const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
+            this.formGroup.controls.cardUId.setValue(firstCardUId);
         }
     }
 

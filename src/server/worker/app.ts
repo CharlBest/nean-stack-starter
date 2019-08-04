@@ -1,3 +1,4 @@
+import { ConsumeMessage } from 'amqplib';
 import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
 import { Database } from '../core/database';
@@ -28,30 +29,7 @@ class App {
                 if (QueueType.hasOwnProperty(queueType) && queueType) {
                     await broker.channel.consume(QueueType[queueType], async (message) => {
                         if (message) {
-                            try {
-                                const data = JSON.parse(message.content.toString());
-
-                                const success = await this.processTask(queueType, data);
-                                if (success) {
-                                    broker.channel.ack(message);
-                                } else {
-                                    if (message.fields.redelivered) {
-                                        logger.error('Error processing message in work queue', [message]);
-                                        // Message will be lost
-                                        broker.channel.nack(message, undefined, false);
-                                    } else {
-                                        broker.channel.nack(message);
-                                    }
-                                }
-                            } catch (error) {
-                                if (message.fields.redelivered) {
-                                    logger.error('Exception processing message in work queue', [error.toString()]);
-                                    // Message will be lost
-                                    broker.channel.nack(message, undefined, false);
-                                } else {
-                                    broker.channel.nack(message);
-                                }
-                            }
+                            this.processMessage(message, queueType);
                         }
                     }, { noAck: false });
                 }
@@ -60,6 +38,33 @@ class App {
             const errorMessage = `Error consuming broker channel`;
             logger.error(errorMessage, [error]);
             throw new Error(error);
+        }
+    }
+
+    async processMessage(message: ConsumeMessage, queueType: string) {
+        try {
+            const data = JSON.parse(message.content.toString());
+
+            const success = await this.processTask(queueType, data);
+            if (success) {
+                broker.channel.ack(message);
+            } else {
+                if (message.fields.redelivered) {
+                    logger.error('Error processing message in work queue', [message]);
+                    // Message will be lost
+                    broker.channel.nack(message, undefined, false);
+                } else {
+                    broker.channel.nack(message);
+                }
+            }
+        } catch (error) {
+            if (message.fields.redelivered) {
+                logger.error('Exception processing message in work queue', [error.toString()]);
+                // Message will be lost
+                broker.channel.nack(message, undefined, false);
+            } else {
+                broker.channel.nack(message);
+            }
         }
     }
 

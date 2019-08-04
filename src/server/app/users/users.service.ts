@@ -5,7 +5,6 @@ import { ServerValidator } from '@shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
-import { CardViewModel } from '@shared/view-models/payment/card.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
@@ -25,14 +24,16 @@ import { usersRepository } from './users.repository';
 
 class UsersService extends BaseService {
 
+    readonly userRequiredError = 'User required';
+
     constructor() {
         super();
     }
 
     // #region private
 
-    private async generateSalt(): Promise<string> {
-        const saltBuffer = await randomBytes(16);
+    private generateSalt(): string {
+        const saltBuffer = randomBytes(16);
         return saltBuffer.toString('hex');
     }
 
@@ -61,13 +62,13 @@ class UsersService extends BaseService {
             throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
-            const salt = await this.generateSalt();
+            const salt = this.generateSalt();
             const hashedPassword = await this.hashPassword(password, salt);
 
             const user = await usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
 
             if (!user) {
-                throw new Error('User required');
+                throw new Error(this.userRequiredError);
             }
 
             // Send email
@@ -103,7 +104,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.doesUsernameAndEmailExist(res, email, username);
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         return user;
@@ -170,10 +171,10 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserById(res, this.getUserId(res));
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
-        const viewModel: UserProfileViewModel = {
+        return {
             id: user.id,
             uId: user.uId,
             email: user.email,
@@ -184,7 +185,7 @@ class UsersService extends BaseService {
             emailVerified: user.emailVerified,
             twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
             paymentCards: user.paymentCards.map(card => {
-                const cardViewModel: CardViewModel = {
+                return {
                     uId: card.uId,
                     expireMonth: card.expireMonth,
                     expireYear: card.expireYear,
@@ -192,18 +193,15 @@ class UsersService extends BaseService {
                     last4: card.last4,
                     isDefault: card.isDefault,
                 };
-                return cardViewModel;
             }),
         };
-
-        return viewModel;
     }
 
     async getUserPublic(res: Response, ip: string, userId: number): Promise<UserPublicViewModel> {
         const user = await usersRepository.getUserPublic(res, this.getOptionalUserId(res), ip, userId);
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         return user;
@@ -218,7 +216,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
         if (!user) {
-            throw new Error('User required');
+            throw new Error(this.userRequiredError);
         }
 
         emailBroker.resendEmailVerificationLink({
@@ -247,7 +245,7 @@ class UsersService extends BaseService {
     async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
-        const salt = await this.generateSalt();
+        const salt = this.generateSalt();
         const hashedPassword = await this.hashPassword(password, salt);
 
         const user = await usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
@@ -296,7 +294,7 @@ class UsersService extends BaseService {
             throw new Error();
         }
 
-        const salt = await this.generateSalt();
+        const salt = this.generateSalt();
         const hashedPassword = await this.hashPassword(newPassword, salt);
 
         const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);

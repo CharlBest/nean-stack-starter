@@ -77,11 +77,10 @@ export class TutorialComponent implements OnInit {
       viewModel.tutorialType = tutorial.tutorialType;
       viewModel.didSkip = didSkip;
 
-      try {
-        this.tutorialService.completedTutorial(viewModel);
-      } catch (error) {
-        // TODO: error handling
-      }
+      this.tutorialService.completedTutorial(viewModel)
+        .catch(error => {
+          // TODO: error handling
+        });
     }
   }
 

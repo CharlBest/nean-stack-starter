@@ -65,6 +65,7 @@ class PaymentsRepository extends BaseRepository {
         }
     }
 
+    // tslint:disable-next-line: parameters-max-number
     async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string,
         stripeFingerprint: string, brand: string, last4: string, expireMonth: number, expireYear: number): Promise<CardModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.payments.createCard,

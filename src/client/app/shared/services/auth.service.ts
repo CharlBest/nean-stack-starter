@@ -9,7 +9,7 @@ import { UserTokenModel } from '@shared/models/shared/user-token.model';
 export class AuthService implements CanActivate {
     private readonly tokenStorageKey = 'token';
 
-    private storedLoggedInUserId: number | null | undefined;
+    private storedLoggedInUserId?: number | null;
     get loggedInUserId(): number | null | undefined {
         return this.storedLoggedInUserId;
     }

@@ -1,9 +1,9 @@
 import { Application } from 'express';
 import * as http from 'http';
 import { broker } from '../broker/broker';
-// import { SwaggerUI } from './SwaggerUI';
 import { Database } from './database';
 import { logger } from './utils/logger';
+// Uncomment if swagger integration is needed
 
 export class Server {
 
@@ -25,12 +25,12 @@ export class Server {
             logger.info(`App port:${app.get('port')}`);
         });
 
-        // this.httpServer.on('error', (error) => { });
-
         this.httpServer.on('close', () => {
             this.destroy();
         });
 
+        // TODO: potential events to listen on
+        // this.httpServer.on('error', (error) => { });
         // process.on('SIGINT', () => { });
         // process.on('SIGHUP', () => { });
         // process.on('SIGQUIT', () => { });

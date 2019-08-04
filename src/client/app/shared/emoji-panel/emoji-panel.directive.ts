@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2, Sanitizer } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import * as emojione from 'emojione';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
@@ -15,8 +15,7 @@ export class EmojiPanelDirective implements OnInit {
     }
 
     constructor(private el: ElementRef,
-        private renderer: Renderer2,
-        private sanitizer: Sanitizer) { }
+        private renderer: Renderer2) { }
 
     ngOnInit() {
         this.renderElement();
@@ -38,9 +37,5 @@ export class EmojiPanelDirective implements OnInit {
                 const element = this.el.nativeElement as HTMLElement;
                 element.innerHTML = element.innerHTML + output;
             });
-    }
-
-    private sanitize(content: string) {
-        // return this.sanitizer.sanitize(SecurityContext.HTML, content);
     }
 }

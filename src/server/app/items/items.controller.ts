@@ -38,7 +38,7 @@ class ItemsController extends BaseController {
         hasErrors = hasErrors || !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -52,7 +52,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -75,7 +75,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -89,7 +89,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -103,7 +103,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -148,7 +148,7 @@ class ItemsController extends BaseController {
         hasErrors = hasErrors || !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -162,7 +162,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -178,7 +178,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(
@@ -192,7 +192,7 @@ class ItemsController extends BaseController {
         const hasErrors = !!Validators.required(uId);
 
         if (hasErrors) {
-            throw new Error('UId is required');
+            throw new Error(this.ERRORS.UIdRequired);
         }
 
         res.status(200).json(

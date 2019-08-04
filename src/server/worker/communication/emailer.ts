@@ -9,8 +9,8 @@ import { PasswordUpdatedEmailModel } from '../../communication/models/email/pass
 import { PaymentSuccessfulEmailModel } from '../../communication/models/email/payment-successful-email.model';
 import { ResendEmailVerificationLinkEmailModel } from '../../communication/models/email/resend-email-verification-link-email.model';
 import { WelcomeEmailModel } from '../../communication/models/email/welcome-email.model';
+import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
-// import { logger } from '../core/utils/logger';
 
 sendGridMail.setApiKey(environment.sendGrid.apiKey);
 sendGridMail.setSubstitutionWrappers('{{', '}}');
@@ -224,6 +224,7 @@ class Emailer implements Email {
 
                 return response && response[0] && response[0].statusCode >= 200 && response[0].statusCode < 300;
             } catch (error) {
+                logger.error('Email failed to send', error);
                 throw error;
             }
         }

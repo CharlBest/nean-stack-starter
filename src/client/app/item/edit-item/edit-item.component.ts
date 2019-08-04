@@ -88,11 +88,10 @@ export class EditItemComponent implements OnInit {
     if (this.savedMedia) {
       for (const media of this.savedMedia) {
         if (!(this.itemForm.formGroup.controls.media.value as Array<string>).includes(media)) {
-          try {
-            this.firebaseStorageService.delete(media);
-          } catch (error) {
-            // TODO: error handling
-          }
+          this.firebaseStorageService.delete(media)
+            .catch(error => {
+              // TODO: error handling
+            });
         }
       }
     }
