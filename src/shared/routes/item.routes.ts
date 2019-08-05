@@ -13,6 +13,7 @@ export class ItemRoutes {
     static createFavourite = (uId?: string) => new BaseRoute(ItemRoutes.root, 'createFavourite', { uId });
     static deleteFavourite = (uId?: string) => new BaseRoute(ItemRoutes.root, 'deleteFavourite', { uId });
     static getFavourites = () => new BaseRoute(ItemRoutes.root, 'getFavourites');
+    static orderFavourite = (uId?: string) => new BaseRoute(ItemRoutes.root, 'orderFavourite', { uId });
     static createComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'createComment', { uId });
     static updateComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'updateComment', { uId });
     static deleteComment = (uId?: string) => new BaseRoute(ItemRoutes.root, 'deleteComment', { uId });

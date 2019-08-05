@@ -8,7 +8,7 @@ RETURN properties(items) as items, users
     avatarUrl: users.avatarUrl
 }
 
-ORDER BY rel.dateCreated DESC
+ORDER BY rel.order
 SKIP {pageIndex}*{pageSize}
 LIMIT {pageSize}
 `

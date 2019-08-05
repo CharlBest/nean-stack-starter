@@ -6,6 +6,7 @@ import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
 import { ReportItemViewModel } from '@shared/view-models/item/report-item.view-model';
 import { environment } from '../../environments/environment';
 
@@ -47,6 +48,10 @@ export class ItemService {
     getFavourites(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
             .get<ItemViewModel[]>(`${environment.httpDomain}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`).toPromise();
+    }
+
+    orderFavourite(uId: string, viewModel: OrderFavouriteViewModel): Promise<void> {
+        return this.http.put<void>(`${environment.httpDomain}${ItemRoutes.orderFavourite(uId).client()}`, viewModel).toPromise();
     }
 
     createComment(itemUId: string, viewModel: CreateOrUpdateCommentViewModel): Promise<CommentViewModel | null> {

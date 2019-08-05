@@ -88,6 +88,10 @@ class ItemsService extends BaseService {
         return await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
     }
 
+    async orderFavourite(res: Response, uId: string, newOrderVal: number, originalOrderVal: number): Promise<boolean> {
+        return await itemsRepository.orderFavourite(res, this.getUserId(res), uId, newOrderVal, originalOrderVal);
+    }
+
     async createComment(res: Response, itemUId: string, description: string): Promise<CommentViewModel> {
         const userId = this.getUserId(res);
         const uId = nodeUUId();

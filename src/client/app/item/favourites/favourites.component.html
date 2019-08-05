@@ -1,8 +1,12 @@
 <app-infinite-scroll (scrolled)="onScroll()"
-    [isProcessing]="isProcessing">
+    [isProcessing]="isProcessing"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)">
 
     <app-item *ngFor="let item of items; trackBy: trackByFn"
-        [item]="item"></app-item>
+        [item]="item"
+        cdkDrag
+        [cdkDragData]="item"></app-item>
 
 </app-infinite-scroll>
 

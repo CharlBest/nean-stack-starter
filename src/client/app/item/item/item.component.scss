@@ -1,5 +1,9 @@
 $card-padding-override: 16px;
 
+:host {
+	display: block;
+}
+
 .header {
 	display: flex;
 	margin-top: -$card-padding-override;

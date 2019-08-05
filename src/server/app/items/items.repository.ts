@@ -195,6 +195,23 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
+    async orderFavourite(res: Response, userId: number, uId: string, newOrderVal: number, originalOrderVal: number): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(Database.queries.items.orderFavourite,
+            {
+                userId,
+                uId,
+                newOrderVal,
+                originalOrderVal
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string)
         : Promise<CommentViewModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.items.createComment,

@@ -166,4 +166,15 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
+    static orderFavourite(newOrderVal: number | null = null, originalOrderVal: number | null = null): FormValidator {
+        return {
+            newOrderVal: [newOrderVal, [
+                Validators.required
+            ]],
+            originalOrderVal: [originalOrderVal, [
+                Validators.required
+            ]]
+        };
+    }
 }

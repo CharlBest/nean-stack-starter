@@ -23,6 +23,8 @@ class ItemsRoutes extends BaseRoute {
             async (req, res, next) => itemsController.deleteFavourite(req, res, next).catch(next));
         this.router.get(ItemRoutes.getFavourites().server(), Authentication.loginRequired,
             async (req, res, next) => itemsController.getFavourites(req, res, next).catch(next));
+        this.router.put(ItemRoutes.orderFavourite().server(), Authentication.loginRequired,
+            async (req, res, next) => itemsController.orderFavourite(req, res, next).catch(next));
         this.router.post(ItemRoutes.createComment().server(), Authentication.loginRequired,
             async (req, res, next) => itemsController.createComment(req, res, next).catch(next));
         this.router.put(ItemRoutes.updateComment().server(), Authentication.loginRequired,

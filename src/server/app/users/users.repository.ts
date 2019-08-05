@@ -202,7 +202,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        if (result.records.length > 0) {
+        if (result && result.records && result.records.length > 0) {
             return result.records[0].get('userExist');
         } else {
             return false;

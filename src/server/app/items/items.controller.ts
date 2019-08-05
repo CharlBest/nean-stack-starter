@@ -2,6 +2,7 @@ import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { ServerValidator, Validators } from '@shared/validation/validators';
 import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
+import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
 import { SearchViewModel } from '@shared/view-models/item/search.view-model';
 import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../shared/base-controller';
@@ -117,6 +118,24 @@ class ItemsController extends BaseController {
 
         res.status(200).json(
             await itemsService.getFavourites(res, pageIndex, pageSize)
+        );
+    }
+
+    async orderFavourite(req: Request, res: Response, next: NextFunction) {
+        const uId = req.params.uId as string | null;
+        const viewModel = req.body as OrderFavouriteViewModel;
+
+        const formGroup = FormGroupBuilder.orderFavourite(viewModel.newOrderVal, viewModel.originalOrderVal);
+        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        hasErrors = hasErrors || !!Validators.required(uId);
+
+        if (hasErrors) {
+            throw new Error();
+        }
+
+        res.status(201).json(
+            await itemsService.orderFavourite(res, uId as string, viewModel.newOrderVal, viewModel.originalOrderVal)
         );
     }
 

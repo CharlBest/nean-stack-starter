@@ -66,8 +66,7 @@ export class ItemComponent implements AfterViewInit {
         await this.itemService.delete(this.item.uId);
         this.snackBar.dismiss();
         this.snackBar.open('Deleted');
-        // TODO: very dirty and bad UI but will work for now
-        this.router.navigate(['']);
+        this.refreshPage();
       } catch (error) {
         this.snackBar.dismiss();
         this.snackBar.open('Delete failed');
@@ -166,6 +165,7 @@ export class ItemComponent implements AfterViewInit {
     try {
       await this.itemService.deleteFavourite(this.item.uId);
       this.item.favourite = false;
+      this.refreshPage();
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
     }
@@ -204,4 +204,9 @@ export class ItemComponent implements AfterViewInit {
   }
 
   // #endregion
+
+  refreshPage() {
+    // TODO: very dirty and bad UI but will work for now
+    window.location.reload();
+  }
 }
