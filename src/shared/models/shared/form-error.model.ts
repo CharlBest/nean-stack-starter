@@ -3,6 +3,7 @@ export type AnyFormError =
     Email |
     MinLength |
     Pattern |
+    TypeAssert |
     CustomFormValidator;
 
 export interface Required {
@@ -25,6 +26,10 @@ export interface Pattern {
         requiredPattern: string,
         actualValue: string
     };
+}
+
+export interface TypeAssert {
+    typeAssert: boolean;
 }
 
 export interface CustomFormValidator {

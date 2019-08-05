@@ -7,15 +7,18 @@ export class FormGroupBuilder {
         return {
             email: [email, [
                 Validators.required,
-                Validators.email
+                Validators.email,
+                Validators.typeAssert(email, 'string'),
             ]],
             username: [username, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(username, 'string'),
             ]],
             password: [password, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REGEX)
+                Validators.pattern(PASSWORD_REGEX),
+                Validators.typeAssert(password, 'string'),
             ]]
         };
     }
@@ -24,7 +27,8 @@ export class FormGroupBuilder {
         return {
             content: [content, [
                 Validators.required,
-                Validators.minLength(10)
+                Validators.minLength(10),
+                Validators.typeAssert(content, 'string'),
             ]]
         };
     }
@@ -33,14 +37,17 @@ export class FormGroupBuilder {
         : FormValidator {
         return {
             emailOrUsername: [emailOrUsername, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(emailOrUsername, 'string'),
             ]],
             password: [password, [
                 Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.typeAssert(password, 'string'),
             ]],
             twoFactorAuthenticationCode: [twoFactorAuthenticationCode, [
-                Validators.minLength(6)
+                Validators.minLength(6),
+                Validators.typeAssert(twoFactorAuthenticationCode, 'string'),
             ]]
         };
     }
@@ -50,7 +57,8 @@ export class FormGroupBuilder {
             password: [password, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REGEX)
+                Validators.pattern(PASSWORD_REGEX),
+                Validators.typeAssert(password, 'string'),
             ]]
         };
     }
@@ -59,7 +67,8 @@ export class FormGroupBuilder {
         return {
             email: [email, [
                 Validators.required,
-                Validators.email
+                Validators.email,
+                Validators.typeAssert(email, 'string'),
             ]]
         };
     }
@@ -69,16 +78,19 @@ export class FormGroupBuilder {
         return {
             password: [password, [
                 Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.typeAssert(password, 'string'),
             ]],
             newPassword: [newPassword, [
                 Validators.required,
                 Validators.minLength(PASSWORD_LENGTH),
-                Validators.pattern(PASSWORD_REGEX)
+                Validators.pattern(PASSWORD_REGEX),
+                Validators.typeAssert(newPassword, 'string'),
             ]],
             confirmPassword: [confirmPassword, [
                 Validators.required,
-                Validators.minLength(PASSWORD_LENGTH)
+                Validators.minLength(PASSWORD_LENGTH),
+                Validators.typeAssert(confirmPassword, 'string'),
             ]]
         };
     }
@@ -87,11 +99,18 @@ export class FormGroupBuilder {
         email: string | null = null): FormValidator {
         return {
             amount: [amount, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(amount, 'number'),
             ]],
-            cardUId: [cardUId, []],
-            saveCard: [saveCard, []],
-            email: [email, []],
+            cardUId: [cardUId, [
+                Validators.typeAssert(cardUId, 'string'),
+            ]],
+            saveCard: [saveCard, [
+                Validators.typeAssert(saveCard, 'boolean'),
+            ]],
+            email: [email, [
+                Validators.typeAssert(email, 'string'),
+            ]],
         };
     }
 
@@ -99,7 +118,8 @@ export class FormGroupBuilder {
         return {
             email: [email, [
                 Validators.required,
-                Validators.email
+                Validators.email,
+                Validators.typeAssert(email, 'string'),
             ]]
         };
     }
@@ -108,17 +128,23 @@ export class FormGroupBuilder {
         : FormValidator {
         return {
             title: [title, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(title, 'string'),
             ]],
-            description: [description],
-            media: [media]
+            description: [description, [
+                Validators.typeAssert(description, 'string'),
+            ]],
+            media: [media, [
+                Validators.typeAssert(media, 'string[]'),
+            ]]
         };
     }
 
     static createOrUpdateComment(description: string | null = null): FormValidator {
         return {
             description: [description, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(description, 'string'),
             ]]
         };
     }
@@ -128,25 +154,32 @@ export class FormGroupBuilder {
         emailNewComment: NotificationType = null, emailHot: NotificationType = null): FormValidator {
         return {
             pushNotificationEnabled: [pushNotificationEnabled, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(pushNotificationEnabled, 'boolean'),
             ]],
             emailEnabled: [emailEnabled, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(emailEnabled, 'boolean'),
             ]],
             autoSubscribeToItem: [autoSubscribeToItem, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(autoSubscribeToItem, 'boolean'),
             ]],
             pushNewComment: [pushNewComment, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(pushNewComment, 'boolean'),
             ]],
             pushHot: [pushHot, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(pushHot, 'boolean'),
             ]],
             emailNewComment: [emailNewComment, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(emailNewComment, 'boolean'),
             ]],
             emailHot: [emailHot, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(emailHot, 'boolean'),
             ]],
         };
     }
@@ -154,7 +187,8 @@ export class FormGroupBuilder {
     static search(term: string | null = null): FormValidator {
         return {
             term: [term, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(term, 'string'),
             ]]
         };
     }
@@ -162,7 +196,8 @@ export class FormGroupBuilder {
     static updateTwoFactorAuthentication(twoFactorAuthenticationEnabled: boolean | null = null): FormValidator {
         return {
             twoFactorAuthenticationEnabled: [twoFactorAuthenticationEnabled, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(twoFactorAuthenticationEnabled, 'boolean'),
             ]]
         };
     }
@@ -170,10 +205,12 @@ export class FormGroupBuilder {
     static orderFavourite(newOrderVal: number | null = null, originalOrderVal: number | null = null): FormValidator {
         return {
             newOrderVal: [newOrderVal, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(newOrderVal, 'number'),
             ]],
             originalOrderVal: [originalOrderVal, [
-                Validators.required
+                Validators.required,
+                Validators.typeAssert(originalOrderVal, 'number'),
             ]]
         };
     }

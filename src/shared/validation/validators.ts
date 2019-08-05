@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
-import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required } from '../models/shared/form-error.model';
+import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required, TypeAssert } from '../models/shared/form-error.model';
 import { PasswordRegexBuilder } from './password-regex-builder';
 
 function isEmptyInputValue(value: any): boolean {
@@ -81,6 +81,32 @@ export class Validators {
             const value: string = control.value;
             return regex.test(value) ? null :
                 { pattern: { requiredPattern: regexStr, actualValue: value } };
+        };
+    }
+
+    static typeAssert(value: string | null, type: 'string'): ValidatorFn;
+    static typeAssert(value: number | null, type: 'number'): ValidatorFn;
+    static typeAssert(value: boolean | null, type: 'boolean'): ValidatorFn;
+    static typeAssert(value: Array<string> | null, type: 'string[]'): ValidatorFn;
+    static typeAssert(value: TypeAssertValue, type: TypeAssertType): ValidatorFn {
+        return (control: AbstractControl | any): TypeAssert | null => {
+            control = Validators.wrapControl(control);
+            if (isEmptyInputValue(control.value)) {
+                return null;  // don't validate empty values to allow optional controls
+            }
+
+            // Type Check
+            let isValid = false;
+            if (type === 'string' || type === 'number' || type === 'boolean') {
+                isValid = typeof control.value === type;
+            } else if (type.endsWith('[]') &&
+                Array.isArray(control.value) &&
+                (control.value.length === 0 ||
+                    (control.value.length > 0 &&
+                        (control.value as string[]).every(arrayItem => typeof arrayItem === type.replace('[]', ''))))) {
+                isValid = true;
+            }
+            return isValid ? null : { typeAssert: true };
         };
     }
 
@@ -193,6 +219,10 @@ export interface FormValidator {
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;
 type WrapControlType = AbstractControl | object | StringNumber | null;
 type StringNumber = string | number;
+
+type TypeAssertValue = null | string | number | boolean | Array<string>;
+type TypeAssertPrimitive = 'string' | 'number' | 'boolean';
+type TypeAssertType = TypeAssertPrimitive | 'string[]';
 
 interface AbstractControl {
     value: any;
