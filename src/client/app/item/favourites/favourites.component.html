@@ -6,7 +6,8 @@
     <app-item *ngFor="let item of items; trackBy: trackByFn"
         [item]="item"
         cdkDrag
-        [cdkDragData]="item"></app-item>
+        [cdkDragData]="item"
+        [cdkDragStartDelay]="400"></app-item>
 
 </app-infinite-scroll>
 
