@@ -19,7 +19,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Angular Material
 * Neo4j query integration
 * API architecture (route -> controller -> service -> repository)
-* Shared validation between Angular and Node (Error handling)
+* Shared validation between Angular and Node (Error handling, type assertion)
 * Shared strongly typed view models
 * Shared strongly typed API endpoints
 * Google analytics - automatic page tracking
@@ -33,9 +33,9 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Web share API
 * Basic web socket connection
 * Notifications area/panel
-* Stripe Payment integration
+* Payment integration via Stripe (Card, Google/Android Pay, Apple Pay, PayPal)
 * Custom Material theme + font (Night Mode, Global CSS variable colors)
-* Progressive Web App (PWA)
+* Progressive Web App (PWA) + custom install banner
 * Complete server setup guide via GCP
 * Backend logger (Node + Neo4j)
 * Content Security Policy
@@ -49,9 +49,13 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Common password checker
 * GDPR/Cookie prompts
 * Offline network message (PWA)
+* Network Speed service
 * Apache Lucene fulltext search
 * Lazy load icon pack
-
+* Drag & Drop sorting capability
+* TSLint + SonarQube
+* Two Factor Authentication via Google Authenticator App
+* Right Click context menu
 
 Client pages
 
