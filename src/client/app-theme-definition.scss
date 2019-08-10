@@ -1,15 +1,120 @@
 @import '~@angular/material/theming';
+$dark-text-color: rgba(black, 0.87);
+$light-text-color: white;
+
+// Use http://mcg.mbitson.com/#!?primary=%23673ab7&accent=%23ffc107&warn=%23f44336&themename=mcgtheme to generate palettes
+// Primary palette
+$primary-palette: (
+  50: #ede7f6,
+  100: #d1c4e9,
+  200: #b39ddb,
+  300: #9575cd,
+  400: #7e57c2,
+  500: #673ab7,
+  600: #5e35b1,
+  700: #512da8,
+  800: #4527a0,
+  900: #311b92,
+  A100: #b388ff,
+  A200: #7c4dff,
+  A400: #651fff,
+  A700: #6200ea,
+  contrast: (
+    50: $dark-text-color,
+    100: $dark-text-color,
+    200: $dark-text-color,
+    300: $light-text-color,
+    400: $light-text-color,
+    500: $light-text-color,
+    600: $light-text-color,
+    700: $light-text-color,
+    800: $light-text-color,
+    900: $light-text-color,
+    A100: $dark-text-color,
+    A200: $light-text-color,
+    A400: $light-text-color,
+    A700: $light-text-color,
+  )
+);
+
+// Accent palette
+$accent-palette: (
+  50: #fff8e1,
+  100: #ffecb3,
+  200: #ffe082,
+  300: #ffd54f,
+  400: #ffca28,
+  500: #ffc107,
+  600: #ffb300,
+  700: #ffa000,
+  800: #ff8f00,
+  900: #ff6f00,
+  A100: #ffe57f,
+  A200: #ffd740,
+  A400: #ffc400,
+  A700: #ffab00,
+  contrast: (
+    50: $dark-text-color,
+    100: $dark-text-color,
+    200: $dark-text-color,
+    300: $dark-text-color,
+    400: $dark-text-color,
+    500: $dark-text-color,
+    600: $dark-text-color,
+    700: $dark-text-color,
+    800: $dark-text-color,
+    900: $dark-text-color,
+    A100: $dark-text-color,
+    A200: $dark-text-color,
+    A400: $dark-text-color,
+    A700: $dark-text-color,
+  )
+);
+
+// Warn palette
+$warn-palette: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $dark-text-color,
+    100: $dark-text-color,
+    200: $dark-text-color,
+    300: $dark-text-color,
+    400: $dark-text-color,
+    500: $light-text-color,
+    600: $light-text-color,
+    700: $light-text-color,
+    800: $light-text-color,
+    900: $light-text-color,
+    A100: $dark-text-color,
+    A200: $light-text-color,
+    A400: $light-text-color,
+    A700: $light-text-color,
+  )
+);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker hue.
-$app-primary-palette: mat-palette($mat-deep-purple);
-$app-accent-palette: mat-palette($mat-amber, A200, A100, A400);
-$app-warn-palette: mat-palette($mat-red);
+$app-primary-palette: mat-palette($primary-palette);
+$app-accent-palette: mat-palette($accent-palette, A200, A100, A400);
+$app-warn-palette: mat-palette($warn-palette);
 
 // Define an alternate dark theme.
-$dark-primary-palette: mat-palette($mat-deep-purple);
-$dark-accent-palette: mat-palette($mat-amber, A200, A100, A400);
-$dark-warn-palette: mat-palette($mat-red);
+$dark-primary-palette: mat-palette($primary-palette);
+$dark-accent-palette: mat-palette($accent-palette, A200, A100, A400);
+$dark-warn-palette: mat-palette($warn-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
 // Light
