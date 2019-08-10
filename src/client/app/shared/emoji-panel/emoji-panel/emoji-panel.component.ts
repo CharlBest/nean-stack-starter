@@ -18,6 +18,7 @@ export class EmojiPanelComponent {
   @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
   isPanelForWebOpen = false;
   emojiCategoryName = EmojiCategoryName;
+  selectedIndex = 0;
 
   emojiCategories = [
     new EmojiCategory(EmojiCategoryName.PEOPLE),
@@ -95,6 +96,18 @@ export class EmojiPanelComponent {
     } else {
       menuTrigger.closeMenu();
       this.onClick(emojiValue.shortname);
+    }
+  }
+
+  onSwipeLeft(event: HammerInput) {
+    if (this.selectedIndex < 7) {
+      this.selectedIndex = this.selectedIndex + 1;
+    }
+  }
+
+  onSwipeRight(event: HammerInput) {
+    if (this.selectedIndex > 0) {
+      this.selectedIndex = this.selectedIndex - 1;
     }
   }
 }
