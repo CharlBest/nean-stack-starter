@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DialogService } from '../dialog/dialog.service';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +33,29 @@ export class ThemeService {
         return window.getComputedStyle(document.documentElement).getPropertyValue('--foreground-color');
     }
 
+    // Native Color Scheme
+    get isPreferColorSchemeDark(): boolean {
+        return this.isPreferColorScheme('dark');
+    }
+
+    get isPreferColorSchemeLight(): boolean {
+        return this.isPreferColorScheme('light');
+    }
+
+    get isPreferColorSchemeNoPreference(): boolean {
+        return this.isPreferColorScheme('no-preference');
+    }
+
+    get isPreferColorSchemeSupported(): boolean {
+        return this.isPreferColorSchemeDark || this.isPreferColorSchemeLight || this.isPreferColorSchemeNoPreference;
+    }
+
+    constructor(private dialogService: DialogService) { }
+
+    private isPreferColorScheme(value: string): boolean {
+        return window.matchMedia(`(prefers-color-scheme: ${value})`).matches;
+    }
+
     private updateTheme() {
         const bodyElement = document.querySelector('body');
         if (bodyElement) {
@@ -47,8 +71,23 @@ export class ThemeService {
         localStorage.setItem(this.isDarkThemeStorageKey, `${this.darkTheme}`);
     }
 
+    private addNativeColorSchemeListener(colorName: string) {
+        window.matchMedia(`(prefers-color-scheme: ${colorName})`).addEventListener('change', async (event: MediaQueryListEvent) => {
+            if (event.matches) {
+                const hasConfirmed = await this.dialogService.confirm(`We noticed you changed your theme to ${colorName}.
+                 Would you like to change the app\'s theme to ${colorName} as well?`);
+                if (hasConfirmed) {
+                    this.darkTheme = colorName === 'dark';
+                    this.updateTheme();
+                }
+            }
+        });
+    }
+
     init() {
         this.updateTheme();
+        this.addNativeColorSchemeListener('dark');
+        this.addNativeColorSchemeListener('light');
     }
 
     toggleTheme() {
