@@ -29,7 +29,7 @@ const routes: Route[] = [
     data: { preload: true }
   },
   {
-    path: 'create-user',
+    path: 'sign-up',
     loadChildren: () => import('./create-user/create-user.module').then(m => m.CreateUserModule)
   },
   {
@@ -86,6 +86,10 @@ const routes: Route[] = [
   {
     path: 'verify',
     loadChildren: () => import('./verify/verify.module').then(m => m.VerifyModule), canActivate: [AuthService]
+  },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingModule)
   },
   {
     path: '404',

@@ -70,7 +70,7 @@
   class="header-push"></div>
 
 <!-- Bottom Nav -->
-<div *ngIf="!bpService.isDesktop"
+<div *ngIf="activeNavigation && !bpService.isDesktop"
   class="navigation bottom">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </div>

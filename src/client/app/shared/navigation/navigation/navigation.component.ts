@@ -34,7 +34,7 @@ export class NavigationComponent implements OnInit {
     home: {
       paths: [
         { path: '' }, { path: 'home' }, { path: 'user', exact: false },
-        { path: 'item' }, { path: 'item/comments', exact: false }, { path: 'item/edit', exact: false }
+        { path: 'item' }, { path: 'item/comments', exact: false }, { path: 'item/edit', exact: false }, { path: 'onboarding' }
       ]
     },
     search: { paths: [{ path: 'search' }] },
@@ -42,7 +42,7 @@ export class NavigationComponent implements OnInit {
     activity: { paths: [{ path: 'activity' }] },
     account: {
       paths: [
-        { path: 'account' }, { path: 'create-user' },
+        { path: 'account' }, { path: 'sign-up' },
         { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
         { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile' },
         { path: 'payment' }, { path: 'verify' }, { path: 'invite' }

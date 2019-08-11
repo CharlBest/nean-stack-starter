@@ -1,0 +1,226 @@
+<div class="container">
+    <div
+        style="width: 100%; height: 100%; max-width: 400px; max-height: 400px; display: flex; flex-direction: column; align-items: center;">
+        <!-- Content -->
+        <mat-tab-group [(selectedIndex)]="selectedIndex"
+            animationDuration="600ms">
+            <mat-tab>
+                <ng-template matTabContent>
+                    Welcome
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="!hasAcceptedCookieConsentOnLoad">
+                <ng-template matTabContent>
+                    <div>Cookie consent</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="acceptCookieConsent()"
+                        [disabled]="hasAcceptedCookieConsent">
+                        {{hasAcceptedCookieConsent ? 'Accepted' : 'Accept'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="pwaService?.canInstallAndNotInPWA">
+                <ng-template matTabContent>
+                    <div>Install</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="pwaService.openInstallPrompt()">
+                        Install
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="themeService.isPreferColorSchemeDark && !isDarkThemeOnLoad">
+                <ng-template matTabContent>
+                    <div>Dark Theme</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="themeService.toggleTheme()">
+                        {{themeService.isDarkTheme ? 'Deactivate' : 'Activate'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Tour</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="takeTour()">
+                        Go
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Sign Up Or Login</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/sign-up">
+                        Sign up
+                    </button>
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/login">
+                        Log In
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Search</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/search">
+                        Search
+                    </button>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+        <!-- Bubbles -->
+        <div>
+            <span *ngFor="let bubble of bubbles"
+                (click)="selectedIndex = bubble"
+                class="bubble"
+                [class.active]="selectedIndex === bubble"></span>
+        </div>
+
+        <!-- Left/Right controls -->
+        <div style="display: flex; justify-content: space-between; margin-top: auto; width: 100%;">
+            <button mat-icon-button
+                (click)="previous()"
+                type="button"
+                matTooltip="Previous"
+                aria-label="Previous"
+                [disabled]="selectedIndex === 0">
+                <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
+            </button>
+            <button mat-icon-button
+                (click)="next()"
+                type="button"
+                matTooltip="Next"
+                aria-label="Next"
+                [disabled]="selectedIndex === numberOfTabs - 1">
+                <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
+            </button>
+        </div>
+    </div>
+    <!-- <div (swiperight)="previous()"
+        (swipeleft)="next()"
+        class="content">
+
+        <mat-tab-group [(selectedIndex)]="selectedIndex"
+            animationDuration="600ms">
+            <mat-tab>
+                <ng-template matTabContent>
+                    Welcome
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="!hasAcceptedCookieConsentOnLoad">
+                <ng-template matTabContent>
+                    <div>Cookie consent</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="acceptCookieConsent()"
+                        [disabled]="hasAcceptedCookieConsent">
+                        {{hasAcceptedCookieConsent ? 'Accepted' : 'Accept'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="pwaService?.canInstallAndNotInPWA">
+                <ng-template matTabContent>
+                    <div>Install</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="pwaService.openInstallPrompt()">
+                        Install
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="themeService.isPreferColorSchemeDark && !isDarkThemeOnLoad">
+                <ng-template matTabContent>
+                    <div>Dark Theme</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="themeService.toggleTheme()">
+                        {{themeService.isDarkTheme ? 'Deactivate' : 'Activate'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Tour</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="takeTour()">
+                        Go
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Sign Up Or Login</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/sign-up">
+                        Sign up
+                    </button>
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/login">
+                        Log In
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <div>Search</div>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/search">
+                        Search
+                    </button>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div>
+            <span *ngFor="let bubble of bubbles"
+                (click)="selectedIndex = bubble"
+                class="bubble"
+                [class.active]="selectedIndex === bubble"></span>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <button mat-icon-button
+            (click)="previous()"
+            type="button"
+            matTooltip="Previous"
+            aria-label="Previous"
+            [disabled]="selectedIndex === 0">
+            <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
+        </button>
+        <span class="flex-spacer"></span>
+        <button mat-icon-button
+            (click)="next()"
+            type="button"
+            matTooltip="Next"
+            aria-label="Next"
+            [disabled]="selectedIndex === numberOfTabs - 1">
+            <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
+        </button>
+    </div> -->
+</div>

@@ -1,0 +1,47 @@
+// Small hack to fill the entire background
+::ng-deep main {
+	max-width: initial !important;
+	padding-bottom: 0 !important;
+	height: 100%;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	height: 100%;
+	background-color: var(--primary-color);
+
+	::ng-deep mat-tab-header {
+		display: none;
+	}
+
+	.dummy-image {
+		height: 100px;
+		width: 50%;
+	}
+
+	mat-tab-group {
+		width: 100%;
+
+		::ng-deep mat-tab-body {
+			text-align: center;
+		}
+	}
+
+	.bubble {
+		display: inline-block;
+		margin: 0 8px;
+		width: 8px;
+		height: 8px;
+		cursor: pointer;
+		border-radius: 50%;
+		background-color: rgba(0, 0, 0, 0.5);
+
+		&.active {
+			background-color: #fff;
+		}
+	}
+}
