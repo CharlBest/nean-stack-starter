@@ -1,0 +1,24 @@
+<div [style.height.px]="toolbarHeight"
+  *ngIf="canShowInstallBanner"
+  class="install-banner">
+  <button mat-icon-button
+    (click)="updateInstallBanner(false)"
+    type="button">
+    <app-icon-close></app-icon-close>
+  </button>
+
+  <img src="assets/logo-color.png"
+    alt="logo">
+
+  <div>
+    <div>NEAN</div>
+    <div>App Development Base</div>
+  </div>
+
+  <span class="flex-spacer"></span>
+
+  <button mat-stroked-button
+    type="button"
+    (click)="pwaService.openInstallPrompt()"
+    color="primary">Install</button>
+</div>

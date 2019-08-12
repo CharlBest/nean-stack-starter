@@ -2,30 +2,8 @@
   [style.height.px]="activeNavigation ? totalToolbarHeight : 0">
 
   <!-- Install banner -->
-  <div [style.height.px]="toolbarHeight"
-    *ngIf="showInstallBanner"
-    class="install-banner">
-    <button mat-icon-button
-      (click)="updateInstallBanner(false, toolbarHeight)"
-      type="button">
-      <app-icon-close></app-icon-close>
-    </button>
-
-    <img src="assets/logo-color.png"
-      alt="logo">
-
-    <div>
-      <div>NEAN</div>
-      <div>App Development Base</div>
-    </div>
-
-    <span class="flex-spacer"></span>
-
-    <button mat-stroked-button
-      type="button"
-      (click)="pwaService.openInstallPrompt()"
-      color="primary">Install</button>
-  </div>
+  <app-install-banner [toolbarHeight]="toolbarHeight"
+    (showInstallBanner)="showInstallBanner($event)"></app-install-banner>
 
   <!-- Main nav -->
   <div *ngIf="navigationType.PRIMARY === activeNavigation"

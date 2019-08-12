@@ -1,0 +1,15 @@
+.install-banner {
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+	max-width: 600px;
+
+	img {
+		height: 40px;
+		margin-right: 12px;
+	}
+
+	button:last-child {
+		margin-right: 12px;
+	}
+}

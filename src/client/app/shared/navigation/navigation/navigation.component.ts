@@ -29,7 +29,6 @@ export class NavigationComponent implements OnInit {
   readonly mobileTopToolbarHeight = 56;
   toolbarHeight: number;
   totalToolbarHeight: number;
-  showInstallBanner = this.pwaService.canInstallAndNotInPWA;
   navItems: NavItem = {
     home: {
       paths: [
@@ -156,13 +155,6 @@ export class NavigationComponent implements OnInit {
       this.totalToolbarHeight = this.pwaService.canInstallAndNotInPWA ? this.toolbarHeight * 2 : this.toolbarHeight;
     });
 
-    // Watch for before install prompt to show install banner
-    this.pwaService.beforeInstallPromptChange.subscribe(() => {
-      if (this.pwaService.canInstallAndNotInPWA) {
-        this.updateInstallBanner(true, this.toolbarHeight * 2);
-      }
-    });
-
     this.addEventListenerOnScroll();
   }
 
@@ -213,9 +205,12 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  updateInstallBanner(showInstallBanner: boolean, totalToolbarHeight: number) {
-    this.showInstallBanner = showInstallBanner;
-    this.totalToolbarHeight = totalToolbarHeight;
+  showInstallBanner(showInstallBanner: boolean) {
+    if (showInstallBanner) {
+      this.totalToolbarHeight = this.toolbarHeight * 2;
+    } else {
+      this.totalToolbarHeight = this.toolbarHeight;
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { CookieConsentModule } from '../cookie-consent/cookie-consent.module';
 import { IconsModule } from '../icons/icons.module';
+import { InstallBannerComponent } from './install-banner/install-banner.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 const materialModules = [
@@ -24,7 +25,8 @@ const materialModules = [
     NavigationComponent
   ],
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    InstallBannerComponent
   ]
 })
 export class NavigationModule { }
