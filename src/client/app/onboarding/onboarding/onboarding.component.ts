@@ -1,6 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { MatTab } from '@angular/material/tabs';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
+import { CookieConsentSnackbarService } from '../../shared/cookie-consent/cookie-consent-snackbar.service';
 import { CookieConsentService } from '../../shared/cookie-consent/cookie-consent.service';
 import { PWAService } from '../../shared/pwa-helper/pwa.service';
 import { ThemeService } from '../../shared/services/theme.service';
@@ -10,7 +11,7 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
     templateUrl: './onboarding.component.html',
     styleUrls: ['./onboarding.component.scss']
 })
-export class OnboardingComponent implements AfterViewInit {
+export class OnboardingComponent implements AfterViewInit, OnDestroy {
 
     @ViewChildren(MatTab) matTabList: QueryList<MatTab>;
     numberOfTabs: number;
@@ -21,6 +22,7 @@ export class OnboardingComponent implements AfterViewInit {
     isDarkThemeOnLoad = this.themeService.isDarkTheme;
 
     constructor(public cookieConsentService: CookieConsentService,
+        private cookieConsentSnackbarService: CookieConsentSnackbarService,
         public pwaService: PWAService,
         public themeService: ThemeService,
         private tutorialService: TutorialService,
@@ -58,5 +60,9 @@ export class OnboardingComponent implements AfterViewInit {
 
     takeTour() {
         this.tutorialService.activateTutorial(TutorialType.SIGN_UP);
+    }
+
+    ngOnDestroy() {
+        this.cookieConsentSnackbarService.openCookieConsentSnackBar();
     }
 }

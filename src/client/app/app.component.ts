@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
+import { OnboardingService } from './onboarding/onboarding.service';
 import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
 import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { PWAService } from './shared/pwa-helper/pwa.service';
@@ -23,7 +24,8 @@ export class AppComponent {
     private asciiArtService: ASCIIArtService,
     private cookieConsentSnackbarService: CookieConsentSnackbarService,
     private networkStatusService: NetworkStatusService,
-    private pwaService: PWAService) {
+    private pwaService: PWAService,
+    private onboardingService: OnboardingService) {
     // Authentication
     this.authService.init();
 
@@ -36,8 +38,11 @@ export class AppComponent {
     // Activate notifications
     this.notificationService.init();
 
-    // Show cookie consent
-    this.cookieConsentSnackbarService.openCookieConsentSnackBar();
+    // Show onboarding
+    if (!this.onboardingService.openOnboarding()) {
+      // Show cookie consent
+      this.cookieConsentSnackbarService.openCookieConsentSnackBar();
+    }
 
     // ASCII Art
     this.asciiArtService.slant();

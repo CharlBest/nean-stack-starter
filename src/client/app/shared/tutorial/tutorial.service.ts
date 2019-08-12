@@ -13,8 +13,6 @@ import { NavigationType } from '../navigation/navigation-type.enum';
 })
 export class TutorialService {
 
-    hasVisitedStorageKey = 'has_user_visited';
-
     constructor(private route: ActivatedRoute,
         private router: Router,
         private http: HttpClient,
@@ -78,17 +76,9 @@ export class TutorialService {
         return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
     }
 
-    hasUserVisited() {
-        return localStorage.getItem(this.hasVisitedStorageKey) === 'true';
-    }
-
-    checkHasVisited() {
-        if (!this.hasUserVisited()) {
-            localStorage.setItem(this.hasVisitedStorageKey, 'true');
-
-            this.snackBar.open('Take the tour', 'Go', {
-                duration: 4000,
-            }).onAction().subscribe(() => this.activateTutorial(TutorialType.SIGN_UP));
-        }
+    showTakeATour() {
+        this.snackBar.open('Take the tour', 'Go', {
+            duration: 4000,
+        }).onAction().subscribe(() => this.activateTutorial(TutorialType.SIGN_UP));
     }
 }

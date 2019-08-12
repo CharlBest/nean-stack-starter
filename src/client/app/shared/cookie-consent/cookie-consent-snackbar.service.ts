@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TutorialService } from '../tutorial/tutorial.service';
 import { CookieConsentService } from './cookie-consent.service';
 import { CookieConsentComponent } from './cookie-consent/cookie-consent.component';
 
@@ -10,16 +9,13 @@ import { CookieConsentComponent } from './cookie-consent/cookie-consent.componen
 export class CookieConsentSnackbarService {
 
   constructor(private snackBar: MatSnackBar,
-    private cookieConsentService: CookieConsentService,
-    private tutorialService: TutorialService) { }
+    private cookieConsentService: CookieConsentService) { }
 
   openCookieConsentSnackBar() {
     if (!this.cookieConsentService.hasAcceptedCookieConsent()) {
       setTimeout(() => this.cookieConsentService.snackBarRef = this.snackBar.openFromComponent(CookieConsentComponent, {
         duration: undefined
       }));
-    } else {
-      this.tutorialService.checkHasVisited();
     }
   }
 }
