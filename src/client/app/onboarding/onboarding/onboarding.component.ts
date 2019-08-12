@@ -3,6 +3,7 @@ import { MatTab } from '@angular/material/tabs';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { CookieConsentSnackbarService } from '../../shared/cookie-consent/cookie-consent-snackbar.service';
 import { CookieConsentService } from '../../shared/cookie-consent/cookie-consent.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { PWAService } from '../../shared/pwa-helper/pwa.service';
 import { ThemeService } from '../../shared/services/theme.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
@@ -26,9 +27,12 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
         public pwaService: PWAService,
         public themeService: ThemeService,
         private tutorialService: TutorialService,
-        private changeDetectorRef: ChangeDetectorRef) { }
+        private changeDetectorRef: ChangeDetectorRef,
+        private navigationService: NavigationService) { }
 
     ngAfterViewInit() {
+        this.navigationService.backRouterPath = '/';
+
         this.numberOfTabs = this.matTabList.length;
 
         const bubbles = [];

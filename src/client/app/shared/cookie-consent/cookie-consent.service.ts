@@ -19,6 +19,9 @@ export class CookieConsentService {
 
   acceptCookieConsent() {
     localStorage.setItem(this.cookieConsentStorageKey, 'true');
-    this.snackBarRef.dismiss();
+
+    if (this.snackBarRef) {
+      this.snackBarRef.dismiss();
+    }
   }
 }
