@@ -2,6 +2,10 @@ header {
 	display: flex;
 	align-items: center;
 
+	&.has-install-banner-above {
+		margin-top: 64px;
+	}
+
 	button {
 		margin-top: -20px;
 	}

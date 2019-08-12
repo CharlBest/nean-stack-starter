@@ -1,5 +1,5 @@
 <div [style.height.px]="toolbarHeight"
-  *ngIf="canShowInstallBanner"
+  *ngIf="navigationService?.showInstallBanner"
   class="install-banner">
   <button mat-icon-button
     (click)="updateInstallBanner(false)"

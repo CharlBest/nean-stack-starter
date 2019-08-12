@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { SearchService } from '../search.service';
 
@@ -22,7 +23,8 @@ export class SearchComponent implements OnInit {
     public bpService: BreakpointService,
     private fb: FormBuilder,
     private location: Location,
-    private searchService: SearchService) { }
+    private searchService: SearchService,
+    public navigationService: NavigationService) { }
 
   ngOnInit() {
     this.formOnInit();

@@ -7,4 +7,5 @@ export class NavigationService {
     backRouterPath: string | null;
     previousUrl = '';
     navigationPlaceholderTemplate: TemplateRef<ElementRef> | null;
+    showInstallBanner = false;
 }

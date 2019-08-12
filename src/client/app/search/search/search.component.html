@@ -1,4 +1,4 @@
-<header>
+<header [class.has-install-banner-above]="navigationService.showInstallBanner">
     <button mat-icon-button
         (click)="back()"
         type="button">

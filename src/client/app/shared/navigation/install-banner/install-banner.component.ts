@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PWAService } from '../../pwa-helper/pwa.service';
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-install-banner',
@@ -9,12 +10,14 @@ import { PWAService } from '../../pwa-helper/pwa.service';
 export class InstallBannerComponent implements OnInit {
 
   @Input() toolbarHeight: number;
-  canShowInstallBanner = this.pwaService.canInstallAndNotInPWA;
   @Output() showInstallBanner: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public pwaService: PWAService) { }
+  constructor(public navigationService: NavigationService,
+    public pwaService: PWAService) { }
 
   ngOnInit() {
+    this.navigationService.showInstallBanner = this.pwaService.canInstallAndNotInPWA;
+
     // Watch for before install prompt to show install banner
     this.pwaService.beforeInstallPromptChange.subscribe(() => {
       if (this.pwaService.canInstallAndNotInPWA) {
@@ -24,7 +27,7 @@ export class InstallBannerComponent implements OnInit {
   }
 
   updateInstallBanner(canShowInstallBanner: boolean) {
-    this.canShowInstallBanner = canShowInstallBanner;
+    this.navigationService.showInstallBanner = canShowInstallBanner;
     this.showInstallBanner.emit(canShowInstallBanner);
   }
 }
