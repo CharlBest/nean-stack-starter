@@ -16,7 +16,7 @@ export class Database {
                 disableLosslessIntegers: true,
                 logging: {
                     level: 'warn',
-                    logger: (level, message) => { logger.log(level, `Neo4j - ${message}`); }
+                    logger: (level, message) => logger.log(level, `Neo4j - ${message}`)
                 }
             }
         );
