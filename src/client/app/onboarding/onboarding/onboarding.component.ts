@@ -37,6 +37,14 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Hide install banner if it's showing
         this.navigationService.showInstallBanner = false;
+
+        // Watch for before install prompt to show install banner
+        this.pwaService.beforeInstallPromptChange.subscribe(() => {
+            if (this.pwaService.canInstallAndNotInPWA) {
+                this.navigationService.showInstallBanner = false;
+                this.showInstallBannerOnLoad = true;
+            }
+        });
     }
 
     ngAfterViewInit() {
