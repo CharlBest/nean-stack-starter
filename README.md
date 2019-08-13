@@ -833,8 +833,8 @@ docker top <container_name>
     3.1 Neo4j
     * Go to localhost:7474 in your browser
     * :server user add
-    * Username = "server_web", Roles = "Publisher"
-    * Username = "server_worker", Roles = "Publisher"
+    * Username = "server_web", Roles = "architect"
+    * Username = "server_worker", Roles = "architect"
     * Do the same for other db instance on localhost:7475
         * :server  disconnect
         * :server user add
