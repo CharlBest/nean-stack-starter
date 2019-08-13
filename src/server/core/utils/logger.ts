@@ -20,7 +20,7 @@ export const logger = createLogger({
         // Set logging to ouput debug (all) to console if not in prod else only error console logs
         //
         new (transports.Console)({
-            level: environment.production ? 'error' : 'debug'
+            level: environment.production ? 'info' : 'debug'
         })
     ]
 });
