@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatTab } from '@angular/material/tabs';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { CookieConsentSnackbarService } from '../../shared/cookie-consent/cookie-consent-snackbar.service';
@@ -12,7 +12,7 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
     templateUrl: './onboarding.component.html',
     styleUrls: ['./onboarding.component.scss']
 })
-export class OnboardingComponent implements AfterViewInit, OnDestroy {
+export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChildren(MatTab) matTabList: QueryList<MatTab>;
     numberOfTabs: number;
@@ -21,6 +21,7 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
     hasAcceptedCookieConsentOnLoad = this.cookieConsentService.hasAcceptedCookieConsent();
     hasAcceptedCookieConsent = this.hasAcceptedCookieConsentOnLoad;
     isDarkThemeOnLoad = this.themeService.isDarkTheme;
+    showInstallBannerOnLoad = this.navigationService.showInstallBanner;
 
     constructor(public cookieConsentService: CookieConsentService,
         private cookieConsentSnackbarService: CookieConsentSnackbarService,
@@ -30,9 +31,15 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
         private changeDetectorRef: ChangeDetectorRef,
         private navigationService: NavigationService) { }
 
-    ngAfterViewInit() {
+    ngOnInit() {
+        // When using back nav bar after onboarding go to home
         this.navigationService.backRouterPath = '/';
 
+        // Hide install banner if it's showing
+        this.navigationService.showInstallBanner = false;
+    }
+
+    ngAfterViewInit() {
         this.numberOfTabs = this.matTabList.length;
 
         const bubbles = [];
@@ -68,5 +75,6 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.cookieConsentSnackbarService.openCookieConsentSnackBar();
+        this.navigationService.showInstallBanner = this.showInstallBannerOnLoad;
     }
 }

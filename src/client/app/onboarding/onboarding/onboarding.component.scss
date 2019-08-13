@@ -1,11 +1,7 @@
-// Small hack to fill the entire background
-::ng-deep main {
-	max-width: initial !important;
-	padding-bottom: 0 !important;
-	height: 100%;
-}
-
 :host {
+	position: absolute;
+	left: 0;
+	right: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
