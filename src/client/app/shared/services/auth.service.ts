@@ -28,32 +28,6 @@ export class AuthService implements CanActivate {
     constructor(private router: Router,
         private dialog: MatDialog) { }
 
-    private getDataFromJWT(): { id: number | null, expireDate: number | null } {
-        const token = this.getLocalToken();
-
-        if (token) {
-            const parsedToken = this.parseJwt(token) as { data: UserTokenModel, exp: number };
-
-            const id = +parsedToken.data.i /* alias for ID */;
-            const expireDate = +parsedToken.exp;
-
-            return { id, expireDate };
-        }
-
-        return { id: null, expireDate: null };
-    }
-
-    private parseJwt(token: string) {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        try {
-            return JSON.parse(window.atob(base64));
-        } catch (e) {
-            console.error('problem with token parsing');
-            return null;
-        }
-    }
-
     init() {
         this.updateLoggedInUser();
     }
@@ -102,6 +76,32 @@ export class AuthService implements CanActivate {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private getDataFromJWT(): { id: number | null, expireDate: number | null } {
+        const token = this.getLocalToken();
+
+        if (token) {
+            const parsedToken = this.parseJwt(token) as { data: UserTokenModel, exp: number };
+
+            const id = +parsedToken.data.i /* alias for ID */;
+            const expireDate = +parsedToken.exp;
+
+            return { id, expireDate };
+        }
+
+        return { id: null, expireDate: null };
+    }
+
+    private parseJwt(token: string) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        try {
+            return JSON.parse(window.atob(base64));
+        } catch (e) {
+            console.error('problem with token parsing');
+            return null;
         }
     }
 }

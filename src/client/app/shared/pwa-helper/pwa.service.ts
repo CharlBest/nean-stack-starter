@@ -16,6 +16,12 @@ export class PWAService {
         this.addEventForBeforeInstallPrompt();
     }
 
+    openInstallPrompt() {
+        if (this.beforeInstallPromptEvent) {
+            (this.beforeInstallPromptEvent as any /*BeforeInstallPromptEvent*/).prompt();
+        }
+    }
+
     private addEventForBeforeInstallPrompt() {
         window.addEventListener('beforeinstallprompt', (beforeInstallPromptEvent) => {
             // Prevents immediate prompt display
@@ -23,11 +29,5 @@ export class PWAService {
             this.beforeInstallPromptEvent = beforeInstallPromptEvent;
             this.beforeInstallPromptChange.emit();
         });
-    }
-
-    openInstallPrompt() {
-        if (this.beforeInstallPromptEvent) {
-            (this.beforeInstallPromptEvent as any /*BeforeInstallPromptEvent*/).prompt();
-        }
     }
 }

@@ -19,127 +19,6 @@ class PaymentsService extends BaseService {
         super();
     }
 
-    // #region Private
-
-    private async createCharge(source: string, amount: number, userId: number | null = null,
-        customerId: string | null = null, email: string | null = null) {
-        const stripeAccount = new stripe(environment.stripe.secretKey);
-
-        const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
-            amount: amount * 100,
-            currency: 'EUR',
-            description: 'Donation',
-            source,
-            metadata: {
-                paymentUId: nodeUUId()
-            }
-        };
-
-        if (chargeCreationOptions.metadata) {
-            if (userId) {
-                chargeCreationOptions.metadata.userId = userId;
-            }
-            if (email) {
-                chargeCreationOptions.metadata.email = email;
-            }
-        }
-
-        if (customerId) {
-            chargeCreationOptions.customer = customerId;
-        }
-
-        try {
-            return await stripeAccount.charges.create(chargeCreationOptions);
-        } catch (error) {
-            const errorMessage = 'Error creating charge';
-            logger.error(errorMessage, [error, chargeCreationOptions]);
-            throw new Error(errorMessage);
-        }
-    }
-
-    private async createStripeCard(res: Response, user: UserLiteModel, token: string)
-        : Promise<{ card: CardModel, stripeCustomerId: string }> {
-        const stripeAccount = new stripe(environment.stripe.secretKey);
-
-        try {
-            if (!user.stripeCustomerId) {
-                const customer = await stripeAccount.customers.create({
-                    source: token,
-                    email: user.email,
-                    metadata: {
-                        userId: user.id,
-                        userUId: user.uId
-                    }
-                });
-
-                const retrievedCustomer = await stripeAccount.customers.retrieve(customer.id, {
-                    expand: ['default_source']
-                });
-
-                const card = await paymentsRepository.createCard(
-                    res,
-                    this.getUserId(res),
-                    customer.id,
-                    nodeUUId(),
-                    (retrievedCustomer.default_source as stripe.cards.ICard).id,
-                    (retrievedCustomer.default_source as stripe.cards.ICard).fingerprint,
-                    (retrievedCustomer.default_source as stripe.cards.ICard).brand,
-                    (retrievedCustomer.default_source as stripe.cards.ICard).last4,
-                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_month,
-                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_year
-                );
-
-                if (!card) {
-                    const errorMessage = 'Error creating Stripe card with new customer';
-                    logger.error(errorMessage, [user, customer, retrievedCustomer]);
-                    throw new Error(errorMessage);
-                }
-
-                return {
-                    card,
-                    stripeCustomerId: customer.id
-                };
-            } else {
-                const newCard = await stripeAccount.customers.createSource(user.stripeCustomerId, {
-                    source: token
-                }) as stripe.ICard;
-
-                const userId = this.getUserId(res);
-                const card = await paymentsRepository.createCard(res, userId, user.stripeCustomerId,
-                    nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4, +newCard.exp_month, +newCard.exp_year);
-
-                if (!card) {
-                    const errorMessage = 'Error creating Stripe card with existing';
-                    logger.error(errorMessage, [userId, user, newCard]);
-                    throw new Error(errorMessage);
-                }
-
-                return {
-                    card,
-                    stripeCustomerId: user.stripeCustomerId
-                };
-            }
-        } catch (error) {
-            const errorMessage = 'Error creating Stripe card';
-            logger.error(errorMessage, [error, user, token]);
-            throw new Error(errorMessage);
-        }
-    }
-
-    private async getStripeCardDetails(res: Response, token: string): Promise<stripe.tokens.IToken> {
-        const stripeAccount = new stripe(environment.stripe.secretKey);
-
-        try {
-            return await stripeAccount.tokens.retrieve(token);
-        } catch (error) {
-            const errorMessage = 'Error getting Stripe card details';
-            logger.error(errorMessage, [error, token]);
-            throw new Error(errorMessage);
-        }
-    }
-
-    // #endregion
-
     async anonymousPayment(res: Response, token: string, amount: number, email: string): Promise<boolean> {
         const charge = await this.createCharge(token, amount, null, null, email);
 
@@ -305,6 +184,128 @@ class PaymentsService extends BaseService {
     async paymentHistory(res: Response): Promise<PaymentModel[] | null> {
         return await paymentsRepository.paymentHistory(res, this.getUserId(res));
     }
+
+    // #region Private
+
+    private async createCharge(source: string, amount: number, userId: number | null = null,
+        customerId: string | null = null, email: string | null = null) {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+
+        const chargeCreationOptions: stripe.charges.IChargeCreationOptions = {
+            amount: amount * 100,
+            currency: 'EUR',
+            description: 'Donation',
+            source,
+            metadata: {
+                paymentUId: nodeUUId()
+            }
+        };
+
+        if (chargeCreationOptions.metadata) {
+            if (userId) {
+                chargeCreationOptions.metadata.userId = userId;
+            }
+            if (email) {
+                chargeCreationOptions.metadata.email = email;
+            }
+        }
+
+        if (customerId) {
+            chargeCreationOptions.customer = customerId;
+        }
+
+        try {
+            return await stripeAccount.charges.create(chargeCreationOptions);
+        } catch (error) {
+            const errorMessage = 'Error creating charge';
+            logger.error(errorMessage, [error, chargeCreationOptions]);
+            throw new Error(errorMessage);
+        }
+    }
+
+    private async createStripeCard(res: Response, user: UserLiteModel, token: string)
+        : Promise<{ card: CardModel, stripeCustomerId: string }> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+
+        try {
+            if (!user.stripeCustomerId) {
+                const customer = await stripeAccount.customers.create({
+                    source: token,
+                    email: user.email,
+                    metadata: {
+                        userId: user.id,
+                        userUId: user.uId
+                    }
+                });
+
+                const retrievedCustomer = await stripeAccount.customers.retrieve(customer.id, {
+                    expand: ['default_source']
+                });
+
+                const card = await paymentsRepository.createCard(
+                    res,
+                    this.getUserId(res),
+                    customer.id,
+                    nodeUUId(),
+                    (retrievedCustomer.default_source as stripe.cards.ICard).id,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).fingerprint,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).brand,
+                    (retrievedCustomer.default_source as stripe.cards.ICard).last4,
+                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_month,
+                    +(retrievedCustomer.default_source as stripe.cards.ICard).exp_year
+                );
+
+                if (!card) {
+                    const errorMessage = 'Error creating Stripe card with new customer';
+                    logger.error(errorMessage, [user, customer, retrievedCustomer]);
+                    throw new Error(errorMessage);
+                }
+
+                return {
+                    card,
+                    stripeCustomerId: customer.id
+                };
+            } else {
+                const newCard = await stripeAccount.customers.createSource(user.stripeCustomerId, {
+                    source: token
+                }) as stripe.ICard;
+
+                const userId = this.getUserId(res);
+                const card = await paymentsRepository.createCard(res, userId, user.stripeCustomerId,
+                    nodeUUId(), newCard.id, newCard.fingerprint, newCard.brand, newCard.last4, +newCard.exp_month, +newCard.exp_year);
+
+                if (!card) {
+                    const errorMessage = 'Error creating Stripe card with existing';
+                    logger.error(errorMessage, [userId, user, newCard]);
+                    throw new Error(errorMessage);
+                }
+
+                return {
+                    card,
+                    stripeCustomerId: user.stripeCustomerId
+                };
+            }
+        } catch (error) {
+            const errorMessage = 'Error creating Stripe card';
+            logger.error(errorMessage, [error, user, token]);
+            throw new Error(errorMessage);
+        }
+    }
+
+    private async getStripeCardDetails(res: Response, token: string): Promise<stripe.tokens.IToken> {
+        const stripeAccount = new stripe(environment.stripe.secretKey);
+
+        try {
+            return await stripeAccount.tokens.retrieve(token);
+        } catch (error) {
+            const errorMessage = 'Error getting Stripe card details';
+            logger.error(errorMessage, [error, token]);
+            throw new Error(errorMessage);
+        }
+    }
+
+    // #endregion
+
 }
 
 export const paymentsService = new PaymentsService();

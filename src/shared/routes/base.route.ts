@@ -2,6 +2,22 @@ export class BaseRoute {
     constructor(public rootRoute: string, public route: string,
         public params?: { [key: string]: QueryParam }, public version = 1) { }
 
+    server(): string {
+        return `/v${this.version}/${this.rootRoute}/${this.route}${this.serverUrlParams()}`;
+    }
+
+    client(queryParams?: { [key: string]: QueryParam }): string {
+        let url = `/api/v${this.version}/${this.rootRoute}/${this.route}`;
+
+        // Url params
+        url = this.clientUrlParams(url);
+
+        // Query params
+        url = this.clientQueryParams(url, queryParams);
+
+        return url;
+    }
+
     private serverUrlParams() {
         if (this.params) {
             return `/:${Object.keys(this.params).join('/:')}`;
@@ -32,22 +48,6 @@ export class BaseRoute {
                 }
             }
         }
-
-        return url;
-    }
-
-    server(): string {
-        return `/v${this.version}/${this.rootRoute}/${this.route}${this.serverUrlParams()}`;
-    }
-
-    client(queryParams?: { [key: string]: QueryParam }): string {
-        let url = `/api/v${this.version}/${this.rootRoute}/${this.route}`;
-
-        // Url params
-        url = this.clientUrlParams(url);
-
-        // Query params
-        url = this.clientQueryParams(url, queryParams);
 
         return url;
     }

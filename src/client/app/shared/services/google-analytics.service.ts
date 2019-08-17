@@ -22,6 +22,29 @@ export class GoogleAnalyticsService implements OnDestroy {
   constructor(private logger: LoggerService,
     private router: Router) { }
 
+  init() {
+    this.initializeGa();
+
+    if ((window as CustomWindow).appType === 'web') {
+      this.ga('create', environment.googleAnalytics.web, 'auto');
+    } else if ((window as CustomWindow).appType === 'ios') {
+      this.ga('create', environment.googleAnalytics.ios, 'auto');
+    } else if ((window as CustomWindow).appType === 'chromeextension') {
+      this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
+    }
+
+    this.trackRouterNavigation();
+  }
+
+  emitEvent(eventCategory: string, eventAction: string, eventLabel: string | null = null, eventValue: number | null = null) {
+    this.ga('send', 'event', {
+      eventCategory,
+      eventLabel,
+      eventAction,
+      eventValue
+    });
+  }
+
   private locationChanged(url: string) {
     this.sendPage(url);
   }
@@ -64,29 +87,6 @@ export class GoogleAnalyticsService implements OnDestroy {
           this.locationChanged(event.urlAfterRedirects);
         }
       });
-  }
-
-  init() {
-    this.initializeGa();
-
-    if ((window as CustomWindow).appType === 'web') {
-      this.ga('create', environment.googleAnalytics.web, 'auto');
-    } else if ((window as CustomWindow).appType === 'ios') {
-      this.ga('create', environment.googleAnalytics.ios, 'auto');
-    } else if ((window as CustomWindow).appType === 'chromeextension') {
-      this.ga('create', environment.googleAnalytics.chromeExtension, 'auto');
-    }
-
-    this.trackRouterNavigation();
-  }
-
-  emitEvent(eventCategory: string, eventAction: string, eventLabel: string | null = null, eventValue: number | null = null) {
-    this.ga('send', 'event', {
-      eventCategory,
-      eventLabel,
-      eventAction,
-      eventValue
-    });
   }
 
   ngOnDestroy() {

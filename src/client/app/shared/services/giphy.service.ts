@@ -20,54 +20,6 @@ export class GiphyService {
 
     constructor(private http: HttpClient) { }
 
-    private paramsMapper(tags?: any, limit?: string, offset?: string, rating?: string) {
-        const params = new Params();
-
-        if (tags) {
-            params.q = tags.constructor === Array ? tags.join('+') : tags;
-        }
-
-        if (limit) {
-            params.limit = limit;
-        }
-
-        if (offset) {
-            params.offset = offset;
-        }
-
-        if (rating) {
-            params.rating = rating;
-        }
-
-        return params;
-    }
-
-    private responseMapper(response: any, returnUrl: any) {
-        if (!returnUrl) {
-            return response;
-        }
-
-        const isArray = response.constructor === Array;
-        if (!isArray) {
-            return response.images.original.url;
-        }
-
-        return response.map((item: any) => {
-            return item.images.original.url;
-        });
-    }
-
-    private get(url: string, data?: any): Observable<any> {
-        const params = data || {};
-        params.api_key = this.apiKey;
-        return this.http.get(url, { params })
-            .pipe(
-                map((x: any) => {
-                    return x.data.data;
-                })
-            );
-    }
-
     find(tags: any, limit: any, offset: any, rating: any): Promise<any> {
         return this.get(this.url.find, this.paramsMapper(tags, limit, offset, rating))
             .pipe(
@@ -129,6 +81,54 @@ export class GiphyService {
                     return this.responseMapper(x, true);
                 })
             ).toPromise();
+    }
+
+    private paramsMapper(tags?: any, limit?: string, offset?: string, rating?: string) {
+        const params = new Params();
+
+        if (tags) {
+            params.q = tags.constructor === Array ? tags.join('+') : tags;
+        }
+
+        if (limit) {
+            params.limit = limit;
+        }
+
+        if (offset) {
+            params.offset = offset;
+        }
+
+        if (rating) {
+            params.rating = rating;
+        }
+
+        return params;
+    }
+
+    private responseMapper(response: any, returnUrl: any) {
+        if (!returnUrl) {
+            return response;
+        }
+
+        const isArray = response.constructor === Array;
+        if (!isArray) {
+            return response.images.original.url;
+        }
+
+        return response.map((item: any) => {
+            return item.images.original.url;
+        });
+    }
+
+    private get(url: string, data?: any): Observable<any> {
+        const params = data || {};
+        params.api_key = this.apiKey;
+        return this.http.get(url, { params })
+            .pipe(
+                map((x: any) => {
+                    return x.data.data;
+                })
+            );
     }
 }
 

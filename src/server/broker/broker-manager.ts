@@ -3,9 +3,6 @@ import { broker } from './broker';
 import { QueueType } from './queue-type.enum';
 
 class BrokerManager {
-    private encode(data: string) {
-        return Buffer.from(JSON.stringify(data));
-    }
 
     async sendToQueue(queueType: QueueType, data: any): Promise<void> {
         const errorMessage = `Error sending to queue on RabbitMQ`;
@@ -23,6 +20,11 @@ class BrokerManager {
             throw new Error(error);
         }
     }
+
+    private encode(data: string) {
+        return Buffer.from(JSON.stringify(data));
+    }
+
 }
 
 export const brokerManager = new BrokerManager();

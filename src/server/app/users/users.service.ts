@@ -30,29 +30,6 @@ class UsersService extends BaseService {
         super();
     }
 
-    // #region private
-
-    private generateSalt(): string {
-        const saltBuffer = randomBytes(16);
-        return saltBuffer.toString('hex');
-    }
-
-    private async hashPassword(password: string, salt: string): Promise<string> {
-        const hashedPassword = pbkdf2Sync(password, salt, 10000, 32, 'sha512');
-        return hashedPassword.toString('hex');
-    }
-
-    private async verifyPassword(password: string, salt: string, passwordAttempt: string): Promise<boolean> {
-        const hashedPassword = await this.hashPassword(passwordAttempt, salt);
-        if (password === hashedPassword) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // #endregion
-
     async createUser(res: Response, email: string, username: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
@@ -334,6 +311,29 @@ class UsersService extends BaseService {
         viewModel.qrCodeKeyUri = authenticator.keyuri(user.email, 'NEAN', user.twoFactorAuthenticationSecret);
         return viewModel;
     }
+
+    // #region private
+
+    private generateSalt(): string {
+        const saltBuffer = randomBytes(16);
+        return saltBuffer.toString('hex');
+    }
+
+    private async hashPassword(password: string, salt: string): Promise<string> {
+        const hashedPassword = pbkdf2Sync(password, salt, 10000, 32, 'sha512');
+        return hashedPassword.toString('hex');
+    }
+
+    private async verifyPassword(password: string, salt: string, passwordAttempt: string): Promise<boolean> {
+        const hashedPassword = await this.hashPassword(passwordAttempt, salt);
+        if (password === hashedPassword) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // #endregion
 }
 
 export const usersService = new UsersService();

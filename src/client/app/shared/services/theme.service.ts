@@ -52,6 +52,17 @@ export class ThemeService {
 
     constructor(private dialogService: DialogService) { }
 
+    init() {
+        this.updateTheme();
+        this.addNativeColorSchemeListener('dark');
+        this.addNativeColorSchemeListener('light');
+    }
+
+    toggleTheme() {
+        this.darkTheme = !this.darkTheme;
+        this.updateTheme();
+    }
+
     private isPreferColorScheme(value: string): boolean {
         return window.matchMedia(`(prefers-color-scheme: ${value})`).matches;
     }
@@ -82,16 +93,5 @@ export class ThemeService {
                 }
             }
         });
-    }
-
-    init() {
-        this.updateTheme();
-        this.addNativeColorSchemeListener('dark');
-        this.addNativeColorSchemeListener('light');
-    }
-
-    toggleTheme() {
-        this.darkTheme = !this.darkTheme;
-        this.updateTheme();
     }
 }
