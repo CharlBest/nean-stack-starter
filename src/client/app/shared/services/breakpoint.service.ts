@@ -3,6 +3,11 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 
+// Use this service if you can to detect if the user is using a
+// mobile or desktop. Useful for showing and hiding things in the
+// UI that is specific for that platform like native share functionality
+// on mobile
+
 @Injectable({
     providedIn: 'root'
 })

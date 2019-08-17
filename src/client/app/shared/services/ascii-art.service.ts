@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ThemeService } from './theme.service';
 
+// Use this service if you want to output some sick ascii art in the console
+// showing off your brand or something
+
 @Injectable({
   providedIn: 'root'
 })

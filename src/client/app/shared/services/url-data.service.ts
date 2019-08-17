@@ -3,6 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 
+// Use this service if you want to store data big data like objects in the url
+// This is useful for when you want to prevent the user from losing data in their
+// current session. The advantage of using this over local storage is when you share
+// the url someone else can get that sessions data as well like prefilling a form
+
 @Injectable({
     providedIn: 'root'
 })

@@ -3,6 +3,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+// Use this service if you want an event to fire whenever the user
+// navigates to the same url that they are on. This is useful in
+// scenarios like the home page where if you click on the home icon
+// in the navigation bar to expect the page to scroll up and render
+// the latest content or at least refresh
+
 @Injectable()
 export class RefreshSameUrlService implements OnDestroy {
     // NB: This service should be provided in the component's providers so that OnDestory gets called
