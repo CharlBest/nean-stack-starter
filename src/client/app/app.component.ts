@@ -5,6 +5,7 @@ import { OnboardingService } from './onboarding/onboarding.service';
 import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
 import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { PWAService } from './shared/pwa-helper/pwa.service';
+import { ActiveTimerService } from './shared/services/active-timer.service';
 import { ASCIIArtService } from './shared/services/ascii-art.service';
 import { AuthService } from './shared/services/auth.service';
 import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
@@ -25,7 +26,8 @@ export class AppComponent {
     private cookieConsentSnackbarService: CookieConsentSnackbarService,
     private networkStatusService: NetworkStatusService,
     private pwaService: PWAService,
-    private onboardingService: OnboardingService) {
+    private onboardingService: OnboardingService,
+    private activeTimerService: ActiveTimerService) {
     // Authentication
     this.authService.init();
 
@@ -37,6 +39,9 @@ export class AppComponent {
 
     // Activate notifications
     this.notificationService.init();
+
+    // Alert user if they've used the platform for too long
+    this.activeTimerService.init();
 
     // Show onboarding
     if (!this.onboardingService.openOnboarding()) {
