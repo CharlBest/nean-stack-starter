@@ -16,6 +16,7 @@ import { DialogModule } from './shared/dialog/dialog.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error-interceptor';
 import { NavigationModule } from './shared/navigation/navigation.module';
+import { ParticleEffectModule } from './shared/particle-effect/particle-effect.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     TutorialModule,
     DialogModule,
     ClipboardModule,
+    ParticleEffectModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
