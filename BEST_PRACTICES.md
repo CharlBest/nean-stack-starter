@@ -9,6 +9,7 @@
 * Use this regex ]="[a-zA-Z$]*\((\$event)?\)" in VSCode to test templates to see if methods are being used to evaluate values
 * Check that the viewModel from req.body is not accessing inner objects that might be undefined and throw an exception
 * Add loading="lazy" to all image tags
+* Prevent posting the same request when still in progress by hiding the form and showing preloader or disabling the submit button
 
 ### Testing
 * Responsiveness by resizing window
