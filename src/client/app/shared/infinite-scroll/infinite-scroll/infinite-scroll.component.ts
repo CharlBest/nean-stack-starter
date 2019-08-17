@@ -9,6 +9,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
   @Input() options = {};
   @Input() isProcessing: boolean;
   @Output() scrolled = new EventEmitter<void>();
+  @ViewChild('wrapper', { static: true }) wrapper: ElementRef<HTMLDivElement>;
   @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
   get element() {
     return this.host.nativeElement;
@@ -25,7 +26,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
     };
 
     this.observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !this.isProcessing) {
+      if (entry.isIntersecting && !this.isProcessing && this.wrapper.nativeElement.childElementCount > 0) {
         this.scrolled.emit();
       }
     }, options);

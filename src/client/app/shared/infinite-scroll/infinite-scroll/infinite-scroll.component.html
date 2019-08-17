@@ -1,5 +1,8 @@
-<ng-content></ng-content>
+<div #wrapper>
+    <ng-content></ng-content>
+</div>
 
-<app-preloader [style.visibility]="isProcessing ? 'visible' : 'hidden'"></app-preloader>
+<app-preloader *ngIf="isProcessing || wrapper?.childElementCount > 0"
+    [style.visibility]="isProcessing ? 'visible' : 'hidden'"></app-preloader>
 
 <div #anchor></div>
