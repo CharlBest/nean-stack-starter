@@ -22,8 +22,7 @@
 </header>
 
 <app-infinite-scroll (scrolled)="onScroll()"
-    [isProcessing]="isProcessing"
-    *ngIf="items?.length > 0">
+    [isProcessing]="isProcessing">
 
     <app-item *ngFor="let item of items; trackBy: trackByFn"
         [item]="item"></app-item>
