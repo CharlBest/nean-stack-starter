@@ -21,10 +21,8 @@ export class MediaComponent implements OnChanges {
     public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      if (changes.hasOwnProperty(propName) && propName === 'src' && this.src) {
-        this.processMediaType();
-      }
+    if (changes.src && this.src) {
+      this.processMediaType();
     }
   }
 
