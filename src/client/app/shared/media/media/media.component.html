@@ -9,15 +9,21 @@
       *ngIf="safeSrc !== ''"
       (click)="openViewMediaDialog()"
       [src]="safeSrc"
-      alt="image">
+      alt="image"
+      loading="lazy"
+      width="100%"
+      height="100%">
   </div>
 
   <div *ngIf="mediaTypeEnum.YOUTUBE === mediaType">
     <div *ngIf="thumbnail"
       class="thumbnail-container">
-      <img class="img thumbnail"
+      <img class="thumbnail"
         [src]="safeSrc"
-        alt="image">
+        alt="image"
+        loading="lazy"
+        width="100%"
+        height="100%">
     </div>
     <div *ngIf="!thumbnail">
       <iframe [src]="safeSrc"
@@ -37,7 +43,8 @@
       frameborder="0"
       webkitallowfullscreen
       mozallowfullscreen
-      allowfullscreen></iframe>
+      allowfullscreen
+      loading="lazy"></iframe>
   </div>
 
 </ng-container>

@@ -1,14 +1,22 @@
 <mat-card *ngIf="!isProcessing && item"
     [appRightClickContextMenu]="contextMenu">
     <mat-card-content>
+
+        <!-- Header -->
         <div class="header">
             <button routerLink="/user/{{item?.user?.id}}"
                 mat-button
                 type="button">
                 <div>
-                    <div *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
+                    <!-- Avatar -->
+                    <img *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
                         mat-card-avatar
-                        [style.background-image]="'url(' + item?.user?.avatarUrl + ')'"></div>
+                        [src]="item?.user?.avatarUrl"
+                        loading="lazy"
+                        width="40"
+                        height="40" />
+
+                    <!-- Default Avatar -->
                     <ng-template #defaultAvatar>
                         <div mat-card-avatar
                             class="default-avatar">
@@ -16,6 +24,7 @@
                         </div>
                     </ng-template>
 
+                    <!-- Name -->
                     <div class="header-text-container">
                         <mat-card-title>{{item?.user?.username}}</mat-card-title>
                         <mat-card-subtitle>{{item.dateCreated | date:'HH:mm MMM d, y'}}</mat-card-subtitle>
@@ -23,6 +32,7 @@
                 </div>
             </button>
 
+            <!-- Context Menu -->
             <app-context-menu #contextMenu>
                 <mat-nav-list>
                     <mat-list-item (click)="copyLink()">
@@ -86,7 +96,9 @@
 
             <img mat-card-image
                 [src]="item?.media[activeMediaIndex]"
-                alt="item image">
+                alt="item image"
+                loading="lazy"
+                height="100%">
         </div>
 
         <div routerLink="/item/comments/{{item.uId}}"

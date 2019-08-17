@@ -6,7 +6,7 @@ $card-padding-override: 16px;
 
 .header {
 	display: flex;
-	margin-top: -$card-padding-override;
+	margin-top: -$card-padding-override !important;
 	margin-left: -$card-padding-override;
 	margin-right: -$card-padding-override;
 
@@ -68,7 +68,7 @@ $card-padding-override: 16px;
 	}
 
 	img {
-		margin-top: 0;
+		margin-top: 10px;
 		outline: none;
 	}
 }
