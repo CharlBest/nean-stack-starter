@@ -1,132 +1,134 @@
 <div (swiperight)="previous()"
     (swipeleft)="next()"
     class="container">
+    <div class="content">
 
-    <!-- Content -->
-    <mat-tab-group [(selectedIndex)]="selectedIndex"
-        animationDuration="600ms">
-        <mat-tab>
-            <ng-template matTabContent>
-                <h2>Welcome</h2>
+        <!-- Content -->
+        <mat-tab-group [(selectedIndex)]="selectedIndex"
+            animationDuration="600ms">
+            <mat-tab>
+                <ng-template matTabContent>
+                    <h2>Welcome</h2>
 
-                <p>Use this project as a base for any new software project</p>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="!hasAcceptedCookieConsentOnLoad">
-            <ng-template matTabContent>
-                <h2>Cookies</h2>
+                    <p>Use this project as a base for any new software project</p>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="!hasAcceptedCookieConsentOnLoad">
+                <ng-template matTabContent>
+                    <h2>Cookies</h2>
 
-                <p>By using NEAN's services you agree to our Cookies Use. We and our partners operate globally
-                    and use cookies, including for analytics, personalisation, and ads.</p>
+                    <p>By using NEAN's services you agree to our Cookies Use. We and our partners operate globally
+                        and use cookies, including for analytics, personalisation, and ads.</p>
 
-                <button mat-stroked-button
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="acceptCookieConsent()"
+                        [disabled]="hasAcceptedCookieConsent">
+                        {{hasAcceptedCookieConsent ? 'Accepted' : 'Accept'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="pwaService?.canInstallAndNotInPWA">
+                <ng-template matTabContent>
+                    <h2>Install</h2>
+
+                    <p>Use this application frequently? Why not install it.</p>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="pwaService.openInstallPrompt()">
+                        Install
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab *ngIf="themeService.isPreferColorSchemeDark && !isDarkThemeOnLoad">
+                <ng-template matTabContent>
+                    <h2>Dark Mode</h2>
+
+                    <p>We notice you have dark mode enabled on your device. Do you also want to get the dark theme for
+                        this app?</p>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="themeService.toggleTheme()">
+                        {{themeService.isDarkTheme ? 'Deactivate' : 'Activate'}}
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <h2>Tour</h2>
+
+                    <p>Take a tour to see what you can do.</p>
+
+                    <button mat-stroked-button
+                        type="button"
+                        (click)="takeTour()">
+                        Go
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <h2>Account</h2>
+
+                    <p>Want to stick around and join the community?</p>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/sign-up">
+                        Sign up
+                    </button>
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/login">
+                        Log In
+                    </button>
+                </ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template matTabContent>
+                    <h2>Explore</h2>
+
+                    <p>See what this app has to offer.</p>
+
+                    <button mat-stroked-button
+                        type="button"
+                        routerLink="/">
+                        Home
+                    </button>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div class="bottom-bar">
+            <!-- Bubbles -->
+            <div>
+                <span *ngFor="let bubble of bubbles"
+                    (click)="selectedIndex = bubble"
+                    class="bubble"
+                    [class.active]="selectedIndex === bubble"></span>
+            </div>
+
+            <!-- Left/Right controls -->
+            <div class="left-right-bar-container">
+                <button mat-icon-button
+                    (click)="previous()"
                     type="button"
-                    (click)="acceptCookieConsent()"
-                    [disabled]="hasAcceptedCookieConsent">
-                    {{hasAcceptedCookieConsent ? 'Accepted' : 'Accept'}}
+                    matTooltip="Previous"
+                    aria-label="Previous"
+                    [disabled]="selectedIndex === 0">
+                    <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
                 </button>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="pwaService?.canInstallAndNotInPWA">
-            <ng-template matTabContent>
-                <h2>Install</h2>
-
-                <p>Use this application frequently? Why not install it.</p>
-
-                <button mat-stroked-button
+                <button mat-icon-button
+                    (click)="next()"
                     type="button"
-                    (click)="pwaService.openInstallPrompt()">
-                    Install
+                    matTooltip="Next"
+                    aria-label="Next"
+                    [disabled]="selectedIndex === numberOfTabs - 1">
+                    <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
                 </button>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="themeService.isPreferColorSchemeDark && !isDarkThemeOnLoad">
-            <ng-template matTabContent>
-                <h2>Dark Mode</h2>
-
-                <p>We notice you have dark mode enabled on your device. Do you also want to get the dark theme for
-                    this app?</p>
-
-                <button mat-stroked-button
-                    type="button"
-                    (click)="themeService.toggleTheme()">
-                    {{themeService.isDarkTheme ? 'Deactivate' : 'Activate'}}
-                </button>
-            </ng-template>
-        </mat-tab>
-        <mat-tab>
-            <ng-template matTabContent>
-                <h2>Tour</h2>
-
-                <p>Take a tour to see what you can do.</p>
-
-                <button mat-stroked-button
-                    type="button"
-                    (click)="takeTour()">
-                    Go
-                </button>
-            </ng-template>
-        </mat-tab>
-        <mat-tab>
-            <ng-template matTabContent>
-                <h2>Account</h2>
-
-                <p>Want to stick around and join the community?</p>
-
-                <button mat-stroked-button
-                    type="button"
-                    routerLink="/sign-up">
-                    Sign up
-                </button>
-                <button mat-stroked-button
-                    type="button"
-                    routerLink="/login">
-                    Log In
-                </button>
-            </ng-template>
-        </mat-tab>
-        <mat-tab>
-            <ng-template matTabContent>
-                <h2>Explore</h2>
-
-                <p>See what this app has to offer.</p>
-
-                <button mat-stroked-button
-                    type="button"
-                    routerLink="/">
-                    Home
-                </button>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
-
-    <div class="bottom-bar">
-        <!-- Bubbles -->
-        <div>
-            <span *ngFor="let bubble of bubbles"
-                (click)="selectedIndex = bubble"
-                class="bubble"
-                [class.active]="selectedIndex === bubble"></span>
-        </div>
-
-        <!-- Left/Right controls -->
-        <div class="left-right-bar-container">
-            <button mat-icon-button
-                (click)="previous()"
-                type="button"
-                matTooltip="Previous"
-                aria-label="Previous"
-                [disabled]="selectedIndex === 0">
-                <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
-            </button>
-            <button mat-icon-button
-                (click)="next()"
-                type="button"
-                matTooltip="Next"
-                aria-label="Next"
-                [disabled]="selectedIndex === numberOfTabs - 1">
-                <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
-            </button>
+            </div>
         </div>
     </div>
 </div>
