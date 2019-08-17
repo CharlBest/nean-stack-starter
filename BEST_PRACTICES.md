@@ -7,7 +7,8 @@
 * Button type should always be set to button or submit
 * mat-icon-button should always contain a tooltop and aria-label
 * Use this regex ]="[a-zA-Z$]*\((\$event)?\)" in VSCode to test templates to see if methods are being used to evaluate values
-* Check that the viewModel from req.body is not accessing inner objects that might be undefined and throw an exception 
+* Check that the viewModel from req.body is not accessing inner objects that might be undefined and throw an exception
+* Add loading="lazy" to all image tags
 
 ### Testing
 * Responsiveness by resizing window
