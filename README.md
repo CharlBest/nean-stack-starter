@@ -139,6 +139,13 @@ In the environments folder there is 1 file. In development default values are us
 Note: firebase storage has authentication on their buckets. Whitelist your url or something
 
 
+## 3rd Party Cloud Solutions
+* GitHub (source code)
+* Firebase (image/blob storage)
+* SendGrid (email service)
+* Stripe (payment service)
+* Cloudflare (CDN)
+* Google Cloud (server)
 
 
 # Server setup
