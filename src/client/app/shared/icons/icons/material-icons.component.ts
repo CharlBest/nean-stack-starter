@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { Category } from '../material-icon-category.model';
 import { BaseIconComponent } from './base-icon.component';
-import { Category } from './icon-category.model';
 
 export function materialIconPath(iconName: string, category: string = Category.ACTION) {
-  return `../../../../../node_modules/material-design-icons/${category}/svg/production/ic_${iconName}_24px.svg`;
+  return `../../../../../../node_modules/material-design-icons/${category}/svg/production/ic_${iconName}_24px.svg`;
 }
 
 @Component({

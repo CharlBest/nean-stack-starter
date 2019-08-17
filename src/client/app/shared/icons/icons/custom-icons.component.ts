@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseIconComponent } from './base-icon.component';
 
 export function customIconPath(iconName: string) {
-  return `../../../assets/icons/${iconName}.svg`;
+  return `../../../../assets/icons/${iconName}.svg`;
 }
 
 @Component({
