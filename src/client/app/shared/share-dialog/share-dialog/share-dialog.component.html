@@ -1,22 +1,122 @@
 <h2 mat-dialog-title>Share</h2>
 <mat-dialog-content>
-    <a [href]="url"
-        (click)="copy()">{{url}}</a>
+
+    <mat-form-field appearance="fill">
+        <input matInput
+            [value]="url">
+
+        <span matSuffix>
+            <button mat-button
+                type="button"
+                (click)="copy()"
+                color="primary">COPY</button>
+        </span>
+    </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button
-        (click)="copy()"
-        type="button">COPY</button>
-    <button mat-stroked-button
-        type="button"
-        mat-dialog-close>Cancel</button>
+    <!-- Desktop -->
+    <ng-container *ngIf="bpService.isDesktop || !shareService.hasWebShareApi()">
+        <button mat-icon-button
+            (click)="openWhatsApp()"
+            type="button"
+            matTooltip="WhatsApp"
+            aria-label="WhatsApp">
+            <app-icon-whatsapp></app-icon-whatsapp>
+        </button>
+        <button mat-icon-button
+            (click)="openFacebook()"
+            type="button"
+            matTooltip="Facebook"
+            aria-label="Facebook">
+            <app-icon-facebook></app-icon-facebook>
+        </button>
+        <button mat-icon-button
+            (click)="openFacebookMessenger()"
+            type="button"
+            matTooltip="Facebook Messenger"
+            aria-label="Facebook Messenger">
+            <app-icon-messenger></app-icon-messenger>
+        </button>
+        <button mat-icon-button
+            (click)="openTwitter()"
+            type="button"
+            matTooltip="Twitter"
+            aria-label="Twitter">
+            <app-icon-twitter></app-icon-twitter>
+        </button>
+        <button mat-icon-button
+            (click)="openReddit()"
+            type="button"
+            matTooltip="Reddit"
+            aria-label="Reddit">
+            <app-icon-reddit></app-icon-reddit>
+        </button>
+        <button mat-icon-button
+            (click)="openWeChat()"
+            type="button"
+            matTooltip="WeChat"
+            aria-label="WeChat">
+            <app-icon-wechat></app-icon-wechat>
+        </button>
+        <button mat-icon-button
+            (click)="openLinkedIn()"
+            type="button"
+            matTooltip="Linked In"
+            aria-label="Linked In">
+            <app-icon-linkedin></app-icon-linkedin>
+        </button>
+        <button mat-icon-button
+            (click)="openPinterest()"
+            type="button"
+            matTooltip="Pinterest"
+            aria-label="Pinterest">
+            <app-icon-pinterest></app-icon-pinterest>
+        </button>
+        <button mat-icon-button
+            (click)="openTumblr()"
+            type="button"
+            matTooltip="Tumblr"
+            aria-label="Tumblr">
+            <app-icon-tumblr></app-icon-tumblr>
+        </button>
+        <button mat-icon-button
+            (click)="openBlogger()"
+            type="button"
+            matTooltip="Blogger"
+            aria-label="Blogger">
+            <app-icon-blogger></app-icon-blogger>
+        </button>
+        <button mat-icon-button
+            (click)="openMix()"
+            type="button"
+            matTooltip="Mix"
+            aria-label="Mix">
+            <app-icon-mix></app-icon-mix>
+        </button>
+        <button mat-icon-button
+            (click)="openEmail()"
+            type="button"
+            matTooltip="Email"
+            aria-label="Email">
+            <app-icon-email></app-icon-email>
+        </button>
+    </ng-container>
+
+    <!-- Mobile -->
+    <ng-container *ngIf="!bpService.isDesktop">
+        <button mat-icon-button
+            *ngIf="shareService.hasWebShareApi()"
+            (click)="webShare()"
+            type="button"
+            matTooltip="Share"
+            aria-label="Share">
+            <app-icon-share></app-icon-share>
+        </button>
+    </ng-container>
+
     <span class="flex-spacer"></span>
-    <button mat-icon-button
-        *ngIf="shareService.hasWebShareApi()"
-        (click)="webShare()"
+
+    <button mat-stroked-button
         type="button"
-        matTooltip="Share"
-        aria-label="Share">
-        <app-icon-share></app-icon-share>
-    </button>
+        mat-dialog-close>Close</button>
 </mat-dialog-actions>

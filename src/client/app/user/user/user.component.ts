@@ -96,7 +96,7 @@ export class UserComponent implements OnInit {
 
       const url = ['/user', this.userId];
       if (!this.shareService.webShareWithUrl('User', url)) {
-        this.shareDialogService.share(url);
+        this.shareDialogService.share(url, this.user.username);
       }
     }
   }

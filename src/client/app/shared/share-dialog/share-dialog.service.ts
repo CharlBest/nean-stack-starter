@@ -9,9 +9,10 @@ export class ShareDialogService {
     constructor(private dialog: MatDialog,
         private shareService: ShareService) { }
 
-    share(url: Url) {
+    share(url: Url, text: string) {
         const dialogRef = this.dialog.open(ShareDialogComponent);
         dialogRef.componentInstance.url = this.shareService.fullUrl(url);
+        dialogRef.componentInstance.text = text;
 
         return dialogRef.afterClosed();
     }

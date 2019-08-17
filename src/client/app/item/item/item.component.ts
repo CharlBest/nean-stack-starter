@@ -127,7 +127,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
 
     const url = ['/item/comments', this.item.uId];
     if (!this.shareService.webShareWithUrl('Item', url)) {
-      this.shareDialogService.share(url);
+      this.shareDialogService.share(url, this.item.title);
     }
   }
 

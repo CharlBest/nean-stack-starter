@@ -141,7 +141,7 @@ export class ProfileComponent implements OnInit {
 
     const url = ['/user', this.user.id];
     if (!this.shareService.webShareWithUrl('User', url)) {
-      this.shareDialogService.share(url);
+      this.shareDialogService.share(url, this.user.username);
     }
   }
 
