@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
 
   async search(newSearch = true) {
     let term = this.formGroup.controls.term.value;
-    if (term) {
+    if (term && !this.isProcessing) {
       this.isProcessing = true;
 
       term = term.trim();
