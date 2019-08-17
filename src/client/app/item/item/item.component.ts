@@ -25,7 +25,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
   isProcessing = false;
   showMoreButton = false;
   activeMediaIndex = 0;
-  descriptionTimeout: number | null;
+  descriptionTimeoutId: number | null;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
@@ -43,7 +43,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
 
   processDescription() {
     if (this.description && !this.isViewingComments) {
-      this.descriptionTimeout = window.setTimeout(() => {
+      this.descriptionTimeoutId = window.setTimeout(() => {
         if (this.description.nativeElement.offsetHeight < this.description.nativeElement.scrollHeight ||
           this.description.nativeElement.offsetWidth < this.description.nativeElement.scrollWidth) {
           this.showMoreButton = true;
@@ -212,8 +212,8 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.descriptionTimeout) {
-      clearTimeout(this.descriptionTimeout);
+    if (this.descriptionTimeoutId) {
+      clearTimeout(this.descriptionTimeoutId);
     }
   }
 }
