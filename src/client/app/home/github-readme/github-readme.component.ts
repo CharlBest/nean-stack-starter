@@ -14,7 +14,7 @@ export class GitHubReadMeComponent {
 
   doneLoading() {
     // Remove DEMO link in text
-    setTimeout(() => {
+    window.setTimeout(() => {
       const container = document.getElementsByClassName('github-readme-container');
       if (container && container[0]) {
         const anchorLinks = container[0].getElementsByTagName('a');

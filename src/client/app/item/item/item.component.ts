@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
@@ -17,7 +17,7 @@ import { ItemService } from '../item.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-export class ItemComponent implements AfterViewInit {
+export class ItemComponent implements AfterViewInit, OnDestroy {
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
   @ViewChild('description', { static: false }) description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
@@ -25,6 +25,7 @@ export class ItemComponent implements AfterViewInit {
   isProcessing = false;
   showMoreButton = false;
   activeMediaIndex = 0;
+  descriptionTimeout: number | null;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService,
@@ -42,7 +43,7 @@ export class ItemComponent implements AfterViewInit {
 
   processDescription() {
     if (this.description && !this.isViewingComments) {
-      setTimeout(() => {
+      this.descriptionTimeout = window.setTimeout(() => {
         if (this.description.nativeElement.offsetHeight < this.description.nativeElement.scrollHeight ||
           this.description.nativeElement.offsetWidth < this.description.nativeElement.scrollWidth) {
           this.showMoreButton = true;
@@ -208,5 +209,11 @@ export class ItemComponent implements AfterViewInit {
   refreshPage() {
     // TODO: very dirty and bad UI but will work for now
     window.location.reload();
+  }
+
+  ngOnDestroy() {
+    if (this.descriptionTimeout) {
+      clearTimeout(this.descriptionTimeout);
+    }
   }
 }

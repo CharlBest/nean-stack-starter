@@ -44,7 +44,7 @@ export class GoogleAnalyticsService implements OnDestroy {
 
       // Then send queued commands to either real or e2e test ga();
       // after waiting to allow possible e2e test to replace global ga function
-      ga(() => setTimeout(() => {
+      ga(() => window.setTimeout(() => {
         // Log that analytics engine is initialized
         // this.logger.log('GA fn:', (window as CustomWindow).toString());
         this.ga = (window as CustomWindow).ga;
