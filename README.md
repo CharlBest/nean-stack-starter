@@ -4,7 +4,7 @@ A basic app that has all the features that all platforms have like authenticatio
 
 ## [DEMO](https://nean.io/)
 
-![Stack](https://i.imgur.com/QUE8u2M.png)
+![Stack](https://i.imgur.com/8aKGS2h.png)
 
 Similar to the MEAN stack just with Neo4j rather than Mongo.
 
