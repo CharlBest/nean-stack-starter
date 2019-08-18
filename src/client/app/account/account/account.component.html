@@ -1,75 +1,79 @@
-<mat-card>
-    <mat-card-content>
-        <mat-nav-list>
-            <mat-list-item routerLink="/login"
-                *ngIf="!authService.loggedInUserId">
-                <app-icon-lock mat-list-icon></app-icon-lock>
-                <span mat-line>Login</span>
-            </mat-list-item>
-            <ng-container *ngIf="authService.loggedInUserId">
-                <mat-list-item routerLink="/user/{{authService.loggedInUserId}}">
-                    <app-icon-fiber-manual-record mat-list-icon></app-icon-fiber-manual-record>
-                    <span mat-line>Items</span>
-                </mat-list-item>
-                <mat-list-item routerLink="/item/saved">
-                    <app-icon-star mat-list-icon></app-icon-star>
-                    <span mat-line>Saved</span>
-                </mat-list-item>
-                <mat-list-item routerLink="/profile">
-                    <app-icon-account-circle mat-list-icon></app-icon-account-circle>
-                    <span mat-line>Profile</span>
-                </mat-list-item>
-                <mat-list-item routerLink="/profile/notifications">
-                    <app-icon-notifications mat-list-icon></app-icon-notifications>
-                    <span mat-line>Notification Preferences</span>
-                </mat-list-item>
-            </ng-container>
-            <mat-divider></mat-divider>
-            <mat-list-item routerLink="/payment">
-                <app-icon-credit-card mat-list-icon></app-icon-credit-card>
-                <span mat-line>Donate</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/feedback">
-                <app-icon-feedback mat-list-icon></app-icon-feedback>
-                <span mat-line>Feedback</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/invite">
-                <app-icon-group-add mat-list-icon></app-icon-group-add>
-                <span mat-line>Invite Friends</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/newsletter">
-                <app-icon-mail mat-list-icon></app-icon-mail>
-                <span mat-line>Newsletter</span>
-            </mat-list-item>
-            <mat-list-item (click)="takeTour()">
-                <app-icon-live-help mat-list-icon></app-icon-live-help>
-                <span mat-line>Take Tour</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/business/help">
-                <app-icon-help mat-list-icon></app-icon-help>
-                <span mat-line>Help</span>
-            </mat-list-item>
-            <mat-list-item routerLink="/business/dev">
-                <app-icon-code mat-list-icon></app-icon-code>
-                <span mat-line>Developer</span>
-            </mat-list-item>
-            <mat-list-item *ngIf="authService.loggedInUserId"
-                (click)="logout()">
-                <app-icon-exit-to-app mat-list-icon></app-icon-exit-to-app>
-                <span mat-line>Logout</span>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item (click)="themeService.toggleTheme()">
-                <app-icon-brightness-2 mat-list-icon
-                    *ngIf="!themeService.isDarkTheme"></app-icon-brightness-2>
-                <span mat-line
-                    *ngIf="!themeService.isDarkTheme">Night mode</span>
+<ng-container *translate="let t">
 
-                <app-icon-brightness-5 mat-list-icon
-                    *ngIf="themeService.isDarkTheme"></app-icon-brightness-5>
-                <span mat-line
-                    *ngIf="themeService.isDarkTheme">Day mode</span>
-            </mat-list-item>
-        </mat-nav-list>
-    </mat-card-content>
-</mat-card>
+    <mat-card>
+        <mat-card-content>
+            <mat-nav-list>
+                <mat-list-item routerLink="/login"
+                    *ngIf="!authService.loggedInUserId">
+                    <app-icon-lock mat-list-icon></app-icon-lock>
+                    <span mat-line>{{t.login}}</span>
+                </mat-list-item>
+                <ng-container *ngIf="authService.loggedInUserId">
+                    <mat-list-item routerLink="/user/{{authService.loggedInUserId}}">
+                        <app-icon-fiber-manual-record mat-list-icon></app-icon-fiber-manual-record>
+                        <span mat-line>{{t.items}}</span>
+                    </mat-list-item>
+                    <mat-list-item routerLink="/item/saved">
+                        <app-icon-star mat-list-icon></app-icon-star>
+                        <span mat-line>{{t.saved}}</span>
+                    </mat-list-item>
+                    <mat-list-item routerLink="/profile">
+                        <app-icon-account-circle mat-list-icon></app-icon-account-circle>
+                        <span mat-line>{{t.profile}}</span>
+                    </mat-list-item>
+                    <mat-list-item routerLink="/profile/notifications">
+                        <app-icon-notifications mat-list-icon></app-icon-notifications>
+                        <span mat-line>{{t.notificationPreferences}}</span>
+                    </mat-list-item>
+                </ng-container>
+                <mat-divider></mat-divider>
+                <mat-list-item routerLink="/payment">
+                    <app-icon-credit-card mat-list-icon></app-icon-credit-card>
+                    <span mat-line>{{t.donate}}</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/feedback">
+                    <app-icon-feedback mat-list-icon></app-icon-feedback>
+                    <span mat-line>{{t.feedback}}</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/invite">
+                    <app-icon-group-add mat-list-icon></app-icon-group-add>
+                    <span mat-line>{{t.inviteFriends}}</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/newsletter">
+                    <app-icon-mail mat-list-icon></app-icon-mail>
+                    <span mat-line>{{t.newsletter}}</span>
+                </mat-list-item>
+                <mat-list-item (click)="takeTour()">
+                    <app-icon-live-help mat-list-icon></app-icon-live-help>
+                    <span mat-line>{{t.takeTour}}</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/business/help">
+                    <app-icon-help mat-list-icon></app-icon-help>
+                    <span mat-line>{{t.help}}</span>
+                </mat-list-item>
+                <mat-list-item routerLink="/business/dev">
+                    <app-icon-code mat-list-icon></app-icon-code>
+                    <span mat-line>{{t.developer}}</span>
+                </mat-list-item>
+                <mat-list-item *ngIf="authService.loggedInUserId"
+                    (click)="logout()">
+                    <app-icon-exit-to-app mat-list-icon></app-icon-exit-to-app>
+                    <span mat-line>{{t.logout}}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item (click)="themeService.toggleTheme()">
+                    <app-icon-brightness-2 mat-list-icon
+                        *ngIf="!themeService.isDarkTheme"></app-icon-brightness-2>
+                    <span mat-line
+                        *ngIf="!themeService.isDarkTheme">{{t.nightMode}}</span>
+
+                    <app-icon-brightness-5 mat-list-icon
+                        *ngIf="themeService.isDarkTheme"></app-icon-brightness-5>
+                    <span mat-line
+                        *ngIf="themeService.isDarkTheme">{{t.dayMode}}</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-card-content>
+    </mat-card>
+
+</ng-container>

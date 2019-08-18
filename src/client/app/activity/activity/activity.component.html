@@ -1,34 +1,38 @@
-<button mat-stroked-button
-    type="button"
-    (click)="manualWebSocketBroadcast()"
-    matTooltip="Web Socket Broadcast to other open sessions">
-    <app-icon-notifications-active></app-icon-notifications-active>
-    &nbsp;&nbsp;Trigger Broadcast
-</button>
-<br>
-<br>
+<ng-container *translate="let t">
 
-<mat-card>
-    <mat-card-content>
-        <ng-container *ngIf="notificationService.messages.length > 0">
-            <mat-list>
-                <mat-list-item *ngFor="let message of notificationService.messages; let i = index">
-                    <span mat-line>{{message}}</span>
-                    <button mat-icon-button
-                        (click)="removeMessage(i)"
-                        type="button"
-                        matTooltip="Mark As Read"
-                        aria-label="Mark As Read">
-                        <app-icon-close></app-icon-close>
-                    </button>
-                </mat-list-item>
-            </mat-list>
-        </ng-container>
+    <button mat-stroked-button
+        type="button"
+        (click)="manualWebSocketBroadcast()"
+        matTooltip="Web Socket Broadcast to other open sessions">
+        <app-icon-notifications-active></app-icon-notifications-active>
+        &nbsp;&nbsp;{{t.triggerBroadcast}}
+    </button>
+    <br>
+    <br>
 
-        <ng-container *ngIf="notificationService.messages.length <= 0">
-            <mat-list>
-                <mat-list-item>No Messages</mat-list-item>
-            </mat-list>
-        </ng-container>
-    </mat-card-content>
-</mat-card>
+    <mat-card>
+        <mat-card-content>
+            <ng-container *ngIf="notificationService.messages.length > 0">
+                <mat-list>
+                    <mat-list-item *ngFor="let message of notificationService.messages; let i = index">
+                        <span mat-line>{{message}}</span>
+                        <button mat-icon-button
+                            (click)="removeMessage(i)"
+                            type="button"
+                            matTooltip="Mark As Read"
+                            aria-label="Mark As Read">
+                            <app-icon-close></app-icon-close>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+
+            <ng-container *ngIf="notificationService.messages.length <= 0">
+                <mat-list>
+                    <mat-list-item>{{t.noMessages}}</mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+
+</ng-container>

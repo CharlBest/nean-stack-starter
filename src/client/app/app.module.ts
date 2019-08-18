@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { DialogModule } from './shared/dialog/dialog.module';
 import { AuthInterceptor } from './shared/interceptors/auth-interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error-interceptor';
+import { LanguageInterceptor } from './shared/interceptors/language-interceptor';
 import { NavigationModule } from './shared/navigation/navigation.module';
 import { ParticleEffectModule } from './shared/particle-effect/particle-effect.module';
 import { TutorialModule } from './shared/tutorial/tutorial.module';
@@ -46,6 +47,11 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LanguageInterceptor,
       multi: true
     },
     // Material gestures via HammerJS (this is needed for lazy loaded modules)

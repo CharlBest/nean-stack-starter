@@ -43,7 +43,7 @@ export class CommentComponent {
         this.snackBar.dismiss();
         this.snackBar.open('Deleted');
         // TODO: very dirty and bad UI but will work for now
-        location.reload();
+        window.location.reload();
       } catch (error) {
         this.snackBar.dismiss();
         this.snackBar.open('Delete failed');

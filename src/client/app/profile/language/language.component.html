@@ -2,11 +2,11 @@
   <mat-card-title>Language</mat-card-title>
   <mat-card-content>
     <mat-radio-group class="radio-group-vertical"
-      [value]="activeLanguage">
+      [value]="translateService.activeLanguage">
       <mat-radio-button class="radio-button-vertical"
         *ngFor="let language of languages"
         [value]="language.code"
-        (click)="chooseLanguage(language)">{{language.title}}</mat-radio-button>
+        (click)="chooseLanguage(language.code)">{{language.title}}</mat-radio-button>
     </mat-radio-group>
   </mat-card-content>
 </mat-card>

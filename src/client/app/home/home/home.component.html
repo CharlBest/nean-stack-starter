@@ -1,21 +1,23 @@
-<mat-card>
-    <mat-card-subtitle>Everything on this demo site is live/working condition. Creating a profile, sending emails,
-        donating
-        money, uploading profile pictures and more.</mat-card-subtitle>
-</mat-card>
+<ng-container *translate="let t">
 
-<app-github-readme></app-github-readme>
+    <mat-card>
+        <mat-card-subtitle>{{t.everythingOnThisDemoSite}}</mat-card-subtitle>
+    </mat-card>
 
-<app-infinite-scroll (scrolled)="onScroll()"
-    [isProcessing]="isProcessing">
+    <app-github-readme></app-github-readme>
 
-    <app-item *ngFor="let item of items; trackBy: trackByFn"
-        [item]="item"></app-item>
+    <app-infinite-scroll (scrolled)="onScroll()"
+        [isProcessing]="isProcessing">
 
-</app-infinite-scroll>
+        <app-item *ngFor="let item of items; trackBy: trackByFn"
+            [item]="item"></app-item>
 
-<mat-card *ngIf="!isProcessing && (!items || items?.length === 0) && networkStatus.isOnline">
-    No items exist
-</mat-card>
+    </app-infinite-scroll>
 
-<app-network-status #networkStatus></app-network-status>
+    <mat-card *ngIf="!isProcessing && (!items || items?.length === 0) && networkStatus.isOnline">
+        {{t.noItemsExist}}
+    </mat-card>
+
+    <app-network-status #networkStatus></app-network-status>
+
+</ng-container>

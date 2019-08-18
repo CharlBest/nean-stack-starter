@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { IconsModule } from '../shared/icons/icons.module';
+import { TranslateModule } from '../shared/translate/translate.module';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account/account.component';
 
@@ -16,6 +17,7 @@ const materialModules = [
     CommonModule,
     AccountRoutingModule,
     IconsModule,
+    TranslateModule,
     ...materialModules
   ],
   declarations: [

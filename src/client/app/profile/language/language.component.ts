@@ -1,5 +1,7 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { Language } from './language.model';
+import { Component } from '@angular/core';
+import { Language } from '@shared/translate/language.enum';
+import { TranslateService } from '../../shared/translate/translate.service';
+import { LanguageItem } from './language-item.model';
 
 @Component({
   selector: 'app-language',
@@ -9,29 +11,14 @@ import { Language } from './language.model';
 export class LanguageComponent {
 
   languages = [
-    new Language('en-US', 'English'),
-    new Language('af-ZA', 'Afrikaans'),
+    new LanguageItem(Language.ENGLISH, 'English'),
+    new LanguageItem(Language.AFRIKAANS, 'Afrikaans'),
   ];
 
-  constructor(@Inject(LOCALE_ID) public activeLanguage: string) { }
+  constructor(public translateService: TranslateService) { }
 
   chooseLanguage(language: Language) {
-    if (language.code !== this.activeLanguage) {
-      document.cookie = `lang=${language.code};path=/`;
-      location.reload();
-    }
-  }
-
-  getCookie(name: string): string | null {
-    const nameLenPlus = (name.length + 1);
-    return document.cookie
-      .split(';')
-      .map(c => c.trim())
-      .filter(cookie => {
-        return cookie.substring(0, nameLenPlus) === `${name}=`;
-      })
-      .map(cookie => {
-        return decodeURIComponent(cookie.substring(nameLenPlus));
-      })[0] || null;
+    this.translateService.saveLanguagePreference(language);
+    window.location.reload();
   }
 }

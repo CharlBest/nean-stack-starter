@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { translateService } from '@shared/translate/translate.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { WebSocketService } from '../../shared/services/websocket.service';
 
@@ -19,8 +20,8 @@ export class ActivityComponent {
 
   manualWebSocketBroadcast() {
     const model = new NewSignUpWebSocketModel();
-    model.message = 'hello from somewhere';
+    model.message = translateService.t('helloFromSomewhere');
     this.webSocketService.send(model);
-    this.snackBar.open('Sent');
+    this.snackBar.open(translateService.t('sent'));
   }
 }

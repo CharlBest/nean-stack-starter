@@ -24,6 +24,8 @@ class App {
         // bootstrap.setupGraphQL(this.express);
         // Auth
         bootstrap.setupAuthentication(this.express);
+        // Language
+        bootstrap.setupLanguage(this.express);
         // Setup DB
         await bootstrap.setupDatabase(this.express);
         // Setup routes

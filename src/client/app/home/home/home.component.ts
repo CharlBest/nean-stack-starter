@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { translateService } from '@shared/translate/translate.service';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Subscription } from 'rxjs';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -76,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.snackBar.dismiss();
 
-        this.snackBar.open('New items available', 'Fetch', {
+        this.snackBar.open(translateService.t('newItemsAvailable'), translateService.t('fetch'), {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center'

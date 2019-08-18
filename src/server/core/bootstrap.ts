@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
+import { Language } from './middleware/language';
 import { Neo4j } from './middleware/neo4j';
 import { webSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
@@ -37,6 +38,10 @@ class Bootstrap {
 
     setupAuthentication(app: Application): void {
         app.use(Authentication.setUser);
+    }
+
+    setupLanguage(app: Application): void {
+        app.use(Language.setLanguage);
     }
 
     setupRoutes(app: Application): void {

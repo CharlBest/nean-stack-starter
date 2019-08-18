@@ -11,6 +11,7 @@ import { AuthService } from './shared/services/auth.service';
 import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
 import { NotificationService } from './shared/services/notification.service';
 import { ThemeService } from './shared/services/theme.service';
+import { TranslateService } from './shared/translate/translate.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,11 @@ export class AppComponent {
     private networkStatusService: NetworkStatusService,
     private pwaService: PWAService,
     private onboardingService: OnboardingService,
-    private activeTimerService: ActiveTimerService) {
+    private activeTimerService: ActiveTimerService,
+    private translateService: TranslateService) {
+    // Translation (i18n)
+    this.translateService.init();
+
     // Authentication
     this.authService.init();
 
