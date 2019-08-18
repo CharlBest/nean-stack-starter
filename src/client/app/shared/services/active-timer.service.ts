@@ -23,6 +23,7 @@ export class ActiveTimerService {
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.clearTimeout();
+                this.clearClickListener();
             } else {
                 this.setTimer();
             }
@@ -42,10 +43,14 @@ export class ActiveTimerService {
         this.dialogService.alert('Time to take a break? You\'ve been online for 1 hour.');
 
         // Remove showing message on click
-        document.removeEventListener('click', this.showMessageOnNextClick);
+        this.clearClickListener();
 
         // Restart timer
         this.setTimer();
+    }
+
+    private clearClickListener() {
+        document.removeEventListener('click', this.showMessageOnNextClick);
     }
 
     private clearTimeout() {
