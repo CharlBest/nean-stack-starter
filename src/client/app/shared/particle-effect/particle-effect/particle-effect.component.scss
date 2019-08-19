@@ -9,9 +9,9 @@
 
 	::ng-deep .particle {
 		border-radius: 50%;
-		filter: blur(3px);
 		position: absolute;
-		background-color: #b9b9b9;
+		background-color: var(--primary-color);
+		// filter: blur(3px);
 	}
 }
 
