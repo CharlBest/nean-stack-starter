@@ -1,0 +1,62 @@
+// Card
+mat-card {
+	margin-bottom: 10px;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+// Emoji panel on mobile in bottom sheet (outside app-root)
+mat-bottom-sheet-container.emoji-panel {
+	padding: 0;
+
+	mat-tab-group {
+		width: 100% !important;
+	}
+}
+
+.mat-list,
+.mat-nav-list {
+	padding-top: 0;
+}
+
+// Override mat-form-field appearance="fill" to remove the bottom field underline
+.mat-form-field-underline {
+	display: none;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+	border-radius: 4px !important;
+}
+
+.mat-error {
+	font-size: 75%;
+	padding: 0 1em;
+}
+
+// Material CDK Connected Overlay fullscreen
+.cdk-overlay-pane.fullscreen {
+	top: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	left: 0 !important;
+
+	> * {
+		width: 100vw;
+		height: 100vh;
+	}
+}
+
+// Angular Material bug. Workaround:
+// Remove when fixed: https://github.com/angular/components/issues/16546
+.mat-card-actions .mat-stroked-button,
+.mat-dialog-actions .mat-stroked-button {
+	margin: 0 8px;
+}
+
+.mat-card-actions .mat-stroked-button:first-child,
+.mat-dialog-actions .mat-stroked-button:first-child {
+	margin-left: 0;
+	margin-right: 0;
+}

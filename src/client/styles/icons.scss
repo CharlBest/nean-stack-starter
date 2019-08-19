@@ -1,0 +1,32 @@
+.app-icon {
+	display: inline-block;
+	fill: currentColor;
+	height: 24px;
+	width: 24px;
+
+	circle {
+		fill: currentColor;
+	}
+
+	&.inline {
+		height: 1em;
+		width: 1em;
+
+		svg {
+			height: 1em;
+			width: 1em;
+		}
+	}
+
+	&.primary svg {
+		fill: var(--primary-color);
+	}
+
+	&.accent svg {
+		fill: var(--accent-color);
+	}
+
+	&.warn svg {
+		fill: var(--warn-color);
+	}
+}

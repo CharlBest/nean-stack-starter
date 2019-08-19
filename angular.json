@@ -38,7 +38,7 @@
                 "input": "src/client/styles.scss"
               },
               {
-                "input": "src/client/app-theme.scss"
+                "input": "src/client/styles/app-theme.scss"
               }
             ],
             "scripts": []

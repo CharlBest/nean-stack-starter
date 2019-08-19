@@ -1,0 +1,24 @@
+// Styling for all injected emoji
+.emoji-input {
+	height: 20px;
+	display: inline-block;
+	width: 170px;
+	padding: 2px 5px 2px 0;
+	border-bottom: 1px solid gray;
+	outline: none;
+	white-space: nowrap;
+	overflow: hidden;
+
+	* {
+		display: inline;
+		white-space: nowrap;
+	}
+
+	br {
+		display: none;
+	}
+
+	img {
+		width: 1em;
+	}
+}

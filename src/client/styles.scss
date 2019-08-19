@@ -1,24 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
-@import 'app-theme-definition.scss';
-
-// Open Sans font - https://google-webfonts-helper.herokuapp.com/fonts/open-sans
-/* open-sans-regular - latin */
-@font-face {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-display: fallback;
-	src: local('Open Sans Regular'), local('OpenSans-Regular'), url('assets/open-sans-v15-latin-regular.woff2') format('woff2'), url('assets/open-sans-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-/* open-sans-700 - latin */
-@font-face {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	font-display: fallback;
-	src: local('Open Sans Bold'), local('OpenSans-Bold'), url('assets/open-sans-v15-latin-700.woff2') format('woff2'), url('assets/open-sans-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
+@import 'styles/app-theme-definition.scss';
+@import 'styles/fonts.scss';
 
 // Global color variables
 :root {
@@ -53,6 +36,8 @@ body {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		@import 'styles/emoji.scss';
+		@import 'styles/icons.scss';
 
 		// Validation
 		.validation-message {
@@ -71,15 +56,6 @@ body {
 			display: block !important;
 		}
 
-		// Material Card
-		mat-card {
-			margin-bottom: 10px;
-
-			&[hidden] {
-				display: none;
-			}
-		}
-
 		// Vertical radio button layout
 		.radio-group-vertical {
 			display: inline-flex;
@@ -87,31 +63,6 @@ body {
 
 			.radio-button-vertical {
 				margin: 5px;
-			}
-		}
-
-		// Styling for all injected emoji
-		.emoji-input {
-			height: 20px;
-			display: inline-block;
-			width: 170px;
-			padding: 2px 5px 2px 0;
-			border-bottom: 1px solid gray;
-			outline: none;
-			white-space: nowrap;
-			overflow: hidden;
-
-			* {
-				display: inline;
-				white-space: nowrap;
-			}
-
-			br {
-				display: none;
-			}
-
-			img {
-				width: 1em;
 			}
 		}
 
@@ -130,28 +81,6 @@ body {
 		}
 	}
 
-	// Material CDK Connected Overlay fullscreen
-	.cdk-overlay-pane.fullscreen {
-		top: 0 !important;
-		right: 0 !important;
-		bottom: 0 !important;
-		left: 0 !important;
-
-		> * {
-			width: 100vw;
-			height: 100vh;
-		}
-	}
-
-	// Emoji panel on mobile in bottom sheet (outside app-root)
-	mat-bottom-sheet-container.emoji-panel {
-		padding: 0;
-
-		mat-tab-group {
-			width: 100% !important;
-		}
-	}
-
 	.full-width {
 		width: 100%;
 	}
@@ -167,74 +96,10 @@ body {
 	a {
 		color: inherit;
 	}
-
-	.mat-list,
-	.mat-nav-list {
-		padding-top: 0;
-	}
-
-	// Override mat-form-field appearance="fill" to remove the bottom field underline
-	.mat-form-field-underline {
-		display: none;
-	}
-
-	.mat-form-field-appearance-fill .mat-form-field-flex {
-		border-radius: 4px !important;
-	}
-
-	.mat-error {
-		font-size: 75%;
-		padding: 0 1em;
-	}
-
-	.app-icon {
-		display: inline-block;
-		fill: currentColor;
-		height: 24px;
-		width: 24px;
-
-		circle {
-			fill: currentColor;
-		}
-
-		&.inline {
-			height: 1em;
-			width: 1em;
-
-			svg {
-				height: 1em;
-				width: 1em;
-			}
-		}
-
-		&.primary svg {
-			fill: var(--primary-color);
-		}
-
-		&.accent svg {
-			fill: var(--accent-color);
-		}
-
-		&.warn svg {
-			fill: var(--warn-color);
-		}
-	}
 }
 
 // Stripe element override if dark theme
 .dark-theme .stripe-element {
 	background-color: rgba(255, 255, 255, 0.1) !important;
 }
-
-// Angular Material bug. Workaround:
-// Remove when fixed: https://github.com/angular/components/issues/16546
-.mat-card-actions .mat-stroked-button,
-.mat-dialog-actions .mat-stroked-button {
-	margin: 0 8px;
-}
-
-.mat-card-actions .mat-stroked-button:first-child,
-.mat-dialog-actions .mat-stroked-button:first-child {
-	margin-left: 0;
-	margin-right: 0;
-}
+@import 'styles/material-overrides.scss';
