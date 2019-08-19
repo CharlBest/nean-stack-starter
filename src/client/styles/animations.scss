@@ -1,0 +1,61 @@
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slidedown {
+	from {
+		transform: translateY(-25%);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes slideup {
+	from {
+		transform: translateY(50%);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes slideright {
+	from {
+		transform: translateX(-50%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes scaleup {
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes scaleup-circle {
+	from {
+		transform-origin: top;
+		transform: scale(0) translateY(-50%) rotate(0deg);
+	}
+
+	to {
+		transform-origin: center;
+		transform: scale(1) translateY(-50%) rotate(360deg);
+	}
+}

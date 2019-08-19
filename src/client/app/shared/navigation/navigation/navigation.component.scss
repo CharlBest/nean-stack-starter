@@ -58,5 +58,6 @@ header {
 		display: flex;
 		justify-content: center;
 		font-size: 0.8em;
+		animation: slidedown 0.5s ease-in-out, fadein 0.75s ease-in-out;
 	}
 }
