@@ -38,12 +38,14 @@ header {
 	justify-content: space-around;
 	z-index: 2;
 	align-items: center;
+	max-width: 500px;
 
 	&.bottom {
 		background-color: var(--background-color);
 		position: fixed;
 		bottom: 0;
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
+		max-width: 100%;
 	}
 
 	a {
