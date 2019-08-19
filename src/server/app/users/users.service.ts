@@ -1,7 +1,6 @@
 import { UserTokenModel } from '@shared/models/shared/user-token.model';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
-import { translateService } from '@shared/translate/translate.service';
 import { ServerValidator } from '@shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
@@ -58,7 +57,7 @@ class UsersService extends BaseService {
 
             // Notify everyone there is another sign up
             const model = new NewSignUpWebSocketModel();
-            model.message = translateService.ts(res, 'newSignUpJustNow');
+            model.message = 'newSignUpJustNow';
             model.type = WebSocketType.NEW_SIGN_UP;
             webSocketServer.send(model);
         } else {

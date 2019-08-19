@@ -1,7 +1,7 @@
 // tslint:disable: max-line-length
-import { Language } from '../language.interface';
+import { TranslateTerm } from '../translate-term.interface';
 
-export const english: Language = {
+export const english: TranslateTerm = {
     everythingOnThisDemoSite: 'Everything on this demo site is live and in a working condition. Creating a profile, sending emails, donating money, uploading profile pictures and more.',
     noItemsExist: 'No items exist',
     login: 'Login',
@@ -26,4 +26,5 @@ export const english: Language = {
     newItemsAvailable: 'New items available',
     fetch: 'Fetch',
     newSignUpJustNow: 'New sign up just now',
+    helloToYouToo: 'Hello to you too',
 };

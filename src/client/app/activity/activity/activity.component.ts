@@ -20,7 +20,7 @@ export class ActivityComponent {
 
   manualWebSocketBroadcast() {
     const model = new NewSignUpWebSocketModel();
-    model.message = translateService.t('helloFromSomewhere');
+    model.message = 'helloFromSomewhere';
     this.webSocketService.send(model);
     this.snackBar.open(translateService.t('sent'));
   }

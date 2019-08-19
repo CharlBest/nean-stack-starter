@@ -1,4 +1,4 @@
-export interface Language {
+export interface TranslateTerm {
     everythingOnThisDemoSite: string;
     noItemsExist: string;
     login: string;
@@ -23,4 +23,7 @@ export interface Language {
     newItemsAvailable: string;
     fetch: string;
     newSignUpJustNow: string;
+    helloToYouToo: string;
 }
+
+export type TranslateKey = keyof TranslateTerm;

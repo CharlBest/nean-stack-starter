@@ -1,7 +1,7 @@
 // tslint:disable: max-line-length
-import { Language } from '../language.interface';
+import { TranslateTerm } from '../translate-term.interface';
 
-export const afrikaans: Language = {
+export const afrikaans: TranslateTerm = {
     everythingOnThisDemoSite: 'Alles op hierdie demonstrasie platform is in werkende toestand. Om \'n profiel te maak, eposse te stuur, geld te skenk en meer.',
     noItemsExist: 'Geen items besteen',
     login: 'Teken In',
@@ -26,4 +26,5 @@ export const afrikaans: Language = {
     newItemsAvailable: 'Nuwe items beskikbaar',
     fetch: 'Bring',
     newSignUpJustNow: 'Iemand het sopas aangesluit',
+    helloToYouToo: 'Hello vir jou ook',
 };

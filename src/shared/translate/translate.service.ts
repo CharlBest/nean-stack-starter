@@ -1,44 +1,18 @@
 import { Response } from 'express';
-import { Language as LanguageType } from './language.enum';
-import { Language } from './language.interface';
+import { Language } from './language.enum';
 import { afrikaans } from './languages/afrikaans';
 import { english } from './languages/english';
+import { TranslateKey, TranslateTerm } from './translate-term.interface';
 
 class TranslateService {
 
-    // TODO: MessageFormat Support for pluralization and gender
-    // TODO: Converted account module, activity module, home module
-    // TODO: save language preference to db
-    // TODO: websockets have no idea which language the user is (rather send key than the message itself - more lightweight anyway)
-
-    private activeLanguage: Language;
-    get getActiveLanguage(): Language {
+    private activeLanguage: TranslateTerm;
+    get getActiveLanguage(): TranslateTerm {
         return this.activeLanguage;
     }
 
-    getLanguagePack(language: LanguageType | null) {
-        if (language === LanguageType.ENGLISH) {
-            return english;
-        } else if (language === LanguageType.AFRIKAANS) {
-            return afrikaans;
-        } else {
-            console.error('Language could not be found');
-            return null;
-        }
-    }
-
-    setLanguage(language: LanguageType | null): boolean {
-        const pack = this.getLanguagePack(language);
-        if (pack) {
-            this.activeLanguage = pack;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     // Client
-    t(key: keyof Language, params?: TranslateParams) {
+    t(key: TranslateKey, params?: TranslateParams) {
         if (params) {
             return this.replacePlaceholders(this.activeLanguage[key], params) || this.keyNotFound(key);
         } else {
@@ -47,7 +21,7 @@ class TranslateService {
     }
 
     // Server - prevent using this. Rather send key to client and render text there.
-    ts(res: Response, key: keyof Language, params?: TranslateParams) {
+    ts(res: Response, key: TranslateKey, params?: TranslateParams) {
         const pack = this.getLanguagePack(res.locals.language);
         if (!pack) {
             console.error('Language could not be found');
@@ -58,6 +32,27 @@ class TranslateService {
             return this.replacePlaceholders(pack[key], params) || this.keyNotFound(key);
         } else {
             return pack[key] || this.keyNotFound(key);
+        }
+    }
+
+    getLanguagePack(language: Language | null) {
+        if (language === Language.ENGLISH) {
+            return english;
+        } else if (language === Language.AFRIKAANS) {
+            return afrikaans;
+        } else {
+            console.error('Language could not be found');
+            return null;
+        }
+    }
+
+    setLanguage(language: Language | null): boolean {
+        const pack = this.getLanguagePack(language);
+        if (pack) {
+            this.activeLanguage = pack;
+            return true;
+        } else {
+            return false;
         }
     }
 

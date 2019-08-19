@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { translateService } from '@shared/translate/translate.service';
 import { BreakpointService } from './breakpoint.service';
 import { WebSocketService } from './websocket.service';
 
@@ -19,12 +20,15 @@ export class NotificationService {
         // SnackBar
         this.webSocketService.newSignUp$
             .subscribe(data => {
+                const message = translateService.t(data.message);
+
                 this.snackBar.dismiss();
+
                 // Add messages to queue
-                this.messages.push(data.message);
+                this.messages.push(message);
 
                 // Show notification popup
-                this.snackBar.open(data.message, 'Say hello back', {
+                this.snackBar.open(message, 'Say hello back', {
                     duration: 5000,
                     verticalPosition: this.bpService.isDesktop ? 'top' : 'bottom',
                     horizontalPosition: this.bpService.isDesktop ? 'right' : 'center'
@@ -32,7 +36,7 @@ export class NotificationService {
                     .subscribe(() => {
                         // Send message back
                         const model = new NewSignUpWebSocketModel();
-                        model.message = 'Hello to you too';
+                        model.message = 'helloToYouToo';
                         this.webSocketService.send(model);
                     });
             });
