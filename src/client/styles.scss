@@ -2,6 +2,10 @@
 @import '~@angular/material/theming';
 @import 'styles/app-theme-definition.scss';
 @import 'styles/fonts.scss';
+@import 'styles/emoji.scss';
+@import 'styles/icons.scss';
+@import 'styles/animations.scss';
+@import 'styles/material-overrides.scss';
 
 // Global color variables
 :root {
@@ -36,9 +40,6 @@ body {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		@import 'styles/emoji.scss';
-		@import 'styles/icons.scss';
-		@import 'styles/animations.scss';
 
 		// Validation
 		.validation-message {
@@ -103,4 +104,3 @@ body {
 .dark-theme .stripe-element {
 	background-color: rgba(255, 255, 255, 0.1) !important;
 }
-@import 'styles/material-overrides.scss';
