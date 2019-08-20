@@ -48,8 +48,7 @@ header {
 		max-width: 100%;
 
 		a {
-			@extend .animation-fide-in;
-			@extend .animation-slide-up;
+			animation: fadein 0.5s ease-in, slideup 0.5s ease-in-out;
 		}
 	}
 
@@ -63,7 +62,6 @@ header {
 		display: flex;
 		justify-content: center;
 		font-size: 0.8em;
-		@extend .animation-fide-in;
-		@extend .animation-slide-down;
+		animation: fadein 0.5s ease-in, slidedown 0.5s ease-in-out;
 	}
 }
