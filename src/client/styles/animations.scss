@@ -48,6 +48,16 @@
 	}
 }
 
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 @keyframes scaleup-circle {
 	from {
 		transform-origin: top;
@@ -58,4 +68,32 @@
 		transform-origin: center;
 		transform: scale(1) translateY(-50%) rotate(360deg);
 	}
+}
+
+.animation-fade-in {
+	animation: fadein 0.5s ease-in;
+}
+
+.animation-slide-down {
+	animation: slidedown 0.5s ease-in-out;
+}
+
+.animation-slide-up {
+	animation: slideup 0.5s ease-in-out;
+}
+
+.animation-slide-right {
+	animation: slideright 0.5s ease-in;
+}
+
+.animation-scale-up {
+	animation: scaleup 0.5s ease-in-out;
+}
+
+.animation-spin {
+	animation: spin 0.5s ease-in-out;
+}
+
+.animation-scale-up-circle {
+	animation: scaleup-circle 0.5s ease-in-out;
 }
