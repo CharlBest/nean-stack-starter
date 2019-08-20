@@ -35,25 +35,32 @@
             <!-- Context Menu -->
             <app-context-menu #contextMenu>
                 <mat-nav-list>
-                    <mat-list-item (click)="copyLink()">
-                        <app-icon-link mat-list-icon></app-icon-link>
-                        <span mat-line>Copy link to Item</span>
-                    </mat-list-item>
                     <mat-list-item *ngIf="authService.loggedInUserId"
                         (click)="subscribeToItem($event)">
                         <app-icon-notifications mat-list-icon
-                            *ngIf="!item?.subscribed"></app-icon-notifications>
+                            *ngIf="!item?.subscribed"
+                            class="animation-spin"></app-icon-notifications>
                         <app-icon-notifications-active mat-list-icon
                             *ngIf="item?.subscribed"
-                            color="accent"></app-icon-notifications-active>
+                            color="accent"
+                            class="animation-spin"></app-icon-notifications-active>
                         <span mat-line>Subscribe
                             {{item?.subscriptionCount > 0 ? '(' + item?.subscriptionCount + ')' : '' }}</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="authService.loggedInUserId"
                         (click)="favouriteItem($event)">
                         <app-icon-star mat-list-icon
-                            [color]="item?.favourite ? 'accent' : ''"></app-icon-star>
+                            *ngIf="!item?.favourite"
+                            class="animation-spin"></app-icon-star>
+                        <app-icon-star mat-list-icon
+                            *ngIf="item?.favourite"
+                            color="accent"
+                            class="animation-spin"></app-icon-star>
                         <span mat-line>Save</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="copyLink()">
+                        <app-icon-link mat-list-icon></app-icon-link>
+                        <span mat-line>Copy link to Item</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="item?.user?.id === authService.loggedInUserId"
                         (click)="goToComments()">
