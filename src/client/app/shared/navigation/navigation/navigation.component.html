@@ -60,7 +60,9 @@
   <a mat-button
     routerLink="/"
     [ngClass]="navItems['home'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
-    <app-icon-home></app-icon-home>
+    <app-icon-home matBadge
+      matBadgeColor="warn"
+      [matBadgeHidden]="!notificationService.showHomeNavigationBadge"></app-icon-home>
     <div>Home</div>
   </a>
   <a mat-button

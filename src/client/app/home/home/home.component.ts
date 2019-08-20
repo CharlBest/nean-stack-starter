@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { translateService } from '@shared/translate/translate.service';
+import { Component, OnInit } from '@angular/core';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
-import { Subscription } from 'rxjs';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.service';
-import { WebSocketService } from '../../shared/services/websocket.service';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -13,19 +10,17 @@ import { HomeService } from '../home.service';
   styleUrls: ['./home.component.scss'],
   providers: [RefreshSameUrlService]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
   isProcessing = true;
   items: ItemViewModel[] = [];
   pageIndex = 0;
   listEnd = false;
-  webSocketSubscription: Subscription;
 
   constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
     private refreshSameUrlService: RefreshSameUrlService,
-    private webSocketService: WebSocketService,
-    private snackBar: MatSnackBar) { }
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.refreshSameUrlService.init(() => {
@@ -33,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.getItems();
-    this.listenForNewItemsViaWebSocket();
   }
 
   async getItems() {
@@ -65,29 +59,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
+    // Scroll to the top
     window.scrollTo(0, 0);
+
+    // Hide/disable badge on home navigation item if it exists
+    this.navigationService.showHomeNavigationBadge = false;
+
+    // Reset
     this.pageIndex = 0;
     this.items = [];
+
+    // Get new items
     this.getItems();
-  }
-
-  listenForNewItemsViaWebSocket() {
-    // TODO: potentially distracting so move to badge on home nav icon
-    this.webSocketSubscription = this.webSocketService.newItem$
-      .subscribe(() => {
-        this.snackBar.dismiss();
-
-        this.snackBar.open(translateService.t('newItemsAvailable'), translateService.t('fetch'), {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center'
-        }).onAction().subscribe(() => this.refresh());
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.webSocketSubscription) {
-      this.webSocketSubscription.unsubscribe();
-    }
   }
 }

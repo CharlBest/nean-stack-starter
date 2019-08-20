@@ -9,6 +9,7 @@ import { PWAService } from '../../pwa-helper/pwa.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
+import { WebSocketService } from '../../services/websocket.service';
 import { NavigationType } from '../navigation-type.enum';
 import { NavigationService } from '../navigation.service';
 
@@ -57,7 +58,8 @@ export class NavigationComponent implements OnInit {
     public bpService: BreakpointService,
     public notificationService: NotificationService,
     public navigationService: NavigationService,
-    public pwaService: PWAService) { }
+    public pwaService: PWAService,
+    private webSocketService: WebSocketService) { }
 
   ngOnInit() {
     this.initPrimaryNavWathcer();
@@ -65,6 +67,7 @@ export class NavigationComponent implements OnInit {
     this.navigationEnd();
     this.configureTopToolbarOnScrollUp();
     this.checkAllNavItemAssociations();
+    this.listenForNewItemsViaWebSocket();
   }
 
   navigationStart() {
@@ -214,6 +217,13 @@ export class NavigationComponent implements OnInit {
     } else {
       this.totalToolbarHeight = this.toolbarHeight;
     }
+  }
+
+  listenForNewItemsViaWebSocket() {
+    this.webSocketService.newItem$
+      .subscribe(() => {
+        this.navigationService.showHomeNavigationBadge = true;
+      });
   }
 }
 

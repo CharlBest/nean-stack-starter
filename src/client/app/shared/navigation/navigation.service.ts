@@ -8,4 +8,5 @@ export class NavigationService {
     previousUrl = '';
     navigationPlaceholderTemplate: TemplateRef<ElementRef> | null;
     showInstallBanner = false;
+    showHomeNavigationBadge = false;
 }
