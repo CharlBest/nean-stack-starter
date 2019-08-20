@@ -20,11 +20,11 @@
     </mat-form-field>
 
     <div *ngIf="formErrorsService.globalErrors?.inviteEmails?.required"
-      class="mat-error">
+      class="error-message">
       Email(s) are required
     </div>
     <div *ngIf="formErrorsService.globalErrors?.inviteEmails?.email"
-      class="mat-error">
+      class="error-message">
       There were an invalid email address
     </div>
   </mat-card-content>

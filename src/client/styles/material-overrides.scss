@@ -30,9 +30,11 @@ mat-bottom-sheet-container.emoji-panel {
 	border-radius: 4px !important;
 }
 
-.mat-error {
+.error-message {
+	color: var(--warn-color);
 	font-size: 75%;
 	padding: 0 1em;
+	@extend .animation-slide-down;
 }
 
 // Material CDK Connected Overlay fullscreen

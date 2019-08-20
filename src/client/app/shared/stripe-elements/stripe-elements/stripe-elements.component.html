@@ -9,21 +9,21 @@
             <div #cardNumber
                 class="card-number"></div>
         </div>
-        <div class="mat-error">{{elementsWrapper.cardNumber.error}}</div>
+        <div class="error-message">{{elementsWrapper.cardNumber.error}}</div>
     </div>
     <br>
     <!-- Expiry Date -->
     <div class="mat-form-field card-expiry-container">
         <div #cardExpiry
             class="stripe-element"></div>
-        <div class="mat-error">{{elementsWrapper.cardExpiry.error}}</div>
+        <div class="error-message">{{elementsWrapper.cardExpiry.error}}</div>
     </div>
     <br>
     <!-- CVV -->
     <div class="mat-form-field card-cvc-container">
         <div #cardCvc
             class="stripe-element"></div>
-        <div class="mat-error">{{elementsWrapper.cardCvc.error}}</div>
+        <div class="error-message">{{elementsWrapper.cardCvc.error}}</div>
     </div>
     <br>
     <div *ngIf="error">
