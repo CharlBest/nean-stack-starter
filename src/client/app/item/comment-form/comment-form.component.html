@@ -1,9 +1,10 @@
 <form [formGroup]="formGroup">
     <mat-card>
         <mat-card-content>
-            <mat-form-field appearance="fill">
-                <mat-label>Type comment here...</mat-label>
+            <mat-form-field appearance="fill"
+                [floatLabel]="'never'">
                 <textarea matInput
+                    placeholder="Type comment here..."
                     formControlName="description"
                     cdkTextareaAutosize
                     cdkAutosizeMinRows="1"
@@ -20,7 +21,7 @@
                 type="submit"
                 *ngIf="showCommentSubmitButton || (formGroup.controls['description'].value && formGroup.controls['description'].value !== '')"
                 [disabled]="!formGroup.valid"
-                (click)="submitForm.emit()">{{comment ? 'Update Comment' : 'Comment'}}</button>
+                (click)="submitForm.emit()">{{comment ? 'Update' : 'Comment'}}</button>
         </mat-card-actions>
     </mat-card>
 </form>
