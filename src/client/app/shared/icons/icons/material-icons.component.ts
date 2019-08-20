@@ -287,3 +287,15 @@ export class IconFlagComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('email', Category.COMMUNICATION)
 })
 export class IconEmailComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-arrow-drop-down',
+  templateUrl: materialIconPath('arrow_drop_down', Category.NAVIGATION)
+})
+export class IconArrowDropDownComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-arrow-drop-up',
+  templateUrl: materialIconPath('arrow_drop_up', Category.NAVIGATION)
+})
+export class IconArrowDropUpComponent extends BaseIconComponent { }

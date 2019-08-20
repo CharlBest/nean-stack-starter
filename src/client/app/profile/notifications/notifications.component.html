@@ -45,12 +45,19 @@
 
             <br>
 
-            <div class="header">
+            <div class="advanced-options cursor-pointer"
+                (click)="showAdvancedOptions = !showAdvancedOptions">
                 <span>Advanced</span>
+                <app-icon-arrow-drop-down *ngIf="!showAdvancedOptions"></app-icon-arrow-drop-down>
+                <app-icon-arrow-drop-up *ngIf="showAdvancedOptions"></app-icon-arrow-drop-up>
             </div>
-            <br>
-            <mat-checkbox formControlName="autoSubscribeToItem">Auto subscribe to your items</mat-checkbox>
-            <mat-card-subtitle>Automatically subscribe to your new items</mat-card-subtitle>
+
+            <div *ngIf="showAdvancedOptions"
+                class="animation-fade-in animation-slide-down">
+                <br>
+                <mat-checkbox formControlName="autoSubscribeToItem">Auto subscribe to your items</mat-checkbox>
+                <mat-card-subtitle>Automatically subscribe to your new items</mat-card-subtitle>
+            </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-stroked-button

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 // tslint:disable-next-line: max-line-length
 import { IconApplePayComponent, IconBloggerComponent, IconFacebookComponent, IconGooglePayComponent, IconLinkedInComponent, IconMessengerComponent, IconMixComponent, IconPayPalComponent, IconPinterestComponent, IconRedditComponent, IconTumblrComponent, IconTwitterComponent, IconWeChatComponent, IconWhatsAppComponent } from './icons/custom-icons.component';
 // tslint:disable-next-line: max-line-length
-import { IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowBackComponent, IconArrowUpwardComponent, IconBeachAccessComponent, IconBrightness2Component, IconBrightness5Component, IconCancelComponent, IconCheckCircleComponent, IconCloseComponent, IconCodeComponent, IconCreditCardComponent, IconDeleteComponent, IconDirectionsCarComponent, IconDoneComponent, IconEditComponent, IconEmailComponent, IconErrorOutlineComponent, IconExitToAppComponent, IconFeedbackComponent, IconFiberManualRecordComponent, IconFlagComponent, IconFreeBreakfastComponent, IconGraphicEqComponent, IconGroupAddComponent, IconHelpComponent, IconHomeComponent, IconInfoComponent, IconKeyboardArrowLeftComponent, IconKeyboardArrowRightComponent, IconLightbulbOutlineComponent, IconLinkComponent, IconLiveHelpComponent, IconLockComponent, IconMailComponent, IconModeCommentComponent, IconMoreVertComponent, IconNotificationActiveComponent, IconNotificationsComponent, IconPersonComponent, IconPetsComponent, IconPriorityHighComponent, IconReportComponent, IconSearchComponent, IconShareComponent, IconStarComponent, IconTagFaceComponent } from './icons/material-icons.component';
+import { IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowBackComponent, IconArrowDropDownComponent, IconArrowDropUpComponent, IconArrowUpwardComponent, IconBeachAccessComponent, IconBrightness2Component, IconBrightness5Component, IconCancelComponent, IconCheckCircleComponent, IconCloseComponent, IconCodeComponent, IconCreditCardComponent, IconDeleteComponent, IconDirectionsCarComponent, IconDoneComponent, IconEditComponent, IconEmailComponent, IconErrorOutlineComponent, IconExitToAppComponent, IconFeedbackComponent, IconFiberManualRecordComponent, IconFlagComponent, IconFreeBreakfastComponent, IconGraphicEqComponent, IconGroupAddComponent, IconHelpComponent, IconHomeComponent, IconInfoComponent, IconKeyboardArrowLeftComponent, IconKeyboardArrowRightComponent, IconLightbulbOutlineComponent, IconLinkComponent, IconLiveHelpComponent, IconLockComponent, IconMailComponent, IconModeCommentComponent, IconMoreVertComponent, IconNotificationActiveComponent, IconNotificationsComponent, IconPersonComponent, IconPetsComponent, IconPriorityHighComponent, IconReportComponent, IconSearchComponent, IconShareComponent, IconStarComponent, IconTagFaceComponent } from './icons/material-icons.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +67,8 @@ import { IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowB
     IconTwitterComponent,
     IconWeChatComponent,
     IconWhatsAppComponent,
+    IconArrowDropDownComponent,
+    IconArrowDropUpComponent,
   ],
   exports: [
     IconHomeComponent,
@@ -130,6 +132,8 @@ import { IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowB
     IconTwitterComponent,
     IconWeChatComponent,
     IconWhatsAppComponent,
+    IconArrowDropDownComponent,
+    IconArrowDropUpComponent,
   ]
 })
 export class IconsModule { }

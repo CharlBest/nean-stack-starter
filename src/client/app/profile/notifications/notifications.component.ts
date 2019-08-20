@@ -19,6 +19,7 @@ export class NotificationsComponent implements OnInit {
   notificationPreferences: NotificationPreferencesViewModel;
   formGroup: FormGroup;
   isProcessing = true;
+  showAdvancedOptions = false;
 
   constructor(private fb: FormBuilder,
     private pushNotificationService: PushNotificationService,
