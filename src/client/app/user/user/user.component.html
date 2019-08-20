@@ -5,13 +5,13 @@
 
             <app-context-menu #contextMenu>
                 <mat-nav-list>
-                    <mat-list-item (click)="copyLink()">
-                        <app-icon-link mat-list-icon></app-icon-link>
-                        <span mat-line>Copy link to User</span>
-                    </mat-list-item>
                     <mat-list-item (click)="openShareDialog()">
                         <app-icon-share mat-list-icon></app-icon-share>
                         <span mat-line>Share</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="copyLink()">
+                        <app-icon-link mat-list-icon></app-icon-link>
+                        <span mat-line>Copy link to User</span>
                     </mat-list-item>
                 </mat-nav-list>
             </app-context-menu>
