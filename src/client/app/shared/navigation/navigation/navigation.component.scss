@@ -46,6 +46,10 @@ header {
 		bottom: 0;
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
 		max-width: 100%;
+
+		a {
+			animation: slideup 0.5s ease-in-out, fadein 0.75s ease-in-out;
+		}
 	}
 
 	a {
