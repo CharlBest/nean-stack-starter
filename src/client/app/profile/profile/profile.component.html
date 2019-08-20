@@ -59,6 +59,8 @@
     </mat-card-content>
   </mat-card>
 
+  <br>
+
   <mat-card appTutorial="AVATAR_UPLOAD">
     <mat-card-title>Avatar</mat-card-title>
     <mat-card-content>
@@ -78,14 +80,24 @@
     </mat-card-actions>
   </mat-card>
 
+  <br>
+
   <app-update-bio [content]="user.bio"></app-update-bio>
+
+  <br>
 
   <app-update-password></app-update-password>
 
+  <br>
+
   <app-payments [paymentCards]="user.paymentCards"></app-payments>
+
+  <br>
 
   <app-two-factor-authentication [twoFactorAuthenticationEnabled]="user.twoFactorAuthenticationEnabled">
   </app-two-factor-authentication>
+
+  <br>
 
   <app-language></app-language>
 
