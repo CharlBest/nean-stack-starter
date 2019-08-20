@@ -74,36 +74,36 @@
             </app-context-menu>
         </div>
 
-        <div *ngIf="item?.media && item?.media?.length > 0"
-            class="media">
-            <div *ngIf="item?.media?.length > 1">
-                <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
-                <button mat-icon-button
-                    (click)="mediaPrevious()"
-                    type="button"
-                    matTooltip="Previous"
-                    aria-label="Previous">
-                    <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
-                </button>
-                <button mat-icon-button
-                    (click)="mediaNext()"
-                    type="button"
-                    matTooltip="Next"
-                    aria-label="Next">
-                    <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
-                </button>
+        <div routerLink="/item/comments/{{item.uId}}"
+            [class.cursor-pointer]="!isViewingComments"
+            class="content">
+            <div *ngIf="item?.media && item?.media?.length > 0"
+                class="media">
+                <div *ngIf="item?.media?.length > 1">
+                    <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
+                    <button mat-icon-button
+                        (click)="mediaPrevious()"
+                        type="button"
+                        matTooltip="Previous"
+                        aria-label="Previous">
+                        <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
+                    </button>
+                    <button mat-icon-button
+                        (click)="mediaNext()"
+                        type="button"
+                        matTooltip="Next"
+                        aria-label="Next">
+                        <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
+                    </button>
+                </div>
+
+                <img mat-card-image
+                    [src]="item?.media[activeMediaIndex]"
+                    alt="item image"
+                    loading="lazy"
+                    height="100%">
             </div>
 
-            <img mat-card-image
-                [src]="item?.media[activeMediaIndex]"
-                alt="item image"
-                loading="lazy"
-                height="100%">
-        </div>
-
-        <div routerLink="/item/comments/{{item.uId}}"
-            class="body"
-            [class.cursor-pointer]="!isViewingComments">
             <h3>{{item.title}}</h3>
 
             <p #description>{{item.description}}</p>

@@ -50,33 +50,31 @@ $card-padding-override: 16px;
 	}
 }
 
-.media {
-	position: relative;
-	user-select: none;
-
-	& > div {
-		position: absolute;
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		align-items: center;
-		height: 100%;
-
-		button {
-			background-color: rgba(255, 255, 255, 0.5);
-		}
-	}
-
-	img {
-		margin-top: 10px;
-		outline: none;
-	}
-}
-
-.body {
-	text-decoration: none;
+.content {
 	outline: none;
 	-webkit-tap-highlight-color: transparent;
+
+	.media {
+		position: relative;
+		user-select: none;
+
+		& > div {
+			position: absolute;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			align-items: center;
+			height: 100%;
+
+			button {
+				background-color: rgba(255, 255, 255, 0.5);
+			}
+		}
+
+		img {
+			margin-top: 10px;
+		}
+	}
 
 	p {
 		// 1.4em per line
