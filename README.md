@@ -34,7 +34,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Basic web socket connection
 * Notifications area/panel
 * Payment integration via Stripe (Card, Google/Android Pay, Apple Pay, PayPal)
-* Custom Material theme + font (Night Mode, Global CSS variable colors)
+* Custom Material theme + font + color palette (Night Mode, Global CSS variable colors)
 * Progressive Web App (PWA) + custom install banner
 * Complete server setup guide via GCP
 * Backend logger (Node + Neo4j)
@@ -49,6 +49,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Common password checker
 * GDPR/Cookie prompts
 * Offline network message (PWA)
+* Share API + Share Target API
 * Network Speed service
 * Apache Lucene fulltext search
 * Lazy load icon pack
@@ -56,6 +57,15 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * TSLint + SonarQube
 * Two Factor Authentication via Google Authenticator App
 * Right Click context menu
+* Basic CSS animations
+* Global style management
+* Internationalization (i18n)
+* Background Particle Effect
+* Desktop social share options
+* Material Design and custom svg icons module
+* Lazy load all images
+* Complete build script
+
 
 Client pages
 
@@ -71,17 +81,16 @@ Client pages
 * terms and conditions, privacy policy and help
 * invite a friend
 * 404 error page
+* onboarding
 * items
     * create
     * edit
     * comment
     * favourites
 
-## In-progress or coming soon
-* Angular localization
+## Coming Soon
 * GraphQL integration (Apollo)
 * Cordova IOS build output
-* Unit + integration tests (Karma + Protractor)
 
 ## Running Locally
 
