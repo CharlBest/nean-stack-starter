@@ -32,7 +32,7 @@ mat-bottom-sheet-container.emoji-panel {
 
 .error-message {
 	color: var(--warn-color);
-	font-size: 75%;
+	font-size: 0.75em;
 	padding: 0 1em;
 	@extend .animation-slide-down;
 }

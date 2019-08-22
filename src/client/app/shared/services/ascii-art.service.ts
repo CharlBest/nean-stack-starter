@@ -9,7 +9,7 @@ import { ThemeService } from './theme.service';
 })
 export class ASCIIArtService {
   // https://www.ascii-art-generator.org/
-  private readonly styles = `font-family: monospace; font-size: large; color: ${this.themeService.primaryColor};`;
+  private readonly styles = `font-family: monospace; font-size: 2em; color: ${this.themeService.primaryColor};`;
 
   constructor(private themeService: ThemeService) { }
 

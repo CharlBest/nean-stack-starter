@@ -11,6 +11,7 @@
 * Add loading="lazy" to all image tags
 * Prevent posting the same request when still in progress by hiding the form and showing preloader or disabling the submit button
 * If possible provide a default for any input field
+* font-size should be in em
 
 ### Testing
 * Responsiveness by resizing window
