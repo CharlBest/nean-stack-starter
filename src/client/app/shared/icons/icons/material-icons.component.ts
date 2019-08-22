@@ -299,3 +299,15 @@ export class IconArrowDropDownComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('arrow_drop_up', Category.NAVIGATION)
 })
 export class IconArrowDropUpComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-visibility',
+  templateUrl: materialIconPath('visibility', Category.ACTION)
+})
+export class IconVisibilityComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-visibility-off',
+  templateUrl: materialIconPath('visibility_off', Category.ACTION)
+})
+export class IconVisibilityOffComponent extends BaseIconComponent { }

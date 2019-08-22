@@ -18,6 +18,7 @@ import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { MediaModule } from '../shared/media/media.module';
+import { PasswordExposeModule } from '../shared/password-expose/password-expose.module';
 import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { RightClickContextMenuModule } from '../shared/right-click-context-menu/right-click-context-menu.module';
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
@@ -68,6 +69,7 @@ const materialModules = [
     IconsModule,
     RightClickContextMenuModule,
     PreloaderModule,
+    PasswordExposeModule,
     ...materialModules
   ],
   declarations: [

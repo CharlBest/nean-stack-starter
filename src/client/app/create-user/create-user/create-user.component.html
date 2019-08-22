@@ -45,11 +45,14 @@
 
             <br>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill"
+                appPasswordExpose>
                 <mat-label>Password</mat-label>
                 <input matInput
                     formControlName="password"
                     type="password">
+                <app-icon-visibility matSuffix></app-icon-visibility>
+                <app-icon-visibility-off matSuffix></app-icon-visibility-off>
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['password']">
                         <ng-container *ngIf="formGroup.controls['password'].hasError('pattern')">
