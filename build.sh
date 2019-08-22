@@ -12,3 +12,10 @@ ng lint
 npx ng build --configuration=production
 
 npx webpack --mode=production
+
+# TODO: this could be expanded to show primary navigaiton vs back navigation plus more.
+for r in $(find src/client/app -name "*-routing.module.ts"); do
+    echo $r; grep "path:\|component:\|loadChildren:" $r;
+    routeCount=$((routeCount + 1))
+done
+echo "Total route files:" ${routeCount};
