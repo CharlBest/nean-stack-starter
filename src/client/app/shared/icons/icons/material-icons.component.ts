@@ -311,3 +311,9 @@ export class IconVisibilityComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('visibility_off', Category.ACTION)
 })
 export class IconVisibilityOffComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-translate',
+  templateUrl: materialIconPath('translate', Category.ACTION)
+})
+export class IconTranslateComponent extends BaseIconComponent { }

@@ -27,4 +27,5 @@ export const english: TranslateTerm = {
     fetch: 'Fetch',
     newSignUpJustNow: 'New sign up just now',
     helloToYouToo: 'Hello to you too',
+    language: 'Language',
 };

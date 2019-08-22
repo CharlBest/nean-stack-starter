@@ -46,7 +46,7 @@ export class NavigationComponent implements OnInit {
         { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
         { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile', exact: false },
         { path: 'payment' }, { path: 'verify' }, { path: 'invite' }, { path: 'item/saved', exact: false },
-        { path: 'user', exact: false }
+        { path: 'user', exact: false }, { path: 'language' }
       ]
     }
   };

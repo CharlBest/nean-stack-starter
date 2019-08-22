@@ -27,4 +27,5 @@ export const afrikaans: TranslateTerm = {
     fetch: 'Bring',
     newSignUpJustNow: 'Iemand het sopas aangesluit',
     helloToYouToo: 'Hello vir jou ook',
+    language: 'Taal',
 };

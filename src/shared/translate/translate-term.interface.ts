@@ -24,6 +24,7 @@ export interface TranslateTerm {
     fetch: string;
     newSignUpJustNow: string;
     helloToYouToo: string;
+    language: string;
 }
 
 export type TranslateKey = keyof TranslateTerm;

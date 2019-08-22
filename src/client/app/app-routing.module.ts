@@ -80,6 +80,10 @@ const routes: Route[] = [
     loadChildren: () => import('./invite/invite.module').then(m => m.InviteModule)
   },
   {
+    path: 'language',
+    loadChildren: () => import('./language/language.module').then(m => m.LanguageModule)
+  },
+  {
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
   },

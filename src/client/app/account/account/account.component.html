@@ -27,6 +27,10 @@
                     </mat-list-item>
                 </ng-container>
                 <mat-divider></mat-divider>
+                <mat-list-item routerLink="/language">
+                    <app-icon-translate mat-list-icon></app-icon-translate>
+                    <span mat-line>{{t.language}}</span>
+                </mat-list-item>
                 <mat-list-item routerLink="/payment">
                     <app-icon-credit-card mat-list-icon></app-icon-credit-card>
                     <span mat-line>{{t.donate}}</span>
