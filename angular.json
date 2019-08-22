@@ -34,12 +34,8 @@
               }
             ],
             "styles": [
-              {
-                "input": "src/client/styles.scss"
-              },
-              {
-                "input": "src/client/styles/app-theme.scss"
-              }
+              "src/client/styles.scss",
+              "src/client/styles/app-theme.scss"
             ],
             "scripts": []
           },
