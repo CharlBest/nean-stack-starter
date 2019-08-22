@@ -33,7 +33,7 @@ export class NavigationComponent implements OnInit {
   navItems: NavItem = {
     home: {
       paths: [
-        { path: '' }, { path: 'home' }, { path: 'user', exact: false },
+        { path: '' }, { path: 'home' },
         { path: 'item' }, { path: 'item/comments', exact: false }, { path: 'item/edit', exact: false }, { path: 'onboarding' }
       ]
     },
@@ -44,8 +44,9 @@ export class NavigationComponent implements OnInit {
       paths: [
         { path: 'account' }, { path: 'sign-up' },
         { path: 'business', exact: false }, { path: 'feedback' }, { path: 'newsletter' },
-        { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile' },
-        { path: 'payment' }, { path: 'verify' }, { path: 'invite' }
+        { path: 'login', exact: false }, { path: 'forgot-password' }, { path: 'profile', exact: false },
+        { path: 'payment' }, { path: 'verify' }, { path: 'invite' }, { path: 'item/saved', exact: false },
+        { path: 'user', exact: false }
       ]
     }
   };
