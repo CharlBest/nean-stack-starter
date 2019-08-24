@@ -27,6 +27,7 @@ import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemRoutingModule } from './item-routing.module';
+import { ItemSkeletonComponent } from './item-skeleton/item-skeleton.component';
 import { ItemComponent } from './item/item.component';
 
 const materialModules = [
@@ -66,9 +67,11 @@ const materialModules = [
     CommentFormComponent,
     EditCommentComponent,
     CreateCommentComponent,
+    ItemSkeletonComponent
   ],
   exports: [
-    ItemComponent
+    ItemComponent,
+    ItemSkeletonComponent
   ]
 })
 export class ItemModule { }

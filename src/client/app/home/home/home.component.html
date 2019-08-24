@@ -6,8 +6,14 @@
 
     <app-github-readme></app-github-readme>
 
-    <app-infinite-scroll (scrolled)="onScroll()"
-        [isProcessing]="isProcessing">
+    <ng-container *ngIf="isProcessing">
+        <app-item-skeleton></app-item-skeleton>
+        <app-item-skeleton></app-item-skeleton>
+        <app-item-skeleton></app-item-skeleton>
+        <app-item-skeleton></app-item-skeleton>
+    </ng-container>
+
+    <app-infinite-scroll (scrolled)="onScroll()">
 
         <app-item *ngFor="let item of items; trackBy: trackByFn"
             [item]="item"></app-item>
