@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { translateService } from '@shared/translate/translate.service';
 import { NavigationType } from '../shared/navigation/navigation-type.enum';
 import { LanguageComponent } from './language/language.component';
 
@@ -8,7 +9,7 @@ import { LanguageComponent } from './language/language.component';
         RouterModule.forChild([
             {
                 path: '', component: LanguageComponent, pathMatch: 'full',
-                data: { title: 'Language', nav: NavigationType.BACK }
+                data: { title: translateService.t('language'), nav: NavigationType.BACK }
             }
         ])
     ],

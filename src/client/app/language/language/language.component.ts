@@ -19,6 +19,6 @@ export class LanguageComponent {
 
   chooseLanguage(language: Language) {
     this.translateService.saveLanguagePreference(language);
-    this.translateService.refresh();
+    window.location.reload();
   }
 }
