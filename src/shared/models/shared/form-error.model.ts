@@ -4,6 +4,7 @@ export type AnyFormError =
     MinLength |
     Pattern |
     TypeAssert |
+    PasswordCharacters |
     CustomFormValidator;
 
 export interface Required {
@@ -30,6 +31,15 @@ export interface Pattern {
 
 export interface TypeAssert {
     typeAssert: boolean;
+}
+
+export interface PasswordCharacters {
+    passwordCharacters: {
+        capital: boolean;
+        lowercase: boolean;
+        number: boolean;
+        special: boolean;
+    };
 }
 
 export interface CustomFormValidator {

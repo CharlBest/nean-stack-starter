@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { Validators } from '@shared/validation/validators';
 import { CreateUserViewModel } from '@shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '@shared/view-models/create-user/login.view-model';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
@@ -38,6 +39,10 @@ export class CreateUserComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(FormGroupBuilder.createUser());
+
+    // Show individually which characters are required (only for UI)
+    this.formGroup.controls.password.setValidators(this.formGroup.controls.password.validator ?
+      [this.formGroup.controls.password.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
   }
 
   async onSubmit() {

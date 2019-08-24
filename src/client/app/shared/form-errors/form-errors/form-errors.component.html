@@ -1,27 +1,33 @@
-<ng-container *ngIf="control?.hasError('email'); else elseif1">
+<ng-container *ngIf="control?.hasError('email'); else required">
     Invalid email address
 </ng-container>
 
-<ng-template #elseif1>
-    <ng-container *ngIf="control?.hasError('required'); else elseif2">
+<ng-template #required>
+    <ng-container *ngIf="control?.hasError('required'); else minLength">
         Required
     </ng-container>
 </ng-template>
 
-<ng-template #elseif2>
-    <ng-container *ngIf="control?.hasError('minlength'); else elseif3">
+<ng-template #minLength>
+    <ng-container *ngIf="control?.hasError('minlength'); else typeAssert">
         {{control.errors['minlength'].requiredLength}} characters required but
         {{control.errors['minlength'].actualLength}}
         found
     </ng-container>
 </ng-template>
 
-<ng-template #elseif3>
-    <ng-container *ngIf="control?.hasError('typeAssert'); else else1">
+<ng-template #typeAssert>
+    <ng-container *ngIf="control?.hasError('typeAssert'); else password">
         Type error
     </ng-container>
 </ng-template>
 
-<ng-template #else1>
+<ng-template #password>
+    <ng-container *ngIf="control?.hasError('passwordCharacters'); else custom">
+        {{passwordCharacterMessageBuilder()}}
+    </ng-container>
+</ng-template>
+
+<ng-template #custom>
     <ng-content></ng-content>
 </ng-template>

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
-import { AnyFormError, CustomFormValidator, Email, MinLength, Pattern, Required, TypeAssert } from '../models/shared/form-error.model';
+// tslint:disable-next-line:max-line-length
+import { AnyFormError, CustomFormValidator, Email, MinLength, PasswordCharacters, Pattern, Required, TypeAssert } from '../models/shared/form-error.model';
 import { PasswordRegexBuilder } from './password-regex-builder';
 
 function isEmptyInputValue(value: any): boolean {
@@ -108,6 +109,32 @@ export class Validators {
             }
             return isValid ? null : { typeAssert: true };
         };
+    }
+
+    static passwordCharacters(control: AbstractControl | string): PasswordCharacters | null {
+        control = Validators.wrapControl(control);
+        if (isEmptyInputValue(control.value)) {
+            return null;  // don't validate empty values to allow optional controls
+        }
+
+        const hasCapitalLetter = new PasswordRegexBuilder().oneUpperCase().value.test(control.value);
+        const hasLowercaseLetter = new PasswordRegexBuilder().oneLowerCase().value.test(control.value);
+        const hasNumber = new PasswordRegexBuilder().oneDigit().value.test(control.value);
+        // Optional: const hasSpecialCharacter = new PasswordRegexBuilder().oneSpecialCharacter().value.test(control.value);
+
+        if (hasCapitalLetter && hasLowercaseLetter && hasNumber) {
+            return null;
+        } else {
+            // Return true if invalid/error
+            return {
+                passwordCharacters: {
+                    capital: !hasCapitalLetter,
+                    lowercase: !hasLowercaseLetter,
+                    number: !hasNumber,
+                    special: false,
+                }
+            };
+        }
     }
 
     static customFormValidator(control: AbstractControl): CustomFormValidator | null {

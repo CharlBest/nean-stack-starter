@@ -1,7 +1,7 @@
 export class PasswordRegexBuilder {
     private regex = '';
 
-    constructor(private minLength: number, private maxLength = 100) { }
+    constructor(private minLength?: number, private maxLength = 100) { }
 
     oneUpperCase() {
         this.regex += '(?=.*?[A-Z])';
@@ -24,6 +24,6 @@ export class PasswordRegexBuilder {
     }
 
     get value(): RegExp {
-        return new RegExp(`^${this.regex}.{${this.minLength},${this.maxLength}}$`);
+        return new RegExp(`^${this.regex}.{${this.minLength || 0},${this.maxLength}}$`);
     }
 }
