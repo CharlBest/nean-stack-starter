@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { Validators } from '@shared/validation/validators';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
@@ -30,6 +31,10 @@ export class UpdatePasswordComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(FormGroupBuilder.updatePassword());
+
+    // Show individually which characters are required (only for UI)
+    this.formGroup.controls.newPassword.setValidators(this.formGroup.controls.newPassword.validator ?
+      [this.formGroup.controls.newPassword.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
 
     const confirmPasswordControl = this.formGroup.controls.confirmPassword;
     confirmPasswordControl.statusChanges.subscribe(data => {

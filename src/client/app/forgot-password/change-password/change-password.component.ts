@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { Validators } from '@shared/validation/validators';
 import { ChangeForgottenPasswordViewModel } from '@shared/view-models/forgot-password/change-forgotten-password.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { PasswordStrengthService } from '../../shared/password-strength/password-strength.service';
@@ -34,6 +35,10 @@ export class ChangePasswordComponent implements OnInit {
 
   formOnInit() {
     this.formGroup = this.fb.group(FormGroupBuilder.changeForgottenPassword());
+
+    // Show individually which characters are required (only for UI)
+    this.formGroup.controls.password.setValidators(this.formGroup.controls.password.validator ?
+      [this.formGroup.controls.password.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
   }
 
   getParams() {
