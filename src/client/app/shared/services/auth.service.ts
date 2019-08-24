@@ -147,7 +147,12 @@ export class AuthService implements CanActivate {
     }
 
     hasStoredTokenExpired() {
-        return this.hasTokenExpired(this.localStorageService.storageData.token);
+        if (this.localStorageService.userData.tokenExpiry &&
+            Math.floor(Date.now() / 1000) >= this.localStorageService.userData.tokenExpiry) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private getDataFromJWT(token: string | null | undefined): { id: number | null, expireDate: number | null } {
