@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   isProcessing = false;
   items: ItemViewModel[] | null;
   pageIndex = 0;
+  private readonly pageSize = 20;
   listEnd = false;
 
   constructor(public formErrorsService: FormErrorsService,
@@ -45,13 +46,18 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
 
       try {
-        const response = await this.searchService.search(this.term, this.pageIndex);
+        const response = await this.searchService.search(this.term, this.pageIndex, this.pageSize);
         if (response) {
           if (!this.items) {
             this.items = [];
           }
 
           this.items.push(...response);
+
+          // Check if more items exist
+          if (response.length < this.pageSize) {
+            this.listEnd = true;
+          }
         } else {
           this.items = [];
           this.listEnd = true;
