@@ -1,33 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { ItemModule } from '../item/item.module';
-import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
-import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
-import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search/search.component';
 
 const materialModules = [
-  MatButtonModule,
   MatCardModule,
-  MatInputModule,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     SearchRoutingModule,
-    ReactiveFormsModule,
-    FormErrorsModule,
-    IconsModule,
     ItemModule,
     InfiniteScrollModule,
-    PreloaderModule,
     ...materialModules
   ],
   declarations: [

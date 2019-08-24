@@ -1,26 +1,3 @@
-<header [class.has-install-banner-above]="navigationService.showInstallBanner">
-    <button mat-icon-button
-        (click)="back()"
-        type="button">
-        <app-icon-arrow-back></app-icon-arrow-back>
-    </button>
-
-    <form [hidden]="isProcessing"
-        [formGroup]="formGroup">
-        <mat-form-field appearance="fill"
-            (keyup.enter)="search()">
-            <mat-label>Search</mat-label>
-            <span matPrefix>
-                <app-icon-search></app-icon-search>
-                &nbsp;&nbsp;
-            </span>
-            <input matInput
-                formControlName="term"
-                [attr.autofocus]="bpService.isDesktop || null" />
-        </mat-form-field>
-    </form>
-</header>
-
 <app-infinite-scroll (scrolled)="onScroll()"
     [isProcessing]="isProcessing">
 

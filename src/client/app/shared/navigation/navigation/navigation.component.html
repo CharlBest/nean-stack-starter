@@ -30,6 +30,7 @@
   <div *ngIf="navigationType.BACK === activeNavigation"
     [style.height.px]="toolbarHeight"
     class="toolbar">
+    <!-- Back -->
     <div (click)="back()">
       <button mat-icon-button
         type="button"
@@ -37,11 +38,24 @@
         <app-icon-arrow-back></app-icon-arrow-back>
       </button>
 
-      <a mat-button>
+      <!-- A little hack to hide search heading for custom search bar in header -->
+      <a *ngIf="headerBackTitle && headerBackTitle !== 'Search'"
+        mat-button>
         {{headerBackTitle}}
       </a>
     </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <app-icon-search></app-icon-search>
+      <input #searchField
+        placeholder="Search"
+        (keyup.enter)="navigationService.searched.emit(searchField.value)"
+        [attr.autofocus]="bpService.isDesktop || null" />
+    </div>
+
     <span class="flex-spacer"></span>
+
     <ng-container *ngTemplateOutlet="navigationService.navigationPlaceholderTemplate"></ng-container>
   </div>
 </header>

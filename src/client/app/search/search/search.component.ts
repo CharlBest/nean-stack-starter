@@ -1,8 +1,6 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormGroupBuilder } from '@shared/validation/form-group-builder';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { Subscription } from 'rxjs';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -12,8 +10,9 @@ import { SearchService } from '../search.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
-  formGroup: FormGroup;
+export class SearchComponent implements OnInit, OnDestroy {
+  term: string;
+  searchedSubscription: Subscription;
   isProcessing = false;
   items: ItemViewModel[] | null;
   pageIndex = 0;
@@ -21,25 +20,22 @@ export class SearchComponent implements OnInit {
 
   constructor(public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
-    private fb: FormBuilder,
-    private location: Location,
     private searchService: SearchService,
-    public navigationService: NavigationService) { }
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
-    this.formOnInit();
-  }
-
-  formOnInit() {
-    this.formGroup = this.fb.group(FormGroupBuilder.search());
+    this.searchedSubscription = this.navigationService.searched.subscribe((value: string) => {
+      this.term = value;
+      this.search();
+    });
   }
 
   async search(newSearch = true) {
-    let term = this.formGroup.controls.term.value;
-    if (term && !this.isProcessing) {
+    if (this.term && !this.isProcessing) {
       this.isProcessing = true;
 
-      term = term.trim();
+      // This will maybe alter results
+      this.term = this.term.trim();
 
       // Reset
       if (newSearch) {
@@ -49,7 +45,7 @@ export class SearchComponent implements OnInit {
       }
 
       try {
-        const response = await this.searchService.search(term, this.pageIndex);
+        const response = await this.searchService.search(this.term, this.pageIndex);
         if (response) {
           if (!this.items) {
             this.items = [];
@@ -68,10 +64,6 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  back() {
-    this.location.back();
-  }
-
   onScroll() {
     if (!this.listEnd) {
       this.pageIndex++;
@@ -81,5 +73,11 @@ export class SearchComponent implements OnInit {
 
   trackByFn(index: number, item: ItemViewModel) {
     return item.id;
+  }
+
+  ngOnDestroy() {
+    if (this.searchedSubscription) {
+      this.searchedSubscription.unsubscribe();
+    }
   }
 }

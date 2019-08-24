@@ -6,10 +6,8 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { PWAService } from '../../pwa-helper/pwa.service';
-import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
-import { LocalStorageService } from '../../services/storage.service';
 import { WebSocketService } from '../../services/websocket.service';
 import { NavigationType } from '../navigation-type.enum';
 import { NavigationService } from '../navigation.service';
@@ -54,15 +52,13 @@ export class NavigationComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     public router: Router,
-    private authService: AuthService,
     private titleService: Title,
     private location: Location,
     public bpService: BreakpointService,
     public notificationService: NotificationService,
     public navigationService: NavigationService,
     public pwaService: PWAService,
-    private webSocketService: WebSocketService,
-    private localStorageService: LocalStorageService) { }
+    private webSocketService: WebSocketService) { }
 
   ngOnInit() {
     this.initPrimaryNavWathcer();
@@ -88,11 +84,9 @@ export class NavigationComponent implements OnInit {
       )
       .subscribe(event => {
         if (event.snapshot.data) {
-          const title = event.snapshot.data.title;
-          if (title) {
-            this.titleService.setTitle(title);
-            this.headerBackTitle = title;
-          }
+          const title = event.snapshot.data.title || '';
+          this.titleService.setTitle(title);
+          this.headerBackTitle = title;
 
           this.activeNavigation = event.snapshot.data.nav as NavigationType;
           const backRouterPath = event.snapshot.data.backRouterPath || this.navigationService.backRouterPath;

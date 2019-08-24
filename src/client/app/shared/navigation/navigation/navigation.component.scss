@@ -21,6 +21,47 @@ header {
 		&.bottom {
 			color: var(--foreground-color);
 		}
+
+		.search-bar {
+			display: flex;
+			align-items: center;
+			background-color: rgba(255, 255, 255, 0.1);
+			border-radius: 8px;
+			width: 100%;
+			max-width: 600px;
+			overflow: hidden;
+			margin-left: 16px;
+
+			app-icon-search {
+				padding: 0 10px;
+			}
+
+			input {
+				border: none;
+				height: 40px;
+				width: 100%;
+				background-color: transparent;
+				color: #fff;
+				font-size: 1em;
+				z-index: 1000;
+				display: block;
+				outline: none;
+
+				&::placeholder {
+					color: #fff;
+				}
+
+				&:focus {
+					background-color: #fff;
+					color: initial;
+					padding-left: 10px;
+
+					&::placeholder {
+						color: initial;
+					}
+				}
+			}
+		}
 	}
 
 	a {
