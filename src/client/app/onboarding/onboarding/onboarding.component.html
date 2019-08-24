@@ -103,7 +103,7 @@
 
         <div class="bottom-bar">
             <!-- Bubbles -->
-            <div>
+            <div class="animation-slide-up">
                 <span *ngFor="let bubble of bubbles"
                     (click)="selectedIndex = bubble"
                     class="bubble"
@@ -117,7 +117,8 @@
                     type="button"
                     matTooltip="Previous"
                     aria-label="Previous"
-                    [disabled]="selectedIndex === 0">
+                    [disabled]="selectedIndex === 0"
+                    class="animation-slide-right">
                     <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
                 </button>
                 <button mat-icon-button
@@ -125,7 +126,8 @@
                     type="button"
                     matTooltip="Next"
                     aria-label="Next"
-                    [disabled]="selectedIndex === numberOfTabs - 1">
+                    [disabled]="selectedIndex === numberOfTabs - 1"
+                    class="animation-slide-left">
                     <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
                 </button>
             </div>

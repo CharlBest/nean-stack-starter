@@ -28,6 +28,16 @@
 	}
 }
 
+@keyframes slideleft {
+	from {
+		transform: translateX(50%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
 @keyframes slideright {
 	from {
 		transform: translateX(-50%);
@@ -80,6 +90,10 @@
 
 .animation-slide-up {
 	animation: slideup 0.5s ease-in-out;
+}
+
+.animation-slide-left {
+	animation: slideleft 0.5s ease-in;
 }
 
 .animation-slide-right {
