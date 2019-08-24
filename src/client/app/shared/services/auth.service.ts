@@ -34,7 +34,7 @@ export class AuthService implements CanActivate {
         const accountKeys: Array<string> = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
-            if (key && key.startsWith(`${this.localStorageService.storagePrefix}data_`) && !key.endsWith('__')) {
+            if (key && key.startsWith(this.localStorageService.storagePrefix) && !key.endsWith('__')) {
                 accountKeys.push(key);
             }
         }
@@ -56,12 +56,12 @@ export class AuthService implements CanActivate {
             this.localStorageService.setUserStorageData(userData);
         } else {
             // load anonymous data
-            const anonymousData = localStorage.getItem(`${this.localStorageService.storagePrefix}data__`);
+            const anonymousData = localStorage.getItem(`${this.localStorageService.storagePrefix}_`);
             if (anonymousData) {
-                this.localStorageService.setUserStorageData(JSON.parse(anonymousData) as StorageData);
+                this.localStorageService.setUserStorageData(this.parseJSON(anonymousData) as StorageData);
             } else { // Save initial default values
                 const stringData = JSON.stringify(this.localStorageService.storageData);
-                localStorage.setItem(`${this.localStorageService.storagePrefix}data__`, stringData);
+                localStorage.setItem(`${this.localStorageService.storagePrefix}_`, stringData);
 
                 // Create data in local storage if not exist yet
                 this.localStorageService.setUserStorageData();
@@ -70,11 +70,11 @@ export class AuthService implements CanActivate {
     }
 
     getUserData(accountKey: string): StorageData | null {
-        const userIdStartIndex = `${this.localStorageService.storagePrefix}data_`.length;
+        const userIdStartIndex = this.localStorageService.storagePrefix.length;
         const userIdSuffix = accountKey.substring(userIdStartIndex);
-        const data = localStorage.getItem(`${this.localStorageService.storagePrefix}data_${userIdSuffix}`);
+        const data = localStorage.getItem(`${this.localStorageService.storagePrefix}${userIdSuffix}`);
         if (data) {
-            const jsonData = JSON.parse(data) as StorageData;
+            const jsonData = this.parseJSON(data) as StorageData;
             if (jsonData) {
                 return jsonData; // user data
             } else {
@@ -166,10 +166,14 @@ export class AuthService implements CanActivate {
     private parseJwt(token: string) {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
+        return this.parseJSON(window.atob(base64));
+    }
+
+    private parseJSON(jsonString: string): any {
         try {
-            return JSON.parse(window.atob(base64));
-        } catch (e) {
-            console.error('problem with token parsing');
+            return JSON.parse(jsonString);
+        } catch {
+            console.error('Error parsing JSON string');
             return null;
         }
     }
