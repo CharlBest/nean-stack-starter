@@ -1,6 +1,7 @@
 import { UserTokenModel } from '@shared/models/shared/user-token.model';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
+import { translateService } from '@shared/translate/translate.service';
 import { ServerValidator } from '@shared/validation/validators';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
@@ -140,6 +141,12 @@ class UsersService extends BaseService {
             {
                 issuer: Authentication.issuerName
             });
+
+        viewModel.email = user.email;
+        viewModel.username = user.username;
+        viewModel.consent = user.consent;
+        viewModel.darkTheme = user.darkTheme;
+        viewModel.language = user.language;
 
         return viewModel;
     }
@@ -310,6 +317,18 @@ class UsersService extends BaseService {
         const viewModel = new TwoFactorAuthenticationViewModel();
         viewModel.qrCodeKeyUri = authenticator.keyuri(user.email, 'NEAN', user.twoFactorAuthenticationSecret);
         return viewModel;
+    }
+
+    // TODO: not sure if disabling this is good?
+    // tslint:disable-next-line: bool-param-default
+    async updateConfiguration(res: Response, consent: boolean | undefined, darkTheme: boolean | undefined, language: string | undefined)
+        : Promise<boolean> {
+        if (language) {
+            const exists = translateService.doesLanguageKeyExist(language);
+            language = exists ? language : undefined;
+        }
+
+        return await usersRepository.updateConfiguration(res, this.getUserId(res), consent, darkTheme, language);
     }
 
     // #region private

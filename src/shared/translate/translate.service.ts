@@ -36,13 +36,16 @@ class TranslateService {
     }
 
     getLanguagePack(language: Language | null) {
-        if (language === Language.ENGLISH) {
-            return english;
-        } else if (language === Language.AFRIKAANS) {
-            return afrikaans;
-        } else {
-            console.error('Language could not be found');
-            return null;
+        switch (language) {
+            case Language.ENGLISH:
+                return english;
+
+            case Language.AFRIKAANS:
+                return afrikaans;
+
+            default:
+                console.error('Language could not be found');
+                return null;
         }
     }
 
@@ -67,6 +70,10 @@ class TranslateService {
         } else {
             return null;
         }
+    }
+
+    doesLanguageKeyExist(key: string) {
+        return Object.values(Language).includes(key);
     }
 
     private keyNotFound(key: string) {

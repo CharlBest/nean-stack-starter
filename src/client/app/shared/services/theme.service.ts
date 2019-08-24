@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { DialogService } from '../dialog/dialog.service';
-import { LocalStorageService, StorageKey } from './storage.service';
+import { AuthService } from './auth.service';
+import { LocalStorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThemeService {
+
     private darkThemeClass = 'dark-theme';
-    private darkTheme: boolean = this.localStorageService.getItem(StorageKey.IS_DARK_THEME) === 'true';
     get isDarkTheme(): boolean {
-        return this.darkTheme;
+        return this.localStorageService.storageData.darkTheme;
     }
 
     // Colors
@@ -51,35 +52,37 @@ export class ThemeService {
     }
 
     constructor(private dialogService: DialogService,
-        private localStorageService: LocalStorageService) { }
+        private localStorageService: LocalStorageService,
+        private authService: AuthService) { }
 
     init() {
-        this.updateTheme();
+        this.addRemoveDarkThemeClass();
+
         this.addNativeColorSchemeListener('dark');
         this.addNativeColorSchemeListener('light');
+
+        this.authService.userLoggedInOrLoggedOut.subscribe(() => {
+            this.addRemoveDarkThemeClass();
+        });
     }
 
     toggleTheme() {
-        this.darkTheme = !this.darkTheme;
-        this.updateTheme();
-    }
-
-    refresh() {
-        const storedDarkTheme = this.localStorageService.getItem(StorageKey.IS_DARK_THEME) === 'true';
-        if (storedDarkTheme !== this.darkTheme) {
-            this.darkTheme = storedDarkTheme;
-            this.updateTheme();
-        }
+        this.updateTheme(!this.isDarkTheme);
     }
 
     private isPreferColorScheme(value: string): boolean {
         return window.matchMedia(`(prefers-color-scheme: ${value})`).matches;
     }
 
-    private updateTheme() {
+    private updateTheme(value: boolean) {
+        this.localStorageService.setUserStorageData({ darkTheme: value });
+        this.addRemoveDarkThemeClass();
+    }
+
+    private addRemoveDarkThemeClass() {
         const bodyElement = document.querySelector('body');
         if (bodyElement) {
-            if (this.darkTheme) {
+            if (this.isDarkTheme) {
                 bodyElement.classList.add(this.darkThemeClass);
             } else {
                 bodyElement.classList.remove(this.darkThemeClass);
@@ -87,8 +90,6 @@ export class ThemeService {
         } else {
             console.error('Body tag can\'t be found');
         }
-
-        this.localStorageService.setItem(StorageKey.IS_DARK_THEME, `${this.darkTheme}`);
     }
 
     private addNativeColorSchemeListener(colorName: string) {
@@ -97,8 +98,7 @@ export class ThemeService {
                 const hasConfirmed = await this.dialogService.confirm(`We noticed you changed your theme to ${colorName}.
                  Would you like to change the app\'s theme to ${colorName} as well?`);
                 if (hasConfirmed) {
-                    this.darkTheme = colorName === 'dark';
-                    this.updateTheme();
+                    this.updateTheme(colorName === 'dark');
                 }
             }
         });

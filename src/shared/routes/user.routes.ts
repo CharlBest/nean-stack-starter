@@ -23,4 +23,5 @@ export class UserRoutes {
     static searchUserStartWith = () => new BaseRoute(UserRoutes.root, 'searchUserStartWith');
     static completedTutorial = () => new BaseRoute(UserRoutes.root, 'completedTutorial');
     static updateTwoFactorAuthentication = () => new BaseRoute(UserRoutes.root, 'updateTwoFactorAuthentication');
+    static updateConfiguration = () => new BaseRoute(UserRoutes.root, 'updateConfiguration');
 }

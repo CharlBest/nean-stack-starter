@@ -30,11 +30,11 @@ export class AppComponent {
     private onboardingService: OnboardingService,
     private activeTimerService: ActiveTimerService,
     private translateService: TranslateService) {
-    // Translation (i18n)
-    this.translateService.init();
-
     // Authentication
     this.authService.init();
+
+    // Translation (i18n)
+    this.translateService.init();
 
     // Google Analytics
     this.gaService.init();

@@ -9,4 +9,7 @@ export class UserLiteModel {
     stripeCustomerId: string;
     twoFactorAuthenticationEnabled: boolean;
     twoFactorAuthenticationSecret: string;
+    consent: boolean;
+    darkTheme: boolean;
+    language: string;
 }

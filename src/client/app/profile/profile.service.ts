@@ -11,6 +11,7 @@ import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
+import { UpdateConfigurationViewModel } from '@shared/view-models/user/update-configuration.view-model';
 import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { UpdateTwoFactorAuthenticationViewModel } from '@shared/view-models/user/update-two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
@@ -82,5 +83,9 @@ export class ProfileService {
     return this.http
       .put<TwoFactorAuthenticationViewModel>(`${environment.httpDomain}${UserRoutes.updateTwoFactorAuthentication().client()}`, model)
       .toPromise();
+  }
+
+  updateConfiguration(model: UpdateConfigurationViewModel): Promise<boolean> {
+    return this.http.put<boolean>(`${environment.httpDomain}${UserRoutes.updateConfiguration().client()}`, model).toPromise();
   }
 }

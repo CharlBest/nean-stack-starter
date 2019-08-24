@@ -77,7 +77,7 @@ export class CreateUserComponent implements OnInit {
     try {
       const response = await this.loginService.login(model);
       if (response && response.token) {
-        this.authService.setToken(response.token);
+        this.authService.setToken(response);
         this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
       } else {
         this.dialogService.alert('Authentication failed');

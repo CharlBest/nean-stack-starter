@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { LocalStorageService } from '../services/storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService,
+        private localStorageService: LocalStorageService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Get the auth header from the service.
-        const authToken = this.authService.getLocalToken();
+        const authToken = this.localStorageService.storageData.token;
         // Clone the request to add the new header.
         const authRequest = authToken ? request.clone({ headers: request.headers.set('Authorization', `Bearer ${authToken}`) }) : request;
         // Pass on the cloned request instead of the original request.

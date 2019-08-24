@@ -18,7 +18,7 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
     numberOfTabs: number;
     selectedIndex = 0;
     bubbles: Array<number>;
-    hasAcceptedCookieConsentOnLoad = this.cookieConsentService.hasAcceptedCookieConsent();
+    hasAcceptedCookieConsentOnLoad = this.cookieConsentService.hasAcceptedCookieConsent;
     hasAcceptedCookieConsent = this.hasAcceptedCookieConsentOnLoad;
     isDarkThemeOnLoad = this.themeService.isDarkTheme;
     showInstallBannerOnLoad = this.navigationService.showInstallBanner;

@@ -8,6 +8,7 @@ import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar
 import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { UpdateConfigurationViewModel } from '@shared/view-models/user/update-configuration.view-model';
 import { UpdateTwoFactorAuthenticationViewModel } from '@shared/view-models/user/update-two-factor-authentication.view-model';
 import { NextFunction, Request, Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
@@ -237,6 +238,21 @@ class UsersController extends BaseController {
 
         res.status(200).json(
             await usersService.updateTwoFactorAuthentication(res, viewModel.isEnabled)
+        );
+    }
+
+    async updateConfiguration(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as UpdateConfigurationViewModel;
+
+        const formGroup = FormGroupBuilder.updateConfiguration(viewModel.consent, viewModel.darkTheme, viewModel.language);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+
+        if (hasErrors) {
+            throw new Error();
+        }
+
+        res.status(200).json(
+            await usersService.updateConfiguration(res, viewModel.consent, viewModel.darkTheme, viewModel.language)
         );
     }
 }

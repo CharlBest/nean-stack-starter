@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageService, StorageKey } from '../shared/services/storage.service';
+import { LocalStorageService } from '../shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class OnboardingService {
     private localStorageService: LocalStorageService) { }
 
   openOnboarding(): boolean {
-    const hasUserVisited = this.hasUserVisited();
-    this.setUserVisited();
+    const hasUserVisited = this.localStorageService.storageData.hasUserVisited;
+    this.localStorageService.setUserStorageData({ hasUserVisited: true });
 
     // TODO: hack to never show cookie consent on the onboarding page
     const isOnboarding = location.pathname.startsWith('/onboarding');
@@ -26,13 +26,5 @@ export class OnboardingService {
     }
 
     return false;
-  }
-
-  hasUserVisited() {
-    return this.localStorageService.getItem(StorageKey.HAS_USER_VISITED) === 'true';
-  }
-
-  setUserVisited() {
-    this.localStorageService.setItem(StorageKey.HAS_USER_VISITED, 'true');
   }
 }

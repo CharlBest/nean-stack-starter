@@ -80,6 +80,7 @@ export class Database {
                 completedTutorial: (await import(`../database/users/completedTutorial.${Database.fileExtension}`)).data,
                 updateTwoFactorAuthentication:
                     (await import(`../database/users/updateTwoFactorAuthentication.${Database.fileExtension}`)).data,
+                updateConfiguration: (await import(`../database/users/updateConfiguration.${Database.fileExtension}`)).data,
             },
             payments: {
                 anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
@@ -151,6 +152,7 @@ export interface DbQueries {
         deleteUser: string,
         completedTutorial: string,
         updateTwoFactorAuthentication: string,
+        updateConfiguration: string,
     };
 
     payments: {

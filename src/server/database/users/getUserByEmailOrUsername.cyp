@@ -5,9 +5,14 @@ WHERE toLower(user.username) = toLower({emailOrUsername}) OR toLower(user.email)
 RETURN user
 { 
     id: user.id,
+    email: user.email,
+    username: user.username,
     password: user.password,
     passwordSalt: user.passwordSalt,
     twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
-    twoFactorAuthenticationSecret: user.twoFactorAuthenticationSecret
+    twoFactorAuthenticationSecret: user.twoFactorAuthenticationSecret,
+    consent: user.consent,
+    darkTheme: user.darkTheme,
+    language: user.language
 }
 `

@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { UserTokenModel } from '@shared/models/shared/user-token.model';
-import { TranslateService } from '../translate/translate.service';
-import { LocalStorageService, StorageKey } from './storage.service';
-import { ThemeService } from './theme.service';
-import { UserService } from './user.service';
+import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
+import { LocalStorageService, StorageData } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService implements CanActivate {
 
+    @Output() userLoggedInOrLoggedOut: EventEmitter<void> = new EventEmitter<void>();
+
     get loggedInUserId(): number | null | undefined {
-        return this.userService.storedLoggedInUserId;
+        return this.localStorageService.userData.userId;
     }
 
     private preventLogoutOnNextRequestFlag: boolean;
@@ -25,49 +25,98 @@ export class AuthService implements CanActivate {
             return false;
         }
     }
-    private tokenExpireDateInSeconds: number | null;
 
     constructor(private router: Router,
         private dialog: MatDialog,
-        private localStorageService: LocalStorageService,
-        private userService: UserService,
-        private themeService: ThemeService,
-        private translateService: TranslateService) { }
+        private localStorageService: LocalStorageService) { }
 
     init() {
-        const token = this.getLocalToken();
-        const { id, expireDate } = this.getDataFromJWT(token);
+        const accountKeys: Array<string> = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith(`${this.localStorageService.storagePrefix}data_`) && !key.endsWith('__')) {
+                accountKeys.push(key);
+            }
+        }
 
-        this.userService.storedLoggedInUserId = id;
-        this.tokenExpireDateInSeconds = expireDate;
+        let userData: StorageData | null = null;
+        for (const key of accountKeys) {
+            const data = this.getUserData(key);
+            if (data && data.token && !this.hasTokenExpired(data.token)) {
+                userData = data;
+            }
+        }
+
+        if (userData && userData.token) {
+            // load user data
+            const { id, expireDate } = this.getDataFromJWT(userData.token);
+
+            this.localStorageService.updateUserData(id, expireDate);
+
+            this.localStorageService.setUserStorageData(userData);
+        } else {
+            // load anonymous data
+            const anonymousData = localStorage.getItem(`${this.localStorageService.storagePrefix}data__`);
+            if (anonymousData) {
+                this.localStorageService.setUserStorageData(JSON.parse(anonymousData) as StorageData);
+            } else { // Save initial default values
+                const stringData = JSON.stringify(this.localStorageService.storageData);
+                localStorage.setItem(`${this.localStorageService.storagePrefix}data__`, stringData);
+
+                // Create data in local storage if not exist yet
+                this.localStorageService.setUserStorageData();
+            }
+        }
+    }
+
+    getUserData(accountKey: string): StorageData | null {
+        const userIdStartIndex = `${this.localStorageService.storagePrefix}data_`.length;
+        const userIdSuffix = accountKey.substring(userIdStartIndex);
+        const data = localStorage.getItem(`${this.localStorageService.storagePrefix}data_${userIdSuffix}`);
+        if (data) {
+            const jsonData = JSON.parse(data) as StorageData;
+            if (jsonData) {
+                return jsonData; // user data
+            } else {
+                return null; // anonymous data
+            }
+        } else {
+            return null; // anonymous data
+        }
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.hasToken() || this.router.navigate(['login'], { queryParams: { returnUrl: state.url }, queryParamsHandling: 'merge' });
     }
 
-    setToken(token: string) {
+    setToken(model: TokenViewModel) {
         // Get token data
-        const { id, expireDate } = this.getDataFromJWT(token);
+        const { id, expireDate } = this.getDataFromJWT(model.token);
 
         // Save token data in memory (needs to be saved before stored into local storage for correct prefix generation)
-        this.userService.storedLoggedInUserId = id;
-        this.tokenExpireDateInSeconds = expireDate;
+        this.localStorageService.updateUserData(id, expireDate);
 
-        // Store token in local storage
-        this.localStorageService.setItem(StorageKey.TOKEN, token);
+        // Save local storage in memory for user
+        this.localStorageService.updateStoredData();
 
-        // Copy local setting to account if not exist
-        this.syncAnnonymousDataWithAccount();
+        // Store token in local storage as well as email and username to select multiple accounts
+        this.localStorageService.setUserStorageData({
+            email: model.email,
+            username: model.username,
+            token: model.token
+        });
+
+        this.userLoggedInOrLoggedOut.emit();
     }
 
     removeToken() {
-        this.localStorageService.removeItem(StorageKey.TOKEN);
-        this.userService.storedLoggedInUserId = null;
-        this.tokenExpireDateInSeconds = null;
+        this.localStorageService.setUserStorageData({ token: null });
 
-        this.themeService.refresh();
-        this.translateService.refresh();
+        this.localStorageService.updateUserData(null, null);
+
+        this.localStorageService.updateStoredData();
+
+        this.userLoggedInOrLoggedOut.emit();
     }
 
     removeTokenAndNavigateToLogin() {
@@ -77,27 +126,31 @@ export class AuthService implements CanActivate {
     }
 
     hasToken(): boolean {
-        const token = this.getLocalToken();
-        return token !== null && token !== undefined;
-    }
-
-    getLocalToken(): string | null {
-        return this.localStorageService.getItem(StorageKey.TOKEN);
+        return !!this.localStorageService.storageData.token;
     }
 
     preventLogoutOnNextRequest() {
         this.preventLogoutOnNextRequestFlag = true;
     }
 
-    hasTokenExpired() {
-        if (this.tokenExpireDateInSeconds && this.hasToken() && Math.floor(Date.now() / 1000) >= this.tokenExpireDateInSeconds) {
+    hasTokenExpired(token?: string | null) {
+        const { id, expireDate } = this.getDataFromJWT(token);
+        if (!id || !expireDate) {
+            return true;
+        }
+
+        if (Math.floor(Date.now() / 1000) >= expireDate) {
             return true;
         } else {
             return false;
         }
     }
 
-    private getDataFromJWT(token: string | null): { id: number | null, expireDate: number | null } {
+    hasStoredTokenExpired() {
+        return this.hasTokenExpired(this.localStorageService.storageData.token);
+    }
+
+    private getDataFromJWT(token: string | null | undefined): { id: number | null, expireDate: number | null } {
         if (token) {
             const parsedToken = this.parseJwt(token) as { data: UserTokenModel, exp: number };
 
@@ -119,49 +172,5 @@ export class AuthService implements CanActivate {
             console.error('problem with token parsing');
             return null;
         }
-    }
-
-    // TODO this method feels error prone with lots of permutation that can go wrong
-    // also take into account that there are refreshes happening
-    // Purpose of this is to copy all local settings to a user's settings when they
-    // don't have them
-    private syncAnnonymousDataWithAccount() {
-        if (!this.userService.storedLoggedInUserId) {
-            return;
-        }
-
-        // Onboarding
-        if (!this.localStorageService.getItem(StorageKey.HAS_USER_VISITED)) {
-            const value = localStorage.getItem(this.localStorageService.concatKeyPrefix(StorageKey.HAS_USER_VISITED, null));
-            if (value) {
-                this.localStorageService.setItem(StorageKey.HAS_USER_VISITED, value);
-            }
-        }
-
-        // Cookie Consent
-        if (!this.localStorageService.getItem(StorageKey.COOKIE_CONSENT)) {
-            const value = localStorage.getItem(this.localStorageService.concatKeyPrefix(StorageKey.COOKIE_CONSENT, null));
-            if (value) {
-                this.localStorageService.setItem(StorageKey.COOKIE_CONSENT, value);
-            }
-        }
-
-        // Theme
-        if (!this.localStorageService.getItem(StorageKey.IS_DARK_THEME)) {
-            const value = localStorage.getItem(this.localStorageService.concatKeyPrefix(StorageKey.IS_DARK_THEME, null));
-            if (value) {
-                this.localStorageService.setItem(StorageKey.IS_DARK_THEME, value);
-            }
-        }
-        this.themeService.refresh();
-
-        // Language
-        if (!this.localStorageService.getItem(StorageKey.LANGUAGE)) {
-            const value = localStorage.getItem(this.localStorageService.concatKeyPrefix(StorageKey.LANGUAGE, null));
-            if (value) {
-                this.localStorageService.setItem(StorageKey.LANGUAGE, value);
-            }
-        }
-        this.translateService.refresh();
     }
 }

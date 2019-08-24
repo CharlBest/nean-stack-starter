@@ -305,6 +305,25 @@ class UsersRepository extends BaseRepository {
             return null;
         }
     }
+
+    // tslint:disable-next-line: bool-param-default
+    async updateConfiguration(res: Response, userId: number, consent: boolean | undefined, darkTheme: boolean | undefined,
+        language: string | undefined): Promise<boolean> {
+        const result = await res.locals.neo4jSession.run(Database.queries.users.updateConfiguration,
+            {
+                userId,
+                consent,
+                darkTheme,
+                language,
+            }
+        );
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export const usersRepository = new UsersRepository();

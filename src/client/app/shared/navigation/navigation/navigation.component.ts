@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -9,6 +9,7 @@ import { PWAService } from '../../pwa-helper/pwa.service';
 import { AuthService } from '../../services/auth.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
+import { LocalStorageService } from '../../services/storage.service';
 import { WebSocketService } from '../../services/websocket.service';
 import { NavigationType } from '../navigation-type.enum';
 import { NavigationService } from '../navigation.service';
@@ -60,27 +61,17 @@ export class NavigationComponent implements OnInit {
     public notificationService: NotificationService,
     public navigationService: NavigationService,
     public pwaService: PWAService,
-    private webSocketService: WebSocketService) { }
+    private webSocketService: WebSocketService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
     this.initPrimaryNavWathcer();
-    this.navigationStart();
     this.navigationEnd();
     this.configureTopToolbarOnScrollUp();
     this.checkAllNavItemAssociations();
     this.listenForNewItemsViaWebSocket();
   }
 
-  navigationStart() {
-    // Remove expired auth token
-    this.router.events
-      .pipe(filter(e => e instanceof NavigationStart))
-      .subscribe(event => {
-        if (this.authService.hasTokenExpired()) {
-          this.authService.removeToken();
-        }
-      });
-  }
 
   navigationEnd() {
     // Set title, navigation and back route

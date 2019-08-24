@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
         this.isProcessing = false;
       } else if (response && response.token) {
         // Login successful
-        this.authService.setToken(response.token);
+        this.authService.setToken(response);
 
         this.router.navigateByUrl(this.returnUrl);
       } else {

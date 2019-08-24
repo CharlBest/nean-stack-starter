@@ -214,4 +214,19 @@ export class FormGroupBuilder {
             ]]
         };
     }
+
+    static updateConfiguration(consent: boolean | null = null, darkTheme: boolean | null = null, language: string | null = null)
+        : FormValidator {
+        return {
+            consent: [consent, [
+                Validators.typeAssert(consent, 'boolean'),
+            ]],
+            darkTheme: [darkTheme, [
+                Validators.typeAssert(darkTheme, 'boolean'),
+            ]],
+            language: [language, [
+                Validators.typeAssert(language, 'string'),
+            ]],
+        };
+    }
 }
