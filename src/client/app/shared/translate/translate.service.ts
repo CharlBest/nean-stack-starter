@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Language } from '@shared/translate/language.enum';
 import { translateService } from '@shared/translate/translate.service';
+import { LocalStorageService, StorageKey } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslateService {
 
-  private readonly languageKey = 'language';
   private readonly defaultLanguage = Language.ENGLISH;
   activeLanguage: Language | null;
 
-  constructor() { }
+  constructor(private localStorageService: LocalStorageService) { }
 
   init() {
-    const storedLanguage = localStorage.getItem(this.languageKey) as Language || this.defaultLanguage;
+    const storedLanguage = this.localStorageService.getItem(StorageKey.LANGUAGE) as Language || this.defaultLanguage;
     this.activeLanguage = storedLanguage || this.defaultLanguage;
 
     const success = translateService.setLanguage(this.activeLanguage);
@@ -25,6 +25,14 @@ export class TranslateService {
   }
 
   saveLanguagePreference(language: Language) {
-    localStorage.setItem(this.languageKey, language);
+    this.localStorageService.setItem(StorageKey.LANGUAGE, language);
+  }
+
+  refresh() {
+    const storedLanguage = this.localStorageService.getItem(StorageKey.LANGUAGE) as Language;
+    if (this.activeLanguage !== storedLanguage) {
+      this.activeLanguage = storedLanguage || this.defaultLanguage;
+      translateService.setLanguage(this.activeLanguage);
+    }
   }
 }

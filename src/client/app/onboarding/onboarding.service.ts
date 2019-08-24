@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService, StorageKey } from '../shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingService {
 
-  private readonly hasVisitedStorageKey = 'has_user_visited';
-
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private localStorageService: LocalStorageService) { }
 
   openOnboarding(): boolean {
     const hasUserVisited = this.hasUserVisited();
@@ -29,10 +29,10 @@ export class OnboardingService {
   }
 
   hasUserVisited() {
-    return localStorage.getItem(this.hasVisitedStorageKey) === 'true';
+    return this.localStorageService.getItem(StorageKey.HAS_USER_VISITED) === 'true';
   }
 
   setUserVisited() {
-    localStorage.setItem(this.hasVisitedStorageKey, 'true');
+    this.localStorageService.setItem(StorageKey.HAS_USER_VISITED, 'true');
   }
 }

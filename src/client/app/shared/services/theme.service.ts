@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DialogService } from '../dialog/dialog.service';
+import { LocalStorageService, StorageKey } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThemeService {
-    private isDarkThemeStorageKey = 'is_dark_theme';
     private darkThemeClass = 'dark-theme';
-    private darkTheme: boolean = localStorage.getItem(this.isDarkThemeStorageKey) === 'true';
+    private darkTheme: boolean = this.localStorageService.getItem(StorageKey.IS_DARK_THEME) === 'true';
     get isDarkTheme(): boolean {
         return this.darkTheme;
     }
@@ -50,7 +50,8 @@ export class ThemeService {
         return this.isPreferColorSchemeDark || this.isPreferColorSchemeLight || this.isPreferColorSchemeNoPreference;
     }
 
-    constructor(private dialogService: DialogService) { }
+    constructor(private dialogService: DialogService,
+        private localStorageService: LocalStorageService) { }
 
     init() {
         this.updateTheme();
@@ -61,6 +62,14 @@ export class ThemeService {
     toggleTheme() {
         this.darkTheme = !this.darkTheme;
         this.updateTheme();
+    }
+
+    refresh() {
+        const storedDarkTheme = this.localStorageService.getItem(StorageKey.IS_DARK_THEME) === 'true';
+        if (storedDarkTheme !== this.darkTheme) {
+            this.darkTheme = storedDarkTheme;
+            this.updateTheme();
+        }
     }
 
     private isPreferColorScheme(value: string): boolean {
@@ -79,7 +88,7 @@ export class ThemeService {
             console.error('Body tag can\'t be found');
         }
 
-        localStorage.setItem(this.isDarkThemeStorageKey, `${this.darkTheme}`);
+        this.localStorageService.setItem(StorageKey.IS_DARK_THEME, `${this.darkTheme}`);
     }
 
     private addNativeColorSchemeListener(colorName: string) {
