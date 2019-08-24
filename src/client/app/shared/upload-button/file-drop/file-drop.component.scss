@@ -1,0 +1,29 @@
+.area {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 25px;
+	border: 1px dashed rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+	transition: 0.2s;
+	background-color: rgba(0, 0, 0, 0.03);
+
+	// TODO: this should also be the primary color
+	&.highlight,
+	&:hover {
+		border-color: var(--primary-color);
+		opacity: 0.7;
+	}
+
+	input {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		cursor: pointer;
+		opacity: 0;
+		outline: none;
+	}
+}

@@ -1,0 +1,11 @@
+<div class="area"
+    [class.highlight]="highlightDragDropArea">
+
+    <span *ngIf="!message">Drag a file here or <a href="#">browse</a> for one to upload</span>
+    <span *ngIf="message">{{message}}</span>
+
+    <input type="file"
+        multiple
+        (change)="onInputChange($event)">
+
+</div>
