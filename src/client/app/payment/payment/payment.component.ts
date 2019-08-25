@@ -102,17 +102,17 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    sendPaymentToServer(token: string | null = null) {
+    sendPaymentToServer(token: string | null = null): Promise<boolean> {
         this.isProcessing = true;
 
         if (this.isAuthenticated) {
-            this.sendViaAuthenticatedUser(token);
+            return this.sendViaAuthenticatedUser(token);
         } else {
-            this.sendViaAnonymousUser(token);
+            return this.sendViaAnonymousUser(token);
         }
     }
 
-    async sendViaAuthenticatedUser(token: string | null) {
+    async sendViaAuthenticatedUser(token: string | null): Promise<boolean> {
         const viewModel = new UserPaymentViewModel();
         viewModel.token = token;
         viewModel.cardUId = this.formGroup.controls.cardUId.value;
@@ -122,14 +122,17 @@ export class PaymentComponent implements OnInit {
         try {
             await this.paymentService.userPayment(viewModel);
             this.paymentSuccess = true;
+            return true;
         } catch (error) {
             this.formErrorsService.updateFormValidity(error, this.formGroup);
         } finally {
             this.isProcessing = false;
         }
+
+        return false;
     }
 
-    async sendViaAnonymousUser(token: string | null) {
+    async sendViaAnonymousUser(token: string | null): Promise<boolean> {
         if (token) {
             const viewModel = new AnonymousPaymentViewModel();
             viewModel.token = token;
@@ -139,12 +142,15 @@ export class PaymentComponent implements OnInit {
             try {
                 await this.paymentService.anonymousPayment(viewModel);
                 this.paymentSuccess = true;
+                return true;
             } catch (error) {
                 this.formErrorsService.updateFormValidity(error, this.formGroup);
             } finally {
                 this.isProcessing = false;
             }
         }
+
+        return false;
     }
 
     // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
@@ -174,16 +180,22 @@ export class PaymentComponent implements OnInit {
         return true;
     }
 
-    paymentRequestButtonComplete(event: any) {
+    async paymentRequestButtonComplete(event: stripe.paymentRequest.StripeTokenPaymentResponse) {
         if (event && event.token && (event.payerEmail || this.isAuthenticated)) {
             if (!this.isAuthenticated) {
                 this.formGroup.controls.email.setValue(event.payerEmail);
             }
 
-            this.sendPaymentToServer(event.token.id);
+            const success = await this.sendPaymentToServer(event.token.id);
+            if (success) {
+                this.stripePaymentRequestButton.completePaymentRequest(event, 'success');
+                return;
+            }
         } else {
             this.dialogService.alert('Invalid card details');
         }
+
+        this.stripePaymentRequestButton.completePaymentRequest(event, 'fail');
     }
 
     selectSection(section: Section) {

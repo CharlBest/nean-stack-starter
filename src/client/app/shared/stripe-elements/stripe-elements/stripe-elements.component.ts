@@ -17,7 +17,7 @@ export class StripeElementsComponent implements OnInit {
     @ViewChild('cardExpiry', { static: true }) cardExpiry: ElementRef<HTMLDivElement>;
     @ViewChild('cardCvc', { static: true }) cardCvc: ElementRef<HTMLDivElement>;
 
-    elementsWrapper = new ElementsWrapper();
+    elementsWrapper: ElementsWrapper;
     cardBrandType = CardBrandType;
     error: string;
     isValid = false;
@@ -52,22 +52,24 @@ export class StripeElementsComponent implements OnInit {
         };
 
         // Card number
-        this.elementsWrapper.cardNumber.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardNumber.type, {
+        const cardNumber = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardNumber.type, {
             placeholder: 'Card Number *',
             style: elementStyles
         });
 
         // Card expiry
-        this.elementsWrapper.cardExpiry.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardExpiry.type, {
+        const cardExpiry = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardExpiry.type, {
             placeholder: 'MM / YY *',
             style: elementStyles
         });
 
         // Card CVC
-        this.elementsWrapper.cardCvc.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardCvc.type, {
+        const cardCvc = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardCvc.type, {
             placeholder: 'CVC *',
             style: elementStyles
         });
+
+        this.elementsWrapper = new ElementsWrapper(cardNumber, cardExpiry, cardCvc);
 
         this.initializeElement(this.elementsWrapper.cardNumber);
         this.initializeElement(this.elementsWrapper.cardExpiry);
@@ -86,13 +88,13 @@ export class StripeElementsComponent implements OnInit {
             }
         });
         // change (empty, complete, error, value), ready, focus, blur, click
-        elementWrapper.element.on('change', (data: any) => {
+        elementWrapper.element.on('change', (data: stripe.elements.ElementChangeResponse) => {
             elementWrapper.valid = data && data.error === undefined && data.empty === false;
             this.isValid = this.elementsWrapper.cardNumber.valid &&
                 this.elementsWrapper.cardExpiry.valid &&
                 this.elementsWrapper.cardCvc.valid;
 
-            if (data && data.error && data.error.type === 'validation_error') {
+            if (data && data.error && data.error.type === ('validation_error' as any)) {
                 elementWrapper.error = data.error.message;
             } else {
                 elementWrapper.error = null;
@@ -142,7 +144,7 @@ export class StripeElementsComponent implements OnInit {
         const { token, error } = await this.stripeElementsService.stripe.createToken(this.elementsWrapper.cardNumber.element);
 
         if (error) {
-            this.error = error.message;
+            this.error = error.message ? error.message : 'Error in payment';
             return null;
         } else {
             return token;

@@ -11,11 +11,12 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
 
     @Input() amount: number;
     @Input() showButton = false;
-    @Output() paymentComplete: EventEmitter<any> = new EventEmitter<any>();
+    @Output() paymentComplete: EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse> =
+        new EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
-    canMakePayment: boolean | null = null;
+    canMakePayment: { applePay?: boolean } | null = null;
     showPaymentRequestButton = false;
-    paymentRequestButtonInstance: any;
+    paymentRequestButtonInstance: stripe.paymentRequest.StripePaymentRequest;
     paymentRequestButtonOptions = {
         country: 'IE',
         currency: 'eur',
@@ -60,6 +61,13 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         this.paymentRequestButtonInstance.show();
     }
 
+    // NB: it's very important to call this after payment request was made otherwise it will always
+    // show error but payment might have succeeded.
+    // https://stripe.com/docs/stripe-js/reference#payment-response-object
+    completePaymentRequest(tokenPaymentResponse: stripe.paymentRequest.StripeTokenPaymentResponse, code: TokenPaymentCompleteCode) {
+        tokenPaymentResponse.complete(code);
+    }
+
     private async initialize() {
         this.paymentRequestButtonInstance = this.stripeElementsService.stripe.paymentRequest(this.paymentRequestButtonOptions);
         // Check the availability of the Payment Request API first.
@@ -71,7 +79,8 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
             // TODO: payment button not available
         }
 
-        this.paymentRequestButtonInstance.on('token', (event: any) => this.paymentComplete.emit(event));
+        this.paymentRequestButtonInstance.on('token', (event: stripe.paymentRequest.StripeTokenPaymentResponse) =>
+            this.paymentComplete.emit(event));
     }
 
     private createAndMountButton() {
@@ -90,3 +99,11 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         this.showPaymentRequestButton = true;
     }
 }
+
+type TokenPaymentCompleteCode =
+    'success' |
+    'fail' |
+    'invalid_payer_name' |
+    'invalid_payer_phone' |
+    'invalid_payer_email' |
+    'invalid_shipping_address';

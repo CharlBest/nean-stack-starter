@@ -106,6 +106,7 @@
     "@types/stripe": "^6.31.20",
     "@types/uuid": "^3.4.5",
     "@types/web-push": "^3.3.0",
+    "@types/stripe-v3": "^3.1.6",
     "@types/webpack": "^4.39.1",
     "@types/winston": "^2.4.4",
     "@types/ws": "^6.0.3",

@@ -3,7 +3,9 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
     "module": "esnext",
-    "types": [],
+    "types": [
+      "stripe-v3"
+    ],
     "esModuleInterop": true
   },
   "include": [

@@ -1,16 +1,14 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-declare var Stripe: any;
-
 @Injectable({
     providedIn: 'root'
 })
 export class StripeElementsService {
 
     @Output() stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
-    stripeInstance: any; /*stripe.Stripe*/
-    elementsInstance: any;
+    stripeInstance: stripe.Stripe;
+    elementsInstance: stripe.elements.Elements;
 
     constructor() {
         this.initializeStripe();
