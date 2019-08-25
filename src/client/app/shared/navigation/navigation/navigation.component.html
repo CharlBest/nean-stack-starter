@@ -46,7 +46,8 @@
     </div>
 
     <!-- Search -->
-    <div class="search-bar">
+    <div *ngIf="headerBackTitle === 'Search'"
+      class="search-bar">
       <app-icon-search></app-icon-search>
       <input #searchField
         placeholder="Search"
