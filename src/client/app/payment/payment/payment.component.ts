@@ -147,6 +147,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
+    // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
     isFormValid(): boolean {
         // Form validity (Amount is required)
         if (!this.formGroup.valid) {

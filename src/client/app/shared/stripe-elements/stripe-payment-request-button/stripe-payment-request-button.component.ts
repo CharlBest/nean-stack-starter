@@ -1,5 +1,4 @@
-// tslint:disable-next-line: max-line-length
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
@@ -14,7 +13,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
     @Input() showButton = false;
     @Output() paymentComplete: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
-    canMakePayment = null;
+    canMakePayment: boolean | null = null;
     showPaymentRequestButton = false;
     paymentRequestButtonInstance: any;
     paymentRequestButtonOptions = {
@@ -29,8 +28,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
     };
 
     constructor(private stripeElementsService: StripeElementsService,
-        public themeService: ThemeService,
-        private changeDetectorRef: ChangeDetectorRef) { }
+        public themeService: ThemeService) { }
 
     ngOnInit() {
         if (this.stripeElementsService.stripeInstance) {
@@ -74,9 +72,6 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         }
 
         this.paymentRequestButtonInstance.on('token', (event: any) => this.paymentComplete.emit(event));
-
-        // Force validation and updates in consuming components as this is async
-        this.changeDetectorRef.detectChanges();
     }
 
     private createAndMountButton() {
