@@ -13,9 +13,8 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
 })
 export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    numberOfTabs: number;
     selectedIndex = 0;
-    bubbles: Array<number>;
+    tabs: Array<number>;
     hasAcceptedCookieConsentOnLoad = this.cookieConsentService.hasAcceptedCookieConsent;
     hasAcceptedCookieConsent = this.hasAcceptedCookieConsentOnLoad;
     isDarkThemeOnLoad = this.themeService.isDarkTheme;
@@ -41,8 +40,9 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.pwaService.canInstallAndNotInPWA) {
                 this.navigationService.showInstallBanner = false;
                 this.showInstallBannerOnLoad = true;
+
+                this.tabs.push(this.tabs.length);
             }
-            this.generateBubbles();
         });
     }
 
@@ -52,16 +52,13 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     generateBubbles() {
         const matTabs = document.getElementsByTagName('mat-tab-body');
-        if (matTabs) {
-            this.numberOfTabs = matTabs.length;
+
+        const tabs = [];
+        for (let i = 0; i < matTabs.length; i++) {
+            tabs.push(i);
         }
 
-        const bubbles = [];
-        for (let i = 0; i < this.numberOfTabs; i++) {
-            bubbles.push(i);
-        }
-
-        this.bubbles = bubbles;
+        this.tabs = tabs;
         this.changeDetectorRef.detectChanges();
     }
 
@@ -72,7 +69,7 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     next() {
-        if (this.selectedIndex < this.numberOfTabs - 1) {
+        if (this.selectedIndex < this.tabs.length - 1) {
             this.selectedIndex = this.selectedIndex + 1;
         }
     }
