@@ -105,7 +105,9 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     this.showMoreButton = false;
   }
 
-  mediaPrevious() {
+  mediaPrevious(event: Event) {
+    event.stopPropagation();
+
     if (this.activeMediaIndex === 0) {
       this.activeMediaIndex = this.item.media.length - 1;
     } else {
@@ -113,7 +115,9 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  mediaNext() {
+  mediaNext(event: Event) {
+    event.stopPropagation();
+
     // TODO: swithcing out the images to fast (clicking rapidly) freezes it
     if (this.activeMediaIndex >= this.item.media.length - 1) {
       this.activeMediaIndex = 0;

@@ -89,14 +89,14 @@
                 <div *ngIf="item?.media?.length > 1">
                     <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
                     <button mat-icon-button
-                        (click)="mediaPrevious()"
+                        (click)="mediaPrevious($event)"
                         type="button"
                         matTooltip="Previous"
                         aria-label="Previous">
                         <app-icon-keyboard-arrow-left></app-icon-keyboard-arrow-left>
                     </button>
                     <button mat-icon-button
-                        (click)="mediaNext()"
+                        (click)="mediaNext($event)"
                         type="button"
                         matTooltip="Next"
                         aria-label="Next">
