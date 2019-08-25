@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+// tslint:disable-next-line: max-line-length
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
@@ -28,7 +29,8 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
     };
 
     constructor(private stripeElementsService: StripeElementsService,
-        public themeService: ThemeService) { }
+        public themeService: ThemeService,
+        private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         if (this.stripeElementsService.stripeInstance) {
@@ -56,7 +58,11 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         }
     }
 
-    async initialize() {
+    activatePaymentRequestButton() {
+        this.paymentRequestButtonInstance.show();
+    }
+
+    private async initialize() {
         this.paymentRequestButtonInstance = this.stripeElementsService.stripe.paymentRequest(this.paymentRequestButtonOptions);
         // Check the availability of the Payment Request API first.
         this.canMakePayment = await this.paymentRequestButtonInstance.canMakePayment();
@@ -68,9 +74,12 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
         }
 
         this.paymentRequestButtonInstance.on('token', (event: any) => this.paymentComplete.emit(event));
+
+        // Force validation and updates in consuming components as this is async
+        this.changeDetectorRef.detectChanges();
     }
 
-    createAndMountButton() {
+    private createAndMountButton() {
         const element = this.stripeElementsService.elementsInstance.create('paymentRequestButton', {
             paymentRequest: this.paymentRequestButtonInstance,
             style: {
@@ -84,9 +93,5 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
 
         element.mount(this.paymentRequestButton.nativeElement);
         this.showPaymentRequestButton = true;
-    }
-
-    activatePaymentRequestButton() {
-        this.paymentRequestButtonInstance.show();
     }
 }
