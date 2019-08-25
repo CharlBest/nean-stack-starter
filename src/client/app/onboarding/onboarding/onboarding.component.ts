@@ -44,10 +44,15 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.navigationService.showInstallBanner = false;
                 this.showInstallBannerOnLoad = true;
             }
+            this.generateBubbles();
         });
     }
 
     ngAfterViewInit() {
+        this.generateBubbles();
+    }
+
+    generateBubbles() {
         this.numberOfTabs = this.matTabList.length;
 
         const bubbles = [];
