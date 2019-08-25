@@ -19,16 +19,28 @@ export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
 
     this.addEventListeners();
 
+    this.setStyles(this.visibilityIcon);
+    this.setStyles(this.visibilityOffIcon);
+
     this.hide();
+  }
+
+  setStyles(element: HTMLElement | null) {
+    if (element) {
+      element.style.userSelect = 'none';
+      element.style.cursor = 'pointer';
+    }
   }
 
   addEventListeners() {
     if (this.visibilityOffIcon) {
       this.show = this.show.bind(this);
-      this.visibilityOffIcon.addEventListener('mousedown touchstart', this.show);
+      this.visibilityOffIcon.addEventListener('mousedown', this.show);
+      this.visibilityOffIcon.addEventListener('touchstart', this.show);
 
       this.hide = this.hide.bind(this);
-      document.addEventListener('mouseup touchend', this.hide);
+      document.addEventListener('mouseup', this.hide);
+      document.addEventListener('touchend', this.hide);
     }
   }
 
@@ -46,8 +58,11 @@ export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.visibilityOffIcon) {
-      this.visibilityOffIcon.removeEventListener('mousedown touchstart', this.show);
-      document.removeEventListener('mouseup touchend', this.hide);
+      this.visibilityOffIcon.removeEventListener('mousedown', this.show);
+      this.visibilityOffIcon.removeEventListener('touchstart', this.show);
+
+      document.removeEventListener('mouseup', this.hide);
+      document.removeEventListener('touchend', this.hide);
     }
   }
 }
