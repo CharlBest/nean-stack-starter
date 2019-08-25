@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { CardBrandType } from '../card-brand.enum';
 import { ElementsWrapper, ElementWrapper } from '../stripe-element.model';
@@ -9,7 +9,7 @@ import { StripeElementsService } from '../stripe-elements.service';
     templateUrl: './stripe-elements.component.html',
     styleUrls: ['./stripe-elements.component.scss']
 })
-export class StripeElementsComponent implements OnInit {
+export class StripeElementsComponent implements OnInit, OnDestroy {
 
     @Output() isDoneRendering: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -17,7 +17,7 @@ export class StripeElementsComponent implements OnInit {
     @ViewChild('cardExpiry', { static: true }) cardExpiry: ElementRef<HTMLDivElement>;
     @ViewChild('cardCvc', { static: true }) cardCvc: ElementRef<HTMLDivElement>;
 
-    elementsWrapper: ElementsWrapper;
+    elementsWrapper = new ElementsWrapper();
     cardBrandType = CardBrandType;
     error: string;
     isValid = false;
@@ -29,7 +29,23 @@ export class StripeElementsComponent implements OnInit {
         this.initialize();
     }
 
-    initialize() {
+    async generateToken() {
+        if (!this.elementsWrapper.cardNumber.element) {
+            return null;
+        }
+
+        // createToken takes a single element but pulls in other elements that has been instantiated as well to create a card element
+        const { token, error } = await this.stripeElementsService.stripe.createToken(this.elementsWrapper.cardNumber.element);
+
+        if (error) {
+            this.error = error.message ? error.message : 'Error in payment';
+            return null;
+        } else {
+            return token;
+        }
+    }
+
+    private initialize() {
         if (this.stripeElementsService.stripeInstance) {
             this.elementsOnInit();
         } else {
@@ -41,7 +57,7 @@ export class StripeElementsComponent implements OnInit {
         }
     }
 
-    elementsOnInit() {
+    private elementsOnInit() {
         const elementStyles = {
             base: {
                 color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255)' : 'rgba(0, 0, 0, 0.87)',
@@ -52,41 +68,56 @@ export class StripeElementsComponent implements OnInit {
         };
 
         // Card number
-        const cardNumber = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardNumber.type, {
+        this.elementsWrapper.cardNumber.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardNumber.type, {
             placeholder: 'Card Number *',
             style: elementStyles
         });
 
         // Card expiry
-        const cardExpiry = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardExpiry.type, {
+        this.elementsWrapper.cardExpiry.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardExpiry.type, {
             placeholder: 'MM / YY *',
             style: elementStyles
         });
 
         // Card CVC
-        const cardCvc = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardCvc.type, {
+        this.elementsWrapper.cardCvc.element = this.stripeElementsService.elementsInstance.create(this.elementsWrapper.cardCvc.type, {
             placeholder: 'CVC *',
             style: elementStyles
         });
-
-        this.elementsWrapper = new ElementsWrapper(cardNumber, cardExpiry, cardCvc);
 
         this.initializeElement(this.elementsWrapper.cardNumber);
         this.initializeElement(this.elementsWrapper.cardExpiry);
         this.initializeElement(this.elementsWrapper.cardCvc);
     }
 
-    initializeElement(elementWrapper: ElementWrapper) {
+    private initializeElement(elementWrapper: ElementWrapper) {
+        if (!elementWrapper.element) {
+            console.error('Failed to create element', elementWrapper);
+            return;
+        }
+
         elementWrapper.element.mount(this[elementWrapper.type].nativeElement);
         elementWrapper.element.on('ready', () => {
             if (this.elementsWrapper.readyCount < 2) {
                 this.elementsWrapper.readyCount++;
             } else {
                 this.elementsWrapper.isRendering = false;
-                this.elementsWrapper.cardNumber.element.focus();
+                if (this.elementsWrapper.cardNumber.element) {
+                    this.elementsWrapper.cardNumber.element.focus();
+                }
                 this.isDoneRendering.emit(true);
             }
         });
+
+        this.addChangeEventListener(elementWrapper);
+    }
+
+    private addChangeEventListener(elementWrapper: ElementWrapper) {
+        if (!elementWrapper.element) {
+            console.error('Failed to add event listener to element', elementWrapper);
+            return;
+        }
+
         // change (empty, complete, error, value), ready, focus, blur, click
         elementWrapper.element.on('change', (data: stripe.elements.ElementChangeResponse) => {
             elementWrapper.valid = data && data.error === undefined && data.empty === false;
@@ -139,15 +170,15 @@ export class StripeElementsComponent implements OnInit {
         });
     }
 
-    async generateToken() {
-        // createToken takes a single element but pulls in other elements that has been instantiated as well to create a card element
-        const { token, error } = await this.stripeElementsService.stripe.createToken(this.elementsWrapper.cardNumber.element);
-
-        if (error) {
-            this.error = error.message ? error.message : 'Error in payment';
-            return null;
-        } else {
-            return token;
+    ngOnDestroy() {
+        if (this.elementsWrapper.cardNumber.element) {
+            this.elementsWrapper.cardNumber.element.destroy();
+        }
+        if (this.elementsWrapper.cardExpiry.element) {
+            this.elementsWrapper.cardExpiry.element.destroy();
+        }
+        if (this.elementsWrapper.cardCvc.element) {
+            this.elementsWrapper.cardCvc.element.destroy();
         }
     }
 }

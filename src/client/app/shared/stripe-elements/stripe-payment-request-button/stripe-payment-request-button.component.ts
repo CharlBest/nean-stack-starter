@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
@@ -7,13 +7,14 @@ import { StripeElementsService } from '../stripe-elements.service';
     templateUrl: './stripe-payment-request-button.component.html',
     styleUrls: ['./stripe-payment-request-button.component.scss']
 })
-export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
+export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() amount: number;
     @Input() showButton = false;
     @Output() paymentComplete: EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse> =
         new EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
+    paymentRequestElement: stripe.elements.Element;
     canMakePayment: { applePay?: boolean } | null = null;
     showPaymentRequestButton = false;
     paymentRequestButtonInstance: stripe.paymentRequest.StripePaymentRequest;
@@ -84,7 +85,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
     }
 
     private createAndMountButton() {
-        const element = this.stripeElementsService.elementsInstance.create('paymentRequestButton', {
+        this.paymentRequestElement = this.stripeElementsService.elementsInstance.create('paymentRequestButton', {
             paymentRequest: this.paymentRequestButtonInstance,
             style: {
                 paymentRequestButton: {
@@ -95,8 +96,14 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges {
             },
         });
 
-        element.mount(this.paymentRequestButton.nativeElement);
+        this.paymentRequestElement.mount(this.paymentRequestButton.nativeElement);
         this.showPaymentRequestButton = true;
+    }
+
+    ngOnDestroy() {
+        if (this.paymentRequestElement) {
+            this.paymentRequestElement.destroy();
+        }
     }
 }
 

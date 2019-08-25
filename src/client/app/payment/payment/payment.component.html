@@ -63,8 +63,7 @@
                     (paymentComplete)="paymentRequestButtonComplete($event)"
                     [amount]="formGroup.controls['amount'].value"></app-stripe-payment-request-button>
 
-                <app-stripe-elements
-                    [hidden]="formGroup.controls['cardUId'].value !== null && formGroup.controls['cardUId'].value !== 'new'"
+                <app-stripe-elements [hidden]="formGroup.controls['cardUId'].value !== 'new'"
                     #stripeElements
                     (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
 
@@ -80,8 +79,7 @@
                     </mat-form-field>
                 </ng-container>
 
-                <ng-container
-                    *ngIf="isAuthenticated && (formGroup.controls['cardUId'].value === null || formGroup.controls['cardUId'].value === 'new')">
+                <ng-container *ngIf="isAuthenticated && formGroup.controls['cardUId'].value === 'new'">
                     <br>
                     <br>
 

@@ -20,6 +20,14 @@ CVC: Any 3 degit number
 Zip: Any 5 degit number
 */
 
+/*
+    User journeys:
+    1) Not authenticated: all Stripe details required, email address required
+    2) Authenticated: no cards, all Stripe details required
+    3) Authenticated: has cards, create new one, all Stripe details required
+    4) Authenticated: has cards, use existing one, card id required
+*/
+
 export enum Section {
     CARD = 1,
     MOBILE = 2,
@@ -55,7 +63,7 @@ export class PaymentComponent implements OnInit {
     }
 
     formOnInit() {
-        this.formGroup = this.fb.group(FormGroupBuilder.payment(2));
+        this.formGroup = this.fb.group(FormGroupBuilder.payment(2, 'new'));
     }
 
     checkAuthenticationAndGetCards() {
@@ -80,14 +88,14 @@ export class PaymentComponent implements OnInit {
                 this.paymentCards.sort((a, b) => (a.isDefault === b.isDefault) ? 0 : a.isDefault ? -1 : 1);
             }
 
-            const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : null;
+            const firstCardUId = this.paymentCards && this.paymentCards.length > 0 ? this.paymentCards[0].uId : 'new';
             this.formGroup.controls.cardUId.setValue(firstCardUId);
         }
     }
 
     async onSubmit() {
         if (this.activeSection === Section.CARD) {
-            if (this.formGroup.controls.cardUId.value === null || this.formGroup.controls.cardUId.value === 'new') {
+            if (this.formGroup.controls.cardUId.value === 'new') {
                 const token = await this.stripeElementsComponent.generateToken();
                 if (token) {
                     this.sendPaymentToServer(token.id);
@@ -162,14 +170,16 @@ export class PaymentComponent implements OnInit {
 
         // Card payment
         if (this.activeSection === Section.CARD) {
-            // Email is requried if anonymous payment
-            if (!this.isAuthenticated && (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
+            // Not authenticated AND stripe elements is valid and email is required
+            if (!this.isAuthenticated && (!this.stripeElementsComponent.isValid ||
+                this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
                 return false;
             }
 
-            // Stripe element valid when adding new card by user
-            if (this.isAuthenticated && !this.stripeElementsComponent.isValid &&
-                (this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === 'new')) {
+            // Authenticated AND new card and stipe elements is valid
+            if (this.isAuthenticated
+                && this.formGroup.controls.cardUId.value === 'new'
+                && !this.stripeElementsComponent.isValid) {
                 return false;
             }
         } else if (this.activeSection === Section.MOBILE) {
