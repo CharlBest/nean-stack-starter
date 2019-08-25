@@ -1,5 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { MatTab } from '@angular/material/tabs';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { CookieConsentSnackbarService } from '../../shared/cookie-consent/cookie-consent-snackbar.service';
 import { CookieConsentService } from '../../shared/cookie-consent/cookie-consent.service';
@@ -14,7 +13,6 @@ import { TutorialService } from '../../shared/tutorial/tutorial.service';
 })
 export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    @ViewChildren(MatTab) matTabList: QueryList<MatTab>;
     numberOfTabs: number;
     selectedIndex = 0;
     bubbles: Array<number>;
@@ -53,7 +51,10 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     generateBubbles() {
-        this.numberOfTabs = this.matTabList.length;
+        const matTabs = document.getElementsByTagName('mat-tab-body');
+        if (matTabs) {
+            this.numberOfTabs = matTabs.length;
+        }
 
         const bubbles = [];
         for (let i = 0; i < this.numberOfTabs; i++) {
