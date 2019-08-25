@@ -12,6 +12,7 @@
 * Prevent posting the same request when still in progress by hiding the form and showing preloader or disabling the submit button
 * If possible provide a default for any input field
 * font-size should be in em
+* Microinteractions should be instant on user actions (click/taps) by trigger animations instantly
 
 ### Testing
 * Responsiveness by resizing window
