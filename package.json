@@ -21,7 +21,7 @@
     "start": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/web/web.bundle.js",
     "start:worker": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/worker/worker.bundle.js",
     "start:worker:watch": "nodemon --max_semi_space_size=2 --max_old_space_size=256 dist/server/worker/worker.bundle.js",
-    "start:client:watch": "ng serve",
+    "start:client:watch": "ng serve --open",
     "start:server:watch": "nodemon --inspect --max_semi_space_size=2 --max_old_space_size=256 dist/server/web/web.bundle.js",
     "ng": "ng",
     "test": "echo \"Error: no test... minimal project\" && exit 1",
