@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { DialogService } from '../dialog/dialog.service';
 
 @Injectable({
     providedIn: 'root',
@@ -10,10 +11,14 @@ export class PWAService {
     get canInstallAndNotInPWA(): boolean {
         return !!this.beforeInstallPromptEvent && !this.isWithinPWA;
     }
-    readonly isWithinPWA: boolean = window.matchMedia('(display-mode: standalone)').matches;
+    readonly isWithinPWA: boolean = window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true; // Safari workaround
+
+    constructor(private dialogService: DialogService) { }
 
     init() {
         this.addEventForBeforeInstallPrompt();
+        this.addListenerForAppInstalled();
     }
 
     openInstallPrompt() {
@@ -28,6 +33,12 @@ export class PWAService {
             beforeInstallPromptEvent.preventDefault();
             this.beforeInstallPromptEvent = beforeInstallPromptEvent;
             this.beforeInstallPromptChange.emit();
+        });
+    }
+
+    private addListenerForAppInstalled() {
+        window.addEventListener('appinstalled', (event) => {
+            this.dialogService.alert('Your app was successfully installed');
         });
     }
 }
