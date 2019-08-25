@@ -93,13 +93,8 @@ export class ThemeService {
     }
 
     private addNativeColorSchemeListener(colorName: string) {
-        console.log(colorName);
-        console.log(window.matchMedia(`(prefers-color-scheme: ${colorName})`));
-        console.log(window.matchMedia(`(prefers-color-scheme: light)`));
-        console.log(window.matchMedia(`screen and (prefers-color-scheme: light)`));
-        console.log(window.matchMedia(`screen and (prefers-color-scheme: ${colorName})`));
-
-        window.matchMedia(`(prefers-color-scheme: ${colorName})`).addEventListener('change', async (event: MediaQueryListEvent) => {
+        // tslint:disable-next-line: deprecation (Safari does not allow addEventListener although addListener is deprecated)
+        window.matchMedia(`(prefers-color-scheme: ${colorName})`).addListener(async (event: MediaQueryListEvent) => {
             if (event.matches) {
                 const hasConfirmed = await this.dialogService.confirm(`We noticed you changed your theme to ${colorName}.
                  Would you like to change the app\'s theme to ${colorName} as well?`);
