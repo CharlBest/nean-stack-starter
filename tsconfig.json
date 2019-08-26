@@ -11,7 +11,7 @@
     "moduleResolution": "node",
     "module": "esNext",
     "strictNullChecks": true,
-    // "strictFunctionTypes": true,
+    "strictFunctionTypes": true,
     // "strictPropertyInitialization": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -33,5 +33,9 @@
         "./shared/*"
       ],
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }
