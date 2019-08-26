@@ -114,8 +114,8 @@ export class NavigationComponent implements OnInit {
     // Check if user has gone to primary nav page
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.navigationService.previousUrl = event.url;
+      .subscribe(event => {
+        this.navigationService.previousUrl = (event as NavigationEnd).url;
         if (this.activeNavigation === NavigationType.PRIMARY) {
           this.hasNavigatedToPageWithPrimaryNav = true;
         }

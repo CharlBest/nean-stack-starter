@@ -119,7 +119,10 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         }
 
         // change (empty, complete, error, value), ready, focus, blur, click
-        elementWrapper.element.on('change', (data: stripe.elements.ElementChangeResponse) => {
+        elementWrapper.element.on('change', (data: stripe.elements.ElementChangeResponse | undefined) => {
+            if (!data) {
+                return;
+            }
             elementWrapper.valid = data && data.error === undefined && data.empty === false;
             this.isValid = this.elementsWrapper.cardNumber.valid &&
                 this.elementsWrapper.cardExpiry.valid &&

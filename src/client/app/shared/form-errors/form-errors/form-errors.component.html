@@ -10,8 +10,9 @@
 
 <ng-template #minLength>
     <ng-container *ngIf="control?.hasError('minlength'); else typeAssert">
-        {{control.errors['minlength'].requiredLength}} characters required but
-        {{control.errors['minlength'].actualLength}}
+        <!-- TODO: remove Non-null assertion operator without breaking angularCompilerOptions=fullTemplateTypeCheck -->
+        {{control.errors!['minlength'].requiredLength}} characters required but
+        {{control.errors!['minlength'].actualLength}}
         found
     </ng-container>
 </ng-template>
@@ -24,7 +25,7 @@
 
 <ng-template #password>
     <ng-container *ngIf="control?.hasError('passwordCharacters'); else custom">
-        {{passwordCharacterMessageBuilder()}}
+        {{control.errors | passwordCharacterMessageBuilder}}
     </ng-container>
 </ng-template>
 

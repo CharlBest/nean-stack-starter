@@ -29,9 +29,9 @@ export class FirebaseStorageService {
                     case storage.TaskState.RUNNING:
                         break;
                 }
-            }, (error: FirebaseError) => {
+            }, error => {
                 // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
+                switch ((error as FirebaseError).code) {
                     case 'storage/unauthorized':
                         break;
 

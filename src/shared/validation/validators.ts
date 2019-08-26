@@ -18,7 +18,7 @@ export const PASSWORD_REGEX = new PasswordRegexBuilder(PASSWORD_LENGTH).oneUpper
 
 // Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
 export class Validators {
-    private static nullValidator(c: AbstractControl): null { return null; }
+    private static nullValidator(c: AbstractControl | StringNumber): null { return null; }
 
     private static wrapControl(control: WrapControlType): AbstractControl {
         // Warning if this method starts allowing booleans
@@ -30,10 +30,13 @@ export class Validators {
         return isEmptyInputValue(control.value) ? { required: true } : null;
     }
 
-    static email(control: AbstractControl | string): Email | null {
+    static email(control: AbstractControl | StringNumber): Email | null {
         control = Validators.wrapControl(control);
         if (isEmptyInputValue(control.value)) {
             return null;  // don't validate empty values to allow optional controls
+        }
+        if (control.value) {
+            control.value = control.value.toString();
         }
         return EMAIL_REGEXP.test(control.value) ? null : { email: true };
     }
@@ -75,11 +78,11 @@ export class Validators {
             regexStr = pattern.toString();
             regex = pattern;
         }
-        return (control: AbstractControl): Pattern | null => {
-            if (isEmptyInputValue(control.value)) {
+        return (control: AbstractControl | StringNumber): Pattern | null => {
+            if (isEmptyInputValue((control as AbstractControl).value)) {
                 return null;  // don't validate empty values to allow optional controls
             }
-            const value: string = control.value;
+            const value: string = (control as AbstractControl).value;
             return regex.test(value) ? null :
                 { pattern: { requiredPattern: regexStr, actualValue: value } };
         };
@@ -242,6 +245,8 @@ export class ServerValidator {
 export interface FormValidator {
     [key: string]: [any, Array<ValidatorFn>?];
 }
+
+// TODO: these types are getting out of hand. Refactor!
 
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;
 type WrapControlType = AbstractControl | object | StringNumber | null;

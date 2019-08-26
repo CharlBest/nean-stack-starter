@@ -1,7 +1,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, OnDestroy } from '@angular/core';
-import { NavigationStart, Router, RouterEvent } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { ContextMenuComponent } from '../context-menu/context-menu/context-menu.component';
@@ -65,7 +65,7 @@ export class RightClickContextMenuService implements OnDestroy {
     private closeOnNavigate() {
         // Close on navigate
         this.routerEventsSubscription = this.router.events.pipe(
-            filter((routerEvent: RouterEvent) => routerEvent instanceof NavigationStart),
+            filter(routerEvent => routerEvent instanceof NavigationStart),
             tap(() => this.overlayRef ? this.overlayRef.dispose() : null),
             take(1)
         ).subscribe();

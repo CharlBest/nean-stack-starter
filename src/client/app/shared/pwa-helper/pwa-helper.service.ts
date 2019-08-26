@@ -1,7 +1,7 @@
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, OnDestroy } from '@angular/core';
-import { NavigationStart, Router, RouterEvent } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { PWAHelperComponent } from './pwa-helper/pwa-helper.component';
@@ -29,7 +29,7 @@ export class PWAHelperService implements OnDestroy {
 
         // Close on navigate
         this.routerEventsSubscription = this.router.events.pipe(
-            filter((event: RouterEvent) => event instanceof NavigationStart),
+            filter(event => event instanceof NavigationStart),
             tap(() => overlayRef.dispose()),
             take(1)
         ).subscribe();
