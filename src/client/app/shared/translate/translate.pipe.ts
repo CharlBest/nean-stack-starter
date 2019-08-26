@@ -5,8 +5,6 @@ import { TranslateParams, translateService } from '@shared/translate/translate.s
   name: 'translateParams'
 })
 export class TranslatePipe implements PipeTransform {
-  constructor() { }
-
   transform(value: string, params?: TranslateParams) {
     return translateService.replacePlaceholders(value, params);
   }
