@@ -65,6 +65,9 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Material Design and custom svg icons module
 * Lazy load all images
 * Complete build script
+* Password Peek
+* Skeleton Screens
+* File Drop uploader
 
 
 Client pages
