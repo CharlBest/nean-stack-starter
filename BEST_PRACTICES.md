@@ -1,6 +1,6 @@
 ## BEST PRACTISES
 
-* Add rel="noopener" to all links opening external urls
+* Add rel="noopener noreferrer" to all links opening external urls
 * Remove unused imports especially Angular Material
 * icons should have role and tooltip
 * Remove all inline styles

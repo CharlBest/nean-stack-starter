@@ -6,7 +6,7 @@
                 <span>One Time Pin App <a
                         href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         class="download-link">(download Google Authenticator)</a>
                 </span>
                 <form [formGroup]="formGroup">
@@ -27,7 +27,7 @@
                     <a [href]="sanitizedQRCodeKeyUri"
                         *ngIf="!bpService.isDesktop"
                         target="_blank"
-                        rel="noopener">
+                        rel="noopener noreferrer">
                     </a>
                     <canvas #canvas></canvas>
                 </div>
