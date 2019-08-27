@@ -317,3 +317,9 @@ export class IconVisibilityOffComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('translate', Category.ACTION)
 })
 export class IconTranslateComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-change-history',
+  templateUrl: materialIconPath('change_history', Category.ACTION)
+})
+export class IconChangeHistoryComponent extends BaseIconComponent { }

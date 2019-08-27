@@ -3,6 +3,11 @@
     <mat-card>
         <mat-card-content>
             <mat-nav-list>
+                <mat-list-item routerLink="/sign-up"
+                    *ngIf="!authService.loggedInUserId">
+                    <app-icon-edit mat-list-icon></app-icon-edit>
+                    <span mat-line>{{t.signup}}</span>
+                </mat-list-item>
                 <mat-list-item routerLink="/login"
                     *ngIf="!authService.loggedInUserId">
                     <app-icon-lock mat-list-icon></app-icon-lock>

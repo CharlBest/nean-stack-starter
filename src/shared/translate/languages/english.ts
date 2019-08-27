@@ -4,7 +4,8 @@ import { TranslateTerm } from '../translate-term.interface';
 export const english: TranslateTerm = {
     everythingOnThisDemoSite: 'Everything on this demo site is live and in a working condition. Creating a profile, sending emails, donating money, uploading profile pictures and more.',
     noItemsExist: 'No items exist',
-    login: 'Login',
+    signup: 'Sign Up',
+    login: 'Log In',
     items: 'Items',
     saved: 'Saved',
     profile: 'Profile',

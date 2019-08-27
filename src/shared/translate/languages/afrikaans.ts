@@ -4,6 +4,7 @@ import { TranslateTerm } from '../translate-term.interface';
 export const afrikaans: TranslateTerm = {
     everythingOnThisDemoSite: 'Alles op hierdie demonstrasie platform is in werkende toestand. Om \'n profiel te maak, eposse te stuur, geld te skenk en meer.',
     noItemsExist: 'Geen items besteen',
+    signup: 'Teken Op',
     login: 'Teken In',
     items: 'Items',
     saved: 'Gestoor',

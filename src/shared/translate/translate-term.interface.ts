@@ -1,6 +1,7 @@
 export interface TranslateTerm {
     everythingOnThisDemoSite: string;
     noItemsExist: string;
+    signup: string;
     login: string;
     items: string;
     saved: string;
