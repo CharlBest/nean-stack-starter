@@ -1,7 +1,7 @@
+import { Clipboard } from '@angular/cdk-experimental/clipboard';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ClipboardService } from 'ngx-clipboard';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class ShareService {
 
     constructor(private snackBar: MatSnackBar,
         private router: Router,
-        private clipboardService: ClipboardService) { }
+        private clipboard: Clipboard) { }
 
     fullUrl(url: Url): string {
         return environment.httpDomain + this.router.createUrlTree(url).toString();
@@ -39,7 +39,7 @@ export class ShareService {
     }
 
     copy(url: string) {
-        if (this.clipboardService.copyFromContent(url)) {
+        if (this.clipboard.copy(url)) {
             this.snackBar.open('Copied');
         }
     }
