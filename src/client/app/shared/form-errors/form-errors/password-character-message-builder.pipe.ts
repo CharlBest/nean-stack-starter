@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { PasswordCharacters } from '@shared/models/shared/form-error.model';
+import { ValidationErrors } from '@angular/forms';
 import { TranslateParams, translateService } from '@shared/translate/translate.service';
 
 @Pipe({
     name: 'passwordCharacterMessageBuilder'
 })
 export class PasswordCharacterMessageBuilderPipe implements PipeTransform {
-    transform(value: PasswordCharacters, params?: TranslateParams) {
+    transform(value: ValidationErrors | null, params?: TranslateParams) {
         const errorArray = [];
         if (value) {
             if (value.passwordCharacters.capital) {

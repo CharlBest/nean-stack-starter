@@ -203,5 +203,5 @@ class Bootstrap {
 export const bootstrap = new Bootstrap();
 
 interface ExtendedWebSocket extends WebSocket {
-    isAlive: boolean;
+    isAlive?: boolean;
 }

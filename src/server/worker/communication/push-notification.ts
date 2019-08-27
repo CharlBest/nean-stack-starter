@@ -61,7 +61,8 @@ class PushNotification implements PushNotificationInterface {
                 const response = await Promise.all(
                     pushSubscription
                         .filter(sub => sub !== null && sub !== undefined)
-                        .map((sub: PushSubscriptionViewModel) => sendNotification(sub, JSON.stringify(notificationPayload)))
+                        .map((sub: PushSubscriptionViewModel | null | undefined) =>
+                            sendNotification((sub as PushSubscriptionViewModel), JSON.stringify(notificationPayload)))
                 );
 
                 // TODO: if one push notification fails it will cause a resend to all other receivers/users
