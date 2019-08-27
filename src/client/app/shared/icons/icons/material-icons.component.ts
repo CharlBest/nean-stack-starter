@@ -323,3 +323,9 @@ export class IconTranslateComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('change_history', Category.ACTION)
 })
 export class IconChangeHistoryComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-verified-user',
+  templateUrl: materialIconPath('verified_user', Category.ACTION)
+})
+export class IconVerifiedUserComponent extends BaseIconComponent { }

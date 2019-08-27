@@ -48,9 +48,9 @@
     <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     <mat-card-content>
       <div>Email verified:
-        <app-icon-done *ngIf="user.emailVerified"
+        <app-icon-verified-user *ngIf="user.emailVerified"
           [inline]="true"
-          class="email-verified"></app-icon-done>
+          class="email-verified"></app-icon-verified-user>
         <app-icon-close *ngIf="!user.emailVerified"
           [inline]="true"
           color="warn"></app-icon-close>
