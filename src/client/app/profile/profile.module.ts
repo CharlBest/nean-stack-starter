@@ -27,6 +27,7 @@ import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { FingerprintComponent } from './fingerprint/fingerprint.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { PaymentsComponent } from './payments/payments.component';
@@ -81,6 +82,7 @@ const materialModules = [
     CreateCardComponent,
     NotificationsComponent,
     TwoFactorAuthenticationComponent,
+    FingerprintComponent,
   ]
 })
 export class ProfileModule { }
