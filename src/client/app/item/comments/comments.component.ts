@@ -83,7 +83,11 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  goToLogin() {
+  goToSignUp() {
+    this.router.navigate(['sign-up'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
+  }
+
+  goToLogIn() {
     this.router.navigate(['login'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
   }
 

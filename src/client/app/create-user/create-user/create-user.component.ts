@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { Validators } from '@shared/validation/validators';
 import { CreateUserViewModel } from '@shared/view-models/create-user/create-user.view-model';
@@ -22,6 +22,7 @@ export class CreateUserComponent implements OnInit {
 
   formGroup: FormGroup;
   isProcessing = false;
+  returnUrl: string | null = null;
 
   constructor(private fb: FormBuilder,
     private createUserService: CreateUserService,
@@ -31,10 +32,12 @@ export class CreateUserComponent implements OnInit {
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
     private dialogService: DialogService,
-    private passwordStrengthService: PasswordStrengthService) { }
+    private passwordStrengthService: PasswordStrengthService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.formOnInit();
+    this.getParams();
   }
 
   formOnInit() {
@@ -43,6 +46,13 @@ export class CreateUserComponent implements OnInit {
     // Show individually which characters are required (only for UI)
     this.formGroup.controls.password.setValidators(this.formGroup.controls.password.validator ?
       [this.formGroup.controls.password.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
+  }
+
+  getParams() {
+    const returnUrl = this.route.snapshot.queryParams.returnUrl;
+    if (returnUrl) {
+      this.returnUrl = returnUrl;
+    }
   }
 
   async onSubmit() {
@@ -78,7 +88,12 @@ export class CreateUserComponent implements OnInit {
       const response = await this.loginService.login(model);
       if (response && response.token) {
         this.authService.setToken(response);
-        this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
+
+        if (this.returnUrl) {
+          this.router.navigateByUrl(this.returnUrl);
+        } else {
+          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
+        }
       } else {
         this.dialogService.alert('Authentication failed');
       }

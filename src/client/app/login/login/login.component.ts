@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    this.getParams();
+    this.getQueryParams();
     this.formOnInit();
   }
 
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.formGroup = this.fb.group(FormGroupBuilder.login());
   }
 
-  getParams() {
+  getQueryParams() {
     const returnUrl = this.route.snapshot.queryParams.returnUrl;
     if (returnUrl) {
       this.returnUrl = returnUrl;
