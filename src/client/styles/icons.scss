@@ -3,6 +3,7 @@
 	fill: currentColor;
 	height: 24px;
 	width: 24px;
+	line-height: 24px;
 
 	circle {
 		fill: currentColor;
@@ -18,15 +19,15 @@
 		}
 	}
 
-	&.primary svg {
+	&.primary {
 		fill: var(--primary-color);
 	}
 
-	&.accent svg {
+	&.accent {
 		fill: var(--accent-color);
 	}
 
-	&.warn svg {
+	&.warn {
 		fill: var(--warn-color);
 	}
 }
