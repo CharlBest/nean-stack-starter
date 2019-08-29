@@ -19,9 +19,10 @@ class PaymentsController extends BaseController {
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'anonymousPaymentToken', Validators.required(viewModel.token));
+        const emailError = !!Validators.required(viewModel.email);
 
-        if (hasErrors) {
-            throw new Error();
+        if (hasErrors || emailError) {
+            throw new Error('Invalid token or email');
         }
 
         res.status(200).json(

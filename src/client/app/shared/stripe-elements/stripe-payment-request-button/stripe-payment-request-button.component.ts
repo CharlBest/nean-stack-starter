@@ -10,6 +10,7 @@ import { StripeElementsService } from '../stripe-elements.service';
 export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() amount: number;
+    @Input() isAuthenticated: boolean;
     @Input() showButton = false;
     @Output() paymentComplete: EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse> =
         new EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse>();
@@ -26,7 +27,8 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
             amount: this.amount ? this.amount * 100 : 0,
         },
         requestPayerName: false,
-        requestPayerEmail: true,
+        // Convert to boolean and then get the opposite
+        requestPayerEmail: !!!this.isAuthenticated,
     };
 
     constructor(private stripeElementsService: StripeElementsService,
@@ -48,11 +50,15 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         if (changes.amount && this.paymentRequestButtonInstance) {
             this.paymentRequestButtonOptions.total.amount = this.amount * 100;
             const newOptions = {
+                // TODO: not sure if all properties have to be provided for an update
+                country: this.paymentRequestButtonOptions.country,
                 currency: this.paymentRequestButtonOptions.currency,
                 total: {
                     label: this.paymentRequestButtonOptions.total.label,
                     amount: this.paymentRequestButtonOptions.total.amount,
                 },
+                requestPayerName: this.paymentRequestButtonOptions.requestPayerName,
+                requestPayerEmail: this.paymentRequestButtonOptions.requestPayerEmail,
             };
             this.paymentRequestButtonInstance.update(newOptions);
         }
@@ -70,6 +76,9 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
     }
 
     private async initialize() {
+        // Update amount in case new value was assigned during initialization
+        this.paymentRequestButtonOptions.total.amount = this.amount;
+
         this.paymentRequestButtonInstance = this.stripeElementsService.stripe.paymentRequest(this.paymentRequestButtonOptions);
         // Check the availability of the Payment Request API first.
         this.canMakePayment = await this.paymentRequestButtonInstance.canMakePayment();
