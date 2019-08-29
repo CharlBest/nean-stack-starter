@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { create, get } from '@github/webauthn-json';
+import { create, get, supported } from '@github/webauthn-json';
 import { PublicKeyCredentialDescriptorJSON, PublicKeyCredentialWithAttestationJSON } from '@github/webauthn-json/dist/src/json';
 
 @Component({
@@ -8,6 +8,10 @@ import { PublicKeyCredentialDescriptorJSON, PublicKeyCredentialWithAttestationJS
   styleUrls: ['./fingerprint.component.scss']
 })
 export class FingerprintComponent {
+
+  get isSupported() {
+    return supported();
+  }
 
   registeredCredentials(): PublicKeyCredentialDescriptorJSON[] {
     return this.getRegistrations().map((reg) => ({
@@ -42,8 +46,7 @@ export class FingerprintComponent {
   }
 
   getRegistrations(): PublicKeyCredentialWithAttestationJSON[] {
-    const registrations = JSON.parse(localStorage.webauthnExampleRegistrations || '[]');
-    return registrations;
+    return JSON.parse(localStorage.webauthnExampleRegistrations || '[]');
   }
 
   setRegistrations(registrations: PublicKeyCredentialWithAttestationJSON[], display: boolean = true): void {
