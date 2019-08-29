@@ -6,7 +6,8 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
     imports: [
         RouterModule.forChild([
             {
-                path: '', component: OnboardingComponent, pathMatch: 'full'
+                path: '', component: OnboardingComponent, pathMatch: 'full',
+                data: { title: 'Onboarding' }
             }
         ])
     ],
