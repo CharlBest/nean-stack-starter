@@ -84,7 +84,7 @@ export class NavigationComponent implements OnInit {
       )
       .subscribe(event => {
         if (event.snapshot.data) {
-          const title = event.snapshot.data.title || '';
+          const title = event.snapshot.data.title || alert(`No title for path: ${event.snapshot.url}`);
           this.titleService.setTitle(title);
           this.headerBackTitle = title;
 
