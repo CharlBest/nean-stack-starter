@@ -6,7 +6,7 @@ export function customIconPath(iconName: string) {
 }
 
 @Component({
-  selector: 'app-icon-applepay',
+  selector: 'app-icon-apple-pay',
   templateUrl: customIconPath('applepay')
 })
 export class IconApplePayComponent extends BaseIconComponent { }
@@ -24,7 +24,7 @@ export class IconBloggerComponent extends BaseIconComponent { }
 export class IconFacebookComponent extends BaseIconComponent { }
 
 @Component({
-  selector: 'app-icon-googlepay',
+  selector: 'app-icon-google-pay',
   templateUrl: customIconPath('googlepay')
 })
 export class IconGooglePayComponent extends BaseIconComponent { }

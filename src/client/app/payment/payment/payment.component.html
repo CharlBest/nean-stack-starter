@@ -90,6 +90,14 @@
 
             </div>
 
+            <div *ngIf="activeSection === sections.MOBILE"
+                class="mobile-compatible-options">
+                <br>
+                <app-icon-google-pay></app-icon-google-pay>
+                <app-icon-apple-pay></app-icon-apple-pay>
+                <br>
+            </div>
+
             <div *ngIf="formErrorsService.globalErrors?.anonymousPaymentToken?.required || formErrorsService.globalErrors?.userPaymentToken?.required"
                 class="error-message">
                 Token is required
