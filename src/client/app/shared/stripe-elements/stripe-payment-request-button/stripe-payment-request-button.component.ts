@@ -47,8 +47,9 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.amount && this.paymentRequestButtonInstance) {
-            this.paymentRequestButtonOptions.total.amount = this.amount * 100;
+        if ((changes.amount || changes.isAuthenticated) && this.paymentRequestButtonInstance) {
+            this.setDynamicOptions();
+
             const newOptions = {
                 // TODO: not sure if all properties have to be provided for an update
                 country: this.paymentRequestButtonOptions.country,
@@ -75,9 +76,14 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         tokenPaymentResponse.complete(code);
     }
 
+    private setDynamicOptions() {
+        this.paymentRequestButtonOptions.total.amount = this.amount ? this.amount * 100 : 0;
+        this.paymentRequestButtonOptions.requestPayerEmail = !!!this.isAuthenticated;
+    }
+
     private async initialize() {
         // Update amount in case new value was assigned during initialization
-        this.paymentRequestButtonOptions.total.amount = this.amount;
+        this.setDynamicOptions();
 
         this.paymentRequestButtonInstance = this.stripeElementsService.stripe.paymentRequest(this.paymentRequestButtonOptions);
         // Check the availability of the Payment Request API first.
