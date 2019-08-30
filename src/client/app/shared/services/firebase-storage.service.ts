@@ -17,7 +17,9 @@ export class FirebaseStorageService {
             const storageRef = app(environment.firebase.projectId).storage().ref(`${folderName || this.folderName}/${fileName}`);
 
             // Upload file
-            const task: storage.UploadTask = storageRef.put(file);
+            const task: storage.UploadTask = storageRef.put(file, {
+                cacheControl: 'public,max-age=300'
+            });
 
             task.on(storage.TaskEvent.STATE_CHANGED, (snapshot: storage.UploadTaskSnapshot) => {
                 onProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
