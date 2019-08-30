@@ -347,6 +347,8 @@ Buy a domain name and set the name servers to cloudflare
   7. Create Page Role for redirecting to HTTPS (second)
      * URL: http://*nean.io/*
      * Setting: Always Use HTTPS
+  8. Caching
+     * Browser Cache Expiration = 2 days
 
 
 ## Setup Nginx Web Server
@@ -422,17 +424,21 @@ server {
 }
 ```
 
-3. Create static-files.conf
+3. Create snippets/static-files.conf
 ```text
 index index.html;
 
 location / {
     # First attempt to serve request as file, then as directory, then fall back to displaying the index.html
     try_files $uri $uri/ /index.html;
+
+    # Cacheing
+    # expires 1d;
+    # add_header Cache-Control "public, no-cache";
 }
 ```
 
-4. Create static-files.conf
+4. Create snippets/api-params.conf
 ```text
 proxy_http_version 1.1;
 
@@ -490,6 +496,14 @@ sudo chmod -R 755 /var/www/nean.io
 # If the above doesn't work use this
 # sudo chown -R www-data:www-data /var/www/nean.io
 ```
+
+Note:
+
+4 different cache location exist:
+1. Browser (Cache-Control header)
+2. Service Worker (ng-config.json)
+3. CloudFlare (browser UI)
+4. Nginx (.conf)
 
 ## Setup Node.js
 
