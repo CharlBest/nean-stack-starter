@@ -85,12 +85,13 @@
     src='https://www.google-analytics.com/analytics.js'></script>
   <!-- End Google Analytics -->
 
+  <!-- Content Security Policy -->
   <!-- https://www.sitepoint.com/content-security-policy-getting-started/ -->
   <!-- Firebase, Github, Google Analytics, API server, WebSockets -->
   <!-- TODO: not sure if localhost in connect-src is a security vulnerability + should this actually be set in header with index.html? -->
   <meta http-equiv="Content-Security-Policy"
     content="
-          default-src 'none';
+          default-src 'self';
           style-src 'self' 'unsafe-inline';
           script-src 'self' https://www.google-analytics.com https://js.stripe.com;
           connect-src 'self' http://localhost:3000 ws://localhost:3000 ws://localhost:4200 https://*.nean.io wss://nean.io wss://*.nean.io https://www.google-analytics.com/ https://raw.githubusercontent.com https://firebasestorage.googleapis.com;
@@ -101,6 +102,18 @@
           form-action 'none';
           manifest-src 'self';
         ">
+
+  <!-- Preload fonts -->
+  <link rel="preload"
+    href="/assets/fonts/OpenSans-Regular-latin.woff2"
+    as="font"
+    crossorigin="anonymous"
+    type="font/woff2" />
+  <link rel="preload"
+    href="/assets/fonts/OpenSans-Bold-latin.woff2"
+    as="font"
+    crossorigin="anonymous"
+    type="font/woff2" />
 </head>
 
 <body class="mat-app-background">
