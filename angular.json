@@ -26,7 +26,7 @@
             "assets": [
               "src/client/favicon.ico",
               "src/client/manifest.json",
-              "src/client/robot.txt",
+              "src/client/robots.txt",
               "src/client/assets",
               {
                 "glob": "**/*-32-*.png",
