@@ -3,8 +3,7 @@ export class UserLiteModel {
     uId: string;
     email: string;
     username: string;
-    password: string;
-    passwordSalt: string;
+    passwordHash: string;
     emailCode: string;
     stripeCustomerId: string;
     twoFactorAuthenticationEnabled: boolean;

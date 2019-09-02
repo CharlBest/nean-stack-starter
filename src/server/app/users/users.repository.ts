@@ -14,15 +14,14 @@ class UsersRepository extends BaseRepository {
         super();
     }
 
-    async createUser(res: Response, uId: string, email: string, username: string, password: string, passwordSalt: string, emailCode: string)
+    async createUser(res: Response, uId: string, email: string, username: string, passwordHash: string, emailCode: string)
         : Promise<Pick<UserModel, 'email' | 'username' | 'emailCode'> | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.createUser,
             {
                 uId,
                 email,
                 username,
-                password,
-                passwordSalt,
+                passwordHash,
                 emailCode
             }
         );
@@ -174,14 +173,13 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async changeForgottenPassword(res: Response, email: string, code: string, password: string, passwordSalt: string)
+    async changeForgottenPassword(res: Response, email: string, code: string, passwordHash: string)
         : Promise<Pick<UserModel, 'email'> | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.changeForgottenPassword,
             {
                 email,
                 code,
-                password,
-                passwordSalt
+                passwordHash
             }
         );
 
@@ -239,12 +237,11 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async updatePassword(res: Response, userId: number, password: string, passwordSalt: string): Promise<Pick<UserModel, 'email'> | null> {
+    async updatePassword(res: Response, userId: number, passwordHash: string): Promise<Pick<UserModel, 'email'> | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.updatePassword,
             {
                 userId,
-                password,
-                passwordSalt
+                passwordHash
             }
         );
 

@@ -6,8 +6,7 @@ RETURN user
     uId: user.uId,
     email: user.email,
     username: user.username,
-    password: user.password,
-    passwordSalt: user.passwordSalt,
+    passwordHash: user.passwordHash,
     emailCode: user.emailCode,
     stripeCustomerId: user.stripeCustomerId
 }

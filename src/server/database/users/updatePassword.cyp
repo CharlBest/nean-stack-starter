@@ -1,6 +1,6 @@
 export const data = `
 MATCH (user:User { id: {userId} })
-SET user.password = {password}, user.passwordSalt = {passwordSalt}
+SET user.passwordHash = {passwordHash}
 RETURN user
 { 
     email: user.email

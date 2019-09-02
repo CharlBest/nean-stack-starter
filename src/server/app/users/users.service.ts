@@ -10,7 +10,7 @@ import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutori
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
-import { pbkdf2Sync, randomBytes } from 'crypto';
+import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { authenticator } from 'otplib';
@@ -40,10 +40,9 @@ class UsersService extends BaseService {
             throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
-            const salt = this.generateSalt();
-            const hashedPassword = await this.hashPassword(password, salt);
+            const passwordHash = await this.hashPassword(password);
 
-            const user = await usersRepository.createUser(res, nodeUUId(), email, username, hashedPassword, salt, nodeUUId());
+            const user = await usersRepository.createUser(res, nodeUUId(), email, username, passwordHash, nodeUUId());
 
             if (!user) {
                 throw new Error(this.userRequiredError);
@@ -95,7 +94,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
 
         // Check password
-        if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
+        if (!user || !(await this.verifyPassword(password, user.passwordHash))) {
             ServerValidator.addGlobalError(res, 'loginInvalidCredentials', true);
             throw new Error();
         }
@@ -131,7 +130,7 @@ class UsersService extends BaseService {
             // r: 'role'
         };
 
-        // HS256 algorithm
+        // HS256 algorithm. TODO: is this the best algorithm to encrypt token with?
         viewModel.token = sign(
             {
                 exp: Math.floor(Date.now() / 1000) + (60 * 60), /* 1 hour */
@@ -229,10 +228,9 @@ class UsersService extends BaseService {
     async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
-        const salt = this.generateSalt();
-        const hashedPassword = await this.hashPassword(password, salt);
+        const passwordHash = await this.hashPassword(password);
 
-        const user = await usersRepository.changeForgottenPassword(res, email, code, hashedPassword, salt);
+        const user = await usersRepository.changeForgottenPassword(res, email, code, passwordHash);
 
         if (!user) {
             ServerValidator.addGlobalError(res, 'changeForgottenPassword', true);
@@ -241,6 +239,28 @@ class UsersService extends BaseService {
 
         emailBroker.passwordUpdated({
             email: user.email
+        });
+    }
+
+    async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
+        const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
+
+        if (!user || !(await this.verifyPassword(password, user.passwordHash))) {
+            ServerValidator.addGlobalError(res, 'updatePasswordInvalid', true);
+            throw new Error();
+        }
+
+        const passwordHash = await this.hashPassword(newPassword);
+
+        const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), passwordHash);
+
+        if (!updatedUser) {
+            ServerValidator.addGlobalError(res, 'updatePassword', true);
+            throw new Error();
+        }
+
+        emailBroker.passwordUpdated({
+            email: updatedUser.email
         });
     }
 
@@ -268,29 +288,6 @@ class UsersService extends BaseService {
         });
 
         await usersRepository.updateBio(res, this.getUserId(res), sanitizedHTMLContent);
-    }
-
-    async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
-        const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
-
-        if (!user || !(await this.verifyPassword(user.password, user.passwordSalt, password))) {
-            ServerValidator.addGlobalError(res, 'updatePasswordInvalid', true);
-            throw new Error();
-        }
-
-        const salt = this.generateSalt();
-        const hashedPassword = await this.hashPassword(newPassword, salt);
-
-        const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), hashedPassword, salt);
-
-        if (!updatedUser) {
-            ServerValidator.addGlobalError(res, 'updatePassword', true);
-            throw new Error();
-        }
-
-        emailBroker.passwordUpdated({
-            email: updatedUser.email
-        });
     }
 
     async deleteUser(res: Response): Promise<boolean> {
@@ -333,23 +330,13 @@ class UsersService extends BaseService {
 
     // #region private
 
-    private generateSalt(): string {
-        const saltBuffer = randomBytes(16);
-        return saltBuffer.toString('hex');
+    private async hashPassword(password: string): Promise<string> {
+        const saltRounds = 11; // https://www.npmjs.com/package/bcrypt#a-note-on-rounds
+        return bcrypt.hash(password, saltRounds);
     }
 
-    private async hashPassword(password: string, salt: string): Promise<string> {
-        const hashedPassword = pbkdf2Sync(password, salt, 10000, 32, 'sha512');
-        return hashedPassword.toString('hex');
-    }
-
-    private async verifyPassword(password: string, salt: string, passwordAttempt: string): Promise<boolean> {
-        const hashedPassword = await this.hashPassword(passwordAttempt, salt);
-        if (password === hashedPassword) {
-            return true;
-        } else {
-            return false;
-        }
+    private verifyPassword(password: string, passwordHash: string): Promise<boolean> {
+        return bcrypt.compare(password, passwordHash);
     }
 
     // #endregion
