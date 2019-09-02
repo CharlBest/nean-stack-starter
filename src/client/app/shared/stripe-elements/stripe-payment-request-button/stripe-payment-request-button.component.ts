@@ -52,7 +52,6 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
 
             const newOptions = {
                 // TODO: not sure if all properties have to be provided for an update
-                country: this.paymentRequestButtonOptions.country,
                 currency: this.paymentRequestButtonOptions.currency,
                 total: {
                     label: this.paymentRequestButtonOptions.total.label,
