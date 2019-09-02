@@ -212,7 +212,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         // Maybe allow ascii emoji as well
         // (<any>emojione).ascii = true;
         (emojione as any).sprites = true;
-        (emojione as any).imagePathSVGSprites = './assets/emoji/';
+        (emojione as any).imagePathSVGSprites = '.';
         return emojione.shortnameToImage(html);
     }
 

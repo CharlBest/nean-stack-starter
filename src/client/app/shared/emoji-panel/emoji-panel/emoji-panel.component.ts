@@ -37,7 +37,7 @@ export class EmojiPanelComponent {
 
   async render() {
     (emojione as any).sprites = true;
-    (emojione as any).imagePathSVGSprites = './assets/emoji/';
+    (emojione as any).imagePathSVGSprites = '.';
 
     // TODO: this should potentially move to a service as well as all in memory data like emojiData for when this comp
     // is used on more than one page so that it can be reused rather than loading it again.
