@@ -10,7 +10,7 @@ import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutori
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { authenticator } from 'otplib';
@@ -331,7 +331,7 @@ class UsersService extends BaseService {
     // #region private
 
     private async hashPassword(password: string): Promise<string> {
-        const saltRounds = 11; // https://www.npmjs.com/package/bcrypt#a-note-on-rounds
+        const saltRounds = 10;
         return bcrypt.hash(password, saltRounds);
     }
 

@@ -84,7 +84,7 @@
     "ws": "^7.1.2",
     "zone.js": "^0.10.2",
     "@github/webauthn-json": "^0.3.1",
-    "bcrypt": "^3.0.6"
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.0",
@@ -112,7 +112,7 @@
     "@types/winston": "^2.4.4",
     "@types/ws": "^6.0.3",
     "@types/hammerjs": "~2.0.36",
-    "@types/bcrypt": "^3.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "codelyzer": "^5.1.0",
     "husky": "^3.0.4",
     "nodemon": "^1.19.1",
