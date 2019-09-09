@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run start:client:watch\" \"npm run build:server:watch\" \"npm run start:server:watch\"",
-    "build": "ng build --configuration=production && webpack --mode=production",
+    "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html",
     "buildv2": "bash build.sh",
     "build:dev": "ng build --configuration=development && webpack --mode=production",
     "build:server:watch": "webpack --mode=development --watch",
@@ -31,7 +31,8 @@
     "build:en": "ng build --prod --locale en-US --i18n-format xlf --i18n-file src/locale/messages.en-US.xlf --output-path ../web/dist/en-US",
     "build:af": "ng build --prod --locale af-ZA --i18n-format xlf --i18n-file src/locale/messages.af-ZA.xlf --output-path ../web/dist/af-ZA",
     "build-i18n": "npm run build:en && npm run build:af",
-    "generate-vapid-keys": "web-push generate-vapid-keys --json"
+    "generate-vapid-keys": "web-push generate-vapid-keys --json",
+    "minify-index-html": "html-minifier dist/client/index.html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --use-short-doctype --minify-css true --minify-js true -o dist/client/index.html"
   },
   "husky": {
     "hooks": {
@@ -114,6 +115,7 @@
     "@types/hammerjs": "~2.0.36",
     "@types/bcryptjs": "^2.4.2",
     "codelyzer": "^5.1.0",
+    "html-minifier": "^4.0.0",
     "husky": "^3.0.4",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
