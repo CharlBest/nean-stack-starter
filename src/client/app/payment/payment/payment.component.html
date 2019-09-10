@@ -73,7 +73,8 @@
                         <input matInput
                             formControlName="email"
                             placeholder="Email"
-                            type="email">
+                            type="email"
+                            autocomplete="email">
                         <mat-error>
                             <app-form-errors [control]="formGroup.controls['email']"></app-form-errors>
                         </mat-error>

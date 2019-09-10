@@ -33,7 +33,8 @@
                 <mat-label>Username</mat-label>
                 <input matInput
                     formControlName="username"
-                    type="text">
+                    type="text"
+                    autocomplete="username">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['username']">
                         <ng-container *ngIf="formGroup.controls['username'].hasError('exists')">
@@ -50,7 +51,8 @@
                 <mat-label>Password</mat-label>
                 <input matInput
                     formControlName="password"
-                    type="password">
+                    type="password"
+                    autocomplete="new-password">
                 <app-icon-visibility matSuffix></app-icon-visibility>
                 <app-icon-visibility-off matSuffix></app-icon-visibility-off>
                 <mat-error>
