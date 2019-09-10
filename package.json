@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1072",
+  "version": "0.0.1073",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -42,6 +42,7 @@
   "dependencies": {
     "@angular/animations": "^8.2.5",
     "@angular/cdk": "^8.2.0",
+    "@angular/cdk-experimental": "^8.2.0",
     "@angular/common": "^8.2.5",
     "@angular/compiler": "^8.2.5",
     "@angular/core": "^8.2.5",
@@ -52,9 +53,10 @@
     "@angular/pwa": "^0.803.3",
     "@angular/router": "^8.2.5",
     "@angular/service-worker": "^8.2.5",
-    "@angular/cdk-experimental": "^8.2.0",
+    "@github/webauthn-json": "^0.3.1",
     "@sendgrid/mail": "^6.4.0",
     "amqplib": "^0.5.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "concurrently": "^4.1.2",
@@ -83,9 +85,7 @@
     "webpack-cli": "^3.3.8",
     "winston": "^3.2.1",
     "ws": "^7.1.2",
-    "zone.js": "^0.10.2",
-    "@github/webauthn-json": "^0.3.1",
-    "bcryptjs": "^2.4.3"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.3",
