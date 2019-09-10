@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1071",
+  "version": "0.0.1072",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -84,7 +84,7 @@
     "winston": "^3.2.1",
     "ws": "^7.1.2",
     "zone.js": "^0.10.2",
-    "@github/webauthn-json": "^0.3.6",
+    "@github/webauthn-json": "^0.3.1",
     "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
