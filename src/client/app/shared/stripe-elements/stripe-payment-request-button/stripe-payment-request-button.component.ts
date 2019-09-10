@@ -56,9 +56,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
                 total: {
                     label: this.paymentRequestButtonOptions.total.label,
                     amount: this.paymentRequestButtonOptions.total.amount,
-                },
-                requestPayerName: this.paymentRequestButtonOptions.requestPayerName,
-                requestPayerEmail: this.paymentRequestButtonOptions.requestPayerEmail,
+                }
             };
             this.paymentRequestButtonInstance.update(newOptions);
         }
@@ -77,7 +75,6 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
 
     private setDynamicOptions() {
         this.paymentRequestButtonOptions.total.amount = this.amount ? this.amount * 100 : 0;
-        this.paymentRequestButtonOptions.requestPayerEmail = !!!this.isAuthenticated;
     }
 
     private async initialize() {
