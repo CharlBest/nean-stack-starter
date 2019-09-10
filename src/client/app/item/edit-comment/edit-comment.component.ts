@@ -64,7 +64,6 @@ export class EditCommentComponent implements OnInit {
       this.router.navigate(['/item/comments', this.comment.itemUId]);
     } catch (error) {
       this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
-    } finally {
       this.isProcessing = false;
     }
   }

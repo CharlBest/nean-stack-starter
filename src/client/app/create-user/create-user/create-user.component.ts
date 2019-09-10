@@ -96,10 +96,10 @@ export class CreateUserComponent implements OnInit {
         }
       } else {
         this.dialogService.alert('Authentication failed');
+        this.isProcessing = false;
       }
     } catch (error) {
       this.formErrorsService.updateFormValidity(error, this.formGroup);
-    } finally {
       this.isProcessing = false;
     }
   }

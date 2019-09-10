@@ -29,7 +29,6 @@ export class CreateCardComponent {
                 this.router.navigate(['/profile']);
             } catch (error) {
                 this.formErrorsService.updateFormValidity(error);
-            } finally {
                 this.isProcessing = false;
             }
         } else {

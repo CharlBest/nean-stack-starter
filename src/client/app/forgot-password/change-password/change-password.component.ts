@@ -67,7 +67,6 @@ export class ChangePasswordComponent implements OnInit {
         this.router.navigate(['/login']);
       } catch (error) {
         this.formErrorsService.updateFormValidity(error, this.formGroup);
-      } finally {
         this.isProcessing = false;
       }
     } else {

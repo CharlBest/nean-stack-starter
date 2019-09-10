@@ -77,9 +77,9 @@ export class EditItemComponent implements OnInit {
         this.deleteRemovedImagesFromStorage();
         this.router.navigate(['/item/comments', response.uId]);
       }
+      // TODO: what if reponse is null
     } catch (error) {
       this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-    } finally {
       this.isProcessing = false;
     }
   }

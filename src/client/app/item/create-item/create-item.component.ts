@@ -55,13 +55,13 @@ export class CreateItemComponent implements OnInit {
 
         if (!this.pushNotificationService.isPushNotificationPermissionGrandted()) {
           this.askForNotificationPermission(response);
+          this.isProcessing = false;
         } else {
           this.router.navigate(['/item/comments', response.uId]);
         }
       }
     } catch (error) {
       this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
-    } finally {
       this.isProcessing = false;
     }
   }
