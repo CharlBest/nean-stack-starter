@@ -47,7 +47,7 @@
     <!-- Search -->
     <div *ngIf="headerBackTitle === 'Search'"
       class="search-bar">
-      <app-icon-search></app-icon-search>
+      <app-icon-search (click)="navigationService.searched.emit(searchField.value)"></app-icon-search>
       <input #searchField
         placeholder="Search"
         (keyup.enter)="navigationService.searched.emit(searchField.value)"
