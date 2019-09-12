@@ -1,7 +1,14 @@
-mat-form-field {
-	display: block;
+mat-card-content {
+	text-align: center;
 
-	textarea {
-		width: 100%;
+	app-icon-error-outline {
+		display: initial;
+		opacity: 0.5;
+
+		::ng-deep svg {
+			font-size: 5em;
+			height: 1em;
+			width: 1em;
+		}
 	}
 }

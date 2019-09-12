@@ -1,9 +1,15 @@
 <mat-card>
   <mat-card-content>
-    Page or file could not be found.
+    <div>Page or file could not be found.</div>
+
+    <app-icon-error-outline></app-icon-error-outline>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button
+    <button mat-raised-button
       routerLink="/">Home</button>
+    <button mat-raised-button
+      routerLink="/search">Search</button>
+    <button mat-raised-button
+      routerLink="/feedback">Feedback</button>
   </mat-card-actions>
 </mat-card>
