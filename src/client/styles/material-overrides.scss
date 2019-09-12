@@ -49,16 +49,3 @@ mat-bottom-sheet-container.emoji-panel {
 		height: 100vh;
 	}
 }
-
-// Angular Material bug. Workaround:
-// Remove when fixed: https://github.com/angular/components/issues/16546
-.mat-card-actions .mat-stroked-button,
-.mat-dialog-actions .mat-stroked-button {
-	margin: 0 8px;
-}
-
-.mat-card-actions .mat-stroked-button:first-child,
-.mat-dialog-actions .mat-stroked-button:first-child {
-	margin-left: 0;
-	margin-right: 0;
-}
