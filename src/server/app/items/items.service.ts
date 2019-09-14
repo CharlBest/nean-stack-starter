@@ -1,7 +1,8 @@
 import { CommentModel } from '@shared/models/item/comment.model';
+import { FileModel } from '@shared/models/shared/file.model';
 import { NewItemWebSocketModel } from '@shared/models/web-socket/new-item-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
-import { MAX_MEDIA_UPLOADS } from '@shared/validation/validators';
+import { MAX_FILE_UPLOADS } from '@shared/validation/validators';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Response } from 'express';
@@ -18,13 +19,14 @@ class ItemsService extends BaseService {
         super();
     }
 
-    async create(res: Response, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async create(res: Response, title: string, description: string, media: Array<FileModel>): Promise<ItemViewModel> {
         if (media && Array.isArray(media)) {
-            media = media.slice(0, MAX_MEDIA_UPLOADS);
+            media = media.slice(0, MAX_FILE_UPLOADS);
         }
 
         const userId = this.getUserId(res);
         const uId = nodeUUId();
+        media.forEach(file => file.uId = nodeUUId());
         const result = await itemsRepository.create(res, userId, uId, title, description, media);
 
         if (!result) {
@@ -41,9 +43,9 @@ class ItemsService extends BaseService {
         return result;
     }
 
-    async update(res: Response, uId: string, title: string, description: string, media: Array<string>): Promise<ItemViewModel> {
+    async update(res: Response, uId: string, title: string, description: string, media: Array<FileModel>): Promise<ItemViewModel> {
         if (media && Array.isArray(media)) {
-            media = media.slice(0, MAX_MEDIA_UPLOADS);
+            media = media.slice(0, MAX_FILE_UPLOADS);
         }
 
         const userId = this.getUserId(res);

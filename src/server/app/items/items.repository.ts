@@ -1,4 +1,5 @@
 // tslint:disable: no-identical-functions
+import { FileModel } from '@shared/models/shared/file.model';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Application, Response } from 'express';
@@ -12,19 +13,19 @@ class ItemsRepository extends BaseRepository {
     }
 
     async createItemFromDataFetcher(neo4jSession: neo4j.Session, app: Application, userId: number, uId: string,
-        title: string, description: string, media: Array<string> | null): Promise<void> {
+        title: string, description: string, files: Array<FileModel> | null): Promise<void> {
         await neo4jSession.run(app.locals.dbQueries.items.create,
             {
                 userId,
                 uId,
                 title,
                 description,
-                media
+                files
             }
         );
     }
 
-    async create(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
+    async create(res: Response, userId: number, uId: string, title: string, description: string, files: Array<FileModel>)
         : Promise<ItemViewModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.items.create,
             {
@@ -32,13 +33,14 @@ class ItemsRepository extends BaseRepository {
                 uId,
                 title,
                 description,
-                media
+                files
             }
         );
 
         const model = result.records.map(record => {
             return {
                 ...record.get('item'),
+                files: record.get('files'),
                 user: record.get('user')
             } as ItemViewModel;
         });
@@ -50,7 +52,7 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async update(res: Response, userId: number, uId: string, title: string, description: string, media: Array<string>)
+    async update(res: Response, userId: number, uId: string, title: string, description: string, files: Array<FileModel>)
         : Promise<ItemViewModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.items.update,
             {
@@ -58,13 +60,14 @@ class ItemsRepository extends BaseRepository {
                 uId,
                 title,
                 description,
-                media
+                files
             }
         );
 
         const model = result.records.map(record => {
             return {
                 ...record.get('item'),
+                files: record.get('files'),
                 user: record.get('user')
             } as ItemViewModel;
         });
@@ -88,6 +91,7 @@ class ItemsRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('item'),
+                files: record.get('files'),
                 user: record.get('user'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),
@@ -113,6 +117,7 @@ class ItemsRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('items'),
+                files: record.get('files'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),
@@ -183,6 +188,7 @@ class ItemsRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('items'),
+                files: record.get('files'),
                 user: record.get('users'),
                 favourite: true,
             } as ItemViewModel;
@@ -338,6 +344,7 @@ class ItemsRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('items'),
+                files: record.get('files'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),

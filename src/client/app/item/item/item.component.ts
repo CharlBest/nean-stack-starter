@@ -109,7 +109,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     if (this.activeMediaIndex === 0) {
-      this.activeMediaIndex = this.item.media.length - 1;
+      this.activeMediaIndex = this.item.files.length - 1;
     } else {
       this.activeMediaIndex--;
     }
@@ -119,7 +119,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     // TODO: swithcing out the images to fast (clicking rapidly) freezes it
-    if (this.activeMediaIndex >= this.item.media.length - 1) {
+    if (this.activeMediaIndex >= this.item.files.length - 1) {
       this.activeMediaIndex = 0;
     } else {
       this.activeMediaIndex++;

@@ -1,5 +1,7 @@
+import { FileModel } from '../../models/shared/file.model';
+
 export class CreateOrUpdateItemViewModel {
     title: string;
     description: string;
-    media: Array<string>;
+    files: Array<FileModel>;
 }

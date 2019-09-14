@@ -84,9 +84,9 @@
         <div routerLink="/item/comments/{{item.uId}}"
             [class.cursor-pointer]="!isViewingComments"
             class="content">
-            <div *ngIf="item?.media && item?.media?.length > 0"
+            <div *ngIf="item?.files && item?.files?.length > 0"
                 class="media">
-                <div *ngIf="item?.media?.length > 1">
+                <div *ngIf="item?.files?.length > 1">
                     <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
                     <button mat-icon-button
                         (click)="mediaPrevious($event)"
@@ -105,7 +105,7 @@
                 </div>
 
                 <img mat-card-image
-                    [src]="item?.media[activeMediaIndex]"
+                    [src]="item?.files[activeMediaIndex].url"
                     alt="item image"
                     loading="lazy"
                     height="100%">

@@ -1,7 +1,11 @@
 export const data = `
 MATCH (users:User { id: {userId} })-[rel:HAS_FAVOURITE]->(items:Item)
+OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
+WITH items, rel, collect(properties(files)) as files, users
 
-RETURN properties(items) as items, users
+RETURN properties(items) as items,
+files,
+users
 {
     id: users.id,
     username: users.username,

@@ -18,8 +18,11 @@ WITH viewingUser, item, user
 
 OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
 OPTIONAL MATCH (viewingUser)-[subscribed:SUBSCRIBED]->(item)
+OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
 
-RETURN properties(item) as item, user
+RETURN properties(item) as item,
+collect(properties(files)) as files,
+user
 {
     id: user.id,
     username: user.username,

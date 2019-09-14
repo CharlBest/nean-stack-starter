@@ -3,8 +3,11 @@ MATCH (users:User { id: {userId} })-[:HAS_ITEM]->(items:Item)
 
 OPTIONAL MATCH (:User { id: {loggedInUserId} })-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (:User { id: {loggedInUserId} })-[subscribed:SUBSCRIBED]->(items)
+OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
 
-RETURN properties(items) as items, users
+RETURN properties(items) as items,
+collect(properties(files)) as files,
+users
 {
     id: users.id,
     username: users.username,

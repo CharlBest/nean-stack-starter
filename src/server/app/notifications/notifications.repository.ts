@@ -111,6 +111,7 @@ class NotificationsRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('items'),
+                files: record.get('files'),
                 user: record.get('users'),
                 subscribed: true,
             } as ItemViewModel;

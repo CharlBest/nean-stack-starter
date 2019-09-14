@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileModel } from '@shared/models/shared/file.model';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -17,7 +18,7 @@ export class EditItemComponent implements OnInit {
   @ViewChild('itemForm', { static: false }) itemForm: ItemFormComponent;
   isProcessing = false;
   item: ItemViewModel;
-  savedMedia: Array<string>;
+  savedFile: Array<FileModel>;
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService,
@@ -48,8 +49,8 @@ export class EditItemComponent implements OnInit {
         const response = await this.itemService.get(itemUId);
         if (response) {
           this.item = response;
-          if (response.media) {
-            this.savedMedia = [...response.media];
+          if (response.files) {
+            this.savedFile = [...response.files];
           }
         }
       } catch (error) {
@@ -66,7 +67,7 @@ export class EditItemComponent implements OnInit {
     const viewModel = new CreateOrUpdateItemViewModel();
     viewModel.title = this.itemForm.formGroup.controls.title.value;
     viewModel.description = this.itemForm.formGroup.controls.description.value;
-    viewModel.media = this.itemForm.formGroup.controls.media.value;
+    viewModel.files = this.itemForm.formGroup.controls.files.value;
 
     try {
       const response = await this.itemService.update(this.item.uId, viewModel);
@@ -85,10 +86,10 @@ export class EditItemComponent implements OnInit {
   }
 
   deleteRemovedImagesFromStorage() {
-    if (this.savedMedia) {
-      for (const media of this.savedMedia) {
-        if (!(this.itemForm.formGroup.controls.media.value as Array<string>).includes(media)) {
-          this.firebaseStorageService.delete(media)
+    if (this.savedFile) {
+      for (const file of this.savedFile) {
+        if (!(this.itemForm.formGroup.controls.files.value as Array<FileModel>).includes(file)) {
+          this.firebaseStorageService.delete(file.url)
             .catch(error => {
               // TODO: error handling
             });

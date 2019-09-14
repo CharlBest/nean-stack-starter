@@ -27,19 +27,6 @@
 
             <br>
 
-            <div class="media-container">
-                <div *ngFor="let media of formGroup.controls['media'].value; let i = index"
-                    class="media">
-                    <app-media [src]="media"
-                        *ngIf="media"></app-media>
-
-                    <button mat-stroked-button
-                        type="button"
-                        color="warn"
-                        (click)="removeMedia(i)">Remove</button>
-                </div>
-            </div>
-
             <app-upload-button #fileUploader
                 [folderName]="'item'"></app-upload-button>
         </mat-card-content>
@@ -53,8 +40,8 @@
 
             <button mat-stroked-button
                 type="button"
-                *ngIf="!bpService.isDesktop && formGroup.controls['media']?.value?.length < MAX_MEDIA_UPLOADS"
-                (click)="fileUploader.openFileUpload()">Add Media</button>
+                *ngIf="!bpService.isDesktop && formGroup.controls['files']?.value?.length < MAX_FILE_UPLOADS"
+                (click)="fileUploader.openFileUpload()">Add Image</button>
         </mat-card-actions>
     </mat-card>
 </form>

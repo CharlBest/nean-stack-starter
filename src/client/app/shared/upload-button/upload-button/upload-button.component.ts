@@ -1,24 +1,14 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { FileModel, ImageRotation } from '@shared/models/shared/file.model';
 // TODO: for some reason this creates a worker thread even on pages that isn't using this component
 import imageCompression from 'browser-image-compression';
+import { DialogService } from '../../dialog/dialog.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
-enum ImageRotation {
-    ninetyDegrees = 90,
-    oneHundredAndEightyDegrees = 180,
-    twoHundredAndSeventyDegrees = 270
-}
-
-interface Metadata {
+interface Metadata extends FileModel {
     file?: File;
     localUrl?: string;
-    url?: string;
-    width?: number;
-    height?: number;
-    aspectRatio?: number;
-    rotation?: ImageRotation | null;
-    exifOrientation?: number;
     uploadProgressPercentage?: number;
     errorMessage?: string;
 }
@@ -41,7 +31,8 @@ export class UploadButtonComponent {
     message: Metadata;
 
     constructor(private firebaseStorageService: FirebaseStorageService,
-        public bpService: BreakpointService) { }
+        public bpService: BreakpointService,
+        private dialogService: DialogService) { }
 
     @HostListener('dragenter', ['$event']) onDragEnter(event: DragEvent) {
         this.preventDefaults(event);
@@ -99,16 +90,19 @@ export class UploadButtonComponent {
         }
     }
 
-    remove(index: number) {
-        this.previewImages.splice(index, 1);
+    async remove(index: number) {
+        const hasConfirmed = await this.dialogService.confirm('Are you sure?');
+        if (hasConfirmed) {
+            this.previewImages.splice(index, 1);
+        }
     }
 
     openFileUpload() {
         this.fileInput.nativeElement.click();
     }
 
-    async upload(): Promise<Array<Metadata>> {
-        const uploadedFiles: Array<Metadata> = [];
+    async upload(): Promise<Array<FileModel>> {
+        const uploadedFiles: Array<FileModel> = [];
         for (const image of this.previewImages) {
             if (image.file) {
                 const url = await this.firebaseStorageService.upload(image.file, (progress) => {
@@ -119,7 +113,14 @@ export class UploadButtonComponent {
                 }, this.folderName);
 
                 image.url = url;
-                uploadedFiles.push(image);
+                uploadedFiles.push({
+                    url: image.url,
+                    width: image.width,
+                    height: image.height,
+                    aspectRatio: image.aspectRatio,
+                    exifOrientation: image.exifOrientation,
+                    rotation: image.rotation
+                });
             }
         }
 
@@ -148,11 +149,8 @@ export class UploadButtonComponent {
                     file: compressedFile,
                     ...metadata,
                     exifOrientation,
-                    rotation: null,
                     errorMessage: error
                 });
-
-                console.log(this.previewImages);
             } catch (error) {
                 // TODO: error handling
             }
@@ -175,10 +173,13 @@ export class UploadButtonComponent {
                 const img = document.createElement('img');
                 img.onload = () => {
                     const metadata: Metadata = {
+                        url: '',
                         localUrl: img.src,
                         width: img.naturalWidth,
                         height: img.naturalHeight,
-                        aspectRatio: img.naturalWidth / img.naturalHeight
+                        aspectRatio: img.naturalWidth / img.naturalHeight,
+                        rotation: null,
+                        exifOrientation: -1
                     };
 
                     resolve(metadata);

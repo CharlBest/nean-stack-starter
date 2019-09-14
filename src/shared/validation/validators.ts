@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
+import { FileModel } from '../models/shared/file.model';
 // tslint:disable-next-line:max-line-length
 import { AnyFormError, CustomFormValidator, Email, MinLength, PasswordCharacters, Pattern, Required, TypeAssert } from '../models/shared/form-error.model';
 import { PasswordRegexBuilder } from './password-regex-builder';
@@ -11,20 +12,13 @@ function isEmptyInputValue(value: any): boolean {
 
 // tslint:disable-next-line:max-line-length
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
-export const MAX_MEDIA_UPLOADS = 5;
+export const MAX_FILE_UPLOADS = 5;
 
 export const PASSWORD_LENGTH = 8;
 export const PASSWORD_REGEX = new PasswordRegexBuilder(PASSWORD_LENGTH).oneUpperCase().oneLowerCase().oneDigit().value;
 
 // Source https://github.com/angular/angular/blob/master/packages/forms/src/validators.ts
 export class Validators {
-    private static nullValidator(c: AbstractControl | StringNumber): null { return null; }
-
-    private static wrapControl(control: WrapControlType): AbstractControl {
-        // Warning if this method starts allowing booleans
-        return control && (control as any).value !== undefined ? control : { value: control } as any;
-    }
-
     static required(control: AbstractControl | StringNumber | null): Required | null {
         control = Validators.wrapControl(control);
         return isEmptyInputValue(control.value) ? { required: true } : null;
@@ -88,10 +82,11 @@ export class Validators {
         };
     }
 
-    static typeAssert(value: string | null, type: 'string'): ValidatorFn;
-    static typeAssert(value: number | null, type: 'number'): ValidatorFn;
-    static typeAssert(value: boolean | null, type: 'boolean'): ValidatorFn;
-    static typeAssert(value: Array<string> | null, type: 'string[]'): ValidatorFn;
+    static typeAssert(value: object[] | null | undefined, type: 'files'): ValidatorFn;
+    static typeAssert(value: string | null | undefined, type: 'string'): ValidatorFn;
+    static typeAssert(value: number | null | undefined, type: 'number'): ValidatorFn;
+    static typeAssert(value: boolean | null | undefined, type: 'boolean'): ValidatorFn;
+    static typeAssert(value: Array<string> | null | undefined, type: 'string[]'): ValidatorFn;
     static typeAssert(value: TypeAssertValue, type: TypeAssertType): ValidatorFn {
         return (control: AbstractControl | any): TypeAssert | null => {
             control = Validators.wrapControl(control);
@@ -101,13 +96,17 @@ export class Validators {
 
             // Type Check
             let isValid = false;
-            if (type === 'string' || type === 'number' || type === 'boolean') {
+            if (type === 'string' || type === 'number' || type === 'boolean') { // Primitives
                 isValid = typeof control.value === type;
+            } else if (type === 'files' && Array.isArray(control.value)) { // FileModel
+                control.value.forEach((file: FileModel) => {
+                    isValid = !Validators.hasFileError(file);
+                });
             } else if (type.endsWith('[]') &&
                 Array.isArray(control.value) &&
                 (control.value.length === 0 ||
                     (control.value.length > 0 &&
-                        (control.value as string[]).every(arrayItem => typeof arrayItem === type.replace('[]', ''))))) {
+                        (control.value as string[]).every(arrayItem => typeof arrayItem === type.replace('[]', ''))))) { // Array primitives
                 isValid = true;
             }
             return isValid ? null : { typeAssert: true };
@@ -146,6 +145,26 @@ export class Validators {
             return null;  // don't validate empty values to allow optional controls
         }
         return control.value === '4' ? { customFormValidator: true } : null;
+    }
+
+    private static nullValidator(c: AbstractControl | StringNumber): null { return null; }
+
+    private static wrapControl(control: WrapControlType): AbstractControl {
+        // Warning if this method starts allowing booleans
+        return control && (control as any).value !== undefined ? control : { value: control } as any;
+    }
+
+    private static hasFileError(file: FileModel): boolean {
+        // TODO: this is ugly!
+        return typeof file !== 'object' ||
+            !!Validators.required(file.url) ||
+            !!Validators.typeAssert(file.url, 'string')(file.url) ||
+            !!Validators.typeAssert(file.width, 'number')(file.width as number) ||
+            !!Validators.typeAssert(file.height, 'number')(file.height as number) ||
+            !!Validators.typeAssert(file.aspectRatio, 'number')(file.aspectRatio as number) ||
+            !!Validators.required(file.exifOrientation) ||
+            !!Validators.typeAssert(file.exifOrientation, 'number')(file.exifOrientation as number) ||
+            !!Validators.typeAssert(file.rotation, 'number')(file.rotation as number);
     }
 }
 
@@ -249,12 +268,12 @@ export interface FormValidator {
 // TODO: these types are getting out of hand. Refactor!
 
 type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null;
-type WrapControlType = AbstractControl | object | StringNumber | null;
+type WrapControlType = AbstractControl | object | StringNumber | null | undefined;
 type StringNumber = string | number;
 
-type TypeAssertValue = null | string | number | boolean | Array<string>;
+type TypeAssertValue = null | undefined | string | number | boolean | Array<string> | object[];
 type TypeAssertPrimitive = 'string' | 'number' | 'boolean';
-type TypeAssertType = TypeAssertPrimitive | 'string[]';
+type TypeAssertType = TypeAssertPrimitive | 'string[]' | 'files';
 
 interface AbstractControl {
     value: any;

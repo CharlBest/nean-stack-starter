@@ -1,4 +1,5 @@
 // tslint:disable: no-identical-functions
+import { FileModel } from '../models/shared/file.model';
 import { NotificationType } from '../models/user/user.model';
 import { FormValidator, PASSWORD_LENGTH, PASSWORD_REGEX, Validators } from './validators';
 
@@ -124,7 +125,7 @@ export class FormGroupBuilder {
         };
     }
 
-    static createOrUpdateItem(title: string | null = null, description: string | null = null, media: Array<string> | null = null)
+    static createOrUpdateItem(title: string | null = null, description: string | null = null, files: Array<FileModel> | null = null)
         : FormValidator {
         return {
             title: [title, [
@@ -134,8 +135,8 @@ export class FormGroupBuilder {
             description: [description, [
                 Validators.typeAssert(description, 'string'),
             ]],
-            media: [media, [
-                Validators.typeAssert(media, 'string[]'),
+            files: [files, [
+                Validators.typeAssert(files, 'files'),
             ]]
         };
     }

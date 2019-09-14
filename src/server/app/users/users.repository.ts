@@ -143,6 +143,7 @@ class UsersRepository extends BaseRepository {
         const model = result.records.map(record => {
             return {
                 ...record.get('items'),
+                files: record.get('files'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),

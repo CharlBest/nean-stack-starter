@@ -24,7 +24,7 @@
         *ngIf="image.errorMessage">{{image.errorMessage}}</div>
 
     <!-- Preview image -->
-    <img [src]="image.localUrl"
+    <img [src]="image.url || image.localUrl"
         alt="preview image"
         [ngClass]="{'rotate-ninety-degrees': image.rotation === rotationEnum.ninetyDegrees, 'rotate-one-hundred-and-eighty-degrees': image.rotation === rotationEnum.oneHundredAndEightyDegrees, 'rotate-two-hundred-and-seventy-degrees': image.rotation === rotationEnum.twoHundredAndSeventyDegrees}" />
 
