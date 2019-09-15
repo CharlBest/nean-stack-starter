@@ -76,15 +76,6 @@
   <meta name="og:type"
     content="website">
 
-  <!-- Google Analytics -->
-  <script>
-    window.appType = window.appType || 'web';
-    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
-  </script>
-  <script async
-    src='https://www.google-analytics.com/analytics.js'></script>
-  <!-- End Google Analytics -->
-
   <!-- Content Security Policy -->
   <!-- https://www.sitepoint.com/content-security-policy-getting-started/ -->
   <!-- Firebase, Github, Google Analytics, API server, WebSockets -->
@@ -93,9 +84,9 @@
     content="
           default-src 'self';
           style-src 'self' 'unsafe-inline';
-          script-src 'self' blob: https://www.google-analytics.com https://js.stripe.com;
-          connect-src 'self' http://localhost:3000 ws://localhost:3000 ws://localhost:4200 https://*.nean.io wss://nean.io wss://*.nean.io https://www.google-analytics.com/ https://raw.githubusercontent.com https://firebasestorage.googleapis.com;
-          img-src 'self' data: https://www.google-analytics.com https://firebasestorage.googleapis.com;
+          script-src 'self' blob: https://js.stripe.com;
+          connect-src 'self' http://localhost:3000 http://localhost:32768 ws://localhost:3000 ws://localhost:4200 https://*.nean.io wss://nean.io wss://*.nean.io https://raw.githubusercontent.com https://firebasestorage.googleapis.com;
+          img-src 'self' data: https://firebasestorage.googleapis.com;
           font-src 'self';
           child-src 'self' https://js.stripe.com;
           media-src 'none';

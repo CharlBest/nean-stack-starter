@@ -14,12 +14,12 @@ export class UserService {
 
     getUserPublic(userId: number): Promise<UserPublicViewModel | null> {
         return this.http
-            .get<UserPublicViewModel>(`${environment.httpDomain}${UserRoutes.getUserPublic(userId).client()}`).toPromise();
+            .get<UserPublicViewModel>(`${environment.serverEndpoint}${UserRoutes.getUserPublic(userId).client()}`).toPromise();
     }
 
     getUserPublicItems(userId: number, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.httpDomain}${UserRoutes.getUserPublicItems(userId).client({ pageIndex, pageSize })}`)
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${UserRoutes.getUserPublicItems(userId).client({ pageIndex, pageSize })}`)
             .toPromise();
     }
 }

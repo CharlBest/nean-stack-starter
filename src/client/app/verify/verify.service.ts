@@ -11,6 +11,6 @@ export class VerifyService {
     constructor(private http: HttpClient) { }
 
     verifyEmail(code: string): Promise<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.verifyEmail().client()}`, { code }).toPromise();
+        return this.http.post<boolean>(`${environment.serverEndpoint}${UserRoutes.verifyEmail().client()}`, { code }).toPromise();
     }
 }

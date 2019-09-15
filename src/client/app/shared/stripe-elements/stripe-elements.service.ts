@@ -50,7 +50,7 @@ export class StripeElementsService {
             locale: 'en',
             fonts: [
                 {
-                    src: environment.production ? `url("${environment.httpDomain}/assets/fonts/OpenSans-Regular-latin.woff2")` : '',
+                    src: environment.production ? `url("${environment.serverEndpoint}/assets/fonts/OpenSans-Regular-latin.woff2")` : '',
                     family: 'Open Sans'
                 }
             ]

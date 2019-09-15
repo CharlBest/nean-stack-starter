@@ -12,6 +12,6 @@ export class FeedbackService {
     constructor(private http: HttpClient) { }
 
     sendFeedback(viewModel: FeedbackViewModel): Promise<void> {
-        return this.http.post<void>(`${environment.httpDomain}${GeneralRoutes.sendFeedback().client()}`, viewModel).toPromise();
+        return this.http.post<void>(`${environment.serverEndpoint}${GeneralRoutes.sendFeedback().client()}`, viewModel).toPromise();
     }
 }

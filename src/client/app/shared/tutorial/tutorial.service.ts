@@ -73,7 +73,7 @@ export class TutorialService {
     }
 
     completedTutorial(viewModel: CompletedTutorial): Promise<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
+        return this.http.post<boolean>(`${environment.serverEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
     }
 
     showTakeATour() {

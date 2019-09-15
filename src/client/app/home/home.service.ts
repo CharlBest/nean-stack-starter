@@ -13,7 +13,7 @@ export class HomeService {
 
     getItems(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.httpDomain}${ItemRoutes.getItems().client({ pageIndex, pageSize })}`)
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getItems().client({ pageIndex, pageSize })}`)
             .toPromise();
     }
 }

@@ -25,67 +25,67 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   getUserProfile(): Promise<UserProfileViewModel | null> {
-    return this.http.get<UserProfileViewModel>(`${environment.httpDomain}${UserRoutes.getUserProfile().client()}`).toPromise();
+    return this.http.get<UserProfileViewModel>(`${environment.serverEndpoint}${UserRoutes.getUserProfile().client()}`).toPromise();
   }
 
   updateAvatar(viewModel: UpdateAvatarViewModel): Promise<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateAvatar().client()}`, viewModel).toPromise();
+    return this.http.put<void>(`${environment.serverEndpoint}${UserRoutes.updateAvatar().client()}`, viewModel).toPromise();
   }
 
   updateBio(viewModel: UpdateBioViewModel): Promise<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updateBio().client()}`, viewModel).toPromise();
+    return this.http.put<void>(`${environment.serverEndpoint}${UserRoutes.updateBio().client()}`, viewModel).toPromise();
   }
 
   updatePassword(viewModel: UpdatePasswordViewModel): Promise<void> {
-    return this.http.put<void>(`${environment.httpDomain}${UserRoutes.updatePassword().client()}`, viewModel).toPromise();
+    return this.http.put<void>(`${environment.serverEndpoint}${UserRoutes.updatePassword().client()}`, viewModel).toPromise();
   }
 
   deleteUser(): Promise<boolean> {
-    return this.http.delete<boolean>(`${environment.httpDomain}${UserRoutes.deleteUser().client()}`).toPromise();
+    return this.http.delete<boolean>(`${environment.serverEndpoint}${UserRoutes.deleteUser().client()}`).toPromise();
   }
 
   resendEmailVerificationLink(): Promise<void> {
-    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.resendEmailVerificationLink().client()}`, null).toPromise();
+    return this.http.post<void>(`${environment.serverEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null).toPromise();
   }
 
   createCard(token: string): Promise<CardModel | null> {
-    return this.http.post<CardModel>(`${environment.httpDomain}${PaymentRoutes.createCard().client()}`, { token }).toPromise();
+    return this.http.post<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.createCard().client()}`, { token }).toPromise();
   }
 
   deleteCard(uId: string): Promise<CardModel | null> {
-    return this.http.delete<CardModel>(`${environment.httpDomain}${PaymentRoutes.deleteCard(uId).client()}`).toPromise();
+    return this.http.delete<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.deleteCard(uId).client()}`).toPromise();
   }
 
   updateDefaultCard(uId: string): Promise<CardModel | null> {
-    return this.http.put<CardModel>(`${environment.httpDomain}${PaymentRoutes.updateDefaultCard().client()}`, { uId }).toPromise();
+    return this.http.put<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId }).toPromise();
   }
 
   paymentHistory(): Promise<PaymentModel[] | null> {
-    return this.http.get<PaymentModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentHistory().client()}`).toPromise();
+    return this.http.get<PaymentModel[]>(`${environment.serverEndpoint}${PaymentRoutes.paymentHistory().client()}`).toPromise();
   }
 
   sendReport(viewModel: ReportUserViewModel): Promise<void> {
-    return this.http.post<void>(`${environment.httpDomain}${UserRoutes.report().client()}`, viewModel).toPromise();
+    return this.http.post<void>(`${environment.serverEndpoint}${UserRoutes.report().client()}`, viewModel).toPromise();
   }
 
   getNotificationPreferences(): Promise<NotificationPreferencesViewModel | null> {
     return this.http
-      .get<NotificationPreferencesViewModel>(`${environment.httpDomain}${NotificationRoutes.getNotificationPreferences().client()}`)
+      .get<NotificationPreferencesViewModel>(`${environment.serverEndpoint}${NotificationRoutes.getNotificationPreferences().client()}`)
       .toPromise();
   }
 
   updateNotificationPreferences(model: UpdateNotificationPreferencesViewModel): Promise<void> {
-    return this.http.put<void>(`${environment.httpDomain}${NotificationRoutes.updateNotificationPreferences().client()}`, model)
+    return this.http.put<void>(`${environment.serverEndpoint}${NotificationRoutes.updateNotificationPreferences().client()}`, model)
       .toPromise();
   }
 
   updateTwoFactorAuthentication(model: UpdateTwoFactorAuthenticationViewModel): Promise<TwoFactorAuthenticationViewModel> {
     return this.http
-      .put<TwoFactorAuthenticationViewModel>(`${environment.httpDomain}${UserRoutes.updateTwoFactorAuthentication().client()}`, model)
+      .put<TwoFactorAuthenticationViewModel>(`${environment.serverEndpoint}${UserRoutes.updateTwoFactorAuthentication().client()}`, model)
       .toPromise();
   }
 
   updateConfiguration(model: UpdateConfigurationViewModel): Promise<boolean> {
-    return this.http.put<boolean>(`${environment.httpDomain}${UserRoutes.updateConfiguration().client()}`, model).toPromise();
+    return this.http.put<boolean>(`${environment.serverEndpoint}${UserRoutes.updateConfiguration().client()}`, model).toPromise();
   }
 }

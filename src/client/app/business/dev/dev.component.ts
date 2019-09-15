@@ -1,5 +1,5 @@
-import { Component, OnInit, VERSION as AngularVersion } from '@angular/core';
-import { VERSION as AngularMaterialVersion } from '@angular/material/core';
+import { Component, OnInit, VERSION as angularVersion } from '@angular/core';
+import { VERSION as angularMaterialVersion } from '@angular/material/core';
 import { version } from '../../../../../package.json';
 import { GitHubService } from '../../shared/github/github.service';
 
@@ -13,8 +13,8 @@ export class DevComponent implements OnInit {
   dataSource = [
     { description: 'GitHub package.json', version: null },
     { description: 'App package.json', version: `v${version}` },
-    { description: 'Angular', version: `v${AngularVersion.full}` },
-    { description: 'Angular Material', version: `v${AngularMaterialVersion.full}` },
+    { description: 'Angular', version: `v${angularVersion.full}` },
+    { description: 'Angular Material', version: `v${angularMaterialVersion.full}` },
   ];
 
   constructor(private gitHubService: GitHubService) { }

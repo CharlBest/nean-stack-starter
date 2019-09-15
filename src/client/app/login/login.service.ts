@@ -13,6 +13,6 @@ export class LoginService {
     constructor(private http: HttpClient) { }
 
     login(viewModel: LoginViewModel): Promise<TokenViewModel | null> {
-        return this.http.post<TokenViewModel>(`${environment.httpDomain}${UserRoutes.login().client()}`, viewModel).toPromise();
+        return this.http.post<TokenViewModel>(`${environment.serverEndpoint}${UserRoutes.login().client()}`, viewModel).toPromise();
     }
 }

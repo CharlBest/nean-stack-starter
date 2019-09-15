@@ -12,6 +12,6 @@ export class InviteService {
     constructor(private http: HttpClient) { }
 
     sendInvites(viewModel: InviteViewModel): Promise<void> {
-        return this.http.post<void>(`${environment.httpDomain}${GeneralRoutes.invite().client()}`, viewModel).toPromise();
+        return this.http.post<void>(`${environment.serverEndpoint}${GeneralRoutes.invite().client()}`, viewModel).toPromise();
     }
 }

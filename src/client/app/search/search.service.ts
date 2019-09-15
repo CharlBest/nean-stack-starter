@@ -13,7 +13,7 @@ export class SearchService {
 
     search(term: string, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .post<ItemViewModel[]>(`${environment.httpDomain}${ItemRoutes.search().client({ pageIndex, pageSize })}`, { term })
+            .post<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.search().client({ pageIndex, pageSize })}`, { term })
             .toPromise();
     }
 }

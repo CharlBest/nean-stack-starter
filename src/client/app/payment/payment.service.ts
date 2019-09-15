@@ -14,14 +14,14 @@ export class PaymentService {
     constructor(private http: HttpClient) { }
 
     anonymousPayment(viewModel: AnonymousPaymentViewModel): Promise<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.anonymousPayment().client()}`, viewModel).toPromise();
+        return this.http.post<boolean>(`${environment.serverEndpoint}${PaymentRoutes.anonymousPayment().client()}`, viewModel).toPromise();
     }
 
     paymentCards(): Promise<CardModel[] | null> {
-        return this.http.get<CardModel[]>(`${environment.httpDomain}${PaymentRoutes.paymentCards().client()}`).toPromise();
+        return this.http.get<CardModel[]>(`${environment.serverEndpoint}${PaymentRoutes.paymentCards().client()}`).toPromise();
     }
 
     userPayment(viewModel: UserPaymentViewModel): Promise<boolean> {
-        return this.http.post<boolean>(`${environment.httpDomain}${PaymentRoutes.userPayment().client()}`, viewModel).toPromise();
+        return this.http.post<boolean>(`${environment.serverEndpoint}${PaymentRoutes.userPayment().client()}`, viewModel).toPromise();
     }
 }

@@ -13,11 +13,11 @@ export class NewsletterService {
 
     createNewsletterMember(viewModel: NewsletterMemberViewModel): Promise<boolean> {
         return this.http
-            .post<boolean>(`${environment.httpDomain}${GeneralRoutes.createNewsletterMember().client()}`, viewModel)
+            .post<boolean>(`${environment.serverEndpoint}${GeneralRoutes.createNewsletterMember().client()}`, viewModel)
             .toPromise();
     }
 
     deleteNewsletterMember(email: string): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.httpDomain}${GeneralRoutes.deleteNewsletterMember(email).client()}`).toPromise();
+        return this.http.delete<boolean>(`${environment.serverEndpoint}${GeneralRoutes.deleteNewsletterMember(email).client()}`).toPromise();
     }
 }

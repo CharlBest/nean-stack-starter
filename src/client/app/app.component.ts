@@ -6,9 +6,9 @@ import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-con
 import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { PWAService } from './shared/pwa-helper/pwa.service';
 import { ActiveTimerService } from './shared/services/active-timer.service';
+import { AnalyticsService } from './shared/services/analytics.service';
 import { ASCIIArtService } from './shared/services/ascii-art.service';
 import { AuthService } from './shared/services/auth.service';
-import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
 import { NotificationService } from './shared/services/notification.service';
 import { ThemeService } from './shared/services/theme.service';
 import { TranslateService } from './shared/translate/translate.service';
@@ -20,7 +20,7 @@ import { TranslateService } from './shared/translate/translate.service';
 })
 export class AppComponent {
   constructor(private authService: AuthService,
-    private gaService: GoogleAnalyticsService,
+    private analyticsService: AnalyticsService,
     private themeService: ThemeService,
     private notificationService: NotificationService,
     private asciiArtService: ASCIIArtService,
@@ -30,14 +30,14 @@ export class AppComponent {
     private onboardingService: OnboardingService,
     private activeTimerService: ActiveTimerService,
     private translateService: TranslateService) {
+    // Analytics
+    this.analyticsService.init();
+
     // Authentication
     this.authService.init();
 
     // Translation (i18n)
     this.translateService.init();
-
-    // Google Analytics
-    this.gaService.init();
 
     // Activate theme
     this.themeService.init();

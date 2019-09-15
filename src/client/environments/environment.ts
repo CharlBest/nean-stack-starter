@@ -10,14 +10,17 @@
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
+const domain = 'localhost:3000';
+
 export const environment = {
   production: false,
-  domain: 'localhost:3000',
-  httpDomain: '',
-  googleAnalytics: {
-    web: 'UA-107304143-1',
-    ios: 'UA-102909242-6',
-    chromeExtension: 'UA-102909242-7'
+  serverEndpoint: `http://${domain}`,
+  webSocketEndpoint: `ws://${domain}`,
+  analyticsServerEndpoint: 'http://localhost:32768',
+  analytics: {
+    web: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
+    ios: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
+    chromeExtension: '52130482aec0422c8d4cc0a04a7d16237c8433ed'
   },
   firebase: {
     projectId: 'nean-dev',
@@ -29,5 +32,3 @@ export const environment = {
   },
   publicVapidKey: 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs'
 };
-
-environment.httpDomain = `http${environment.production ? 's' : ''}://${environment.domain}`;

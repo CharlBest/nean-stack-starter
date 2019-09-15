@@ -14,7 +14,7 @@ export class ShareService {
         private clipboard: Clipboard) { }
 
     fullUrl(url: Url): string {
-        return environment.httpDomain + this.router.createUrlTree(url).toString();
+        return environment.serverEndpoint + this.router.createUrlTree(url).toString();
     }
 
     hasWebShareApi() {

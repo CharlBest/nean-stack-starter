@@ -1,11 +1,14 @@
+const domain = 'nean.io';
+
 export const environment = {
   production: true,
-  domain: 'nean.io',
-  httpDomain: '',
-  googleAnalytics: {
-    web: 'UA-107304143-2',
-    ios: 'UA-102909242-3',
-    chromeExtension: 'UA-102909242-2'
+  serverEndpoint: `https://${domain}`,
+  webSocketEndpoint: `wss://${domain}`,
+  analyticsServerEndpoint: `https://${domain}/analytics`,
+  analytics: {
+    web: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
+    ios: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
+    chromeExtension: '52130482aec0422c8d4cc0a04a7d16237c8433ed'
   },
   firebase: {
     projectId: 'nean-181415',
@@ -17,5 +20,3 @@ export const environment = {
   },
   publicVapidKey: 'BHh0GLT09LUbnWzwX_r3YTmNMeCiDhmCO2KeT35vEcM8CW5DyfP4StRaAWviffMFY7lAK0vLoHl5h1PIubOMp10'
 };
-
-environment.httpDomain = `http${environment.production ? 's' : ''}://${environment.domain}`;
