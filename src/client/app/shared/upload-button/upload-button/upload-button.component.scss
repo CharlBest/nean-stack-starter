@@ -1,8 +1,67 @@
+.rotate-ninety-degrees {
+	transform: rotate(90deg);
+}
+
+.rotate-one-hundred-and-eighty-degrees {
+	transform: rotate(180deg);
+}
+
+.rotate-two-hundred-and-seventy-degrees {
+	transform: rotate(270deg);
+}
+
 input[type="file"] {
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-  // alternative to pointer-events, compatible with all browsers, just make it impossible to find
-  width: 1px;
-  height: 1px;
+	opacity: 0;
+	position: absolute;
+	top: -10000000000px;
+	left: -10000000000px;
+	pointer-events: none;
+	// alternative to pointer-events, compatible with all browsers, just make it impossible to find
+	width: 1px;
+	height: 1px;
+}
+
+.area {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 25px;
+	border: 1px dashed rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+	transition: 0.2s;
+	background-color: rgba(0, 0, 0, 0.03);
+	cursor: pointer;
+
+	// TODO: this should also be the primary color
+	&.highlight,
+	&:hover {
+		border-color: var(--primary-color);
+		opacity: 0.7;
+	}
+}
+
+.preview-images-container {
+	position: relative;
+	display: inline-block;
+	margin-top: 20px;
+
+	img {
+		max-width: 300px;
+		border-radius: 4px;
+	}
+
+	button {
+		position: absolute;
+		top: 0;
+		background-color: rgba(255, 255, 255, 0.25);
+
+		&.left {
+			left: 0;
+		}
+
+		&.right {
+			right: 0;
+		}
+	}
 }

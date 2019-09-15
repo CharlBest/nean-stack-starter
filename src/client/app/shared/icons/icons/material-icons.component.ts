@@ -329,3 +329,9 @@ export class IconChangeHistoryComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('verified_user', Category.ACTION)
 })
 export class IconVerifiedUserComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-rotate-right',
+  templateUrl: materialIconPath('rotate_right', Category.IMAGE)
+})
+export class IconRotateRightComponent extends BaseIconComponent { }

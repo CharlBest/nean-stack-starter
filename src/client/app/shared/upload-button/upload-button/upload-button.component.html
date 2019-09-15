@@ -1,18 +1,51 @@
 <input type="file"
     #fileInput
+    multiple
     (change)="handleChange($event)" />
 
-<div class="error-message"
-    *ngIf="error">{{error}}</div>
+<div *ngIf="showDropZoneForDesktop && bpService.isDesktop"
+    class="area"
+    [class.highlight]="highlightDragDropArea"
+    (click)="openFileUpload()">
 
-<button mat-stroked-button
-    type="button"
-    [disabled]="isProcessing"
-    (click)="fileInput.click()">{{buttonText}}</button>
+    <span *ngIf="!message">Drag a file here or <u>browse</u> for one to upload</span>
+    <span *ngIf="message">{{message}}</span>
 
-<mat-progress-bar *ngIf="showProgressBar"
-    [value]="progressPercentage"
-    matTooltip="{{progressPercentage}}%"></mat-progress-bar>
+</div>
 
-<app-media [src]="previewImgUrl"
-    *ngIf="showPreview"></app-media>
+<div *ngFor="let image of previewImages; let index = index"
+    class="preview-images-container">
+    <!-- Progress bar -->
+    <mat-progress-bar [value]="image.uploadProgressPercentage"
+        matTooltip="{{image.uploadProgressPercentage}}%"></mat-progress-bar>
+
+    <!-- Error message -->
+    <div class="error-message"
+        *ngIf="image.errorMessage">{{image.errorMessage}}</div>
+
+    <!-- Preview image -->
+    <img [src]="image.localUrl"
+        alt="preview image"
+        [ngClass]="{'rotate-ninety-degrees': image.rotation === rotationEnum.ninetyDegrees, 'rotate-one-hundred-and-eighty-degrees': image.rotation === rotationEnum.oneHundredAndEightyDegrees, 'rotate-two-hundred-and-seventy-degrees': image.rotation === rotationEnum.twoHundredAndSeventyDegrees}" />
+
+    <!-- Remove button -->
+    <button mat-icon-button
+        type="button"
+        (click)="remove(index)"
+        matTooltip="Remove"
+        class="left">
+        <app-icon-close></app-icon-close>
+    </button>
+
+    <!-- Rotate button -->
+    <button mat-icon-button
+        type="button"
+        (click)="rotate(index)"
+        matTooltip="Rotate"
+        class="right">
+        <app-icon-rotate-right></app-icon-rotate-right>
+    </button>
+</div>
+
+
+<div id="test"></div>

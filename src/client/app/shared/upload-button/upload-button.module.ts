@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { IconsModule } from '../icons/icons.module';
 import { MediaModule } from '../media/media.module';
 import { FileDropComponent } from './file-drop/file-drop.component';
 import { UploadButtonComponent } from './upload-button/upload-button.component';
@@ -17,6 +18,7 @@ const materialModules = [
   imports: [
     CommonModule,
     MediaModule,
+    IconsModule,
     ...materialModules
   ],
   declarations: [

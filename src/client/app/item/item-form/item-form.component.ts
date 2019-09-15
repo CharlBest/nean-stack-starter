@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { MAX_MEDIA_UPLOADS } from '@shared/validation/validators';
@@ -6,6 +6,7 @@ import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
+import { UploadButtonComponent } from '../../shared/upload-button/upload-button/upload-button.component';
 
 @Component({
   selector: 'app-item-form',
@@ -14,6 +15,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 })
 export class ItemFormComponent implements OnInit {
 
+  @ViewChild('fileUploader', { static: true }) fileUploader: UploadButtonComponent;
   @Output() submitForm: EventEmitter<void> = new EventEmitter<void>();
   @Input() item: ItemViewModel;
   formGroup: FormGroup;
@@ -36,13 +38,10 @@ export class ItemFormComponent implements OnInit {
     ));
   }
 
-  addItemMedia(downloadURL: string) {
-    const control = this.formGroup.controls.media;
-    if (control.value && control.value.length > 0) {
-      control.value.push(downloadURL);
-    } else {
-      control.setValue([downloadURL]);
-    }
+  async onSubmit() {
+    const media = await this.fileUploader.upload();
+    this.formGroup.controls.media.setValue(media);
+    this.submitForm.emit();
   }
 
   async removeMedia(index: number) {

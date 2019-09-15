@@ -39,19 +39,22 @@
                         (click)="removeMedia(i)">Remove</button>
                 </div>
             </div>
+
+            <app-upload-button #fileUploader
+                [folderName]="'item'"></app-upload-button>
         </mat-card-content>
         <mat-card-actions>
             <button mat-stroked-button
                 type="submit"
                 color="primary"
                 [disabled]="!formGroup.valid"
-                (click)="submitForm.emit()">{{item?.uId ? 'Update' : 'Create'}}</button>
+                (click)="onSubmit()">{{item?.uId ? 'Update' : 'Create'}}</button>
             <!-- TODO: don't think update and create are the best words here. Same with comment -->
 
-            <app-upload-button (uploadComplete)="addItemMedia($event)"
-                [folderName]="'item'"
-                [buttonText]="'Add Media'"
-                *ngIf="formGroup.controls['media']?.value?.length < MAX_MEDIA_UPLOADS"></app-upload-button>
+            <button mat-stroked-button
+                type="button"
+                *ngIf="!bpService.isDesktop && formGroup.controls['media']?.value?.length < MAX_MEDIA_UPLOADS"
+                (click)="fileUploader.openFileUpload()">Add Media</button>
         </mat-card-actions>
     </mat-card>
 </form>
