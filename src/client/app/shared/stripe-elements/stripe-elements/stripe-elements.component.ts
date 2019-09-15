@@ -11,7 +11,8 @@ import { StripeElementsService } from '../stripe-elements.service';
 })
 export class StripeElementsComponent implements OnInit, OnDestroy {
 
-    @Output() isDoneRendering: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() readonly isDoneRendering: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() readonly inputElementChange: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('cardNumber', { static: true }) cardNumber: ElementRef<HTMLDivElement>;
     @ViewChild('cardExpiry', { static: true }) cardExpiry: ElementRef<HTMLDivElement>;
@@ -169,6 +170,8 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
                         elementWrapper.cardBrand = CardBrandType.UNKNOWN;
                         break;
                 }
+
+                this.inputElementChange.emit();
             }
         });
     }

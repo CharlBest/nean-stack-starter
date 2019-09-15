@@ -31,7 +31,7 @@
     "paths": {
       "@shared/*": [
         "./shared/*"
-      ],
+      ]
     }
   },
   "angularCompilerOptions": {

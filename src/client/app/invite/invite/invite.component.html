@@ -3,7 +3,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Emails</mat-label>
       <mat-chip-list #chipList>
-        <mat-chip *ngFor="let email of emails"
+        <mat-chip *ngFor="let email of emails; trackBy: trackByFn"
           (removed)="remove(email)">
           {{email}}
           <app-icon-cancel matChipRemove></app-icon-cancel>

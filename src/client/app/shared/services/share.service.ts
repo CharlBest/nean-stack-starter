@@ -9,6 +9,14 @@ import { environment } from '../../../environments/environment';
 })
 export class ShareService {
 
+    get hasWebShareApi(): boolean {
+        if ((navigator as any /*Navigator*/).share) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     constructor(private snackBar: MatSnackBar,
         private router: Router,
         private clipboard: Clipboard) { }
@@ -17,16 +25,8 @@ export class ShareService {
         return environment.serverEndpoint + this.router.createUrlTree(url).toString();
     }
 
-    hasWebShareApi() {
-        if ((navigator as any /*Navigator*/).share) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     webShare(title: string, fullUrl: string): boolean {
-        if (this.hasWebShareApi()) {
+        if (this.hasWebShareApi) {
             (navigator as any /*Navigator*/).share({ title, text: '', url: fullUrl });
             return true;
         } else {

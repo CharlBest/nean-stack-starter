@@ -12,7 +12,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
     @Input() amount: number;
     @Input() isAuthenticated: boolean;
     @Input() showButton = false;
-    @Output() paymentComplete: EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse> =
+    @Output() readonly paymentComplete: EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse> =
         new EventEmitter<stripe.paymentRequest.StripeTokenPaymentResponse>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
     paymentRequestElement: stripe.elements.Element;

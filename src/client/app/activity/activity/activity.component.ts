@@ -24,4 +24,8 @@ export class ActivityComponent {
     this.webSocketService.send(model);
     this.snackBar.open(translateService.t('sent'));
   }
+
+  trackByFn(index: number, item: string) {
+    return index;
+  }
 }

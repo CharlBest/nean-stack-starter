@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { DialogService } from '../dialog/dialog.service';
 import { NavigationService } from '../navigation/navigation.service';
 
@@ -7,7 +7,7 @@ import { NavigationService } from '../navigation/navigation.service';
 })
 export class PWAService {
 
-    @Output() beforeInstallPromptChange: EventEmitter<void> = new EventEmitter<void>();
+    readonly beforeInstallPromptChange: EventEmitter<void> = new EventEmitter<void>();
     private beforeInstallPromptEvent: Event;
     get canInstallAndNotInPWA(): boolean {
         return !!this.beforeInstallPromptEvent && !this.isWithinPWA;

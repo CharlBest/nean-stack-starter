@@ -30,7 +30,8 @@
     [style.height.px]="toolbarHeight"
     class="toolbar">
     <!-- Back -->
-    <div (click)="back()">
+    <div (click)="back()"
+      (keypress)="back()">
       <button mat-icon-button
         type="button"
         aria-label="Back">

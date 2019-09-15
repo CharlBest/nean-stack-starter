@@ -1,17 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardViewModel } from '@shared/view-models/payment/card.view-model';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ProfileService } from '../profile.service';
+
+interface ExtendedCardViewModel extends CardViewModel {
+  hasExpired: boolean;
+}
 
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.scss']
 })
-export class PaymentsComponent {
+export class PaymentsComponent implements OnChanges {
 
-  @Input() paymentCards: CardViewModel[] = [];
+  @Input() paymentCards: ExtendedCardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
   newDefaultCardUId: string | null;
@@ -19,6 +23,12 @@ export class PaymentsComponent {
   constructor(private profileService: ProfileService,
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService) { }
+
+  ngOnChanges(change: SimpleChanges) {
+    if (change.paymentCards && this.paymentCards) {
+      this.paymentCards.forEach(card => card.hasExpired = this.hasCardExpired(card));
+    }
+  }
 
   async deleteCard(uId: string) {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this payment method?');
@@ -86,5 +96,9 @@ export class PaymentsComponent {
     } else {
       return false;
     }
+  }
+
+  trackByFn(index: number, item: CardViewModel) {
+    return index;
   }
 }

@@ -3,9 +3,10 @@
 
 <div class="tutorial-overlay-transparent"
   *ngIf="active"
-  (click)="preventClick($event)"></div>
+  (click)="preventClick($event)"
+  (keypress)="preventClick($event)"></div>
 
-<div *ngFor="let tut of tuts">
+<div *ngFor="let tut of tuts; trackBy: trackByFn">
   <div *ngIf="tutorialInUrl === tut.tutorialType"
     class="tutorial-box dark-theme">
     <div class="tutorial-container mat-elevation-z4">

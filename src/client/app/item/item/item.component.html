@@ -10,6 +10,7 @@
                 <div>
                     <!-- Avatar -->
                     <img *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
+                        alt="avatar"
                         mat-card-avatar
                         [src]="item?.user?.avatarUrl"
                         loading="lazy"

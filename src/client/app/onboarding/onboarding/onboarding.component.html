@@ -107,10 +107,12 @@
         <div class="bottom-bar">
             <!-- Bubbles -->
             <div class="animation-slide-up">
-                <span *ngFor="let tab of tabs"
-                    (click)="selectedIndex = tab"
-                    class="bubble"
-                    [class.active]="selectedIndex === tab"></span>
+                <button mat-icon-button
+                    *ngFor="let tab of tabs; trackBy: trackByFn"
+                    (click)="selectedIndex = tab">
+                    <span class="bubble"
+                        [class.active]="selectedIndex === tab"></span>
+                </button>
             </div>
 
             <!-- Left/Right controls -->

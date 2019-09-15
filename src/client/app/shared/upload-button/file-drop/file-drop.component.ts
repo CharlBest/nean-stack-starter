@@ -12,8 +12,8 @@ export class FileDropComponent {
 
     @Input() maxFileSize: number;
     @Input() allowMultiple = false;
-    @Output() selectedFile: EventEmitter<File> = new EventEmitter();
-    @Output() maxFileSizeExceeded: EventEmitter<boolean> = new EventEmitter();
+    @Output() readonly selectedFile: EventEmitter<File> = new EventEmitter();
+    @Output() readonly maxFileSizeExceeded: EventEmitter<boolean> = new EventEmitter();
 
     message: string;
     highlightDragDropArea = false;

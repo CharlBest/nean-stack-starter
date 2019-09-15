@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { UserTokenModel } from '@shared/models/shared/user-token.model';
@@ -10,7 +10,7 @@ import { LocalStorageService, StorageData } from './storage.service';
 })
 export class AuthService implements CanActivate {
 
-    @Output() userLoggedInOrLoggedOut: EventEmitter<void> = new EventEmitter<void>();
+    readonly userLoggedInOrLoggedOut: EventEmitter<void> = new EventEmitter<void>();
 
     get loggedInUserId(): number | null | undefined {
         return this.localStorageService.userData.userId;

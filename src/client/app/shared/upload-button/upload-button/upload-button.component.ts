@@ -101,15 +101,17 @@ export class UploadButtonComponent {
         this.fileInput.nativeElement.click();
     }
 
+    trackByFn(index: number, item: Metadata) {
+        return index;
+    }
+
     async upload(): Promise<Array<FileModel>> {
         const uploadedFiles: Array<FileModel> = [];
         for (const image of this.previewImages) {
             if (image.file) {
                 const url = await this.firebaseStorageService.upload(image.file, (progress) => {
                     image.uploadProgressPercentage = progress;
-                    // if (this.hideProgressBarAfterUpload && progress === 100) {
-                    //     this.showProgressBar = false;
-                    // }
+                    // TODO: hide progress bar when finished
                 }, this.folderName);
 
                 image.url = url;

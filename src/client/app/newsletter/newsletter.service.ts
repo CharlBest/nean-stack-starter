@@ -18,6 +18,7 @@ export class NewsletterService {
     }
 
     deleteNewsletterMember(email: string): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.serverEndpoint}${GeneralRoutes.deleteNewsletterMember(email).client()}`).toPromise();
+        return this.http
+            .delete<boolean>(`${environment.serverEndpoint}${GeneralRoutes.deleteNewsletterMember(email).client()}`).toPromise();
     }
 }

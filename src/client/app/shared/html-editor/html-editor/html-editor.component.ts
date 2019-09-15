@@ -10,6 +10,8 @@ import { FirebaseStorageService } from '../../services/firebase-storage.service'
     selector: 'app-html-editor',
     templateUrl: './html-editor.component.html',
     styleUrls: ['./html-editor.component.scss'],
+    // These styles needs to be global but only rendered when this component is called
+    // tslint:disable-next-line: use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None
 })
 export class HTMLEditorComponent implements AfterViewInit {
@@ -19,7 +21,7 @@ export class HTMLEditorComponent implements AfterViewInit {
     @Input() placeholder = 'type here...';
     @Input() imageBucketName = 'html-editor';
     @Input() containsEmoji = false;
-    @Output() textChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() readonly textChange: EventEmitter<string> = new EventEmitter<string>();
 
     editor: Quill;
     imageUploadProgressPercentage: number;

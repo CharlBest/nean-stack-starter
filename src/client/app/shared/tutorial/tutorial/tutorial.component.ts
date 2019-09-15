@@ -93,4 +93,8 @@ export class TutorialComponent implements OnInit {
     event.stopPropagation();
     return false;
   }
+
+  trackByFn(index: number, item: Tutorial) {
+    return index;
+  }
 }

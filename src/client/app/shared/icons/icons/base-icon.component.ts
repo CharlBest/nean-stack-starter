@@ -1,25 +1,20 @@
 import { HostBinding, Input } from '@angular/core';
 export class BaseIconComponent {
-    @Input()
-    color: 'primary' | 'accent' | 'warn';
-    @Input()
-    inline = false;
-    @HostBinding('class.app-icon')
-    appIcon = true;
-    @HostBinding('class.inline')
-    get isInline() {
+    @Input() color: 'primary' | 'accent' | 'warn';
+    @Input() inline = false;
+
+    @HostBinding('class.app-icon') appIcon = true;
+
+    @HostBinding('class.inline') get isInline() {
         return this.inline;
     }
-    @HostBinding('class.primary')
-    get isPrimary() {
+    @HostBinding('class.primary') get isPrimary() {
         return this.color === 'primary';
     }
-    @HostBinding('class.accent')
-    get isAccent() {
+    @HostBinding('class.accent') get isAccent() {
         return this.color === 'accent';
     }
-    @HostBinding('class.warn')
-    get isWarning() {
+    @HostBinding('class.warn') get isWarning() {
         return this.color === 'warn';
     }
 }

@@ -48,7 +48,7 @@
                     formControlName="twoFactorAuthenticationCode">
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls['twoFactorAuthenticationCode']">
-                        <ng-container *ngIf="formGroup.controls['twoFactorAuthenticationCode'].hasError('invalid')">
+                        <ng-container *ngIf="!!formGroup.controls['twoFactorAuthenticationCode'].errors?.invalid">
                             Code is invalid
                         </ng-container>
                     </app-form-errors>

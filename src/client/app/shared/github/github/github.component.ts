@@ -11,7 +11,7 @@ import { GitHubService } from '../github.service';
 export class GitHubComponent implements OnInit {
 
   @Input() filePath: string;
-  @Output() doneLoading: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly doneLoading: EventEmitter<void> = new EventEmitter<void>();
   readmeText: string;
 
   constructor(private gitHubService: GitHubService) { }

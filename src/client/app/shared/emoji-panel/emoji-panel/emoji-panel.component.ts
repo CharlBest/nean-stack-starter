@@ -14,7 +14,7 @@ import { EmojiCategory, EmojiCategoryName, EmojiData, EmojiJsonFile } from './em
 export class EmojiPanelComponent {
   file: EmojiJsonFile;
   @Input() closeOnInsert = false;
-  @Output() inserted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() readonly inserted: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
   isPanelForWebOpen = false;
   emojiCategoryName = EmojiCategoryName;
@@ -109,6 +109,18 @@ export class EmojiPanelComponent {
     if (this.selectedIndex > 0) {
       this.selectedIndex = this.selectedIndex - 1;
     }
+  }
+
+  trackByFnForCategory(index: number, item: EmojiCategory) {
+    return index;
+  }
+
+  trackByFnForEmoji(index: number, item: any) {
+    return index;
+  }
+
+  trackByFnForEmojiDiversity(index: number, item: any) {
+    return index;
   }
 }
 

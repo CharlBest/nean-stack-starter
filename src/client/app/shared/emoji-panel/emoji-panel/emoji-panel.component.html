@@ -35,7 +35,7 @@
     (swiperight)="onSwipeRight($event)">
     <mat-tab-group mat-stretch-tabs
       [(selectedIndex)]="selectedIndex">
-      <mat-tab *ngFor="let category of emojiCategories">
+      <mat-tab *ngFor="let category of emojiCategories; trackBy: trackByFnForCategory">
         <ng-template mat-tab-label>
           <ng-container [ngSwitch]="category.category">
             <app-icon-tag-faces *ngSwitchCase="emojiCategoryName.PEOPLE"
@@ -57,12 +57,13 @@
           </ng-container>
         </ng-template>
         <ng-template matTabContent>
-          <ng-container *ngFor="let emoji of category?.emojiData">
+          <ng-container *ngFor="let emoji of category?.emojiData; trackBy: trackByFnForEmoji">
             <span class="emojione emojione-32-{{emoji.value.category}} _{{emoji.value.code_points.base}}"
               [matMenuTriggerFor]="menu"
               [matMenuTriggerData]="{emoji: emoji}"
               #menuTrigger="matMenuTrigger"
-              (click)="openDiversitiesElseInsert(emoji.value, menuTrigger)"></span>
+              (click)="openDiversitiesElseInsert(emoji.value, menuTrigger)"
+              (keypress)="openDiversitiesElseInsert(emoji.value, menuTrigger)"></span>
           </ng-container>
           <div>powered by EmojiOne</div>
         </ng-template>
@@ -74,9 +75,10 @@
   <mat-menu #menu="matMenu">
     <ng-template matMenuContent
       let-emoji="emoji">
-      <span *ngFor="let emojiDiversity of emoji.value.diversities"
+      <span *ngFor="let emojiDiversity of emoji.value.diversities; trackBy: trackByFnForEmojiDiversity"
         class="emojione emojione-32-diversity _{{emojiDiversity}} cursor-pointer"
-        (click)="onClick(file[emojiDiversity].shortname)"></span>
+        (click)="onClick(file[emojiDiversity].shortname)"
+        (keypress)="onClick(file[emojiDiversity].shortname)"></span>
     </ng-template>
   </mat-menu>
 

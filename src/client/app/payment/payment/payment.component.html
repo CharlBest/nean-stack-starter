@@ -49,7 +49,7 @@
                     <mat-label>Cards</mat-label>
                     <mat-select formControlName="cardUId"
                         [value]="paymentCards[0]?.uId">
-                        <mat-option *ngFor="let card of paymentCards"
+                        <mat-option *ngFor="let card of paymentCards; trackBy: trackByFn"
                             [value]="card.uId">
                             **** {{card.last4}}
                         </mat-option>
@@ -109,7 +109,7 @@
             <button mat-stroked-button
                 color="primary"
                 type="submit"
-                [disabled]="!isFormValid()"
+                [disabled]="!isFormValid"
                 (click)="onSubmit()">Pay</button>
         </mat-card-actions>
     </mat-card>

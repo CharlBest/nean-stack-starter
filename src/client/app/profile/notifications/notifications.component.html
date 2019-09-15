@@ -45,12 +45,13 @@
 
             <br>
 
-            <div class="advanced-options cursor-pointer"
-                (click)="showAdvancedOptions = !showAdvancedOptions">
+            <button mat-button
+                (click)="showAdvancedOptions = !showAdvancedOptions"
+                class="advanced-options">
                 <span>Advanced</span>
                 <app-icon-arrow-drop-down *ngIf="!showAdvancedOptions"></app-icon-arrow-drop-down>
                 <app-icon-arrow-drop-up *ngIf="showAdvancedOptions"></app-icon-arrow-drop-up>
-            </div>
+            </button>
 
             <div *ngIf="showAdvancedOptions"
                 class="animation-fade-in animation-slide-down">

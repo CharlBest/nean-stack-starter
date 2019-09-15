@@ -60,7 +60,8 @@ export class ItemService {
     }
 
     updateComment(uId: string, viewModel: CreateOrUpdateCommentViewModel): Promise<CommentViewModel | null> {
-        return this.http.put<CommentViewModel>(`${environment.serverEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel).toPromise();
+        return this.http
+            .put<CommentViewModel>(`${environment.serverEndpoint}${ItemRoutes.updateComment(uId).client()}`, viewModel).toPromise();
     }
 
     deleteComment(uId: string): Promise<void> {
@@ -78,7 +79,8 @@ export class ItemService {
     }
 
     createSubscription(uId: string): Promise<void> {
-        return this.http.post<void>(`${environment.serverEndpoint}${NotificationRoutes.createSubscription(uId).client()}`, null).toPromise();
+        return this.http
+            .post<void>(`${environment.serverEndpoint}${NotificationRoutes.createSubscription(uId).client()}`, null).toPromise();
     }
 
     deleteSubscription(uId: string): Promise<void> {

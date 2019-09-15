@@ -14,7 +14,8 @@
         <mat-card-content>
             <ng-container *ngIf="notificationService.messages.length > 0">
                 <mat-list>
-                    <mat-list-item *ngFor="let message of notificationService.messages; let i = index"
+                    <mat-list-item
+                        *ngFor="let message of notificationService.messages; let i = index; trackBy: trackByFn"
                         class="animation-slide-down">
                         <span mat-line>{{message}}</span>
                         <button mat-icon-button

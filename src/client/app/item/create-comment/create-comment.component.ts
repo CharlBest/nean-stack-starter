@@ -14,7 +14,7 @@ export class CreateCommentComponent {
 
   @ViewChild('commentForm', { static: true }) commentForm: CommentFormComponent;
   @Input() itemUId: string;
-  @Output() createSuccess: EventEmitter<CommentViewModel> = new EventEmitter();
+  @Output() readonly createSuccess: EventEmitter<CommentViewModel> = new EventEmitter();
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,

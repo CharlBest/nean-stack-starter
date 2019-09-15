@@ -10,7 +10,7 @@ import { NavigationService } from '../navigation.service';
 export class InstallBannerComponent implements OnInit {
 
   @Input() toolbarHeight: number;
-  @Output() showInstallBanner: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() readonly showInstallBanner: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(public navigationService: NavigationService,
     public pwaService: PWAService) { }

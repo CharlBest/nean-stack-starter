@@ -21,4 +21,8 @@ export class LanguageComponent {
     this.translateService.saveLanguagePreference(language);
     window.location.reload();
   }
+
+  trackByFn(index: number, item: string) {
+    return index;
+  }
 }

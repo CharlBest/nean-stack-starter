@@ -6,14 +6,15 @@
 <div *ngIf="showDropZoneForDesktop && bpService.isDesktop"
     class="area"
     [class.highlight]="highlightDragDropArea"
-    (click)="openFileUpload()">
+    (click)="openFileUpload()"
+    (keypress)="openFileUpload()">
 
     <span *ngIf="!message">Drag a file here or <u>browse</u> for one to upload</span>
     <span *ngIf="message">{{message}}</span>
 
 </div>
 
-<div *ngFor="let image of previewImages; let index = index"
+<div *ngFor="let image of previewImages; let index = index; trackBy: trackByFn"
     class="preview-images-container">
     <!-- Progress bar -->
     <mat-progress-bar [value]="image.uploadProgressPercentage"

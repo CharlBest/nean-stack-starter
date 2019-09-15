@@ -8,7 +8,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 export class InfiniteScrollComponent implements OnInit, OnDestroy {
   @Input() options = {};
   @Input() isProcessing: boolean;
-  @Output() scrolled = new EventEmitter<void>();
+  @Output() readonly scrolled = new EventEmitter<void>();
   @ViewChild('wrapper', { static: true }) wrapper: ElementRef<HTMLDivElement>;
   @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
   get element() {

@@ -84,6 +84,10 @@ export class OnboardingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tutorialService.activateTutorial(TutorialType.SIGN_UP);
     }
 
+    trackByFn(index: number, item: string) {
+        return index;
+    }
+
     ngOnDestroy() {
         this.cookieConsentSnackbarService.openCookieConsentSnackBar();
         this.navigationService.showInstallBanner = this.showInstallBannerOnLoad;

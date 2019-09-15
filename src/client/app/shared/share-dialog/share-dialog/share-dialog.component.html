@@ -16,7 +16,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <!-- Desktop -->
-    <ng-container *ngIf="bpService.isDesktop || !shareService.hasWebShareApi()">
+    <ng-container *ngIf="bpService.isDesktop || !shareService.hasWebShareApi">
         <button mat-icon-button
             (click)="openWhatsApp()"
             type="button"
@@ -106,7 +106,7 @@
     <!-- Mobile -->
     <ng-container *ngIf="!bpService.isDesktop">
         <button mat-icon-button
-            *ngIf="shareService.hasWebShareApi()"
+            *ngIf="shareService.hasWebShareApi"
             (click)="webShare()"
             type="button"
             matTooltip="Share"

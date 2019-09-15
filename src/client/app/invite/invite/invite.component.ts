@@ -71,4 +71,8 @@ export class InviteComponent {
       }
     }
   }
+
+  trackByFn(index: number, item: string) {
+    return index;
+  }
 }

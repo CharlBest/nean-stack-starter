@@ -1,15 +1,15 @@
-<ng-container *ngIf="control?.hasError('email'); else required">
+<ng-container *ngIf="!!control?.errors?.email; else required">
     Invalid email address
 </ng-container>
 
 <ng-template #required>
-    <ng-container *ngIf="control?.hasError('required'); else minLength">
+    <ng-container *ngIf="!!control?.errors?.required; else minLength">
         Required
     </ng-container>
 </ng-template>
 
 <ng-template #minLength>
-    <ng-container *ngIf="control?.hasError('minlength'); else typeAssert">
+    <ng-container *ngIf="!!control?.errors?.minlength; else typeAssert">
         <!-- TODO: remove Non-null assertion operator without breaking angularCompilerOptions=fullTemplateTypeCheck -->
         {{control.errors!['minlength'].requiredLength}} characters required but
         {{control.errors!['minlength'].actualLength}}
@@ -18,13 +18,13 @@
 </ng-template>
 
 <ng-template #typeAssert>
-    <ng-container *ngIf="control?.hasError('typeAssert'); else password">
+    <ng-container *ngIf="!!control?.errors?.typeAssert; else password">
         Type error
     </ng-container>
 </ng-template>
 
 <ng-template #password>
-    <ng-container *ngIf="control?.hasError('passwordCharacters'); else custom">
+    <ng-container *ngIf="!!control?.errors?.passwordCharacters; else custom">
         {{control.errors | passwordCharacterMessageBuilder}}
     </ng-container>
 </ng-template>

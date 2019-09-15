@@ -46,6 +46,7 @@ export class PaymentComponent implements OnInit {
     isProcessing = true;
     isProcessingStripeElements = true;
     formGroup: FormGroup;
+    isFormValid = false;
     paymentSuccess = false;
     paymentCards: CardModel[];
     sections = Section;
@@ -60,10 +61,13 @@ export class PaymentComponent implements OnInit {
     ngOnInit() {
         this.formOnInit();
         this.checkAuthenticationAndGetCards();
+
+        this.stripeElementsComponent.inputElementChange.subscribe(() => this.checkForValidity());
     }
 
     formOnInit() {
         this.formGroup = this.fb.group(FormGroupBuilder.payment(2, 'new'));
+        this.formGroup.valueChanges.subscribe(() => this.checkForValidity());
     }
 
     checkAuthenticationAndGetCards() {
@@ -162,10 +166,10 @@ export class PaymentComponent implements OnInit {
     }
 
     // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
-    isFormValid(): boolean {
+    checkForValidity() {
         // Form validity (Amount is required)
         if (!this.formGroup.valid) {
-            return false;
+            this.isFormValid = false;
         }
 
         // Card payment
@@ -173,21 +177,21 @@ export class PaymentComponent implements OnInit {
             // Not authenticated AND stripe elements is valid and email is required
             if (!this.isAuthenticated && (!this.stripeElementsComponent.isValid ||
                 this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
-                return false;
+                this.isFormValid = false;
             }
 
             // Authenticated AND new card and stipe elements is valid
             if (this.isAuthenticated
                 && this.formGroup.controls.cardUId.value === 'new'
                 && !this.stripeElementsComponent.isValid) {
-                return false;
+                this.isFormValid = false;
             }
         } else if (this.activeSection === Section.MOBILE) {
             // Mobile payment
-            return !!this.stripePaymentRequestButton.canMakePayment;
+            this.isFormValid = !!this.stripePaymentRequestButton.canMakePayment;
         }
 
-        return true;
+        this.isFormValid = true;
     }
 
     async paymentRequestButtonComplete(event: stripe.paymentRequest.StripeTokenPaymentResponse) {
@@ -214,5 +218,10 @@ export class PaymentComponent implements OnInit {
             return;
         }
         this.activeSection = section;
+        this.checkForValidity();
+    }
+
+    trackByFn(index: number, item: CardModel) {
+        return index;
     }
 }

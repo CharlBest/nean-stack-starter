@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 })
 export class StripeElementsService {
 
-    @Output() stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
+    readonly stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
     stripeInstance: stripe.Stripe;
     elementsInstance: stripe.elements.Elements;
 

@@ -3,7 +3,7 @@
     <mat-radio-group class="radio-group-vertical"
       [value]="translateService.activeLanguage">
       <mat-radio-button class="radio-button-vertical"
-        *ngFor="let language of languages"
+        *ngFor="let language of languages; trackBy: trackByFn"
         [value]="language.code"
         (click)="chooseLanguage(language.code)">{{language.title}}</mat-radio-button>
     </mat-radio-group>

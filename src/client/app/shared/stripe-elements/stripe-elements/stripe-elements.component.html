@@ -3,7 +3,8 @@
     <!-- Card Number -->
     <div class="mat-form-field card-number-container">
         <div class="stripe-element"
-            (click)="elementsWrapper?.cardNumber?.element?.focus()">
+            (click)="elementsWrapper?.cardNumber?.element?.focus()"
+            (keypress)="elementsWrapper?.cardNumber?.element?.focus()">
             <app-card-brand [cardBrandEnum]="elementsWrapper?.cardNumber?.cardBrand"></app-card-brand>
 
             <div #cardNumber
