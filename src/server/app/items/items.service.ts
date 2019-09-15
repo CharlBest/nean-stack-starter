@@ -19,19 +19,19 @@ class ItemsService extends BaseService {
         super();
     }
 
-    async create(res: Response, title: string, description: string, media: Array<FileModel>): Promise<ItemViewModel> {
-        if (media && Array.isArray(media)) {
-            media = media.slice(0, MAX_FILE_UPLOADS);
+    async create(res: Response, title: string, description: string, files: Array<FileModel>): Promise<ItemViewModel> {
+        if (files && Array.isArray(files)) {
+            files = files.slice(0, MAX_FILE_UPLOADS);
         }
 
         const userId = this.getUserId(res);
         const uId = nodeUUId();
-        media.forEach(file => file.uId = nodeUUId());
-        const result = await itemsRepository.create(res, userId, uId, title, description, media);
+        files.forEach(file => file.uId = nodeUUId());
+        const result = await itemsRepository.create(res, userId, uId, title, description, files);
 
         if (!result) {
             const error = 'Error while creating item';
-            logger.warn(error, [userId, uId, title, description, media]);
+            logger.warn(error, [userId, uId, title, description, files]);
             throw new Error(error);
         }
 
@@ -43,17 +43,18 @@ class ItemsService extends BaseService {
         return result;
     }
 
-    async update(res: Response, uId: string, title: string, description: string, media: Array<FileModel>): Promise<ItemViewModel> {
-        if (media && Array.isArray(media)) {
-            media = media.slice(0, MAX_FILE_UPLOADS);
+    async update(res: Response, uId: string, title: string, description: string, files: Array<FileModel>): Promise<ItemViewModel> {
+        if (files && Array.isArray(files)) {
+            files = files.slice(0, MAX_FILE_UPLOADS);
         }
 
         const userId = this.getUserId(res);
-        const result = await itemsRepository.update(res, userId, uId, title, description, media);
+        files.forEach(file => file.uId = nodeUUId());
+        const result = await itemsRepository.update(res, userId, uId, title, description, files);
 
         if (!result) {
             const error = 'Error while updating item';
-            logger.warn(error, [userId, uId, title, description, media]);
+            logger.warn(error, [userId, uId, title, description, files]);
             throw new Error(error);
         }
 

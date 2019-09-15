@@ -108,6 +108,7 @@ export class UploadButtonComponent {
     async upload(): Promise<Array<FileModel>> {
         const uploadedFiles: Array<FileModel> = [];
         for (const image of this.previewImages) {
+            // If local file upload and get url
             if (image.file) {
                 const url = await this.firebaseStorageService.upload(image.file, (progress) => {
                     image.uploadProgressPercentage = progress;
@@ -115,15 +116,16 @@ export class UploadButtonComponent {
                 }, this.folderName);
 
                 image.url = url;
-                uploadedFiles.push({
-                    url: image.url,
-                    width: image.width,
-                    height: image.height,
-                    aspectRatio: image.aspectRatio,
-                    exifOrientation: image.exifOrientation,
-                    rotation: image.rotation
-                });
             }
+
+            uploadedFiles.push({
+                url: image.url,
+                width: image.width,
+                height: image.height,
+                aspectRatio: image.aspectRatio,
+                exifOrientation: image.exifOrientation,
+                rotation: image.rotation
+            });
         }
 
         return uploadedFiles;
