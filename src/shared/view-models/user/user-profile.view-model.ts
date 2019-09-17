@@ -1,3 +1,4 @@
+import { FileModel } from '../../models/shared/file.model';
 import { CardViewModel } from '../payment/card.view-model';
 
 export class UserProfileViewModel {
@@ -7,7 +8,7 @@ export class UserProfileViewModel {
     username: string;
     dateCreated: number;
     bio: string;
-    avatarUrl?: string | null;
+    avatar?: FileModel | null;
     emailVerified: boolean;
     twoFactorAuthenticationEnabled: boolean;
     paymentCards: CardViewModel[];

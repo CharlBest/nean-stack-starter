@@ -16,6 +16,7 @@ import { sign } from 'jsonwebtoken';
 import { authenticator } from 'otplib';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
+import { FileModel } from '../../../shared/models/shared/file.model';
 import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
@@ -151,7 +152,7 @@ class UsersService extends BaseService {
     }
 
     async getUserProfile(res: Response): Promise<UserProfileViewModel> {
-        const user = await usersRepository.getUserById(res, this.getUserId(res));
+        const user = await usersRepository.getUserProfile(res, this.getUserId(res));
 
         if (!user) {
             throw new Error(this.userRequiredError);
@@ -164,7 +165,7 @@ class UsersService extends BaseService {
             username: user.username,
             dateCreated: user.dateCreated,
             bio: user.bio,
-            avatarUrl: user.avatarUrl,
+            avatar: user.avatar,
             emailVerified: user.emailVerified,
             twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
             paymentCards: user.paymentCards.map(card => {
@@ -268,8 +269,11 @@ class UsersService extends BaseService {
         return await usersRepository.verifyEmail(res, this.getUserId(res), code);
     }
 
-    async updateAvatar(res: Response, avatarUrl: string | null): Promise<void> {
-        await usersRepository.updateAvatar(res, this.getUserId(res), avatarUrl);
+    async updateAvatar(res: Response, avatar: FileModel | null): Promise<void> {
+        if (avatar) {
+            avatar.uId = nodeUUId();
+        }
+        await usersRepository.updateAvatar(res, this.getUserId(res), avatar);
     }
 
     async updateBio(res: Response, content: string): Promise<void> {

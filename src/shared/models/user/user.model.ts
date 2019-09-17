@@ -6,7 +6,6 @@ export class UserModel extends UserLiteModel {
     isVerified: boolean;
     views: number;
     bio: string;
-    avatarUrl: string;
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: Array<string>;

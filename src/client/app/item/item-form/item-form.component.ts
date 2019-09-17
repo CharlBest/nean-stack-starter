@@ -28,7 +28,7 @@ export class ItemFormComponent implements OnInit {
     this.formOnInit();
 
     if (this.item) {
-      this.fileUploader.previewImages = this.item.files;
+      this.fileUploader.setImages(this.item.files);
     }
   }
 

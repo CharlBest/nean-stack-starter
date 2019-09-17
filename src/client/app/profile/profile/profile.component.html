@@ -64,19 +64,15 @@
   <mat-card appTutorial="AVATAR_UPLOAD">
     <mat-card-title>Avatar</mat-card-title>
     <mat-card-content>
-      <app-media [src]="user.avatarUrl"
-        *ngIf="user.avatarUrl"
-        class="avatar"></app-media>
+      <app-upload-button #fileUploader
+        (changed)="updateAvatar()"
+        [folderName]="'avatars'"></app-upload-button>
     </mat-card-content>
     <mat-card-actions>
-      <!-- <app-upload-button (uploadComplete)="updateAvatar($event)"
-        [folderName]="'avatars'"
-        [buttonText]="user.avatarUrl ? 'Replace Avatar' : 'Upload Avatar'"></app-upload-button> -->
       <button mat-stroked-button
-        color="warn"
         type="button"
-        (click)="removeAvatar()"
-        *ngIf="user?.avatarUrl?.length > 0">Remove Avatar</button>
+        *ngIf="!bpService.isDesktop"
+        (click)="fileUploader.openFileUpload()">{{user.avatar ? 'Replace Avatar' : 'Upload Avatar'}}</button>
     </mat-card-actions>
   </mat-card>
 

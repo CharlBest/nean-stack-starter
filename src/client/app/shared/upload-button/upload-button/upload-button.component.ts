@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { FileModel, ImageRotation } from '@shared/models/shared/file.model';
 // TODO: for some reason this creates a worker thread even on pages that isn't using this component
 import imageCompression from 'browser-image-compression';
@@ -22,6 +22,7 @@ export class UploadButtonComponent {
     @Input() folderName = 'images';
     @Input() maxFileSizeInMB = 10;
     @Input() showDropZoneForDesktop = true;
+    @Output() readonly changed: EventEmitter<void> = new EventEmitter();
 
     @ViewChild('fileInput', { static: true }) fileInput: ElementRef<HTMLInputElement>;
     rotationEnum = ImageRotation;
@@ -93,7 +94,14 @@ export class UploadButtonComponent {
     async remove(index: number) {
         const hasConfirmed = await this.dialogService.confirm('Are you sure?');
         if (hasConfirmed) {
-            this.previewImages.splice(index, 1);
+            const oldFile = this.previewImages.splice(index, 1);
+
+            // Remove old avatar from storage
+            if (oldFile && oldFile.length > 0) {
+                await this.firebaseStorageService.delete(oldFile[0].url);
+            }
+
+            this.changed.emit();
         }
     }
 
@@ -131,6 +139,16 @@ export class UploadButtonComponent {
         return uploadedFiles;
     }
 
+    setImages(files: FileModel | Array<FileModel> | null | undefined) {
+        if (files) {
+            if (Array.isArray(files) && files.length > 0) {
+                this.previewImages = files;
+            } else {
+                this.previewImages = [files as FileModel];
+            }
+        }
+    }
+
     private async handleFiles(files: FileList) {
         for (const file of Array.from(files)) {
             let error = '';
@@ -155,6 +173,8 @@ export class UploadButtonComponent {
                     exifOrientation,
                     errorMessage: error
                 });
+
+                this.changed.emit();
             } catch (error) {
                 // TODO: error handling
             }

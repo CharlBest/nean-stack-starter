@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
@@ -9,10 +9,12 @@ import { ContextMenuComponent } from '../../shared/context-menu/context-menu/con
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
+import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
+import { UploadButtonComponent } from '../../shared/upload-button/upload-button/upload-button.component';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<ElementRef>;
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
+  @ViewChild('fileUploader', { static: false }) fileUploader: UploadButtonComponent;
   user: UserProfileViewModel;
   isProcessing = true;
 
@@ -35,7 +38,9 @@ export class ProfileComponent implements OnInit {
     private dialogService: DialogService,
     private router: Router,
     private navigationService: NavigationService,
-    private shareService: ShareService) { }
+    private shareService: ShareService,
+    public bpService: BreakpointService,
+    private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getUser();
@@ -54,6 +59,11 @@ export class ProfileComponent implements OnInit {
         }
 
         this.user = response;
+
+        // This is necessary for file uploader to be rendered in the dom
+        this.changeDetection.detectChanges();
+
+        this.fileUploader.setImages(this.user.avatar);
       }
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
@@ -84,26 +94,17 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async updateAvatar(downloadURL: string | null) {
+  async updateAvatar() {
+    const files = await this.fileUploader.upload();
+
     const viewModel = new UpdateAvatarViewModel();
-    viewModel.avatarUrl = downloadURL;
+    viewModel.avatar = files && files.length > 0 ? files[0] : null;
 
     try {
       await this.profileService.updateAvatar(viewModel);
-      this.user.avatarUrl = viewModel.avatarUrl;
+      this.user.avatar = viewModel.avatar;
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
-    }
-  }
-
-  async removeAvatar() {
-    if (this.user.avatarUrl) {
-      try {
-        await this.firebaseStorageService.delete(this.user.avatarUrl);
-        this.updateAvatar(null);
-      } catch (error) {
-        // TODO: error handling
-      }
     }
   }
 

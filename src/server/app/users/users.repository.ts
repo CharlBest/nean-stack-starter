@@ -1,8 +1,10 @@
+import { FileModel } from '@shared/models/shared/file.model';
 import { UserLiteModel } from '@shared/models/user/user-lite.model';
 import { UserModel } from '@shared/models/user/user.model';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
+import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { Response } from 'express';
 import { Database } from '../../core/database';
@@ -110,6 +112,28 @@ class UsersRepository extends BaseRepository {
         }
     }
 
+    async getUserProfile(res: Response, userId: number): Promise<UserProfileViewModel | null> {
+        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserProfile,
+            {
+                userId
+            }
+        );
+
+        const model = result.records.map(record => {
+            return {
+                ...record.get('user'),
+                avatar: record.get('avatar'),
+                paymentCards: record.get('cards'),
+            } as UserProfileViewModel;
+        });
+
+        if (model && model.length > 0) {
+            return model[0];
+        } else {
+            return null;
+        }
+    }
+
     async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number)
         : Promise<UserPublicViewModel | null> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublic,
@@ -208,11 +232,11 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async updateAvatar(res: Response, userId: number, avatarUrl: string | null): Promise<boolean> {
+    async updateAvatar(res: Response, userId: number, avatar: FileModel | null): Promise<boolean> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.updateAvatar,
             {
                 userId,
-                avatarUrl
+                avatar
             }
         );
 

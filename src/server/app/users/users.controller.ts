@@ -171,8 +171,16 @@ class UsersController extends BaseController {
     async updateAvatar(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as UpdateAvatarViewModel;
 
+        if (viewModel.avatar !== null) {
+            const hasErrors = !!Validators.typeAssert([viewModel.avatar], 'files')([viewModel.avatar] as any);
+
+            if (hasErrors) {
+                throw new Error();
+            }
+        }
+
         res.status(200).json(
-            await usersService.updateAvatar(res, viewModel.avatarUrl)
+            await usersService.updateAvatar(res, viewModel.avatar)
         );
     }
 
