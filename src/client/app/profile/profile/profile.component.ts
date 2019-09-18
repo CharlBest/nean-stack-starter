@@ -7,6 +7,7 @@ import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
+import { UploadButtonComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -14,7 +15,6 @@ import { FirebaseStorageService } from '../../shared/services/firebase-storage.s
 import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
-import { UploadButtonComponent } from '../../shared/upload-button/upload-button/upload-button.component';
 import { ProfileService } from '../profile.service';
 
 @Component({

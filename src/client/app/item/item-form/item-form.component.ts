@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { MAX_FILE_UPLOADS } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { UploadButtonComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
-import { UploadButtonComponent } from '../../shared/upload-button/upload-button/upload-button.component';
 
 @Component({
   selector: 'app-item-form',

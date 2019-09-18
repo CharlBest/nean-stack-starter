@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { EmojiPanelModule } from '../shared/emoji-panel/emoji-panel.module';
+import { UploadButtonModule } from '../shared/file-uploader/file-uploader.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { HTMLEditorModule } from '../shared/html-editor/html-editor.module';
 import { IconsModule } from '../shared/icons/icons.module';
@@ -24,7 +25,6 @@ import { RightClickContextMenuModule } from '../shared/right-click-context-menu/
 import { ShareDialogModule } from '../shared/share-dialog/share-dialog.module';
 import { StripeElementsModule } from '../shared/stripe-elements/stripe-elements.module';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
-import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { FingerprintComponent } from './fingerprint/fingerprint.component';

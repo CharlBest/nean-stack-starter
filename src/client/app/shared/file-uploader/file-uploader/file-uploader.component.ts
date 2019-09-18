@@ -14,9 +14,9 @@ interface Metadata extends FileModel {
 }
 
 @Component({
-    selector: 'app-upload-button',
-    templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.scss']
+    selector: 'app-file-uploader',
+    templateUrl: './file-uploader.component.html',
+    styleUrls: ['./file-uploader.component.scss']
 })
 export class UploadButtonComponent {
     @Input() folderName = 'images';

@@ -64,9 +64,9 @@
   <mat-card appTutorial="AVATAR_UPLOAD">
     <mat-card-title>Avatar</mat-card-title>
     <mat-card-content>
-      <app-upload-button #fileUploader
+      <app-file-uploader #fileUploader
         (changed)="updateAvatar()"
-        [folderName]="'avatars'"></app-upload-button>
+        [folderName]="'avatars'"></app-file-uploader>
     </mat-card-content>
     <mat-card-actions>
       <button mat-stroked-button
