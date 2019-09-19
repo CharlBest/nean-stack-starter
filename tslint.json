@@ -8,11 +8,12 @@
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
-      "severity": "warn"
+      "severity": "warning"
     },
     "component-class-suffix": true,
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
+    "no-use-before-declare": true,
     "directive-selector": [
       true,
       "attribute",
