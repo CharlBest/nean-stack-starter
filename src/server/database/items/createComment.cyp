@@ -14,6 +14,7 @@ SET item.commentCount = SIZE((item)-[:HAS_COMMENT]->())
 
 WITH user, item, comment
 MATCH (itemUser:User)-[:HAS_ITEM]->(item)
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(comment) as comment, 
 CASE WHEN itemUser.nt1 IS NOT NULL THEN itemUser.pushSubscription ELSE null END as pushSubscription,
@@ -21,6 +22,6 @@ user
 {
     id: user.id,
     username: user.username,
-    avatarUrl: user.avatarUrl
+    avatar: collect(properties(avatars))[0]
 }
 `

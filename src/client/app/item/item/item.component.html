@@ -9,10 +9,10 @@
                 type="button">
                 <div>
                     <!-- Avatar -->
-                    <img *ngIf="item.user?.avatarUrl && item.user?.avatarUrl !== ''; else defaultAvatar"
+                    <img *ngIf="item.user?.avatar?.url && item.user?.avatar?.url !== ''; else defaultAvatar"
                         alt="avatar"
                         mat-card-avatar
-                        [src]="item?.user?.avatarUrl"
+                        [src]="item?.user?.avatar?.url"
                         loading="lazy"
                         width="40"
                         height="40" />

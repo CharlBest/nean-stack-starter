@@ -1,5 +1,6 @@
 export const data = `
 MATCH (users:User { id: {userId} })-[:HAS_ITEM]->(items:Item)
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 OPTIONAL MATCH (:User { id: {loggedInUserId} })-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (:User { id: {loggedInUserId} })-[subscribed:SUBSCRIBED]->(items)
@@ -11,7 +12,7 @@ users
 {
     id: users.id,
     username: users.username,
-    avatarUrl: users.avatarUrl
+    avatar: collect(properties(avatars))[0]
 },
 CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
 CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed

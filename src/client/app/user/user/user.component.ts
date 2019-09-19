@@ -72,7 +72,7 @@ export class UserComponent implements OnInit {
           const itemsOwner = {
             id: this.userId,
             username: this.user.username,
-            avatarUrl: this.user.avatarUrl
+            avatar: this.user.avatar
           };
 
           // TODO: This can be optimized

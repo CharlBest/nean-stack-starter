@@ -1,5 +1,6 @@
 export const data = `
 MATCH (user:User { id: {userId} })
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 // Capture views (only once per user or IP address)
 OPTIONAL MATCH (viewingUser:User { id: {loggedInUserId} })
@@ -19,7 +20,7 @@ RETURN user {
     username: user.username,
     isVerified: user.isVerified,
     bio: user.bio,
-    avatarUrl: user.avatarUrl,
+    avatar: collect(properties(avatars))[0],
     haveItems: exists((user)-[:HAS_ITEM]->(:Item))
 }
 `

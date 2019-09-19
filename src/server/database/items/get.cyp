@@ -19,6 +19,7 @@ WITH viewingUser, item, user
 OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
 OPTIONAL MATCH (viewingUser)-[subscribed:SUBSCRIBED]->(item)
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(item) as item,
 collect(properties(files)) as files,
@@ -26,7 +27,7 @@ user
 {
     id: user.id,
     username: user.username,
-    avatarUrl: user.avatarUrl
+    avatar: collect(properties(avatars))[0]
 },
 CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
 CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed

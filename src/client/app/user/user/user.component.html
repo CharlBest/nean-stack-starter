@@ -17,8 +17,8 @@
             </app-context-menu>
         </mat-card-title>
         <mat-card-content>
-            <app-media [src]="user?.avatarUrl"
-                *ngIf="user?.avatarUrl"
+            <app-media [src]="user?.avatar?.url"
+                *ngIf="user?.avatar?.url"
                 class="avatar"></app-media>
 
             <div [innerHTML]="user?.bio"></div>

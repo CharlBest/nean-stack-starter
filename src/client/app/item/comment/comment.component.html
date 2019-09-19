@@ -2,9 +2,9 @@
     class="container"
     [appRightClickContextMenu]="contextMenu">
     <span routerLink="/user/{{comment?.user?.id}}">
-        <div *ngIf="comment.user?.avatarUrl && comment.user?.avatarUrl !== ''; else defaultAvatar"
+        <div *ngIf="comment.user?.avatar?.url && comment.user?.avatar?.url !== ''; else defaultAvatar"
             mat-card-avatar
-            [style.background-image]="'url(' + comment?.user?.avatarUrl + ')'"></div>
+            [style.background-image]="'url(' + comment?.user?.avatar?.url + ')'"></div>
         <ng-template #defaultAvatar>
             <span mat-card-avatar
                 class="default-avatar">

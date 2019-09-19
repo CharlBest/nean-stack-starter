@@ -18,6 +18,7 @@ FOREACH (file IN {files} |
 WITH item, user
 
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(item) as item,
 collect(properties(files)) as files,
@@ -25,6 +26,6 @@ user
 {
     id: user.id,
     username: user.username,
-    avatarUrl: user.avatarUrl
+    avatar: collect(properties(avatars))[0]
 }
 `

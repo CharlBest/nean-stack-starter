@@ -6,6 +6,7 @@ ORDER BY nextItem.id DESC
 LIMIT 1
 
 MATCH (user:User { id: {userId} })
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: {uId}, title: {title}, description: {description}, dateCreated: timestamp() })
 
@@ -15,7 +16,7 @@ FOREACH (file IN {files} |
     MERGE (item)-[:HAS_FILE]->(newFile)
 )
 
-WITH item, user
+WITH item, user, avatars
 
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
 
@@ -34,6 +35,6 @@ user
 {
     id: user.id,
     username: user.username,
-    avatarUrl: user.avatarUrl
+    avatar: collect(properties(avatars))[0]
 }
 `
