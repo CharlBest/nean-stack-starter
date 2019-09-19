@@ -143,8 +143,8 @@ export class UploadButtonComponent {
         if (files) {
             if (Array.isArray(files) && files.length > 0) {
                 this.previewImages = files;
-            } else {
-                this.previewImages = [files as FileModel];
+            } else if (!Array.isArray(files)) {
+                this.previewImages = [files];
             }
         }
     }
