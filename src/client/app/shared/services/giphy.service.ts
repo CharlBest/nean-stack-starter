@@ -4,6 +4,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+class Params {
+    q: Array<string>;
+    limit: string;
+    offset: string;
+    rating: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -130,11 +137,4 @@ export class GiphyService {
                 })
             );
     }
-}
-
-class Params {
-    q: Array<string>;
-    limit: string;
-    offset: string;
-    rating: string;
 }

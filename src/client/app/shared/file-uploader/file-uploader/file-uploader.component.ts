@@ -139,7 +139,7 @@ export class UploadButtonComponent {
         return uploadedFiles;
     }
 
-    setImages(files: FileModel | Array<FileModel> | null | undefined) {
+    setImages(files?: FileModel | Array<FileModel> | null) {
         if (files) {
             if (Array.isArray(files) && files.length > 0) {
                 this.previewImages = files;

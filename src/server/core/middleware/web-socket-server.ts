@@ -22,7 +22,7 @@ class WebSocketServer {
 
     // TODO: implement includeUserMakingRequest
     send(model: BaseWebSocketModel, includeUserMakingRequest = false) {
-        const wss = webSocketServer.getSocketServer();
+        const wss = this.getSocketServer();
         const payload = JSON.stringify(model);
 
         wss.clients.forEach(client => {
