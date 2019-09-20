@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ImageFileDirective } from './image-file.directive';
 import { ImgErrorDirective } from './img-error.directive';
 import { MediaComponent } from './media/media.component';
 import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';
@@ -19,10 +20,12 @@ const materialModules = [
   declarations: [
     MediaComponent,
     ViewMediaDialogComponent,
-    ImgErrorDirective
+    ImgErrorDirective,
+    ImageFileDirective
   ],
   exports: [
-    MediaComponent
+    MediaComponent,
+    ImageFileDirective
   ],
   entryComponents: [
     ViewMediaDialogComponent
