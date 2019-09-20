@@ -394,6 +394,10 @@ server {
         proxy_pass http://localhost:3010;
         include snippets/api-params.conf;
     }
+
+    location /analytics/ {
+        proxy_pass http://localhost:32768/;
+    }
 }
 ```
 
@@ -766,6 +770,14 @@ sudo usermod -aG docker ${USER}
 version: '3'
 
 services:
+  analytics:
+    container_name: countly-analytics
+    image: countly/countly-server
+    ports:
+      - "32768:80"
+    volumes:
+      - $HOME/countly_data:/data/db
+
   neo4j.nean.io:
     container_name: neo4j.nean.io
     image: neo4j/3.5-enterprise

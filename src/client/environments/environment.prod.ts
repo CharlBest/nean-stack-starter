@@ -3,12 +3,12 @@ const domain = 'nean.io';
 export const environment = {
   production: true,
   serverEndpoint: `https://${domain}`,
-  webSocketEndpoint: `wss://${domain}`,
+  webSocketEndpoint: `wss://${domain}/api/`,
   analyticsServerEndpoint: `https://${domain}/analytics`,
   analytics: {
-    web: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
-    ios: '52130482aec0422c8d4cc0a04a7d16237c8433ed',
-    chromeExtension: '52130482aec0422c8d4cc0a04a7d16237c8433ed'
+    web: '81552b0fe6e9ed9e024025576ada1cef02e333d1',
+    ios: '81552b0fe6e9ed9e024025576ada1cef02e333d1',
+    chromeExtension: '81552b0fe6e9ed9e024025576ada1cef02e333d1'
   },
   firebase: {
     projectId: 'nean-181415',
