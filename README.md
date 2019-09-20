@@ -22,7 +22,7 @@ Similar to the MEAN stack just with Neo4j rather than Mongo.
 * Shared validation between Angular and Node (Error handling, type assertion)
 * Shared strongly typed view models
 * Shared strongly typed API endpoints
-* Google analytics - automatic page tracking
+* Countly analytics - automatic page tracking
 * Client share actions
 * Lazy load routes with preloaded parts
 * Image uploader to Firebase storage
@@ -116,17 +116,16 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
 2. Replace logo in client assets folder
 3. Create accounts for services
    1. Firebase account (Images)
-   2. Google Analytics
-   3. Stripe (Payments)
-   4. Google Cloud Platform
+   2. Stripe (Payments)
+   3. Google Cloud Platform
       1. Create VM instance in Compute Engine (f1-micro)
       2. Neo4j Instance (Database Hosting)
       3. RabbitMQ Instance (Message queue)
       4. Nginx reverse proxy
       5. PM2 Node manager
-   5. Cloudflare (DNS)
-   6. Namecheap Domain
-   7. SendGrid (Emails)
+   4. Cloudflare (DNS)
+   5. Namecheap Domain
+   6. SendGrid (Emails)
       1. Welcome
       2. Forgot password
       3. Feedback
