@@ -13,8 +13,6 @@
 input[type="file"] {
 	opacity: 0;
 	position: absolute;
-	top: -10000000000px;
-	left: -10000000000px;
 	pointer-events: none;
 	// alternative to pointer-events, compatible with all browsers, just make it impossible to find
 	width: 1px;

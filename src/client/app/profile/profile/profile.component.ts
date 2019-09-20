@@ -7,7 +7,7 @@ import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
-import { UploadButtonComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
+import { FileUploaderComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<ElementRef>;
   @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
-  @ViewChild('fileUploader', { static: false }) fileUploader: UploadButtonComponent;
+  @ViewChild('fileUploader', { static: false }) fileUploader: FileUploaderComponent;
   user: UserProfileViewModel;
   isProcessing = true;
 
@@ -98,11 +98,18 @@ export class ProfileComponent implements OnInit {
     const files = await this.fileUploader.upload();
 
     const viewModel = new UpdateAvatarViewModel();
-    viewModel.avatar = files && files.length > 0 ? files[0] : null;
+    // TODO: hack
+    viewModel.avatar = files && files.length > 0 ? files[files.length - 1] : null;
 
     try {
       await this.profileService.updateAvatar(viewModel);
+
+      if (this.user.avatar && (!viewModel.avatar || (this.user.avatar.url !== viewModel.avatar.url))) {
+        await this.firebaseStorageService.delete(this.user.avatar.url);
+      }
+
       this.user.avatar = viewModel.avatar;
+      this.fileUploader.setImages(this.user.avatar);
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
     }

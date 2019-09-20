@@ -17,7 +17,8 @@
 <div *ngFor="let image of previewImages; let index = index; trackBy: trackByFn"
     class="preview-images-container">
     <!-- Progress bar -->
-    <mat-progress-bar [value]="image.uploadProgressPercentage"
+    <mat-progress-bar *ngIf="image && image.uploadProgressPercentage"
+        [value]="image.uploadProgressPercentage"
         matTooltip="{{image.uploadProgressPercentage}}%"></mat-progress-bar>
 
     <!-- Error message -->
@@ -27,10 +28,12 @@
     <!-- Preview image -->
     <img [src]="image.url || image.localUrl"
         alt="preview image"
+        (load)="image.hasLoaded = true"
         [ngClass]="{'rotate-ninety-degrees': image.rotation === rotationEnum.ninetyDegrees, 'rotate-one-hundred-and-eighty-degrees': image.rotation === rotationEnum.oneHundredAndEightyDegrees, 'rotate-two-hundred-and-seventy-degrees': image.rotation === rotationEnum.twoHundredAndSeventyDegrees}" />
 
     <!-- Remove button -->
     <button mat-icon-button
+        *ngIf="image.hasLoaded"
         type="button"
         (click)="remove(index)"
         matTooltip="Remove"
@@ -40,6 +43,7 @@
 
     <!-- Rotate button -->
     <button mat-icon-button
+        *ngIf="image.hasLoaded"
         type="button"
         (click)="rotate(index)"
         matTooltip="Rotate"
@@ -47,6 +51,3 @@
         <app-icon-rotate-right></app-icon-rotate-right>
     </button>
 </div>
-
-
-<div id="test"></div>

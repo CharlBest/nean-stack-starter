@@ -5,7 +5,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconsModule } from '../icons/icons.module';
 import { MediaModule } from '../media/media.module';
-import { UploadButtonComponent } from './file-uploader/file-uploader.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 const materialModules = [
   MatButtonModule,
@@ -21,10 +21,10 @@ const materialModules = [
     ...materialModules
   ],
   declarations: [
-    UploadButtonComponent
+    FileUploaderComponent
   ],
   exports: [
-    UploadButtonComponent
+    FileUploaderComponent
   ]
 })
 export class UploadButtonModule { }

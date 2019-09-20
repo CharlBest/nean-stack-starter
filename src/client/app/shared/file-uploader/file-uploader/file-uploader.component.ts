@@ -11,6 +11,7 @@ interface Metadata extends FileModel {
     localUrl?: string;
     uploadProgressPercentage?: number;
     errorMessage?: string;
+    hasLoaded?: boolean;
 }
 
 @Component({
@@ -18,7 +19,7 @@ interface Metadata extends FileModel {
     templateUrl: './file-uploader.component.html',
     styleUrls: ['./file-uploader.component.scss']
 })
-export class UploadButtonComponent {
+export class FileUploaderComponent {
     @Input() folderName = 'images';
     @Input() maxFileSizeInMB = 10;
     @Input() showDropZoneForDesktop = true;
@@ -73,6 +74,7 @@ export class UploadButtonComponent {
 
     rotate(index: number) {
         switch (this.previewImages[index].rotation) {
+            case undefined:
             case null:
                 this.previewImages[index].rotation = ImageRotation.ninetyDegrees;
                 break;
@@ -94,13 +96,7 @@ export class UploadButtonComponent {
     async remove(index: number) {
         const hasConfirmed = await this.dialogService.confirm('Are you sure?');
         if (hasConfirmed) {
-            const oldFile = this.previewImages.splice(index, 1);
-
-            // Remove old avatar from storage
-            if (oldFile && oldFile.length > 0) {
-                await this.firebaseStorageService.delete(oldFile[0].url);
-            }
-
+            this.previewImages.splice(index, 1);
             this.changed.emit();
         }
     }
@@ -142,9 +138,11 @@ export class UploadButtonComponent {
     setImages(files?: FileModel | Array<FileModel> | null) {
         if (files) {
             if (Array.isArray(files) && files.length > 0) {
-                this.previewImages = files;
+                const clonedFiles = JSON.parse(JSON.stringify(files));
+                this.previewImages = clonedFiles;
             } else if (!Array.isArray(files)) {
-                this.previewImages = [files];
+                const clonedFile = JSON.parse(JSON.stringify(files));
+                this.previewImages = [clonedFile];
             }
         }
     }

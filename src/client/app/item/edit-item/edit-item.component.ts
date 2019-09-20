@@ -18,7 +18,6 @@ export class EditItemComponent implements OnInit {
   @ViewChild('itemForm', { static: false }) itemForm: ItemFormComponent;
   isProcessing = false;
   item: ItemViewModel;
-  savedFile: Array<FileModel>;
 
   constructor(public formErrorsService: FormErrorsService,
     private itemService: ItemService,
@@ -49,9 +48,6 @@ export class EditItemComponent implements OnInit {
         const response = await this.itemService.get(itemUId);
         if (response) {
           this.item = response;
-          if (response.files) {
-            this.savedFile = [...response.files];
-          }
         }
       } catch (error) {
         this.formErrorsService.updateFormValidity(error, this.itemForm ? this.itemForm.formGroup : null);
@@ -75,7 +71,7 @@ export class EditItemComponent implements OnInit {
         // TODO: should actually go to previous page before this.
         this.navigationService.backRouterPath = '/';
 
-        this.deleteRemovedImagesFromStorage();
+        this.deleteRemovedImagesFromStorage(viewModel.files);
         this.router.navigate(['/item/comments', response.uId]);
       }
       // TODO: what if reponse is null
@@ -85,15 +81,15 @@ export class EditItemComponent implements OnInit {
     }
   }
 
-  deleteRemovedImagesFromStorage() {
-    if (this.savedFile) {
-      for (const file of this.savedFile) {
-        if (!(this.itemForm.formGroup.controls.files.value as Array<FileModel>).includes(file)) {
-          this.firebaseStorageService.delete(file.url)
-            .catch(error => {
-              // TODO: error handling
-            });
-        }
+  async deleteRemovedImagesFromStorage(files: Array<FileModel>) {
+    // Delete old images from storage
+    for (const file of this.item.files) {
+      const exist = files.some(x => x.url === file.url);
+      if (!exist) {
+        this.firebaseStorageService.delete(file.url)
+          .catch(error => {
+            // TODO: error handling
+          });
       }
     }
   }
