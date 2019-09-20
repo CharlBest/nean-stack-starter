@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1095",
+  "version": "0.0.1097",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,7 @@
     "start:worker:watch": "nodemon --max_semi_space_size=2 --max_old_space_size=256 dist/server/worker/worker.bundle.js",
     "start:client:watch": "ng serve --open",
     "start:server:watch": "nodemon --inspect --max_semi_space_size=2 --max_old_space_size=256 dist/server/web/web.bundle.js",
-    "test": "",
+    "test": "ts-node --project=src/client/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=src/client/test/jasmine.json",
     "lint": "ng lint",
     "generate-vapid-keys": "web-push generate-vapid-keys --json",
     "minify-index-html": "html-minifier dist/client/index.html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --use-short-doctype --minify-css true --minify-js true -o dist/client/index.html"
@@ -109,6 +109,8 @@
     "@types/webpack": "^4.39.1",
     "@types/winston": "^2.4.4",
     "@types/ws": "^6.0.3",
+    "@types/puppeteer": "^1.19.1",
+    "@types/jasmine": "^3.4.0",
     "codelyzer": "^5.1.0",
     "html-minifier": "^4.0.0",
     "husky": "^3.0.5",
@@ -116,6 +118,8 @@
     "ts-node": "^8.3.0",
     "tslint": "~5.20.0",
     "tslint-sonarts": "^1.9.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "puppeteer": "^1.20.0",
+    "jasmine": "^3.4.0"
   }
 }
