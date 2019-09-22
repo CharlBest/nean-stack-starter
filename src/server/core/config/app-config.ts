@@ -1,9 +1,9 @@
 import * as bodyParser from 'body-parser';
+// TODO: maybe add cors if own implementation isn't sufficient
+// import * as cors from 'cors';
+import * as compression from 'compression';
 import { Application } from 'express';
 import * as helmet from 'helmet';
-// TODO: potentially implement these packages
-// import * as cors from 'cors';
-// import * as compression from 'compression';
 
 class AppConfig {
     configure(app: Application): void {
@@ -22,7 +22,7 @@ class AppConfig {
             // }))
 
             // Compress response bodies for all request that traverse through the middleware
-            // .use(compression())
+            .use(compression())
 
             // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
             .use(bodyParser.json({
