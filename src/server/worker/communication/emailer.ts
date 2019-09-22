@@ -164,7 +164,9 @@ class Emailer implements Email {
     private getBody(templateFileName: string, substitutions?: object): Promise<string> {
         return new Promise((resolve, reject) => {
 
-            readFile(`../email-templates/${templateFileName}.html`, { encoding: 'utf-8' }, (error, html) => {
+            const rootPath = environment.production ? './email-templates' : '../email-templates';
+
+            readFile(`${rootPath}/${templateFileName}.html`, { encoding: 'utf-8' }, (error, html) => {
                 if (error) {
                     logger.error('Error fetching email template', error);
                     reject(error);
