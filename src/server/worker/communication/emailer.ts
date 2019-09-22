@@ -1,5 +1,5 @@
-import { MailData } from '@sendgrid/helpers/classes/mail';
-import * as sendGridMail from '@sendgrid/mail';
+import { readFile } from 'fs';
+import { createTransport, SendMailOptions } from 'nodemailer';
 import { Email } from '../../communication/interfaces/email.interface';
 import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
@@ -12,177 +12,114 @@ import { WelcomeEmailModel } from '../../communication/models/email/welcome-emai
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 
-sendGridMail.setApiKey(environment.sendGrid.apiKey);
-sendGridMail.setSubstitutionWrappers('{{', '}}');
+const transporter = createTransport({
+    service: 'SendinBlue',
+    auth: {
+        user: 'interimproj@gmail.com',
+        pass: environment.email.password
+    }
+});
 
 class Emailer implements Email {
     fromEmail = 'admin@nean.io';
     fromName = 'NEAN';
 
     async welcome(model: WelcomeEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.welcome,
-        };
-
-        // TODO: fix sendgrid bug with declaring substitution variables
-        // html: {{username}}
-        // url: /verify/{{verifyCode}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Welcome',
-            username: model.username,
-            verifyCode: model.verifyCode,
-        };
-
-        return this.send(data);
+            html: await this.getBody('welcome', {
+                username: model.username,
+                verifyCode: model.verifyCode,
+            })
+        });
     }
 
     async forgotPassword(model: ForgotPasswordEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.forgotPassword,
-        };
-
-        // url: /forgot-password/reset?code={{verifyCode}}&email={{email}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Forgot Password',
-            email: model.email,
-            verifyCode: model.verifyCode,
-        };
-
-        return this.send(data);
+            html: await this.getBody('forgot-password', {
+                email: model.email,
+                verifyCode: model.verifyCode,
+            })
+        });
     }
 
     async feedback(model: FeedbackEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: this.fromEmail,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.feedback,
-        };
-
-        // html: {{content}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Feedback',
-            content: model.content,
-        };
-
-        return this.send(data);
+            html: await this.getBody('feedback', {
+                content: model.content,
+            })
+        });
     }
 
     async resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.resendEmailVerificationLink,
-        };
-
-        // url: /verify/{{verifyCode}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Email verification',
-            verifyCode: model.verifyCode,
-        };
-
-        return this.send(data);
+            html: await this.getBody('email-verification', {
+                verifyCode: model.verifyCode,
+            })
+        });
     }
 
     async paymentSuccessful(model: PaymentSuccessfulEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.paymentSuccessful,
-        };
-
-        // html: {{amount}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Payment Successful',
-            amount: model.amount,
-        };
-
-        return this.send(data);
+            html: await this.getBody('payment-successful', {
+                amount: model.amount,
+            })
+        });
     }
 
     async passwordUpdated(model: PasswordUpdatedEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.passwordUpdated,
-        };
-
-        // html: {{email}}
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Password Updated',
-        };
-
-        return this.send(data);
+            html: await this.getBody('password-updated')
+        });
     }
 
     async invite(model: InviteEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.emails,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.invite,
-            isMultiple: true,
-        };
-
-        data.dynamicTemplateData = {
+            from: this.fromName,
+            sender: this.fromEmail,
             subject: 'Invite',
-        };
-
-        return this.send(data);
+            html: await this.getBody('invite')
+        });
     }
 
     async notification(model: NotificationEmailModel): Promise<boolean> {
-        const data: MailData = {
+        return this.send({
             to: model.email,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.notification,
-        };
-
-        data.dynamicTemplateData = {
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'Notification',
-            title: model.title,
-            body: model.body
-        };
-
-        return this.send(data);
+            html: await this.getBody('notification', {
+                title: model.title,
+                body: model.body
+            })
+        });
     }
 
     async system(payloadData: any): Promise<boolean> {
-        const data: MailData = {
-            to: this.fromEmail,
-            from: {
-                email: this.fromEmail,
-                name: this.fromName
-            },
-            templateId: environment.sendGrid.templates.system,
-        };
-
         let content = '';
         try {
             if (payloadData) {
@@ -198,31 +135,23 @@ class Emailer implements Email {
             } finally { }
         }
 
-        // html: {{data}}
-        data.dynamicTemplateData = {
+        return this.send({
+            to: this.fromEmail,
+            from: this.fromEmail,
+            sender: this.fromName,
             subject: 'System',
-            data: content,
-        };
-
-        return this.send(data);
+            html: await this.getBody('system', {
+                data: content
+            })
+        });
     }
 
-    async send(data: MailData): Promise<boolean> {
-        if (!environment.production) {
-            data.mailSettings = {
-                sandboxMode: {
-                    enable: true
-                }
-            };
-        }
-
+    async send(data: SendMailOptions): Promise<boolean> {
         if (environment.production) {
             try {
-                // TODO: This will fail until we upgrade to something newer than sendgrid
-                // version 6.4.0 (https://github.com/sendgrid/sendgrid-nodejs/pull/935)
-                const response = await sendGridMail.send(data);
+                const info = await transporter.sendMail(data);
 
-                return response && response[0] && response[0].statusCode >= 200 && response[0].statusCode < 300;
+                return !!info.messageId;
             } catch (error) {
                 logger.error('Email failed to send', error);
                 throw error;
@@ -230,6 +159,39 @@ class Emailer implements Email {
         }
 
         return true;
+    }
+
+    private getBody(templateFileName: string, substitutions?: object): Promise<string> {
+        return new Promise((resolve, reject) => {
+
+            readFile(`../email-templates/${templateFileName}.html`, { encoding: 'utf-8' }, (error, html) => {
+                if (error) {
+                    logger.error('Error fetching email template', error);
+                    reject(error);
+                }
+
+                resolve(this.substitutePlaceholders(html, substitutions));
+            });
+        });
+
+    }
+
+    private substitutePlaceholders(html: string, substitutions?: object): string {
+        // TODO: potential security vulnerability
+        // Substitute placeholders
+        if (substitutions) {
+            for (const substitutionKey in substitutions) {
+                if (substitutions.hasOwnProperty(substitutionKey)) {
+                    try {
+                        html = html.replace(`{{${substitutionKey}}}`, (substitutions as any).substitutionKey);
+                    } catch (substitutionError) {
+                        logger.error('Error substituting email template placeholder', substitutionError);
+                    }
+                }
+            }
+        }
+
+        return html;
     }
 }
 

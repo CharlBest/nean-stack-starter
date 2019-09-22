@@ -11,20 +11,8 @@ export const environment = {
     stripe: {
         secretKey: getEnvironmentVariable('STRIPE_KEY', 'sk_test_RKOxhujxxM8c4xIqt6t036Qo')
     },
-    sendGrid: {
-        apiKey: getEnvironmentVariable('SENDGRID_API_KEY', '***'),
-        templates: {
-            welcome: getEnvironmentVariable('SENDGRID_TEMPLATE_WELCOME', 'd-3238c5b0d7504323b0a693b4d1038d26'),
-            forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', 'd-0a568babd3ee406995b624ae971b442d'),
-            feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', 'd-59414b3bf0f34e3bbf005410d0587060'),
-            resendEmailVerificationLink:
-                getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', 'd-aba9ca3bff4f4adbbdf7f255cf2dec6c'),
-            paymentSuccessful: getEnvironmentVariable('SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL', 'd-590247b465184d61a718a9948087986d'),
-            passwordUpdated: getEnvironmentVariable('SENDGRID_TEMPLATE_PASSWORD_UPDATED', 'd-d5dc72ebfbcb4750a511ffc7373f4eca'),
-            invite: getEnvironmentVariable('SENDGRID_TEMPLATE_INVITE', 'd-77fe4e3da0cd4cdc8d51ef6c315b2d46'),
-            notification: getEnvironmentVariable('SENDGRID_TEMPLATE_NOTIFICATION', 'd-3e61e949c11348f49fbcdd4bc254705b'),
-            system: getEnvironmentVariable('SENDGRID_TEMPLATE_SYSTEM', 'd-da407da0241e44ea9a0e0c3278cad476'),
-        }
+    email: {
+        password: getEnvironmentVariable('EMAIL_PASSWORD', '***')
     },
     authentication: {
         // This key can be anything. It can be a name or random characters. It will be used to sign (encrypt) and decrypt the passwords.
