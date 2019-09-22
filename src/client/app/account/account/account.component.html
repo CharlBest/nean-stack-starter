@@ -71,15 +71,15 @@
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item (click)="themeService.toggleTheme()">
-                    <ng-container *ngIf="!themeService.isDarkTheme">
-                        <app-icon-brightness-2 mat-list-icon></app-icon-brightness-2>
-                        <span mat-line>{{t.nightMode}}</span>
-                    </ng-container>
+                    <app-icon-brightness-2 mat-list-icon
+                        *ngIf="!themeService.isDarkTheme"></app-icon-brightness-2>
+                    <span mat-line
+                        *ngIf="!themeService.isDarkTheme">{{t.nightMode}}</span>
 
-                    <ng-container *ngIf="themeService.isDarkTheme">
-                        <app-icon-brightness-5 mat-list-icon></app-icon-brightness-5>
-                        <span mat-line>{{t.dayMode}}</span>
-                    </ng-container>
+                    <app-icon-brightness-5 mat-list-icon
+                        *ngIf="themeService.isDarkTheme"></app-icon-brightness-5>
+                    <span mat-line
+                        *ngIf="themeService.isDarkTheme">{{t.dayMode}}</span>
                 </mat-list-item>
             </mat-nav-list>
         </mat-card-content>
