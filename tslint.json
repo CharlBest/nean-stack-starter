@@ -119,6 +119,7 @@
     "template-no-any": true,
     "template-no-autofocus": true,
     "template-no-distracting-elements": true,
+    "use-injectable-provided-in": true,
     "template-cyclomatic-complexity": [
       true,
       8
