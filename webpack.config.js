@@ -39,6 +39,7 @@ const config = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
+        // Needed for the @shared path in tsconfig to resolve
         plugins: [new TsConfigPathsPlugin()]
     },
     plugins: [
