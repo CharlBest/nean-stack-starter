@@ -1,5 +1,5 @@
 import { readFile } from 'fs';
-import { createTransport, SendMailOptions } from 'nodemailer';
+import { SendMailOptions } from 'nodemailer';
 import { Email } from '../../communication/interfaces/email.interface';
 import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
@@ -12,13 +12,14 @@ import { WelcomeEmailModel } from '../../communication/models/email/welcome-emai
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 
-const transporter = createTransport({
-    service: 'SendinBlue',
-    auth: {
-        user: 'interimproj@gmail.com',
-        pass: environment.email.password
-    }
-});
+const transporter = {} as any;
+// const transporter = createTransport({
+//     service: 'SendinBlue',
+//     auth: {
+//         user: 'interimproj@gmail.com',
+//         pass: environment.email.password
+//     }
+// });
 
 class Emailer implements Email {
     fromEmail = 'admin@nean.io';
