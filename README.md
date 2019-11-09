@@ -788,6 +788,7 @@ services:
       - $HOME/neo4j/nean.io/data:/data
       - $HOME/neo4j/nean.io/backup:/backup
       - $HOME/neo4j/nean.io/logs:/logs
+      - $HOME/neo4j/nean.io/plugins:/plugins
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
@@ -817,6 +818,7 @@ services:
       - $HOME/neo4j/dev.nean.io/data:/data
       - $HOME/neo4j/dev.nean.io/backup:/backup
       - $HOME/neo4j/dev.nean.io/logs:/logs
+      - $HOME/neo4j/dev.nean.io/plugins:/plugins
     environment:
       NEO4J_dbms_memory_heap_max__size: "512M"
       NEO4J_dbms_memory_pagecache_size: "512M"
@@ -867,6 +869,8 @@ docker-compose up -d
 ```sh
 # terminal within container
 docker exec -it <container_name> bash
+# Execute cyper in container
+bin/cypher-shell -u server_web -p password
 # process monitoring for containers
 docker stats
 # process monitoring for specific container
