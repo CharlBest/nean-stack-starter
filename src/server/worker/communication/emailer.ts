@@ -1,5 +1,4 @@
-import { readFile } from 'fs';
-// import { SendMailOptions } from 'nodemailer';
+import { createTransport, SendMailOptions } from 'nodemailer';
 import { Email } from '../../communication/interfaces/email.interface';
 import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
@@ -12,18 +11,29 @@ import { WelcomeEmailModel } from '../../communication/models/email/welcome-emai
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 
-const transporter = {} as any;
-// const transporter = createTransport({
-//     service: 'SendinBlue',
-//     auth: {
-//         user: 'interimproj@gmail.com',
-//         pass: environment.email.password
-//     }
-// });
-
 class Emailer implements Email {
     fromEmail = 'admin@nean.io';
     fromName = 'NEAN';
+    transporter = createTransport({
+        host: 'smtp.sendgrid.net',
+        port: 465,
+        auth: {
+            user: 'apikey',
+            pass: environment.email.password
+        },
+        secure: true
+    });
+    templates: { [key in keyof Email]: string } = {
+        welcome: require('../email-templates/welcome.html'),
+        forgotPassword: require('../email-templates/forgot-password.html'),
+        feedback: require('../email-templates/feedback.html'),
+        resendEmailVerificationLink: require('../email-templates/feedback.html'),
+        paymentSuccessful: require('../email-templates/payment-successful.html'),
+        passwordUpdated: require('../email-templates/password-updated.html'),
+        invite: require('../email-templates/invite.html'),
+        notification: require('../email-templates/notification.html'),
+        system: require('../email-templates/system.html'),
+    };
 
     async welcome(model: WelcomeEmailModel): Promise<boolean> {
         return this.send({
@@ -31,7 +41,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Welcome',
-            html: await this.getBody('welcome', {
+            html: this.substitutePlaceholders(this.templates.welcome, {
                 username: model.username,
                 verifyCode: model.verifyCode,
             })
@@ -44,7 +54,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Forgot Password',
-            html: await this.getBody('forgot-password', {
+            html: this.substitutePlaceholders(this.templates.forgotPassword, {
                 email: model.email,
                 verifyCode: model.verifyCode,
             })
@@ -57,7 +67,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Feedback',
-            html: await this.getBody('feedback', {
+            html: this.substitutePlaceholders(this.templates.feedback, {
                 content: model.content,
             })
         });
@@ -69,7 +79,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Email verification',
-            html: await this.getBody('email-verification', {
+            html: this.substitutePlaceholders(this.templates.resendEmailVerificationLink, {
                 verifyCode: model.verifyCode,
             })
         });
@@ -81,7 +91,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Payment Successful',
-            html: await this.getBody('payment-successful', {
+            html: this.substitutePlaceholders(this.templates.paymentSuccessful, {
                 amount: model.amount,
             })
         });
@@ -93,7 +103,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Password Updated',
-            html: await this.getBody('password-updated')
+            html: this.substitutePlaceholders(this.templates.passwordUpdated)
         });
     }
 
@@ -103,7 +113,7 @@ class Emailer implements Email {
             from: this.fromName,
             sender: this.fromEmail,
             subject: 'Invite',
-            html: await this.getBody('invite')
+            html: this.substitutePlaceholders(this.templates.invite)
         });
     }
 
@@ -113,7 +123,7 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'Notification',
-            html: await this.getBody('notification', {
+            html: this.substitutePlaceholders(this.templates.notification, {
                 title: model.title,
                 body: model.body
             })
@@ -141,16 +151,16 @@ class Emailer implements Email {
             from: this.fromEmail,
             sender: this.fromName,
             subject: 'System',
-            html: await this.getBody('system', {
+            html: this.substitutePlaceholders(this.templates.system, {
                 data: content
             })
         });
     }
 
-    async send(data: any/*SendMailOptions*/): Promise<boolean> {
+    async send(data: SendMailOptions): Promise<boolean> {
         if (environment.production) {
             try {
-                const info = await transporter.sendMail(data);
+                const info = await this.transporter.sendMail(data);
 
                 return !!info.messageId;
             } catch (error) {
@@ -162,31 +172,19 @@ class Emailer implements Email {
         return true;
     }
 
-    private getBody(templateFileName: string, substitutions?: object): Promise<string> {
-        return new Promise((resolve, reject) => {
-
-            const rootPath = environment.production ? './email-templates' : '../email-templates';
-
-            readFile(`${rootPath}/${templateFileName}.html`, { encoding: 'utf-8' }, (error, html) => {
-                if (error) {
-                    logger.error('Error fetching email template', error);
-                    reject(error);
-                }
-
-                resolve(this.substitutePlaceholders(html, substitutions));
-            });
-        });
-
-    }
-
     private substitutePlaceholders(html: string, substitutions?: object): string {
         // TODO: potential security vulnerability
+
+        if (!html) {
+            console.error('Template html is empty');
+        }
+
         // Substitute placeholders
         if (substitutions) {
             for (const substitutionKey in substitutions) {
                 if (substitutions.hasOwnProperty(substitutionKey)) {
                     try {
-                        html = html.replace(`{{${substitutionKey}}}`, (substitutions as any).substitutionKey);
+                        html = html.replace(`{{${substitutionKey}}}`, substitutions[substitutionKey]);
                     } catch (substitutionError) {
                         logger.error('Error substituting email template placeholder', substitutionError);
                     }
