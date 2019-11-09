@@ -1,5 +1,5 @@
 import { readFile } from 'fs';
-import { SendMailOptions } from 'nodemailer';
+// import { SendMailOptions } from 'nodemailer';
 import { Email } from '../../communication/interfaces/email.interface';
 import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
@@ -147,7 +147,7 @@ class Emailer implements Email {
         });
     }
 
-    async send(data: SendMailOptions): Promise<boolean> {
+    async send(data: any/*SendMailOptions*/): Promise<boolean> {
         if (environment.production) {
             try {
                 const info = await transporter.sendMail(data);
