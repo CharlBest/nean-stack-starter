@@ -776,6 +776,7 @@ services:
       - "32768:80"
     volumes:
       - $HOME/countly_data:/data/db
+    restart: unless-stopped
 
   neo4j.nean.io:
     container_name: neo4j.nean.io
