@@ -1,6 +1,17 @@
 export const data = `
 CALL db.index.fulltext.queryNodes('itemTitleAndDescriptionIndex', {term}) YIELD node as items
 
+WITH collect(items) as itemList
+
+// Save search
+OPTIONAL MATCH (user:User { id: {userId} })
+FOREACH (o IN CASE WHEN user IS NOT NULL THEN [1] ELSE [] END |
+    CREATE (user)-[:SEARCHED]->(:Searched { term: {term}, dateCreated: timestamp() })
+)
+
+WITH itemList
+UNWIND itemList as items
+
 MATCH (users:User)-[:HAS_ITEM]->(items)
 
 OPTIONAL MATCH (:User { id: {userId} })-[favourite:HAS_FAVOURITE]->(items)
