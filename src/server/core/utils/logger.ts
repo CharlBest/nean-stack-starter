@@ -1,5 +1,4 @@
 import { createLogger, format, transports } from 'winston';
-import { emailBroker } from '../../communication/emailer-broker';
 import { environment } from '../../environments/environment';
 
 export const logger = createLogger({
@@ -27,7 +26,7 @@ export const logger = createLogger({
 
 logger.on('error', (error) => {
     // TODO: This could potentially cause an infinite loop if this method (emailer) causes an error
-    emailBroker.system(error);
+    // emailBroker.system(error);
 });
 
 if (!environment.production) {
