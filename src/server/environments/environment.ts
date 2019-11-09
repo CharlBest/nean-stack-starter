@@ -1,4 +1,3 @@
-import { logger } from '../core/utils/logger';
 
 export const environment = {
     production: getEnvironmentVariable('NODE_ENV', 'development' as any) === 'production',
@@ -36,7 +35,7 @@ function getEnvironmentVariable<T>(key: string, defaultValue: T): T {
         const value = process.env[key] as any;
         if (!value) {
             const error = `Environment variable with key ${key} does not exist`;
-            logger.error(error);
+            console.error(error);
             throw new Error(error);
         }
 
