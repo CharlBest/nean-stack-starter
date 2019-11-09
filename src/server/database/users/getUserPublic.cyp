@@ -6,12 +6,12 @@ OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 OPTIONAL MATCH (viewingUser:User { id: {loggedInUserId} })
 FOREACH (o IN CASE WHEN viewingUser IS NOT NULL THEN [viewingUser] ELSE [] END |
     MERGE (user)<-[viewed:VIEWED]-(viewingUser)
-    FOREACH (o IN CASE WHEN EXISTS(viewed.dateTimeCreated) THEN [] ELSE [viewed] END | SET viewed.dateTimeCreated = timestamp() )
+    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = timestamp() )
 )
 FOREACH (o IN CASE WHEN viewingUser IS NULL THEN [1] ELSE [] END |
     MERGE (address:IpAddress { ip: {ip} })
     MERGE (user)<-[viewed:VIEWED]-(address)
-    FOREACH (o IN CASE WHEN EXISTS(viewed.dateTimeCreated) THEN [] ELSE [viewed] END | SET viewed.dateTimeCreated = timestamp() )
+    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = timestamp() )
 )
 SET user.views = SIZE(()-[:VIEWED]->(user))
 
