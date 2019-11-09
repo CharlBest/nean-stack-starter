@@ -172,7 +172,7 @@ class UsersController extends BaseController {
         const viewModel = req.body as UpdateAvatarViewModel;
 
         if (viewModel.avatar !== null) {
-            const hasErrors = !!Validators.typeAssert([viewModel.avatar], 'files')([viewModel.avatar] as any);
+            const hasErrors = !!Validators.typeAssert('files', [viewModel.avatar])([viewModel.avatar] as any);
 
             if (hasErrors) {
                 throw new Error();

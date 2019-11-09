@@ -155,7 +155,7 @@ export class AuthService implements CanActivate {
         }
     }
 
-    private getDataFromJWT(token: string | null | undefined): { id: number | null, expireDate: number | null } {
+    private getDataFromJWT(token?: string | null): { id: number | null, expireDate: number | null } {
         if (token) {
             const parsedToken = this.parseJwt(token) as { data: UserTokenModel, exp: number };
 

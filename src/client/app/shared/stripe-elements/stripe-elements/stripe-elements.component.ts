@@ -120,7 +120,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         }
 
         // change (empty, complete, error, value), ready, focus, blur, click
-        elementWrapper.element.on('change', (data: stripe.elements.ElementChangeResponse | undefined) => {
+        elementWrapper.element.on('change', (data?: stripe.elements.ElementChangeResponse) => {
             if (!data) {
                 return;
             }

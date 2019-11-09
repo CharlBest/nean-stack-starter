@@ -82,12 +82,12 @@ export class Validators {
         };
     }
 
-    static typeAssert(value: object[] | null | undefined, type: 'files'): ValidatorFn;
-    static typeAssert(value: string | null | undefined, type: 'string'): ValidatorFn;
-    static typeAssert(value: number | null | undefined, type: 'number'): ValidatorFn;
-    static typeAssert(value: boolean | null | undefined, type: 'boolean'): ValidatorFn;
-    static typeAssert(value: Array<string> | null | undefined, type: 'string[]'): ValidatorFn;
-    static typeAssert(value: TypeAssertValue, type: TypeAssertType): ValidatorFn {
+    static typeAssert(type: 'files', value?: object[] | null): ValidatorFn;
+    static typeAssert(type: 'string', value?: string | null): ValidatorFn;
+    static typeAssert(type: 'number', value?: number | null): ValidatorFn;
+    static typeAssert(type: 'boolean', value?: boolean | null): ValidatorFn;
+    static typeAssert(type: 'string[]', value?: Array<string> | null): ValidatorFn;
+    static typeAssert(type: TypeAssertType, value: TypeAssertValue): ValidatorFn {
         return (control: AbstractControl | any): TypeAssert | null => {
             control = Validators.wrapControl(control);
             if (isEmptyInputValue(control.value)) {
@@ -158,13 +158,13 @@ export class Validators {
         // TODO: this is ugly!
         return typeof file !== 'object' ||
             !!Validators.required(file.url) ||
-            !!Validators.typeAssert(file.url, 'string')(file.url) ||
-            !!Validators.typeAssert(file.width, 'number')(file.width as number) ||
-            !!Validators.typeAssert(file.height, 'number')(file.height as number) ||
-            !!Validators.typeAssert(file.aspectRatio, 'number')(file.aspectRatio as number) ||
+            !!Validators.typeAssert('string', file.url)(file.url) ||
+            !!Validators.typeAssert('number', file.width)(file.width as number) ||
+            !!Validators.typeAssert('number', file.height)(file.height as number) ||
+            !!Validators.typeAssert('number', file.aspectRatio)(file.aspectRatio as number) ||
             !!Validators.required(file.exifOrientation) ||
-            !!Validators.typeAssert(file.exifOrientation, 'number')(file.exifOrientation as number) ||
-            !!Validators.typeAssert(file.rotation, 'number')(file.rotation as number);
+            !!Validators.typeAssert('number', file.exifOrientation)(file.exifOrientation as number) ||
+            !!Validators.typeAssert('number', file.rotation)(file.rotation as number);
     }
 }
 

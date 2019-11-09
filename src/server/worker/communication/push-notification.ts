@@ -61,7 +61,7 @@ class PushNotification implements PushNotificationInterface {
                 const response = await Promise.all(
                     pushSubscription
                         .filter(sub => sub !== null && sub !== undefined)
-                        .map((sub: PushSubscriptionViewModel | null | undefined) =>
+                        .map((sub?: PushSubscriptionViewModel | null) =>
                             sendNotification((sub as PushSubscriptionViewModel), JSON.stringify(notificationPayload)))
                 );
 
