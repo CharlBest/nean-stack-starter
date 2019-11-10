@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1124",
+  "version": "0.0.1125",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "concurrently \"ng serve --open\" \"webpack --mode=development --watch\" \"npm run start:server:watch\"",
-    "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html && npm run minify-email-template-html",
+    "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html",
     "buildv2": "bash build.sh",
     "start": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/web/web.bundle.js",
     "start:worker": "node --max_semi_space_size=2 --max_old_space_size=256 dist/server/worker/worker.bundle.js",
@@ -109,6 +109,7 @@
     "@types/ws": "^6.0.3",
     "codelyzer": "^5.1.1",
     "concurrently": "^4.1.2",
+    "html-loader": "^0.5.5",
     "html-minifier": "^4.0.0",
     "husky": "^3.0.5",
     "jasmine": "^3.5.0",

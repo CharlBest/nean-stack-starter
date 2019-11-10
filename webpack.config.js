@@ -27,6 +27,15 @@ const config = {
                 test: /\.ts?$/,
                 exclude: /node_modules/,
                 use: 'ts-loader?configFile=src/server/tsconfig.app.json'
+            },
+            {
+                test: /\.html$/,
+                use: [{
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }],
             }
         ]
     },
