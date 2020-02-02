@@ -372,9 +372,9 @@ sudo nginx -v
 1. Create /etc/nginx/sites-available/nean.io
 ```text
 server {
-    listen 443 http2 default_server;
+    listen 443 http2;
     # IPv6 addresses
-    listen [::]:443 http2 default_server;
+    listen [::]:443 http2;
 
     ssl on;
     ssl_certificate /etc/letsencrypt/live/nean.io/fullchain.pem;
@@ -1067,15 +1067,34 @@ Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs
 * Add A record for subdomain pointing to server IP
 
 ## NGINX
-* /etc/nginx/sites-available --> copy example of subdomain
-* change subdomain in new copy
+* Note procedure for domain and subdomains are the same, just add the subdomains before the root domain
+* Go to /var/www/
+* Create new directory (mkdir domain.com)
+* Go to /etc/nginx/sites-available
+* Copy example (cp nean.io domain.com)
+* change domain in new copy
 * change node api server port
-* change ssl (443) to 80 and ** comment out certificates **
-* create sym link in sites-enabled
-* create log folder (sudo mkdir /var/log/subdomain.domain.com)
+* comment out certificates (ssl) and listen http2 (443)
+* Add listen 80;
+* Go to  /etc/nginx/sites-enabled
+* Create symlink to enable domain (ln -s /etc/nginx/sites-available/domain.com domain.com)
+* create log folder (sudo mkdir /var/log/domain.com)
 * sudo service nginx restart
-* sudo certbot certonly -d subdomain.domain.com
-* uncomment certificate links/certificates in conf file
+* Make sure DNS provider (CloudFlare) has a A Record with name domain.com and content = the IP of the server
+* sudo certbot certonly -d domain.com
+* Choose option 3 - Place files in webroot directory (webroot0)
+* Input the webroot of the domain (/var/www/domain.com)
+* Open /etc/nginx/sites-available/domain.com
+* Uncomment certificate links, 443 (SSL) config and remove listen 80
+* Set SSL/TLS encryption mode to Full (strict)
+* Add first CloudFlare page rule
+  * http://*domain.com/.well-known/acme-challenge/*
+  * Cache Level
+  * Standard
+Add second CloudFlare page rule
+  * http://*domain.com/*
+  * Always Use HTTPS
+* sudo service nginx restart
 
 ## Git clone project
 * Commit latest version to GitHub
