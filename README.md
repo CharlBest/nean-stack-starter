@@ -799,7 +799,9 @@ services:
   rabbitmq.nean.io:
       container_name: rabbitmq.nean.io
       image: rabbitmq:3.7-management
-      hostname:  rabbitmq.nean.io
+      hostname: rabbitmq.nean.io
+      volumes:
+        - $HOME/rabbitmq/nean.io:/var/lib/rabbitmq
       environment:
         - RABBITMQ_DEFAULT_USER = guest
         - RABBITMQ_DEFAULT_PASS = guest
@@ -829,7 +831,9 @@ services:
   rabbitmq.dev.nean.io:
       container_name: rabbitmq.dev.nean.io
       image: rabbitmq:3.7-management
-      hostname:  rabbitmq.dev.nean.io
+      hostname: rabbitmq.dev.nean.io
+      volumes:
+        - $HOME/rabbitmq/nean.io:/var/lib/rabbitmq
       environment:
         - RABBITMQ_DEFAULT_USER = guest
         - RABBITMQ_DEFAULT_PASS = guest
