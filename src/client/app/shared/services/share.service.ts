@@ -1,4 +1,4 @@
-import { Clipboard } from '@angular/cdk-experimental/clipboard';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';

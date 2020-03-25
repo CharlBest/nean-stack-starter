@@ -1,4 +1,4 @@
-import { ClipboardModule } from '@angular/cdk-experimental/clipboard';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatBottomSheetConfig, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
