@@ -9,7 +9,8 @@
   },
   "files": [
     "main.ts",
-    "polyfills.ts"
+    "polyfills.ts",
+    "typings.ts"
   ],
   "include": [
     "**/*.d.ts"

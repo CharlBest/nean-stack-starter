@@ -60,7 +60,11 @@ export class TutorialDirective implements OnInit {
 
     reset() {
         const element = (this.elementRef.nativeElement as HTMLElement);
-        element.style.zIndex = this.zIndex;
-        element.style.backgroundColor = this.backgroundColor;
+        if (this.zIndex) {
+            element.style.zIndex = this.zIndex;
+        }
+        if (this.backgroundColor) {
+            element.style.backgroundColor = this.backgroundColor;
+        }
     }
 }
