@@ -31,10 +31,8 @@ const config = {
             {
                 test: /\.html$/,
                 use: [{
-                    loader: 'html-loader',
-                    options: {
-                        minimize: true
-                    }
+                    // This is to minify the index.html
+                    loader: 'html-loader'
                 }],
             }
         ]
