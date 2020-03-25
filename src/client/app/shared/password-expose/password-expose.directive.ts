@@ -6,7 +6,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
 
-  @ContentChild(MatInput, { read: ElementRef, static: false }) private input: ElementRef<HTMLInputElement>;
+  @ContentChild(MatInput, { read: ElementRef }) private input: ElementRef<HTMLInputElement>;
   private visibilityIcon: HTMLElement | null;
   private visibilityOffIcon: HTMLElement | null;
 

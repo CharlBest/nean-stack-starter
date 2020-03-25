@@ -12,7 +12,7 @@ import { ItemService } from '../item.service';
 })
 export class EditCommentComponent implements OnInit {
 
-  @ViewChild('commentForm', { static: false }) commentForm: CommentFormComponent;
+  @ViewChild('commentForm') commentForm: CommentFormComponent;
   isProcessing = false;
   comment: CommentViewModel;
 

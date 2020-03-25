@@ -18,7 +18,7 @@ import { ProfileService } from '../profile.service';
 export class TwoFactorAuthenticationComponent implements OnInit {
 
   @Input() twoFactorAuthenticationEnabled: boolean;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('canvas') canvas: ElementRef<HTMLCanvasElement>;
 
   sanitizedQRCodeKeyUri: SafeUrl;
   secret: string;

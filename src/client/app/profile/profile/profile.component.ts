@@ -24,8 +24,8 @@ import { ProfileService } from '../profile.service';
 export class ProfileComponent implements OnInit {
 
   @ViewChild('backNavRightPlaceholder', { static: true }) backNavRightPlaceholder: TemplateRef<ElementRef>;
-  @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
-  @ViewChild('fileUploader', { static: false }) fileUploader: FileUploaderComponent;
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
+  @ViewChild('fileUploader') fileUploader: FileUploaderComponent;
   user: UserProfileViewModel;
   isProcessing = true;
 

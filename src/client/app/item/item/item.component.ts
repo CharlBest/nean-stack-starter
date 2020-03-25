@@ -18,8 +18,8 @@ import { ItemService } from '../item.service';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenuComponent;
-  @ViewChild('description', { static: false }) description: ElementRef<HTMLParagraphElement>;
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
+  @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
   isProcessing = false;
