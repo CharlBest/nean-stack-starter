@@ -14,10 +14,6 @@ const materialModules = [
     imports: [
         ...materialModules
     ],
-    entryComponents: [
-        AlertDialogComponent,
-        ConfirmDialogComponent
-    ],
     declarations: [
         AlertDialogComponent,
         ConfirmDialogComponent

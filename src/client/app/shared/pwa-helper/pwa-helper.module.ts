@@ -25,9 +25,6 @@ const materialModules = [
     ],
     declarations: [
         PWAHelperComponent
-    ],
-    entryComponents: [
-        PWAHelperComponent
     ]
 })
 export class PWAHelperModule { }

@@ -28,9 +28,6 @@ const materialModules = [
     ],
     providers: [
         ShareDialogService
-    ],
-    entryComponents: [
-        ShareDialogComponent
     ]
 })
 export class ShareDialogModule { }

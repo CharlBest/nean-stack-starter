@@ -26,9 +26,6 @@ const materialModules = [
   exports: [
     MediaComponent,
     ImageFileDirective
-  ],
-  entryComponents: [
-    ViewMediaDialogComponent
   ]
 })
 export class MediaModule { }

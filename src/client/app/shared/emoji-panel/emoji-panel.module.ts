@@ -36,9 +36,6 @@ const materialModules = [
   exports: [
     EmojiPanelComponent,
     EmojiPanelDirective
-  ],
-  entryComponents: [
-    EmojiPanelComponent
   ]
 })
 export class EmojiPanelModule { }

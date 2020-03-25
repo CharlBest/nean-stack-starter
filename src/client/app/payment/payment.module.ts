@@ -40,9 +40,6 @@ const materialModules = [
     ],
     declarations: [
         PaymentComponent
-    ],
-    entryComponents: [
-        PaymentComponent
     ]
 })
 export class PaymentModule { }

@@ -18,9 +18,6 @@ const materialModules = [
   ],
   declarations: [
     CookieConsentComponent
-  ],
-  entryComponents: [
-    CookieConsentComponent
   ]
 })
 export class CookieConsentModule { }

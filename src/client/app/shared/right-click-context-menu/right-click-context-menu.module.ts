@@ -25,9 +25,6 @@ const materialModules = [
   ],
   exports: [
     RightClickContextMenuDirective
-  ],
-  entryComponents: [
-    RightClickContextMenuComponent
   ]
 })
 export class RightClickContextMenuModule { }
