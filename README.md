@@ -769,8 +769,8 @@ sudo usermod -aG docker ${USER}
 version: '3'
 
 services:
-  analytics:
-    container_name: countly-analytics
+  countly-server:
+    container_name: countly-server
     image: countly/countly-server
     ports:
       - "32768:80"
@@ -797,18 +797,12 @@ services:
     restart: unless-stopped
 
   rabbitmq.nean.io:
-      container_name: rabbitmq.nean.io
-      image: rabbitmq:3.7-management
-      hostname: rabbitmq.nean.io
-      volumes:
-        - $HOME/rabbitmq/nean.io:/var/lib/rabbitmq
-      environment:
-        - RABBITMQ_DEFAULT_USER = guest
-        - RABBITMQ_DEFAULT_PASS = guest
-      ports:
-        - "15672:15672"       ## Management Plugin
-        - "5672:5672"         ## AMQP connection
-      restart: unless-stopped
+    container_name: rabbitmq.nean.io
+    image: rabbitmq:3.7
+    hostname: rabbitmq.nean.io
+    ports:
+      - "5672:5672"
+    restart: unless-stopped
 
   neo4j.dev.nean.io:
     container_name: neo4j.dev.nean.io
@@ -829,18 +823,12 @@ services:
     restart: unless-stopped
 
   rabbitmq.dev.nean.io:
-      container_name: rabbitmq.dev.nean.io
-      image: rabbitmq:3.7-management
-      hostname: rabbitmq.dev.nean.io
-      volumes:
-        - $HOME/rabbitmq/nean.io:/var/lib/rabbitmq
-      environment:
-        - RABBITMQ_DEFAULT_USER = guest
-        - RABBITMQ_DEFAULT_PASS = guest
-      ports:
-        - "15673:15672"       ## Management Plugin
-        - "5673:5672"         ## AMQP connection
-      restart: unless-stopped
+    container_name: rabbitmq.dev.nean.io
+    image: rabbitmq:3.7
+    hostname: rabbitmq.dev.nean.io
+    ports:
+      - "5673:5672"
+    restart: unless-stopped
 
 ```
 
@@ -893,14 +881,14 @@ docker top <container_name>
         * :server user add
 
     3.2 RabbitMQ
-    * Go to localhost:15672 in your browser
-    * Change guest user password
-    * Open "Admin" > Click on "guest" > "Update this user" > choose new password
-    * Log out and then log back in
-    * Open "Admin" > "Add user"
-    * Username = "server_web", Tags = None (empty)
-    * Username = "server_worker", Tags = None (empty)
-    * Click on both the web and worker name a then click "Set permission" which will set the default ".* .* .*" permissions to virtual host "/"
+    ```sh
+    # create users
+    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_web password
+    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_worker password
+    # set permissions
+    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_web ".*" ".*" ".*"
+    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_worker ".*" ".*" ".*"
+    ```
     * Do the same for other db instance on localhost:15673
 
 ### Setup periodic backups via cron
