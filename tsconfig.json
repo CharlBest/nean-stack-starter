@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "module": "esNext",
+    "module": "esnext",
     "strict": true,
     "strictPropertyInitialization": false,
     "noImplicitReturns": true,
