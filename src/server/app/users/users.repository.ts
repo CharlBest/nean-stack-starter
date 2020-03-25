@@ -1,6 +1,7 @@
 import { FileModel } from '@shared/models/shared/file.model';
 import { UserLiteModel } from '@shared/models/user/user-lite.model';
 import { UserModel } from '@shared/models/user/user.model';
+import { Language } from '@shared/translate/language.enum';
 import { DoesUsernameAndEmailExist } from '@shared/view-models/create-user/does-username-and-email-exist.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
@@ -329,7 +330,8 @@ class UsersRepository extends BaseRepository {
     }
 
     // tslint:disable-next-line: bool-param-default
-    async updateConfiguration(res: Response, userId: number, consent?: boolean, darkTheme?: boolean, language?: string): Promise<boolean> {
+    async updateConfiguration(res: Response, userId: number, consent?: boolean, darkTheme?: boolean, language?: Language)
+        : Promise<boolean> {
         const result = await res.locals.neo4jSession.run(Database.queries.users.updateConfiguration,
             {
                 userId,

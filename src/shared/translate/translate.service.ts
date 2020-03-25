@@ -72,7 +72,7 @@ class TranslateService {
         }
     }
 
-    doesLanguageKeyExist(key: string) {
+    doesLanguageKeyExist(key: Language) {
         return Object.values(Language).includes(key);
     }
 

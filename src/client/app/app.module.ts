@@ -2,11 +2,10 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatBottomSheetConfig, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
-import { GestureConfig } from '@angular/material/core';
 import { MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatSnackBarConfig, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
-import { BrowserModule, HAMMER_GESTURE_CONFIG, Title } from '@angular/platform-browser';
+import { BrowserModule, HammerModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -34,6 +33,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     DialogModule,
     ClipboardModule,
     ParticleEffectModule,
+    HammerModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
@@ -53,11 +53,6 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
       provide: HTTP_INTERCEPTORS,
       useClass: LanguageInterceptor,
       multi: true
-    },
-    // Material gestures via HammerJS (this is needed for lazy loaded modules)
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: GestureConfig
     },
     // Material defaults
     {

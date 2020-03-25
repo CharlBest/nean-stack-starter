@@ -17,6 +17,7 @@ import { authenticator } from 'otplib';
 import * as sanitizedHTML from 'sanitize-html';
 import { v4 as nodeUUId } from 'uuid';
 import { FileModel } from '../../../shared/models/shared/file.model';
+import { Language } from '../../../shared/translate/language.enum';
 import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
@@ -322,7 +323,7 @@ class UsersService extends BaseService {
 
     // TODO: not sure if disabling this is good?
     // tslint:disable-next-line: bool-param-default
-    async updateConfiguration(res: Response, consent: boolean | undefined, darkTheme: boolean | undefined, language: string | undefined)
+    async updateConfiguration(res: Response, consent: boolean | undefined, darkTheme: boolean | undefined, language: Language | undefined)
         : Promise<boolean> {
         if (language) {
             const exists = translateService.doesLanguageKeyExist(language);

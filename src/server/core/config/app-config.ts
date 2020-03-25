@@ -1,7 +1,7 @@
-import * as bodyParser from 'body-parser';
 // TODO: maybe add cors if own implementation isn't sufficient
 // import * as cors from 'cors';
 import * as compression from 'compression';
+import * as express from 'express';
 import { Application } from 'express';
 import * as helmet from 'helmet';
 
@@ -25,11 +25,11 @@ class AppConfig {
             .use(compression())
 
             // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
-            .use(bodyParser.json({
+            .use(express.json({
                 // Controls the maximum request body size
                 limit: '80kb'
             }))
-            .use(bodyParser.urlencoded({
+            .use(express.urlencoded({
                 // The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false)
                 // or the qs library (when true). The "extended" syntax allows for rich objects and arrays to be encoded into the
                 // URL-encoded format, allowing for a JSON-like experience with URL-encoded.
