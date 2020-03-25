@@ -100,69 +100,62 @@ export class PaymentComponent implements OnInit {
     async onSubmit() {
         if (this.activeSection === Section.CARD) {
             if (this.formGroup.controls.cardUId.value === 'new') {
-                const token = await this.stripeElementsComponent.generateToken();
-                if (token) {
-                    this.sendPaymentToServer(token.id);
+                this.isProcessing = true;
+                let success = false;
+
+                const clientSecret = await this.sendPaymentToServer();
+                if (clientSecret) {
+                    success = await this.stripeElementsComponent.confirmCardPayment(clientSecret);
+                }
+
+                if (success) {
+                    this.paymentSuccess = true;
                 } else {
                     this.dialogService.alert('Invalid card details');
                 }
+
+                this.isProcessing = false;
             } else {
-                this.sendPaymentToServer();
+                // TODO: handle scenario
             }
         } else if (this.activeSection === Section.MOBILE) {
             this.stripePaymentRequestButton.activatePaymentRequestButton();
         }
     }
 
-    sendPaymentToServer(token: string | null = null): Promise<boolean> {
-        this.isProcessing = true;
-
+    sendPaymentToServer(): Promise<string | null> {
         if (this.isAuthenticated) {
-            return this.sendViaAuthenticatedUser(token);
+            return this.sendViaAuthenticatedUser();
         } else {
-            return this.sendViaAnonymousUser(token);
+            return this.sendViaAnonymousUser();
         }
     }
 
-    async sendViaAuthenticatedUser(token: string | null): Promise<boolean> {
+    async sendViaAuthenticatedUser(): Promise<string | null> {
         const viewModel = new UserPaymentViewModel();
-        viewModel.token = token;
         viewModel.cardUId = this.formGroup.controls.cardUId.value;
-        viewModel.amount = +this.formGroup.controls.amount.value;
+        viewModel.amount = +this.formGroup.controls.amount.value * 100; // convert to cent
         viewModel.saveCard = this.formGroup.controls.saveCard.value === true;
 
         try {
-            await this.paymentService.userPayment(viewModel);
-            this.paymentSuccess = true;
-            return true;
+            return await this.paymentService.userPayment(viewModel);
         } catch (error) {
             this.formErrorsService.updateFormValidity(error, this.formGroup);
-        } finally {
-            this.isProcessing = false;
+            return null;
         }
-
-        return false;
     }
 
-    async sendViaAnonymousUser(token: string | null): Promise<boolean> {
-        if (token) {
-            const viewModel = new AnonymousPaymentViewModel();
-            viewModel.token = token;
-            viewModel.email = this.formGroup.controls.email.value;
-            viewModel.amount = +this.formGroup.controls.amount.value;
+    async sendViaAnonymousUser(): Promise<string | null> {
+        const viewModel = new AnonymousPaymentViewModel();
+        viewModel.email = this.formGroup.controls.email.value;
+        viewModel.amount = +this.formGroup.controls.amount.value * 100; // convert to cent
 
-            try {
-                await this.paymentService.anonymousPayment(viewModel);
-                this.paymentSuccess = true;
-                return true;
-            } catch (error) {
-                this.formErrorsService.updateFormValidity(error, this.formGroup);
-            } finally {
-                this.isProcessing = false;
-            }
+        try {
+            return await this.paymentService.anonymousPayment(viewModel);
+        } catch (error) {
+            this.formErrorsService.updateFormValidity(error, this.formGroup);
+            return null;
         }
-
-        return false;
     }
 
     // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
@@ -200,11 +193,11 @@ export class PaymentComponent implements OnInit {
                 this.formGroup.controls.email.setValue(event.payerEmail);
             }
 
-            const success = await this.sendPaymentToServer(event.token.id);
-            if (success) {
-                this.stripePaymentRequestButton.completePaymentRequest(event, 'success');
-                return;
-            }
+            // const success = await this.sendPaymentToServer(event.token.id);
+            // if (success) {
+            //     this.stripePaymentRequestButton.completePaymentRequest(event, 'success');
+            //     return;
+            // }
         } else {
             this.dialogService.alert('Invalid card details');
         }

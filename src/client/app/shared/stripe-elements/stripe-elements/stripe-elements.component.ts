@@ -30,6 +30,25 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         this.initialize();
     }
 
+    async confirmCardPayment(intentSecret: string) {
+        // TODO temp fix because @types/stripe-v3 is out of date
+        // tslint:disable-next-line: no-string-literal
+        const { paymentIntent, error } = await this.stripeElementsService.stripe['confirmCardPayment'](intentSecret, {
+            payment_method: { card: this.elementsWrapper.cardNumber.element }
+        });
+
+        if (error) {
+            console.log(error);
+            // Display error.message in your UI.
+            return false;
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+            // Handle successful payment here
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async generateToken() {
         if (!this.elementsWrapper.cardNumber.element) {
             return null;

@@ -12,21 +12,24 @@ class PaymentsController extends BaseController {
         super();
     }
 
+    async webhook(req: Request, res: Response, next: NextFunction) {
+        paymentsService.webhook(res, req.body, req.headers['stripe-signature'] as string);
+    }
+
     async anonymousPayment(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as AnonymousPaymentViewModel;
 
         const formGroup = FormGroupBuilder.payment(viewModel.amount);
-        let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
+        const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        hasErrors = hasErrors || ServerValidator.addGlobalError(res, 'anonymousPaymentToken', Validators.required(viewModel.token));
         const emailError = !!Validators.required(viewModel.email);
 
         if (hasErrors || emailError) {
-            throw new Error('Invalid token or email');
+            throw new Error('Invalid email address');
         }
 
         res.status(200).json(
-            await paymentsService.anonymousPayment(res, viewModel.token, viewModel.amount, viewModel.email)
+            await paymentsService.anonymousPayment(res, viewModel.amount, viewModel.email)
         );
     }
 
@@ -36,15 +39,12 @@ class PaymentsController extends BaseController {
         const formGroup = FormGroupBuilder.payment(viewModel.amount, viewModel.cardUId, viewModel.saveCard);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
-        const hasToken = ServerValidator.addGlobalError(res, 'userPaymentToken', Validators.required(viewModel.token));
-        const hasCard = !!Validators.required(viewModel.cardUId);
-
-        if (hasErrors || (!hasToken && !hasCard)) {
-            throw new Error('Invalid token or card');
+        if (hasErrors) {
+            throw new Error();
         }
 
         res.status(200).json(
-            await paymentsService.userPayment(res, viewModel.cardUId, viewModel.token, viewModel.amount, viewModel.saveCard)
+            await paymentsService.userPayment(res, viewModel.cardUId, viewModel.amount, viewModel.saveCard)
         );
     }
 

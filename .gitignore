@@ -41,3 +41,5 @@ src/server/logs/*
 # System Files
 .DS_Store
 Thumbs.db
+
+/src/client/assets/images

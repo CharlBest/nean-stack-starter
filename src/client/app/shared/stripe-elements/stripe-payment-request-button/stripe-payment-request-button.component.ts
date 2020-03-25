@@ -93,6 +93,37 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
 
         this.paymentRequestButtonInstance.on('token', (event: stripe.paymentRequest.StripeTokenPaymentResponse) =>
             this.paymentComplete.emit(event));
+
+
+        const clientSecret = 'temp';
+
+        this.paymentRequestButtonInstance.on('paymentmethod', async (ev) => {
+            // Confirm the PaymentIntent without handling potential next actions (yet).
+            // tslint:disable-next-line: no-string-literal
+            const { error: confirmError } = await this.stripeElementsService.stripe['confirmCardPayment'](clientSecret,
+                { payment_method: ev.paymentMethod.id },
+                { handleActions: false }
+            );
+
+            if (confirmError) {
+                // Report to the browser that the payment failed, prompting it to
+                // re-show the payment interface, or show an error message and close
+                // the payment interface.
+                ev.complete('fail');
+            } else {
+                // Report to the browser that the confirmation was successful, prompting
+                // it to close the browser payment method collection interface.
+                ev.complete('success');
+                // Let Stripe.js handle the rest of the payment flow.
+                // tslint:disable-next-line: no-string-literal
+                const { error, paymentIntent } = await this.stripeElementsService.stripe['confirmCardPayment'](clientSecret);
+                if (error) {
+                    // The payment failed -- ask your customer for a new payment method.
+                } else {
+                    // The payment has succeeded.
+                }
+            }
+        });
     }
 
     private createAndMountButton() {

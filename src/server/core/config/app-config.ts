@@ -23,7 +23,6 @@ class AppConfig {
 
             // Compress response bodies for all request that traverse through the middleware
             .use(compression())
-
             // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
             .use(express.json({
                 // Controls the maximum request body size

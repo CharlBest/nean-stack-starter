@@ -11,6 +11,10 @@ class PaymentsRoutes extends BaseRoute {
     }
 
     initRoutes() {
+        // Webhook
+        this.router.post(PaymentRoutes.webhook().server(),
+            async (req, res, next) => paymentsController.webhook(req, res, next).catch(next));
+
         this.router.post(PaymentRoutes.anonymousPayment().server(),
             async (req, res, next) => paymentsController.anonymousPayment(req, res, next).catch(next));
 
