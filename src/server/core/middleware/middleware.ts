@@ -5,7 +5,7 @@ import * as express from 'express';
 import { Application } from 'express';
 import * as helmet from 'helmet';
 
-class AppConfig {
+class Middleware {
     configure(app: Application): void {
 
         app
@@ -41,4 +41,4 @@ class AppConfig {
     }
 }
 
-export const appConfig = new AppConfig();
+export const middleware = new Middleware();
