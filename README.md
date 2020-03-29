@@ -95,7 +95,7 @@ Client pages
 * GraphQL integration (Apollo)
 * Cordova IOS build output
 
-## Running Locally
+## Running locally for development (watch/hot reload)
 
 Make sure you have [Node.js](http://nodejs.org/), [Neo4j](https://neo4j.com/) and [Angular CLI](https://cli.angular.io/) installed.
 
@@ -108,7 +108,7 @@ npm install
 npm run dev
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/)
+Your app should now be running on [localhost:4200](http://localhost:4200/)
 
 ## Make it your own (after clone)
 1. Rename all occurances of the word "nean" to your chosen name
@@ -130,14 +130,6 @@ Your app should now be running on [localhost:3000](http://localhost:3000/)
       3. Feedback
       4. Email verification link
       5. Payment successful
-
-
-## Development (watch/hot reload)
-```sh
-npm run dev
-```
-
-Your app should now be running on [localhost:4200](http://localhost:4200/)
 
 ## Environment variables
 Change to yours.
@@ -871,24 +863,27 @@ docker top <container_name>
 3. <a id="createnewusers">Create new users</a>
 
     3.1 Neo4j
-    * Go to localhost:7474 in your browser
-    * :server user add
-    * Username = "server_web", Roles = "architect"
-    * Username = "server_worker", Roles = "architect"
-    * Do the same for other db instance on localhost:7475
-        * :server  disconnect
-        * :server user add
+    ```sh
+    # Neo4j
+    ## Create users
+    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.createUser('server_web', 'password', false)"
+    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.createUser('server_worker', 'password', false)"
+    ## Set permissions
+    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.addRoleToUser('architect', 'server_web')"
+    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.addRoleToUser('architect', 'server_worker')"
+    ```
 
     3.2 RabbitMQ
     ```sh
-    # create users
+    # RabbitMQ
+    ## Create user
     docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_web password
     docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_worker password
-    # set permissions
+    ## Set permissions
     docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_web ".*" ".*" ".*"
     docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_worker ".*" ".*" ".*"
     ```
-    * Do the same for other db instance on localhost:15673
+    * Do the same for other instances
 
 ### Setup periodic backups via cron
 
@@ -1043,11 +1038,15 @@ Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs
 # Steps to creating a new project/instance
 
 ## Create new project
-* Create GitHub repo
-* git clone repo
+* GitHub Import repository
+* URL = https://github.com/CharlBest/nean-stack-starter.git
+* git clone <new url>
 * cd repo
 * git remote add upstream https://github.com/CharlBest/nean-stack-starter.git
 * git fetch upstream
+* npm install
+* npm run build
+* copy over dist folder via WinSCP
 
 ## Update project
 * Rename all NEAN words to new project name
@@ -1086,20 +1085,6 @@ Add second CloudFlare page rule
   * http://*domain.com/*
   * Always Use HTTPS
 * sudo service nginx restart
-
-## Git clone project
-* Commit latest version to GitHub
-```sh
-cd /var/www/nean.io
-git clone https://github.com/CharlBest/nean-stack-starter.git
-cd gitProjectName
-npm install
-```
-
-## Deploy initial version/dist
-* go to local version
-* npm run build
-* copy over dist folder via WinSCP
 
 ## Docker
 ### Edit docker-compose.yml
