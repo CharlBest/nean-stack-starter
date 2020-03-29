@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  neo4j:
+    container_name: neo4j.nean.io
+    image: neo4j:3.5-enterprise
+    ports:
+      - "7474:7474"  ## Browser
+      - "7687:7687"  ## Bolt connection
+    volumes:
+      - ${ROOT_DIR}/neo4j/data:/data
+      - ${ROOT_DIR}/neo4j/backup:/backup
+      - ${ROOT_DIR}/neo4j/plugins:/plugins
+    environment:
+      NEO4J_dbms_memory_heap_max__size: "512M"
+      NEO4J_dbms_memory_pagecache_size: "512M"
+      NEO4J_AUTH: "${NEO4J_USERNAME}/${NEO4J_PASSWORD}"
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+    restart: unless-stopped
+  rabbitmq:
+    container_name: rabbitmq.nean.io
+    image: rabbitmq:3.7
+    hostname: rabbitmq.nean.io
+    volumes:
+      - ${ROOT_DIR}/rabbitmq/logs/:/var/log/rabbitmq/
+      # - ${ROOT_DIR}/rabbitmq:/var/lib/rabbitmq/mnesia
+    ports:
+      - "5672:5672"
+    restart: unless-stopped
