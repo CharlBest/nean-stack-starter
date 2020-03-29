@@ -2,13 +2,21 @@ import { ConsumeMessage } from 'amqplib';
 import { broker } from '../broker/broker';
 import { QueueType } from '../broker/queue-type.enum';
 import { Database } from '../core/database';
-import { logger } from '../core/utils/logger';
+import { initLogger, logger } from '../core/utils/logger';
+import { initEnvironment } from '../environments/environment';
 import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
+import { environment } from './environments/environment.worker';
 
 class App {
 
     async bootstrapApp(): Promise<void> {
+        // Load environment variables
+        initEnvironment(environment);
+
+        // Initialise logger
+        initLogger();
+
         // Database
         await Database.getQueries();
 

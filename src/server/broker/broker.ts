@@ -9,7 +9,7 @@ class Broker {
 
     async init(): Promise<void> {
         try {
-            this.connection = await connect(environment.rabbitMQ.amqpUrl);
+            this.connection = await connect(`amqp://${environment.rabbitMQ.username}:${environment.rabbitMQ.password}@localhost:${environment.rabbitMQ.port}`);
             this.channel = await this.connection.createChannel();
 
             for (const queueType in QueueType) {

@@ -1,22 +1,27 @@
 import * as express from 'express';
+import { initEnvironment } from '../environments/environment';
 import { bootstrap } from './bootstrap';
-import { appConfig } from './config/app-config';
+import { environment } from './environments/environment.server';
+import { middleware } from './middleware/middleware';
 import { Server } from './server';
+import { initLogger } from './utils/logger';
 
 class App {
 
     private express: express.Application = express();
 
-    constructor() {
-        // It also loads the .env file into the 'process.env' variable.
-        // dotenv.config();
+    async bootstrapApp(): Promise<void> {
+        // Load environment variables
+        initEnvironment(environment);
+
+        // Initialise logger
+        initLogger();
+
         // Create express app
         bootstrap.defineExpressApp(this.express);
-    }
 
-    async bootstrapApp(): Promise<void> {
         // Configure the app config for all the middlewares
-        appConfig.configure(this.express);
+        middleware.configure(this.express);
 
         // Setup CORS
         bootstrap.setupCors(this.express);
