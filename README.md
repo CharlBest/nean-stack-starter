@@ -373,10 +373,10 @@ server {
 
     server_name nean.io www.nean.io;
 
-    root /var/www/nean.io/prod/dist/client;
+    root /var/www/nean.io/dist/client;
 
-    access_log /var/log/nean.io/nginx.access.log;
-    error_log  /var/log/nean.io/nginx.error.log;
+    access_log /var/www/nean.io/nginx/nginx.access.log;
+    error_log  /var/www/nean.io/nginx/nginx.access.log;
 
     include snippets/static-files.conf;
 
@@ -760,13 +760,13 @@ sudo usermod -aG docker ${USER}
 version: '3'
 
 services:
-  countly-server:
-    container_name: countly-server
+  countly:
+    container_name: countly
     image: countly/countly-server
     ports:
       - "32768:80"
     volumes:
-      - $HOME/countly_data:/data/db
+      - ./countly:/data/db
     restart: unless-stopped
 
   neo4j.nean.io:
@@ -1046,29 +1046,39 @@ Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs
 * git fetch upstream
 * npm install
 * npm run build
-* copy over dist folder via WinSCP
 
 ## Update project
+* change services
+  * .env file
+  * docker-compose exposed posts and container names
+  * nginx ports
+  * pm2 environment variables in ecosystem.config.js
 * Rename all NEAN words to new project name
 * Change theme colors in material theme, manifest.json, index.html icons, index.html loading screen bg
 * Change icon/logo
+
+## Copy to server
+* Note procedure for domain and subdomains are the same, just add the subdomains before the root domain
+* Go to /var/www/
+* Create new directory (sudo mkdir domain.com)
+* copy over dist folder via WinSCP into
+* start services
+```sh
+cd /var/www/nean.io/
+docker-compose up --detach
+```
+* [Create new users](#createnewusers)
 
 ## Cloudflare
 * Add A record for subdomain pointing to server IP
 
 ## NGINX
-* Note procedure for domain and subdomains are the same, just add the subdomains before the root domain
-* Go to /var/www/
-* Create new directory (mkdir domain.com)
-* Go to /etc/nginx/sites-available
-* Copy example (cp nean.io domain.com)
-* change domain in new copy
-* change node api server port
+* Create symlink to enable domain (ln -s /var/www/nean.io/services/nginx.conf /etc/nginx/sites-enabled/domain.com)
+* create log folder (sudo mkdir /var/www/nean.io/nginx)
+* sudo nginx -t
+* sudo service nginx restart
 * comment out certificates (ssl) and listen http2 (443)
 * Add listen 80;
-* Go to  /etc/nginx/sites-enabled
-* Create symlink to enable domain (ln -s /etc/nginx/sites-available/domain.com domain.com)
-* create log folder (sudo mkdir /var/log/domain.com)
 * sudo service nginx restart
 * Make sure DNS provider (CloudFlare) has a A Record with name domain.com and content = the IP of the server
 * sudo certbot certonly -d domain.com
@@ -1086,17 +1096,6 @@ Add second CloudFlare page rule
   * Always Use HTTPS
 * sudo service nginx restart
 
-## Docker
-### Edit docker-compose.yml
-* add neo4j and rabbitmq service
-* change domain
-* change ports
-```sh
-cd /var/www/nean.io/
-docker-compose up --detach --no-recreate
-```
-* [Create new users](#createnewusers)
-
 ## PM2
 ### Edit ecosystem.config.js
 * add web and worker apps
@@ -1108,7 +1107,7 @@ pm2 reload ecosystem.config.js --update-env
 pm2 save
 ```
 
-# Steps to update code on prod/server
+# Steps to update code on server
 Local
 ```sh
 # Get latest code from base
@@ -1120,4 +1119,4 @@ npm run build
 Server
 * Open WinSCP
 * copy over newdist to server next to dist
-* mv /var/www/nean.io/prod/dist /var/www/nean.io/prod/olddist && mv /var/www/nean.io/prod/newdist /var/www/nean.io/prod/dist && pm2 reload all && rm -rf /var/www/nean.io/prod/olddist
+* mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist
