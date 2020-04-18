@@ -6,11 +6,11 @@ export const environment: Environment = {
     port: 3000,
     database: {
         uri: 'bolt://localhost',
-        username: 'server_web',
+        username: 'server_worker',
         password: 'password'
     },
     rabbitMQ: {
-        username: 'server_web',
+        username: 'server_worker',
         password: 'password',
         port: 5672
     },
@@ -18,7 +18,7 @@ export const environment: Environment = {
         secretKey: 'sk_test_RKOxhujxxM8c4xIqt6t036Qo'
     },
     email: {
-        password: '***'
+        password: 'password'
     },
     authentication: {
         privateKey: '37LvDSm4XvjYOh9Y'

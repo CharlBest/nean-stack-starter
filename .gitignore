@@ -5,6 +5,14 @@
 /newdist
 /tmp
 /out-tsc
+
+# server environment
+src/server/core/environments/*
+!src/server/core/environments/example.environment.server.ts
+
+src/server/worker/environments/*
+!src/server/worker/environments/example.environment.worker.ts
+
 # Only exists if Bazel was run
 /bazel-out
 

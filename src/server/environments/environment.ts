@@ -1,12 +1,17 @@
 import { Environment } from './environment.interface';
 
-const processEnvironment: Environment | any = {
+const productionEnvironment: Environment | any = {
     production: process.env.NODE_ENV === 'production',
     port: process.env.PORT ? +process.env.PORT : undefined,
     database: {
         uri: process.env.NEO4J_URI,
         username: process.env.NEO4J_USERNAME,
         password: process.env.NEO4J_PASSWORD
+    },
+    rabbitMQ: {
+        username: process.env.RABBITMQ_USERNAME,
+        password: process.env.RABBITMQ_PASSWORD,
+        port: process.env.RABBITMQ_PORT ? +process.env.RABBITMQ_PORT : undefined
     },
     stripe: {
         secretKey: process.env.STRIPE_KEY
@@ -20,17 +25,12 @@ const processEnvironment: Environment | any = {
     vapidKey: {
         public: process.env.VAPID_PUBLIC_KEY,
         private: process.env.VAPID_PRIVATE_KEY
-    },
-    rabbitMQ: {
-        username: process.env.RABBITMQ_USERNAME,
-        password: process.env.RABBITMQ_PASSWORD,
-        port: process.env.RABBITMQ_PORT ? +process.env.RABBITMQ_PORT : undefined
     }
 };
 
 export function initEnvironment(injectEnvironment: Environment) {
-    if (processEnvironment.production) {
-        environment = processEnvironment;
+    if (productionEnvironment.production) {
+        environment = productionEnvironment;
     } else {
         environment = injectEnvironment;
     }

@@ -1,4 +1,4 @@
-import { createTransport, SendMailOptions } from 'nodemailer';
+import { createTransport, SendMailOptions, Transporter } from 'nodemailer';
 import { Email } from '../../communication/interfaces/email.interface';
 import { FeedbackEmailModel } from '../../communication/models/email/feedback-email.model';
 import { ForgotPasswordEmailModel } from '../../communication/models/email/forgot-password-email.model';
@@ -14,15 +14,7 @@ import { environment } from '../../environments/environment';
 class Emailer implements Email {
     fromEmail = 'admin@nean.io';
     fromName = 'NEAN';
-    transporter = createTransport({
-        host: 'smtp.sendgrid.net',
-        port: 465,
-        auth: {
-            user: 'apikey',
-            pass: environment.email.password
-        },
-        secure: true
-    });
+    transporter: Transporter;
     templates: { [key in keyof Email]: string } = {
         welcome: require('../email-templates/welcome.html'),
         forgotPassword: require('../email-templates/forgot-password.html'),
@@ -34,6 +26,18 @@ class Emailer implements Email {
         notification: require('../email-templates/notification.html'),
         system: require('../email-templates/system.html'),
     };
+
+    initEmailer() {
+        this.transporter = createTransport({
+            host: 'smtp.sendgrid.net',
+            port: 465,
+            auth: {
+                user: 'apikey',
+                pass: environment.email.password
+            },
+            secure: true
+        });
+    }
 
     async welcome(model: WelcomeEmailModel): Promise<boolean> {
         return this.send({

@@ -17,6 +17,9 @@ class App {
         // Initialise logger
         initLogger();
 
+        // Initialize Emailer
+        emailer.initEmailer();
+
         // Database
         await Database.getQueries();
 
