@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ItemViewModel } from 'shared/view-models/item/item.view-model';
-import { UserPublicViewModel } from 'shared/view-models/user/user-public.view-model';
+import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
