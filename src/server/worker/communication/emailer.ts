@@ -162,7 +162,7 @@ class Emailer implements Email {
     }
 
     async send(data: SendMailOptions): Promise<boolean> {
-        if (!environment.production) {
+        if (environment.production) {
             try {
                 const info = await this.transporter.sendMail(data);
 
