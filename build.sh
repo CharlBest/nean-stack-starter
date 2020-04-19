@@ -19,3 +19,5 @@ for r in $(find src/client/app -name "*-routing.module.ts"); do
     routeCount=$((routeCount + 1))
 done
 echo "Total route files:" ${routeCount};
+
+#use --max_semi_space_size=2 --max_old_space_size=256 when running node

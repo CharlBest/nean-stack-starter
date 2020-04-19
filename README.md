@@ -105,7 +105,7 @@ Neo4j note: create a local database with with username: neo4j and password: neo4
 git clone git@github.com:CharlBest/nean-stack-starter.git
 cd nean-stack-starter
 npm install
-npm run dev
+npm start
 ```
 
 Your app should now be running on [localhost:4200](http://localhost:4200/)

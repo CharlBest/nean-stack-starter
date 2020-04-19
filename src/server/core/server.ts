@@ -31,10 +31,14 @@ export class Server {
 
         // TODO: potential events to listen on
         // this.httpServer.on('error', (error) => { });
-        // process.on('SIGINT', () => { });
         // process.on('SIGHUP', () => { });
         // process.on('SIGQUIT', () => { });
         // process.on('exit', () => { });
+
+        process.on('SIGINT', () => {
+            this.destroy();
+            process.exit(0);
+        });
 
         process.on('SIGTERM', () => {
             this.destroy();
