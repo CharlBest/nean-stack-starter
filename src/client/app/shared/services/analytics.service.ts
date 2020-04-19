@@ -22,7 +22,7 @@ export class AnalyticsService implements OnDestroy {
   }
 
   emitEvent(nameOfEvent: string, eventValues: { [key: string]: string } | null = null) {
-    countly.q.push(['add_event', {
+    this.push(['add_event', {
       key: nameOfEvent,
       // count: 1,
       // sum: 1.5,
@@ -33,7 +33,7 @@ export class AnalyticsService implements OnDestroy {
 
   // TODO: add this to analytics to better track problemsgoo
   setUser(email: string, id: number) {
-    countly.q.push(['user_details', {
+    this.push(['user_details', {
       email,
       custom: {
         id
@@ -42,23 +42,23 @@ export class AnalyticsService implements OnDestroy {
   }
 
   clearUser() {
-    countly.q.push(['user_details', null]);
+    this.push(['user_details', null]);
   }
 
 
   // Place this somehwere global to catch all
   logError(exception: object) {
-    countly.q.push(['log_error', exception]);
+    this.push(['log_error', exception]);
   }
 
   // This is the default
   enableTracking() {
-    countly.q.push(['opt_in']);
+    this.push(['opt_in']);
   }
 
   // TODO: allow users to toggle this
   disableTracking() {
-    countly.q.push(['opt_out']);
+    this.push(['opt_out']);
   }
 
   // These gyrations are necessary to make the service e2e testable
@@ -86,19 +86,19 @@ export class AnalyticsService implements OnDestroy {
       countly.app_version = version;
 
       // Enable features
-      countly.q.push(['track_sessions']);
-      countly.q.push(['track_errors'], {
+      this.push(['track_sessions']);
+      this.push(['track_errors'], {
         appVersion: version,
         angularVersion,
         angularMaterialVersion
       });
-      countly.q.push(['track_links']);
-      countly.q.push(['track_forms']);
-      countly.q.push(['collect_from_forms']);
+      this.push(['track_links']);
+      this.push(['track_forms']);
+      this.push(['collect_from_forms']);
 
       /* Enterprise:
-      // countly.q.push(['track_scrolls']);
-      // countly.q.push(['track_clicks']);
+      // this.push(['track_scrolls']);
+      // this.push(['track_clicks']);
       */
 
       // Initialize
@@ -117,9 +117,17 @@ export class AnalyticsService implements OnDestroy {
             return;
           }
           this.previousUrl = url;
-          countly.q.push(['track_pageview', url]);
+          this.push(['track_pageview', url]);
         }
       });
+  }
+
+  private push(event: Array<any>, args: object | null = null) {
+    try {
+      countly.q.push(event, args);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   ngOnDestroy() {
