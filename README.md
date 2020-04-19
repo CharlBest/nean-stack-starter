@@ -108,7 +108,11 @@ npm install
 npm start
 ```
 
-Your app should now be running on [localhost:4200](http://localhost:4200/)
+Your app should have automatically opened the browser and be running on [localhost:4200](http://localhost:4200/)
+
+## Only do this once at the start to complete setup
+* Visit [localhost:32768](http://localhost:32768/) and setup Countly
+* [Create new users](#createnewusers)
 
 ## Make it your own (after clone)
 1. Rename all occurances of the word "nean" to your chosen name
