@@ -29,10 +29,10 @@ class Emailer implements Email {
 
     initEmailer() {
         this.transporter = createTransport({
-            host: 'smtp.sendgrid.net',
+            host: 'smtp.zoho.com', // 300 free daily emails limit
             port: 465,
             auth: {
-                user: 'apikey',
+                user: environment.email.username,
                 pass: environment.email.password
             },
             secure: true
@@ -162,7 +162,7 @@ class Emailer implements Email {
     }
 
     async send(data: SendMailOptions): Promise<boolean> {
-        if (environment.production) {
+        if (!environment.production) {
             try {
                 const info = await this.transporter.sendMail(data);
 

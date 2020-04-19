@@ -18,6 +18,7 @@ export const environment: Environment = {
         secretKey: 'sk_test_RKOxhujxxM8c4xIqt6t036Qo'
     },
     email: {
+        username: 'username@email.com',
         password: 'password'
     },
     authentication: {

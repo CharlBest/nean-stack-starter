@@ -10,6 +10,7 @@ export interface Environment {
         secretKey: string;
     };
     email: {
+        username: string;
         password: string;
     };
     authentication: {

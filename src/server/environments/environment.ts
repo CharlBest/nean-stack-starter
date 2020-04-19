@@ -17,7 +17,8 @@ const productionEnvironment: Environment | any = {
         secretKey: process.env.STRIPE_KEY
     },
     email: {
-        password: process.env.SENDGRID_EMAIL_PASSWORD
+        username: process.env.EMAIL_USERNAME,
+        password: process.env.EMAIL_PASSWORD
     },
     authentication: {
         privateKey: process.env.AUTHENTICATION_KEY
