@@ -112,6 +112,7 @@ Your app should have automatically opened the browser and be running on [localho
 
 ## Only do this once at the start to complete setup
 * Visit [localhost:32768](http://localhost:32768/) and setup Countly
+* Get app key from Countly and replace client environment analytics keys
 * [Create new users](#createnewusers)
 
 ## Make it your own (after clone)

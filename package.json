@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1155",
+  "version": "0.0.1156",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -16,8 +16,8 @@
     "start": "concurrently \"npm run start:services\" \"ng serve --open\" \"webpack --mode=development --watch --watch-aggregate-timeout 2000\" \"npm run start:server:watch\" \"npm run start:worker:watch\"",
     "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html",
     "buildv2": "bash build.sh",
-    "start:server:watch": "nodemon --inspect dist/server/web/web.bundle.js",
-    "start:worker:watch": "nodemon dist/server/worker/worker.bundle.js",
+    "start:server:watch": "nodemon --delay 1 --inspect dist/server/web/web.bundle.js",
+    "start:worker:watch": "nodemon --delay 1 dist/server/worker/worker.bundle.js",
     "start:services": "docker-compose --file ./services/docker-compose.yml --env-file=./services/.env up",
     "test": "ts-node --project=src/client/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=src/client/test/jasmine.json",
     "lint": "ng lint",
