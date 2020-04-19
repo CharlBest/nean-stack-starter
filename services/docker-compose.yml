@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  countly:
+    container_name: countly
+    image: countly/countly-server
+    ports:
+      - "32768:80"
+    volumes:
+      - ${ROOT_DIR}/countly:/data/db
+    restart: unless-stopped
   neo4j:
     container_name: neo4j.nean.io
     image: neo4j:3.5-enterprise
