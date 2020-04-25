@@ -25,10 +25,10 @@ input[type="file"] {
 	justify-content: center;
 	align-items: center;
 	padding: 25px;
-	border: 1px dashed rgba(0, 0, 0, 0.3);
+	border: 1px dashed rgb(0 0 0 / 30%);
 	border-radius: 3px;
 	transition: 0.2s;
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgb(0 0 0 / 3%);
 	cursor: pointer;
 
 	// TODO: this should also be the primary color
@@ -52,7 +52,7 @@ input[type="file"] {
 	button {
 		position: absolute;
 		top: 0;
-		background-color: rgba(255, 255, 255, 0.25);
+		background-color: rgb(255 255 255 / 25%);
 
 		&.left {
 			left: 0;
