@@ -37,6 +37,14 @@ class Emailer implements Email {
             },
             secure: true
         });
+
+        this.transporter.verify((error, success) => {
+            if (error) {
+                logger.error('Verify email transport error: ' + error);
+            } else {
+                logger.info('Email transport ready');
+            }
+        });
     }
 
     async welcome(model: WelcomeEmailModel): Promise<boolean> {
