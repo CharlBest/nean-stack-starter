@@ -19,7 +19,7 @@ class UsersRepository extends BaseRepository {
 
     async createUser(res: Response, uId: string, email: string, username: string, passwordHash: string, emailCode: string)
         : Promise<Pick<UserModel, 'email' | 'username' | 'emailCode'> | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.createUser,
+        const result = await this.run(res, Database.queries.users.createUser,
             {
                 uId,
                 email,
@@ -29,7 +29,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -39,19 +39,19 @@ class UsersRepository extends BaseRepository {
     }
 
     async doesUsernameAndEmailExist(res: Response, email: string, username: string): Promise<DoesUsernameAndEmailExist | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.doesUsernameAndEmailExist,
+        const result = await this.run(res, Database.queries.users.doesUsernameAndEmailExist,
             {
                 email,
                 username
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             const localModel = new DoesUsernameAndEmailExist();
             localModel.emailExist = record.get('emailExist');
             localModel.usernameExist = record.get('usernameExist');
             return localModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -61,13 +61,13 @@ class UsersRepository extends BaseRepository {
     }
 
     async getUserByEmailOrUsername(res: Response, emailOrUsername: string): Promise<UserLiteModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserByEmailOrUsername,
+        const result = await this.run(res, Database.queries.users.getUserByEmailOrUsername,
             {
                 emailOrUsername
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -77,13 +77,13 @@ class UsersRepository extends BaseRepository {
     }
 
     async getLiteUserById(res: Response, userId: number): Promise<UserLiteModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getLiteUserById,
+        const result = await this.run(res, Database.queries.users.getLiteUserById,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -93,18 +93,18 @@ class UsersRepository extends BaseRepository {
     }
 
     async getUserById(res: Response, userId: number): Promise<UserModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserById,
+        const result = await this.run(res, Database.queries.users.getUserById,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             return {
                 ...record.get('user'),
                 paymentCards: record.get('cards'),
             } as UserModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -114,19 +114,19 @@ class UsersRepository extends BaseRepository {
     }
 
     async getUserProfile(res: Response, userId: number): Promise<UserProfileViewModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserProfile,
+        const result = await this.run(res, Database.queries.users.getUserProfile,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             return {
                 ...record.get('user'),
                 avatar: record.get('avatar'),
                 paymentCards: record.get('cards'),
             } as UserProfileViewModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -137,7 +137,7 @@ class UsersRepository extends BaseRepository {
 
     async getUserPublic(res: Response, loggedInUserId: number | null, ip: string, userId: number)
         : Promise<UserPublicViewModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublic,
+        const result = await this.run(res, Database.queries.users.getUserPublic,
             {
                 userId,
                 loggedInUserId,
@@ -145,7 +145,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -156,7 +156,7 @@ class UsersRepository extends BaseRepository {
 
     async getUserPublicItems(res: Response, loggedInUserId: number | null, userId: number, pageIndex: number, pageSize: number)
         : Promise<ItemViewModel[] | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.getUserPublicItems,
+        const result = await this.run(res, Database.queries.users.getUserPublicItems,
             {
                 userId,
                 loggedInUserId,
@@ -165,7 +165,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
@@ -173,7 +173,7 @@ class UsersRepository extends BaseRepository {
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),
             } as ItemViewModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -183,14 +183,14 @@ class UsersRepository extends BaseRepository {
     }
 
     async forgotPassword(res: Response, email: string, code: string): Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.addForgottenPasswordCode,
+        const result = await this.run(res, Database.queries.users.addForgottenPasswordCode,
             {
                 email,
                 code
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -201,7 +201,7 @@ class UsersRepository extends BaseRepository {
 
     async changeForgottenPassword(res: Response, email: string, code: string, passwordHash: string)
         : Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.changeForgottenPassword,
+        const result = await this.run(res, Database.queries.users.changeForgottenPassword,
             {
                 email,
                 code,
@@ -209,7 +209,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -219,22 +219,22 @@ class UsersRepository extends BaseRepository {
     }
 
     async verifyEmail(res: Response, userId: number, code: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.verifyEmail,
+        const result = await this.run(res, Database.queries.users.verifyEmail,
             {
                 userId,
                 code
             }
         );
 
-        if (result && result.records && result.records.length > 0) {
-            return result.records[0].get('userExist');
+        if (result && result.length > 0) {
+            return result[0].get('userExist');
         } else {
             return false;
         }
     }
 
     async updateAvatar(res: Response, userId: number, avatar: FileModel | null): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.updateAvatar,
+        const result = await this.run(res, Database.queries.users.updateAvatar,
             {
                 userId,
                 avatar
@@ -249,7 +249,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async updateBio(res: Response, userId: number, bio: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.updateBio,
+        const result = await this.run(res, Database.queries.users.updateBio,
             {
                 userId,
                 bio
@@ -264,14 +264,14 @@ class UsersRepository extends BaseRepository {
     }
 
     async updatePassword(res: Response, userId: number, passwordHash: string): Promise<Pick<UserModel, 'email'> | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.updatePassword,
+        const result = await this.run(res, Database.queries.users.updatePassword,
             {
                 userId,
                 passwordHash
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -281,13 +281,13 @@ class UsersRepository extends BaseRepository {
     }
 
     async deleteUser(res: Response, userId: number): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.deleteUser,
+        const result = await this.run(res, Database.queries.users.deleteUser,
             {
                 userId
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -295,7 +295,7 @@ class UsersRepository extends BaseRepository {
     }
 
     async completedTutorial(res: Response, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.completedTutorial,
+        const result = await this.run(res, Database.queries.users.completedTutorial,
             {
                 userId,
                 tutorialType: viewModel.tutorialType,
@@ -303,7 +303,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -312,7 +312,7 @@ class UsersRepository extends BaseRepository {
 
     async updateTwoFactorAuthentication(res: Response, userId: number, isEnabled: boolean, generatedSecret: string | null)
         : Promise<Pick<UserModel, 'email' | 'twoFactorAuthenticationSecret'> | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.updateTwoFactorAuthentication,
+        const result = await this.run(res, Database.queries.users.updateTwoFactorAuthentication,
             {
                 userId,
                 isEnabled,
@@ -320,7 +320,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => record.get('user'));
+        const model = result ? result.map(record => record.get('user')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -332,7 +332,7 @@ class UsersRepository extends BaseRepository {
     // tslint:disable-next-line: bool-param-default
     async updateConfiguration(res: Response, userId: number, consent?: boolean, darkTheme?: boolean, language?: Language)
         : Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.users.updateConfiguration,
+        const result = await this.run(res, Database.queries.users.updateConfiguration,
             {
                 userId,
                 consent,
@@ -341,7 +341,7 @@ class UsersRepository extends BaseRepository {
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;

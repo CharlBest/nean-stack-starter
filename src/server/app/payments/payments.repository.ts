@@ -12,7 +12,7 @@ class PaymentsRepository extends BaseRepository {
 
     async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, amount: number, email: string)
         : Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.anonymousPayment,
+        const result = await this.run(res, Database.queries.payments.anonymousPayment,
             {
                 paymentUId,
                 chargeId,
@@ -22,7 +22,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -31,7 +31,7 @@ class PaymentsRepository extends BaseRepository {
 
     async userPayment(res: Response, userId: number, cardUId: string | null, paymentUId: string,
         amount: number, chargeId: string, chargeCreated: number): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.userPayment,
+        const result = await this.run(res, Database.queries.payments.userPayment,
             {
                 userId,
                 cardUId,
@@ -42,7 +42,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -50,13 +50,13 @@ class PaymentsRepository extends BaseRepository {
     }
 
     async paymentCards(res: Response, userId: number): Promise<CardModel[] | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.paymentCards,
+        const result = await this.run(res, Database.queries.payments.paymentCards,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => record.get('cards'));
+        const model = result ? result.map(record => record.get('cards')) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -68,7 +68,7 @@ class PaymentsRepository extends BaseRepository {
     // tslint:disable-next-line: parameters-max-number
     async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string,
         stripeFingerprint: string, brand: string, last4: string, expireMonth: number, expireYear: number): Promise<CardModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.createCard,
+        const result = await this.run(res, Database.queries.payments.createCard,
             {
                 userId,
                 stripeCustomerId,
@@ -82,7 +82,7 @@ class PaymentsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => record.get('card'));
+        const model = result ? result.map(record => record.get('card')) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -92,14 +92,14 @@ class PaymentsRepository extends BaseRepository {
     }
 
     async deleteCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.deleteCard,
+        const result = await this.run(res, Database.queries.payments.deleteCard,
             {
                 userId,
                 cardUId
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -107,14 +107,14 @@ class PaymentsRepository extends BaseRepository {
     }
 
     async updateDefaultCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.updateDefaultCard,
+        const result = await this.run(res, Database.queries.payments.updateDefaultCard,
             {
                 userId,
                 cardUId
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -122,13 +122,13 @@ class PaymentsRepository extends BaseRepository {
     }
 
     async paymentHistory(res: Response, userId: number): Promise<PaymentModel[] | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.payments.paymentHistory,
+        const result = await this.run(res, Database.queries.payments.paymentHistory,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => record.get('payments'));
+        const model = result ? result.map(record => record.get('payments')) : null;
 
         if (model && model.length > 0) {
             return model;

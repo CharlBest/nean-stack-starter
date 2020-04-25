@@ -16,13 +16,13 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getNotificationPreferences(res: Response, userId: number): Promise<NotificationPreferencesViewModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getNotificationPreferences,
+        const result = await this.run(res, Database.queries.notifications.getNotificationPreferences,
             {
                 userId
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             const localModel = new NotificationPreferencesViewModel(
                 record.get('pushNotificationTypes'), record.get('emailNotificationTypes'));
             localModel.hasPushSubscription = record.get('hasPushSubscription');
@@ -30,7 +30,7 @@ class NotificationsRepository extends BaseRepository {
             localModel.emailEnabled = record.get('emailEnabled');
             localModel.autoSubscribeToItem = record.get('autoSubscribeToItem');
             return localModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -41,7 +41,7 @@ class NotificationsRepository extends BaseRepository {
 
     async updateNotificationPreferences(res: Response, userId: number, viewModel: UpdateNotificationPreferencesViewModel)
         : Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.updateNotificationPreferences,
+        const result = await this.run(res, Database.queries.notifications.updateNotificationPreferences,
             {
                 userId,
                 pushSubscription: viewModel.pushSubscription ? PushSubscriptionViewModel.createArray(
@@ -70,14 +70,14 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async createSubscription(res: Response, userId: number, uId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.createSubscription,
+        const result = await this.run(res, Database.queries.notifications.createSubscription,
             {
                 userId,
                 uId
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -85,14 +85,14 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async deleteSubscription(res: Response, userId: number, uId: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.deleteSubscription,
+        const result = await this.run(res, Database.queries.notifications.deleteSubscription,
             {
                 userId,
                 uId
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -100,7 +100,7 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getSubscriptions(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getSubscriptions,
+        const result = await this.run(res, Database.queries.notifications.getSubscriptions,
             {
                 userId,
                 pageIndex,
@@ -108,14 +108,14 @@ class NotificationsRepository extends BaseRepository {
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
                 user: record.get('users'),
                 subscribed: true,
             } as ItemViewModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -125,13 +125,13 @@ class NotificationsRepository extends BaseRepository {
     }
 
     async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel | null> {
-        const result = await res.locals.neo4jSession.run(Database.queries.notifications.getNewCommentNotification,
+        const result = await this.run(res, Database.queries.notifications.getNewCommentNotification,
             {
                 commentUId
             }
         );
 
-        const model = result.records.map(record => {
+        const model = result ? result.map(record => {
             const viewModel = new PushNotificationModel();
 
             const pushSubscriptions = record.get('pushSubscriptions');
@@ -142,7 +142,7 @@ class NotificationsRepository extends BaseRepository {
 
             viewModel.body = record.get('description');
             return viewModel;
-        });
+        }) : null;
 
         if (model && model.length > 0) {
             return model[0];

@@ -9,13 +9,13 @@ class GeneralRepository extends BaseRepository {
     }
 
     async createNewsletterMember(res: Response, email: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.general.createNewsletterMember,
+        const result = await this.run(res, Database.queries.general.createNewsletterMember,
             {
                 email
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
@@ -23,13 +23,13 @@ class GeneralRepository extends BaseRepository {
     }
 
     async deleteNewsletterMember(res: Response, email: string): Promise<boolean> {
-        const result = await res.locals.neo4jSession.run(Database.queries.general.deleteNewsletterMember,
+        const result = await this.run(res, Database.queries.general.deleteNewsletterMember,
             {
                 email
             }
         );
 
-        if (result.records) {
+        if (result) {
             return true;
         } else {
             return false;
