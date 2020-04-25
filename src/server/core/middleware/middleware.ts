@@ -15,7 +15,8 @@ class Middleware {
 
             // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
             .use(helmet())
-            // .use(helmet.noCache())
+            .use(helmet.hidePoweredBy({ setTo: 'PHP/5.4.0' }))
+            .use(helmet.referrerPolicy({ policy: 'no-referrer' }))
             // .use(helmet.hsts({
             //     maxAge: 31536000,
             //     includeSubdomains: true
@@ -33,7 +34,8 @@ class Middleware {
                 // The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false)
                 // or the qs library (when true). The "extended" syntax allows for rich objects and arrays to be encoded into the
                 // URL-encoded format, allowing for a JSON-like experience with URL-encoded.
-                extended: true
+                extended: true,
+                limit: '400kb'
             }));
 
         // HTTP request logger middleware for node.js
