@@ -18,9 +18,9 @@ export const environment = {
   webSocketEndpoint: `ws://${domain}`,
   analyticsServerEndpoint: 'http://localhost:32768',
   analytics: {
-    web: 'e75c9750601f95c94583dfde8765e58587181c42',
-    ios: 'e75c9750601f95c94583dfde8765e58587181c42',
-    chromeExtension: 'e75c9750601f95c94583dfde8765e58587181c42'
+    web: 'e633727172d74c6c324b11a42732fde31bef0180',
+    ios: 'e633727172d74c6c324b11a42732fde31bef0180',
+    chromeExtension: 'e633727172d74c6c324b11a42732fde31bef0180'
   },
   firebase: {
     projectId: 'nean-dev',
