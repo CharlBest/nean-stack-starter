@@ -1,7 +1,5 @@
 import * as express from 'express';
-import { initEnvironment } from '../environments/environment';
 import { bootstrap } from './bootstrap';
-import { environment } from './environments/environment.server';
 import { middleware } from './middleware/middleware';
 import { Server } from './server';
 import { initLogger } from './utils/logger';
@@ -11,9 +9,6 @@ class App {
     private express: express.Application = express();
 
     async bootstrapApp(): Promise<void> {
-        // Load environment variables
-        initEnvironment(environment);
-
         // Initialise logger
         initLogger();
 
@@ -41,6 +36,8 @@ class App {
         // bootstrap.setupAutoPeriodicDataFetch(this.express);
         // Broker
         bootstrap.setupBroker();
+        // Cron
+        bootstrap.setupCronJobs();
 
         // TODO: add logger (maybe morgan (http)) or custom
         // Setup errors

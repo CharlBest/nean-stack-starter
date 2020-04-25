@@ -3,6 +3,10 @@ export interface Environment {
     port: number;
     database: {
         uri: string;
+        name: string;
+        // This needs to correspond with the Neo4j credentials .env in services
+        adminUsername: string;
+        adminPassword: string;
         username: string;
         password: string;
     };
@@ -22,6 +26,9 @@ export interface Environment {
         private: string;
     };
     rabbitMQ: {
+        virtualHost: string;
+        adminUsername: string;
+        adminPassword: string;
         username: string;
         password: string;
         port: number;
