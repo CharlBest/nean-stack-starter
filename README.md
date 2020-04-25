@@ -97,11 +97,11 @@ Client pages
 
 ## Running locally for development (watch/hot reload)
 
-Make sure you have [Node.js](http://nodejs.org/), [Neo4j](https://neo4j.com/) and [Angular CLI](https://cli.angular.io/) installed.
-
-Neo4j note: create a local database with with username: neo4j and password: neo4j 
+Make sure you have [Node.js](http://nodejs.org/) and [Docker](https://docs.docker.com/get-docker/) installed.
 
 ```sh
+node -v
+docker -v
 git clone git@github.com:CharlBest/nean-stack-starter.git
 cd nean-stack-starter
 npm install
@@ -113,7 +113,7 @@ Your app should have automatically opened the browser and be running on [localho
 ## Only do this once at the start to complete setup
 * Visit [localhost:32768](http://localhost:32768/) and setup Countly
 * Get app key from Countly and replace client environment analytics keys
-* [Create new users](#createnewusers)
+* Setup server environment variables in src/server/environments
 
 ## Make it your own (after clone)
 1. Rename all occurances of the word "nean" to your chosen name
@@ -129,12 +129,6 @@ Your app should have automatically opened the browser and be running on [localho
       5. PM2 Node manager
    4. Cloudflare (DNS)
    5. Namecheap Domain
-   6. SendGrid (Emails)
-      1. Welcome
-      2. Forgot password
-      3. Feedback
-      4. Email verification link
-      5. Payment successful
 
 ## Environment variables
 Change to yours.
@@ -149,7 +143,7 @@ Note: firebase storage has authentication on their buckets. Whitelist your url o
 ## 3rd Party Cloud Solutions
 * GitHub (source code)
 * Firebase (image/blob storage)
-* SendGrid (email service)
+* Zoho (email service)
 * Stripe (payment service)
 * Cloudflare (CDN)
 * Google Cloud (server)
@@ -600,10 +594,10 @@ function generate(environment, server, env, port = 0, instances = 1) {
 module.exports = {
     apps: [
         generate('prod', 'web', {
-            AMQP_URL: 'amqp://server_web:<PASSWORD>@localhost:5672',
+            AMQP_URL: 'amqp://server_api:<PASSWORD>@localhost:5672',
             DATABASE_PASSWORD: '<PASSWORD>',
             DATABASE_URI: 'bolt://localhost:7687',
-            DATABASE_USERNAME: 'server_web',
+            DATABASE_USERNAME: 'server_api',
         }, 3010, 2),
         generate('prod', 'worker', {
             AMQP_URL: 'amqp://server_worker:<PASSWORD>@localhost:5672',
@@ -612,10 +606,10 @@ module.exports = {
             DATABASE_USERNAME: 'server_worker',
         }),
         generate('dev', 'web', {
-            AMQP_URL: 'amqp://server_web:<PASSWORD>@localhost:5673',
+            AMQP_URL: 'amqp://server_api:<PASSWORD>@localhost:5673',
             DATABASE_PASSWORD: '<PASSWORD>',
             DATABASE_URI: 'bolt://localhost:7688',
-            DATABASE_USERNAME: 'server_web',
+            DATABASE_USERNAME: 'server_api',
         }, 3020, 2),
         generate('dev', 'worker', {
             AMQP_URL: 'amqp://server_worker:<PASSWORD>@localhost:5673',
@@ -858,7 +852,7 @@ docker-compose up -d
 # terminal within container
 docker exec -it <container_name> bash
 # Execute cyper in container
-bin/cypher-shell -u server_web -p password
+bin/cypher-shell -u server_api -p password
 # process monitoring for containers
 docker stats
 # process monitoring for specific container
@@ -866,26 +860,14 @@ docker top <container_name>
 ```
 
 3. <a id="createnewusers">Create new users</a>
-
-    3.1 Neo4j
-    ```sh
-    # Neo4j
-    ## Create users
-    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.createUser('server_web', 'password', false)"
-    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.createUser('server_worker', 'password', false)"
-    ## Set permissions
-    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.addRoleToUser('architect', 'server_web')"
-    docker exec neo4j.nean.io bin/cypher-shell -u neo4j -p password "CALL dbms.security.addRoleToUser('architect', 'server_worker')"
-    ```
-
     3.2 RabbitMQ
     ```sh
     # RabbitMQ
     ## Create user
-    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_web password
+    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_api password
     docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_worker password
     ## Set permissions
-    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_web ".*" ".*" ".*"
+    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_api ".*" ".*" ".*"
     docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_worker ".*" ".*" ".*"
     ```
     * Do the same for other instances
