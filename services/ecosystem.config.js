@@ -1,33 +1,38 @@
-// Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
+// Options reference: https://pm2.keymetrics.io/docs/usage/application-declaration/
 
-const defaultEnvironmentVariables = {
-    NODE_ENV: 'production',
-    NEO4J_URI: 'bolt://localhost:7687',
-    NEO4J_USERNAME: 'server_web',
-    NEO4J_PASSWORD: 'password',
-    RABBITMQ_USERNAME: 'server_web',
-    RABBITMQ_PASSWORD: 'password',
-    RABBITMQ_PORT: 5672,
-    STRIPE_KEY: '',
-    EMAIL_USERNAME: '',
-    EMAIL_PASSWORD: '',
-    AUTHENTICATION_KEY: '',
-    VAPID_PUBLIC_KEY: '',
-    VAPID_PRIVATE_KEY: '',
-};
+const apiConfig = require('./environment.api');
+const workerConfig = require('./environment.worker');
 
-function generate(name, customEnvironmentVariables, port = 0, instances = 1) {
+function generateDev(name, environmentVariables, instances = 1) {
     return {
-        name: `nean.io_${name}`,
+        name,
         script: `${name}.bundle.js`,
-        cwd: `../dist/server/${name}`,
-        instances: instances,
+        cwd: `dist/server/${name}`,
+        instances,
         env: {
-            PORT: port,
-            NEO4J_USERNAME: `server_${name}`,
-            RABBITMQ_USERNAME: `server_${name}`,
-            ...defaultEnvironmentVariables,
-            ...customEnvironmentVariables
+            NODE_ENV: 'development',
+            ...environmentVariables
+            // DEBUG: '*'
+        },
+        error_file: 'pm2-error.log',
+        out_file: 'pm2-output.log',
+        log_file: 'pm2-combined.log',
+        watch: true,
+        watch_delay: 3000,
+        ignore_watch: ['*.log'],
+        restart_delay: 5000
+    }
+}
+
+function generateProd(name, environmentVariables, instances = 1) {
+    return {
+        name,
+        script: `${name}.bundle.js`,
+        cwd: `dist/server/${name}`,
+        instances,
+        env: {
+            NODE_ENV: 'production',
+            ...environmentVariables
         },
         error_file: 'pm2-error.log',
         out_file: 'pm2-output.log',
@@ -37,10 +42,11 @@ function generate(name, customEnvironmentVariables, port = 0, instances = 1) {
         min_uptime: 1000
     }
 }
+
 module.exports = {
     apps: [
-        generate('web', null, 3010),
-        generate('worker')
+        generateDev('api', apiConfig),
+        generateDev('worker', workerConfig)
     ],
     deploy: {
         dev: {
