@@ -1,5 +1,5 @@
 export const data = `
-MATCH (user:User { id: {userId} })-[rel:SUBSCRIBED]->(item:Item { uId: {uId} })
+MATCH (user:User { id: $userId })-[rel:SUBSCRIBED]->(item:Item { uId: $uId })
 
 DELETE rel
 

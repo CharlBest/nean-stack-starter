@@ -1,5 +1,5 @@
 export const data = `
-MATCH (user:User { id: {userId} })
+MATCH (user:User { id: $userId })
 RETURN user 
 { 
     id: user.id,

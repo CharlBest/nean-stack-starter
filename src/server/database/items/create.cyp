@@ -5,13 +5,13 @@ WITH nextItem, CASE WHEN nextItem IS NULL THEN 1 ELSE nextItem.id + 1 END as nex
 ORDER BY nextItem.id DESC
 LIMIT 1
 
-MATCH (user:User { id: {userId} })
+MATCH (user:User { id: $userId })
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
-CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: {uId}, title: {title}, description: {description}, dateCreated: timestamp() })
+CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: $uId, title: $title, description: $description, dateCreated: timestamp() })
 
 // Create files
-FOREACH (file IN {files} |
+FOREACH (file IN $files |
     CREATE (newFile:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: timestamp() })
     MERGE (item)-[:HAS_FILE]->(newFile)
 )

@@ -1,8 +1,8 @@
 export const data = `
-MATCH (user:User { id: {userId} })-[:MADE_COMMENT]->(comment:Comment { uId: {uId} })
+MATCH (user:User { id: $userId })-[:MADE_COMMENT]->(comment:Comment { uId: $uId })
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
-SET comment.description = {description}
+SET comment.description = $description
 
 RETURN properties(comment) as comment,
 user

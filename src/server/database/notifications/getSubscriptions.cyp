@@ -1,5 +1,5 @@
 export const data = `
-MATCH (users:User { id: {userId} })-[rel:SUBSCRIBED]->(items:Item)
+MATCH (users:User { id: $userId })-[rel:SUBSCRIBED]->(items:Item)
 OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
 OPTIONAL MATCH (users)-[:HAS_AVATAR]->(avatars:File)
 
@@ -13,6 +13,6 @@ users
 }
 
 ORDER BY rel.dateCreated DESC
-SKIP {pageIndex}*{pageSize}
-LIMIT {pageSize}
+SKIP $pageIndex*$pageSize
+LIMIT $pageSize
 `

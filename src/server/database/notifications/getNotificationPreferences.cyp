@@ -1,5 +1,5 @@
 export const data = `
-MATCH (user:User { id: {userId} })
+MATCH (user:User { id: $userId })
 
 RETURN
 CASE WHEN user.pushSubscription IS NOT NULL THEN true ELSE false END as hasPushSubscription,

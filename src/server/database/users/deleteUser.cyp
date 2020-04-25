@@ -1,4 +1,4 @@
 export const data = `
-MATCH (user:User { id: {userId} })
+MATCH (user:User { id: $userId })
 DETACH DELETE user
 `

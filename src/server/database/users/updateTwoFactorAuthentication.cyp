@@ -1,8 +1,8 @@
 export const data = `
-MATCH (user:User { id: {userId} })
+MATCH (user:User { id: $userId })
 
-SET user.twoFactorAuthenticationEnabled = {isEnabled}
-SET user.twoFactorAuthenticationSecret = CASE WHEN user.twoFactorAuthenticationSecret IS NULL THEN {generatedSecret} ELSE user.twoFactorAuthenticationSecret END
+SET user.twoFactorAuthenticationEnabled = $isEnabled
+SET user.twoFactorAuthenticationSecret = CASE WHEN user.twoFactorAuthenticationSecret IS NULL THEN $generatedSecret ELSE user.twoFactorAuthenticationSecret END
 
 RETURN user
 { 
