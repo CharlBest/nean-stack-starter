@@ -163,7 +163,7 @@ export class FileUploaderComponent {
 
                 // https://stackoverflow.com/a/32490603/10395024
                 // https://i.stack.imgur.com/VGsAj.gif
-                const exifOrientation = await (imageCompression as any).getExifOrientation(file);
+                const exifOrientation = await imageCompression.getExifOrientation(file);
 
                 this.previewImages.push({
                     file: compressedFile,
