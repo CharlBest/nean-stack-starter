@@ -13,8 +13,22 @@ export function initLogger() {
             // Else create file called debug.log with error, warn, info, verbose and debug level logging in
             //
             new transports.File({
-                filename: environment.production ? 'info.log' : 'src/server/logs/debug.log',
-                level: environment.production ? 'info' : 'debug'
+                filename: environment.production ? 'info.log' : 'debug.log',
+                level: environment.production ? 'info' : 'debug',
+                // maxsize: 500000, // When file reaches 0.5MB it will create a second with a counter prefixed
+                rotationFormat: () => {
+                    return () => {
+                        const temp = new Date();
+                        return `${padStr(temp.getFullYear())}${padStr(1 + temp.getMonth())}${padStr(temp.getDate())}`;
+                        // TODO: add bellow code for more fine grained hourly logs
+                        // padStr(temp.getHours()) +
+                        // padStr(temp.getMinutes()) +
+                        // padStr(temp.getSeconds());
+                    }
+                    function padStr(i: number) {
+                        return (i < 10) ? '0' + i : '' + i;
+                    }
+                }
             }),
             //
             // Set logging to ouput debug (all) to console if not in prod else only error console logs
