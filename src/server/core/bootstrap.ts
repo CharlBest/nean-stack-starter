@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
+import { cron } from './middleware/cron';
 import { Language } from './middleware/language';
 import { Neo4j } from './middleware/neo4j';
 import { webSocketServer } from './middleware/web-socket-server';
@@ -45,6 +46,11 @@ class Bootstrap {
     }
 
     setupRoutes(app: Application): void {
+        // base route
+        app.get('/', (req, res, next) => {
+            res.json({ message: '☺' });
+        });
+
         // serving api routes
         app.use('/api', generalRoutes);
         app.use('/api', usersRoutes);
@@ -143,7 +149,7 @@ class Bootstrap {
 
     async setupDatabase(app: Application): Promise<void> {
         // Retrieve all queries
-        await Database.getQueries();
+        await Database.init();
 
         app.use(Neo4j.sessionSetup);
 
@@ -197,6 +203,10 @@ class Bootstrap {
 
     setupBroker(): void {
         broker.init();
+    }
+
+    setupCronJobs() {
+        cron.init();
     }
 }
 
