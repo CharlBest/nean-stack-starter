@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslateService } from '../translate/translate.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LanguageInterceptor implements HttpInterceptor {
 
     constructor(private translateService: TranslateService) { }

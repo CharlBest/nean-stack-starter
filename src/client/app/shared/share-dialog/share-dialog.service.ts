@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShareService, Url } from '../services/share.service';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ShareDialogService {
 
     constructor(private dialog: MatDialog,

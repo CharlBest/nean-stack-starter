@@ -7,7 +7,9 @@ import { filter, take, tap } from 'rxjs/operators';
 import { ContextMenuComponent } from '../context-menu/context-menu/context-menu.component';
 import { RightClickContextMenuComponent } from './right-click-context-menu/right-click-context-menu.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class RightClickContextMenuService implements OnDestroy {
 
     overlayRef: OverlayRef | null;

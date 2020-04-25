@@ -6,7 +6,9 @@ import { DialogService } from '../dialog/dialog.service';
 import { AuthService } from '../services/auth.service';
 import { LocalStorageService } from '../services/storage.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private authService: AuthService,

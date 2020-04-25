@@ -6,7 +6,9 @@ import { Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { PWAHelperComponent } from './pwa-helper/pwa-helper.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PWAHelperService implements OnDestroy {
 
     private routerEventsSubscription: Subscription;
