@@ -1,17 +1,58 @@
-import { v1 as neo4j } from 'neo4j-driver';
+import { auth, driver, Driver, ServerInfo, Session } from 'neo4j-driver';
 import { environment } from '../environments/environment';
 import { logger } from './utils/logger';
 
 export class Database {
 
-    static driver: neo4j.Driver;
+    static driver: Driver;
     static fileExtension = 'cyp';
     static queries: DbQueries;
 
-    private static createDriver() {
-        const driver = neo4j.driver(
+    static async init(): Promise<void> {
+        await Database.getQueries();
+
+        const adminDriver = driver(
             environment.database.uri,
-            neo4j.auth.basic(environment.database.username, environment.database.password),
+            auth.basic(environment.database.adminUsername, environment.database.adminPassword),
+            {
+                logging: {
+                    level: 'warn',
+                    logger: (level, message) => logger.log(level, `Neo4j - ${message}`)
+                }
+            }
+        );
+
+        const adminSession = adminDriver.session({
+            database: 'system'
+        });
+
+        try {
+            let createDatabase = Database.queries.startup.createDatabase;
+            createDatabase = createDatabase.replace('$databaseName', environment.database.name);
+            await adminSession.run(createDatabase);
+
+            let createUser = Database.queries.startup.createUser;
+            createUser = createUser.replace('$username', environment.database.username);
+            createUser = createUser.replace('$password', environment.database.password);
+            await adminSession.run(createUser);
+
+            let grantUserRoles = Database.queries.startup.grantUserRoles;
+            grantUserRoles = grantUserRoles.replace('$username', environment.database.username);
+            await adminSession.run(grantUserRoles);
+
+            logger.info('Database init success');
+        } catch (e) {
+            logger.error(e.message, [e]);
+        }
+
+        adminSession.close();
+        adminDriver.close();
+    }
+
+    private static createDriver() {
+        return driver(
+            environment.database.uri,
+            auth.basic(environment.database.username, environment.database.password),
             {
                 disableLosslessIntegers: true,
                 logging: {
@@ -20,28 +61,20 @@ export class Database {
                 }
             }
         );
-
-        // Register a callback to know if driver creation was successful:
-        driver.onCompleted = () => {
-            // proceed with using the driver, it was successfully instantiated
-        };
-
-        // Register a callback to know if driver creation failed.
-        // This could happen due to wrong credentials or database unavailability:
-        driver.onError = (error) => {
-            logger.error('Neo4j driver instantiation failed', [error]);
-        };
-
-        return driver;
     }
 
-    static createSession(): neo4j.Session {
-        if (this.driver) {
-            return this.driver.session();
-        } else {
+    static createSession(): Session {
+        if (!this.driver) {
             this.driver = this.createDriver();
-            return this.driver.session();
         }
+
+        return this.driver.session({
+            database: environment.database.name
+        });
+    }
+
+    static verifyDriverConnectivity(): Promise<ServerInfo> {
+        return this.driver.verifyConnectivity();
     }
 
     static clearDriver(): void {
@@ -53,6 +86,9 @@ export class Database {
     static async getQueries() {
         this.queries = {
             startup: {
+                createDatabase: (await import(`../database/startup/createDatabase.${Database.fileExtension}`)).data,
+                createUser: (await import(`../database/startup/createUser.${Database.fileExtension}`)).data,
+                grantUserRoles: (await import(`../database/startup/grantUserRoles.${Database.fileExtension}`)).data,
                 itemTitleAndDescriptionIndex:
                     (await import(`../database/startup/itemTitleAndDescriptionIndex.${Database.fileExtension}`)).data,
                 userEmailAndUsernameIndex: (await import(`../database/startup/userEmailAndUsernameIndex.${Database.fileExtension}`)).data,
@@ -126,6 +162,9 @@ export class Database {
 
 export interface DbQueries {
     startup: {
+        createDatabase: string,
+        createUser: string,
+        grantUserRoles: string,
         itemTitleAndDescriptionIndex: string,
         userEmailAndUsernameIndex: string,
     };
