@@ -9,7 +9,7 @@ const config = {
     devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
     context: path.resolve('./src/server'),
     entry: {
-        web: './main.web.ts',
+        api: './main.api.ts',
         worker: './main.worker.ts',
         // vendor: './vendor.ts'
     },
