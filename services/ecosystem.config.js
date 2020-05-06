@@ -28,7 +28,7 @@ function generateProd(name, environmentVariables, instances = 1) {
     return {
         name,
         script: `${name}.bundle.js`,
-        cwd: `dist/server/${name}`,
+        cwd: `../dist/server/${name}`,
         instances,
         env: {
             NODE_ENV: 'production',
