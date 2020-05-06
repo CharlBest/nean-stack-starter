@@ -3,6 +3,7 @@ import { VERSION as angularMaterialVersion } from '@angular/material/core';
 import { NavigationEnd, Router } from '@angular/router';
 import countly from 'countly-sdk-web';
 import { Subscription } from 'rxjs';
+// import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import { version } from '../../../../../package.json';
 import { environment } from '../../../environments/environment';
 
@@ -18,7 +19,22 @@ export class AnalyticsService implements OnDestroy {
 
   init() {
     this.initialize();
+    this.setWebVitals();
     this.trackRouterNavigation();
+  }
+
+  setWebVitals() {
+    // getCLS((metric: any) => this.reportTrace('device', 'cumulative-layout-shift', metric));
+    // getFCP((metric: any) => this.reportTrace('device', 'first-contentful-paint', metric));
+    // getFID((metric: any) => this.reportTrace('device', 'first-input-delay', metric));
+    // getLCP((metric: any) => this.reportTrace('device', 'largest-contentful-paint', metric));
+    // getTTFB((metric: any) => {
+    //   const requestTime = metric.value - metric.entries[0].requestStart;
+    //   this.reportTrace('network', 'reduce-server-response-times', {
+    //     requestTime,
+    //     ...metric
+    //   });
+    // });
   }
 
   emitEvent(nameOfEvent: string, eventValues: { [key: string]: string } | null = null) {
@@ -128,6 +144,18 @@ export class AnalyticsService implements OnDestroy {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  private reportTrace(type: 'device' | 'network', name: string, metrics: object) {
+    this.push(['report_trace', {
+      type, // device or network
+      name, // use name to identify trace and group them by
+      stz: new Date().getTime(), // start timestamp in miliseconds
+      etz: new Date().getTime(), // end timestamp in miliseconds
+      app_metrics: {
+        ...metrics
+      }
+    }]);
   }
 
   ngOnDestroy() {
