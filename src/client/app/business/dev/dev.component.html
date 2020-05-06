@@ -19,6 +19,10 @@
                 *matRowDef="let row; columns: ['description', 'version'];"></tr>
         </table>
     </mat-card-content>
+    <mat-card-actions>
+        <button mat-stroked-button
+            routerLink="/call/create">Video Call</button>
+    </mat-card-actions>
 </mat-card>
 
 <mat-card [hidden]="isProcessingBestPractices">

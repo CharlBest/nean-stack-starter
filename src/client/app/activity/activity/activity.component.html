@@ -17,7 +17,7 @@
                     <mat-list-item
                         *ngFor="let message of notificationService.messages; let i = index; trackBy: trackByFn"
                         class="animation-slide-down">
-                        <span mat-line>{{message}}</span>
+                        <span mat-line>{{message.message}}</span>
                         <button mat-icon-button
                             (click)="removeMessage(i)"
                             type="button"

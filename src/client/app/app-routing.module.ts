@@ -53,6 +53,10 @@ const routes: Route[] = [
     loadChildren: () => import('./business/business.module').then(m => m.BusinessModule)
   },
   {
+    path: 'call',
+    loadChildren: () => import('./call/call.module').then(m => m.CallModule)
+  },
+  {
     path: 'newsletter',
     loadChildren: () => import('./newsletter/newsletter.module').then(m => m.NewsletterModule)
   },

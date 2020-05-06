@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { translateService } from '@shared/translate/translate.service';
 import { BreakpointService } from './breakpoint.service';
 import { WebSocketService } from './websocket.service';
@@ -10,25 +11,26 @@ import { WebSocketService } from './websocket.service';
 })
 export class NotificationService {
 
-    messages: Array<string> = [];
+    messages: Array<{ message: string, type: WebSocketType, action?: any }> = [];
 
     constructor(private webSocketService: WebSocketService,
         private snackBar: MatSnackBar,
         private bpService: BreakpointService) { }
 
     init() {
-        // SnackBar
+        // New Sign Up
         this.webSocketService.newSignUp$
             .subscribe(data => {
-                const message = translateService.t(data.message);
-
                 this.snackBar.dismiss();
 
                 // Add messages to queue
-                this.messages.push(message);
+                this.messages.push({
+                    message: data.message,
+                    type: data.type
+                });
 
                 // Show notification popup
-                this.snackBar.open(message, 'Say hello back', {
+                this.snackBar.open(data.message, 'Say hello back', {
                     duration: 5000,
                     verticalPosition: this.bpService.isDesktop ? 'top' : 'bottom',
                     horizontalPosition: this.bpService.isDesktop ? 'right' : 'center'
@@ -36,7 +38,7 @@ export class NotificationService {
                     .subscribe(() => {
                         // Send message back
                         const model = new NewSignUpWebSocketModel();
-                        model.message = 'helloToYouToo';
+                        model.message = translateService.t('helloToYouToo');
                         this.webSocketService.send(model);
                     });
             });

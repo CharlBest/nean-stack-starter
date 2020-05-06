@@ -1,0 +1,105 @@
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #929292;
+}
+
+.top-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	padding: 20px 0;
+	background: linear-gradient(rgb(0 0 0 / 15%), rgb(0 0 0 / 0));
+	animation: fadein 0.5s ease-in, slidedown 0.5s ease-in-out;
+}
+
+.bottom-bar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	animation: fadein 0.5s ease-in, slideup 0.5s ease-in-out;
+}
+
+.incoming-video {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.outgoing-video {
+	position: absolute;
+	border-radius: 6px;
+	width: 20%;
+	height: 20%;
+	object-fit: fill;
+	transition: width 1s, height 1s;
+
+	&.fullscreen {
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: 0;
+	}
+
+	&.top-left {
+		top: 20px;
+		left: 20px;
+	}
+
+	&.top-right {
+		top: 20px;
+		right: 20px;
+	}
+
+	&.bottom-left {
+		bottom: 20px;
+		left: 20px;
+
+		&.push-up {
+			animation: slideup 0.5s ease-in-out;
+			bottom: 120px;
+		}
+	}
+
+	&.bottom-right {
+		bottom: 20px;
+		right: 20px;
+
+		&.push-up {
+			animation: slideup 0.5s ease-in-out;
+			bottom: 120px;
+		}
+	}
+}
+
+.mirror {
+	transform: rotateY(180deg);
+}
+
+.app-icon {
+	fill: #fff;
+}
+
+.app-icon.disabled {
+	fill: #c3c3c3;
+}

@@ -38,7 +38,7 @@ export class NavigationComponent implements OnInit {
     },
     search: { paths: [{ path: 'search' }] },
     createItem: { paths: [{ path: 'item/create' }] },
-    activity: { paths: [{ path: 'activity' }] },
+    activity: { paths: [{ path: 'activity' }, { path: 'call' }, { path: 'call/create' }] },
     account: {
       paths: [
         { path: 'account' }, { path: 'sign-up' },
@@ -179,7 +179,7 @@ export class NavigationComponent implements OnInit {
 
       this.router.config.forEach(route => {
         if (route.path && !allNavItems.includes(route.path) && route.path !== '**' && route.path !== '404') {
-          alert(route.path);
+          alert(`Route path navigation association not found. Name: ${route.path}`);
         }
       });
     }

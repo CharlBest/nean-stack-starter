@@ -335,3 +335,51 @@ export class IconVerifiedUserComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('rotate_right', Category.IMAGE)
 })
 export class IconRotateRightComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-call',
+  templateUrl: materialIconPath('call', Category.COMMUNICATION)
+})
+export class IconCallComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-call-end',
+  templateUrl: materialIconPath('call_end', Category.COMMUNICATION)
+})
+export class IconCallEndComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-ring-volume',
+  templateUrl: materialIconPath('ring_volume', Category.COMMUNICATION)
+})
+export class IconRingVolumeComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-switch-camera',
+  templateUrl: materialIconPath('switch_camera', Category.IMAGE)
+})
+export class IconSwitchCameraComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-mic',
+  templateUrl: materialIconPath('mic', Category.AV)
+})
+export class IconMicComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-mic-off',
+  templateUrl: materialIconPath('mic_off', Category.AV)
+})
+export class IconMicOffComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-videocam',
+  templateUrl: materialIconPath('videocam', Category.AV)
+})
+export class IconVideocamComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-videocam-off',
+  templateUrl: materialIconPath('videocam_off', Category.AV)
+})
+export class IconVideocamOffComponent extends BaseIconComponent { }

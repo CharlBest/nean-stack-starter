@@ -1,6 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { BaseWebSocketModel } from '@shared/models/web-socket/base-web-socket.model';
 import { NewItemWebSocketModel } from '@shared/models/web-socket/new-item-web-socket.model';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { WebRTCSignalWebSocketModel } from '@shared/models/web-socket/web-rtc-signal-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { Subject } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
@@ -11,9 +13,10 @@ import { environment } from '../../../environments/environment';
 })
 export class WebSocketService implements OnDestroy {
 
-    private webSocketSubject: WebSocketSubject<NewSignUpWebSocketModel | NewItemWebSocketModel>;
+    private webSocketSubject: WebSocketSubject<BaseWebSocketModel>;
     newSignUp$: Subject<NewSignUpWebSocketModel> = new Subject<NewSignUpWebSocketModel>();
     newItem$: Subject<NewItemWebSocketModel> = new Subject<NewItemWebSocketModel>();
+    webRTCSignal$: Subject<WebRTCSignalWebSocketModel> = new Subject<WebRTCSignalWebSocketModel>();
 
     constructor() {
         this.init();
@@ -35,6 +38,10 @@ export class WebSocketService implements OnDestroy {
                         this.newItem$.next(data as NewSignUpWebSocketModel);
                         break;
 
+                    case WebSocketType.WEB_RTC_SIGNAL:
+                        this.webRTCSignal$.next(data as WebRTCSignalWebSocketModel);
+                        break;
+
                     default:
                         break;
                 }
@@ -46,7 +53,7 @@ export class WebSocketService implements OnDestroy {
         );
     }
 
-    send(data: NewSignUpWebSocketModel) {
+    send(data: BaseWebSocketModel) {
         this.webSocketSubject.next(data);
     }
 

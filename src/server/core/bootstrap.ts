@@ -1,4 +1,5 @@
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
+import { WebRTCSignalWebSocketModel } from '@shared/models/web-socket/web-rtc-signal-web-socket.model';
 import { Application, NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
@@ -98,7 +99,7 @@ class Bootstrap {
                 ws.isAlive = true;
             });
 
-            ws.on('message', (data: NewSignUpWebSocketModel) => {
+            ws.on('message', (data: NewSignUpWebSocketModel | WebRTCSignalWebSocketModel) => {
                 wss.clients.forEach(client => {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
                         client.send(data);

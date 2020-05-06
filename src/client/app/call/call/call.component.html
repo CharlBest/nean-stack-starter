@@ -1,0 +1,151 @@
+<div class="background"></div>
+
+<!-- Incoming Video -->
+<video #incomingVideo
+  class="incoming-video"
+  [class.mirror]="mirrorVideo"
+  (click)="showIcons = !showIcons">
+</video>
+
+<!-- Outgoing Video -->
+<video #outgoingVideo
+  muted
+  class="outgoing-video"
+  [class.mirror]="mirrorVideo"
+  [class.fullscreen]="outgoingVideoPosition === OutgoingVideoPositionType.FULLSCREEN"
+  [class.top-left]="outgoingVideoPosition === OutgoingVideoPositionType.TOP_LEFT"
+  [class.top-right]="outgoingVideoPosition === OutgoingVideoPositionType.TOP_RIGHT"
+  [class.bottom-left]="outgoingVideoPosition === OutgoingVideoPositionType.BOTTOM_LEFT"
+  [class.bottom-right]="outgoingVideoPosition === OutgoingVideoPositionType.BOTTOM_RIGHT"
+  [class.push-up]="showIcons">
+</video>
+
+<!-- Top bar -->
+<div class="top-bar"
+  *ngIf="showIcons">
+
+  <button mat-icon-button
+    (click)="closeFullscreen()"
+    type="button"
+    matTooltip="Close Fullscreen"
+    aria-label="Close Fullscreen">
+    <app-icon-arrow-back></app-icon-arrow-back>
+  </button>
+
+  <div *ngIf="webRTCService.isProcessing"
+    style="display: flex; margin-left: 20px;">
+    <div *ngIf="!answerReceived && isHost">Ringing</div>
+    <div *ngIf="answerReceived && isHost">Connection</div>
+    <div *ngIf="!offerData && !isHost">Waiting for host</div>
+    <div *ngIf="offerData && !isHost">Connecting to host</div>
+    &nbsp;&nbsp;<app-preloader></app-preloader>
+  </div>
+
+  <button mat-icon-button
+    [matMenuTriggerFor]="appMenu"
+    style="margin-left: auto;">
+    <app-icon-more-vert></app-icon-more-vert>
+  </button>
+
+  <mat-menu #appMenu="matMenu">
+    <button mat-menu-item
+      (click)="share()">Invite</button>
+    <button mat-menu-item
+      (click)="openFullscreen()">Fullscreen</button>
+    <button mat-menu-item
+      (click)="mirrorVideo = !mirrorVideo">Mirror</button>
+    <button mat-menu-item
+      *ngIf="!isHost && !hasCallStarted"
+      (click)="becomeHost()">Become Host</button>
+    <ng-container *ngIf="hasCallStarted && !webRTCService.isProcessing">
+      <button mat-menu-item>{{minutesDuration}} minutes</button>
+      <button mat-menu-item
+        (click)="record()">Record</button>
+    </ng-container>
+  </mat-menu>
+</div>
+
+<!-- Bottom bar -->
+<div class="bottom-bar"
+  *ngIf="showIcons">
+  <div>
+    <!-- Call -->
+    <button mat-fab
+      style="background-color: #4cd963;"
+      *ngIf="isHost && !hasCallStarted"
+      type="button"
+      (click)="activateCall(); startVideoCall()">
+      <app-icon-call></app-icon-call>
+    </button>
+
+    <!-- Stop Call -->
+    <button mat-fab
+      *ngIf="hasCallStarted"
+      color="warn"
+      type="button"
+      (click)="stopVideoCall()">
+      <app-icon-call-end></app-icon-call-end>
+    </button>
+
+    <!-- Join Call -->
+    <button mat-fab
+      style="background-color: #4cd963;"
+      *ngIf="offerData && !isHost && !hasCallStarted"
+      (click)="activateCall(); acceptVideoCall()"
+      type="button"
+      matTooltip="Join Call"
+      aria-label="Join Call">
+      <app-icon-ring-volume></app-icon-ring-volume>
+    </button>
+  </div>
+
+  <div style="padding: 40px 0; width: 100%; background: linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 15%));">
+    <div style="display: flex; justify-content: space-around; max-width: 400px; margin: 0 auto;">
+      <button mat-icon-button
+        (click)="rotateCamera()"
+        type="button"
+        matTooltip="Rotate Camera"
+        aria-label="Rotate Camera">
+        <app-icon-switch-camera></app-icon-switch-camera>
+      </button>
+
+      <!-- Enable/Disable Camera -->
+      <button mat-icon-button
+        type="button"
+        *ngIf="isCameraOn"
+        (click)="setCameraState(false)"
+        matTooltip="Disable Camera"
+        aria-label="Disable Camera">
+        <app-icon-videocam></app-icon-videocam>
+      </button>
+
+      <button mat-icon-button
+        type="button"
+        *ngIf="!isCameraOn"
+        (click)="setCameraState(true)"
+        matTooltip="Enable Camera"
+        aria-label="Enable Camera">
+        <app-icon-videocam-off class="disabled"></app-icon-videocam-off>
+      </button>
+
+      <!-- Mute/Unmute Mic -->
+      <button mat-icon-button
+        type="button"
+        *ngIf="isMicOn"
+        (click)="setMicState(false)"
+        matTooltip="Mute Mic"
+        aria-label="Mute Mic">
+        <app-icon-mic></app-icon-mic>
+      </button>
+
+      <button mat-icon-button
+        type="button"
+        *ngIf="!isMicOn"
+        (click)="setMicState(true)"
+        matTooltip="Unmute Mic"
+        aria-label="Unmute Mic">
+        <app-icon-mic-off class="disabled"></app-icon-mic-off>
+      </button>
+    </div>
+  </div>
+</div>

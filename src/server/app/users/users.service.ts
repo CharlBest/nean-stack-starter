@@ -59,7 +59,7 @@ class UsersService extends BaseService {
 
             // Notify everyone there is another sign up
             const model = new NewSignUpWebSocketModel();
-            model.message = 'newSignUpJustNow';
+            model.message = translateService.t('newSignUpJustNow');
             model.type = WebSocketType.NEW_SIGN_UP;
             webSocketServer.send(model);
         } else {
