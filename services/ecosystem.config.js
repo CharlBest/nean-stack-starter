@@ -5,7 +5,7 @@ const workerConfig = require('./environment.worker');
 
 function generateDev(name, environmentVariables, instances = 1) {
     return {
-        name,
+        name: `nean.io-${name}`,
         script: `${name}.bundle.js`,
         cwd: `dist/server/${name}`,
         instances,
@@ -26,7 +26,7 @@ function generateDev(name, environmentVariables, instances = 1) {
 
 function generateProd(name, environmentVariables, instances = 1) {
     return {
-        name,
+        name: `nean.io-${name}`,
         script: `${name}.bundle.js`,
         cwd: `../dist/server/${name}`,
         instances,
