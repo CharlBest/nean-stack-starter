@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconsModule } from '../icons/icons.module';
-import { ShareDialogService } from './share-dialog.service';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
 const materialModules = [
@@ -25,9 +24,6 @@ const materialModules = [
     ],
     declarations: [
         ShareDialogComponent
-    ],
-    providers: [
-        ShareDialogService
     ]
 })
 export class ShareDialogModule { }
