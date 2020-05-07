@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { UserTokenModel } from '@shared/models/shared/user-token.model';
 import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
+import { AnalyticsService } from './analytics.service';
 import { LocalStorageService, StorageData } from './storage.service';
 
 @Injectable({
@@ -28,7 +29,8 @@ export class AuthService implements CanActivate {
 
     constructor(private router: Router,
         private dialog: MatDialog,
-        private localStorageService: LocalStorageService) { }
+        private localStorageService: LocalStorageService,
+        private analyticsService: AnalyticsService) { }
 
     init() {
         const accountKeys: Array<string> = [];
@@ -107,6 +109,9 @@ export class AuthService implements CanActivate {
         });
 
         this.userLoggedInOrLoggedOut.emit();
+
+        // Set analytics
+        this.analyticsService.setUser(id, model);
     }
 
     removeToken() {
@@ -123,6 +128,7 @@ export class AuthService implements CanActivate {
         this.removeToken();
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }, queryParamsHandling: 'merge' });
         this.dialog.closeAll();
+        this.analyticsService.clearUser();
     }
 
     hasToken(): boolean {

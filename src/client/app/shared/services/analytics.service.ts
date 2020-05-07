@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy, VERSION as angularVersion } from '@angular/core';
 import { VERSION as angularMaterialVersion } from '@angular/material/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { TokenViewModel } from '@shared/view-models/create-user/token.view-model';
 import countly from 'countly-sdk-web';
 import { Subscription } from 'rxjs';
-// import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
+import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import { version } from '../../../../../package.json';
 import { environment } from '../../../environments/environment';
 
@@ -24,17 +25,17 @@ export class AnalyticsService implements OnDestroy {
   }
 
   setWebVitals() {
-    // getCLS((metric: any) => this.reportTrace('device', 'cumulative-layout-shift', metric));
-    // getFCP((metric: any) => this.reportTrace('device', 'first-contentful-paint', metric));
-    // getFID((metric: any) => this.reportTrace('device', 'first-input-delay', metric));
-    // getLCP((metric: any) => this.reportTrace('device', 'largest-contentful-paint', metric));
-    // getTTFB((metric: any) => {
-    //   const requestTime = metric.value - metric.entries[0].requestStart;
-    //   this.reportTrace('network', 'reduce-server-response-times', {
-    //     requestTime,
-    //     ...metric
-    //   });
-    // });
+    getCLS(metric => this.reportTrace('device', 'cumulative-layout-shift', metric));
+    getFCP(metric => this.reportTrace('device', 'first-contentful-paint', metric));
+    getFID(metric => this.reportTrace('device', 'first-input-delay', metric));
+    getLCP(metric => this.reportTrace('device', 'largest-contentful-paint', metric));
+    getTTFB(metric => {
+      const requestTime = metric.value - metric.entries[0].startTime;
+      this.reportTrace('network', 'reduce-server-response-times', {
+        requestTime,
+        ...metric
+      });
+    });
   }
 
   emitEvent(nameOfEvent: string, eventValues: { [key: string]: string } | null = null) {
@@ -47,12 +48,13 @@ export class AnalyticsService implements OnDestroy {
     }]);
   }
 
-  // TODO: add this to analytics to better track problemsgoo
-  setUser(email: string, id: number) {
+  setUser(id: number | null, model: TokenViewModel) {
     this.push(['user_details', {
-      email,
+      email: model.email,
+      username: model.username,
       custom: {
-        id
+        id,
+        ...model
       }
     }]);
   }
@@ -60,7 +62,6 @@ export class AnalyticsService implements OnDestroy {
   clearUser() {
     this.push(['user_details', null]);
   }
-
 
   // Place this somehwere global to catch all
   logError(exception: object) {
@@ -75,6 +76,17 @@ export class AnalyticsService implements OnDestroy {
   // TODO: allow users to toggle this
   disableTracking() {
     this.push(['opt_out']);
+  }
+
+  // TODO: Add rating
+  reportFeedback(comment: string, userId?: number | null, rating?: number) {
+    this.push(['report_feedback', {
+      widget_id: '1',
+      contactMe: false,
+      rating,
+      email: userId ? userId.toString() : null,
+      comment
+    }]);
   }
 
   // These gyrations are necessary to make the service e2e testable
@@ -111,6 +123,7 @@ export class AnalyticsService implements OnDestroy {
       this.push(['track_links']);
       this.push(['track_forms']);
       this.push(['collect_from_forms']);
+      this.push(['report_conversion']);
 
       /* Enterprise:
       // this.push(['track_scrolls']);
