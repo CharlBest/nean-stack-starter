@@ -25,6 +25,7 @@
   *ngIf="showIcons">
 
   <button mat-icon-button
+    *ngIf="isFullscreen"
     (click)="closeFullscreen()"
     type="button"
     matTooltip="Close Fullscreen"
@@ -32,12 +33,11 @@
     <app-icon-arrow-back></app-icon-arrow-back>
   </button>
 
-  <div *ngIf="webRTCService.isProcessing"
-    style="display: flex; margin-left: 20px;">
-    <div *ngIf="!answerReceived && isHost">Ringing</div>
-    <div *ngIf="answerReceived && isHost">Connection</div>
-    <div *ngIf="!offerData && !isHost">Waiting for host</div>
-    <div *ngIf="offerData && !isHost">Connecting to host</div>
+  <div style="display: flex; margin-left: 20px;">
+    <div *ngIf="webRTCService.isProcessing && !answerReceived && isHost">Ringing</div>
+    <div *ngIf="webRTCService.isProcessing && answerReceived && isHost">Connecting</div>
+    <div *ngIf="!hasCallStarted && !offerData && !isHost">Waiting for host</div>
+    <div *ngIf="webRTCService.isProcessing && offerData && !isHost">Connecting to host</div>
     &nbsp;&nbsp;<app-preloader></app-preloader>
   </div>
 
@@ -51,6 +51,7 @@
     <button mat-menu-item
       (click)="share()">Invite</button>
     <button mat-menu-item
+      *ngIf="!isFullscreen"
       (click)="openFullscreen()">Fullscreen</button>
     <button mat-menu-item
       (click)="mirrorVideo = !mirrorVideo">Mirror</button>

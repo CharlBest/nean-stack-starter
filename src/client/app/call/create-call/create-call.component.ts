@@ -36,10 +36,11 @@ export class CreateCallComponent implements OnInit {
   }
 
   share() {
-    const url = [`/call?code=${this.code}`];
+    const url = ['/call'];
+    const queryParams = { queryParams: { code: this.code } };
     const title = 'Call Invite';
-    if (!this.shareService.webShareWithUrl(title, url)) {
-      this.shareDialogService.share(url, title);
+    if (!this.shareService.webShareWithUrl(title, url, queryParams)) {
+      this.shareDialogService.share(title, url, queryParams);
     }
   }
 

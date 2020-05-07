@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { WebRTCSignalWebSocketModel } from '@shared/models/web-socket/web-rtc-signal-web-socket.model';
 import SimplePeer from 'simple-peer';
 import { WebSocketService } from './websocket.service';
-
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +10,8 @@ export class WebRTCService {
 
     peer: SimplePeer.Instance;
     isProcessing = false;
+    isSupported = SimplePeer.WEBRTC_SUPPORT;
+    readonly closed: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(private webSocketService: WebSocketService) {
         this.webSocketService.webRTCSignal$
@@ -19,8 +20,6 @@ export class WebRTCService {
                     this.peer.signal(data.data);
                 }
             });
-
-        console.log(new SimplePeer());
     }
 
     loadScript(): Promise<void> {
@@ -114,6 +113,10 @@ export class WebRTCService {
 
         this.peer.on('stream', (stream: MediaStream) => {
             this.setVideoElement(videoElement, stream);
+        });
+
+        this.peer.on('close', () => {
+            this.closed.emit();
         });
     }
 

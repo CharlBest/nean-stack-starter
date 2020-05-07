@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -27,6 +28,7 @@ export class CallComponent implements OnInit, OnDestroy {
   isMicOn = true;
   isCameraOn = true;
   webRTCSignalSubscription: Subscription;
+  webRTCCloseSubscription: Subscription;
   offerData: SimplePeer.SignalData;
   answerReceived = false;
   timerInstance: any;
@@ -40,9 +42,15 @@ export class CallComponent implements OnInit, OnDestroy {
     private webSocketService: WebSocketService,
     private shareService: ShareService,
     private shareDialogService: ShareDialogService,
-    private router: Router) { }
+    private router: Router,
+    private location: Location) { }
 
   async ngOnInit() {
+    if (!this.webRTCService.isSupported) {
+      await this.dialogService.confirm('This feature is not supported on your device. Please exit.');
+      this.location.back();
+    }
+
     this.route.queryParamMap
       .subscribe(params => {
         if (params.has('code')) {
@@ -59,17 +67,7 @@ export class CallComponent implements OnInit, OnDestroy {
       });
 
     // Get stream
-    if (await this.hasPermission()) {
-      this.getPermission();
-    }
-
-    // Get camera and mic permission
-    while (!(await this.hasPermission())) {
-      const hasConfirmed = await this.dialogService.confirm('Grant permission for your camera and microphone?');
-      if (hasConfirmed) {
-        await this.getPermission();
-      }
-    }
+    await this.getStream();
 
     this.webRTCSignalSubscription = this.webSocketService.webRTCSignal$
       .subscribe(data => {
@@ -79,6 +77,25 @@ export class CallComponent implements OnInit, OnDestroy {
           this.answerReceived = true;
         }
       });
+
+    this.webRTCCloseSubscription = this.webRTCService.closed.subscribe(async () => {
+      await this.dialogService.confirm('The call was ended.');
+      this.stopVideoCall();
+    });
+  }
+
+  async getStream() {
+    if (await this.hasPermission()) {
+      this.getPermission();
+    } else {
+      // Get camera and mic permission
+      const hasConfirmed = await this.dialogService.confirm('Grant permission for your camera and microphone?');
+      if (hasConfirmed) {
+        await this.getPermission();
+      } else {
+        this.location.back();
+      }
+    }
   }
 
   async hasPermission() {
@@ -123,6 +140,7 @@ export class CallComponent implements OnInit, OnDestroy {
     }
     this.webRTCService.setVideoElement(this.outgoingVideo.nativeElement, null);
     this.stopTimer();
+    this.location.back();
   }
 
   rotateCamera() {
@@ -163,10 +181,11 @@ export class CallComponent implements OnInit, OnDestroy {
   }
 
   share() {
-    const url = [`/call?code=${this.code}`];
+    const url = ['/call'];
+    const queryParams = { queryParams: { code: this.code } };
     const title = 'Call Invite';
-    if (!this.shareService.webShareWithUrl(title, url)) {
-      this.shareDialogService.share(url, title);
+    if (!this.shareService.webShareWithUrl(title, url, queryParams)) {
+      this.shareDialogService.share(title, url, queryParams);
     }
   }
 
@@ -188,6 +207,9 @@ export class CallComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.webRTCSignalSubscription) {
       this.webRTCSignalSubscription.unsubscribe();
+    }
+    if (this.webRTCCloseSubscription) {
+      this.webRTCCloseSubscription.unsubscribe();
     }
   }
 }
