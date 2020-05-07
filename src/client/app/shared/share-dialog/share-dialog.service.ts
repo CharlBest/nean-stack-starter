@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ShareService, Url } from '../services/share.service';
+import { NavigationExtras, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { Url } from '../services/share.service';
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
 @Injectable({
@@ -9,11 +11,11 @@ import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 export class ShareDialogService {
 
     constructor(private dialog: MatDialog,
-        private shareService: ShareService) { }
+        private router: Router) { }
 
-    share(url: Url, text: string) {
+    share(text: string, url: Url, navigationExtras?: NavigationExtras) {
         const dialogRef = this.dialog.open(ShareDialogComponent);
-        dialogRef.componentInstance.url = this.shareService.fullUrl(url);
+        dialogRef.componentInstance.url = environment.serverEndpoint + this.router.createUrlTree(url, navigationExtras).toString();
         dialogRef.componentInstance.text = text;
 
         return dialogRef.afterClosed();

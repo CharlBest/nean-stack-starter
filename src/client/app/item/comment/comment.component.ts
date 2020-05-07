@@ -82,7 +82,7 @@ export class CommentComponent {
 
       const url = ['/item/comments', this.comment.itemUId];
       if (!this.shareService.webShareWithUrl('Comment', url)) {
-        this.shareDialogService.share(url, this.comment.description);
+        this.shareDialogService.share(this.comment.description, url);
       }
     }
   }

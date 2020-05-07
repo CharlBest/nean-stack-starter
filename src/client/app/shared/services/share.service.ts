@@ -1,7 +1,7 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -21,8 +21,8 @@ export class ShareService {
         private router: Router,
         private clipboard: Clipboard) { }
 
-    fullUrl(url: Url): string {
-        return environment.serverEndpoint + this.router.createUrlTree(url).toString();
+    fullUrl(url: Url, navigationExtras?: NavigationExtras): string {
+        return environment.serverEndpoint + this.router.createUrlTree(url, navigationExtras).toString();
     }
 
     webShare(title: string, fullUrl: string): boolean {
@@ -34,8 +34,8 @@ export class ShareService {
         }
     }
 
-    webShareWithUrl(title: string, url: Url): boolean {
-        return this.webShare(title, this.fullUrl(url));
+    webShareWithUrl(title: string, url: Url, navigationExtras?: NavigationExtras): boolean {
+        return this.webShare(title, this.fullUrl(url, navigationExtras));
     }
 
     copy(url: string) {
