@@ -6,9 +6,9 @@ export const environment = {
   webSocketEndpoint: `wss://${domain}/api/`,
   analyticsServerEndpoint: `https://${domain}/analytics`,
   analytics: {
-    web: '81552b0fe6e9ed9e024025576ada1cef02e333d1',
-    ios: '81552b0fe6e9ed9e024025576ada1cef02e333d1',
-    chromeExtension: '81552b0fe6e9ed9e024025576ada1cef02e333d1'
+    web: '50c3fc5726ae566b592957720b71493cbfb485e4',
+    ios: '50c3fc5726ae566b592957720b71493cbfb485e4',
+    chromeExtension: '50c3fc5726ae566b592957720b71493cbfb485e4'
   },
   firebase: {
     projectId: 'nean-181415',
