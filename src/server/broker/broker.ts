@@ -35,7 +35,7 @@ class Broker {
                 method: 'PUT',
             });
         } catch (error) {
-            logger.info('Creating virtual host error', error);
+            logger.info('Creating virtual host', error);
         }
 
         // Create user
@@ -49,7 +49,7 @@ class Broker {
                 }
             });
         } catch (error) {
-            logger.info('Creating RabbitMQ user error', error);
+            logger.info('Creating RabbitMQ user', error);
         }
 
         // Set permissions
@@ -64,7 +64,7 @@ class Broker {
                 }
             });
         } catch (error) {
-            logger.info('Setting RabbitMQ user permissions error', error);
+            logger.info('Setting RabbitMQ user permissions', error);
         }
 
         logger.info('Broker init success');
