@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1184",
+  "version": "0.0.1185",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "start": "concurrently \"npm run start:services\" \"ng serve --open\" \"webpack --mode=development --watch --watch-aggregate-timeout 2000\" \"npm run start:server\"",
-    "start:server": "pm2 start services/ecosystem.config.js --no-daemon",
+    "start:server": "webpack --mode=development && pm2 start services/ecosystem.config.js --no-daemon",
     "start:services": "docker-compose --file ./services/docker-compose.yml --env-file=./services/.env up",
     "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html",
     "buildv2": "bash build.sh",
@@ -78,7 +78,7 @@
     "ws": "^7.2.5",
     "zone.js": "^0.10.3",
     "nodemailer": "^6.4.6",
-    "web-vitals": "^0.2.0"
+    "web-vitals": "^0.2.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.901.4",
@@ -116,7 +116,7 @@
     "html-minifier": "^4.0.0",
     "husky": "^4.2.5",
     "jasmine": "^3.5.0",
-    "pm2": "^4.4.0",
+    "pm2": "^4.3.1",
     "puppeteer": "^3.0.2",
     "ts-node": "^8.10.1",
     "tslint": "~6.1.2",

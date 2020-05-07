@@ -32,11 +32,4 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card [hidden]="isProcessingChangelog">
-    <mat-card-content>
-        <app-github [filePath]="'CHANGELOG.md'"
-            (doneLoading)="isProcessingChangelog = false"></app-github>
-    </mat-card-content>
-</mat-card>
-
 <app-preloader *ngIf="isProcessingBestPractices || isProcessingChangelog"></app-preloader>
