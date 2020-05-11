@@ -35,6 +35,8 @@ export class CallComponent implements OnInit, OnDestroy {
   minutesDuration = 0;
   mirrorVideo = true;
   isFullscreen = false;
+  callingInverval: any;
+  readonly totalNumberOfRings = 20;
 
   constructor(public webRTCService: WebRTCService,
     private route: ActivatedRoute,
@@ -75,6 +77,7 @@ export class CallComponent implements OnInit, OnDestroy {
           this.offerData = data.data;
         } else if (data.data.type === 'answer') {
           this.answerReceived = true;
+          clearInterval(this.callingInverval);
         }
       });
 
@@ -125,21 +128,41 @@ export class CallComponent implements OnInit, OnDestroy {
     this.startTimer();
   }
 
+  deactivateCall() {
+    this.hasCallStarted = false;
+    this.outgoingVideoPosition = OutgoingVideoPosition.FULLSCREEN;
+    this.stopTimer();
+  }
+
   startVideoCall() {
+    this.activateCall();
     this.webRTCService.startVideoCall(this.stream, this.outgoingVideo.nativeElement, this.incomingVideo.nativeElement);
+
+    let rings = 0;
+    this.callingInverval = setInterval(() => {
+      this.webRTCService.sendSignal();
+      rings++;
+      if (rings > this.totalNumberOfRings) {
+        clearInterval(this.callingInverval);
+        this.deactivateCall();
+      }
+    }, 3000);
   }
 
   acceptVideoCall() {
+    this.activateCall();
     this.webRTCService.acceptVideoCall(this.stream, this.offerData, this.outgoingVideo.nativeElement, this.incomingVideo.nativeElement);
   }
 
   stopVideoCall() {
-    this.webRTCService.destroy();
     if (this.stream) {
       this.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
     }
     this.webRTCService.setVideoElement(this.outgoingVideo.nativeElement, null);
     this.stopTimer();
+
+    this.webRTCService.destroy();
+
     this.location.back();
   }
 

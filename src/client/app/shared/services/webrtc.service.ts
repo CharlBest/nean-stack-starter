@@ -9,6 +9,7 @@ import { WebSocketService } from './websocket.service';
 export class WebRTCService {
 
     peer: SimplePeer.Instance;
+    signalData: SimplePeer.SignalData;
     isProcessing = false;
     isSupported = SimplePeer.WEBRTC_SUPPORT;
     readonly closed: EventEmitter<void> = new EventEmitter<void>();
@@ -101,9 +102,8 @@ export class WebRTCService {
         this.peer.on('error', (err: Error) => console.log('Peer error', err));
 
         this.peer.on('signal', (data: SimplePeer.SignalData) => {
-            const model = new WebRTCSignalWebSocketModel();
-            model.data = data;
-            this.webSocketService.send(model);
+            this.signalData = data;
+            this.sendSignal();
         });
 
         this.peer.on('connect', () => {
@@ -118,6 +118,16 @@ export class WebRTCService {
         this.peer.on('close', () => {
             this.closed.emit();
         });
+    }
+
+    sendSignal() {
+        if (this.signalData) {
+            const model = new WebRTCSignalWebSocketModel();
+            model.data = this.signalData;
+            this.webSocketService.send(model);
+        } else {
+            console.error('Signal data is empty');
+        }
     }
 
     setVideoElement(videoElement: HTMLVideoElement, stream: MediaStream | null) {

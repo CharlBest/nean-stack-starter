@@ -34,11 +34,22 @@
   </button>
 
   <div style="display: flex; margin-left: 20px;">
-    <div *ngIf="webRTCService.isProcessing && !answerReceived && isHost">Ringing</div>
-    <div *ngIf="webRTCService.isProcessing && answerReceived && isHost">Connecting</div>
-    <div *ngIf="!hasCallStarted && !offerData && !isHost">Waiting for host</div>
-    <div *ngIf="webRTCService.isProcessing && offerData && !isHost">Connecting to host</div>
-    &nbsp;&nbsp;<app-preloader></app-preloader>
+    <ng-container *ngIf="webRTCService.isProcessing && !answerReceived && isHost">
+      Ringing
+      &nbsp;&nbsp;<app-preloader></app-preloader>
+    </ng-container>
+    <ng-container *ngIf="webRTCService.isProcessing && answerReceived && isHost">
+      Connecting
+      &nbsp;&nbsp;<app-preloader></app-preloader>
+    </ng-container>
+    <ng-container *ngIf="!hasCallStarted && !offerData && !isHost">
+      Waiting for host
+      &nbsp;&nbsp;<app-preloader></app-preloader>
+    </ng-container>
+    <ng-container *ngIf="webRTCService.isProcessing && offerData && !isHost">
+      Connecting to host
+      &nbsp;&nbsp;<app-preloader></app-preloader>
+    </ng-container>
   </div>
 
   <button mat-icon-button
@@ -75,7 +86,7 @@
       style="background-color: #4cd963;"
       *ngIf="isHost && !hasCallStarted"
       type="button"
-      (click)="activateCall(); startVideoCall()">
+      (click)="startVideoCall()">
       <app-icon-call></app-icon-call>
     </button>
 
@@ -92,7 +103,7 @@
     <button mat-fab
       style="background-color: #4cd963;"
       *ngIf="offerData && !isHost && !hasCallStarted"
-      (click)="activateCall(); acceptVideoCall()"
+      (click)="acceptVideoCall()"
       type="button"
       matTooltip="Join Call"
       aria-label="Join Call">
