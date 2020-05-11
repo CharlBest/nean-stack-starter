@@ -34,7 +34,7 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     ClipboardModule,
     ParticleEffectModule,
     HammerModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerWithDelay:3000' })
   ],
   providers: [
     Title,
