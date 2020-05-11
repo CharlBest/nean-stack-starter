@@ -24,3 +24,8 @@
 		transform: translateX(100%);
 	}
 }
+
+// Dark theme override
+.dark-theme .skeleton-screen .skeleton {
+	background-color: #6f6f6f;
+}
