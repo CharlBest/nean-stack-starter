@@ -60,7 +60,7 @@ export class AnalyticsService implements OnDestroy {
   }
 
   clearUser() {
-    this.push(['user_details', null]);
+    this.push(['user_details', {}]);
   }
 
   // Place this somehwere global to catch all
