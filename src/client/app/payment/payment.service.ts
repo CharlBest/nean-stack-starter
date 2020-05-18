@@ -24,4 +24,8 @@ export class PaymentService {
     userPayment(viewModel: UserPaymentViewModel): Promise<boolean> {
         return this.http.post<boolean>(`${environment.serverEndpoint}${PaymentRoutes.userPayment().client()}`, viewModel).toPromise();
     }
+
+    paymentIntent(viewModel: any): Promise<{ clientSecret: string, publishableKey: string }> {
+        return this.http.post<{ clientSecret: string, publishableKey: string }>(`${environment.serverEndpoint}${PaymentRoutes.paymentIntent().client()}`, viewModel).toPromise();
+    }
 }

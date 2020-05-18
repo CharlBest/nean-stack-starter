@@ -5,6 +5,8 @@ export class PaymentRoutes {
     private static root = 'payments';
 
     static anonymousPayment = () => new BaseRoute(PaymentRoutes.root, 'anonymousPayment');
+    static stripeWebhook = () => new BaseRoute(PaymentRoutes.root, 'stripeWebook');
+    static paymentIntent = () => new BaseRoute(PaymentRoutes.root, 'paymentIntent');
     static userPayment = () => new BaseRoute(PaymentRoutes.root, 'userPayment');
     static paymentCards = () => new BaseRoute(PaymentRoutes.root, 'paymentCards');
     static createCard = () => new BaseRoute(PaymentRoutes.root, 'createCard');

@@ -3,6 +3,9 @@ import { ServerValidator, Validators } from '@shared/validation/validators';
 import { AnonymousPaymentViewModel } from '@shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '@shared/view-models/payment/user-payment.view-model';
 import { NextFunction, Request, Response } from 'express';
+import Stripe from 'stripe';
+import { stripe } from '../../core/middleware/stripe';
+import { environment } from '../../environments/environment';
 import { BaseController } from '../shared/base-controller';
 import { paymentsService } from './payments.service';
 
@@ -100,6 +103,58 @@ class PaymentsController extends BaseController {
         res.status(200).json(
             await paymentsService.paymentHistory(res)
         );
+    }
+    async paymentIntent(req: Request, res: Response, next: NextFunction) {
+        const { amount, currency }: { amount: number; currency: string } = req.body;
+        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency
+        });
+
+        // Send publishable key and PaymentIntent client_secret to client.
+        res.send({
+            clientSecret: paymentIntent.client_secret
+        });
+    }
+
+    // Expose a endpoint as a webhook handler for asynchronous events.
+    // Configure your webhook in the stripe developer dashboard:
+    // https://dashboard.stripe.com/test/webhooks
+    async stripeWebhook(req: Request, res: Response, next: NextFunction) {
+        // Retrieve the event by verifying the signature using the raw body and secret.
+        let event: Stripe.Event;
+
+        try {
+            event = stripe.webhooks.constructEvent(
+                req.body,
+                (req.headers as any)['stripe-signature'],
+                environment.stripe.webhookKey
+            );
+        } catch (err) {
+            console.log(`⚠️ Webhook signature verification failed.`);
+            res.sendStatus(400);
+            return;
+        }
+
+        // Extract the data from the event.
+        const data: Stripe.Event.Data = event.data;
+        const eventType: string = event.type;
+
+        if (eventType === 'payment_intent.succeeded') {
+            // Cast the event into a PaymentIntent to make use of the types.
+            const pi: Stripe.PaymentIntent = data.object as Stripe.PaymentIntent;
+            // Funds have been captured
+            // Fulfill any orders, e-mail receipts, etc
+            // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds).
+            console.log(`🔔 Webhook received: ${pi.object} ${pi.status}!`);
+            console.log('💰 Payment captured!');
+        } else if (eventType === 'payment_intent.payment_failed') {
+            // Cast the event into a PaymentIntent to make use of the types.
+            const pi: Stripe.PaymentIntent = data.object as Stripe.PaymentIntent;
+            console.log(`🔔 Webhook received: ${pi.object} ${pi.status}!`);
+            console.log('❌ Payment failed.');
+        }
+        res.sendStatus(200);
     }
 }
 

@@ -4,6 +4,7 @@ import { CardModel } from '@shared/models/payment/card.model';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { AnonymousPaymentViewModel } from '@shared/view-models/payment/anonymous-payment.view-model';
 import { UserPaymentViewModel } from '@shared/view-models/payment/user-payment.view-model';
+import { PaymentRequestTokenEvent } from '@stripe/stripe-js';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -98,20 +99,21 @@ export class PaymentComponent implements OnInit {
     }
 
     async onSubmit() {
-        if (this.activeSection === Section.CARD) {
-            if (this.formGroup.controls.cardUId.value === 'new') {
-                const token = await this.stripeElementsComponent.generateToken();
-                if (token) {
-                    this.sendPaymentToServer(token.id);
-                } else {
-                    this.dialogService.alert('Invalid card details');
-                }
-            } else {
-                this.sendPaymentToServer();
-            }
-        } else if (this.activeSection === Section.MOBILE) {
-            this.stripePaymentRequestButton.activatePaymentRequestButton();
-        }
+        this.paymentIntent();
+        // if (this.activeSection === Section.CARD) {
+        //     if (this.formGroup.controls.cardUId.value === 'new') {
+        //         const token = await this.stripeElementsComponent.generateToken();
+        //         if (token) {
+        //             this.sendPaymentToServer(token.id);
+        //         } else {
+        //             this.dialogService.alert('Invalid card details');
+        //         }
+        //     } else {
+        //         this.sendPaymentToServer();
+        //     }
+        // } else if (this.activeSection === Section.MOBILE) {
+        //     this.stripePaymentRequestButton.activatePaymentRequestButton();
+        // }
     }
 
     sendPaymentToServer(token: string | null = null): Promise<boolean> {
@@ -165,6 +167,23 @@ export class PaymentComponent implements OnInit {
         return false;
     }
 
+    async paymentIntent(): Promise<boolean> {
+        try {
+            const paymentIntent = await this.paymentService.paymentIntent({ amount: +this.formGroup.controls.amount.value, currency: 'usd' });
+            console.log(paymentIntent);
+            const success = await this.stripeElementsComponent.confirmCardPayment(paymentIntent.clientSecret);
+            console.log(success);
+            this.paymentSuccess = true;
+            return true;
+        } catch (error) {
+            this.formErrorsService.updateFormValidity(error, this.formGroup);
+        } finally {
+            this.isProcessing = false;
+        }
+
+        return false;
+    }
+
     // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
     checkForValidity() {
         // Form validity (Amount is required)
@@ -194,7 +213,7 @@ export class PaymentComponent implements OnInit {
         this.isFormValid = true;
     }
 
-    async paymentRequestButtonComplete(event: stripe.paymentRequest.StripeTokenPaymentResponse) {
+    async paymentRequestButtonComplete(event: PaymentRequestTokenEvent) {
         if (event && event.token && (event.payerEmail || this.isAuthenticated)) {
             if (!this.isAuthenticated) {
                 this.formGroup.controls.email.setValue(event.payerEmail);

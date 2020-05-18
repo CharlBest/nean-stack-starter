@@ -2,9 +2,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": [
-      "stripe-v3"
-    ],
     "esModuleInterop": true
   },
   "files": [

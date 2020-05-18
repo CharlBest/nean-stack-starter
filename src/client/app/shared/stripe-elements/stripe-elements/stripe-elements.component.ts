@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { StripeCardNumberElement } from '@stripe/stripe-js';
 import { ThemeService } from '../../services/theme.service';
 import { CardBrandType } from '../card-brand.enum';
 import { ElementsWrapper, ElementWrapper } from '../stripe-element.model';
@@ -26,7 +27,8 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
     constructor(private stripeElementsService: StripeElementsService,
         public themeService: ThemeService) { }
 
-    ngOnInit() {
+    async ngOnInit() {
+        await this.stripeElementsService.stripe();
         this.initialize();
     }
 
@@ -36,7 +38,8 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         }
 
         // createToken takes a single element but pulls in other elements that has been instantiated as well to create a card element
-        const { token, error } = await this.stripeElementsService.stripe.createToken(this.elementsWrapper.cardNumber.element);
+        const stripe = await this.stripeElementsService.stripe();
+        const { token, error } = await stripe.createToken(this.elementsWrapper.cardNumber.element);
 
         if (error) {
             this.error = error.message ? error.message : 'Error in payment';
@@ -46,19 +49,31 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private initialize() {
-        if (this.stripeElementsService.stripeInstance) {
-            this.elementsOnInit();
-        } else {
-            this.stripeElementsService.stripeInitialized.subscribe((data: boolean) => {
-                if (data) {
-                    this.elementsOnInit();
-                }
-            });
+    async confirmCardPayment(intentSecret: string) {
+        if (!this.elementsWrapper.cardNumber.element) {
+            return null;
         }
+
+        const stripe = await this.stripeElementsService.stripe();
+        const { paymentIntent, error } = await stripe.confirmCardPayment(intentSecret, {
+            payment_method: { card: this.elementsWrapper.cardNumber.element }
+        });
+
+        if (error) {
+            // Display error.message in your UI.
+            this.error = error.message ? error.message : 'Error in payment';
+            return null;
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+            // The payment has succeeded
+            // Display a success message
+            // Handle successful payment here
+            return true;
+        }
+
+        return false;
     }
 
-    private elementsOnInit() {
+    private initialize() {
         const elementStyles = {
             base: {
                 color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255)' : 'rgba(0, 0, 0, 0.87)',
@@ -120,7 +135,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         }
 
         // change (empty, complete, error, value), ready, focus, blur, click
-        elementWrapper.element.on('change', (data?: stripe.elements.ElementChangeResponse) => {
+        (elementWrapper.element as StripeCardNumberElement).on('change', data => {
             if (!data) {
                 return;
             }
@@ -129,7 +144,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
                 this.elementsWrapper.cardExpiry.valid &&
                 this.elementsWrapper.cardCvc.valid;
 
-            if (data && data.error && data.error.type === ('validation_error' as any)) {
+            if (data && data.error && data.error.type === 'validation_error') {
                 elementWrapper.error = data.error.message;
             } else {
                 elementWrapper.error = null;

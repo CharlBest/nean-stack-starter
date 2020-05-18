@@ -1,52 +1,33 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
+import { TranslateService } from '../translate/translate.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StripeElementsService {
 
-    readonly stripeInitialized: EventEmitter<boolean> = new EventEmitter<boolean>();
-    stripeInstance: stripe.Stripe;
-    elementsInstance: stripe.elements.Elements;
+    private stripeInstance: Stripe;
+    elementsInstance: StripeElements;
 
-    constructor() {
-        this.initializeStripe();
-    }
+    constructor(private translateService: TranslateService) { }
 
-    get stripe() {
+    async stripe(): Promise<Stripe> {
         if (!this.stripeInstance) {
-            this.stripeInstance = Stripe(environment.stripe.publishableKey);
+            const stripe = await loadStripe(environment.stripe.publishableKey);
+            if (stripe) {
+                this.stripeInstance = stripe;
+                await this.initializeElements();
+            }
         }
 
         return this.stripeInstance;
     }
 
-    initializeStripe() {
-        const elementId = 'stripe-client-script';
-        const script = document.getElementById(elementId);
-
-        if (!script) {
-            const node = document.createElement('script');
-            node.src = 'https://js.stripe.com/v3/';
-            node.type = 'text/javascript';
-            node.async = false;
-            node.id = elementId;
-            node.onload = () => {
-                if (!this.stripeInstance) {
-                    this.stripeInstance = Stripe(environment.stripe.publishableKey);
-                    this.initializeElements();
-                    this.stripeInitialized.emit(true);
-                }
-            };
-            document.getElementsByTagName('head')[0].appendChild(node);
-        } else {
-            this.stripeInitialized.emit(true);
-        }
-    }
-
-    initializeElements() {
-        this.elementsInstance = this.stripe.elements({
+    async initializeElements() {
+        this.elementsInstance = (await this.stripe()).elements({
+            // locale: this.translateService.activeLanguage || 'en',
             locale: 'en',
             fonts: [
                 {
