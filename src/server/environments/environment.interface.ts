@@ -10,8 +10,17 @@ export interface Environment {
         username: string;
         password: string;
     };
+    rabbitMQ: {
+        virtualHost: string;
+        adminUsername: string;
+        adminPassword: string;
+        username: string;
+        password: string;
+        port: number;
+    };
     stripe: {
         secretKey: string;
+        webhookKey: string;
     };
     email: {
         username: string;
@@ -24,13 +33,5 @@ export interface Environment {
     vapidKey: {
         public: string;
         private: string;
-    };
-    rabbitMQ: {
-        virtualHost: string;
-        adminUsername: string;
-        adminPassword: string;
-        username: string;
-        password: string;
-        port: number;
     };
 }

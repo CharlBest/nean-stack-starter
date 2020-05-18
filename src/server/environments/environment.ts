@@ -21,7 +21,8 @@ export let environment: Environment = {
         port: +process.env.RABBITMQ_PORT!
     },
     stripe: {
-        secretKey: process.env.STRIPE_KEY!
+        secretKey: process.env.STRIPE_KEY!,
+        webhookKey: process.env.STRIPE_WEBHOOK_KEY!
     },
     email: {
         username: process.env.EMAIL_USERNAME!,
