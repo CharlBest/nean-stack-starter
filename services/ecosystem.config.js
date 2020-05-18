@@ -46,7 +46,7 @@ function generateProd(name, environmentVariables, instances = 1) {
 module.exports = {
     apps: [
         generateDev('api', apiConfig),
-        generateDev('worker', workerConfig)
+        // generateDev('worker', workerConfig)
     ],
     deploy: {
         dev: {

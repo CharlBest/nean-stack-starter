@@ -1,6 +1,5 @@
 module.exports = {
     NODE_ENV: 'development',
-    PORT: 3000,
     NEO4J_URI: 'neo4j://localhost',
     NEO4J_NAME: 'nean',
     NEO4J_ADMIN_USERNAME: 'neo4j',
@@ -13,10 +12,8 @@ module.exports = {
     RABBITMQ_USERNAME: 'server_worker',
     RABBITMQ_PASSWORD: 'password',
     RABBITMQ_PORT: 5672,
-    STRIPE_KEY: 'sk_test_RKOxhujxxM8c4xIqt6t036Qo',
     EMAIL_USERNAME: 'admin@nean.io',
     EMAIL_PASSWORD: '2wCe@LZBDu95Df3r',
-    AUTHENTICATION_KEY: '37LvDSm4XvjYOh9Y',
     VAPID_PUBLIC_KEY: 'BGdpTzg0UM2ZPfhAf88qoZ3CZS1trq0oEJTS14vHbV4SYjrxBLBj2jy4DYrXzhUJ_l5t_lybFleNDWv3ZWQQVZs',
     VAPID_PRIVATE_KEY: 'bqghrqfk5AiwPbOyJVSc1RgtaqmfJZAwX4uIDo0l8IA',
 }
