@@ -27,8 +27,7 @@ export class StripeElementsService {
 
     async initializeElements() {
         this.elementsInstance = (await this.stripe()).elements({
-            // locale: this.translateService.activeLanguage || 'en',
-            locale: 'en',
+            locale: this.translateService.defaultLanguage,
             fonts: [
                 {
                     src: environment.production ? `url("${environment.serverEndpoint}/assets/fonts/OpenSans-Regular-latin.woff2")` : '',
