@@ -17,6 +17,7 @@ export class CallComponent implements OnInit, OnDestroy {
 
   @ViewChild('incomingVideo', { static: true }) incomingVideo: ElementRef<HTMLVideoElement>;
   @ViewChild('outgoingVideo', { static: true }) outgoingVideo: ElementRef<HTMLVideoElement>;
+  @ViewChild('ringAudio', { static: true }) ringAudio: ElementRef<HTMLAudioElement>;
 
   code: string;
   stream: MediaStream;
@@ -36,7 +37,16 @@ export class CallComponent implements OnInit, OnDestroy {
   mirrorVideo = true;
   isFullscreen = false;
   callingInverval: any;
+  isRinging = false;
   readonly totalNumberOfRings = 20;
+  readonly ringInterval = 3000;
+  get hasVibrate(): boolean {
+    if ('vibrate' in navigator || 'mozVibrate' in navigator) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   constructor(public webRTCService: WebRTCService,
     private route: ActivatedRoute,
@@ -74,6 +84,7 @@ export class CallComponent implements OnInit, OnDestroy {
     this.webRTCSignalSubscription = this.webSocketService.webRTCSignal$
       .subscribe(data => {
         if (data.data.type === 'offer') {
+          this.startRing();
           this.offerData = data.data;
         } else if (data.data.type === 'answer') {
           this.answerReceived = true;
@@ -146,10 +157,11 @@ export class CallComponent implements OnInit, OnDestroy {
         clearInterval(this.callingInverval);
         this.deactivateCall();
       }
-    }, 3000);
+    }, this.ringInterval);
   }
 
   acceptVideoCall() {
+    this.stopRing();
     this.activateCall();
     this.webRTCService.acceptVideoCall(this.stream, this.offerData, this.outgoingVideo.nativeElement, this.incomingVideo.nativeElement);
   }
@@ -227,6 +239,31 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
+  startRing() {
+    if (!this.isRinging) {
+      this.isRinging = true;
+
+      // Vibrate
+      if (this.hasVibrate) {
+        const timesToVibrate = this.totalNumberOfRings * this.ringInterval / 2000;
+        navigator.vibrate(new Array(timesToVibrate).fill(2000));
+      }
+
+      // Play sound
+      this.ringAudio.nativeElement.play();
+    }
+  }
+
+  stopRing() {
+    this.isRinging = false;
+
+    if (this.hasVibrate) {
+      navigator.vibrate(0);
+    }
+
+    this.ringAudio.nativeElement.pause();
+  }
+
   ngOnDestroy() {
     if (this.webRTCSignalSubscription) {
       this.webRTCSignalSubscription.unsubscribe();
@@ -234,6 +271,7 @@ export class CallComponent implements OnInit, OnDestroy {
     if (this.webRTCCloseSubscription) {
       this.webRTCCloseSubscription.unsubscribe();
     }
+    this.stopRing();
   }
 }
 
