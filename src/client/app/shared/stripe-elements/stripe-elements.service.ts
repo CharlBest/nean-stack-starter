@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { TranslateService } from '../translate/translate.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ export class StripeElementsService {
     stripeInstance: stripe.Stripe;
     elementsInstance: stripe.elements.Elements;
 
-    constructor() {
+    constructor(private translateService: TranslateService) {
         this.initializeStripe();
     }
 
@@ -47,7 +48,7 @@ export class StripeElementsService {
 
     initializeElements() {
         this.elementsInstance = this.stripe.elements({
-            locale: 'en',
+            locale: this.translateService.defaultLanguage,
             fonts: [
                 {
                     src: environment.production ? `url("${environment.serverEndpoint}/assets/fonts/OpenSans-Regular-latin.woff2")` : '',

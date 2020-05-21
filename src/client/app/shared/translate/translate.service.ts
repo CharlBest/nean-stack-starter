@@ -9,7 +9,7 @@ import { LocalStorageService } from '../services/storage.service';
 })
 export class TranslateService {
 
-  private readonly defaultLanguage = Language.ENGLISH;
+  readonly defaultLanguage = Language.ENGLISH;
   activeLanguage: Language | null;
 
   constructor(private localStorageService: LocalStorageService,
