@@ -122,11 +122,8 @@ export class Database {
             payments: {
                 anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
                 userPayment: (await import(`../database/payments/userPayment.${Database.fileExtension}`)).data,
-                paymentCards: (await import(`../database/payments/paymentCards.${Database.fileExtension}`)).data,
-                createCard: (await import(`../database/payments/createCard.${Database.fileExtension}`)).data,
-                deleteCard: (await import(`../database/payments/deleteCard.${Database.fileExtension}`)).data,
-                updateDefaultCard: (await import(`../database/payments/updateDefaultCard.${Database.fileExtension}`)).data,
                 paymentHistory: (await import(`../database/payments/paymentHistory.${Database.fileExtension}`)).data,
+                updateCustomer: (await import(`../database/payments/updateCustomer.${Database.fileExtension}`)).data,
             },
             items: {
                 create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
@@ -199,11 +196,8 @@ export interface DbQueries {
     payments: {
         anonymousPayment: string,
         userPayment: string,
-        paymentCards: string,
-        createCard: string,
-        deleteCard: string,
-        updateDefaultCard: string,
         paymentHistory: string,
+        updateCustomer: string,
     };
 
     items: {

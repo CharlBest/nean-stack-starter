@@ -101,8 +101,7 @@ class UsersRepository extends BaseRepository {
 
         const model = result ? result.map(record => {
             return {
-                ...record.get('user'),
-                paymentCards: record.get('cards'),
+                ...record.get('user')
             } as UserModel;
         }) : null;
 
@@ -123,8 +122,7 @@ class UsersRepository extends BaseRepository {
         const model = result ? result.map(record => {
             return {
                 ...record.get('user'),
-                avatar: record.get('avatar'),
-                paymentCards: record.get('cards'),
+                avatar: record.get('avatar')
             } as UserProfileViewModel;
         }) : null;
 

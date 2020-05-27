@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardViewModel } from '@shared/view-models/payment/card.view-model';
+import { PaymentService } from '../../payment/payment.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { ProfileService } from '../profile.service';
 
 interface ExtendedCardViewModel extends CardViewModel {
   hasExpired: boolean;
@@ -18,9 +18,9 @@ export class PaymentsComponent implements OnChanges {
   @Input() paymentCards: ExtendedCardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
-  newDefaultCardUId: string | null;
+  newDefaultCardId: string | null;
 
-  constructor(private profileService: ProfileService,
+  constructor(private paymentService: PaymentService,
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService) { }
 
@@ -30,18 +30,18 @@ export class PaymentsComponent implements OnChanges {
     }
   }
 
-  async deleteCard(uId: string) {
+  async deleteCard(id: string) {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this payment method?');
     if (hasConfirmed) {
 
       try {
-        const response = await this.profileService.deleteCard(uId);
+        const response = await this.paymentService.deleteCard(id);
         if (response) {
           if (!this.paymentCards) {
             this.paymentCards = [];
           }
 
-          this.paymentCards = this.paymentCards.filter(card => card.uId !== uId);
+          this.paymentCards = this.paymentCards.filter(card => card.id !== id);
         }
       } catch (error) {
         this.formErrorsService.updateFormValidity(error);
@@ -61,13 +61,13 @@ export class PaymentsComponent implements OnChanges {
       return;
     }
 
-    if (this.newDefaultCardUId && this.newDefaultCardUId !== currentDefaultCard.uId) {
+    if (this.newDefaultCardId && this.newDefaultCardId !== currentDefaultCard.id) {
 
       try {
-        const response = await this.profileService.updateDefaultCard(this.newDefaultCardUId);
+        const response = await this.paymentService.updateDefaultCard(this.newDefaultCardId);
         if (response) {
           this.paymentCards.forEach(card => {
-            if (card.uId !== this.newDefaultCardUId) {
+            if (card.id !== this.newDefaultCardId) {
               card.isDefault = false;
             } else {
               card.isDefault = true;

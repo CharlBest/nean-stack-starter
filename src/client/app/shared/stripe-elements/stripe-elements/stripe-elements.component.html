@@ -26,11 +26,13 @@
             class="stripe-element"></div>
         <div class="error-message">{{elementsWrapper?.cardCvc?.error}}</div>
     </div>
+</div>
+
+<div *ngIf="error"
+    class="mat-error">
     <br>
-    <div *ngIf="error">
-        {{error}}
-        <br>
-    </div>
+    {{error}}
+    <br>
 </div>
 
 <mat-form-field appearance="fill"

@@ -2,7 +2,7 @@
   <mat-card-title>Payment Methods</mat-card-title>
   <mat-card-content>
 
-    <mat-radio-group [(ngModel)]="newDefaultCardUId">
+    <mat-radio-group [(ngModel)]="newDefaultCardId">
       <table>
         <tbody>
           <tr *ngFor="let card of paymentCards; trackBy: trackByFn">
@@ -13,7 +13,7 @@
                 </mat-chip-list>
               </ng-container>
               <ng-container *ngIf="isChangingDefault">
-                <mat-radio-button [value]="card.uId"
+                <mat-radio-button [value]="card.id"
                   [checked]="card.isDefault"></mat-radio-button>
               </ng-container>
             </td>
@@ -23,7 +23,7 @@
 
               <app-icon-credit-card *ngIf="!card.brand"></app-icon-credit-card>
             </td>
-            <td>**** {{card.last4}}</td>
+            <td>**** **** **** {{card.last4}}</td>
             <td>
               <button mat-button
                 *ngIf="card.hasExpired"
@@ -36,7 +36,7 @@
               <button mat-icon-button
                 *ngIf="!card.isDefault || paymentCards.length === 1"
                 color="warn"
-                (click)="deleteCard(card.uId)"
+                (click)="deleteCard(card.id)"
                 type="button"
                 matTooltip="Delete"
                 aria-label="Delete">
@@ -64,7 +64,7 @@
       type="button">Save Default Method</button>
     <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
-      (click)="this.isChangingDefault = false; newDefaultCardUId = null"
+      (click)="this.isChangingDefault = false; newDefaultCardId = null"
       type="button">Cancel</button>
     <span class="flex-spacer"></span>
     <button mat-stroked-button

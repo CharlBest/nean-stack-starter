@@ -20,7 +20,7 @@ export interface Environment {
     };
     stripe: {
         secretKey: string;
-        webhookKey: string;
+        webhookSigningSecret: string;
     };
     email: {
         username: string;

@@ -1,5 +1,4 @@
-﻿import { CardModel } from '../payment/card.model';
-import { UserLiteModel } from './user-lite.model';
+﻿import { UserLiteModel } from './user-lite.model';
 
 export class UserModel extends UserLiteModel {
     dateCreated: number;
@@ -9,7 +8,6 @@ export class UserModel extends UserLiteModel {
     emailVerified: boolean;
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: Array<string>;
-    paymentCards: CardModel[];
     pushSubscription: PushSubscriptionValues;
     pushNotificationTypes: PushNotificationTypes;
     emailNotificationTypes: EmailNotificationTypes;

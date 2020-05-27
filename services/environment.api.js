@@ -1,5 +1,4 @@
 module.exports = {
-    NODE_ENV: 'development',
     PORT: 3000,
     NEO4J_URI: 'neo4j://localhost',
     NEO4J_NAME: 'nean',
@@ -13,6 +12,7 @@ module.exports = {
     RABBITMQ_USERNAME: 'server_api',
     RABBITMQ_PASSWORD: 'password',
     RABBITMQ_PORT: 5672,
-    STRIPE_KEY: 'sk_test_RKOxhujxxM8c4xIqt6t036Qo',
     AUTHENTICATION_KEY: '37LvDSm4XvjYOh9Y',
+    STRIPE_KEY: 'sk_test_uoAC6oPh6pxIyGuo8WHxhNpp',
+    STRIPE_WEBHOOK_SIGNING_SECRET: 'whsec_BxjS7bvpABPIAVA3zKozTZ4ikmPHUdcm',
 }

@@ -12,17 +12,15 @@ class PaymentsRoutes extends BaseRoute {
     }
 
     initRoutes() {
-        this.router.post(PaymentRoutes.anonymousPayment().server(),
-            async (req, res, next) => paymentsController.anonymousPayment(req, res, next).catch(next));
         this.router.post(PaymentRoutes.stripeWebhook().server(), express.raw({ type: 'application/json' }),
             async (req, res, next) => paymentsController.stripeWebhook(req, res, next).catch(next));
         this.router.post(PaymentRoutes.paymentIntent().server(),
             async (req, res, next) => paymentsController.paymentIntent(req, res, next).catch(next));
 
-        this.router.post(PaymentRoutes.userPayment().server(), Authentication.loginRequired,
-            async (req, res, next) => paymentsController.userPayment(req, res, next).catch(next));
         this.router.get(PaymentRoutes.paymentCards().server(), Authentication.loginRequired,
             async (req, res, next) => paymentsController.paymentCards(req, res, next).catch(next));
+        this.router.post(PaymentRoutes.createCardIntent().server(), Authentication.loginRequired,
+            async (req, res, next) => paymentsController.createCardIntent(req, res, next).catch(next));
         this.router.post(PaymentRoutes.createCard().server(), Authentication.loginRequired,
             async (req, res, next) => paymentsController.createCard(req, res, next).catch(next));
         this.router.delete(PaymentRoutes.deleteCard().server(), Authentication.loginRequired,

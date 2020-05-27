@@ -4,6 +4,12 @@
         <app-stripe-elements #stripeElements
             (isDoneRendering)="isProcessing = !$event"></app-stripe-elements>
 
+        <br>
+
+        <form [formGroup]="formGroup">
+            <mat-checkbox formControlName="setAsDefault">Set as default</mat-checkbox>
+        </form>
+
     </mat-card-content>
     <mat-card-actions>
         <button mat-stroked-button

@@ -8,11 +8,11 @@ function generateDev(name, environmentVariables, instances = 1) {
         name: `nean.io-${name}`,
         script: `${name}.bundle.js`,
         cwd: `dist/server/${name}`,
-        instances,
+        // instances,
         env: {
+            // DEBUG: '*',
             NODE_ENV: 'development',
             ...environmentVariables
-            // DEBUG: '*'
         },
         error_file: 'pm2-error.log',
         out_file: 'pm2-output.log',

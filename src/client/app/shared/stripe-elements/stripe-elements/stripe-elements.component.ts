@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { StripeCardNumberElement } from '@stripe/stripe-js';
+import { PaymentIntent, StripeCardNumberElement } from '@stripe/stripe-js';
 import { ThemeService } from '../../services/theme.service';
 import { CardBrandType } from '../card-brand.enum';
 import { ElementsWrapper, ElementWrapper } from '../stripe-element.model';
@@ -32,50 +32,61 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         this.initialize();
     }
 
-    async generateToken() {
-        if (!this.elementsWrapper.cardNumber.element) {
-            return null;
-        }
-
-        // createToken takes a single element but pulls in other elements that has been instantiated as well to create a card element
-        const stripe = await this.stripeElementsService.stripe();
-        const { token, error } = await stripe.createToken(this.elementsWrapper.cardNumber.element);
-
-        if (error) {
-            this.error = error.message ? error.message : 'Error in payment';
-            return null;
-        } else {
-            return token;
-        }
-    }
-
-    async confirmCardPayment(intentSecret: string) {
+    async confirmCardSetup(intentSecret: string): Promise<string | null | undefined> {
         if (!this.elementsWrapper.cardNumber.element) {
             return null;
         }
 
         const stripe = await this.stripeElementsService.stripe();
-        const { paymentIntent, error } = await stripe.confirmCardPayment(intentSecret, {
-            payment_method: { card: this.elementsWrapper.cardNumber.element }
-        });
+        const { setupIntent, error } = await stripe.confirmCardSetup(
+            intentSecret,
+            {
+                payment_method: {
+                    card: this.elementsWrapper.cardNumber.element
+                }
+            }
+        );
 
         if (error) {
             // Display error.message in your UI.
-            this.error = error.message ? error.message : 'Error in payment';
             return null;
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        } else {
+            // The SetupIntent was successful!
+            return setupIntent?.payment_method;
+        }
+    }
+
+    async confirmCardPayment(intentSecret: string): Promise<PaymentIntent | null> {
+        if (!this.elementsWrapper.cardNumber.element) {
+            return null;
+        }
+
+        const stripe = await this.stripeElementsService.stripe();
+        const confirmPayment = await stripe.confirmCardPayment(intentSecret, {
+            payment_method: { card: this.elementsWrapper.cardNumber.element }
+        });
+
+        console.log(confirmPayment);
+
+        if (confirmPayment.error) {
+            // Display error.message in your UI.
+            this.error = confirmPayment.error.message ? confirmPayment.error.message : 'Error in payment';
+            return null;
+        } else if (confirmPayment.paymentIntent && confirmPayment.paymentIntent.status === 'succeeded') {
             // The payment has succeeded
             // Display a success message
             // Handle successful payment here
-            return true;
+            return confirmPayment.paymentIntent;
         }
 
-        return false;
+        return null;
     }
 
     private initialize() {
         const elementStyles = {
             base: {
+                fontFamily: 'Open Sans, Arial, sans-serif',
+                fontSmoothing: 'antialiased',
                 color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255)' : 'rgba(0, 0, 0, 0.87)',
                 '::placeholder': {
                     color: this.themeService.isDarkTheme ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.54)',
@@ -185,9 +196,13 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
                         elementWrapper.cardBrand = CardBrandType.UNKNOWN;
                         break;
                 }
-
-                this.inputElementChange.emit();
             }
+
+
+            // Clear global error message
+            this.error = '';
+
+            this.inputElementChange.emit();
         });
     }
 

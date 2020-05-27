@@ -1,5 +1,5 @@
 export class CardViewModel {
-    uId: string;
+    id: string;
     expireMonth: number;
     expireYear: number;
     brand: string;

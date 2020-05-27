@@ -1,2 +1,9 @@
 <div #paymentRequestButton
     [hidden]="!showPaymentRequestButton"></div>
+
+<div *ngIf="error"
+    class="mat-error">
+    <br>
+    {{error}}
+    <br>
+</div>

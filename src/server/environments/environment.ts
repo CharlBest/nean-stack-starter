@@ -22,14 +22,14 @@ export let environment: Environment = {
     },
     stripe: {
         secretKey: process.env.STRIPE_KEY!,
-        webhookKey: process.env.STRIPE_WEBHOOK_KEY!
+        webhookSigningSecret: process.env.STRIPE_WEBHOOK_SIGNING_SECRET!
+    },
+    authentication: {
+        privateKey: process.env.AUTHENTICATION_KEY!
     },
     email: {
         username: process.env.EMAIL_USERNAME!,
         password: process.env.EMAIL_PASSWORD!
-    },
-    authentication: {
-        privateKey: process.env.AUTHENTICATION_KEY!
     },
     vapidKey: {
         public: process.env.VAPID_PUBLIC_KEY!,

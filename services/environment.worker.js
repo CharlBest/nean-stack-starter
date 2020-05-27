@@ -1,5 +1,4 @@
 module.exports = {
-    NODE_ENV: 'development',
     NEO4J_URI: 'neo4j://localhost',
     NEO4J_NAME: 'nean',
     NEO4J_ADMIN_USERNAME: 'neo4j',

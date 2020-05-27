@@ -96,15 +96,23 @@ export class FormGroupBuilder {
         };
     }
 
-    static payment(amount: number | null = null, cardUId: string | null = null, saveCard: boolean | null = null,
+    static createCard(setAsDefault: boolean | null = null): FormValidator {
+        return {
+            setAsDefault: [setAsDefault, [
+                Validators.typeAssert('boolean', setAsDefault),
+            ]]
+        };
+    }
+
+    static payment(amount: number | null = null, cardId: string | null = null, saveCard: boolean | null = null,
         email: string | null = null): FormValidator {
         return {
             amount: [amount, [
                 Validators.required,
                 Validators.typeAssert('number', amount),
             ]],
-            cardUId: [cardUId, [
-                Validators.typeAssert('string', cardUId),
+            cardId: [cardId, [
+                Validators.typeAssert('string', cardId),
             ]],
             saveCard: [saveCard, [
                 Validators.typeAssert('boolean', saveCard),

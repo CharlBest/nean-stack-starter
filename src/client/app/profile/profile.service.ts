@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CardModel } from '@shared/models/payment/card.model';
-import { PaymentModel } from '@shared/models/payment/payment.model';
 import { NotificationRoutes } from '@shared/routes/notification.routes';
-import { PaymentRoutes } from '@shared/routes/payment.routes';
 import { UserRoutes } from '@shared/routes/user.routes';
 import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
@@ -46,22 +43,6 @@ export class ProfileService {
 
   resendEmailVerificationLink(): Promise<void> {
     return this.http.post<void>(`${environment.serverEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null).toPromise();
-  }
-
-  createCard(token: string): Promise<CardModel | null> {
-    return this.http.post<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.createCard().client()}`, { token }).toPromise();
-  }
-
-  deleteCard(uId: string): Promise<CardModel | null> {
-    return this.http.delete<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.deleteCard(uId).client()}`).toPromise();
-  }
-
-  updateDefaultCard(uId: string): Promise<CardModel | null> {
-    return this.http.put<CardModel>(`${environment.serverEndpoint}${PaymentRoutes.updateDefaultCard().client()}`, { uId }).toPromise();
-  }
-
-  paymentHistory(): Promise<PaymentModel[] | null> {
-    return this.http.get<PaymentModel[]>(`${environment.serverEndpoint}${PaymentRoutes.paymentHistory().client()}`).toPromise();
   }
 
   sendReport(viewModel: ReportUserViewModel): Promise<void> {

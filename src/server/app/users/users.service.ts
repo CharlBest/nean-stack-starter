@@ -22,6 +22,7 @@ import { emailBroker } from '../../communication/emailer-broker';
 import { Authentication } from '../../core/middleware/authentication';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
 import { environment } from '../../environments/environment';
+import { paymentsService } from '../payments/payments.service';
 import { BaseService } from '../shared/base-service';
 import { usersRepository } from './users.repository';
 
@@ -169,16 +170,7 @@ class UsersService extends BaseService {
             avatar: user.avatar,
             emailVerified: user.emailVerified,
             twoFactorAuthenticationEnabled: user.twoFactorAuthenticationEnabled,
-            paymentCards: user.paymentCards.map(card => {
-                return {
-                    uId: card.uId,
-                    expireMonth: card.expireMonth,
-                    expireYear: card.expireYear,
-                    brand: card.brand,
-                    last4: card.last4,
-                    isDefault: card.isDefault,
-                };
-            }),
+            paymentCards: await paymentsService.getStripeCards(user.stripeCustomerId)
         };
     }
 

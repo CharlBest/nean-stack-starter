@@ -16,7 +16,7 @@ export const environment = {
     messagingSenderId: '622256376084'
   },
   stripe: {
-    publishableKey: 'pk_live_ee9MNzGQ4YeBswQ2dt8p4e9k'
+    publishableKey: 'pk_live_d2ZlfgXFkSdjFPp9Y2UbEgyP'
   },
   publicVapidKey: 'BHh0GLT09LUbnWzwX_r3YTmNMeCiDhmCO2KeT35vEcM8CW5DyfP4StRaAWviffMFY7lAK0vLoHl5h1PIubOMp10'
 };

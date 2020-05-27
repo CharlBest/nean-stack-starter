@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentModel } from '@shared/models/payment/payment.model';
+import { PaymentService } from '../../payment/payment.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { ProfileService } from '../profile.service';
 
 @Component({
   templateUrl: './payment-history.component.html',
@@ -12,7 +12,7 @@ export class PaymentHistoryComponent implements OnInit {
   isProcessing = false;
   paymentHistory: PaymentModel[];
 
-  constructor(private profileService: ProfileService,
+  constructor(private paymentService: PaymentService,
     private formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class PaymentHistoryComponent implements OnInit {
 
   async getPaymentHistory() {
     try {
-      const response = await this.profileService.paymentHistory();
+      const response = await this.paymentService.paymentHistory();
       if (response) {
         this.paymentHistory = response;
       }

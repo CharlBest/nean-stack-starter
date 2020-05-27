@@ -1,4 +1,3 @@
-import { CardModel } from '@shared/models/payment/card.model';
 import { PaymentModel } from '@shared/models/payment/payment.model';
 import { Response } from 'express';
 import { Database } from '../../core/database';
@@ -10,14 +9,13 @@ class PaymentsRepository extends BaseRepository {
         super();
     }
 
-    async anonymousPayment(res: Response, paymentUId: string, chargeId: string, chargeCreated: number, amount: number, email: string)
+    async anonymousPayment(res: Response, chargeId: string, amount: number, chargeCreated: number, email: string)
         : Promise<boolean> {
         const result = await this.run(res, Database.queries.payments.anonymousPayment,
             {
-                paymentUId,
                 chargeId,
-                chargeCreated,
                 amount,
+                chargeCreated,
                 email
             }
         );
@@ -29,88 +27,13 @@ class PaymentsRepository extends BaseRepository {
         }
     }
 
-    async userPayment(res: Response, userId: number, cardUId: string | null, paymentUId: string,
-        amount: number, chargeId: string, chargeCreated: number): Promise<boolean> {
+    async userPayment(res: Response, userId: number, chargeId: string, amount: number, chargeCreated: number): Promise<boolean> {
         const result = await this.run(res, Database.queries.payments.userPayment,
             {
                 userId,
-                cardUId,
-                paymentUId,
-                amount,
                 chargeId,
+                amount,
                 chargeCreated,
-            }
-        );
-
-        if (result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async paymentCards(res: Response, userId: number): Promise<CardModel[] | null> {
-        const result = await this.run(res, Database.queries.payments.paymentCards,
-            {
-                userId
-            }
-        );
-
-        const model = result ? result.map(record => record.get('cards')) : null;
-
-        if (model && model.length > 0) {
-            return model;
-        } else {
-            return null;
-        }
-    }
-
-    // tslint:disable-next-line: parameters-max-number
-    async createCard(res: Response, userId: number, stripeCustomerId: string, uId: string, stripeCardId: string,
-        stripeFingerprint: string, brand: string, last4: string, expireMonth: number, expireYear: number): Promise<CardModel | null> {
-        const result = await this.run(res, Database.queries.payments.createCard,
-            {
-                userId,
-                stripeCustomerId,
-                uId,
-                stripeCardId,
-                stripeFingerprint,
-                brand,
-                last4,
-                expireMonth,
-                expireYear,
-            }
-        );
-
-        const model = result ? result.map(record => record.get('card')) : null;
-
-        if (model && model.length > 0) {
-            return model[0];
-        } else {
-            return null;
-        }
-    }
-
-    async deleteCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await this.run(res, Database.queries.payments.deleteCard,
-            {
-                userId,
-                cardUId
-            }
-        );
-
-        if (result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async updateDefaultCard(res: Response, userId: number, cardUId: string): Promise<boolean> {
-        const result = await this.run(res, Database.queries.payments.updateDefaultCard,
-            {
-                userId,
-                cardUId
             }
         );
 
@@ -134,6 +57,21 @@ class PaymentsRepository extends BaseRepository {
             return model;
         } else {
             return null;
+        }
+    }
+
+    async updateCustomer(res: Response, userId: number, stripeCustomerId: string): Promise<boolean> {
+        const result = await this.run(res, Database.queries.payments.updateCustomer,
+            {
+                userId,
+                stripeCustomerId
+            }
+        );
+
+        if (result) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

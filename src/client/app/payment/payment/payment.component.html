@@ -47,11 +47,11 @@
                 <mat-form-field appearance="fill"
                     *ngIf="isAuthenticated && paymentCards?.length > 0">
                     <mat-label>Cards</mat-label>
-                    <mat-select formControlName="cardUId"
-                        [value]="paymentCards[0]?.uId">
+                    <mat-select formControlName="cardId"
+                        [value]="paymentCards[0]?.id">
                         <mat-option *ngFor="let card of paymentCards; trackBy: trackByFn"
-                            [value]="card.uId">
-                            **** {{card.last4}}
+                            [value]="card.id">
+                            **** **** **** {{card.last4}}
                         </mat-option>
                         <mat-option value="new">Use new card</mat-option>
                     </mat-select>
@@ -60,13 +60,15 @@
                 <br>
 
                 <app-stripe-payment-request-button #stripePaymentRequestButton
-                    (paymentComplete)="paymentRequestButtonComplete($event)"
+                    (paymentMethod)="paymentRequestButtonComplete($event)"
                     [amount]="formGroup.controls['amount'].value"
                     [isAuthenticated]="isAuthenticated"></app-stripe-payment-request-button>
 
-                <app-stripe-elements [hidden]="formGroup.controls['cardUId'].value !== 'new'"
+                <app-stripe-elements [hidden]="formGroup.controls['cardId'].value !== 'new'"
                     #stripeElements
                     (isDoneRendering)="isProcessingStripeElements = !$event"></app-stripe-elements>
+
+                <br>
 
                 <ng-container *ngIf="!isAuthenticated">
                     <mat-form-field appearance="fill">
@@ -81,10 +83,7 @@
                     </mat-form-field>
                 </ng-container>
 
-                <ng-container *ngIf="isAuthenticated && formGroup.controls['cardUId'].value === 'new'">
-                    <br>
-                    <br>
-
+                <ng-container *ngIf="isAuthenticated && formGroup.controls['cardId'].value === 'new'">
                     <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
 
                     <br>

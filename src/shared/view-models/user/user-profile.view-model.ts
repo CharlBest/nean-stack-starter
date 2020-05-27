@@ -6,6 +6,7 @@ export class UserProfileViewModel {
     uId: string;
     email: string;
     username: string;
+    stripeCustomerId?: string;
     dateCreated: number;
     bio: string;
     avatar?: FileModel | null;

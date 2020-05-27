@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { CanMakePaymentResult, PaymentRequest, PaymentRequestCompleteStatus, PaymentRequestOptions, PaymentRequestTokenEvent, StripePaymentRequestButtonElement } from '@stripe/stripe-js';
+// tslint:disable-next-line: max-line-length
+import { CanMakePaymentResult, PaymentIntent, PaymentRequest, PaymentRequestOptions, PaymentRequestPaymentMethodEvent, StripeError, StripePaymentRequestButtonElement } from '@stripe/stripe-js';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
@@ -13,12 +14,13 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
     @Input() amount: number;
     @Input() isAuthenticated: boolean;
     @Input() showButton = false;
-    @Output() readonly paymentComplete: EventEmitter<PaymentRequestTokenEvent> = new EventEmitter<PaymentRequestTokenEvent>();
+    @Output() readonly paymentMethod: EventEmitter<PaymentRequestPaymentMethodEvent> = new EventEmitter<PaymentRequestPaymentMethodEvent>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
     paymentRequestElement: StripePaymentRequestButtonElement;
     canMakePayment: CanMakePaymentResult | null = null;
     showPaymentRequestButton = false;
     paymentRequestButtonInstance: PaymentRequest;
+    error: string;
     paymentRequestButtonOptions: PaymentRequestOptions = {
         country: 'IE',
         currency: 'eur',
@@ -59,13 +61,6 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         this.paymentRequestButtonInstance.show();
     }
 
-    // NB: it's very important to call this after payment request was made otherwise it will always
-    // show error but payment might have succeeded.
-    // https://stripe.com/docs/stripe-js/reference#payment-response-object
-    completePaymentRequest(tokenPaymentResponse: PaymentRequestTokenEvent, code: PaymentRequestCompleteStatus) {
-        tokenPaymentResponse.complete(code);
-    }
-
     private setDynamicOptions() {
         this.paymentRequestButtonOptions.total.amount = this.amount ? this.amount * 100 : 0;
     }
@@ -85,7 +80,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
             // TODO: payment button not available
         }
 
-        this.paymentRequestButtonInstance.on('token', event => this.paymentComplete.emit(event));
+        this.paymentRequestButtonInstance.on('paymentmethod', event => this.paymentMethod.emit(event));
     }
 
     private createAndMountButton() {
@@ -102,6 +97,34 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
 
         this.paymentRequestElement.mount(this.paymentRequestButton.nativeElement);
         this.showPaymentRequestButton = true;
+    }
+
+    async confirmPaymentRequestButton(intentSecret: string, paymentMethodId?: string): Promise<PaymentIntent | null> {
+        const stripe = await this.stripeElementsService.stripe();
+
+        let confirmPayment: { paymentIntent?: PaymentIntent; error?: StripeError };
+        if (paymentMethodId) {
+            confirmPayment = await stripe.confirmCardPayment(
+                intentSecret,
+                { payment_method: paymentMethodId },
+                { handleActions: false }
+            );
+        } else {
+            confirmPayment = await stripe.confirmCardPayment(intentSecret);
+        }
+
+        if (confirmPayment.error) {
+            // Display error.message in your UI.
+            this.error = confirmPayment.error.message ? confirmPayment.error.message : 'Error in payment';
+            return null;
+        } else if (confirmPayment.paymentIntent && confirmPayment.paymentIntent.status === 'succeeded') {
+            // The payment has succeeded
+            // Display a success message
+            // Handle successful payment here
+            return confirmPayment.paymentIntent;
+        }
+
+        return null;
     }
 
     ngOnDestroy() {
