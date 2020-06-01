@@ -57,20 +57,6 @@ export class ItemFormComponent implements OnInit {
     if (input) {
       input.value = '';
     }
-
-
-    // const { input, value } = event;
-    // const email = value.trim();
-
-    // if (value && !Validators.email(email)) {
-    //   if (!this.tags.includes(email)) {
-    //     this.tags.push(email);
-    //     this.chipList.errorState = false;
-    //     input.value = '';
-    //   }
-    // } else if (value && email && email !== '') {
-    //   this.chipList.errorState = true;
-    // }
   }
 
   removeTag(tag: string): void {
