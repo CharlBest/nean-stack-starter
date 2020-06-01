@@ -17,7 +17,7 @@ FOREACH (nullRow IN CASE WHEN existingItem IS NULL THEN [row] ELSE [] END |
     SET newItem.id = toInteger(nullRow.number) + nextId
     SET newItem.title = nullRow.title
     SET newItem.description = nullRow.description
-    SET newItem.dateCreated = timestamp()
+    SET newItem.dateCreated = datetime()
 )
 
 WITH row

@@ -11,7 +11,7 @@ WITH DISTINCT item, user
 
 // Create files
 FOREACH (file IN $files |
-    CREATE (newFile:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: timestamp() })
+    CREATE (newFile:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: datetime() })
     MERGE (item)-[:HAS_FILE]->(newFile)
 )
 

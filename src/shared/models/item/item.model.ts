@@ -6,7 +6,7 @@ export class ItemModel {
     title: string;
     description: string;
     files: Array<FileModel>;
-    dateCreated: number;
+    dateCreated: string;
     views: number;
     commentCount: number;
     favouriteCount: number;

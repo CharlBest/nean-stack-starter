@@ -7,7 +7,7 @@ LIMIT 1
 
 MATCH (user:User { id: $userId }), (item:Item { uId: $itemUId })
 
-CREATE (user)-[:MADE_COMMENT]->(comment:Comment { id: nextId, uId: $uId, description: $description, dateCreated: timestamp() })<-[:HAS_COMMENT]-(item)
+CREATE (user)-[:MADE_COMMENT]->(comment:Comment { id: nextId, uId: $uId, description: $description, dateCreated: datetime() })<-[:HAS_COMMENT]-(item)
 
 SET user.commentCount = SIZE((user)-[:MADE_COMMENT]->())
 SET item.commentCount = SIZE((item)-[:HAS_COMMENT]->())

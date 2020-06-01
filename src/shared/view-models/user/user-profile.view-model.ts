@@ -7,7 +7,7 @@ export class UserProfileViewModel {
     email: string;
     username: string;
     stripeCustomerId?: string;
-    dateCreated: number;
+    dateCreated: string;
     bio: string;
     avatar?: FileModel | null;
     emailVerified: boolean;

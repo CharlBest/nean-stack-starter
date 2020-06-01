@@ -1,12 +1,12 @@
 ﻿import { UserLiteModel } from './user-lite.model';
 
 export class UserModel extends UserLiteModel {
-    dateCreated: number;
+    dateCreated: string;
     isVerified: boolean;
     views: number;
     bio: string;
     emailVerified: boolean;
-    emailVerifiedDateCreated: number;
+    emailVerifiedDateCreated: string;
     forgotPasswordCodes: Array<string>;
     pushSubscription: PushSubscriptionValues;
     pushNotificationTypes: PushNotificationTypes;

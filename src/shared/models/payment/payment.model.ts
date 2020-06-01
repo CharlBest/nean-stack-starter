@@ -3,5 +3,5 @@ export class PaymentModel {
     amount: number;
     chargeId: string;
     chargeCreated: number;
-    dateCreated: number;
+    dateCreated: string;
 }

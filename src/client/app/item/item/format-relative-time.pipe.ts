@@ -9,8 +9,8 @@ export class FormatRelativeTimePipe implements PipeTransform {
 
     constructor(private translateService: TranslateService) { }
 
-    transform(timestamp: number | null, params?: any) {
-        if (!timestamp) {
+    transform(date: string | null, params?: any) {
+        if (!date) {
             return null;
         }
 
@@ -21,7 +21,7 @@ export class FormatRelativeTimePipe implements PipeTransform {
                 style: 'long', /* alternative = 'narrow' */
             });
 
-            const ms = timestamp - Date.now();
+            const ms = new Date(date).getTime() - Date.now();
 
             const years = Math.ceil(ms / 31536e6);
             if (years) return formatter.format(years, 'year');
@@ -41,12 +41,12 @@ export class FormatRelativeTimePipe implements PipeTransform {
             const seconds = Math.ceil(ms / 1e3);
             return formatter.format(seconds, 'second');
         } else {
-            return this.angularDatePipe(timestamp);
+            return this.angularDatePipe(date);
         }
     }
 
-    angularDatePipe(timestamp: number) {
+    angularDatePipe(date: string) {
         const locale = this.translateService.activeLanguage || this.translateService.defaultLanguage;
-        return formatDate(timestamp, 'HH:mm MMM d, y', locale);
+        return formatDate(date, 'HH:mm MMM d, y', locale);
     }
 }

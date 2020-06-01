@@ -5,12 +5,12 @@ MATCH (user:User)-[:HAS_ITEM]->(item:Item { uId: $uId })
 OPTIONAL MATCH (viewingUser:User { id: $userId })
 FOREACH (o IN CASE WHEN viewingUser IS NOT NULL THEN [viewingUser] ELSE [] END |
     MERGE (item)<-[viewed:VIEWED]-(viewingUser)
-    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = timestamp() )
+    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = datetime() )
 )
 FOREACH (o IN CASE WHEN viewingUser IS NULL THEN [1] ELSE [] END |
     MERGE (address:IpAddress { ip: $ip })
     MERGE (item)<-[viewed:VIEWED]-(address)
-    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = timestamp() )
+    FOREACH (o IN CASE WHEN EXISTS(viewed.dateCreated) THEN [] ELSE [viewed] END | SET viewed.dateCreated = datetime() )
 )
 SET item.views = SIZE(()-[:VIEWED]->(item))
 

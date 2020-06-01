@@ -7,7 +7,7 @@ DETACH DELETE avatar
 WITH user
 
 FOREACH (file IN CASE WHEN $avatar IS NOT NULL THEN [$avatar] ELSE [] END |
-    CREATE (newAvatar:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: timestamp() })
+    CREATE (newAvatar:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: datetime() })
     MERGE (user)-[:HAS_AVATAR]->(newAvatar)
 )
 `

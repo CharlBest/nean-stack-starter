@@ -6,7 +6,7 @@ WITH collect(items) as itemList
 // Save search
 OPTIONAL MATCH (user:User { id: $userId })
 FOREACH (o IN CASE WHEN user IS NOT NULL THEN [1] ELSE [] END |
-    CREATE (user)-[:SEARCHED]->(:Searched { term: $term, dateCreated: timestamp() })
+    CREATE (user)-[:SEARCHED]->(:Searched { term: $term, dateCreated: datetime() })
 )
 
 WITH itemList

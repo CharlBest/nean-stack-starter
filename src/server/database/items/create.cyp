@@ -8,11 +8,11 @@ LIMIT 1
 MATCH (user:User { id: $userId })
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
-CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: $uId, title: $title, description: $description, dateCreated: timestamp() })
+CREATE (user)-[:HAS_ITEM]->(item:Item { id: nextId, uId: $uId, title: $title, description: $description, dateCreated: datetime() })
 
 // Create files
 FOREACH (file IN $files |
-    CREATE (newFile:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: timestamp() })
+    CREATE (newFile:File { uId: file.uId, url: file.url, width: file.width, height: file.height, aspectRatio: file.aspectRatio, exifOrientation: file.exifOrientation, rotation: file.rotation, dateCreated: datetime() })
     MERGE (item)-[:HAS_FILE]->(newFile)
 )
 
@@ -32,7 +32,7 @@ SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
 
 // Subscribe to notifications
 FOREACH (o IN CASE WHEN user.autoSubscribeToItem = true OR user.autoSubscribeToItem IS NULL THEN [1] ELSE [] END |
-    MERGE (user)-[:SUBSCRIBED { dateCreated: timestamp() }]->(item)
+    MERGE (user)-[:SUBSCRIBED { dateCreated: datetime() }]->(item)
     SET user.subscriptionCount = SIZE((user)-[:SUBSCRIBED]->())
     SET item.subscriptionCount = SIZE((item)<-[:SUBSCRIBED]-())
 )
