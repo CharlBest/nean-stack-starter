@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { MatBottomSheetConfig, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
 import { MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatSnackBarConfig, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
+import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS, MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/tooltip';
 import { BrowserModule, HammerModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -71,6 +71,8 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
       provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
       useValue: { closeOnNavigation: true, autoFocus: false, restoreFocus: false } as MatBottomSheetConfig
     },
+    // Temp fix for Share Dialog service https://github.com/angular/angular/issues/35759
+    MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER,
   ],
   bootstrap: [
     AppComponent
