@@ -25,7 +25,7 @@ import { FavouritesComponent } from './favourites/favourites.component';
             },
             {
                 path: 'comment/edit/:uId', component: EditCommentComponent, pathMatch: 'full',
-                data: { title: 'Edit Comment', nav: NavigationType.BACK }
+                data: { title: 'Edit Comment', nav: NavigationType.BACK, canActivate: [AuthService] }
             },
             {
                 path: 'saved', component: FavouritesComponent, pathMatch: 'full',
