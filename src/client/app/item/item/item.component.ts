@@ -194,6 +194,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     try {
       await this.itemService.createSubscription(this.item.uId);
       this.item.subscribed = true;
+      this.item.subscriptionCount++;
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
     }
@@ -203,6 +204,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     try {
       await this.itemService.deleteSubscription(this.item.uId);
       this.item.subscribed = false;
+      this.item.subscriptionCount--;
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
     }
