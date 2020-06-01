@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -38,7 +39,8 @@ const materialModules = [
   MatMenuModule,
   MatListModule,
   MatTooltipModule,
-  DragDropModule
+  DragDropModule,
+  MatChipsModule
 ];
 
 @NgModule({

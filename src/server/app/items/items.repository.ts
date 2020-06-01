@@ -25,15 +25,16 @@ class ItemsRepository extends BaseRepository {
         );
     }
 
-    async create(res: Response, userId: number, uId: string, title: string, description: string, files: Array<FileModel>)
-        : Promise<ItemViewModel | null> {
+    async create(res: Response, userId: number, uId: string, title: string, description: string,
+        files: Array<FileModel>, tags: Array<string>): Promise<ItemViewModel | null> {
         const result = await this.run(res, Database.queries.items.create,
             {
                 userId,
                 uId,
                 title,
                 description,
-                files
+                files,
+                tags
             }
         );
 
@@ -41,7 +42,8 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('item'),
                 files: record.get('files'),
-                user: record.get('user')
+                tags: record.get('tags'),
+                user: record.get('user'),
             } as ItemViewModel;
         }) : null;
 
@@ -52,15 +54,16 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async update(res: Response, userId: number, uId: string, title: string, description: string, files: Array<FileModel>)
-        : Promise<ItemViewModel | null> {
+    async update(res: Response, userId: number, uId: string, title: string, description: string,
+        files: Array<FileModel>, tags: Array<string>): Promise<ItemViewModel | null> {
         const result = await this.run(res, Database.queries.items.update,
             {
                 userId,
                 uId,
                 title,
                 description,
-                files
+                files,
+                tags
             }
         );
 
@@ -68,7 +71,8 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('item'),
                 files: record.get('files'),
-                user: record.get('user')
+                tags: record.get('tags'),
+                user: record.get('user'),
             } as ItemViewModel;
         }) : null;
 
@@ -92,6 +96,7 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('item'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('user'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),
@@ -118,6 +123,7 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),
@@ -189,6 +195,7 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('users'),
                 favourite: true,
             } as ItemViewModel;
@@ -345,6 +352,7 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),

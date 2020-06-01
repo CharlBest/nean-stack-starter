@@ -1,5 +1,7 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { MAX_FILE_UPLOADS } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
@@ -19,6 +21,8 @@ export class ItemFormComponent implements OnInit {
   @Input() item: ItemViewModel | null;
   formGroup: FormGroup;
   readonly MAX_FILE_UPLOADS = MAX_FILE_UPLOADS;
+  // Enter, comma, semi-colon
+  readonly separatorKeysCodes = [ENTER, COMMA, 186];
 
   constructor(private fb: FormBuilder,
     public formErrorsService: FormErrorsService,
@@ -36,13 +40,54 @@ export class ItemFormComponent implements OnInit {
     this.formGroup = this.fb.group(FormGroupBuilder.createOrUpdateItem(
       this.item ? this.item.title : null,
       this.item ? this.item.description : null,
-      this.item ? this.item.files : null
+      this.item ? this.item.files : null,
+      this.item ? this.item.tags : [],
     ));
+  }
+
+  addTag(event: MatChipInputEvent): void {
+    const { input, value } = event;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.formGroup.controls.tags.value.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+
+    // const { input, value } = event;
+    // const email = value.trim();
+
+    // if (value && !Validators.email(email)) {
+    //   if (!this.tags.includes(email)) {
+    //     this.tags.push(email);
+    //     this.chipList.errorState = false;
+    //     input.value = '';
+    //   }
+    // } else if (value && email && email !== '') {
+    //   this.chipList.errorState = true;
+    // }
+  }
+
+  removeTag(tag: string): void {
+    const index = this.formGroup.controls.tags.value.indexOf(tag);
+
+    if (index >= 0) {
+      this.formGroup.controls.tags.value.splice(index, 1);
+    }
   }
 
   async onSubmit() {
     const files = await this.fileUploader.upload();
     this.formGroup.controls.files.setValue(files);
     this.submitForm.emit();
+  }
+
+  trackByFn(index: number, item: string) {
+    return index;
   }
 }

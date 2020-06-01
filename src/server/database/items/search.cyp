@@ -17,10 +17,12 @@ MATCH (users:User)-[:HAS_ITEM]->(items)
 OPTIONAL MATCH (:User { id: $userId })-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (:User { id: $userId })-[subscribed:SUBSCRIBED]->(items)
 OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (items)-[:TAG]->(tags:Tag)
 OPTIONAL MATCH (users)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(items) as items,
 collect(properties(files)) as files,
+collect(tags.name) as tags,
 users
 {
     id: users.id,

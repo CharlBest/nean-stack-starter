@@ -112,6 +112,7 @@ class NotificationsRepository extends BaseRepository {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('users'),
                 subscribed: true,
             } as ItemViewModel;

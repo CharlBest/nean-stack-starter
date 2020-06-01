@@ -133,7 +133,8 @@ export class FormGroupBuilder {
         };
     }
 
-    static createOrUpdateItem(title: string | null = null, description: string | null = null, files: Array<FileModel> | null = null)
+    static createOrUpdateItem(title: string | null = null, description: string | null = null,
+        files: Array<FileModel> | null = null, tags: Array<string> | null = null)
         : FormValidator {
         return {
             title: [title, [
@@ -145,6 +146,9 @@ export class FormGroupBuilder {
             ]],
             files: [files, [
                 Validators.typeAssert('files', files),
+            ]],
+            tags: [tags, [
+                Validators.typeAssert('string[]', tags),
             ]]
         };
     }

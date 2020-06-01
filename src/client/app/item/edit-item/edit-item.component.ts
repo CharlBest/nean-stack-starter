@@ -64,6 +64,7 @@ export class EditItemComponent implements OnInit {
     viewModel.title = this.itemForm.formGroup.controls.title.value;
     viewModel.description = this.itemForm.formGroup.controls.description.value;
     viewModel.files = this.itemForm.formGroup.controls.files.value;
+    viewModel.tags = this.itemForm.formGroup.controls.tags.value;
 
     try {
       const response = await this.itemService.update(this.item.uId, viewModel);

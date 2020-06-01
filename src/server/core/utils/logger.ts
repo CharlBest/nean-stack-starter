@@ -19,7 +19,7 @@ export function initLogger() {
                 rotationFormat: () => {
                     return () => {
                         const temp = new Date();
-                        return `${padStr(temp.getFullYear())}${padStr(1 + temp.getMonth())}${padStr(temp.getDate())}`;
+                        return `${padStr(temp.getUTCFullYear())}${padStr(1 + temp.getUTCMonth())}${padStr(temp.getUTCDate())}`;
                         // TODO: add bellow code for more fine grained hourly logs
                         // padStr(temp.getHours()) +
                         // padStr(temp.getMinutes()) +

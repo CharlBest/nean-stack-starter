@@ -18,7 +18,7 @@ export class InviteComponent {
   isDone = false;
   emails: Array<string> = [];
   // Enter, comma, semi-colon
-  separatorKeysCodes = [ENTER, COMMA, 186];
+  readonly separatorKeysCodes = [ENTER, COMMA, 186];
 
   constructor(private inviteService: InviteService,
     public formErrorsService: FormErrorsService,

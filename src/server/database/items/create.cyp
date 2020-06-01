@@ -16,9 +16,17 @@ FOREACH (file IN $files |
     MERGE (item)-[:HAS_FILE]->(newFile)
 )
 
+// Tags
+FOREACH (tag IN $tags |
+	MERGE (tagNode:Tag { name: toLower(tag) })
+	MERGE (item)-[:TAG { customName: tag }]->(tagNode)
+	SET tagNode.links = SIZE(()-[:TAG]->(tagNode))
+)
+
 WITH item, user, avatars
 
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (item)-[:TAG]->(tags:Tag)
 
 SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
 
@@ -31,6 +39,7 @@ FOREACH (o IN CASE WHEN user.autoSubscribeToItem = true OR user.autoSubscribeToI
 
 RETURN properties(item) as item, 
 collect(properties(files)) as files,
+collect(tags.name) as tags,
 user
 {
     id: user.id,

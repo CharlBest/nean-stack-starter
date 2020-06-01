@@ -19,10 +19,12 @@ WITH viewingUser, item, user
 OPTIONAL MATCH (viewingUser)-[favourite:HAS_FAVOURITE]->(item)
 OPTIONAL MATCH (viewingUser)-[subscribed:SUBSCRIBED]->(item)
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (item)-[:TAG]->(tags:Tag)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(item) as item,
 collect(properties(files)) as files,
+collect(tags.name) as tags,
 user
 {
     id: user.id,

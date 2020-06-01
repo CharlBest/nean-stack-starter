@@ -4,4 +4,5 @@ export class CreateOrUpdateItemViewModel {
     title: string;
     description: string;
     files: Array<FileModel>;
+    tags: Array<string>;
 }

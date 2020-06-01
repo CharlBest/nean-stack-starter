@@ -167,6 +167,7 @@ class UsersRepository extends BaseRepository {
             return {
                 ...record.get('items'),
                 files: record.get('files'),
+                tags: record.get('tags'),
                 user: record.get('users'),
                 favourite: record.get('favourite'),
                 subscribed: record.get('subscribed'),

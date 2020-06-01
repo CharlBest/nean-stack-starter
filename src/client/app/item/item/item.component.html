@@ -28,7 +28,9 @@
                     <!-- Name -->
                     <div class="header-text-container">
                         <mat-card-title>{{item?.user?.username}}</mat-card-title>
-                        <mat-card-subtitle>{{item.dateCreated | formatRelativeTime}}</mat-card-subtitle>
+                        <mat-card-subtitle [matTooltip]="item.dateCreated | date: 'HH:mm MMM d, y'">
+                            {{item.dateCreated | formatRelativeTime}}
+                        </mat-card-subtitle>
                     </div>
                 </div>
             </button>
@@ -113,6 +115,10 @@
             </div>
 
             <h3>{{item.title}}</h3>
+
+            <mat-chip-list aria-label="Tags">
+                <mat-chip *ngFor="let tag of item?.tags">{{tag}}</mat-chip>
+            </mat-chip-list>
 
             <p #description>{{item.description}}</p>
         </div>

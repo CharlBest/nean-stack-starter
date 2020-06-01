@@ -7,7 +7,7 @@
                     formControlName="title"
                     [attr.autofocus]="bpService.isDesktop || null" />
                 <mat-error>
-                    <app-form-errors [control]="formGroup.controls['title']"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls.title"></app-form-errors>
                 </mat-error>
             </mat-form-field>
 
@@ -21,8 +21,28 @@
                     cdkAutosizeMinRows="3"
                     cdkAutosizeMaxRows="8"></textarea>
                 <mat-error>
-                    <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
+                    <app-form-errors [control]="formGroup.controls.description"></app-form-errors>
                 </mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Tags</mat-label>
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let tag of formGroup.controls.tags.value; trackBy: trackByFn"
+                        (removed)="removeTag(tag)">
+                        {{tag}}
+                        <app-icon-cancel matChipRemove
+                            [inline]="true"></app-icon-cancel>
+                    </mat-chip>
+
+                    <input [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="true"
+                        (matChipInputTokenEnd)="addTag($event)"
+                        [attr.autofocus]="bpService.isDesktop || null" />
+                </mat-chip-list>
             </mat-form-field>
 
             <br>

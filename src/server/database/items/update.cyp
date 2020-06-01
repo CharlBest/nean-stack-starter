@@ -17,11 +17,26 @@ FOREACH (file IN $files |
 
 WITH item, user
 
+// Tags
+OPTIONAL MATCH (item)-[rel:TAG]->(oldTag:Tag)
+DELETE rel
+
+SET oldTag.links = SIZE(()-[:TAG]->(oldTag))
+FOREACH (tag IN $tags |
+	MERGE (tagNode:Tag { name: toLower(tag) })
+	MERGE (item)-[:TAG { customName: tag }]->(tagNode)
+	SET tagNode.links = SIZE(()-[:TAG]->(tagNode))
+)
+
+WITH item, user
+
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
+OPTIONAL MATCH (item)-[:TAG]->(tags:Tag)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 
 RETURN properties(item) as item,
 collect(properties(files)) as files,
+collect(tags.name) as tags,
 user
 {
     id: user.id,

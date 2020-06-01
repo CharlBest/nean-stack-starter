@@ -17,7 +17,7 @@ class ItemsController extends BaseController {
     async create(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.files);
+        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.files, viewModel.tags);
         const hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         if (hasErrors) {
@@ -25,7 +25,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(201).json(
-            await itemsService.create(res, viewModel.title, viewModel.description, viewModel.files)
+            await itemsService.create(res, viewModel.title, viewModel.description, viewModel.files, viewModel.tags)
         );
     }
 
@@ -33,7 +33,7 @@ class ItemsController extends BaseController {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
-        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.files);
+        const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.files, viewModel.tags);
         let hasErrors = ServerValidator.setErrorsAndSave(res, formGroup);
 
         hasErrors = hasErrors || !!Validators.required(uId);
@@ -43,7 +43,7 @@ class ItemsController extends BaseController {
         }
 
         res.status(200).json(
-            await itemsService.update(res, uId as string, viewModel.title, viewModel.description, viewModel.files)
+            await itemsService.update(res, uId as string, viewModel.title, viewModel.description, viewModel.files, viewModel.tags)
         );
     }
 

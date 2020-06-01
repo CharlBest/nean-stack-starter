@@ -18,7 +18,7 @@ export class FormatRelativeTimePipe implements PipeTransform {
             const { language = this.translateService.activeLanguage || 'en-US' } = navigator;
             const formatter = new (Intl as any).RelativeTimeFormat(language, {
                 numeric: 'auto',
-                style: 'long',
+                style: 'long', /* alternative = 'narrow' */
             });
 
             const ms = timestamp - Date.now();

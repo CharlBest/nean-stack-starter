@@ -19,7 +19,7 @@ class ItemsService extends BaseService {
         super();
     }
 
-    async create(res: Response, title: string, description: string, files: Array<FileModel>): Promise<ItemViewModel> {
+    async create(res: Response, title: string, description: string, files: Array<FileModel>, tags: Array<string>): Promise<ItemViewModel> {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
         }
@@ -27,7 +27,7 @@ class ItemsService extends BaseService {
         const userId = this.getUserId(res);
         const uId = nodeUUId();
         files.forEach(file => file.uId = nodeUUId());
-        const result = await itemsRepository.create(res, userId, uId, title, description, files);
+        const result = await itemsRepository.create(res, userId, uId, title, description, files, tags);
 
         if (!result) {
             const error = 'Error while creating item';
@@ -43,14 +43,15 @@ class ItemsService extends BaseService {
         return result;
     }
 
-    async update(res: Response, uId: string, title: string, description: string, files: Array<FileModel>): Promise<ItemViewModel> {
+    async update(res: Response, uId: string, title: string, description: string, files: Array<FileModel>, tags: Array<string>)
+        : Promise<ItemViewModel> {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
         }
 
         const userId = this.getUserId(res);
         files.forEach(file => file.uId = nodeUUId());
-        const result = await itemsRepository.update(res, userId, uId, title, description, files);
+        const result = await itemsRepository.update(res, userId, uId, title, description, files, tags);
 
         if (!result) {
             const error = 'Error while updating item';

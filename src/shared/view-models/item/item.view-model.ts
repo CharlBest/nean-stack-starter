@@ -5,4 +5,5 @@ export class ItemViewModel extends ItemModel {
     user?: ItemUserViewModel;
     favourite?: boolean;
     subscribed?: boolean;
+    tags?: Array<string>;
 }

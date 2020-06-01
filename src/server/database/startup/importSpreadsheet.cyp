@@ -27,4 +27,17 @@ MATCH (item:Item { uId: row.uId })
 
 MERGE (user)-[:HAS_ITEM]->(item)
 SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
+
+// Add tags
+OPTIONAL MATCH (item)-[rel:TAG]->(oldTag:Tag)
+DELETE rel
+
+WITH item, oldTag, row
+
+SET oldTag.links = SIZE(()-[:TAG]->(oldTag))
+FOREACH (tag IN SPLIT(row.tags, ',') |
+	MERGE (tagNode:Tag { name: toLower(tag) })
+	MERGE (item)-[:TAG { customName: tag }]->(tagNode)
+	SET tagNode.links = SIZE(()-[:TAG]->(tagNode))
+)
 `
