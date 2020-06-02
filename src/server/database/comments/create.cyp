@@ -13,7 +13,6 @@ SET user.commentCount = SIZE((user)-[:MADE_COMMENT]->())
 SET item.commentCount = SIZE((item)-[:HAS_COMMENT]->())
 
 WITH user, item, comment
-MATCH (itemUser:User)-[:HAS_ITEM]->(item)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 OPTIONAL MATCH (user)-[isItemOwner:HAS_ITEM]->(item)
 
