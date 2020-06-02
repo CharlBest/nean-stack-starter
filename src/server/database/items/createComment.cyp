@@ -15,6 +15,7 @@ SET item.commentCount = SIZE((item)-[:HAS_COMMENT]->())
 WITH user, item, comment
 MATCH (itemUser:User)-[:HAS_ITEM]->(item)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
+OPTIONAL MATCH (user)-[isItemOwner:HAS_ITEM]->(item)
 
 RETURN properties(comment) as comment, 
 user
@@ -22,5 +23,7 @@ user
     id: user.id,
     username: user.username,
     avatar: collect(properties(avatars))[0]
-}
+},
+CASE WHEN isItemOwner IS NOT NULL THEN true ELSE false END as isItemOwner,
+item.uId as itemUId
 `

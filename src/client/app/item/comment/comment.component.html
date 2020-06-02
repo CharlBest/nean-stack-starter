@@ -19,7 +19,7 @@
                 routerLink="/user/{{comment?.user?.id}}">
                 {{comment?.user?.username}}
                 <app-icon-done [inline]="true"
-                    *ngIf="itemUserId === comment?.user?.id"></app-icon-done>
+                    *ngIf="comment?.isItemOwner"></app-icon-done>
                 &nbsp;&middot;&nbsp;
                 <span class="date">{{comment.dateCreated | date: 'HH:mm MMM d, y'}}</span>
             </div>
@@ -58,15 +58,5 @@
         </app-context-menu>
     </div>
 </div>
-
-<!-- <button mat-button
-        [matMenuTriggerFor]="menu"
-        xPosition="after"
-        #contextMenuTrigger="matMenuTrigger"
-        (click)="openContextMenu($event)"
-        matTooltip="Menu"
-        aria-label="Menu">
-        <app-icon-more-vert></app-icon-more-vert>
-</button> -->
 
 <app-preloader *ngIf="isProcessing && !comment"></app-preloader>

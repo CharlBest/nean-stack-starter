@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ReportCommentViewModel } from '@shared/view-models/item/report-comment.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -16,10 +16,9 @@ import { ItemService } from '../item.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent implements OnInit {
   @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
   @Input() comment: CommentViewModel;
-  @Input() itemUserId: number;
   isProcessing = false;
 
   constructor(private itemService: ItemService,
@@ -29,7 +28,32 @@ export class CommentComponent {
     private shareDialogService: ShareDialogService,
     private shareService: ShareService,
     private snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    const commentUId = this.route.snapshot.params.uId;
+    if (!this.comment && commentUId) {
+      this.getComment(commentUId);
+    }
+  }
+
+  async getComment(commentUId: string) {
+    this.isProcessing = true;
+
+    try {
+      const response = await this.itemService.getComment(commentUId);
+      if (response) {
+        this.comment = response;
+      }
+    } catch (error) {
+      // TODO: cannot pass in commentForm.formGroup here because the element does not exist
+      // because of *ngIf. Hiding it will cause the form to initilize without the data required
+      this.formErrorsService.updateFormValidity(error);
+    } finally {
+      this.isProcessing = false;
+    }
+  }
 
   async deleteComment() {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this comment?');
@@ -80,7 +104,7 @@ export class CommentComponent {
     if (this.comment.itemUId) {
       this.contextMenu.close();
 
-      const url = ['/item/comments', this.comment.itemUId];
+      const url = ['/item/comment', this.comment.uId];
       if (!this.shareService.webShareWithUrl('Comment', url)) {
         this.shareDialogService.share(this.comment.description, url);
       }
@@ -89,7 +113,7 @@ export class CommentComponent {
 
   copyLink() {
     if (this.comment.itemUId) {
-      this.shareService.copyWithUrl(['/item/comments', this.comment.itemUId]);
+      this.shareService.copyWithUrl(['/item/comment', this.comment.uId]);
       this.contextMenu.close();
     }
   }

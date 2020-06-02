@@ -1,7 +1,8 @@
 import { CommentModel } from '../../models/item/comment.model';
-import { ItemUserViewModel } from './item-user.view-model';
+import { UserOwnerViewModel } from './user-owner.view-model';
 
 export class CommentViewModel extends CommentModel {
     itemUId?: string | null;
-    user?: ItemUserViewModel;
+    user?: UserOwnerViewModel;
+    isItemOwner: boolean;
 }

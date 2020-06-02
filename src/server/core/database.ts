@@ -123,7 +123,7 @@ export class Database {
                 anonymousPayment: (await import(`../database/payments/anonymousPayment.${Database.fileExtension}`)).data,
                 userPayment: (await import(`../database/payments/userPayment.${Database.fileExtension}`)).data,
                 paymentHistory: (await import(`../database/payments/paymentHistory.${Database.fileExtension}`)).data,
-                updateCustomer: (await import(`../database/payments/updateCustomer.${Database.fileExtension}`)).data,
+                updateStripeCustomer: (await import(`../database/payments/updateStripeCustomer.${Database.fileExtension}`)).data,
             },
             items: {
                 create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
@@ -197,7 +197,7 @@ export interface DbQueries {
         anonymousPayment: string,
         userPayment: string,
         paymentHistory: string,
-        updateCustomer: string,
+        updateStripeCustomer: string,
     };
 
     items: {

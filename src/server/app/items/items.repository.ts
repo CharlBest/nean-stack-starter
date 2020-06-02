@@ -240,7 +240,8 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('comment'),
                 user: record.get('user'),
-                itemUId,
+                isItemOwner: record.get('isItemOwner'),
+                itemUId: record.get('itemUId'),
             } as CommentViewModel;
         }) : null;
 
@@ -264,6 +265,8 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('comment'),
                 user: record.get('user'),
+                isItemOwner: record.get('isItemOwner'),
+                itemUId: record.get('itemUId'),
             } as CommentViewModel;
         }) : null;
 
@@ -304,6 +307,8 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('comments'),
                 user: record.get('users'),
+                isItemOwner: record.get('isItemOwner'),
+                itemUId: record.get('itemUId'),
             } as CommentViewModel;
         }) : null;
 
@@ -327,6 +332,7 @@ class ItemsRepository extends BaseRepository {
             return {
                 ...record.get('comment'),
                 user: record.get('user'),
+                isItemOwner: record.get('isItemOwner'),
                 itemUId: record.get('itemUId'),
             } as CommentViewModel;
         }) : null;
