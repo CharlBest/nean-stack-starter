@@ -1,8 +1,8 @@
 import { ItemModel } from '../../models/item/item.model';
-import { ItemUserViewModel } from './item-user.view-model';
+import { UserOwnerViewModel } from './user-owner.view-model';
 
 export class ItemViewModel extends ItemModel {
-    user?: ItemUserViewModel;
+    user?: UserOwnerViewModel;
     favourite?: boolean;
     subscribed?: boolean;
     tags?: Array<string>;

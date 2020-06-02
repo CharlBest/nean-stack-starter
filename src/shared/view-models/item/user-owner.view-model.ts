@@ -1,6 +1,6 @@
 import { FileModel } from '../../models/shared/file.model';
 
-export class ItemUserViewModel {
+export class UserOwnerViewModel {
     id: number;
     username: string;
     avatar: FileModel;
