@@ -60,8 +60,8 @@ class PaymentsRepository extends BaseRepository {
         }
     }
 
-    async updateCustomer(res: Response, userId: number, stripeCustomerId: string): Promise<boolean> {
-        const result = await this.run(res, Database.queries.payments.updateCustomer,
+    async updateStripeCustomer(res: Response, userId: number, stripeCustomerId: string): Promise<boolean> {
+        const result = await this.run(res, Database.queries.payments.updateStripeCustomer,
             {
                 userId,
                 stripeCustomerId

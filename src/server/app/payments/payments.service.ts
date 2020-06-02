@@ -206,7 +206,7 @@ class PaymentsService extends BaseService {
                 }
             });
 
-            await paymentsRepository.updateCustomer(res, user.id, customer.id);
+            await paymentsRepository.updateStripeCustomer(res, user.id, customer.id);
 
             user.stripeCustomerId = customer.id;
             return customer.id;
