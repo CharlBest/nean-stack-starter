@@ -138,11 +138,11 @@ export class Database {
                 search: (await import(`../database/items/search.${Database.fileExtension}`)).data,
             },
             comments: {
-                create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
-                update: (await import(`../database/items/update.${Database.fileExtension}`)).data,
-                delete: (await import(`../database/items/delete.${Database.fileExtension}`)).data,
-                get: (await import(`../database/items/get.${Database.fileExtension}`)).data,
-                getAll: (await import(`../database/items/getAll.${Database.fileExtension}`)).data,
+                create: (await import(`../database/comments/create.${Database.fileExtension}`)).data,
+                update: (await import(`../database/comments/update.${Database.fileExtension}`)).data,
+                delete: (await import(`../database/comments/delete.${Database.fileExtension}`)).data,
+                get: (await import(`../database/comments/get.${Database.fileExtension}`)).data,
+                getAll: (await import(`../database/comments/getAll.${Database.fileExtension}`)).data,
             },
             notifications: {
                 getNotificationPreferences:
