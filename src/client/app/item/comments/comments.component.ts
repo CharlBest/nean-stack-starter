@@ -4,6 +4,7 @@ import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { CommentService } from '../comment.service';
 import { ItemService } from '../item.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class CommentsComponent implements OnInit {
   listEnd = false;
 
   constructor(private itemService: ItemService,
+    private commentService: CommentService,
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -59,7 +61,7 @@ export class CommentsComponent implements OnInit {
       this.isProcessingComment = true;
 
       try {
-        const response = await this.itemService.getComments(this.itemUId, this.pageIndex);
+        const response = await this.commentService.getAll(this.itemUId, this.pageIndex);
         if (response) {
           // TODO: is the the fastest way?
           response.forEach(comment => comment.itemUId = this.itemUId);

@@ -3,7 +3,7 @@ import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
-import { ItemService } from '../item.service';
+import { CommentService } from '../comment.service';
 
 @Component({
   selector: 'app-create-comment',
@@ -18,7 +18,7 @@ export class CreateCommentComponent {
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,
-    private itemService: ItemService) { }
+    private commentService: CommentService) { }
 
   async onSubmit() {
     this.isProcessing = true;
@@ -27,7 +27,7 @@ export class CreateCommentComponent {
     viewModel.description = this.commentForm.formGroup.controls.description.value;
 
     try {
-      const response = await this.itemService.createComment(this.itemUId, viewModel);
+      const response = await this.commentService.create(this.itemUId, viewModel);
       if (response) {
         this.commentForm.formRef.resetForm();
         response.itemUId = this.itemUId;

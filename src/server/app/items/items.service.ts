@@ -1,13 +1,10 @@
-import { CommentModel } from '@shared/models/item/comment.model';
 import { FileModel } from '@shared/models/shared/file.model';
 import { NewItemWebSocketModel } from '@shared/models/web-socket/new-item-web-socket.model';
 import { WebSocketType } from '@shared/models/web-socket/web-socket.enum';
 import { MAX_FILE_UPLOADS } from '@shared/validation/validators';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
-import { pushNotificationBroker } from '../../communication/push-notification-broker';
 import { webSocketServer } from '../../core/middleware/web-socket-server';
 import { logger } from '../../core/utils/logger';
 import { BaseService } from '../shared/base-service';
@@ -72,8 +69,8 @@ class ItemsService extends BaseService {
         return result;
     }
 
-    async getItems(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        return await itemsRepository.getItems(res, this.getOptionalUserId(res), pageIndex, pageSize);
+    async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        return await itemsRepository.getAll(res, this.getOptionalUserId(res), pageIndex, pageSize);
     }
 
     async delete(res: Response, uId: string): Promise<boolean> {
@@ -94,56 +91,6 @@ class ItemsService extends BaseService {
 
     async orderFavourite(res: Response, uId: string, newOrderVal: number, originalOrderVal: number): Promise<boolean> {
         return await itemsRepository.orderFavourite(res, this.getUserId(res), uId, newOrderVal, originalOrderVal);
-    }
-
-    async createComment(res: Response, itemUId: string, description: string): Promise<CommentViewModel> {
-        const userId = this.getUserId(res);
-        const uId = nodeUUId();
-        const result = await itemsRepository.createComment(res, userId, uId, itemUId, description);
-
-        if (!result) {
-            const error = 'Error while creating comment';
-            logger.warn(error, [userId, uId, itemUId, description]);
-            throw new Error(error);
-        }
-
-        // Send push notification
-        pushNotificationBroker.newComment({
-            commentUId: result.uId
-        });
-
-        return result;
-    }
-
-    async updateComment(res: Response, uId: string, description: string): Promise<CommentViewModel> {
-        const userId = this.getUserId(res);
-        const result = await itemsRepository.updateComment(res, userId, uId, description);
-
-        if (!result) {
-            const error = 'Error while updating comment';
-            logger.warn(error, [userId, uId, description]);
-            throw new Error(error);
-        }
-
-        return result;
-    }
-
-    async deleteComment(res: Response, uId: string): Promise<boolean> {
-        return await itemsRepository.deleteComment(res, this.getUserId(res), uId);
-    }
-
-    async getComments(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[] | null> {
-        return await itemsRepository.getComments(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
-    }
-
-    async getComment(res: Response, ip: string, uId: string): Promise<CommentViewModel> {
-        const result = await itemsRepository.getComment(res, this.getOptionalUserId(res), ip, uId);
-
-        if (!result) {
-            throw new Error('Error while getting comment');
-        }
-
-        return result;
     }
 
     async search(res: Response, term: string, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {

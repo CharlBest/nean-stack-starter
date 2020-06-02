@@ -1,6 +1,5 @@
 // tslint:disable: no-identical-functions
 import { FileModel } from '@shared/models/shared/file.model';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Application, Response } from 'express';
 import { Session } from 'neo4j-driver';
@@ -110,8 +109,8 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getItems(res: Response, userId: number | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        const result = await this.run(res, Database.queries.items.getItems,
+    async getAll(res: Response, userId: number | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        const result = await this.run(res, Database.queries.items.getAll,
             {
                 userId,
                 pageIndex,
@@ -222,125 +221,6 @@ class ItemsRepository extends BaseRepository {
             return true;
         } else {
             return false;
-        }
-    }
-
-    async createComment(res: Response, userId: number, uId: string, itemUId: string, description: string)
-        : Promise<CommentViewModel | null> {
-        const result = await this.run(res, Database.queries.items.createComment,
-            {
-                userId,
-                uId,
-                itemUId,
-                description,
-            }
-        );
-
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
-
-        if (model && model.length > 0) {
-            return model[0];
-        } else {
-            return null;
-        }
-    }
-
-    async updateComment(res: Response, userId: number, uId: string, description: string): Promise<CommentViewModel | null> {
-        const result = await this.run(res, Database.queries.items.updateComment,
-            {
-                userId,
-                uId,
-                description,
-            }
-        );
-
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
-
-        if (model && model.length > 0) {
-            return model[0];
-        } else {
-            return null;
-        }
-    }
-
-    async deleteComment(res: Response, userId: number, uId: string): Promise<boolean> {
-        const result = await this.run(res, Database.queries.items.deleteComment,
-            {
-                userId,
-                uId
-            }
-        );
-
-        if (result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async getComments(res: Response, userId: number | null, uId: string, pageIndex: number, pageSize: number)
-        : Promise<CommentViewModel[] | null> {
-        const result = await this.run(res, Database.queries.items.getComments,
-            {
-                userId,
-                uId,
-                pageIndex,
-                pageSize
-            }
-        );
-
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comments'),
-                user: record.get('users'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
-
-        if (model && model.length > 0) {
-            return model;
-        } else {
-            return null;
-        }
-    }
-
-    async getComment(res: Response, userId: number | null, ip: string, uId: string): Promise<CommentViewModel | null> {
-        const result = await this.run(res, Database.queries.items.getComment,
-            {
-                userId,
-                ip,
-                uId
-            }
-        );
-
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
-
-        if (model && model.length > 0) {
-            return model[0];
-        } else {
-            return null;
         }
     }
 

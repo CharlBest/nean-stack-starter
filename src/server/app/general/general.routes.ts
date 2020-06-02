@@ -6,19 +6,25 @@ class GeneralRoutes extends BaseRoute {
 
     constructor() {
         super();
-        this.initRoutes();
+        this.initAnonymousRoutes();
+        this.initAuthenticatedRoutes();
     }
 
-    initRoutes() {
+    initAnonymousRoutes() {
         this.router.post(GeneralStaticRoutes.createNewsletterMember().server(),
             async (req, res, next) => generalController.createNewsletterMember(req, res, next).catch(next));
+
         this.router.delete(GeneralStaticRoutes.deleteNewsletterMember().server(),
             async (req, res, next) => generalController.deleteNewsletterMember(req, res, next).catch(next));
+
         this.router.post(GeneralStaticRoutes.sendFeedback().server(),
             async (req, res, next) => generalController.sendFeedback(req, res, next).catch(next));
+
         this.router.post(GeneralStaticRoutes.invite().server(),
             async (req, res, next) => generalController.invite(req, res, next).catch(next));
     }
+
+    initAuthenticatedRoutes() { }
 }
 
 export const generalRoutes = new GeneralRoutes().router;

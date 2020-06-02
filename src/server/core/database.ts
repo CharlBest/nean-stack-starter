@@ -129,18 +129,20 @@ export class Database {
                 create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
                 update: (await import(`../database/items/update.${Database.fileExtension}`)).data,
                 get: (await import(`../database/items/get.${Database.fileExtension}`)).data,
-                getItems: (await import(`../database/items/getItems.${Database.fileExtension}`)).data,
+                getAll: (await import(`../database/items/getAll.${Database.fileExtension}`)).data,
                 delete: (await import(`../database/items/delete.${Database.fileExtension}`)).data,
                 createFavourite: (await import(`../database/items/createFavourite.${Database.fileExtension}`)).data,
                 deleteFavourite: (await import(`../database/items/deleteFavourite.${Database.fileExtension}`)).data,
                 getFavourites: (await import(`../database/items/getFavourites.${Database.fileExtension}`)).data,
                 orderFavourite: (await import(`../database/items/orderFavourite.${Database.fileExtension}`)).data,
-                createComment: (await import(`../database/items/createComment.${Database.fileExtension}`)).data,
-                updateComment: (await import(`../database/items/updateComment.${Database.fileExtension}`)).data,
-                deleteComment: (await import(`../database/items/deleteComment.${Database.fileExtension}`)).data,
-                getComments: (await import(`../database/items/getComments.${Database.fileExtension}`)).data,
-                getComment: (await import(`../database/items/getComment.${Database.fileExtension}`)).data,
                 search: (await import(`../database/items/search.${Database.fileExtension}`)).data,
+            },
+            comments: {
+                create: (await import(`../database/items/create.${Database.fileExtension}`)).data,
+                update: (await import(`../database/items/update.${Database.fileExtension}`)).data,
+                delete: (await import(`../database/items/delete.${Database.fileExtension}`)).data,
+                get: (await import(`../database/items/get.${Database.fileExtension}`)).data,
+                getAll: (await import(`../database/items/getAll.${Database.fileExtension}`)).data,
             },
             notifications: {
                 getNotificationPreferences:
@@ -204,18 +206,21 @@ export interface DbQueries {
         create: string,
         update: string,
         get: string,
-        getItems: string,
+        getAll: string,
         delete: string,
         createFavourite: string,
         deleteFavourite: string,
         getFavourites: string,
         orderFavourite: string,
-        createComment: string,
-        updateComment: string,
-        deleteComment: string,
-        getComments: string,
-        getComment: string,
         search: string,
+    };
+
+    comments: {
+        create: string,
+        update: string,
+        delete: string,
+        get: string,
+        getAll: string,
     };
 
     notifications: {

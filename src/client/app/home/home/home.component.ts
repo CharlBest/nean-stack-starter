@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     this.isProcessing = true;
 
     try {
-      const response = await this.homeService.getItems(this.pageIndex);
+      const response = await this.homeService.getAll(this.pageIndex);
       if (response) {
         this.items.push(...response);
       } else {

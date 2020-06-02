@@ -3,10 +3,12 @@ import { WebRTCSignalWebSocketModel } from '@shared/models/web-socket/web-rtc-si
 import { Application, NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
+import { commentsRoutes } from '../app/comments/comments.routes';
 import { generalRoutes } from '../app/general/general.routes';
 import { itemsRoutes } from '../app/items/items.routes';
 import { notificationsRoutes } from '../app/notifications/notifications.routes';
 import { paymentsRoutes } from '../app/payments/payments.routes';
+import { repliesRoutes } from '../app/replies/replies.routes';
 import { usersRoutes } from '../app/users/users.routes';
 import { broker } from '../broker/broker';
 import { environment } from '../environments/environment';
@@ -57,6 +59,8 @@ class Bootstrap {
         app.use('/api', usersRoutes);
         app.use('/api', paymentsRoutes);
         app.use('/api', itemsRoutes);
+        app.use('/api', commentsRoutes);
+        app.use('/api', repliesRoutes);
         app.use('/api', notificationsRoutes);
     }
 

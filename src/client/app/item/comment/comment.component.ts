@@ -9,6 +9,7 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { AuthService } from '../../shared/services/auth.service';
 import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
+import { CommentService } from '../comment.service';
 import { ItemService } from '../item.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class CommentComponent implements OnInit {
   isProcessing = false;
 
   constructor(private itemService: ItemService,
+    private commentService: CommentService,
     private formErrorsService: FormErrorsService,
     public authService: AuthService,
     private dialogService: DialogService,
@@ -42,7 +44,7 @@ export class CommentComponent implements OnInit {
     this.isProcessing = true;
 
     try {
-      const response = await this.itemService.getComment(commentUId);
+      const response = await this.commentService.get(commentUId);
       if (response) {
         this.comment = response;
       }
@@ -63,7 +65,7 @@ export class CommentComponent implements OnInit {
       this.snackBar.open('Deleting...');
 
       try {
-        await this.itemService.deleteComment(this.comment.uId);
+        await this.commentService.delete(this.comment.uId);
         this.snackBar.dismiss();
         this.snackBar.open('Deleted');
         // TODO: very dirty and bad UI but will work for now
