@@ -7,9 +7,6 @@ LIMIT 1
 
 CREATE (user:User { id: nextId, uId: $uId, email: $email, username: $username, passwordHash: $passwordHash, dateCreated: datetime(), isVerified: false, views: 0, bio: '', emailCode: $emailCode, emailVerified: false })
 
-//Temp fix for feed bacause first node needs to be included
-MERGE (user)-[:IS]->(user)
-
 RETURN user
 { 
     email: user.email,
