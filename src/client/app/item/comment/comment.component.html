@@ -44,14 +44,14 @@
                     <app-icon-edit mat-list-icon></app-icon-edit>
                     <span mat-line>Edit</span>
                 </mat-list-item>
-                <mat-list-item (click)="deleteComment()"
+                <mat-list-item (click)="delete()"
                     *ngIf="comment?.user?.id === authService.loggedInUserId">
                     <app-icon-delete mat-list-icon
                         color="warn"></app-icon-delete>
                     <span mat-line>Delete</span>
                 </mat-list-item>
-                <mat-list-item (click)="reportComment()">
-                    <app-icon-report mat-list-icon></app-icon-report>
+                <mat-list-item (click)="report()">
+                    <app-icon-flag mat-list-icon></app-icon-flag>
                     <span mat-line>Report</span>
                 </mat-list-item>
             </mat-nav-list>

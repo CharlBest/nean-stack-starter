@@ -8,4 +8,5 @@ export class GeneralRoutes {
     static deleteNewsletterMember = (email?: string) => new BaseRoute(GeneralRoutes.root, 'deleteNewsletterMember', { email });
     static sendFeedback = () => new BaseRoute(GeneralRoutes.root, 'sendFeedback');
     static invite = () => new BaseRoute(GeneralRoutes.root, 'invite');
+    static report = () => new BaseRoute(GeneralRoutes.root, 'report');
 }

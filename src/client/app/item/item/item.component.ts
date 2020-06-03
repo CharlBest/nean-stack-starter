@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } fro
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
-import { ReportItemViewModel } from '@shared/view-models/item/report-item.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
+import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -56,7 +57,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async deleteItem() {
+  async delete() {
     const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this item?');
     if (hasConfirmed) {
       this.contextMenu.close();
@@ -78,19 +79,20 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async reportItem() {
+  async report() {
     const hasConfirmed = await this.dialogService
       .confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.');
     if (hasConfirmed) {
       this.contextMenu.close();
 
-      const viewModel = new ReportItemViewModel();
+      const viewModel = new CreateReportViewModel();
+      viewModel.type = ReportType.ITEM;
       viewModel.uId = this.item.uId;
 
       this.snackBar.open('Sending...');
 
       try {
-        await this.itemService.sendReport(viewModel);
+        await this.itemService.report(viewModel);
         this.snackBar.dismiss();
         this.snackBar.open('Sent');
       } catch (error) {

@@ -27,9 +27,6 @@ class UsersRoutes extends BaseRoute {
         this.router.post(UserRoutes.login().server(),
             async (req, res, next) => usersController.login(req, res, next).catch(next));
 
-        this.router.post(UserRoutes.report().server(),
-            async (req, res, next) => usersController.report(req, res, next).catch(next));
-
         this.router.get(UserRoutes.getUserPublic().server(),
             async (req, res, next) => usersController.getUserPublic(req, res, next).catch(next));
 

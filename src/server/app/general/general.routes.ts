@@ -22,6 +22,9 @@ class GeneralRoutes extends BaseRoute {
 
         this.router.post(GeneralStaticRoutes.invite().server(),
             async (req, res, next) => generalController.invite(req, res, next).catch(next));
+
+        this.router.post(GeneralStaticRoutes.report().server(),
+            async (req, res, next) => generalController.report(req, res, next).catch(next));
     }
 
     initAuthenticatedRoutes() { }

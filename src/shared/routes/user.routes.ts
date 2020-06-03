@@ -17,7 +17,6 @@ export class UserRoutes {
     static updatePassword = () => new BaseRoute(UserRoutes.root, 'updatePassword');
     static deleteUser = () => new BaseRoute(UserRoutes.root, 'deleteUser');
     static resendEmailVerificationLink = () => new BaseRoute(UserRoutes.root, 'resendEmailVerificationLink');
-    static report = () => new BaseRoute(UserRoutes.root, 'report');
     static verifyEmail = () => new BaseRoute(UserRoutes.root, 'verifyEmail');
     static search = () => new BaseRoute(UserRoutes.root, 'search');
     static searchUserStartWith = () => new BaseRoute(UserRoutes.root, 'searchUserStartWith');

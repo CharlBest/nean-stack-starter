@@ -3,6 +3,8 @@ import { ServerValidator, Validators } from '@shared/validation/validators';
 import { FeedbackViewModel } from '@shared/view-models/feedback/feedback.view-model';
 import { InviteViewModel } from '@shared/view-models/invite/invite.view-model';
 import { NewsletterMemberViewModel } from '@shared/view-models/newsletter/newsletter-member.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
+import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../shared/base-controller';
 import { generalService } from './general.service';
@@ -90,6 +92,20 @@ class GeneralController extends BaseController {
         generalService.invite(res, viewModel.emails);
 
         res.status(200).json();
+    }
+
+    async report(req: Request, res: Response, next: NextFunction) {
+        const viewModel = req.body as CreateReportViewModel;
+
+        const hasErrors = !!Validators.required(viewModel.type) || !!Validators.required(viewModel.uId);
+
+        if (hasErrors) {
+            throw new Error();
+        }
+
+        res.status(201).json(
+            await generalService.report(res, ReportType[viewModel.type], viewModel.uId)
+        );
     }
 }
 

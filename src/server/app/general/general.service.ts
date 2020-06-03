@@ -30,6 +30,10 @@ class GeneralService extends BaseService {
             emails
         });
     }
+
+    async report(res: Response, type: string, uId: string): Promise<boolean> {
+        return await generalRepository.report(res, this.getOptionalUserId(res), type, uId);
+    }
 }
 
 export const generalService = new GeneralService();

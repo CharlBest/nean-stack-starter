@@ -98,11 +98,6 @@ class UsersController extends BaseController {
         );
     }
 
-    async report(req: Request, res: Response, next: NextFunction) {
-        // TODO: do something
-        res.status(200).json();
-    }
-
     // TODO: not in use
     async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
         const viewModel = req.body as CreateUserViewModel;

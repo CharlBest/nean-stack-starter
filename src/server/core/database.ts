@@ -96,6 +96,7 @@ export class Database {
             general: {
                 createNewsletterMember: (await import(`../database/general/createNewsletterMember.${Database.fileExtension}`)).data,
                 deleteNewsletterMember: (await import(`../database/general/deleteNewsletterMember.${Database.fileExtension}`)).data,
+                report: (await import(`../database/general/report.${Database.fileExtension}`)).data,
             },
             users: {
                 addForgottenPasswordCode: (await import(`../database/users/addForgottenPasswordCode.${Database.fileExtension}`)).data,
@@ -171,6 +172,7 @@ export interface DbQueries {
     general: {
         createNewsletterMember: string,
         deleteNewsletterMember: string,
+        report: string,
     };
 
     users: {

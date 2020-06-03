@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ReportUserViewModel } from '@shared/view-models/profile/report-user.view-model';
 import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
+import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -72,19 +73,20 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async reportUser() {
+  async report() {
     const hasConfirmed = await this.dialogService
       .confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.');
     if (hasConfirmed) {
       this.contextMenu.close();
 
-      const viewModel = new ReportUserViewModel();
+      const viewModel = new CreateReportViewModel();
+      viewModel.type = ReportType.USER;
       viewModel.uId = this.user.uId;
 
       this.snackBar.open('Sending...');
 
       try {
-        await this.profileService.sendReport(viewModel);
+        await this.profileService.report(viewModel);
         this.snackBar.dismiss();
         this.snackBar.open('Sent');
       } catch (error) {

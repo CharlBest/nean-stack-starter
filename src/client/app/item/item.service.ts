@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GeneralRoutes } from '@shared/routes/general.routes';
 import { ItemRoutes } from '@shared/routes/item.routes';
 import { NotificationRoutes } from '@shared/routes/notification.routes';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
-import { ReportItemViewModel } from '@shared/view-models/item/report-item.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -31,8 +32,8 @@ export class ItemService {
         return this.http.delete<boolean>(`${environment.serverEndpoint}${ItemRoutes.delete(uId).client()}`).toPromise();
     }
 
-    sendReport(viewModel: ReportItemViewModel): Promise<void> {
-        return this.http.post<void>(`${environment.serverEndpoint}${ItemRoutes.report().client()}`, viewModel).toPromise();
+    report(viewModel: CreateReportViewModel): Promise<void> {
+        return this.http.post<void>(`${environment.serverEndpoint}${GeneralRoutes.report().client()}`, viewModel).toPromise();
     }
 
     createFavourite(uId: string): Promise<void> {

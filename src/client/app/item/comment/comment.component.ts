@@ -2,7 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
-import { ReportCommentViewModel } from '@shared/view-models/item/report-comment.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
+import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -36,11 +37,11 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     const commentUId = this.route.snapshot.params.uId;
     if (!this.comment && commentUId) {
-      this.getComment(commentUId);
+      this.get(commentUId);
     }
   }
 
-  async getComment(commentUId: string) {
+  async get(commentUId: string) {
     this.isProcessing = true;
 
     try {
@@ -57,8 +58,8 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  async deleteComment() {
-    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this comment?');
+  async delete() {
+    const hasConfirmed = await this.dialogService.confirm('Delete your comment and all of its replies permanently?', 'DELETE', 'CANCEL', 'Delete comment');
     if (hasConfirmed) {
       this.contextMenu.close();
 
@@ -80,19 +81,20 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  async reportComment() {
+  async report() {
     const hasConfirmed = await this.dialogService
       .confirm('This comment is either spam, abusive, harmful or you think it doesn\'t belong on here.');
     if (hasConfirmed) {
       this.contextMenu.close();
 
-      const viewModel = new ReportCommentViewModel();
+      const viewModel = new CreateReportViewModel();
+      viewModel.type = ReportType.COMMENT;
       viewModel.uId = this.comment.uId;
 
       this.snackBar.open('Sending...');
 
       try {
-        await this.itemService.sendReport(viewModel);
+        await this.itemService.report(viewModel);
         this.snackBar.dismiss();
         this.snackBar.open('Sent');
       } catch (error) {

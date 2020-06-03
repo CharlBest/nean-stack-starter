@@ -35,6 +35,22 @@ class GeneralRepository extends BaseRepository {
             return false;
         }
     }
+
+    async report(res: Response, userId: number | null, type: string, uId: string): Promise<boolean> {
+        const result = await this.run(res, Database.queries.general.report,
+            {
+                userId,
+                type,
+                uId
+            }
+        );
+
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export const generalRepository = new GeneralRepository();
