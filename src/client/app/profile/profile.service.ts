@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GeneralRoutes } from '@shared/routes/general.routes';
 import { NotificationRoutes } from '@shared/routes/notification.routes';
 import { UserRoutes } from '@shared/routes/user.routes';
 import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
 import { UpdateBioViewModel } from '@shared/view-models/profile/update-bio.view-model';
 import { UpdatePasswordViewModel } from '@shared/view-models/profile/update-password.view-model';
-import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
 import { NotificationPreferencesViewModel } from '@shared/view-models/user/notification-preferences.view-model';
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UpdateConfigurationViewModel } from '@shared/view-models/user/update-configuration.view-model';
@@ -44,10 +42,6 @@ export class ProfileService {
 
   resendEmailVerificationLink(): Promise<void> {
     return this.http.post<void>(`${environment.serverEndpoint}${UserRoutes.resendEmailVerificationLink().client()}`, null).toPromise();
-  }
-
-  report(viewModel: CreateReportViewModel): Promise<void> {
-    return this.http.post<void>(`${environment.serverEndpoint}${GeneralRoutes.report().client()}`, viewModel).toPromise();
   }
 
   getNotificationPreferences(): Promise<NotificationPreferencesViewModel | null> {

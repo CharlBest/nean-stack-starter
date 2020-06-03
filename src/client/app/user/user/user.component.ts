@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
+import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { ShareService } from '../../shared/services/share.service';
@@ -31,7 +35,9 @@ export class UserComponent implements OnInit {
     private formErrorsService: FormErrorsService,
     private shareDialogService: ShareDialogService,
     public authService: AuthService,
-    private shareService: ShareService) { }
+    private shareService: ShareService,
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getParams();
@@ -109,6 +115,29 @@ export class UserComponent implements OnInit {
     if (this.userId) {
       this.shareService.copyWithUrl(['/user', this.userId]);
       this.contextMenu.close();
+    }
+  }
+
+  async report() {
+    const hasConfirmed = await this.dialogService
+      .confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+    if (hasConfirmed) {
+      this.contextMenu.close();
+
+      const viewModel = new CreateReportViewModel();
+      viewModel.type = ReportType.USER;
+      viewModel.uId = this.user.uId;
+
+      this.snackBar.open('Sending...');
+
+      try {
+        await this.userService.report(viewModel);
+        this.snackBar.dismiss();
+        this.snackBar.open('Sent');
+      } catch (error) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Sending failed');
+      }
     }
   }
 

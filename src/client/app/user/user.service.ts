@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GeneralRoutes } from '@shared/routes/general.routes';
 import { UserRoutes } from '@shared/routes/user.routes';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { environment } from '../../environments/environment';
 
@@ -21,5 +23,9 @@ export class UserService {
         return this.http
             .get<ItemViewModel[]>(`${environment.serverEndpoint}${UserRoutes.getUserPublicItems(userId).client({ pageIndex, pageSize })}`)
             .toPromise();
+    }
+
+    report(viewModel: CreateReportViewModel): Promise<void> {
+        return this.http.post<void>(`${environment.serverEndpoint}${GeneralRoutes.report().client()}`, viewModel).toPromise();
     }
 }

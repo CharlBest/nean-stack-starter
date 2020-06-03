@@ -2,12 +2,9 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChil
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UpdateAvatarViewModel } from '@shared/view-models/profile/update-avatar.view-model';
-import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
-import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
-import { DialogService } from '../../shared/dialog/dialog.service';
 import { FileUploaderComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
@@ -36,7 +33,6 @@ export class ProfileComponent implements OnInit {
     private tutorialService: TutorialService,
     private firebaseStorageService: FirebaseStorageService,
     private formErrorsService: FormErrorsService,
-    private dialogService: DialogService,
     private router: Router,
     private navigationService: NavigationService,
     private shareService: ShareService,
@@ -70,29 +66,6 @@ export class ProfileComponent implements OnInit {
       this.formErrorsService.updateFormValidity(error);
     } finally {
       this.isProcessing = false;
-    }
-  }
-
-  async report() {
-    const hasConfirmed = await this.dialogService
-      .confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.');
-    if (hasConfirmed) {
-      this.contextMenu.close();
-
-      const viewModel = new CreateReportViewModel();
-      viewModel.type = ReportType.USER;
-      viewModel.uId = this.user.uId;
-
-      this.snackBar.open('Sending...');
-
-      try {
-        await this.profileService.report(viewModel);
-        this.snackBar.dismiss();
-        this.snackBar.open('Sent');
-      } catch (error) {
-        this.snackBar.dismiss();
-        this.snackBar.open('Sending failed');
-      }
     }
   }
 
