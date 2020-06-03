@@ -165,7 +165,8 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  insertReply(event: Event) {
+  insertReply() {
+    this.showCreateReply = false;
     this.comment.commentCount ? this.comment.commentCount++ : this.comment.commentCount = 1;
 
     // Dirty way of reloading replies child component

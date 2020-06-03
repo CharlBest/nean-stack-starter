@@ -85,7 +85,7 @@
         <app-create-comment *ngIf="showCreateReply"
             [itemUId]="comment.itemUId"
             [commentUId]="comment.uId"
-            (createSuccess)="insertReply($event)"
+            (createSuccess)="insertReply()"
             (cancel)="showCreateReply = false"></app-create-comment>
 
         <!-- Replies -->
