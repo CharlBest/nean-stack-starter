@@ -23,7 +23,10 @@
                 <app-icon-done [inline]="true"
                     *ngIf="comment?.isItemOwner"></app-icon-done>
                 &nbsp;&middot;&nbsp;
-                <span class="date">{{comment.dateCreated | date: 'HH:mm MMM d, y'}}</span>
+                <span class="date"
+                    [matTooltip]="comment.dateCreated | date: 'HH:mm MMM d, y'">
+                    {{comment.dateCreated | formatRelativeTime}}
+                </span>
             </div>
         </div>
 
