@@ -1,3 +1,11 @@
+:host {
+	width: 100%;
+}
+
 mat-form-field {
 	width: 100%;
+}
+
+.mat-stroked-button.mat-primary {
+	margin-right: 10px;
 }

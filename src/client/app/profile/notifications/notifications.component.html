@@ -46,6 +46,7 @@
             <br>
 
             <button mat-button
+                type="button"
                 (click)="showAdvancedOptions = !showAdvancedOptions"
                 class="advanced-options">
                 <span>Advanced</span>
@@ -63,6 +64,7 @@
         <mat-card-actions>
             <button mat-stroked-button
                 *ngIf="formGroup.controls['pushNotificationEnabled'].value || formGroup.controls['emailEnabled'].value || (formGroup.controls['autoSubscribeToItem'].value !== notificationPreferences?.autoSubscribeToItem)"
+                color="primary"
                 type="submit"
                 (click)="onSubmit()">Update Preferences</button>
         </mat-card-actions>

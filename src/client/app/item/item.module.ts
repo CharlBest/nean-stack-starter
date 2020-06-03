@@ -23,7 +23,6 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateCommentComponent } from './create-comment/create-comment.component';
 import { CreateItemComponent } from './create-item/create-item.component';
-import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { ItemFormComponent } from './item-form/item-form.component';
@@ -68,7 +67,6 @@ const materialModules = [
     FavouritesComponent,
     CommentComponent,
     CommentFormComponent,
-    EditCommentComponent,
     CreateCommentComponent,
     ItemSkeletonComponent,
     FormatRelativeTimePipe

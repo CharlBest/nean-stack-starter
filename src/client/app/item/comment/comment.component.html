@@ -13,7 +13,9 @@
         </ng-template>
     </span>
 
-    <div class="content">
+    <!-- View -->
+    <div *ngIf="!editItem"
+        class="content">
         <div>
             <div class="username"
                 routerLink="/user/{{comment?.user?.id}}">
@@ -28,6 +30,17 @@
         <span>{{comment.description}}</span>
     </div>
 
+    <!-- Edit -->
+    <ng-container *ngIf="editItem">
+        <app-comment-form #commentForm
+            *ngIf="!isProcessingCreateOrUpdate && comment"
+            [comment]="comment"
+            (submitForm)="onSubmit()"
+            (cancel)="editItem = false"></app-comment-form>
+
+        <app-preloader *ngIf="isProcessingCreateOrUpdate"></app-preloader>
+    </ng-container>
+
     <div>
         <app-context-menu #contextMenu>
             <mat-nav-list>
@@ -40,7 +53,7 @@
                     <span mat-line>Copy link to Comment</span>
                 </mat-list-item>
                 <mat-list-item *ngIf="comment?.user?.id === authService.loggedInUserId"
-                    (click)="goToEdit()">
+                    (click)="openEdit()">
                     <app-icon-edit mat-list-icon></app-icon-edit>
                     <span mat-line>Edit</span>
                 </mat-list-item>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
 import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -10,6 +11,7 @@ import { FormErrorsService } from '../../shared/form-errors/form-errors.service'
 import { AuthService } from '../../shared/services/auth.service';
 import { ShareService } from '../../shared/services/share.service';
 import { ShareDialogService } from '../../shared/share-dialog/share-dialog.service';
+import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { CommentService } from '../comment.service';
 import { ItemService } from '../item.service';
 
@@ -20,8 +22,11 @@ import { ItemService } from '../item.service';
 })
 export class CommentComponent implements OnInit {
   @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
+  @ViewChild('commentForm') commentForm: CommentFormComponent;
   @Input() comment: CommentViewModel;
   isProcessing = false;
+  isProcessingCreateOrUpdate = false;
+  editItem = false;
 
   constructor(private itemService: ItemService,
     private commentService: CommentService,
@@ -122,8 +127,27 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  goToEdit() {
+  openEdit() {
     this.contextMenu.close();
-    this.router.navigate(['/item/comment/edit', this.comment.uId], { state: { comment: this.comment } });
+    this.editItem = true;
+  }
+
+  async onSubmit() {
+    this.isProcessingCreateOrUpdate = true;
+
+    const viewModel = new CreateOrUpdateCommentViewModel();
+    viewModel.description = this.commentForm.formGroup.controls.description.value;
+
+    try {
+      const response = await this.commentService.update(this.comment.uId, viewModel);
+      this.editItem = false;
+      if (response) {
+        this.comment.description = response.description;
+      }
+    } catch (error) {
+      this.formErrorsService.updateFormValidity(error, this.commentForm ? this.commentForm.formGroup : null);
+    } finally {
+      this.isProcessingCreateOrUpdate = false;
+    }
   }
 }

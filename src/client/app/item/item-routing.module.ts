@@ -5,7 +5,6 @@ import { AuthService } from '../shared/services/auth.service';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
-import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 
@@ -27,10 +26,6 @@ import { FavouritesComponent } from './favourites/favourites.component';
             {
                 path: 'comment/:uId', component: CommentComponent, pathMatch: 'full',
                 data: { title: 'Comment', nav: NavigationType.BACK }
-            },
-            {
-                path: 'comment/edit/:uId', component: EditCommentComponent, pathMatch: 'full',
-                data: { title: 'Edit Comment', nav: NavigationType.BACK, canActivate: [AuthService] }
             },
             {
                 path: 'saved', component: FavouritesComponent, pathMatch: 'full',

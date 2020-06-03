@@ -51,11 +51,11 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-stroked-button
-                type="submit"
                 color="primary"
+                type="submit"
                 [disabled]="!formGroup.valid"
-                (click)="onSubmit()">{{item?.uId ? 'Update' : 'Create'}}</button>
-            <!-- TODO: don't think update and create are the best words here. Same with comment -->
+                (click)="onSubmit()">{{item?.uId ? 'Save' : 'Create'}}</button>
+            <!-- TODO: don't think create is the best word here -->
 
             <button mat-stroked-button
                 type="button"

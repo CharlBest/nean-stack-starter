@@ -1,27 +1,30 @@
 <form [formGroup]="formGroup">
-    <mat-card>
-        <mat-card-content>
-            <mat-form-field appearance="fill"
-                [floatLabel]="'never'">
-                <textarea matInput
-                    placeholder="Type comment here..."
-                    formControlName="description"
-                    cdkTextareaAutosize
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="8"
-                    (blur)="showCommentSubmitButton = false"
-                    (focus)="showCommentSubmitButton = true"></textarea>
-                <mat-error>
-                    <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
-                </mat-error>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-stroked-button
-                type="submit"
-                *ngIf="showCommentSubmitButton || (formGroup.controls['description'].value && formGroup.controls['description'].value !== '')"
-                [disabled]="!formGroup.valid"
-                (click)="submitForm.emit()">{{comment ? 'Update' : 'Comment'}}</button>
-        </mat-card-actions>
-    </mat-card>
+    <mat-form-field appearance="fill"
+        [floatLabel]="'never'">
+        <textarea matInput
+            placeholder="Type comment here..."
+            formControlName="description"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="8"
+            (blur)="showButtons = false"
+            (focus)="showButtons = true"></textarea>
+        <mat-error>
+            <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
+        </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <button mat-stroked-button
+        color="primary"
+        type="submit"
+        *ngIf="showButtons || (formGroup.controls['description'].value && formGroup.controls['description'].value !== '')"
+        [disabled]="!formGroup.valid"
+        (click)="submitForm.emit()">{{comment ? 'Save' : 'Comment'}}</button>
+
+    <button mat-stroked-button
+        type="button"
+        *ngIf="showButtons"
+        (click)="cancelForm()">Cancel</button>
 </form>
