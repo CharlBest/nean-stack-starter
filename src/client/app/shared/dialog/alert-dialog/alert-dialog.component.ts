@@ -5,5 +5,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./alert-dialog.component.scss']
 })
 export class AlertDialogComponent {
+    @Input() title = 'Alert';
     @Input() message: string;
+    @Input() closeButtonText = 'Close';
 }

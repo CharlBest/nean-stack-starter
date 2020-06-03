@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Alert</h2>
+<h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content>
     {{message}}
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-stroked-button
         type="button"
-        mat-dialog-close>Close</button>
+        mat-dialog-close>{{closeButtonText}}</button>
 </mat-dialog-actions>

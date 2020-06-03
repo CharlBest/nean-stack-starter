@@ -9,14 +9,21 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 export class DialogService {
     constructor(private dialog: MatDialog) { }
 
-    alert(message: string) {
+    alert(message: string, closeButtonText: string | null = null, title: string | null = null): void {
         const dialogRef = this.dialog.open(AlertDialogComponent, {
             disableClose: true
         });
         dialogRef.componentInstance.message = message;
+        if (closeButtonText) {
+            dialogRef.componentInstance.closeButtonText = closeButtonText;
+        }
+        if (title) {
+            dialogRef.componentInstance.title = title;
+        }
     }
 
-    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null): Promise<boolean> {
+    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null, title: string | null = null)
+        : Promise<boolean> {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: true
         });
@@ -26,6 +33,9 @@ export class DialogService {
         }
         if (closeButtonText) {
             dialogRef.componentInstance.closeButtonText = closeButtonText;
+        }
+        if (title) {
+            dialogRef.componentInstance.title = title;
         }
 
         return dialogRef.afterClosed().toPromise();
