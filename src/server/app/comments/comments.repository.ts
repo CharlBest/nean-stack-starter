@@ -10,7 +10,7 @@ class CommentsRepository extends BaseRepository {
         super();
     }
 
-    async create(res: Response, userId: number, uId: string, itemUId: string, description: string)
+    async create(res: Response, userId: number, uId: string, itemUId: string, description: string, commentUId?: string | null)
         : Promise<CommentViewModel | null> {
         const result = await this.run(res, Database.queries.comments.create,
             {
@@ -18,6 +18,7 @@ class CommentsRepository extends BaseRepository {
                 uId,
                 itemUId,
                 description,
+                commentUId,
             }
         );
 
@@ -105,6 +106,33 @@ class CommentsRepository extends BaseRepository {
     async getAll(res: Response, userId: number | null, uId: string, pageIndex: number, pageSize: number)
         : Promise<CommentViewModel[] | null> {
         const result = await this.run(res, Database.queries.comments.getAll,
+            {
+                userId,
+                uId,
+                pageIndex,
+                pageSize
+            }
+        );
+
+        const model = result ? result.map(record => {
+            return {
+                ...record.get('comments'),
+                user: record.get('users'),
+                isItemOwner: record.get('isItemOwner'),
+                itemUId: record.get('itemUId'),
+            } as CommentViewModel;
+        }) : null;
+
+        if (model && model.length > 0) {
+            return model;
+        } else {
+            return null;
+        }
+    }
+
+    async getReplies(res: Response, userId: number | null, uId: string, pageIndex: number, pageSize: number)
+        : Promise<CommentViewModel[] | null> {
+        const result = await this.run(res, Database.queries.comments.getReplies,
             {
                 userId,
                 uId,

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
@@ -79,7 +80,10 @@ export class UserComponent implements OnInit {
           response.forEach((item: ItemViewModel) => item.user = itemsOwner);
 
           this.items.push(...response);
-        } else {
+        }
+
+        // End of list
+        if (!response || (response && response.length !== DEFAULT_PAGE_SIZE)) {
           this.listEnd = true;
         }
       } catch (error) {

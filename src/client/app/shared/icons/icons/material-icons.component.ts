@@ -133,6 +133,12 @@ export class IconDoneComponent extends BaseIconComponent { }
 export class IconLinkComponent extends BaseIconComponent { }
 
 @Component({
+  selector: 'app-icon-reply',
+  templateUrl: materialIconPath('reply', Category.CONTENT)
+})
+export class IconReplyComponent extends BaseIconComponent { }
+
+@Component({
   selector: 'app-icon-share',
   templateUrl: materialIconPath('share', Category.SOCIAL)
 })

@@ -1,0 +1,9 @@
+<app-infinite-scroll (scrolled)="onScroll()"
+    [isProcessing]="isProcessing">
+
+    <ng-container *ngIf="comments && comments.length > 0">
+        <app-comment *ngFor="let comment of comments; trackBy: trackByFn"
+            [comment]="comment"></app-comment>
+    </ng-container>
+
+</app-infinite-scroll>

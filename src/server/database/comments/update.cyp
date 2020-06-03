@@ -1,5 +1,5 @@
 export const data = `
-MATCH (user:User { id: $userId })-[:MADE_COMMENT]->(comment:Comment { uId: $uId })<-[:HAS_COMMENT]-(item:Item)
+MATCH (user:User { id: $userId })-[:MADE_COMMENT]->(comment:Comment { uId: $uId })<-[:HAS_COMMENT*]-(item:Item)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 OPTIONAL MATCH (user)-[isItemOwner:HAS_ITEM]->(item)
 

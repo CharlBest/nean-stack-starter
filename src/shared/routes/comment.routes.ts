@@ -9,4 +9,5 @@ export class CommentRoutes {
     static delete = (uId?: string) => new BaseRoute(CommentRoutes.root, 'delete', { uId });
     static get = (uId?: string) => new BaseRoute(CommentRoutes.root, 'get', { uId });
     static getAll = (uId?: string) => new BaseRoute(CommentRoutes.root, 'getAll', { uId });
+    static getReplies = (uId?: string) => new BaseRoute(CommentRoutes.root, 'getReplies', { uId });
 }

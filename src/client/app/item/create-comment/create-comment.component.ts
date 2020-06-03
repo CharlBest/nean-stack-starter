@@ -14,7 +14,9 @@ export class CreateCommentComponent {
 
   @ViewChild('commentForm', { static: true }) commentForm: CommentFormComponent;
   @Input() itemUId: string;
+  @Input() commentUId: string;
   @Output() readonly createSuccess: EventEmitter<CommentViewModel> = new EventEmitter();
+  @Output() readonly cancel: EventEmitter<CommentViewModel> = new EventEmitter();
   isProcessing = false;
 
   constructor(public formErrorsService: FormErrorsService,
@@ -25,6 +27,7 @@ export class CreateCommentComponent {
 
     const viewModel = new CreateOrUpdateCommentViewModel();
     viewModel.description = this.commentForm.formGroup.controls.description.value;
+    viewModel.commentUId = this.commentUId;
 
     try {
       const response = await this.commentService.create(this.itemUId, viewModel);
@@ -38,5 +41,9 @@ export class CreateCommentComponent {
     } finally {
       this.isProcessing = false;
     }
+  }
+
+  cancelForm() {
+    this.cancel.emit();
   }
 }

@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -30,7 +31,10 @@ export class FavouritesComponent implements OnInit {
       const response = await this.itemService.getFavourites(this.pageIndex);
       if (response) {
         this.items.push(...response);
-      } else {
+      }
+
+      // End of list
+      if (!response || (response && response.length !== DEFAULT_PAGE_SIZE)) {
         this.listEnd = true;
       }
     } catch (error) {

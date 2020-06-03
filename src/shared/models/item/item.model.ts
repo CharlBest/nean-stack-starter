@@ -8,7 +8,7 @@ export class ItemModel {
     files: Array<FileModel>;
     dateCreated: string;
     views: number;
-    commentCount: number;
-    favouriteCount: number;
-    subscriptionCount: number;
+    commentCount?: number;
+    favouriteCount?: number;
+    subscriptionCount?: number;
 }

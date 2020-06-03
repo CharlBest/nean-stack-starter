@@ -1,5 +1,5 @@
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
-import { ServerValidator, Validators } from '@shared/validation/validators';
+import { DEFAULT_PAGE_SIZE, ServerValidator, Validators } from '@shared/validation/validators';
 import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
 import { SearchViewModel } from '@shared/view-models/item/search.view-model';
@@ -62,7 +62,7 @@ class ItemsController extends BaseController {
 
     async getAll(req: Request, res: Response, next: NextFunction) {
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
-        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
             await itemsService.getAll(res, pageIndex, pageSize)
@@ -113,7 +113,7 @@ class ItemsController extends BaseController {
 
     async getFavourites(req: Request, res: Response, next: NextFunction) {
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
-        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
             await itemsService.getFavourites(res, pageIndex, pageSize)
@@ -140,7 +140,7 @@ class ItemsController extends BaseController {
 
     async search(req: Request, res: Response, next: NextFunction) {
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
-        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
         const viewModel = req.body as SearchViewModel;
 
         const formGroup = FormGroupBuilder.search(viewModel.term);

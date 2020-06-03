@@ -13,10 +13,10 @@ class CommentsService extends BaseService {
         super();
     }
 
-    async create(res: Response, itemUId: string, description: string): Promise<CommentViewModel> {
+    async create(res: Response, itemUId: string, description: string, commentUId?: string | null): Promise<CommentViewModel> {
         const userId = this.getUserId(res);
         const uId = nodeUUId();
-        const result = await commentsRepository.create(res, userId, uId, itemUId, description);
+        const result = await commentsRepository.create(res, userId, uId, itemUId, description, commentUId);
 
         if (!result) {
             const error = 'Error while creating comment';
@@ -61,6 +61,10 @@ class CommentsService extends BaseService {
 
     async getAll(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[] | null> {
         return await commentsRepository.getAll(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
+    }
+
+    async getReplies(res: Response, uId: string, pageIndex: number, pageSize: number): Promise<CommentModel[] | null> {
+        return await commentsRepository.getReplies(res, this.getOptionalUserId(res), uId, pageIndex, pageSize);
     }
 }
 

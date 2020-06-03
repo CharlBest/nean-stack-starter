@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
 import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
@@ -26,7 +26,9 @@ export class CommentComponent implements OnInit {
   @Input() comment: CommentViewModel;
   isProcessing = false;
   isProcessingCreateOrUpdate = false;
-  editItem = false;
+  showEditItem = false;
+  showReplies = false;
+  showCreateReply = false;
 
   constructor(private itemService: ItemService,
     private commentService: CommentService,
@@ -36,8 +38,8 @@ export class CommentComponent implements OnInit {
     private shareDialogService: ShareDialogService,
     private shareService: ShareService,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     const commentUId = this.route.snapshot.params.uId;
@@ -64,7 +66,7 @@ export class CommentComponent implements OnInit {
   }
 
   async delete() {
-    const hasConfirmed = await this.dialogService.confirm('Delete your comment and all of its replies permanently?', 'DELETE', 'CANCEL', 'Delete comment');
+    const hasConfirmed = await this.dialogService.confirm('Delete your comment and all of its replies permanently?', 'Delete', 'Cancel', 'Delete comment');
     if (hasConfirmed) {
       this.contextMenu.close();
 
@@ -129,7 +131,19 @@ export class CommentComponent implements OnInit {
 
   openEdit() {
     this.contextMenu.close();
-    this.editItem = true;
+    this.showEditItem = true;
+  }
+
+  async openReply() {
+    if (this.authService.loggedInUserId) {
+      this.showReplies = true;
+      this.showCreateReply = true;
+    } else {
+      const hasConfirmed = await this.dialogService.confirm('Please log in to reply', 'Sign In');
+      if (hasConfirmed) {
+        this.authService.removeTokenAndNavigateToLogin();
+      }
+    }
   }
 
   async onSubmit() {
@@ -140,7 +154,7 @@ export class CommentComponent implements OnInit {
 
     try {
       const response = await this.commentService.update(this.comment.uId, viewModel);
-      this.editItem = false;
+      this.showEditItem = false;
       if (response) {
         this.comment.description = response.description;
       }
@@ -149,5 +163,14 @@ export class CommentComponent implements OnInit {
     } finally {
       this.isProcessingCreateOrUpdate = false;
     }
+  }
+
+  insertReply(event: Event) {
+    this.comment.commentCount ? this.comment.commentCount++ : this.comment.commentCount = 1;
+
+    // Dirty way of reloading replies child component
+    this.showReplies = false;
+    this.changeDetector.detectChanges();
+    this.showReplies = true;
   }
 }

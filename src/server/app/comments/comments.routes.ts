@@ -17,6 +17,9 @@ class CommentsRoutes extends BaseRoute {
 
         this.router.get(CommentRoutes.getAll().server(),
             async (req, res, next) => commentsController.getAll(req, res, next).catch(next));
+
+        this.router.get(CommentRoutes.getReplies().server(),
+            async (req, res, next) => commentsController.getReplies(req, res, next).catch(next));
     }
 
     initAuthenticatedRoutes() {

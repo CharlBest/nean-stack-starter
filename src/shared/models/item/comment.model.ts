@@ -3,4 +3,5 @@ export class CommentModel {
     uId: string;
     description: string;
     dateCreated: string;
+    commentCount?: number;
 }

@@ -35,4 +35,10 @@ export class CommentService {
             .get<CommentViewModel[]>(`${environment.serverEndpoint}${CommentRoutes.getAll(itemUId).client({ pageIndex, pageSize })}`)
             .toPromise();
     }
+
+    getReplies(commentUId: string, pageIndex: number, pageSize?: number): Promise<CommentViewModel[] | null> {
+        return this.http
+            .get<CommentViewModel[]>(`${environment.serverEndpoint}${CommentRoutes.getReplies(commentUId).client({ pageIndex, pageSize })}`)
+            .toPromise();
+    }
 }

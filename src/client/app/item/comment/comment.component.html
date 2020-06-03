@@ -1,77 +1,105 @@
-<div [hidden]="isProcessing"
-    class="container"
-    [appRightClickContextMenu]="contextMenu">
-    <span routerLink="/user/{{comment?.user?.id}}">
-        <div *ngIf="comment.user?.avatar?.url && comment.user?.avatar?.url !== ''; else defaultAvatar"
-            mat-card-avatar
-            [style.background-image]="'url(' + comment?.user?.avatar?.url + ')'"></div>
-        <ng-template #defaultAvatar>
-            <span mat-card-avatar
-                class="default-avatar">
-                <app-icon-account-circle></app-icon-account-circle>
-            </span>
-        </ng-template>
-    </span>
-
-    <!-- View -->
-    <div *ngIf="!editItem"
-        class="content">
-        <div>
-            <div class="username"
-                routerLink="/user/{{comment?.user?.id}}">
-                {{comment?.user?.username}}
-                <app-icon-done [inline]="true"
-                    *ngIf="comment?.isItemOwner"></app-icon-done>
-                &nbsp;&middot;&nbsp;
-                <span class="date"
-                    [matTooltip]="comment.dateCreated | date: 'HH:mm MMM d, y'">
-                    {{comment.dateCreated | formatRelativeTime}}
+<div class="container">
+    <div [hidden]="isProcessing"
+        class="comment"
+        [appRightClickContextMenu]="contextMenu">
+        <span routerLink="/user/{{comment?.user?.id}}">
+            <div *ngIf="comment.user?.avatar?.url && comment.user?.avatar?.url !== ''; else defaultAvatar"
+                mat-card-avatar
+                [style.background-image]="'url(' + comment?.user?.avatar?.url + ')'"></div>
+            <ng-template #defaultAvatar>
+                <span mat-card-avatar
+                    class="default-avatar">
+                    <app-icon-account-circle></app-icon-account-circle>
                 </span>
+            </ng-template>
+        </span>
+
+        <!-- View -->
+        <div *ngIf="!showEditItem"
+            class="content">
+            <div>
+                <div class="username"
+                    routerLink="/user/{{comment?.user?.id}}">
+                    {{comment?.user?.username}}
+                    <app-icon-done [inline]="true"
+                        *ngIf="comment?.isItemOwner"></app-icon-done>
+                    &nbsp;&middot;&nbsp;
+                    <span class="date"
+                        [matTooltip]="comment.dateCreated | date: 'HH:mm MMM d, y'">
+                        {{comment.dateCreated | formatRelativeTime}}
+                    </span>
+                </div>
             </div>
+
+            <span>{{comment.description}}</span>
         </div>
 
-        <span>{{comment.description}}</span>
+        <!-- Edit -->
+        <ng-container *ngIf="showEditItem">
+            <app-comment-form #commentForm
+                *ngIf="!isProcessingCreateOrUpdate && comment"
+                [comment]="comment"
+                (submitForm)="onSubmit()"
+                (cancel)="showEditItem = false"></app-comment-form>
+
+            <app-preloader *ngIf="isProcessingCreateOrUpdate"></app-preloader>
+        </ng-container>
+
+        <div>
+            <app-context-menu #contextMenu>
+                <mat-nav-list>
+                    <mat-list-item (click)="openReply()">
+                        <app-icon-reply mat-list-icon></app-icon-reply>
+                        <span mat-line>Reply</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="openShareDialog()">
+                        <app-icon-share mat-list-icon></app-icon-share>
+                        <span mat-line>Share</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="copyLink()">
+                        <app-icon-link mat-list-icon></app-icon-link>
+                        <span mat-line>Copy link to Comment</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="openEdit()"
+                        *ngIf="comment?.user?.id === authService.loggedInUserId">
+                        <app-icon-edit mat-list-icon></app-icon-edit>
+                        <span mat-line>Edit</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="delete()"
+                        *ngIf="comment?.user?.id === authService.loggedInUserId">
+                        <app-icon-delete mat-list-icon
+                            color="warn"></app-icon-delete>
+                        <span mat-line>Delete</span>
+                    </mat-list-item>
+                    <mat-list-item (click)="report()">
+                        <app-icon-flag mat-list-icon></app-icon-flag>
+                        <span mat-line>Report</span>
+                    </mat-list-item>
+                </mat-nav-list>
+            </app-context-menu>
+        </div>
     </div>
 
-    <!-- Edit -->
-    <ng-container *ngIf="editItem">
-        <app-comment-form #commentForm
-            *ngIf="!isProcessingCreateOrUpdate && comment"
-            [comment]="comment"
-            (submitForm)="onSubmit()"
-            (cancel)="editItem = false"></app-comment-form>
+    <div class="reply">
+        <!-- Reply -->
+        <app-create-comment *ngIf="showCreateReply"
+            [itemUId]="comment.itemUId"
+            [commentUId]="comment.uId"
+            (createSuccess)="insertReply($event)"
+            (cancel)="showCreateReply = false"></app-create-comment>
 
-        <app-preloader *ngIf="isProcessingCreateOrUpdate"></app-preloader>
-    </ng-container>
-
-    <div>
-        <app-context-menu #contextMenu>
-            <mat-nav-list>
-                <mat-list-item (click)="openShareDialog()">
-                    <app-icon-share mat-list-icon></app-icon-share>
-                    <span mat-line>Share</span>
-                </mat-list-item>
-                <mat-list-item (click)="copyLink()">
-                    <app-icon-link mat-list-icon></app-icon-link>
-                    <span mat-line>Copy link to Comment</span>
-                </mat-list-item>
-                <mat-list-item *ngIf="comment?.user?.id === authService.loggedInUserId"
-                    (click)="openEdit()">
-                    <app-icon-edit mat-list-icon></app-icon-edit>
-                    <span mat-line>Edit</span>
-                </mat-list-item>
-                <mat-list-item (click)="delete()"
-                    *ngIf="comment?.user?.id === authService.loggedInUserId">
-                    <app-icon-delete mat-list-icon
-                        color="warn"></app-icon-delete>
-                    <span mat-line>Delete</span>
-                </mat-list-item>
-                <mat-list-item (click)="report()">
-                    <app-icon-flag mat-list-icon></app-icon-flag>
-                    <span mat-line>Report</span>
-                </mat-list-item>
-            </mat-nav-list>
-        </app-context-menu>
+        <!-- Replies -->
+        <button mat-button
+            *ngIf="comment?.commentCount > 0"
+            (click)="showReplies = !showReplies"
+            color="primary"
+            type="button">
+            <app-icon-arrow-drop-up *ngIf="showReplies"></app-icon-arrow-drop-up>
+            <app-icon-arrow-drop-down *ngIf="!showReplies"></app-icon-arrow-drop-down>
+            View {{comment.commentCount}} {{comment.commentCount === 1 ? 'reply' : 'replies'}}
+        </button>
+        <app-replies *ngIf="showReplies"
+            [comment]="comment"></app-replies>
     </div>
 </div>
 

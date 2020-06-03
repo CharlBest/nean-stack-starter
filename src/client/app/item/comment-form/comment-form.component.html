@@ -8,7 +8,8 @@
             cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="8"
             (blur)="showButtons = false"
-            (focus)="showButtons = true"></textarea>
+            (focus)="showButtons = true"
+            [attr.autofocus]="bpService.isDesktop || null"></textarea>
         <mat-error>
             <app-form-errors [control]="formGroup.controls['description']"></app-form-errors>
         </mat-error>

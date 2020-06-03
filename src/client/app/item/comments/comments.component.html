@@ -1,13 +1,13 @@
-<div *ngIf="!isProcessing && item">
-    <app-item [item]="item"
-        [isViewingComments]="true"></app-item>
+<app-item *ngIf="!isProcessing && item"
+    [item]="item"
+    [isViewingComments]="true"></app-item>
 
-    <app-create-comment [hidden]="!isAuthenticated"
-        [itemUId]="item?.uId"
-        (createSuccess)="insertComment($event)"></app-create-comment>
+<mat-card>
+    <mat-card-title>{{item?.commentCount}} Comment{{item?.commentCount === 1 ? '' : 's'}}</mat-card-title>
+    <mat-card-content>
 
-    <mat-card *ngIf="!isAuthenticated">
-        <mat-card-content>
+        <!-- Login to comment -->
+        <div *ngIf="!isAuthenticated">
             <button mat-stroked-button
                 type="button"
                 (click)="goToSignUp()">Sign Up</button> or
@@ -15,21 +15,27 @@
                 type="button"
                 (click)="goToLogIn()">Log In</button>
             if you want to comment
-        </mat-card-content>
-    </mat-card>
-</div>
+        </div>
 
-<app-infinite-scroll (scrolled)="onScroll()"
-    [isProcessing]="isProcessing || isProcessingComment">
+        <!-- Create comment -->
+        <app-create-comment [hidden]="!isAuthenticated"
+            [itemUId]="item?.uId"
+            (createSuccess)="insertComment($event)"></app-create-comment>
 
-    <mat-card *ngIf="comments && comments.length > 0">
-        <mat-card-content>
-            <app-comment *ngFor="let comment of comments; trackBy: trackByFn"
-                [comment]="comment"></app-comment>
-        </mat-card-content>
-    </mat-card>
+        <br>
 
-</app-infinite-scroll>
+        <!-- Comments -->
+        <app-infinite-scroll (scrolled)="onScroll()"
+            [isProcessing]="isProcessing || isProcessingComment">
+
+            <ng-container *ngIf="comments && comments.length > 0">
+                <app-comment *ngFor="let comment of comments; trackBy: trackByFn"
+                    [comment]="comment"></app-comment>
+            </ng-container>
+
+        </app-infinite-scroll>
+    </mat-card-content>
+</mat-card>
 
 <ng-container *ngIf="!isProcessing && !item">
     <mat-card>

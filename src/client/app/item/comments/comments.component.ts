@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -66,7 +67,10 @@ export class CommentsComponent implements OnInit {
           // TODO: is the the fastest way?
           response.forEach(comment => comment.itemUId = this.itemUId);
           this.comments.push(...response);
-        } else {
+        }
+
+        // End of list
+        if (!response || (response && response.length !== DEFAULT_PAGE_SIZE)) {
           this.listEnd = true;
         }
       } catch (error) {
@@ -83,6 +87,8 @@ export class CommentsComponent implements OnInit {
     } else {
       this.comments = [comment];
     }
+
+    this.item.commentCount ? this.item.commentCount++ : this.item.commentCount = 1;
   }
 
   goToSignUp() {

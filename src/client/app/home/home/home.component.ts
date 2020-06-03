@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
@@ -37,7 +38,10 @@ export class HomeComponent implements OnInit {
       const response = await this.homeService.getAll(this.pageIndex);
       if (response) {
         this.items.push(...response);
-      } else {
+      }
+
+      // End of list
+      if (!response || (response && response.length !== DEFAULT_PAGE_SIZE)) {
         this.listEnd = true;
       }
     } catch (error) {

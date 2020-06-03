@@ -1,7 +1,6 @@
-<mat-card>
-    <app-comment-form #commentForm
-        [hidden]="isProcessing"
-        (submitForm)="onSubmit()"></app-comment-form>
-</mat-card>
+<app-comment-form #commentForm
+    [hidden]="isProcessing"
+    (submitForm)="onSubmit()"
+    (cancel)="cancelForm()"></app-comment-form>
 
 <app-preloader *ngIf="isProcessing"></app-preloader>

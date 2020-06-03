@@ -144,6 +144,7 @@ export class Database {
                 delete: (await import(`../database/comments/delete.${Database.fileExtension}`)).data,
                 get: (await import(`../database/comments/get.${Database.fileExtension}`)).data,
                 getAll: (await import(`../database/comments/getAll.${Database.fileExtension}`)).data,
+                getReplies: (await import(`../database/comments/getReplies.${Database.fileExtension}`)).data,
             },
             notifications: {
                 getNotificationPreferences:
@@ -223,6 +224,7 @@ export interface DbQueries {
         delete: string,
         get: string,
         getAll: string,
+        getReplies: string,
     };
 
     notifications: {

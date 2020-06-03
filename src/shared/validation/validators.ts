@@ -13,6 +13,7 @@ function isEmptyInputValue(value: any): boolean {
 // tslint:disable-next-line:max-line-length
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 export const MAX_FILE_UPLOADS = 5;
+export const DEFAULT_PAGE_SIZE = 10;
 
 export const PASSWORD_LENGTH = 8;
 export const PASSWORD_REGEX = new PasswordRegexBuilder(PASSWORD_LENGTH).oneUpperCase().oneLowerCase().oneDigit().value;

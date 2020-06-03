@@ -1,5 +1,5 @@
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
-import { ServerValidator, Validators } from '@shared/validation/validators';
+import { DEFAULT_PAGE_SIZE, ServerValidator, Validators } from '@shared/validation/validators';
 import { CreateUserViewModel } from '@shared/view-models/create-user/create-user.view-model';
 import { LoginViewModel } from '@shared/view-models/create-user/login.view-model';
 import { ChangeForgottenPasswordViewModel } from '@shared/view-models/forgot-password/change-forgotten-password.view-model';
@@ -85,7 +85,7 @@ class UsersController extends BaseController {
     async getUserPublicItems(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id ? +req.params.id : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
-        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         const hasErrors = !!Validators.required(id);
 

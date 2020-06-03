@@ -1,5 +1,5 @@
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
-import { ServerValidator, Validators } from '@shared/validation/validators';
+import { DEFAULT_PAGE_SIZE, ServerValidator, Validators } from '@shared/validation/validators';
 import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../shared/base-controller';
@@ -71,7 +71,7 @@ class NotificationsController extends BaseController {
 
     async getSubscriptions(req: Request, res: Response, next: NextFunction) {
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
-        const pageSize = req.query.pageSize ? +req.query.pageSize : null || this.DEFAULT_PAGE_SIZE;
+        const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
             await notificationsService.getSubscriptions(res, pageIndex, pageSize)

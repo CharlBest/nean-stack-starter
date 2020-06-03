@@ -1,33 +1,40 @@
 .container {
-	display: flex;
 	margin-bottom: 24px;
 
-	.mat-card-avatar {
-		background-size: cover;
-		margin-right: 10px;
-		cursor: pointer;
-		outline: none;
-	}
+	.comment {
+		display: flex;
 
-	.default-avatar svg {
-		height: 40px;
-		width: 40px;
-		opacity: 0.55;
-	}
-
-	.content {
-		flex-grow: 1;
-
-		.username {
-			font-weight: bold;
+		.mat-card-avatar {
+			background-size: cover;
+			margin-right: 30px;
 			cursor: pointer;
 			outline: none;
-			text-decoration: none;
 		}
 
-		.date {
-			opacity: 0.5;
-			font-weight: lighter;
+		::ng-deep .default-avatar svg {
+			height: 40px;
+			width: 40px;
+			opacity: 0.55;
 		}
+
+		.content {
+			flex-grow: 1;
+
+			.username {
+				font-weight: bold;
+				cursor: pointer;
+				outline: none;
+				text-decoration: none;
+			}
+
+			.date {
+				opacity: 0.5;
+				font-weight: lighter;
+			}
+		}
+	}
+
+	.reply {
+		margin-left: 54px;
 	}
 }
