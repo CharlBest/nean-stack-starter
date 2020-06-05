@@ -1,4 +1,5 @@
 import { Directive, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { TranslateTerm } from '@shared/translate/translate-term.interface';
 import { translateService } from '@shared/translate/translate.service';
 
 @Directive({
@@ -7,7 +8,7 @@ import { translateService } from '@shared/translate/translate.service';
 })
 export class TranslateDirective implements OnInit {
 
-  constructor(private templateRef: TemplateRef<any>,
+  constructor(private templateRef: TemplateRef<{ $implicit: TranslateTerm }>,
     private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
