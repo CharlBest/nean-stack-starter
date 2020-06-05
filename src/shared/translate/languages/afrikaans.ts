@@ -1,4 +1,3 @@
-// tslint:disable: max-line-length
 import { TranslateTerm } from '../translate-term.interface';
 
 export const afrikaans: TranslateTerm = {
@@ -7,6 +6,7 @@ export const afrikaans: TranslateTerm = {
     signup: 'Teken Op',
     login: 'Teken In',
     items: 'Items',
+    subscriptions: 'Subskripsies',
     saved: 'Gestoor',
     profile: 'Profiel',
     notificationPreferences: 'Kennisgewing Voorkeure',

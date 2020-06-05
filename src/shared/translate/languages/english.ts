@@ -1,4 +1,3 @@
-// tslint:disable: max-line-length
 import { TranslateTerm } from '../translate-term.interface';
 
 export const english: TranslateTerm = {
@@ -7,6 +6,7 @@ export const english: TranslateTerm = {
     signup: 'Sign Up',
     login: 'Log In',
     items: 'Items',
+    subscriptions: 'Subscriptions',
     saved: 'Saved',
     profile: 'Profile',
     notificationPreferences: 'Notification Preferences',

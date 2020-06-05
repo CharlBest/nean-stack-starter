@@ -4,6 +4,7 @@ export interface TranslateTerm {
     signup: string;
     login: string;
     items: string;
+    subscriptions: string;
     saved: string;
     profile: string;
     notificationPreferences: string;
