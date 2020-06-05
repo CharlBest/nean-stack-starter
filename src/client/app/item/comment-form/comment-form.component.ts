@@ -35,7 +35,9 @@ export class CommentFormComponent implements OnInit {
   formOnInit() {
     this.formGroup = this.fb.group(FormGroupBuilder.createOrUpdateComment(
       this.comment ? this.comment.description : null
-    ));
+    ), {
+      updateOn: 'submit'
+    });
   }
 
   cancelForm() {
