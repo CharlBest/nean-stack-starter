@@ -27,6 +27,8 @@ WITH item, user, avatars
 
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
 OPTIONAL MATCH (item)-[:TAG]->(tags:Tag)
+OPTIONAL MATCH (user)-[favourite:HAS_FAVOURITE]->(item)
+OPTIONAL MATCH (user)-[subscribed:SUBSCRIBED]->(item)
 
 SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
 
@@ -45,5 +47,7 @@ user
     id: user.id,
     username: user.username,
     avatar: collect(properties(avatars))[0]
-}
+},
+CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
+CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
 `

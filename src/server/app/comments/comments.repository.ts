@@ -1,6 +1,6 @@
-// tslint:disable: no-identical-functions
 import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
 import { Response } from 'express';
+import { Record } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
 
@@ -22,14 +22,7 @@ class CommentsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildCommentViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -47,14 +40,7 @@ class CommentsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildCommentViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -87,14 +73,7 @@ class CommentsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comment'),
-                user: record.get('user'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildCommentViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -114,14 +93,7 @@ class CommentsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comments'),
-                user: record.get('users'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildCommentViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -141,20 +113,22 @@ class CommentsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('comments'),
-                user: record.get('users'),
-                isItemOwner: record.get('isItemOwner'),
-                itemUId: record.get('itemUId'),
-            } as CommentViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildCommentViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;
         } else {
             return null;
         }
+    }
+
+    private buildCommentViewModel(record: Record): CommentViewModel {
+        return {
+            ...(record.has('comments') ? record.get('comments') : record.get('comment')) as CommentViewModel,
+            user: record.has('users') ? record.get('users') : record.get('user'),
+            isItemOwner: record.get('isItemOwner'),
+            itemUId: record.get('itemUId'),
+        };
     }
 }
 

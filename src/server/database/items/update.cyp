@@ -33,6 +33,8 @@ WITH item, user
 OPTIONAL MATCH (item)-[:HAS_FILE]->(files:File)
 OPTIONAL MATCH (item)-[:TAG]->(tags:Tag)
 OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
+OPTIONAL MATCH (user)-[favourite:HAS_FAVOURITE]->(item)
+OPTIONAL MATCH (user)-[subscribed:SUBSCRIBED]->(item)
 
 RETURN properties(item) as item,
 collect(properties(files)) as files,
@@ -42,5 +44,7 @@ user
     id: user.id,
     username: user.username,
     avatar: collect(properties(avatars))[0]
-}
+},
+CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
+CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
 `

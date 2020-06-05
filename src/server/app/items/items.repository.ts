@@ -1,10 +1,10 @@
-// tslint:disable: no-identical-functions
 import { FileModel } from '@shared/models/shared/file.model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Application, Response } from 'express';
-import { Session } from 'neo4j-driver';
+import { Record, Session } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { BaseRepository } from '../shared/base-repository';
+
 class ItemsRepository extends BaseRepository {
 
     constructor() {
@@ -37,14 +37,7 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('item'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('user'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -66,14 +59,7 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('item'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('user'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -91,16 +77,7 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('item'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('user'),
-                favourite: record.get('favourite'),
-                subscribed: record.get('subscribed'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model[0];
@@ -118,16 +95,7 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('items'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('users'),
-                favourite: record.get('favourite'),
-                subscribed: record.get('subscribed'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -190,15 +158,7 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('items'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('users'),
-                favourite: true,
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -234,22 +194,24 @@ class ItemsRepository extends BaseRepository {
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('items'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('users'),
-                favourite: record.get('favourite'),
-                subscribed: record.get('subscribed'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;
         } else {
             return null;
         }
+    }
+
+    private buildItemViewModel(record: Record): ItemViewModel {
+        return {
+            ...(record.has('items') ? record.get('items') : record.get('item')) as ItemViewModel,
+            files: record.get('files'),
+            tags: record.get('tags'),
+            user: record.has('users') ? record.get('users') : record.get('user'),
+            favourite: record.get('favourite'),
+            subscribed: record.get('subscribed')
+        };
     }
 }
 
