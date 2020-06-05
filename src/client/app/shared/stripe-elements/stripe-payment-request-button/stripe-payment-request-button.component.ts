@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-// tslint:disable-next-line: max-line-length
 import { CanMakePaymentResult, PaymentIntent, PaymentRequest, PaymentRequestOptions, PaymentRequestPaymentMethodEvent, StripeError, StripePaymentRequestButtonElement } from '@stripe/stripe-js';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';

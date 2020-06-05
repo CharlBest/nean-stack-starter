@@ -17,20 +17,9 @@ export abstract class BaseRepository {
 
                 const result = await res.locals.neo4jSession.run(query, params);
 
-                // TODO: Temp fix for DateTime objects to strings
                 if (result.records) {
-                    for (const record of result.records) {
-                        for (const recordKey of record.keys) {
-                            const object = record.get(recordKey);
-                            if (!Array.isArray(object)) {
-                                for (const key in object) {
-                                    if (object.hasOwnProperty(key) && isDateTime(object[key])) {
-                                        object[key] = object[key].toString();
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    // TODO: Temp fix for DateTime objects to strings
+                    this.convertDateTimeObjectsToStrings(result.records);
                 }
 
                 return result.records;
@@ -44,6 +33,22 @@ export abstract class BaseRepository {
         } catch (error) {
             console.error(error);
             return null;
+        }
+    }
+
+    // tslint:disable-next-line: cognitive-complexity
+    private convertDateTimeObjectsToStrings(records: Record[]) {
+        for (const record of records) {
+            for (const recordKey of record.keys) {
+                const object = record.get(recordKey);
+                if (!Array.isArray(object)) {
+                    for (const key in object) {
+                        if (object.hasOwnProperty(key) && isDateTime(object[key])) {
+                            object[key] = object[key].toString();
+                        }
+                    }
+                }
+            }
         }
     }
 }

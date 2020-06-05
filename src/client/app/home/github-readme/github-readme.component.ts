@@ -18,10 +18,9 @@ export class GitHubReadMeComponent {
       const container = document.getElementsByClassName('github-readme-container');
       if (container && container[0]) {
         const anchorLinks = container[0].getElementsByTagName('a');
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < anchorLinks.length; i++) {
-          if (anchorLinks[i].href === 'https://nean.io/') {
-            anchorLinks[i].remove();
+        for (const link of Array.from(anchorLinks)) {
+          if (link.href === 'https://nean.io/') {
+            link.remove();
           }
         }
       }

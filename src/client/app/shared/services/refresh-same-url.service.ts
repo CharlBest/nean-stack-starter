@@ -9,7 +9,9 @@ import { filter } from 'rxjs/operators';
 // in the navigation bar to expect the page to scroll up and render
 // the latest content or at least refresh
 
-@Injectable()
+@Injectable({
+    providedIn: 'any'
+})
 export class RefreshSameUrlService implements OnDestroy {
     // NB: This service should be provided in the component's providers so that OnDestory gets called
     private routerEventsSubscription: Subscription;

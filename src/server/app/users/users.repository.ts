@@ -328,8 +328,7 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    // tslint:disable-next-line: bool-param-default
-    async updateConfiguration(res: Response, userId: number, consent?: boolean, darkTheme?: boolean, language?: Language)
+    async updateConfiguration(res: Response, userId: number, consent: boolean = false, darkTheme: boolean = false, language?: Language)
         : Promise<boolean> {
         const result = await this.run(res, Database.queries.users.updateConfiguration,
             {

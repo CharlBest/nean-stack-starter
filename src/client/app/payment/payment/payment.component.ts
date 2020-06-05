@@ -8,7 +8,6 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StripeElementsComponent } from '../../shared/stripe-elements/stripe-elements/stripe-elements.component';
-// tslint:disable-next-line: max-line-length
 import { StripePaymentRequestButtonComponent } from '../../shared/stripe-elements/stripe-payment-request-button/stripe-payment-request-button.component';
 import { PaymentService } from '../payment.service';
 

@@ -1,4 +1,3 @@
-// tslint:disable: max-line-length
 import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { ShareService } from '../../services/share.service';
@@ -65,7 +64,11 @@ export class ShareDialogComponent implements OnInit {
     }
 
     openFacebook() {
-        // Alternative: `http://www.facebook.com/dialog/share?app_id=87741124305&href=${this.encodedUrl}&display=popup&redirect_uri=https://www.youtube.com/facebook_redirect`;
+        /*
+        Alternative:
+        `http://www.facebook.com/dialog/share?app_id=87741124305&href=${this.encodedUrl}
+        &display=popup&redirect_uri=https://www.youtube.com/facebook_redirect`
+        */
         const url = `https://facebook.com/sharer.php?u=${this.getEncodedUrl('facebook')}`;
         window.open(url, this.target);
     }
@@ -83,7 +86,13 @@ export class ShareDialogComponent implements OnInit {
     }
 
     openBlogger() {
-        // TODO: concat to url: &source=youtube&b=%3Ciframe%20width%3D%22480%22%20height%3D%22270%22%20src%3D%22https%3A//www.youtube.com/embed/QCoQs9NO9q0%22%20frameborder%3D%220%22%20allow%3D%22accelerometer%3B%20autoplay%3B%20encrypted-media%3B%20gyroscope%3B%20picture-in-picture%22%20allowfullscreen%3E%3C/iframe%3E&eurl=https%3A//i.ytimg.com/vi/QCoQs9NO9q0/maxresdefault.jpg
+        /*
+        TODO: concat to url:
+        &source=youtube&b=%3Ciframe%20width%3D%22480%22%20height%3D%22270%22%20src%3D%22https%3A//www.youtube.com
+        /embed/QCoQs9NO9q0%22%20frameborder%3D%220%22%20allow%3D%22accelerometer%3B%20autoplay%3B%20encrypted-
+        media%3B%20gyroscope%3B%20picture-in-picture%22%20allowfullscreen%3E%3C/iframe%3E&eurl=https%3A//i.ytimg.com
+        /vi/QCoQs9NO9q0/maxresdefault.jpg
+        */
         const url = `http://www.blogger.com/blog-this.g?n=${this.getEncodedTextAndUrl('blogger')}`;
         window.open(url, this.target);
     }

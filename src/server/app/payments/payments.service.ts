@@ -249,10 +249,12 @@ class PaymentsService extends BaseService {
             .map((paymentMethod, index) => {
                 const viewModel = new CardViewModel();
                 viewModel.id = paymentMethod.id;
-                viewModel.expireMonth = paymentMethod.card!.exp_month;
-                viewModel.expireYear = paymentMethod.card!.exp_year;
-                viewModel.brand = paymentMethod.card!.brand;
-                viewModel.last4 = paymentMethod.card!.last4;
+                if (paymentMethod.card) {
+                    viewModel.expireMonth = paymentMethod.card.exp_month;
+                    viewModel.expireYear = paymentMethod.card.exp_year;
+                    viewModel.brand = paymentMethod.card.brand;
+                    viewModel.last4 = paymentMethod.card.last4;
+                }
                 viewModel.isDefault = index === 0;
                 return viewModel;
             });

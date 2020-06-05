@@ -33,7 +33,10 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
-      140
+      {
+        "limit": 140,
+        "ignore-pattern": "^import "
+      }
     ],
     "member-access": false,
     "member-ordering": [
@@ -122,7 +125,7 @@
     "use-injectable-provided-in": true,
     "template-cyclomatic-complexity": [
       true,
-      8
+      15
     ]
   },
   "rulesDirectory": [

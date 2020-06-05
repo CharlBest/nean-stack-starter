@@ -313,10 +313,8 @@ class UsersService extends BaseService {
         return viewModel;
     }
 
-    // TODO: not sure if disabling this is good?
-    // tslint:disable-next-line: bool-param-default
-    async updateConfiguration(res: Response, consent: boolean | undefined, darkTheme: boolean | undefined, language: Language | undefined)
-        : Promise<boolean> {
+    async updateConfiguration(res: Response, consent: boolean | undefined = false,
+        darkTheme: boolean | undefined = false, language: Language | undefined): Promise<boolean> {
         if (language) {
             const exists = translateService.doesLanguageKeyExist(language);
             language = exists ? language : undefined;

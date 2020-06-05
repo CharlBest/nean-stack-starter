@@ -2,15 +2,15 @@ import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscri
 import { sendNotification, setVapidDetails } from 'web-push';
 import { notificationsService } from '../../app/notifications/notifications.service';
 import { PushNotification as PushNotificationInterface } from '../../communication/interfaces/push-notification.interface';
-// tslint:disable-next-line:max-line-length
 import { CommentCreationPushNotificationModel } from '../../communication/models/push-notification/comment-creation-push-notification.model';
 import { Database } from '../../core/database';
 import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
+import { PushNotificationModel } from './push-notification.model';
 
 class PushNotification implements PushNotificationInterface {
 
-    async callDb(service: (res: any) => Promise<any>, title: string): Promise<boolean> {
+    async callDb(service: (res: any) => Promise<PushNotificationModel | null>, title: string): Promise<boolean> {
         const res = {
             locals: {
                 neo4jSession: Database.createSession()

@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { FormError, GlobalError } from '../models/shared/error.model';
 import { FileModel } from '../models/shared/file.model';
-// tslint:disable-next-line:max-line-length
 import { AnyFormError, CustomFormValidator, Email, MinLength, PasswordCharacters, Pattern, Required, TypeAssert } from '../models/shared/form-error.model';
 import { PasswordRegexBuilder } from './password-regex-builder';
 
@@ -10,7 +9,6 @@ function isEmptyInputValue(value: any): boolean {
     return value === undefined || value === null || value.length === 0;
 }
 
-// tslint:disable-next-line:max-line-length
 const EMAIL_REGEXP = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 export const MAX_FILE_UPLOADS = 5;
 export const DEFAULT_PAGE_SIZE = 10;
