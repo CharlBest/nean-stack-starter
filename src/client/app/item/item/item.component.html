@@ -117,7 +117,7 @@
             <h3>{{item.title}}</h3>
 
             <mat-chip-list aria-label="Tags">
-                <mat-chip *ngFor="let tag of item?.tags">{{tag}}</mat-chip>
+                <mat-chip *ngFor="let tag of item?.tags; trackBy: trackByFn">{{tag}}</mat-chip>
             </mat-chip-list>
 
             <p #description>{{item.description}}</p>

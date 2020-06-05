@@ -219,6 +219,10 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     window.location.reload();
   }
 
+  trackByFn(index: number, tag: string) {
+    return index;
+  }
+
   ngOnDestroy() {
     if (this.descriptionTimeoutId) {
       clearTimeout(this.descriptionTimeoutId);
