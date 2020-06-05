@@ -7,6 +7,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { CreateItemComponent } from './create-item/create-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,10 @@ import { FavouritesComponent } from './favourites/favourites.component';
             {
                 path: 'saved', component: FavouritesComponent, pathMatch: 'full',
                 data: { title: 'Saved', nav: NavigationType.BACK }, canActivate: [AuthService]
+            },
+            {
+                path: 'subscriptions', component: SubscriptionsComponent, pathMatch: 'full',
+                data: { title: 'Subscriptions', nav: NavigationType.BACK }, canActivate: [AuthService]
             },
         ])
     ],

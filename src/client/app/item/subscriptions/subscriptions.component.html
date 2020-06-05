@@ -1,0 +1,11 @@
+<app-infinite-scroll (scrolled)="onScroll()"
+    [isProcessing]="isProcessing">
+
+    <app-item *ngFor="let item of items; trackBy: trackByFn"
+        [item]="item"></app-item>
+
+</app-infinite-scroll>
+
+<mat-card *ngIf="!isProcessing && (!items || items?.length === 0)">
+    You have no subscriptions
+</mat-card>

@@ -49,6 +49,12 @@ export class ItemService {
             .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`).toPromise();
     }
 
+    getSubscriptions(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
+        return this.http
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${NotificationRoutes.getSubscriptions().client({ pageIndex, pageSize })}`)
+            .toPromise();
+    }
+
     orderFavourite(uId: string, viewModel: OrderFavouriteViewModel): Promise<void> {
         return this.http.put<void>(`${environment.serverEndpoint}${ItemRoutes.orderFavourite(uId).client()}`, viewModel).toPromise();
     }
