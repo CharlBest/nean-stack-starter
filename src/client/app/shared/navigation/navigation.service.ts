@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Injectable, TemplateRef } from '@angular/core';
+import { EventEmitter, Injectable, TemplateRef } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -6,7 +6,7 @@ import { ElementRef, EventEmitter, Injectable, TemplateRef } from '@angular/core
 export class NavigationService {
     backRouterPath: string | null;
     previousUrl = '';
-    navigationPlaceholderTemplate: TemplateRef<ElementRef> | null;
+    navigationPlaceholderTemplate: TemplateRef<HTMLElement> | null;
     showInstallBanner = false;
     showHomeNavigationBadge = false;
     readonly searched: EventEmitter<string> = new EventEmitter<string>();

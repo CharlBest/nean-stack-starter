@@ -7,7 +7,6 @@ import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';
 import { FileUploaderComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { NavigationService } from '../../shared/navigation/navigation.service';
 import { BreakpointService } from '../../shared/services/breakpoint.service';
 import { FirebaseStorageService } from '../../shared/services/firebase-storage.service';
 import { ShareService } from '../../shared/services/share.service';
@@ -34,16 +33,12 @@ export class ProfileComponent implements OnInit {
     private firebaseStorageService: FirebaseStorageService,
     private formErrorsService: FormErrorsService,
     private router: Router,
-    private navigationService: NavigationService,
     private shareService: ShareService,
     public bpService: BreakpointService,
     private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getUser();
-
-    // Set template ref for back nav right placeholder
-    this.navigationService.navigationPlaceholderTemplate = this.backNavRightPlaceholder;
   }
 
   async getUser() {

@@ -98,12 +98,6 @@ export class NavigationComponent implements OnInit {
 
           // Reset
           this.navigationService.backRouterPath = null;
-
-          // Reset back nav right placeholder
-          // TODO: bug: wipe on page load
-          if (this.navigationService.navigationPlaceholderTemplate) {
-            this.navigationService.navigationPlaceholderTemplate = null;
-          }
         }
 
         this.updateActiveNavItem();

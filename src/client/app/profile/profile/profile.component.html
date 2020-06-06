@@ -1,12 +1,11 @@
-<ng-template #backNavRightPlaceholder>
-  <button routerLink="/business/user-data"
-    mat-icon-button
-    type="button"
-    matTooltip="User data"
-    aria-label="User data">
-    <app-icon-graphic-eq></app-icon-graphic-eq>
-  </button>
-</ng-template>
+<button *appNavRightPlaceholder
+  routerLink="/business/user-data"
+  mat-icon-button
+  type="button"
+  matTooltip="User data"
+  aria-label="User data">
+  <app-icon-graphic-eq></app-icon-graphic-eq>
+</button>
 
 <div [hidden]="isProcessing"
   *ngIf="user"
@@ -21,6 +20,10 @@
             (click)="resendEmailVerificationLink()">
             <app-icon-mail mat-list-icon></app-icon-mail>
             <span mat-line>Resend email verification</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/activity/reminders">
+            <app-icon-alarm mat-list-icon></app-icon-alarm>
+            <span mat-line>Reminders</span>
           </mat-list-item>
           <mat-list-item (click)="openShareDialog()">
             <app-icon-share mat-list-icon></app-icon-share>
