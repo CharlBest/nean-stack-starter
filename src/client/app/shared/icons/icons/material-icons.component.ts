@@ -199,10 +199,22 @@ export class IconInfoComponent extends BaseIconComponent { }
 export class IconCheckCircleComponent extends BaseIconComponent { }
 
 @Component({
+  selector: 'app-icon-alarm',
+  templateUrl: materialIconPath('alarm', Category.ACTION)
+})
+export class AlarmComponent extends BaseIconComponent { }
+
+@Component({
   selector: 'app-icon-graphic-eq',
   templateUrl: materialIconPath('graphic_eq', Category.DEVICE)
 })
 export class IconGraphicEqComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-group-work',
+  templateUrl: materialIconPath('group_work', Category.ACTION)
+})
+export class GroupWorkComponent extends BaseIconComponent { }
 
 @Component({
   selector: 'app-icon-tag-faces',

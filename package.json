@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1251",
+  "version": "0.0.1252",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -14,10 +14,10 @@
   ],
   "scripts": {
     "start": "concurrently -k -n \"SERVICE,WEB,BUILD,API\" -c \"yellow,red,blue,green\" \"npm run start:services\" \"npm run start:client\" \"npm run start:serverwatch\" \"npm run start:server\"",
-    "start:client": "ng serve --open",
-    "start:server": "webpack --mode=development && wait-on tcp:5672 tcp:7687 && pm2 start services/ecosystem.config.js --no-daemon",
-    "start:serverwatch": "webpack --mode=development --watch --watch-aggregate-timeout 2000",
     "start:services": "docker-compose --file ./services/docker-compose.yml --env-file=./services/.env up",
+    "start:client": "ng serve --open",
+    "start:serverwatch": "webpack --mode=development --watch --watch-aggregate-timeout 2000",
+    "start:server": "webpack --mode=development && wait-on tcp:5672 tcp:7687 && pm2 start services/ecosystem.config.js --no-daemon",
     "start:stripe-webhook-listener": "docker run --network=\"host\" --rm -it stripe/stripe-cli listen --forward-to localhost:3000/api/v1/payments/stripeWebook --skip-verify --api-key sk_test_uoAC6oPh6pxIyGuo8WHxhNpp",
     "build": "ng build --configuration=production && webpack --mode=production && npm run minify-index-html",
     "buildv2": "bash build.sh",

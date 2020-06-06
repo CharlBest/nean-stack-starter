@@ -7,14 +7,16 @@ OPTIONAL MATCH (users)-[:HAS_AVATAR]->(avatars:File)
 OPTIONAL MATCH (users)-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (users)-[subscribed:SUBSCRIBED]->(items)
 
-RETURN properties(items) as items,
-collect(properties(files)) as files,
-collect(properties(tags)) as tags,
+WITH properties(items) as items, rel, collect(properties(files)) as files, collect(tags.name) as tags, users, collect(properties(avatars))[0] as avatar, favourite, subscribed
+
+RETURN items,
+files,
+tags,
 users
 {
     id: users.id,
     username: users.username,
-    avatar: collect(properties(avatars))[0]
+    avatar: avatar
 },
 CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
 CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed

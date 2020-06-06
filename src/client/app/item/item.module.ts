@@ -31,6 +31,7 @@ import { ItemSkeletonComponent } from './item-skeleton/item-skeleton.component';
 import { FormatRelativeTimePipe } from './item/format-relative-time.pipe';
 import { ItemComponent } from './item/item.component';
 import { RepliesComponent } from './replies/replies.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 const materialModules = [
   MatButtonModule,
@@ -66,6 +67,7 @@ const materialModules = [
     CreateItemComponent,
     EditItemComponent,
     FavouritesComponent,
+    SubscriptionsComponent,
     CommentComponent,
     RepliesComponent,
     CommentFormComponent,
