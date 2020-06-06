@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { CommentService } from '../comment.service';

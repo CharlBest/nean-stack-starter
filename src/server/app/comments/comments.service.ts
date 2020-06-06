@@ -1,5 +1,5 @@
-import { CommentModel } from '@shared/models/item/comment.model';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CommentModel } from '@shared/models/comment/comment.model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { Response } from 'express';
 import { v4 as nodeUUId } from 'uuid';
 import { pushNotificationBroker } from '../../communication/push-notification-broker';

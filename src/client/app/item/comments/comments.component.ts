@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { AuthService } from '../../shared/services/auth.service';

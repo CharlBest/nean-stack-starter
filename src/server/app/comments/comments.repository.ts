@@ -1,4 +1,4 @@
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { Response } from 'express';
 import { Record } from 'neo4j-driver';
 import { Database } from '../../core/database';

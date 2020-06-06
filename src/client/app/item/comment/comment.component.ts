@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
-import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/comment/create-or-update-comment.view-model';
 import { CreateReportViewModel } from '@shared/view-models/report/create-report.view-model';
 import { ReportType } from '@shared/view-models/report/report-type.enum';
 import { ContextMenuComponent } from '../../shared/context-menu/context-menu/context-menu.component';

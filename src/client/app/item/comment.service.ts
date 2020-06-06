@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CommentRoutes } from '@shared/routes/comment.routes';
-import { CommentViewModel } from '@shared/view-models/item/comment.view-model';
-import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
+import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/comment/create-or-update-comment.view-model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

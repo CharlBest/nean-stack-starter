@@ -1,5 +1,5 @@
-import { CommentModel } from '../../models/item/comment.model';
-import { UserOwnerViewModel } from './user-owner.view-model';
+import { CommentModel } from '../../models/comment/comment.model';
+import { UserOwnerViewModel } from '../item/user-owner.view-model';
 
 export class CommentViewModel extends CommentModel {
     itemUId?: string | null;

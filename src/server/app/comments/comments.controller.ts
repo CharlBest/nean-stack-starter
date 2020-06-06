@@ -1,6 +1,6 @@
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { DEFAULT_PAGE_SIZE, ServerValidator, Validators } from '@shared/validation/validators';
-import { CreateOrUpdateCommentViewModel } from '@shared/view-models/item/create-or-update-comment.view-model';
+import { CreateOrUpdateCommentViewModel } from '@shared/view-models/comment/create-or-update-comment.view-model';
 import { NextFunction, Request, Response } from 'express';
 import { BaseController } from '../shared/base-controller';
 import { commentsService } from './comments.service';
