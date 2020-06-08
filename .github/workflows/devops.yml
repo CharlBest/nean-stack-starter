@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install packages
-      run: npm ci && npm install -g @lhci/cli@0.4.x
+      run: npm ci
 
     - name: Install Lighthouse CI
       run: npm install -g @lhci/cli@0.4.x
@@ -38,8 +38,8 @@ jobs:
     - name: TSLint
       run: npm run lint
 
-    - name: Lighthouse
-      run: lhci autorun --upload.target=temporary-public-storage
+    # - name: Lighthouse
+    #   run: lhci autorun --upload.target=temporary-public-storage
 
     - name: Build Angular client, Node API server and Borker worker
       run: npm run build

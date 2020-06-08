@@ -124,7 +124,7 @@
     "template-no-distracting-elements": true,
     "use-injectable-provided-in": true,
     "template-cyclomatic-complexity": [
-      true,
+      false,
       15
     ]
   },
