@@ -38,19 +38,29 @@ jobs:
     - name: TSLint
       run: npm run lint
 
-    # - name: Lighthouse
-    #   run: lhci autorun --upload.target=temporary-public-storage
-
     - name: Build Angular client, Node API server and Borker worker
       run: npm run build
 
-    - name: Deploy to GCP
+    - name: Setup gcloud
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
-    - run: mv dist newdist
-    - run: gcloud compute scp --recurse newdist/ interimproj@ubuntu-server-4:/var/www/nean.io
-    - run: gcloud compute ssh ubuntu-server-4 --command "mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist"
+
+    - name: Rename dist folder to newdist
+      run: mv dist newdist
+
+    - name: Copy newdist folder to VM
+      run: gcloud compute scp --recurse newdist/ interimproj@ubuntu-server-4:/var/www/nean.io
+
+    - name: Use newdist + pm2 reload
+      run: gcloud compute ssh ubuntu-server-4 --command "mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist"
+
+    - name: Lighthouse
+      uses: treosh/lighthouse-ci-action@v3
+        with:
+          urls: |
+            https://nean.io/
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
