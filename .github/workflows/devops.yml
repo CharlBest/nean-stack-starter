@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  release:
+    types: [created]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Setup, Audit, Lint, Build and Deploy
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install packages
+      run: npm ci && npm install -g @lhci/cli@0.4.x
+
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli@0.4.x
+
+    - name: NPM Audit
+      run: npm audit
+
+    - name: TSLint
+      run: npm run lint
+
+    - name: Lighthouse
+      run: lhci autorun --upload.target=temporary-public-storage
+
+    - name: Build Angular client, Node API server and Borker worker
+      run: npm run build
+
+    - name: Deploy to GCP
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+    - run: mv dist newdist
+    - run: gcloud compute scp --recurse newdist/ interimproj@ubuntu-server-4:/var/www/nean.io
+    - run: gcloud compute ssh ubuntu-server-4 --command "mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist"
