@@ -23,22 +23,24 @@ export class FormatRelativeTimePipe implements PipeTransform {
 
             const ms = new Date(date).getTime() - Date.now();
 
-            const years = Math.ceil(ms / 31536e6);
+            // Mapping from a Intl.RelativeTimeFormat unit string to the equivalent value in milliseconds
+
+            const years = Math.ceil(ms / 31_557_600_000); // Approx. 86,400 seconds per day * 365.25 days
             if (years) return formatter.format(years, 'year');
 
-            const months = Math.ceil(ms / 168e6);
+            const months = Math.ceil(ms / 2_629_800_000); // Approx. 31,557,600 seconds per year / 12 months
             if (months) return formatter.format(months, 'month');
 
-            const days = Math.ceil(ms / 864e5);
+            const days = Math.ceil(ms / 86_400_000);
             if (days) return formatter.format(days, 'day');
 
-            const hours = Math.ceil(ms / 36e5);
+            const hours = Math.ceil(ms / 3_600_000);
             if (hours) return formatter.format(hours, 'hour');
 
-            const minutes = Math.ceil(ms / 6e4);
+            const minutes = Math.ceil(ms / 60_000);
             if (minutes) return formatter.format(minutes, 'minute');
 
-            const seconds = Math.ceil(ms / 1e3);
+            const seconds = Math.ceil(ms / 1_000);
             return formatter.format(seconds, 'second');
         } else {
             return this.angularDatePipe(date);
