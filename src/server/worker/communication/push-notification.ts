@@ -40,7 +40,7 @@ class PushNotification implements PushNotificationInterface {
                 body = body.substr(0, 230) + (body.length > 230 ? ' ...' : '');
             }
 
-            setVapidDetails('mailto:admin@nean.io', environment.vapidKey.public, environment.vapidKey.private);
+            setVapidDetails(`mailto:${environment.email.username}`, environment.vapidKey.public, environment.vapidKey.private);
             // TODO: not sure if this should be set setGCMAPIKey();
 
             const notificationOptions: NotificationOptions = {

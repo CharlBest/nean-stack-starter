@@ -12,7 +12,7 @@ import { logger } from '../../core/utils/logger';
 import { environment } from '../../environments/environment';
 
 class Emailer implements Email {
-    fromEmail = 'admin@nean.io';
+    fromEmail = environment.email.username;
     fromName = 'NEAN';
     transporter: Transporter;
     templates: { [key in keyof Email]: string } = {
