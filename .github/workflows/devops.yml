@@ -65,8 +65,8 @@ jobs:
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
-        project_id: $GCE_PROJECT_ID
-        service_account_key: $GCE_SERVICE_ACCOUNT_KEY
+        project_id: ${{ env.GCE_PROJECT_ID }}
+        service_account_key: ${{ env.GCE_SERVICE_ACCOUNT_KEY }}
         export_default_credentials: true
 
     - name: Download dist
