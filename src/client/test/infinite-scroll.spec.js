@@ -1,4 +1,3 @@
-// @ts-check
 const puppeteer = require('puppeteer');
 
 (async () => {

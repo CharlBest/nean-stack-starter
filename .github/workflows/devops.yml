@@ -8,6 +8,15 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  GCE_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCE_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SA_KEY }}
+  GCE_USER: interimproj
+  GCE_INSTANCE: ubuntu-server-4
+  GCE_INSTANCE_ZONE: europe-west2-c
+  VM_DIST_PATH: /var/www/nean.io
+  TEST_URL: https://nean.io/
+
 jobs:
   build:
     name: Setup, Audit, Lint, Build and Deploy
@@ -15,7 +24,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        os: [ubuntu-latest]
+        node-version: [14.x, 12.x]
 
     steps:
     - name: Checkout source code
@@ -29,9 +39,6 @@ jobs:
     - name: Install packages
       run: npm ci
 
-    - name: Install Lighthouse CI
-      run: npm install -g @lhci/cli@0.4.x
-
     - name: NPM Audit
       run: npm audit
 
@@ -41,26 +48,44 @@ jobs:
     - name: Build Angular client, Node API server and Borker worker
       run: npm run build
 
+    - name: Save production artifacts
+      uses: actions/upload-artifact@v1
+      if: matrix.node-version == '12.x' && matrix.os == 'ubuntu-latest'
+      with:
+        name: dist
+        path: dist
+
+  deploy:
     - name: Setup gcloud
+      needs: [build]
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: $GCE_PROJECT_ID
+        service_account_key: $GCE_SERVICE_ACCOUNT_KEY
         export_default_credentials: true
 
-    - name: Rename dist folder to newdist
+    - name: Download dist
+      uses: actions/download-artifact@v1
+      with:
+        name: dist
+
+    - name: Rename dist to newdist
       run: mv dist newdist
 
-    - name: Copy newdist folder to VM
-      run: gcloud compute scp --recurse newdist/ interimproj@ubuntu-server-4:/var/www/nean.io
+    - name: Copy newdist to VM
+      run: gcloud compute scp --recurse --zone=$GCE_INSTANCE_ZONE newdist $GCE_USER@$GCE_INSTANCE:$VM_DIST_PATH
 
     - name: Use newdist + pm2 reload
-      run: gcloud compute ssh ubuntu-server-4 --command "mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist"
+      run: gcloud compute ssh --zone=$GCE_INSTANCE_ZONE $GCE_USER@$GCE_INSTANCE --command "mv $VM_DIST_PATH/dist $VM_DIST_PATH/olddist && mv $VM_DIST_PATH/newdist $VM_DIST_PATH/dist && rm -rf $VM_DIST_PATH/olddist && export PATH=$PATH:/home/interimproj/.nvm/versions/node/v10.13.0/bin; pm2 reload all"
 
-    # - name: Lighthouse
-    #   uses: treosh/lighthouse-ci-action@v3
-    #     with:
-    #       urls: |
-    #         https://nean.io/
-    #       temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+  test:
+    - name: Regression Testing
+      needs: [deploy]
+
+    - name: Lighthouse CI
+      uses: treosh/lighthouse-ci-action@v3
+        with:
+          urls: |
+            $TEST_URL
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
