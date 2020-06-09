@@ -1,0 +1,6 @@
+<app-reminder-form #reminderForm
+  [hidden]="isProcessing"
+  [reminder]="reminder"
+  (submitForm)="onSubmit()"></app-reminder-form>
+
+<app-preloader *ngIf="isProcessing"></app-preloader>

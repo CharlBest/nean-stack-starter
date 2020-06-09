@@ -153,6 +153,20 @@ export class FormGroupBuilder {
         };
     }
 
+    static createOrUpdateReminder(name: string | null = null, date: string | null = null)
+        : FormValidator {
+        return {
+            name: [name, [
+                Validators.required,
+                Validators.typeAssert('string', name),
+            ]],
+            date: [date, [
+                Validators.required,
+                Validators.typeAssert('string', date),
+            ]],
+        };
+    }
+
     static createOrUpdateComment(description: string | null = null): FormValidator {
         return {
             description: [description, [

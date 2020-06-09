@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Add reminder</h2>
+<mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput
+                formControlName="date" />
+            <mat-error>
+                <app-form-errors [control]="formGroup.controls.date"></app-form-errors>
+            </mat-error>
+        </mat-form-field>
+
+        <br>
+
+        <mat-radio-group>
+            <mat-radio-button value="30">30 minutes before</mat-radio-button>
+            <mat-radio-button value="10">10 minutes before as email</mat-radio-button>
+            <mat-radio-button value="60">1 hour before</mat-radio-button>
+            <mat-radio-button value="120">2 hours before</mat-radio-button>
+            <mat-radio-button value="240">2 days before</mat-radio-button>
+            <mat-radio-button value="0"
+                (click)="openCustomReminderDialog()">Custom...</mat-radio-button>
+        </mat-radio-group>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-stroked-button
+        color="primary"
+        type="submit"
+        [disabled]="!formGroup.valid"
+        (click)="onSubmit()">Save</button>
+    <button mat-stroked-button
+        type="button"
+        mat-dialog-close>
+        Cancel
+    </button>
+</mat-dialog-actions>

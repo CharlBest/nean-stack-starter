@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Custom notification</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <input matInput
+      [ngModel]="durationInMinutes"
+      (ngModelChange)="onDurationInMinutesChange($event)"
+      [attr.autofocus]="bpService.isDesktop || null" />
+  </mat-form-field>
+
+  <mat-radio-group [ngModel]="timeFrame"
+    (ngModelChange)="onTimeFrameChange($event)">
+    <mat-radio-button value="min"
+      #min>Minute{{durationInMinutes === 1 ? '' : 's'}} {{min.checked ? 'before' : ''}}</mat-radio-button>
+    <mat-radio-button value="hour"
+      #hour>Hour{{durationInMinutes === 1 ? '' : 's'}} {{hour.checked ? 'before' : ''}}</mat-radio-button>
+    <mat-radio-button value="day"
+      #day>Day{{durationInMinutes === 1 ? '' : 's'}} {{day.checked ? 'before' : ''}}</mat-radio-button>
+    <mat-radio-button value="week"
+      #week>Week{{durationInMinutes === 1 ? '' : 's'}} {{week.checked ? 'before' : ''}}</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-divider></mat-divider>
+
+  <mat-radio-group [(ngModel)]="notificationType">
+    <mat-radio-button value="notification">As notification</mat-radio-button>
+    <mat-radio-button value="email">As email</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button
+    color="primary"
+    type="button"
+    (click)="onSubmit()">Save</button>
+  <button mat-stroked-button
+    type="button"
+    mat-dialog-close>
+    Cancel
+  </button>
+</mat-dialog-actions>

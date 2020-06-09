@@ -88,6 +88,10 @@ const routes: Route[] = [
     loadChildren: () => import('./language/language.module').then(m => m.LanguageModule)
   },
   {
+    path: 'reminder',
+    loadChildren: () => import('./reminder/reminder.module').then(m => m.ReminderModule)
+  },
+  {
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
   },

@@ -38,7 +38,7 @@ export class NavigationComponent implements OnInit {
     },
     search: { paths: [{ path: 'search' }] },
     createItem: { paths: [{ path: 'item/create' }] },
-    activity: { paths: [{ path: 'activity' }, { path: 'call' }, { path: 'call/create' }] },
+    activity: { paths: [{ path: 'activity' }, { path: 'call' }, { path: 'call/create' }, { path: 'reminder', exact: false }] },
     account: {
       paths: [
         { path: 'account' }, { path: 'sign-up' },
