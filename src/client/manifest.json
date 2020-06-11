@@ -1,6 +1,12 @@
 {
   "short_name": "NEAN",
   "name": "NEAN",
+  "start_url": "https://nean.io/?utm_source=homescreen&utm_medium=shortcut",
+  "description": "NEAN stack starter",
+  "background_color": "#ffffff",
+  "theme_color": "#673ab7",
+  "scope": "/",
+  "display": "standalone",
   "icons": [
     {
       "src": "assets/logo-color-192.png",
@@ -15,12 +21,6 @@
       "purpose": "maskable any"
     }
   ],
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#673ab7",
-  "description": "NEAN stack starter",
   "share_target": {
     "action": "/item/create/",
     "enctype": "application/x-www-form-urlencoded",
@@ -30,5 +30,51 @@
       "text": "text",
       "url": "url"
     }
-  }
+  },
+  "shortcuts": [
+    {
+      "name": "New Item",
+      "url": "/item/create",
+      "icons": [
+        {
+          "src": "assets/shortcuts/create-item.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "url": "/search",
+      "icons": [
+        {
+          "src": "assets/shortcuts/search.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Activity",
+      "url": "/activity",
+      "icons": [
+        {
+          "src": "assets/shortcuts/activity.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "url": "/account",
+      "icons": [
+        {
+          "src": "assets/shortcuts/account.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
