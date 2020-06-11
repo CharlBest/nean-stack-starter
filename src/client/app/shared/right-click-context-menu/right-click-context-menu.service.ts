@@ -68,7 +68,7 @@ export class RightClickContextMenuService implements OnDestroy {
         // Close on navigate
         this.routerEventsSubscription = this.router.events.pipe(
             filter(routerEvent => routerEvent instanceof NavigationStart),
-            tap(() => this.overlayRef ? this.overlayRef.dispose() : null),
+            tap(() => this.close()),
             take(1)
         ).subscribe();
     }
