@@ -1,6 +1,7 @@
 import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { RightClickContextMenuService } from '../../right-click-context-menu/right-click-context-menu.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { PreventBackNavigationService } from '../../services/prevent-back-navigation.service';
 
@@ -15,11 +16,13 @@ export class ContextMenuComponent {
 
     constructor(public bottomSheet: MatBottomSheet,
         public bpService: BreakpointService,
-        private preventBackNavigationService: PreventBackNavigationService) { }
+        private preventBackNavigationService: PreventBackNavigationService,
+        private rightClickContextMenuService: RightClickContextMenuService) { }
 
     async open(event: Event) {
         event.preventDefault();
         event.stopPropagation();
+        this.rightClickContextMenuService.close();
 
         if (this.bpService.isDesktop) {
             this.contextMenuTrigger.openMenu();
