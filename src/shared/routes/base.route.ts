@@ -53,4 +53,4 @@ export class BaseRoute {
     }
 }
 
-type QueryParam = string | number | undefined;
+type QueryParam = string | number | boolean | undefined;
