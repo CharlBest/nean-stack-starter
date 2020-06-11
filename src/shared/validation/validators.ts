@@ -85,6 +85,7 @@ export class Validators {
     static typeAssert(type: 'string', value?: string | null): ValidatorFn;
     static typeAssert(type: 'number', value?: number | null): ValidatorFn;
     static typeAssert(type: 'boolean', value?: boolean | null): ValidatorFn;
+    static typeAssert(type: 'date', value?: Date | string | null): ValidatorFn;
     static typeAssert(type: 'string[]', value?: Array<string> | null): ValidatorFn;
     static typeAssert(type: TypeAssertType, value: TypeAssertValue): ValidatorFn {
         return (control: AbstractControl | any): TypeAssert | null => {
@@ -97,6 +98,8 @@ export class Validators {
             let isValid = false;
             if (type === 'string' || type === 'number' || type === 'boolean') { // Primitives
                 isValid = typeof control.value === type;
+            } else if (type === 'date') { // Date
+                isValid = control.value instanceof Date || typeof control.value === 'string';
             } else if (type === 'files' && Array.isArray(control.value)) { // FileModel
                 control.value.forEach((file: FileModel) => {
                     isValid = !Validators.hasFileError(file);
@@ -270,9 +273,9 @@ type ValidatorFn = (c: AbstractControl | string | number) => AnyFormError | null
 type WrapControlType = AbstractControl | object | StringNumber | null | undefined;
 type StringNumber = string | number;
 
-type TypeAssertValue = null | undefined | string | number | boolean | Array<string> | object[];
+type TypeAssertValue = null | undefined | string | number | boolean | Array<string> | object[] | Date;
 type TypeAssertPrimitive = 'string' | 'number' | 'boolean';
-type TypeAssertType = TypeAssertPrimitive | 'string[]' | 'files';
+type TypeAssertType = TypeAssertPrimitive | 'date' | 'string[]' | 'files';
 
 interface AbstractControl {
     value: any;
