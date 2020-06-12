@@ -72,12 +72,10 @@ const routes: Route[] = [
   {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule),
-    data: { preload: true }
   },
   {
     path: 'account',
     loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-    data: { preload: true }
   },
   {
     path: 'invite',
