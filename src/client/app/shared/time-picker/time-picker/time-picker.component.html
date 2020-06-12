@@ -1,0 +1,131 @@
+<div style="display: flex; align-items: baseline;">
+  <h2 mat-dialog-title>Time</h2>
+  <span class="flex-spacer"></span>
+  <button mat-stroked-button
+    (click)="toggle24Hour()"
+    type="button">
+    {{is24Hour ? '12 Hour' : '24 Hour'}}
+  </button>
+</div>
+
+<mat-dialog-content>
+
+  <div style="display: flex; align-items: center;">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <button mat-icon-button
+        (click)="toggleHours(true)"
+        type="button"
+        matTooltip="Increase hours"
+        aria-label="Increase hours">
+        <app-icon-keyboard-arrow-up color="primary"></app-icon-keyboard-arrow-up>
+      </button>
+      <input matInput
+        [formControl]="hoursControl"
+        [class.single-digit-input]="hoursControl.value < 10"
+        [class.double-digit-input]="hoursControl.value >= 10"
+        type="number"
+        min="1"
+        max="12">
+      <button mat-icon-button
+        (click)="toggleHours(false)"
+        type="button"
+        matTooltip="Decrease hours"
+        aria-label="Decrease hours">
+        <app-icon-keyboard-arrow-down color="primary"></app-icon-keyboard-arrow-down>
+      </button>
+    </div>
+
+    <div>:</div>
+
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <button mat-icon-button
+        (click)="toggleMinutes(true)"
+        type="button"
+        matTooltip="Increase hours"
+        aria-label="Increase hours">
+        <app-icon-keyboard-arrow-up color="primary"></app-icon-keyboard-arrow-up>
+      </button>
+      <input matInput
+        [formControl]="minutesControl"
+        [class.single-digit-input]="minutesControl.value.length < 2"
+        [class.double-digit-input]="minutesControl.value.length >= 2"
+        type="text">
+      <button mat-icon-button
+        (click)="toggleMinutes(false)"
+        type="button"
+        matTooltip="Decrease hours"
+        aria-label="Increment hours">
+        <app-icon-keyboard-arrow-down color="primary"></app-icon-keyboard-arrow-down>
+      </button>
+    </div>
+
+    <div *ngIf="!is24Hour">
+      <button mat-stroked-button
+        [color]="isAM ? 'primary' : ''"
+        (click)="isAM = true"
+        type="button"
+        matTooltip="AM"
+        aria-label="AM">
+        AM
+        <app-icon-brightness-2></app-icon-brightness-2>
+      </button>
+      <br>
+      <br>
+      <button mat-stroked-button
+        [color]="!isAM ? 'primary' : ''"
+        (click)="isAM = false"
+        type="button"
+        matTooltip="PM"
+        aria-label="PM">
+        PM
+        <app-icon-brightness-5></app-icon-brightness-5>
+      </button>
+    </div>
+  </div>
+
+  <p *ngIf="!editTimeZone">
+    Your time zone is {{userTimeZone}}
+    <button mat-stroked-button
+      *ngIf="!editTimeZone"
+      (click)="editTimeZone = true"
+      type="button">
+      Edit
+    </button>
+  </p>
+  <p>
+    Members will see the event in their local time zone.
+  </p>
+
+  <mat-form-field appearance="fill"
+    *ngIf="editTimeZone"
+    style="width: 100%;">
+    <mat-label>Time Zone</mat-label>
+    <input type="text"
+      matInput
+      [formControl]="timeZone"
+      [matAutocomplete]="autoGroup">
+    <mat-autocomplete #autoGroup="matAutocomplete">
+      <mat-optgroup *ngFor="let group of timeZoneGroups | async"
+        [label]="group.name">
+        <mat-option *ngFor="let zone of group.zones"
+          [value]="zone.zone">
+          <div style="display: flex;">
+            <span>{{zone.name}}</span>
+            <span class="flex-spacer"></span>
+            <span style="opacity: 60%;">{{zone.zone}}</span>
+          </div>
+        </mat-option>
+      </mat-optgroup>
+    </mat-autocomplete>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button
+    (click)="onSubmit()"
+    color="primary"
+    type="button">Ok</button>
+  <button mat-stroked-button
+    type="button"
+    mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

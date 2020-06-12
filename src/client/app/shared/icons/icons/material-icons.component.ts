@@ -253,6 +253,18 @@ export class IconAirplaneModeActiveComponent extends BaseIconComponent { }
 export class IconArrowUpwardComponent extends BaseIconComponent { }
 
 @Component({
+  selector: 'app-icon-keyboard-arrow-up',
+  templateUrl: materialIconPath('keyboard_arrow_up', Category.HARDWARE)
+})
+export class IconKeyboardArrowUpComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-keyboard-arrow-down',
+  templateUrl: materialIconPath('keyboard_arrow_down', Category.HARDWARE)
+})
+export class IconKeyboardArrowDownComponent extends BaseIconComponent { }
+
+@Component({
   selector: 'app-icon-error-outline',
   templateUrl: materialIconPath('error_outline', Category.ALERT)
 })
