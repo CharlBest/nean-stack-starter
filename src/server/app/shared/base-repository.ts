@@ -4,14 +4,16 @@ import { int, isDateTime, Record } from 'neo4j-driver';
 import { logger } from '../../core/utils/logger';
 
 export abstract class BaseRepository {
-    async run(res: Response, query: string, params: object): Promise<Array<Record> | null> {
+    async run(res: Response, query: string, params?: object): Promise<Array<Record> | null> {
         try {
             try {
                 // Cast to Neo4j int
-                for (const key of Object.keys(params)) {
-                    const value = params[key];
-                    if (Number.isInteger(value)) {
-                        params[key] = int(value);
+                if (params) {
+                    for (const key of Object.keys(params)) {
+                        const value = params[key];
+                        if (Number.isInteger(value)) {
+                            params[key] = int(value);
+                        }
                     }
                 }
 
