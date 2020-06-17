@@ -1,4 +1,4 @@
-<div style="display: flex; align-items: baseline;">
+<div class="heading">
   <h2 mat-dialog-title>Time</h2>
   <span class="flex-spacer"></span>
   <button mat-stroked-button
@@ -10,8 +10,8 @@
 
 <mat-dialog-content>
 
-  <div style="display: flex; align-items: center;">
-    <div style="display: flex; flex-direction: column; align-items: center;">
+  <div class="container">
+    <div class="time-digit-container">
       <button mat-icon-button
         (click)="toggleHours(true)"
         type="button"
@@ -37,7 +37,7 @@
 
     <div>:</div>
 
-    <div style="display: flex; flex-direction: column; align-items: center;">
+    <div class="time-digit-container">
       <button mat-icon-button
         (click)="toggleMinutes(true)"
         type="button"
@@ -98,21 +98,22 @@
 
   <mat-form-field appearance="fill"
     *ngIf="editTimeZone"
-    style="width: 100%;">
+    class="time-zone-input">
     <mat-label>Time Zone</mat-label>
     <input type="text"
       matInput
       [formControl]="timeZone"
       [matAutocomplete]="autoGroup">
-    <mat-autocomplete #autoGroup="matAutocomplete">
-      <mat-optgroup *ngFor="let group of timeZoneGroups | async"
+    <mat-autocomplete #autoGroup="matAutocomplete"
+      [displayWith]="autocompleteDisplayFn">
+      <mat-optgroup *ngFor="let group of timeZoneGroups | async; trackBy: trackByFn"
         [label]="group.name">
-        <mat-option *ngFor="let zone of group.zones"
+        <mat-option *ngFor="let zone of group.zones; trackBy: trackByFn"
           [value]="zone.zone">
-          <div style="display: flex;">
+          <div class="zone-option-container">
             <span>{{zone.name}}</span>
             <span class="flex-spacer"></span>
-            <span style="opacity: 60%;">{{zone.zone}}</span>
+            <span class="time-offset">{{zone.zone}}</span>
           </div>
         </mat-option>
       </mat-optgroup>

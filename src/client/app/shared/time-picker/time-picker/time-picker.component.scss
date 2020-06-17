@@ -1,9 +1,37 @@
-.single-digit-input {
-	width: 1ch;
+.heading {
+	display: flex;
+	align-items: baseline;
 }
 
-.double-digit-input {
-	width: 2ch;
+.container {
+	display: flex;
+	align-items: center;
+
+	.time-digit-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.single-digit-input {
+			width: 1ch;
+		}
+
+		.double-digit-input {
+			width: 2ch;
+		}
+	}
+}
+
+.time-zone-input {
+	width: 100%;
+
+	.zone-option-container {
+		display: flex;
+
+		.time-offset {
+			opacity: 60%;
+		}
+	}
 }
 
 input[type=number]::-webkit-inner-spin-button,

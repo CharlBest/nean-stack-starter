@@ -115,6 +115,10 @@ export class TimePickerComponent implements OnInit {
     return timeZone.filter(zone => zone.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  autocompleteDisplayFn(timeZone: TimeZone): string {
+    return timeZone && timeZone.name ? timeZone.name : '';
+  }
+
   toggleHours(increment: boolean = true) {
     // Up
     if (increment) {
@@ -210,5 +214,9 @@ export class TimePickerComponent implements OnInit {
 
     this.dialogRef.close();
     this.timePicked.emit(date.toISOString());
+  }
+
+  trackByFn(index: number, timeZoneGroup: TimeZoneGroup) {
+    return index;
   }
 }
