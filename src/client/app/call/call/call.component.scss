@@ -19,6 +19,15 @@
 	padding: 20px 0;
 	background: linear-gradient(rgb(0 0 0 / 15%), rgb(0 0 0 / 0));
 	animation: fadein 0.5s ease-in, slidedown 0.5s ease-in-out;
+
+	.help-text-container {
+		display: flex;
+		margin-left: 20px;
+	}
+
+	.context-menu-button {
+		margin-left: auto;
+	}
 }
 
 .bottom-bar {
@@ -30,6 +39,23 @@
 	bottom: 0;
 	width: 100%;
 	animation: fadein 0.5s ease-in, slideup 0.5s ease-in-out;
+
+	.call-join-button {
+		background-color: #4cd963;
+	}
+
+	.in-call-options-container {
+		padding: 40px 0;
+		width: 100%;
+		background: linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 15%));
+
+		.in-call-options-inner-container {
+			display: flex;
+			justify-content: space-around;
+			max-width: 400px;
+			margin: 0 auto;
+		}
+	}
 }
 
 .incoming-video {

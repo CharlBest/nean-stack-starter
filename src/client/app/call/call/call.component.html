@@ -39,7 +39,7 @@
     <app-icon-arrow-back></app-icon-arrow-back>
   </button>
 
-  <div style="display: flex; margin-left: 20px;">
+  <div class="help-text-container">
     <ng-container *ngIf="webRTCService.isProcessing && !answerReceived && isHost">
       Ringing
       &nbsp;&nbsp;<app-preloader></app-preloader>
@@ -60,7 +60,7 @@
 
   <button mat-icon-button
     [matMenuTriggerFor]="appMenu"
-    style="margin-left: auto;">
+    class="context-menu-button">
     <app-icon-more-vert></app-icon-more-vert>
   </button>
 
@@ -89,7 +89,7 @@
   <div>
     <!-- Call -->
     <button mat-fab
-      style="background-color: #4cd963;"
+      class="call-join-button"
       *ngIf="isHost && !hasCallStarted"
       type="button"
       (click)="startVideoCall()">
@@ -107,7 +107,7 @@
 
     <!-- Join Call -->
     <button mat-fab
-      style="background-color: #4cd963;"
+      class="call-join-button"
       *ngIf="offerData && !isHost && !hasCallStarted"
       (click)="acceptVideoCall()"
       type="button"
@@ -117,8 +117,8 @@
     </button>
   </div>
 
-  <div style="padding: 40px 0; width: 100%; background: linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 15%));">
-    <div style="display: flex; justify-content: space-around; max-width: 400px; margin: 0 auto;">
+  <div class="in-call-options-container">
+    <div class="in-call-options-inner-container">
       <button mat-icon-button
         (click)="rotateCamera()"
         type="button"
