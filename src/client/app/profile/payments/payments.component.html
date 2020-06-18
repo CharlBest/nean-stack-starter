@@ -2,7 +2,7 @@
   <mat-card-title>Payment Methods</mat-card-title>
   <mat-card-content>
 
-    <mat-radio-group [(ngModel)]="newDefaultCardId">
+    <mat-radio-group [formControl]="newDefaultCardIdControl">
       <table>
         <tbody>
           <tr *ngFor="let card of paymentCards; trackBy: trackByFn">
@@ -64,7 +64,7 @@
       type="button">Save Default Method</button>
     <button mat-stroked-button
       *ngIf="isChangingDefault && paymentCards?.length > 0"
-      (click)="this.isChangingDefault = false; newDefaultCardId = null"
+      (click)="this.isChangingDefault = false; newDefaultCardIdControl.value = null"
       type="button">Cancel</button>
     <span class="flex-spacer"></span>
     <button mat-stroked-button

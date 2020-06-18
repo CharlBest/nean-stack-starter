@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as codeGenerator } from 'uuid';
 import { ShareService } from '../../shared/services/share.service';
@@ -9,7 +10,7 @@ import { ShareDialogService } from '../../shared/share-dialog/share-dialog.servi
   styleUrls: ['./create-call.component.scss']
 })
 export class CreateCallComponent implements OnInit {
-  code: string;
+  codeControl = new FormControl(this.route.snapshot.queryParams.code || codeGenerator());
 
   constructor(private shareService: ShareService,
     private shareDialogService: ShareDialogService,
@@ -17,27 +18,26 @@ export class CreateCallComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.code = this.route.snapshot.queryParams.code || codeGenerator();
     this.updateCode();
 
     // Watch for changes
     this.route.queryParamMap
       .subscribe(params => {
         if (params.has('code')) {
-          this.code = params.get('code') || codeGenerator();
+          this.codeControl.setValue(params.get('code') || codeGenerator());
         } else {
-          this.code = codeGenerator();
+          this.codeControl.setValue(codeGenerator());
         }
       });
   }
 
   updateCode() {
-    this.router.navigate([], { queryParams: { code: this.code }, queryParamsHandling: 'merge' });
+    this.router.navigate([], { queryParams: { code: this.codeControl.value }, queryParamsHandling: 'merge' });
   }
 
   share() {
     const url = ['/call'];
-    const queryParams = { queryParams: { code: this.code } };
+    const queryParams = { queryParams: { code: this.codeControl.value } };
     const title = 'Call Invite';
     if (!this.shareService.webShareWithUrl(title, url, queryParams)) {
       this.shareDialogService.share(title, url, queryParams);
@@ -45,6 +45,6 @@ export class CreateCallComponent implements OnInit {
   }
 
   start() {
-    this.router.navigate(['call'], { queryParams: { code: this.code, host: true }, queryParamsHandling: 'merge' });
+    this.router.navigate(['call'], { queryParams: { code: this.codeControl.value, host: true }, queryParamsHandling: 'merge' });
   }
 }

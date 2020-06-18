@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { CardViewModel } from '@shared/view-models/payment/card.view-model';
 import { PaymentService } from '../../payment/payment.service';
 import { DialogService } from '../../shared/dialog/dialog.service';
@@ -18,7 +19,7 @@ export class PaymentsComponent implements OnChanges {
   @Input() paymentCards: ExtendedCardViewModel[] = [];
   isProcessing = false;
   isChangingDefault = false;
-  newDefaultCardId: string | null;
+  newDefaultCardIdControl = new FormControl();
 
   constructor(private paymentService: PaymentService,
     private formErrorsService: FormErrorsService,
@@ -61,13 +62,13 @@ export class PaymentsComponent implements OnChanges {
       return;
     }
 
-    if (this.newDefaultCardId && this.newDefaultCardId !== currentDefaultCard.id) {
+    if (this.newDefaultCardIdControl.value && this.newDefaultCardIdControl.value !== currentDefaultCard.id) {
 
       try {
-        const response = await this.paymentService.updateDefaultCard(this.newDefaultCardId);
+        const response = await this.paymentService.updateDefaultCard(this.newDefaultCardIdControl.value);
         if (response) {
           this.paymentCards.forEach(card => {
-            if (card.id !== this.newDefaultCardId) {
+            if (card.id !== this.newDefaultCardIdControl.value) {
               card.isDefault = false;
             } else {
               card.isDefault = true;
