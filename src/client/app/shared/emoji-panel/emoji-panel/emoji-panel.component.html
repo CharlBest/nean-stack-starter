@@ -30,44 +30,70 @@
 <!-- Emoji content -->
 <ng-template #emoji
   let-data>
+  <mat-card>
+    <!-- Search -->
+    <div class="search-container">
+      <app-icon-search></app-icon-search>
+      <input matInput
+        [formControl]="searchControl"
+        class="search"
+        placeholder="Filter" />
+      <app-icon-cancel [inline]="true"
+        *ngIf="searchControl.value && searchControl.value !== ''"
+        (click)="clearSearch()"></app-icon-cancel>
+    </div>
 
-  <mat-card (swipeleft)="onSwipeLeft($event)"
-    (swiperight)="onSwipeRight($event)">
+    <!-- Tabs -->
     <mat-tab-group mat-stretch-tabs
-      [(selectedIndex)]="selectedIndex">
-      <mat-tab *ngFor="let category of emojiCategories; trackBy: trackByFnForCategory">
-        <ng-template mat-tab-label>
-          <ng-container [ngSwitch]="category.category">
-            <app-icon-tag-faces *ngSwitchCase="emojiCategoryName.PEOPLE"
-              matTooltip="Smileys & People"></app-icon-tag-faces>
-            <app-icon-pets *ngSwitchCase="emojiCategoryName.NATURE"
-              matTooltip="Animals & Nature"></app-icon-pets>
-            <app-icon-free-breakfast *ngSwitchCase="emojiCategoryName.FOOD"
-              matTooltip="Food & Drink"></app-icon-free-breakfast>
-            <app-icon-beach-access *ngSwitchCase="emojiCategoryName.ACTIVITY"
-              matTooltip="Activity"></app-icon-beach-access>
-            <app-icon-directions-car *ngSwitchCase="emojiCategoryName.TRAVEL"
-              matTooltip="Travel & Places"></app-icon-directions-car>
-            <app-icon-lightbulb-outline *ngSwitchCase="emojiCategoryName.OBJECTS"
-              matTooltip="Objects"></app-icon-lightbulb-outline>
-            <app-icon-priority-high *ngSwitchCase="emojiCategoryName.SYMBOLS"
-              matTooltip="Symbols"></app-icon-priority-high>
-            <app-icon-flag *ngSwitchCase="emojiCategoryName.FLAGS"
-              matTooltip="Flags"></app-icon-flag>
-          </ng-container>
-        </ng-template>
-        <ng-template matTabContent>
-          <ng-container *ngFor="let emoji of category?.emojiData; trackBy: trackByFnForEmoji">
-            <span class="emojione emojione-32-{{emoji.value.category}} _{{emoji.value.code_points.base}}"
-              [matMenuTriggerFor]="menu"
-              [matMenuTriggerData]="{emoji: emoji}"
-              #menuTrigger="matMenuTrigger"
-              (click)="openDiversitiesElseInsert(emoji.value, menuTrigger)"
-              (keypress)="openDiversitiesElseInsert(emoji.value, menuTrigger)"></span>
-          </ng-container>
-          <div>powered by EmojiOne</div>
-        </ng-template>
-      </mat-tab>
+      [(selectedIndex)]="selectedIndex"
+      (swipeleft)="onSwipeLeft($event)"
+      (swiperight)="onSwipeRight($event)">
+
+      <ng-container *ngFor="let category of emojiCategories; trackBy: trackByFnForCategory">
+        <mat-tab [disabled]="category.category === emojiCategoryName.SEARCH && category?.emojiData.length === 0">
+          <ng-template mat-tab-label>
+            <ng-container [ngSwitch]="category.category">
+              <app-icon-search *ngSwitchCase="emojiCategoryName.SEARCH"
+                matTooltip="Search"></app-icon-search>
+              <app-icon-tag-faces *ngSwitchCase="emojiCategoryName.PEOPLE"
+                matTooltip="Smileys & People"></app-icon-tag-faces>
+              <app-icon-pets *ngSwitchCase="emojiCategoryName.NATURE"
+                matTooltip="Animals & Nature"></app-icon-pets>
+              <app-icon-free-breakfast *ngSwitchCase="emojiCategoryName.FOOD"
+                matTooltip="Food & Drink"></app-icon-free-breakfast>
+              <app-icon-beach-access *ngSwitchCase="emojiCategoryName.ACTIVITY"
+                matTooltip="Activity"></app-icon-beach-access>
+              <app-icon-directions-car *ngSwitchCase="emojiCategoryName.TRAVEL"
+                matTooltip="Travel & Places"></app-icon-directions-car>
+              <app-icon-lightbulb-outline *ngSwitchCase="emojiCategoryName.OBJECTS"
+                matTooltip="Objects"></app-icon-lightbulb-outline>
+              <app-icon-priority-high *ngSwitchCase="emojiCategoryName.SYMBOLS"
+                matTooltip="Symbols"></app-icon-priority-high>
+              <app-icon-flag *ngSwitchCase="emojiCategoryName.FLAGS"
+                matTooltip="Flags"></app-icon-flag>
+            </ng-container>
+          </ng-template>
+
+          <!-- Emoji -->
+          <ng-template matTabContent>
+            <ng-container *ngFor="let emoji of category?.emojiData; trackBy: trackByFnForEmoji">
+              <span class="joypixels joypixels-32-{{emoji.value.category}} _{{emoji.value.code_points.base}}"
+                [matMenuTriggerFor]="menu"
+                [matMenuTriggerData]="{emoji: emoji}"
+                #menuTrigger="matMenuTrigger"
+                (click)="openDiversitiesElseInsert(emoji.value, menuTrigger)"
+                (keypress)="openDiversitiesElseInsert(emoji.value, menuTrigger)"></span>
+            </ng-container>
+
+            <ng-container *ngIf="!isProcessing">
+              <div *ngIf="category?.emojiData.length === 0">No emoji found</div>
+              <div>powered by JoyPixels</div>
+            </ng-container>
+            <app-preloader *ngIf="isProcessing"></app-preloader>
+          </ng-template>
+        </mat-tab>
+      </ng-container>
+
     </mat-tab-group>
   </mat-card>
 
@@ -75,8 +101,8 @@
   <mat-menu #menu="matMenu">
     <ng-template matMenuContent
       let-emoji="emoji">
-      <span *ngFor="let emojiDiversity of emoji.value.diversities; trackBy: trackByFnForEmojiDiversity"
-        class="emojione emojione-32-diversity _{{emojiDiversity}} cursor-pointer"
+      <span *ngFor="let emojiDiversity of emoji.value.diversity_children; trackBy: trackByFnForEmojiDiversity"
+        class="joypixels joypixels-32-diversity _{{emojiDiversity}} cursor-pointer"
         (click)="onClick(file[emojiDiversity].shortname)"
         (keypress)="onClick(file[emojiDiversity].shortname)"></span>
     </ng-template>

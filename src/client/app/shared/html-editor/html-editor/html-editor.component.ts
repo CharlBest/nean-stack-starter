@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, Output, SecurityContext, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as emojione from 'emojione';
+import * as emojiToolkit from 'emoji-toolkit';
 import Quill from 'quill';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
@@ -201,10 +201,10 @@ export class HTMLEditorComponent implements AfterViewInit {
 
     renderHTMLWithEmoji(html: string) {
         // Maybe allow ascii emoji as well
-        // (<any>emojione).ascii = true;
-        (emojione as any).sprites = true;
-        (emojione as any).imagePathSVGSprites = '.';
-        return emojione.shortnameToImage(html);
+        // emojiToolkit.ascii = true;
+        emojiToolkit.sprites = true;
+        emojiToolkit.imagePathSVGSprites = '.';
+        return emojiToolkit.shortnameToImage(html);
     }
 
     getInnerHTML() {

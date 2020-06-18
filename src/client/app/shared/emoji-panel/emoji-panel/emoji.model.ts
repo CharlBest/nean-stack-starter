@@ -1,8 +1,9 @@
 export interface EmojiJsonFile {
-    [key: string]: EmojiData | any;
+    [key: string]: EmojiData;
 }
 
 export enum EmojiCategoryName {
+    SEARCH = 'search',
     PEOPLE = 'people',
     NATURE = 'nature',
     FOOD = 'food',
@@ -26,22 +27,24 @@ export interface EmojiData {
     category: EmojiCategoryName;
     code_points: {
         base: string;
-        decimal: string;
         fully_qualified: string;
-        non_fully_qualified: string;
-        output: string;
+        decimal: string;
         default_matches: Array<string>;
         greedy_matches: Array<string>;
+        diversity_parent: string;
+        gender_parent: string;
     };
     display: number;
-    diversities: Array<string>;
-    diversity: string;
-    gender: string;
-    genders: Array<string>;
+    diversity: Array<string>;
+    diversity_children: Array<string>;
+    gender: Array<string>;
+    gender_children: Array<string>;
     keywords: Array<string>;
     name: string;
     order: number;
     shortname: string;
     shortname_alternates: Array<string>;
     unicode_version: number;
+    humanform: number;
+    diversity_base: number;
 }

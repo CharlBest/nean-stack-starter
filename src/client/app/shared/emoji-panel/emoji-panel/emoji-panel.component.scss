@@ -1,13 +1,13 @@
-@import 'emojione-assets/sprites/emojione-sprite-32.min.css';
+@import 'emoji-assets/sprites/joypixels-sprite-32.min.css';
 
 mat-card {
 	padding: 0;
 
 	mat-tab-group {
-		width: 290px;
-		height: 290px;
+		width: 310px;
+		height: 310px;
 
-		.emojione {
+		.joypixels {
 			cursor: pointer;
 			border: 1px solid transparent;
 
@@ -20,6 +20,22 @@ mat-card {
 		::ng-deep .mat-tab-label {
 			min-width: 34px;
 			padding: 0;
+		}
+	}
+
+	.search-container {
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid #e0e0e0;
+		padding: 5px;
+
+		.search {
+			width: 100%;
+			margin: 0 10px;
+		}
+
+		app-icon-cancel {
+			cursor: pointer;
 		}
 	}
 }

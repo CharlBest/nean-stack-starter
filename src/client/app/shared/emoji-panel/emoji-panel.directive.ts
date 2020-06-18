@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
-import * as emojione from 'emojione';
+import * as emojiToolkit from 'emoji-toolkit';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
 
 @Directive({
@@ -31,8 +31,8 @@ export class EmojiPanelDirective implements OnInit {
     emojiPanel() {
         this.appEmojiPanel.inserted
             .subscribe((data: string) => {
-                (emojione as any).ascii = true;
-                const output = emojione.toImage(data);
+                emojiToolkit.ascii = true;
+                const output = emojiToolkit.toImage(data);
 
                 const element = this.el.nativeElement as HTMLElement;
                 element.innerHTML = element.innerHTML + output;
