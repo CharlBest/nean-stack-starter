@@ -6,7 +6,6 @@ import { map, startWith } from 'rxjs/operators';
 import { TimeZone, TimeZoneGroup, timeZones } from './time-zones';
 
 @Component({
-  selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.scss']
 })

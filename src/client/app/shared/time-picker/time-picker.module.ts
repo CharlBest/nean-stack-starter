@@ -28,7 +28,6 @@ const materialModules = [
     TimePickerDirective,
   ],
   exports: [
-    TimePickerComponent,
     TimePickerDirective,
   ]
 })
