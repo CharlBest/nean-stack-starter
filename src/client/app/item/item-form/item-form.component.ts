@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroupBuilder } from '@shared/validation/form-group-builder';
 import { MAX_FILE_UPLOADS } from '@shared/validation/validators';
+import { CreateOrUpdateItemViewModel } from '@shared/view-models/item/create-or-update-item.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FileUploaderComponent } from '../../shared/file-uploader/file-uploader/file-uploader.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
@@ -17,7 +18,7 @@ import { BreakpointService } from '../../shared/services/breakpoint.service';
 export class ItemFormComponent implements OnInit {
 
   @ViewChild('fileUploader', { static: true }) fileUploader: FileUploaderComponent;
-  @Output() readonly submitForm: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly submitForm: EventEmitter<CreateOrUpdateItemViewModel> = new EventEmitter<CreateOrUpdateItemViewModel>();
   @Input() item: ItemViewModel | null;
   formGroup: FormGroup;
   readonly MAX_FILE_UPLOADS = MAX_FILE_UPLOADS;
@@ -69,8 +70,14 @@ export class ItemFormComponent implements OnInit {
 
   async onSubmit() {
     const files = await this.fileUploader.upload();
-    this.formGroup.controls.files.setValue(files);
-    this.submitForm.emit();
+
+    const viewModel = new CreateOrUpdateItemViewModel();
+    viewModel.title = this.formGroup.controls.title.value;
+    viewModel.description = this.formGroup.controls.description.value;
+    viewModel.files = files;
+    viewModel.tags = this.formGroup.controls.tags.value;
+
+    this.submitForm.emit(viewModel);
   }
 
   trackByFn(index: number, item: string) {

@@ -1,5 +1,5 @@
 <app-item-form #itemForm
     [hidden]="isProcessing"
-    (submitForm)="onSubmit()"></app-item-form>
+    (submitForm)="onSubmit($event)"></app-item-form>
 
 <app-preloader *ngIf="isProcessing"></app-preloader>
