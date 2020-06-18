@@ -19,11 +19,11 @@ class ItemsService extends BaseService {
     async create(res: Response, title: string, description: string, files: Array<FileModel>, tags: Array<string>): Promise<ItemViewModel> {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
+            files.forEach(file => file.uId = nodeUUId());
         }
 
         const userId = this.getUserId(res);
         const uId = nodeUUId();
-        files.forEach(file => file.uId = nodeUUId());
         const result = await itemsRepository.create(res, userId, uId, title, description, files, tags);
 
         if (!result) {
@@ -44,10 +44,10 @@ class ItemsService extends BaseService {
         : Promise<ItemViewModel> {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
+            files.forEach(file => file.uId = nodeUUId());
         }
 
         const userId = this.getUserId(res);
-        files.forEach(file => file.uId = nodeUUId());
         const result = await itemsRepository.update(res, userId, uId, title, description, files, tags);
 
         if (!result) {
