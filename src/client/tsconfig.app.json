@@ -7,7 +7,7 @@
   "files": [
     "main.ts",
     "polyfills.ts",
-    "typings.ts"
+    "typings.d.ts"
   ],
   "include": [
     "**/*.d.ts"
