@@ -38,7 +38,7 @@ export class MediaComponent implements OnChanges {
           token = this.src.substring(keyStartIndex, this.src.length);
         }
 
-        this.safeSrc = `http://img.youtube.com/vi/${token}/default.jpg`;
+        this.safeSrc = `https://img.youtube.com/vi/${token}/default.jpg`;
       } else {
         // TODO: rather load image than Iframe and add click to pic to load + play video
         this.src = this.src.replace('youtube.com/watch?v=', 'youtube.com/embed/');
