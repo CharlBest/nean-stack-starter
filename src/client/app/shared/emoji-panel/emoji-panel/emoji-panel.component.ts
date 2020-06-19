@@ -16,7 +16,7 @@ import { EmojiCategory, EmojiCategoryName, EmojiData, EmojiJsonFile } from './em
 export class EmojiPanelComponent implements OnInit {
   file: EmojiJsonFile;
   @Input() closeOnInsert = false;
-  @Output() readonly inserted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() readonly selected: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
   searchControl = new FormControl();
   isPanelForWebOpen = false;
@@ -90,7 +90,7 @@ export class EmojiPanelComponent implements OnInit {
         const searchResults = [];
 
         for (const key in this.file) {
-          if (this.file[key].name && this.file[key].name.startsWith(value)) {
+          if (this.file[key].keywords && this.file[key].keywords.some(keyword => keyword.startsWith(value))) {
             searchResults.push({
               key,
               value: this.file[key]
@@ -113,7 +113,7 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   onClick(shortname: string) {
-    this.inserted.emit(shortname);
+    this.selected.emit(shortname);
 
     if (this.closeOnInsert) {
       this.isPanelForWebOpen = !this.isPanelForWebOpen;
@@ -140,7 +140,7 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger) {
-    if (emojiValue.diversity_children.length > 0) {
+    if (emojiValue.diversities.length > 0) {
       menuTrigger.openMenu();
     } else {
       menuTrigger.closeMenu();

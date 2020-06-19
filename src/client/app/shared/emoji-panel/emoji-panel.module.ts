@@ -14,6 +14,7 @@ import { IconsModule } from '../icons/icons.module';
 import { PreloaderModule } from '../preloader/preloader.module';
 import { EmojiPanelDirective } from './emoji-panel.directive';
 import { EmojiPanelComponent } from './emoji-panel/emoji-panel.component';
+import { EmojiComponent } from './emoji/emoji.component';
 
 const materialModules = [
   MatTabsModule,
@@ -37,11 +38,13 @@ const materialModules = [
   ],
   declarations: [
     EmojiPanelComponent,
-    EmojiPanelDirective
+    EmojiPanelDirective,
+    EmojiComponent,
   ],
   exports: [
     EmojiPanelComponent,
-    EmojiPanelDirective
+    EmojiPanelDirective,
+    EmojiComponent
   ]
 })
 export class EmojiPanelModule { }

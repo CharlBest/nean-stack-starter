@@ -36,9 +36,10 @@ export interface EmojiData {
     };
     display: number;
     diversity: Array<string>;
-    diversity_children: Array<string>;
+    diversities: Array<string>;
+    diversity_base: number;
     gender: Array<string>;
-    gender_children: Array<string>;
+    genders: Array<string>;
     keywords: Array<string>;
     name: string;
     order: number;
@@ -46,5 +47,4 @@ export interface EmojiData {
     shortname_alternates: Array<string>;
     unicode_version: number;
     humanform: number;
-    diversity_base: number;
 }

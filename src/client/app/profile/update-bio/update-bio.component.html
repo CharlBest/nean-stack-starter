@@ -6,7 +6,9 @@
       [htmlContent]="content"
       [containsEmoji]="true"></app-html-editor>
 
-    <app-emoji-panel (inserted)="emojiInserted($event)"></app-emoji-panel>
+    <app-emoji-panel (selected)="emojiInserted($event)">
+      <app-icon-tag-faces></app-icon-tag-faces>
+    </app-emoji-panel>
   </mat-card-content>
   <mat-card-actions>
     <button mat-stroked-button

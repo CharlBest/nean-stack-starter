@@ -29,7 +29,7 @@ export class EmojiPanelDirective implements OnInit {
     }
 
     emojiPanel() {
-        this.appEmojiPanel.inserted
+        this.appEmojiPanel.selected
             .subscribe((data: string) => {
                 emojiToolkit.ascii = true;
                 const output = emojiToolkit.toImage(data);
