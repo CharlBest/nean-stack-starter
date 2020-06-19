@@ -89,9 +89,10 @@
           style-src 'self' 'unsafe-inline';
           script-src 'self' blob: https://js.stripe.com;
           connect-src 'self' http://localhost:3000 http://localhost:32768 ws://localhost:3000 ws://localhost:4200 https://*.nean.io wss://nean.io wss://*.nean.io https://raw.githubusercontent.com https://firebasestorage.googleapis.com;
-          img-src 'self' data: https://firebasestorage.googleapis.com;
+          img-src 'self' data: https://firebasestorage.googleapis.com https://img.youtube.com;
           font-src 'self';
           child-src 'self' https://js.stripe.com;
+          frame-src 'self' https://www.youtube.com;
           media-src 'none';
           form-action 'none';
           manifest-src 'self';
