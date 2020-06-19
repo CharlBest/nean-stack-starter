@@ -13,7 +13,7 @@ export class TutorialDirective implements OnInit {
     private zIndex: string | null;
     private backgroundColor: string | null;
 
-    constructor(private elementRef: ElementRef,
+    constructor(private elementRef: ElementRef<HTMLElement>,
         private route: ActivatedRoute) { }
 
     ngOnInit() {
@@ -22,9 +22,8 @@ export class TutorialDirective implements OnInit {
     }
 
     initialize() {
-        const elementStyle = (this.elementRef.nativeElement as HTMLElement).style;
-        this.zIndex = elementStyle.zIndex;
-        this.backgroundColor = elementStyle.backgroundColor;
+        this.zIndex = this.elementRef.nativeElement.style.zIndex;
+        this.backgroundColor = this.elementRef.nativeElement.style.backgroundColor;
     }
 
     getParams() {
@@ -43,8 +42,6 @@ export class TutorialDirective implements OnInit {
     }
 
     process() {
-        const element = (this.elementRef.nativeElement as HTMLElement);
-
         // Hidden tutorial item
         if (this.tutorialInUrl !== TutorialType[this.appTutorial]) {
             this.reset();
@@ -52,19 +49,18 @@ export class TutorialDirective implements OnInit {
 
         // Shown tutorial item
         if (this.tutorialInUrl === TutorialType[this.appTutorial]) {
-            element.style.zIndex = '11';
-            element.style.backgroundColor = this.tutorialBackgroundColor;
-            window.scroll(0, element.offsetTop);
+            this.elementRef.nativeElement.style.zIndex = '11';
+            this.elementRef.nativeElement.style.backgroundColor = this.tutorialBackgroundColor;
+            window.scroll(0, this.elementRef.nativeElement.offsetTop);
         }
     }
 
     reset() {
-        const element = (this.elementRef.nativeElement as HTMLElement);
         if (this.zIndex) {
-            element.style.zIndex = this.zIndex;
+            this.elementRef.nativeElement.style.zIndex = this.zIndex;
         }
         if (this.backgroundColor) {
-            element.style.backgroundColor = this.backgroundColor;
+            this.elementRef.nativeElement.style.backgroundColor = this.backgroundColor;
         }
     }
 }

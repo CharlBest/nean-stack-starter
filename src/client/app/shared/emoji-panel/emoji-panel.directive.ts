@@ -14,7 +14,7 @@ export class EmojiPanelDirective implements OnInit {
         // sanitize
     }
 
-    constructor(private el: ElementRef,
+    constructor(private el: ElementRef<HTMLElement>,
         private renderer: Renderer2) { }
 
     ngOnInit() {
@@ -34,8 +34,7 @@ export class EmojiPanelDirective implements OnInit {
                 emojiToolkit.ascii = true;
                 const output = emojiToolkit.toImage(data);
 
-                const element = this.el.nativeElement as HTMLElement;
-                element.innerHTML = element.innerHTML + output;
+                this.el.nativeElement.innerHTML = this.el.nativeElement.innerHTML + output;
             });
     }
 }

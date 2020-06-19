@@ -17,7 +17,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
 
   private observer: IntersectionObserver;
 
-  constructor(private host: ElementRef) { }
+  constructor(private host: ElementRef<HTMLElement>) { }
 
   ngOnInit() {
     const options = {
