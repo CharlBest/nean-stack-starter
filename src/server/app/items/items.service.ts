@@ -20,6 +20,8 @@ class ItemsService extends BaseService {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
             files.forEach(file => file.uId = nodeUUId());
+        } else {
+            files = [];
         }
 
         const userId = this.getUserId(res);
@@ -45,6 +47,8 @@ class ItemsService extends BaseService {
         if (files && Array.isArray(files)) {
             files = files.slice(0, MAX_FILE_UPLOADS);
             files.forEach(file => file.uId = nodeUUId());
+        } else {
+            files = [];
         }
 
         const userId = this.getUserId(res);
