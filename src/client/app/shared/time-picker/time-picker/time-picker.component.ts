@@ -1,19 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith } from 'rxjs/operators';
+import { TimePickerModel } from './time-picker.model';
 import { TimeZone, TimeZoneGroup, timeZones } from './time-zones';
 
 @Component({
+  selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.scss']
 })
 export class TimePickerComponent implements OnInit {
 
-  @Output() readonly timePicked: EventEmitter<string> = new EventEmitter<string>();
+  @Input() time: string;
+  @Output() readonly timePicked: EventEmitter<TimePickerModel> = new EventEmitter<TimePickerModel>();
 
-  is24Hour = false;
+  is24Hour = true;
   isAM = true;
   timeZoneGroups: Observable<TimeZoneGroup[]>;;
   editTimeZone = false;
@@ -40,14 +43,28 @@ export class TimePickerComponent implements OnInit {
   }
 
   formOnInit() {
-    this.hoursControl = new FormControl(10, [
+    let hours;
+    let minutes;
+
+    if (this.time) {
+      const dateTime = new Date(this.time);
+      hours = dateTime.getHours();
+      minutes = dateTime.getMinutes().toString();
+
+      // Prepend zero to minutes if single digit
+      if (minutes.length === 1) {
+        minutes = `0${minutes}`
+      }
+    }
+
+    this.hoursControl = new FormControl(hours || 10, [
       Validators.required,
       Validators.min(1),
       Validators.max(24),
       Validators.pattern('^\d{2}$')
     ]);
 
-    this.minutesControl = new FormControl('00', [
+    this.minutesControl = new FormControl(minutes || '00', [
       Validators.required,
       Validators.pattern('^\d{2}$')
     ]);
@@ -208,11 +225,17 @@ export class TimePickerComponent implements OnInit {
     }
     const hoursFormatted = hours.toString().length > 1 ? hours : `0${hours}`;
     const dateString = `2000-01-01T${hoursFormatted}:${this.minutesControl.value}:00${this.timeZone.value}`;
-    console.log(dateString);
     const date = new Date(dateString);
 
     this.dialogRef.close();
-    this.timePicked.emit(date.toISOString());
+
+    const model = new TimePickerModel();
+    model.utcDate = date;
+    model.utcISO = date.toISOString();
+    model.displayLocalTime = `${hoursFormatted}:${this.minutesControl.value}`;
+    model.utcISOTime = `T${model.displayLocalTime}:00Z`;
+
+    this.timePicked.emit(model);
   }
 
   trackByFn(index: number, timeZoneGroup: TimeZoneGroup) {

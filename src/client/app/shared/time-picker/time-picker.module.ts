@@ -6,14 +6,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { IconsModule } from '../icons/icons.module';
+import { ExtractTimePipe } from './extract-time.pipe';
 import { TimePickerDirective } from './time-picker.directive';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 
 const materialModules = [
-  MatDialogModule,
   MatButtonModule,
   MatInputModule,
   MatAutocompleteModule,
+  MatDialogModule,
 ];
 
 @NgModule({
@@ -26,9 +27,11 @@ const materialModules = [
   declarations: [
     TimePickerComponent,
     TimePickerDirective,
+    ExtractTimePipe,
   ],
   exports: [
     TimePickerDirective,
+    ExtractTimePipe,
   ]
 })
 export class TimePickerModule { }
