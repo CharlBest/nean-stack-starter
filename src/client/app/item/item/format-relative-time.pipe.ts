@@ -9,7 +9,7 @@ export class FormatRelativeTimePipe implements PipeTransform {
 
     constructor(private translateService: TranslateService) { }
 
-    transform(date: string | null, params?: any) {
+    transform(date: string | null) {
         if (!date) {
             return null;
         }
