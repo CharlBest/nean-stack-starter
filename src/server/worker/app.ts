@@ -5,6 +5,7 @@ import { Database } from '../core/database';
 import { initLogger, logger } from '../core/utils/logger';
 import { emailer } from './communication/emailer';
 import { pushNotification } from './communication/push-notification';
+import { cron } from './cron';
 
 class App {
 
@@ -21,6 +22,9 @@ class App {
         // Broker
         await broker.init();
         this.initMessageBroker();
+
+        // Cron
+        cron.init();
 
         this.onDestroy();
     }

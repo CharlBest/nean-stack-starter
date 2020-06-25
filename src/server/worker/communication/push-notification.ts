@@ -10,19 +10,24 @@ import { PushNotificationModel } from './push-notification.model';
 
 class PushNotification implements PushNotificationInterface {
 
-    async callDb(service: (res: any) => Promise<PushNotificationModel | null>, title: string): Promise<boolean> {
+    async callDb(service: (res: any) => Promise<PushNotificationModel[] | null>, title: string): Promise<boolean> {
         const res = {
             locals: {
                 neo4jSession: Database.createSession()
             }
         };
 
-        const result = await service(res);
+        const results = await service(res);
 
         res.locals.neo4jSession.close();
 
-        if (result) {
-            return this.send(result.pushSubscriptions, result.title ? result.title : title, result.body);
+        if (results && results.length > 0) {
+            const allPushSubscriptions = [];
+            for (const result of results) {
+                allPushSubscriptions.push(...result.pushSubscriptions);
+            }
+
+            return this.send(allPushSubscriptions, results[0].title ? results[0].title : title, results[0].body);
         } else {
             return true;
         }

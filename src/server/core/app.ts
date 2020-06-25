@@ -36,8 +36,6 @@ class App {
         // bootstrap.setupAutoPeriodicDataFetch(this.express);
         // Broker
         bootstrap.setupBroker();
-        // Cron
-        bootstrap.setupCronJobs();
 
         // TODO: add logger (maybe morgan (http)) or custom
         // Setup errors

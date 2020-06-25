@@ -14,7 +14,6 @@ import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
 import { Authentication } from './middleware/authentication';
-import { cron } from './middleware/cron';
 import { Language } from './middleware/language';
 import { Neo4j } from './middleware/neo4j';
 import { webSocketServer } from './middleware/web-socket-server';
@@ -206,10 +205,6 @@ class Bootstrap {
 
     setupBroker(): void {
         broker.init();
-    }
-
-    setupCronJobs() {
-        cron.init();
     }
 }
 

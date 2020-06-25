@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import { emailBroker } from '../../communication/emailer-broker';
+import { emailBroker } from '../communication/emailer-broker';
 
 class Cron {
     // Every 5 minutes - check for and send reminders
