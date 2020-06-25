@@ -105,7 +105,7 @@ export class CommentsComponent implements OnInit {
   }
 
   onScroll() {
-    if (!this.listEnd) {
+    if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getComments();
     }

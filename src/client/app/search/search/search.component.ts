@@ -71,7 +71,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onScroll() {
-    if (!this.listEnd) {
+    if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.search(false);
     }

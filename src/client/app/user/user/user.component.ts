@@ -142,7 +142,7 @@ export class UserComponent implements OnInit {
   }
 
   onScroll() {
-    if (!this.listEnd) {
+    if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getItems();
     }
