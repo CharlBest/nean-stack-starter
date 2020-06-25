@@ -5,6 +5,7 @@ import { EventEmitter, Injectable, TemplateRef } from '@angular/core';
 })
 export class NavigationService {
     backRouterPath: string | null;
+    backHeaderTitle: string | null;
     previousUrl = '';
     navigationPlaceholderTemplate: TemplateRef<HTMLElement> | null;
     showInstallBanner = false;

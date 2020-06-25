@@ -22,7 +22,6 @@ export class NavigationComponent implements OnInit {
 
   activeNavigation?: NavigationType;
   navigationType = NavigationType;
-  headerBackTitle = '';
   backRouterPath: string | null;
   hasNavigatedToPageWithPrimaryNav = false;
   readonly desktopTopToolbarHeight = 64;
@@ -86,7 +85,7 @@ export class NavigationComponent implements OnInit {
         if (event.snapshot.data) {
           const title = event.snapshot.data.title || alert(`No title for path: ${event.snapshot.url}`);
           this.titleService.setTitle(title);
-          this.headerBackTitle = title;
+          this.navigationService.backHeaderTitle = title;
 
           this.activeNavigation = event.snapshot.data.nav as NavigationType;
           const backRouterPath = event.snapshot.data.backRouterPath || this.navigationService.backRouterPath;
