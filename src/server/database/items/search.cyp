@@ -1,5 +1,6 @@
 export const data = `
-CALL db.index.fulltext.queryNodes('itemTitleAndDescriptionIndex', $term) YIELD node as items
+WITH 'title:' + $term + '~^2 ' + 'description:' + $term + '~'  as query
+CALL db.index.fulltext.queryNodes('itemTitleAndDescriptionIndex', query) YIELD node as items
 
 WITH collect(items) as itemList
 
@@ -32,7 +33,6 @@ users
 CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
 CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
 
-ORDER BY items.dateCreated DESC
 SKIP $pageIndex*$pageSize
 LIMIT $pageSize
 `
