@@ -31,7 +31,13 @@
                 </div>
             </div>
 
-            <span>{{comment.description}}</span>
+            <div>{{comment.description}}</div>
+
+            <button mat-button
+                (click)="openReply()"
+                type="button">
+                Reply
+            </button>
         </div>
 
         <!-- Edit -->
@@ -48,10 +54,6 @@
         <div>
             <app-context-menu #contextMenu>
                 <mat-nav-list>
-                    <mat-list-item (click)="openReply()">
-                        <app-icon-reply mat-list-icon></app-icon-reply>
-                        <span mat-line>Reply</span>
-                    </mat-list-item>
                     <mat-list-item (click)="openShareDialog()">
                         <app-icon-share mat-list-icon></app-icon-share>
                         <span mat-line>Share</span>
