@@ -16,15 +16,15 @@
                 <ng-container *ngIf="authService.loggedInUserId">
                     <mat-list-item routerLink="/user/{{authService.loggedInUserId}}">
                         <app-icon-fiber-manual-record mat-list-icon></app-icon-fiber-manual-record>
-                        <span mat-line>{{t.items}}</span>
+                        <span mat-line>{{t.yourItems}}</span>
                     </mat-list-item>
                     <mat-list-item routerLink="/item/subscriptions">
                         <app-icon-group-work mat-list-icon></app-icon-group-work>
-                        <span mat-line>{{t.subscriptions}}</span>
+                        <span mat-line>{{t.yourSubscriptions}}</span>
                     </mat-list-item>
                     <mat-list-item routerLink="/item/saved">
                         <app-icon-star mat-list-icon></app-icon-star>
-                        <span mat-line>{{t.saved}}</span>
+                        <span mat-line>{{t.yourSaved}}</span>
                     </mat-list-item>
                     <mat-list-item routerLink="/profile">
                         <app-icon-account-circle mat-list-icon></app-icon-account-circle>

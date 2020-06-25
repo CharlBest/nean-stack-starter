@@ -3,9 +3,9 @@ export interface TranslateTerm {
     noItemsExist: string;
     signup: string;
     login: string;
-    items: string;
-    subscriptions: string;
-    saved: string;
+    yourItems: string;
+    yourSubscriptions: string;
+    yourSaved: string;
     profile: string;
     notificationPreferences: string;
     donate: string;
