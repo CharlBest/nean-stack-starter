@@ -1,8 +1,9 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
+import { FilterComponent } from '../../shared/filter/filter/filter.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { ItemService } from '../item.service';
 
@@ -12,25 +13,31 @@ import { ItemService } from '../item.service';
 })
 export class FavouritesComponent implements OnInit {
 
+  @ViewChild('filters') filters: FilterComponent;
   isProcessing = true;
   items: ItemViewModel[] = [];
-  pageIndex = 0;
-  listEnd = false;
+  pageIndex: number;
+  listEnd: boolean;
 
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
-    this.getFavourites();
+    this.getFavourites(true);
   }
 
-  async getFavourites() {
+  async getFavourites(refresh: boolean = false) {
     this.isProcessing = true;
 
+    if (refresh) {
+      this.pageIndex = 0;
+      this.listEnd = false;
+    }
+
     try {
-      const response = await this.itemService.getFavourites(this.pageIndex);
+      const response = await this.itemService.getFavourites(this.filters.tags, this.pageIndex);
       if (response) {
-        this.items.push(...response);
+        refresh ? this.items = response : this.items.push(...response);
       }
 
       // End of list
@@ -49,6 +56,10 @@ export class FavouritesComponent implements OnInit {
       this.pageIndex++;
       this.getFavourites();
     }
+  }
+
+  filtersUpdated() {
+    this.getFavourites(true);
   }
 
   trackByFn(index: number, item: ItemViewModel) {

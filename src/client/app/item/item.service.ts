@@ -44,9 +44,10 @@ export class ItemService {
         return this.http.delete<void>(`${environment.serverEndpoint}${ItemRoutes.deleteFavourite(uId).client()}`).toPromise();
     }
 
-    getFavourites(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
+    getFavourites(tags: string | null, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getFavourites().client({ pageIndex, pageSize })}`).toPromise();
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getFavourites().client({ tags, pageIndex, pageSize })}`)
+            .toPromise();
     }
 
     getSubscriptions(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {

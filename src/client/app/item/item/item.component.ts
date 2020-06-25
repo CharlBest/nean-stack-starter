@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
@@ -23,6 +23,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
   @ViewChild('description') description: ElementRef<HTMLParagraphElement>;
   @Input() item: ItemViewModel;
   @Input() isViewingComments: boolean;
+  @Output() readonly filterClicked: EventEmitter<string> = new EventEmitter<string>();
   isProcessing = false;
   showMoreButton = false;
   activeMediaIndex = 0;

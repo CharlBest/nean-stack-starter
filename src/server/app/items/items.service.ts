@@ -73,8 +73,8 @@ class ItemsService extends BaseService {
         return result;
     }
 
-    async getAll(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        return await itemsRepository.getAll(res, this.getOptionalUserId(res), pageIndex, pageSize);
+    async getAll(res: Response, tags: Array<string> | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        return await itemsRepository.getAll(res, this.getOptionalUserId(res), tags, pageIndex, pageSize);
     }
 
     async delete(res: Response, uId: string): Promise<boolean> {
@@ -89,8 +89,8 @@ class ItemsService extends BaseService {
         return await itemsRepository.deleteFavourite(res, this.getUserId(res), uId);
     }
 
-    async getFavourites(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        return await itemsRepository.getFavourites(res, this.getUserId(res), pageIndex, pageSize);
+    async getFavourites(res: Response, tags: Array<string> | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+        return await itemsRepository.getFavourites(res, this.getUserId(res), tags, pageIndex, pageSize);
     }
 
     async orderFavourite(res: Response, uId: string, newOrderVal: number, originalOrderVal: number): Promise<boolean> {

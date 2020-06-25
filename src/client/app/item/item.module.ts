@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
 import { UploadButtonModule } from '../shared/file-uploader/file-uploader.module';
+import { FilterModule } from '../shared/filter/filter.module';
 import { FormErrorsModule } from '../shared/form-errors/form-errors.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
@@ -58,6 +59,7 @@ const materialModules = [
     InfiniteScrollModule,
     RightClickContextMenuModule,
     PreloaderModule,
+    FilterModule,
     ...materialModules
   ],
   declarations: [

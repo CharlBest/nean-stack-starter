@@ -86,10 +86,12 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getAll(res: Response, userId: number | null, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+    async getAll(res: Response, userId: number | null, tags: Array<string> | null, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
         const result = await this.run(res, Database.queries.items.getAll,
             {
                 userId,
+                tags,
                 pageIndex,
                 pageSize
             }
@@ -149,10 +151,12 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    async getFavourites(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+    async getFavourites(res: Response, userId: number, tags: Array<string> | null, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
         const result = await this.run(res, Database.queries.items.getFavourites,
             {
                 userId,
+                tags,
                 pageIndex,
                 pageSize
             }

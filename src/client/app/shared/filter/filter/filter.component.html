@@ -1,0 +1,13 @@
+<div *ngIf="tagsToFilter?.length > 0"
+    class="filter">
+    <app-icon-filter-list></app-icon-filter-list>
+    <mat-chip-list>
+        <mat-chip *ngFor="let tag of tagsToFilter; let i = index; trackBy: trackByFn"
+            (removed)="removeFilter(i)">
+            {{tag}}
+            <app-icon-cancel matChipRemove
+                [inline]="true"></app-icon-cancel>
+        </mat-chip>
+    </mat-chip-list>
+    <br>
+</div>

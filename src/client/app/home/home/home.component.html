@@ -13,10 +13,15 @@
         <app-item-skeleton></app-item-skeleton>
     </ng-container>
 
+    <app-filter #filters
+        [hidden]="isProcessing"
+        (filtersUpdated)="filtersUpdated()"></app-filter>
+
     <app-infinite-scroll (scrolled)="onScroll()">
 
         <app-item *ngFor="let item of items; trackBy: trackByFn"
-            [item]="item"></app-item>
+            [item]="item"
+            (filterClicked)="filters.filterClick($event)"></app-item>
 
     </app-infinite-scroll>
 

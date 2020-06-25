@@ -1,3 +1,7 @@
+<app-filter #filters
+    [hidden]="isProcessing"
+    (filtersUpdated)="filtersUpdated()"></app-filter>
+
 <app-infinite-scroll (scrolled)="onScroll()"
     [isProcessing]="isProcessing"
     cdkDropList

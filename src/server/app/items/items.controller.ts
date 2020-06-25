@@ -61,11 +61,12 @@ class ItemsController extends BaseController {
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
+        const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await itemsService.getAll(res, pageIndex, pageSize)
+            await itemsService.getAll(res, tags, pageIndex, pageSize)
         );
     }
 
@@ -112,11 +113,12 @@ class ItemsController extends BaseController {
     }
 
     async getFavourites(req: Request, res: Response, next: NextFunction) {
+        const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await itemsService.getFavourites(res, pageIndex, pageSize)
+            await itemsService.getFavourites(res, tags, pageIndex, pageSize)
         );
     }
 

@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ItemModule } from '../item/item.module';
+import { FilterModule } from '../shared/filter/filter.module';
 import { GitHubModule } from '../shared/github/github.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { NetworkStatusModule } from '../shared/network-status/network-status.module';
@@ -31,6 +32,7 @@ const materialModules = [
     InfiniteScrollModule,
     PreloaderModule,
     TranslateModule,
+    FilterModule,
     ...materialModules
   ],
   declarations: [

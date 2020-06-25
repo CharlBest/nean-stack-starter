@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
+import { FilterComponent } from '../../shared/filter/filter/filter.component';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 import { NavigationService } from '../../shared/navigation/navigation.service';
 import { RefreshSameUrlService } from '../../shared/services/refresh-same-url.service';
@@ -11,33 +12,39 @@ import { HomeService } from '../home.service';
   styleUrls: ['./home.component.scss'],
   providers: [RefreshSameUrlService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
 
+  @ViewChild('filters') filters: FilterComponent;
   isProcessing = true;
   items: ItemViewModel[] = [];
-  pageIndex = 0;
-  listEnd = false;
+  pageIndex: number;
+  listEnd: boolean;
 
   constructor(private homeService: HomeService,
     public formErrorsService: FormErrorsService,
-    private refreshSameUrlService: RefreshSameUrlService,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
-    this.refreshSameUrlService.init(() => {
-      this.refresh();
-    });
+  ngAfterViewInit() {
+    // TODO: add back in refereshing the feed when clicking
+    // this.refreshSameUrlService.init(() => {
+    //   this.refresh();
+    // });
 
-    this.getItems();
+    this.getItems(true);
   }
 
-  async getItems() {
+  async getItems(refresh: boolean = false) {
     this.isProcessing = true;
 
+    if (refresh) {
+      this.pageIndex = 0;
+      this.listEnd = false;
+    }
+
     try {
-      const response = await this.homeService.getAll(this.pageIndex);
+      const response = await this.homeService.getAll(this.filters.tags, this.pageIndex);
       if (response) {
-        this.items.push(...response);
+        refresh ? this.items = response : this.items.push(...response);
       }
 
       // End of list
@@ -52,10 +59,14 @@ export class HomeComponent implements OnInit {
   }
 
   onScroll() {
-    if (!this.listEnd) {
+    if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getItems();
     }
+  }
+
+  filtersUpdated() {
+    this.getItems(true);
   }
 
   trackByFn(index: number, item: ItemViewModel) {
@@ -69,11 +80,7 @@ export class HomeComponent implements OnInit {
     // Hide/disable badge on home navigation item if it exists
     this.navigationService.showHomeNavigationBadge = false;
 
-    // Reset
-    this.pageIndex = 0;
-    this.items = [];
-
     // Get new items
-    this.getItems();
+    this.getItems(true);
   }
 }

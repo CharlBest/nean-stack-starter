@@ -413,3 +413,9 @@ export class IconVideocamComponent extends BaseIconComponent { }
   templateUrl: materialIconPath('videocam_off', Category.AV)
 })
 export class IconVideocamOffComponent extends BaseIconComponent { }
+
+@Component({
+  selector: 'app-icon-filter-list',
+  templateUrl: materialIconPath('filter_list', Category.CONTENT)
+})
+export class IconFilterListComponent extends BaseIconComponent { }

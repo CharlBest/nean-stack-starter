@@ -11,9 +11,9 @@ export class HomeService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
+    getAll(tags: string | null, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getAll().client({ pageIndex, pageSize })}`)
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${ItemRoutes.getAll().client({ tags, pageIndex, pageSize })}`)
             .toPromise();
     }
 }
