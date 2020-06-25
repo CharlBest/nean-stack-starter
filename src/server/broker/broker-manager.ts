@@ -4,7 +4,7 @@ import { QueueType } from './queue-type.enum';
 
 class BrokerManager {
 
-    async sendToQueue(queueType: QueueType, data: any): Promise<void> {
+    async sendToQueue(queueType: QueueType, data: any = ''): Promise<void> {
         const errorMessage = `Error sending to queue on RabbitMQ`;
 
         try {

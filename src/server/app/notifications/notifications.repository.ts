@@ -125,7 +125,7 @@ class NotificationsRepository extends BaseRepository {
         }
     }
 
-    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel | null> {
+    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel[] | null> {
         const result = await this.run(res, Database.queries.notifications.getNewCommentNotification,
             {
                 commentUId
@@ -146,7 +146,7 @@ class NotificationsRepository extends BaseRepository {
         }) : null;
 
         if (model && model.length > 0) {
-            return model[0];
+            return model;
         } else {
             return null;
         }
