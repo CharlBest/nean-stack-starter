@@ -68,7 +68,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
         await this.itemService.delete(this.item.uId);
         this.snackBar.dismiss();
         this.snackBar.open('Deleted');
-        this.refreshPage();
+        this.router.navigate(['/']);
       } catch (error) {
         this.snackBar.dismiss();
         this.snackBar.open('Delete failed');
@@ -172,7 +172,9 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     try {
       await this.itemService.deleteFavourite(this.item.uId);
       this.item.favourite = false;
-      this.refreshPage();
+
+      // TODO: very dirty and bad UI but will work for now
+      window.location.reload();
     } catch (error) {
       this.formErrorsService.updateFormValidity(error);
     }
@@ -213,11 +215,6 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
   }
 
   // #endregion
-
-  refreshPage() {
-    // TODO: very dirty and bad UI but will work for now
-    window.location.reload();
-  }
 
   trackByFn(index: number, tag: string) {
     return index;
