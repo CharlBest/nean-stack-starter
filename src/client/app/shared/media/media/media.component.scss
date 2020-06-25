@@ -1,7 +1,3 @@
-iframe {
-	max-width: 420px;
-}
-
 .thumbnail-container {
 	.image.thumbnail {
 		width: 100%;
@@ -12,4 +8,24 @@ iframe {
 	cursor: pointer;
 	max-height: 100%;
 	max-width: 100%;
+}
+
+.video-container {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	&::after {
+		padding-top: 56.25%;
+		display: block;
+		content: '';
+	}
+
+	iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
 }
