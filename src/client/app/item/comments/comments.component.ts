@@ -4,6 +4,7 @@ import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { CommentService } from '../comment.service';
 import { ItemService } from '../item.service';
@@ -28,7 +29,8 @@ export class CommentsComponent implements OnInit {
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.getParams();
@@ -48,6 +50,9 @@ export class CommentsComponent implements OnInit {
         const response = await this.itemService.get(this.itemUId);
         if (response) {
           this.item = response;
+
+          // Set header text
+          this.navigationService.backHeaderTitle = this.item.title;
         }
       } catch (error) {
         this.formErrorsService.updateFormValidity(error);
