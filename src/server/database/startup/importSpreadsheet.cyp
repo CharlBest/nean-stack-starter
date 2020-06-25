@@ -29,8 +29,8 @@ MERGE (user)-[:HAS_ITEM]->(item)
 SET user.itemCount = SIZE((user)-[:HAS_ITEM]->())
 
 // Add tags
-OPTIONAL MATCH (item)-[rel:TAG]->(oldTag:Tag)
-DELETE rel
+OPTIONAL MATCH (item)-[hasTag:TAG]->(oldTag:Tag)
+DELETE hasTag
 
 WITH item, oldTag, row
 

@@ -18,8 +18,8 @@ FOREACH (file IN $files |
 WITH item, user
 
 // Tags
-OPTIONAL MATCH (item)-[rel:TAG]->(oldTag:Tag)
-DELETE rel
+OPTIONAL MATCH (item)-[hasTag:TAG]->(oldTag:Tag)
+DELETE hasTag
 
 SET oldTag.links = SIZE(()-[:TAG]->(oldTag))
 FOREACH (tag IN $tags |

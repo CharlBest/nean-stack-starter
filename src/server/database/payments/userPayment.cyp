@@ -3,5 +3,5 @@ MATCH (user:User { id: $userId })
 
 CREATE (payment:Payment { amount: $amount, chargeId: $chargeId, chargeCreated: $chargeCreated, dateCreated: datetime() })
 
-MERGE (user)-[rel:PAYED]->(payment)
+MERGE (user)-[:PAYED]->(payment)
 `
