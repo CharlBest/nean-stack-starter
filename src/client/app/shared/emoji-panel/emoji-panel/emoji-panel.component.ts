@@ -90,8 +90,9 @@ export class EmojiPanelComponent implements OnInit {
         const searchResults = [];
 
         for (const key in this.file) {
-          if ((this.file[key].keywords && this.file[key].keywords.some(keyword => keyword.startsWith(value))) ||
-            (this.file[key].name && this.file[key].name.startsWith(value))) {
+          if (this.file[key].diversity === null && // Remove diversity emoji
+            ((this.file[key].keywords && this.file[key].keywords.some(keyword => keyword.startsWith(value))) || // keyword
+              (this.file[key].name && this.file[key].name.startsWith(value)))) { // name
             searchResults.push({
               key,
               value: this.file[key]
