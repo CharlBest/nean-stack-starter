@@ -41,7 +41,7 @@ export class MediaComponent implements OnChanges {
         this.safeSrc = `https://img.youtube.com/vi/${token}/default.jpg`;
       } else {
         // TODO: rather load image than Iframe and add click to pic to load + play video
-        this.src = this.src.replace('youtube.com/watch?v=', 'youtube.com/embed/');
+        this.src = this.src.replace('youtube.com/watch?v=', 'youtube.com/embed/') + '?controls=0&color=white';
 
         // TODO: this is dangerous and should be looked at again
         this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.src) as string;
