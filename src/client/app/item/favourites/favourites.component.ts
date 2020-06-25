@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { OrderFavouriteViewModel } from '@shared/view-models/item/order-favourite.view-model';
@@ -11,7 +11,7 @@ import { ItemService } from '../item.service';
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.scss']
 })
-export class FavouritesComponent implements OnInit {
+export class FavouritesComponent implements AfterViewInit {
 
   @ViewChild('filters') filters: FilterComponent;
   isProcessing = true;
@@ -22,7 +22,7 @@ export class FavouritesComponent implements OnInit {
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.getFavourites(true);
   }
 
