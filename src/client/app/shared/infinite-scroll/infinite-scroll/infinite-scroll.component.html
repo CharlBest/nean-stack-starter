@@ -5,4 +5,8 @@
 <app-preloader *ngIf="isProcessing || wrapper?.childElementCount > 0"
     [style.visibility]="isProcessing ? 'visible' : 'hidden'"></app-preloader>
 
+<ng-container *ngIf="isProcessing">
+    <app-skeleton-screen *ngFor="let screen of numberOfSkeletonScreens"></app-skeleton-screen>
+</ng-container>
+
 <div #anchor></div>

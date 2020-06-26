@@ -8,12 +8,14 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 export class InfiniteScrollComponent implements OnInit, OnDestroy {
   @Input() options = {};
   @Input() isProcessing: boolean;
+  @Input() skeletonScreens = 0;
   @Output() readonly scrolled = new EventEmitter<void>();
   @ViewChild('wrapper', { static: true }) wrapper: ElementRef<HTMLDivElement>;
   @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
   get element() {
     return this.host.nativeElement;
   }
+  numberOfSkeletonScreens: Array<string>;
 
   private observer: IntersectionObserver;
 
@@ -32,6 +34,8 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
     }, options);
 
     this.observer.observe(this.anchor.nativeElement);
+
+    this.numberOfSkeletonScreens = new Array(this.skeletonScreens);
   }
 
   private isHostScrollable() {

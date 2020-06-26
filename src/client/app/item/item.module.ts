@@ -28,7 +28,6 @@ import { EditItemComponent } from './edit-item/edit-item.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemRoutingModule } from './item-routing.module';
-import { ItemSkeletonComponent } from './item-skeleton/item-skeleton.component';
 import { FormatRelativeTimePipe } from './item/format-relative-time.pipe';
 import { ItemComponent } from './item/item.component';
 import { RepliesComponent } from './replies/replies.component';
@@ -74,12 +73,10 @@ const materialModules = [
     RepliesComponent,
     CommentFormComponent,
     CreateCommentComponent,
-    ItemSkeletonComponent,
     FormatRelativeTimePipe
   ],
   exports: [
-    ItemComponent,
-    ItemSkeletonComponent
+    ItemComponent
   ]
 })
 export class ItemModule { }
