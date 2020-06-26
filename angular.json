@@ -27,6 +27,7 @@
               "src/client/favicon.ico",
               "src/client/manifest.json",
               "src/client/robots.txt",
+              "src/client/custom-service-worker.js",
               "src/client/assets"
             ],
             "styles": [

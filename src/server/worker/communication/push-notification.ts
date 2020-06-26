@@ -10,7 +10,7 @@ import { PushNotificationModel } from './push-notification.model';
 
 class PushNotification implements PushNotificationInterface {
 
-    async callDb(service: (res: any) => Promise<PushNotificationModel[] | null>, title: string): Promise<boolean> {
+    async callDb(service: (res: any) => Promise<PushNotificationModel[] | null>, defaultTitle: string): Promise<boolean> {
         const res = {
             locals: {
                 neo4jSession: Database.createSession()
@@ -27,7 +27,7 @@ class PushNotification implements PushNotificationInterface {
                 allPushSubscriptions.push(...result.pushSubscriptions);
             }
 
-            return this.send(allPushSubscriptions, results[0].title ? results[0].title : title, results[0].body);
+            return this.send(allPushSubscriptions, results[0].title ? results[0].title : defaultTitle, results[0].body);
         } else {
             return true;
         }
@@ -39,7 +39,8 @@ class PushNotification implements PushNotificationInterface {
         }, 'Item - Comment');
     }
 
-    async send(pushSubscription: Array<PushSubscriptionViewModel | null | undefined>, title: string, body: string): Promise<boolean> {
+    async send(pushSubscription: Array<PushSubscriptionViewModel | null | undefined>, title: string, body: string, url?: string)
+        : Promise<boolean> {
         if (pushSubscription) {
             if (body) {
                 body = body.substr(0, 230) + (body.length > 230 ? ' ...' : '');
@@ -52,6 +53,7 @@ class PushNotification implements PushNotificationInterface {
                 body,
                 icon: 'assets/logo-color.png',
                 data: {
+                    url: url || '/',
                     dateOfArrival: Date.now()
                 }
             };
