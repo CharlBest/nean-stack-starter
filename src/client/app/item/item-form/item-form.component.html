@@ -7,6 +7,7 @@
                 <mat-label>Title</mat-label>
                 <input matInput
                     formControlName="title"
+                    required
                     [attr.autofocus]="bpService.isDesktop || null" />
                 <mat-error>
                     <app-form-errors [control]="formGroup.controls.title"></app-form-errors>
