@@ -9,6 +9,7 @@ import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
 import { Response } from 'express';
 import { Database } from '../../core/database';
+import { itemsRepository } from '../items/items.repository';
 import { BaseRepository } from '../shared/base-repository';
 
 class UsersRepository extends BaseRepository {
@@ -152,27 +153,19 @@ class UsersRepository extends BaseRepository {
         }
     }
 
-    async getUserPublicItems(res: Response, loggedInUserId: number | null, userId: number, pageIndex: number, pageSize: number)
-        : Promise<ItemViewModel[] | null> {
+    async getUserPublicItems(res: Response, loggedInUserId: number | null, userId: number, tags: Array<string> | null,
+        pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
         const result = await this.run(res, Database.queries.users.getUserPublicItems,
             {
                 userId,
                 loggedInUserId,
+                tags,
                 pageIndex,
                 pageSize
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('items'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('users'),
-                favourite: record.get('favourite'),
-                subscribed: record.get('subscribed'),
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => itemsRepository.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;

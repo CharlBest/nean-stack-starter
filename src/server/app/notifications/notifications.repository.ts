@@ -7,6 +7,7 @@ import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user
 import { Response } from 'express';
 import { Database } from '../../core/database';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
+import { itemsRepository } from '../items/items.repository';
 import { BaseRepository } from '../shared/base-repository';
 
 class NotificationsRepository extends BaseRepository {
@@ -99,24 +100,18 @@ class NotificationsRepository extends BaseRepository {
         }
     }
 
-    async getSubscriptions(res: Response, userId: number, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
+    async getSubscriptions(res: Response, userId: number, tags: Array<string> | null, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
         const result = await this.run(res, Database.queries.notifications.getSubscriptions,
             {
                 userId,
+                tags,
                 pageIndex,
                 pageSize
             }
         );
 
-        const model = result ? result.map(record => {
-            return {
-                ...record.get('items'),
-                files: record.get('files'),
-                tags: record.get('tags'),
-                user: record.get('users'),
-                subscribed: true,
-            } as ItemViewModel;
-        }) : null;
+        const model = result ? result.map(record => itemsRepository.buildItemViewModel(record)) : null;
 
         if (model && model.length > 0) {
             return model;

@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ItemModule } from '../item/item.module';
 import { ContextMenuModule } from '../shared/context-menu/context-menu.module';
+import { FilterModule } from '../shared/filter/filter.module';
 import { IconsModule } from '../shared/icons/icons.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { MediaModule } from '../shared/media/media.module';
@@ -32,6 +33,7 @@ const materialModules = [
     MediaModule,
     RightClickContextMenuModule,
     PreloaderModule,
+    FilterModule,
     ...materialModules
   ],
   declarations: [

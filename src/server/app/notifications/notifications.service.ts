@@ -28,8 +28,9 @@ class NotificationsService extends BaseService {
         return await notificationsRepository.deleteSubscription(res, this.getUserId(res), uId);
     }
 
-    async getSubscriptions(res: Response, pageIndex: number, pageSize: number): Promise<ItemViewModel[] | null> {
-        return await notificationsRepository.getSubscriptions(res, this.getUserId(res), pageIndex, pageSize);
+    async getSubscriptions(res: Response, tags: Array<string> | null, pageIndex: number, pageSize: number)
+        : Promise<ItemViewModel[] | null> {
+        return await notificationsRepository.getSubscriptions(res, this.getUserId(res), tags, pageIndex, pageSize);
     }
 
     async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel[] | null> {

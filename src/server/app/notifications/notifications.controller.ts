@@ -70,11 +70,12 @@ class NotificationsController extends BaseController {
     }
 
     async getSubscriptions(req: Request, res: Response, next: NextFunction) {
+        const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
 
         res.status(200).json(
-            await notificationsService.getSubscriptions(res, pageIndex, pageSize)
+            await notificationsService.getSubscriptions(res, tags, pageIndex, pageSize)
         );
     }
 }

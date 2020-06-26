@@ -19,9 +19,9 @@ export class UserService {
             .get<UserPublicViewModel>(`${environment.serverEndpoint}${UserRoutes.getUserPublic(userId).client()}`).toPromise();
     }
 
-    getUserPublicItems(userId: number, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
+    getUserPublicItems(userId: number, tags: string | null, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.serverEndpoint}${UserRoutes.getUserPublicItems(userId).client({ pageIndex, pageSize })}`)
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${UserRoutes.getUserPublicItems(userId).client({ tags, pageIndex, pageSize })}`)
             .toPromise();
     }
 

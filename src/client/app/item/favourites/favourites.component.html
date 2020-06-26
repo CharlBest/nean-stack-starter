@@ -9,6 +9,7 @@
 
     <app-item *ngFor="let item of items; trackBy: trackByFn"
         [item]="item"
+        (filterClicked)="filters.filterClick($event)"
         cdkDrag
         [cdkDragData]="item"
         [cdkDragStartDelay]="400"></app-item>

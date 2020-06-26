@@ -50,9 +50,9 @@ export class ItemService {
             .toPromise();
     }
 
-    getSubscriptions(pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
+    getSubscriptions(tags: string | null, pageIndex: number, pageSize?: number): Promise<ItemViewModel[] | null> {
         return this.http
-            .get<ItemViewModel[]>(`${environment.serverEndpoint}${NotificationRoutes.getSubscriptions().client({ pageIndex, pageSize })}`)
+            .get<ItemViewModel[]>(`${environment.serverEndpoint}${NotificationRoutes.getSubscriptions().client({ tags, pageIndex, pageSize })}`)
             .toPromise();
     }
 

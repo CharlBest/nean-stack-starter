@@ -1,13 +1,16 @@
 export const data = `
-MATCH (users:User { id: $userId })-[subscribed:SUBSCRIBED]->(items:Item)
+MATCH (users:User { id: $userId })-[subscription:SUBSCRIBED]->(items:Item)
+OPTIONAL MATCH (items)-[:TAG]->(itemTags:Tag)
+
+// Filter items on tags
+WITH users, items, subscription, collect(itemTags.name) as tags
+WHERE $tags IS NULL OR ALL(tag IN $tags WHERE tag IN tags)
+
 OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
 OPTIONAL MATCH (users)-[:HAS_AVATAR]->(avatars:File)
-OPTIONAL MATCH (items)-[:TAG]->(tags:Tag)
-
 OPTIONAL MATCH (users)-[favourite:HAS_FAVOURITE]->(items)
-OPTIONAL MATCH (users)-[subscribed:SUBSCRIBED]->(items)
 
-WITH properties(items) as items, subscribed, collect(properties(files)) as files, collect(tags.name) as tags, users, collect(properties(avatars))[0] as avatar, favourite, subscribed
+WITH properties(items) as items, subscription, collect(properties(files)) as files, tags, users, collect(properties(avatars))[0] as avatar, favourite
 
 RETURN items,
 files,
@@ -19,9 +22,9 @@ users
     avatar: avatar
 },
 CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
-CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
+CASE WHEN subscription IS NOT NULL THEN true ELSE false END as subscribed
 
-ORDER BY subscribed.dateCreated DESC
+ORDER BY subscription.dateCreated DESC
 SKIP $pageIndex*$pageSize
 LIMIT $pageSize
 `

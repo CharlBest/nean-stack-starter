@@ -207,7 +207,7 @@ class ItemsRepository extends BaseRepository {
         }
     }
 
-    private buildItemViewModel(record: Record): ItemViewModel {
+    buildItemViewModel(record: Record): ItemViewModel {
         return {
             ...(record.has('items') ? record.get('items') : record.get('item')) as ItemViewModel,
             files: record.get('files'),

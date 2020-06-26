@@ -53,6 +53,10 @@ $card-padding-override: 16px;
 	outline: none;
 	-webkit-tap-highlight-color: transparent;
 
+	mat-chip {
+		cursor: pointer;
+	}
+
 	.media {
 		position: relative;
 		user-select: none;

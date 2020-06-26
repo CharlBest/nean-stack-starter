@@ -1,15 +1,19 @@
 export const data = `
 MATCH (users:User { id: $userId })-[:HAS_ITEM]->(items:Item)
-OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
+OPTIONAL MATCH (items)-[:TAG]->(itemTags:Tag)
 
+// Filter items on tags
+WITH users, items, collect(itemTags.name) as tags
+WHERE $tags IS NULL OR ALL(tag IN $tags WHERE tag IN tags)
+
+OPTIONAL MATCH (user)-[:HAS_AVATAR]->(avatars:File)
 OPTIONAL MATCH (:User { id: $loggedInUserId })-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (:User { id: $loggedInUserId })-[subscribed:SUBSCRIBED]->(items)
 OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
-OPTIONAL MATCH (items)-[:TAG]->(tags:Tag)
 
 RETURN properties(items) as items,
 collect(properties(files)) as files,
-collect(tags.name) as tags,
+tags,
 users
 {
     id: users.id,

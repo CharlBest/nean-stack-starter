@@ -184,9 +184,9 @@ class UsersService extends BaseService {
         return user;
     }
 
-    async getUserPublicItems(res: Response, userId: number, pageIndex: number, pageSize: number)
+    async getUserPublicItems(res: Response, userId: number, tags: Array<string> | null, pageIndex: number, pageSize: number)
         : Promise<ItemViewModel[] | null> {
-        return await usersRepository.getUserPublicItems(res, this.getOptionalUserId(res), userId, pageIndex, pageSize);
+        return await usersRepository.getUserPublicItems(res, this.getOptionalUserId(res), userId, tags, pageIndex, pageSize);
     }
 
     async resendEmailVerificationLink(res: Response): Promise<void> {

@@ -8,10 +8,9 @@ WHERE $tags IS NULL OR ALL(tag IN $tags WHERE tag IN tags)
 
 OPTIONAL MATCH (items)-[:HAS_FILE]->(files:File)
 OPTIONAL MATCH (users)-[:HAS_AVATAR]->(avatars:File)
-OPTIONAL MATCH (users)-[favourite:HAS_FAVOURITE]->(items)
 OPTIONAL MATCH (users)-[subscribed:SUBSCRIBED]->(items)
 
-WITH properties(items) as items, hasFavourite, collect(properties(files)) as files, tags, users, collect(properties(avatars))[0] as avatar, favourite, subscribed
+WITH properties(items) as items, hasFavourite, collect(properties(files)) as files, tags, users, collect(properties(avatars))[0] as avatar, subscribed
 
 RETURN items,
 files,
@@ -22,7 +21,7 @@ users
     username: users.username,
     avatar: avatar
 },
-CASE WHEN favourite IS NOT NULL THEN true ELSE false END as favourite,
+true as favourite,
 CASE WHEN subscribed IS NOT NULL THEN true ELSE false END as subscribed
 
 ORDER BY hasFavourite.order
