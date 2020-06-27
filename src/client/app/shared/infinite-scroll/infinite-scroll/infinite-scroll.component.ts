@@ -45,6 +45,10 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
       style.getPropertyValue('overflow-y') === 'scroll';
   }
 
+  trackByFn(index: number, tag: string) {
+    return index;
+  }
+
   ngOnDestroy() {
     this.observer.disconnect();
   }
