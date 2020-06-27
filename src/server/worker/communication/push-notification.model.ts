@@ -2,6 +2,6 @@ import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscri
 
 export class PushNotificationModel {
     pushSubscriptions: Array<PushSubscriptionViewModel>;
-    title?: string;
+    title: string;
     body: string;
 }

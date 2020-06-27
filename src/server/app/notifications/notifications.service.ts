@@ -33,8 +33,8 @@ class NotificationsService extends BaseService {
         return await notificationsRepository.getSubscriptions(res, this.getUserId(res), tags, pageIndex, pageSize);
     }
 
-    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel[] | null> {
-        return await notificationsRepository.getNewCommentNotification(res, commentUId);
+    async getNewCommentNotification(res: Response, commentUId: string, title: string): Promise<PushNotificationModel[] | null> {
+        return await notificationsRepository.getNewCommentNotification(res, commentUId, title);
     }
 }
 

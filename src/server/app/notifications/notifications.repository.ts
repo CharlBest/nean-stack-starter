@@ -5,6 +5,7 @@ import { NotificationsViewModel } from '@shared/view-models/user/notifications.v
 import { PushSubscriptionViewModel } from '@shared/view-models/user/push-subscription.view-model';
 import { UpdateNotificationPreferencesViewModel } from '@shared/view-models/user/update-notification-preferences.view-model';
 import { Response } from 'express';
+import { Record } from 'neo4j-driver';
 import { Database } from '../../core/database';
 import { PushNotificationModel } from '../../worker/communication/push-notification.model';
 import { itemsRepository } from '../items/items.repository';
@@ -120,31 +121,34 @@ class NotificationsRepository extends BaseRepository {
         }
     }
 
-    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel[] | null> {
+    async getNewCommentNotification(res: Response, commentUId: string, title: string): Promise<PushNotificationModel[] | null> {
         const result = await this.run(res, Database.queries.notifications.getNewCommentNotification,
             {
                 commentUId
             }
         );
 
-        const model = result ? result.map(record => {
-            const viewModel = new PushNotificationModel();
-
-            const pushSubscriptions = record.get('pushSubscriptions');
-            if (pushSubscriptions && pushSubscriptions.length > 0) {
-                viewModel.pushSubscriptions = pushSubscriptions
-                    .map((pushNotification: PushSubscriptionValues) => PushSubscriptionViewModel.createFromArray(pushNotification));
-            }
-
-            viewModel.body = record.get('description');
-            return viewModel;
-        }) : null;
+        const model = result ? result.map(record => this.buildPushNotificationModel(record, title)) : null;
 
         if (model && model.length > 0) {
             return model;
         } else {
             return null;
         }
+    }
+
+    buildPushNotificationModel(record: Record, title: string): PushNotificationModel {
+        const viewModel = new PushNotificationModel();
+
+        const pushSubscriptions = record.get('pushSubscriptions');
+        if (pushSubscriptions && pushSubscriptions.length > 0) {
+            viewModel.pushSubscriptions = pushSubscriptions
+                .map((pushNotification: PushSubscriptionValues) => PushSubscriptionViewModel.createFromArray(pushNotification));
+        }
+
+        viewModel.title = title;
+        viewModel.body = record.get('description');
+        return viewModel;
     }
 }
 

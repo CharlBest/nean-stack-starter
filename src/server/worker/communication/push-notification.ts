@@ -10,7 +10,7 @@ import { PushNotificationModel } from './push-notification.model';
 
 class PushNotification implements PushNotificationInterface {
 
-    async callDb(service: (res: any) => Promise<PushNotificationModel[] | null>, defaultTitle: string): Promise<boolean> {
+    async callDb(service: (res: any) => Promise<PushNotificationModel[] | null>): Promise<boolean> {
         const res = {
             locals: {
                 neo4jSession: Database.createSession()
@@ -27,7 +27,7 @@ class PushNotification implements PushNotificationInterface {
                 allPushSubscriptions.push(...result.pushSubscriptions);
             }
 
-            return this.send(allPushSubscriptions, results[0].title ? results[0].title : defaultTitle, results[0].body);
+            return this.send(allPushSubscriptions, results[0].title, results[0].body);
         } else {
             return true;
         }
@@ -35,8 +35,8 @@ class PushNotification implements PushNotificationInterface {
 
     async newComment(model: CommentCreationPushNotificationModel): Promise<boolean> {
         return this.callDb(async res => {
-            return await notificationsService.getNewCommentNotification(res, model.commentUId);
-        }, 'Item - Comment');
+            return await notificationsService.getNewCommentNotification(res, model.commentUId, 'Item - Comment');
+        });
     }
 
     async send(pushSubscription: Array<PushSubscriptionViewModel | null | undefined>, title: string, body: string, url?: string)
