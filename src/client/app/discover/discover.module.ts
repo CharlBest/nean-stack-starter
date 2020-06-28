@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ItemModule } from '../item/item.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
-import { SearchRoutingModule } from './search-routing.module';
-import { SearchComponent } from './search/search.component';
+import { DiscoverRoutingModule } from './discover-routing.module';
+import { DiscoverComponent } from './discover/discover.component';
 
 const materialModules = [
   MatCardModule,
@@ -13,13 +13,13 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    SearchRoutingModule,
+    DiscoverRoutingModule,
     ItemModule,
     InfiniteScrollModule,
     ...materialModules
   ],
   declarations: [
-    SearchComponent
+    DiscoverComponent
   ]
 })
-export class SearchModule { }
+export class DiscoverModule { }

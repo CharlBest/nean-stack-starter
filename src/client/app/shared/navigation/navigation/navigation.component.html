@@ -39,14 +39,14 @@
       </button>
 
       <!-- A little hack to hide search heading for custom search bar in header -->
-      <a *ngIf="navigationService.backHeaderTitle && navigationService.backHeaderTitle !== 'Search'"
+      <a *ngIf="navigationService.backHeaderTitle && navigationService.backHeaderTitle !== 'Discover'"
         mat-button>
         {{navigationService.backHeaderTitle}}
       </a>
     </div>
 
     <!-- Search -->
-    <div *ngIf="navigationService.backHeaderTitle === 'Search'"
+    <div *ngIf="navigationService.backHeaderTitle === 'Discover'"
       class="search-bar">
       <app-icon-search (click)="navigationService.searched.emit(searchField.value)"></app-icon-search>
       <input #searchField
@@ -82,10 +82,10 @@
     <div>Home</div>
   </a>
   <a mat-button
-    routerLink="/search"
-    [ngClass]="navItems['search'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    routerLink="/discover"
+    [ngClass]="navItems['discover'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
     <app-icon-search></app-icon-search>
-    <div>Seach</div>
+    <div>Discover</div>
   </a>
   <a mat-button
     routerLink="/item/create"

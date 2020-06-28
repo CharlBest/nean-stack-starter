@@ -13,7 +13,7 @@ describe('Search Component', () => {
     });
 
     it('should be search title', async () => {
-        await page.goto(`${environment.serverEndpoint}/search`);
+        await page.goto(`${environment.serverEndpoint}/discover`);
 
         const title = await page.title();
         expect(title).toEqual('Search');
@@ -23,7 +23,7 @@ describe('Search Component', () => {
     });
 
     it('should be able to search', async () => {
-        await page.goto(`${environment.serverEndpoint}/search`);
+        await page.goto(`${environment.serverEndpoint}/discover`);
 
         await page.type('header input', 'test');
         await (await page.$('header input')).press('Enter');

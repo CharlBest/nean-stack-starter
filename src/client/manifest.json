@@ -44,8 +44,8 @@
       ]
     },
     {
-      "name": "Search",
-      "url": "/search",
+      "name": "Discover",
+      "url": "/discover",
       "icons": [
         {
           "src": "assets/shortcuts/search.png",

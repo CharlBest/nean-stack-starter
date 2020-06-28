@@ -65,8 +65,8 @@ const routes: Route[] = [
     loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
   {
-    path: 'search',
-    loadChildren: () => import('./search/search.module').then(m => m.SearchModule),
+    path: 'discover',
+    loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverModule),
     data: { preload: true }
   },
   {
