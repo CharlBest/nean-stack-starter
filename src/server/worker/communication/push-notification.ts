@@ -27,7 +27,7 @@ class PushNotification implements PushNotificationInterface {
                 allPushSubscriptions.push(...result.pushSubscriptions);
             }
 
-            return this.send(allPushSubscriptions, results[0].title, results[0].body);
+            return this.send(allPushSubscriptions, results[0].title, results[0].body, results[0].url);
         } else {
             return true;
         }
@@ -35,7 +35,7 @@ class PushNotification implements PushNotificationInterface {
 
     async newComment(model: CommentCreationPushNotificationModel): Promise<boolean> {
         return this.callDb(async res => {
-            return await notificationsService.getNewCommentNotification(res, model.commentUId, 'Item - Comment');
+            return await notificationsService.getNewCommentNotification(res, model.commentUId);
         });
     }
 

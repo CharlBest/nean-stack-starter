@@ -4,4 +4,5 @@ export class PushNotificationModel {
     pushSubscriptions: Array<PushSubscriptionViewModel>;
     title: string;
     body: string;
+    url?: string;
 }

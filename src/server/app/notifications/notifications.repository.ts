@@ -121,14 +121,19 @@ class NotificationsRepository extends BaseRepository {
         }
     }
 
-    async getNewCommentNotification(res: Response, commentUId: string, title: string): Promise<PushNotificationModel[] | null> {
+    async getNewCommentNotification(res: Response, commentUId: string): Promise<PushNotificationModel[] | null> {
         const result = await this.run(res, Database.queries.notifications.getNewCommentNotification,
             {
                 commentUId
             }
         );
 
-        const model = result ? result.map(record => this.buildPushNotificationModel(record, title)) : null;
+        const model = result ? result.map(record => {
+            const viewModel = this.buildPushNotificationModel(record);
+            viewModel.title = 'Item - Comment';
+            viewModel.url = `/item/comment/${commentUId}`;
+            return viewModel;
+        }) : null;
 
         if (model && model.length > 0) {
             return model;
@@ -137,7 +142,7 @@ class NotificationsRepository extends BaseRepository {
         }
     }
 
-    buildPushNotificationModel(record: Record, title: string): PushNotificationModel {
+    buildPushNotificationModel(record: Record): PushNotificationModel {
         const viewModel = new PushNotificationModel();
 
         const pushSubscriptions = record.get('pushSubscriptions');
@@ -146,7 +151,6 @@ class NotificationsRepository extends BaseRepository {
                 .map((pushNotification: PushSubscriptionValues) => PushSubscriptionViewModel.createFromArray(pushNotification));
         }
 
-        viewModel.title = title;
         viewModel.body = record.get('description');
         return viewModel;
     }
