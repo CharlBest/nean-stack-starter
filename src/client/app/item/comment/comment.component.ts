@@ -21,7 +21,7 @@ import { ItemService } from '../item.service';
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit {
-  @ViewChild('contextMenu', { static: true }) contextMenu: ContextMenuComponent;
+  @ViewChild('contextMenu') contextMenu: ContextMenuComponent;
   @ViewChild('commentForm') commentForm: CommentFormComponent;
   @Input() comment: CommentViewModel;
   isProcessing = false;
