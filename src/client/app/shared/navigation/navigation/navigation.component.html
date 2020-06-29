@@ -74,7 +74,7 @@
 <ng-template #navLinks>
   <a mat-button
     routerLink="/"
-    [ngClass]="navItems['home'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    [ngClass]="navItems['home'].active ? (bpService.isDesktop ? 'mat-accent' : 'mat-primary') : ''">
     <app-icon-home matBadge="&#8288;"
       matBadgeSize="small"
       matBadgeColor="warn"
@@ -83,19 +83,19 @@
   </a>
   <a mat-button
     routerLink="/discover"
-    [ngClass]="navItems['discover'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    [ngClass]="navItems['discover'].active ? (bpService.isDesktop ? 'mat-accent' : 'mat-primary') : ''">
     <app-icon-search></app-icon-search>
     <div>Discover</div>
   </a>
   <a mat-button
     routerLink="/item/create"
-    [ngClass]="navItems['createItem'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    [ngClass]="navItems['createItem'].active ? (bpService.isDesktop ? 'mat-accent' : 'mat-primary') : ''">
     <app-icon-change-history></app-icon-change-history>
     <div>Create</div>
   </a>
   <a mat-button
     routerLink="/activity"
-    [ngClass]="navItems['activity'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    [ngClass]="navItems['activity'].active ? (bpService.isDesktop ? 'mat-accent' : 'mat-primary') : ''">
     <app-icon-notifications matBadge="{{notificationService.messages?.length}}"
       matBadgeSize="small"
       matBadgeColor="warn"
@@ -104,7 +104,7 @@
   </a>
   <a mat-button
     routerLink="/account"
-    [ngClass]="navItems['account'].active ? bpService.isDesktop ? 'mat-accent' : 'mat-primary' : ''">
+    [ngClass]="navItems['account'].active ? (bpService.isDesktop ? 'mat-accent' : 'mat-primary') : ''">
     <app-icon-person></app-icon-person>
     <div>Account</div>
   </a>
