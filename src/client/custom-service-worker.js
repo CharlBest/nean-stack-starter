@@ -5,11 +5,10 @@ importScripts('./ngsw-worker.js');
 
     self.addEventListener('notificationclick', event => {
         console.log('Notification details: ', event.notification);
-        console.log('Notification actions: ', event.action);
         event.notification.close();
 
         if (clients.openWindow) {
-            const rootUrl = new URL('/', location).href;
+            const rootOrigin = new URL('/', location).origin;
             const url = new URL(event.notification.data.url || '/', location).href;
 
             // Enumerate windows, and call window.focus(), or open a new one.
@@ -17,7 +16,8 @@ importScripts('./ngsw-worker.js');
                 clients.matchAll().then(matchedClients => {
                     console.log('Matched clients: ', matchedClients);
                     for (let client of matchedClients) {
-                        if (client.url === rootUrl) {
+                        const clientOrigin = new URL(client.url).origin;
+                        if (clientOrigin === rootOrigin) {
                             return client.navigate(url).then(navClient => navClient.focus());
                         }
                     }
