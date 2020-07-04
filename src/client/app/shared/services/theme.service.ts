@@ -96,8 +96,13 @@ export class ThemeService {
         // tslint:disable-next-line: deprecation (Safari does not allow addEventListener although addListener is deprecated)
         window.matchMedia(`(prefers-color-scheme: ${colorName})`).addListener(async (event: MediaQueryListEvent) => {
             if (event.matches) {
-                const hasConfirmed = await this.dialogService.confirm(`We noticed you changed your theme to ${colorName}.
-                 Would you like to change the app\'s theme to ${colorName} as well?`);
+                const hasConfirmed = await this.dialogService.confirm({
+                    title: 'Theme changed',
+                    body: `We noticed you changed your theme to ${colorName}.
+                    Would you like to change the app\'s theme to ${colorName} as well?`,
+                    confirmButtonText: 'Yes',
+                    closeButtonText: 'No'
+                });
                 if (hasConfirmed) {
                     this.updateTheme(colorName === 'dark');
                 }

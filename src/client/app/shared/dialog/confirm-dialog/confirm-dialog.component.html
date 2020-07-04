@@ -1,13 +1,16 @@
-<h2 mat-dialog-title>{{title}}</h2>
-<mat-dialog-content>
-    {{message}}
+<h2 mat-dialog-title
+    *ngIf="title">{{title}}</h2>
+<mat-dialog-content *ngIf="body">
+    {{body}}
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-stroked-button
+        *ngIf="confirmButtonText"
         type="button"
         color="primary"
         [mat-dialog-close]="true">{{confirmButtonText}}</button>
     <button mat-stroked-button
+        *ngIf="closeButtonText"
         type="button"
         [mat-dialog-close]="false">{{closeButtonText}}</button>
 </mat-dialog-actions>

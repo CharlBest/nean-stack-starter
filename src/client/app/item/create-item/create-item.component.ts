@@ -62,7 +62,12 @@ export class CreateItemComponent implements OnInit {
   }
 
   async askForNotificationPermission(item: ItemViewModel) {
-    const hasConfirmed = await this.dialogService.confirm('Grant permission to get notifications for comments?', 'Allow', 'Cancel', 'Notification Permission');
+    const hasConfirmed = await this.dialogService.confirm({
+      title: 'Notification Permission',
+      body: 'Grant permission to get notifications for comments?',
+      confirmButtonText: 'Allow',
+      closeButtonText: 'Deny'
+    });
     if (hasConfirmed) {
       this.router.navigate(['/profile/notifications']);
     } else {

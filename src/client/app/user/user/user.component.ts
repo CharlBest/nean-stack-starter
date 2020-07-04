@@ -127,7 +127,11 @@ export class UserComponent implements AfterViewInit {
 
   async report() {
     const hasConfirmed = await this.dialogService
-      .confirm('This user is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+      .confirm({
+        title: 'Report',
+        body: 'This user is either spam, abusive, harmful or you think it doesn\'t belong on here.',
+        confirmButtonText: 'Report'
+      });
     if (hasConfirmed) {
       this.contextMenu.close();
 

@@ -18,7 +18,11 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Stop request if token has expired
         if (this.authService.hasToken() && this.authService.hasStoredTokenExpired()) {
-            this.dialogService.confirm('Your session has expired. Please log back in.', 'Sign In').then(() => {
+            this.dialogService.alert({
+                title: 'Logged out',
+                body: 'Your session has expired. Please log back in.',
+                closeButtonText: 'Log in'
+            }).then(() => {
                 this.authService.removeTokenAndNavigateToLogin();
             });
             return NEVER;

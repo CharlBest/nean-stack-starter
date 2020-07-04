@@ -61,7 +61,10 @@ export class LoginComponent implements OnInit {
     try {
       const response = await this.loginService.login(viewModel);
       if (response && !response.token && response.twoFactorAuthenticationEnabled) {
-        this.dialogService.alert('Please provide your two factor authentication code from your Authenticator/One Time Pin app');
+        this.dialogService.alert({
+          title: 'Action needed',
+          body: 'Please provide your two factor authentication code from your Authenticator/One Time Pin app'
+        });
         this.showTwoFactorAuthentication = true;
         this.isProcessing = false;
       } else if (response && response.token) {
@@ -70,7 +73,10 @@ export class LoginComponent implements OnInit {
 
         this.router.navigateByUrl(this.returnUrl);
       } else {
-        this.dialogService.alert('Authentication failed');
+        this.dialogService.alert({
+          title: 'Problem',
+          body: 'Authentication failed'
+        });
         this.isProcessing = false;
       }
     } catch (error) {

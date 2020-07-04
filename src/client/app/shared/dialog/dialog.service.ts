@@ -9,33 +9,40 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 export class DialogService {
     constructor(private dialog: MatDialog) { }
 
-    alert(message: string, closeButtonText: string | null = null, title: string | null = null): void {
+    alert({ title = 'Alert', body, closeButtonText = 'Close' }: { title?: string, body?: string, closeButtonText?: string })
+        : Promise<void> {
         const dialogRef = this.dialog.open(AlertDialogComponent, {
             disableClose: true
         });
-        dialogRef.componentInstance.message = message;
-        if (closeButtonText) {
-            dialogRef.componentInstance.closeButtonText = closeButtonText;
-        }
         if (title) {
             dialogRef.componentInstance.title = title;
         }
+        if (body) {
+            dialogRef.componentInstance.body = body;
+        }
+        if (closeButtonText) {
+            dialogRef.componentInstance.closeButtonText = closeButtonText;
+        }
+
+        return dialogRef.afterClosed().toPromise();
     }
 
-    confirm(message: string, confirmButtonText: string | null = null, closeButtonText: string | null = null, title: string | null = null)
-        : Promise<boolean> {
+    confirm({ title = 'Confirmation', body, confirmButtonText = 'Confirm', closeButtonText = 'Cancel' }:
+        { title?: string, body?: string, confirmButtonText?: string, closeButtonText?: string }): Promise<boolean> {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: true
         });
-        dialogRef.componentInstance.message = message;
+        if (title) {
+            dialogRef.componentInstance.title = title;
+        }
+        if (body) {
+            dialogRef.componentInstance.body = body;
+        }
         if (confirmButtonText) {
             dialogRef.componentInstance.confirmButtonText = confirmButtonText;
         }
         if (closeButtonText) {
             dialogRef.componentInstance.closeButtonText = closeButtonText;
-        }
-        if (title) {
-            dialogRef.componentInstance.title = title;
         }
 
         return dialogRef.afterClosed().toPromise();

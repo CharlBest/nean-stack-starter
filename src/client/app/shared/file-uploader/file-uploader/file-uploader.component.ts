@@ -94,7 +94,11 @@ export class FileUploaderComponent {
     }
 
     async remove(index: number) {
-        const hasConfirmed = await this.dialogService.confirm('Are you sure?');
+        const hasConfirmed = await this.dialogService.confirm({
+            title: 'Remove',
+            body: 'Are you sure?',
+            confirmButtonText: 'Proceed'
+        });
         if (hasConfirmed) {
             this.previewImages.splice(index, 1);
             this.changed.emit();

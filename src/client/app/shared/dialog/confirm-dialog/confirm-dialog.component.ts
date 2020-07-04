@@ -5,8 +5,8 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./confirm-dialog.component.scss']
 })
 export class ConfirmDialogComponent {
-    @Input() title = 'Confirmation';
-    @Input() message: string;
-    @Input() confirmButtonText = 'Confirm';
-    @Input() closeButtonText = 'Close';
+    @Input() title: string;
+    @Input() body: string;
+    @Input() confirmButtonText: string;
+    @Input() closeButtonText: string;
 }

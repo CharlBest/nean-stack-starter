@@ -64,7 +64,9 @@ export class PWAService {
 
     private addListenerForAppInstalled() {
         window.addEventListener('appinstalled', (event) => {
-            this.dialogService.alert('Your app was successfully installed');
+            this.dialogService.alert({
+                body: 'Your app was successfully installed'
+            });
         });
     }
 }

@@ -59,7 +59,10 @@ export class CallComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     if (!this.webRTCService.isSupported) {
-      await this.dialogService.confirm('This feature is not supported on your device. Please exit.');
+      await this.dialogService.alert({
+        title: 'Feature not supported',
+        body: 'This feature is not supported on your device. Please exit.'
+      });
       this.location.back();
     }
 
@@ -71,7 +74,10 @@ export class CallComponent implements OnInit, OnDestroy {
             this.code = code;
           }
         } else {
-          this.dialogService.alert('The invitation link is invalid');
+          this.dialogService.alert({
+            title: 'Problem',
+            body: 'The invitation link is invalid'
+          });
         }
         if (params.has('host')) {
           this.isHost = params.get('host') === 'true';
@@ -93,7 +99,10 @@ export class CallComponent implements OnInit, OnDestroy {
       });
 
     this.webRTCCloseSubscription = this.webRTCService.closed.subscribe(async () => {
-      await this.dialogService.confirm('The call was ended.');
+      await this.dialogService.alert({
+        title: 'End of call',
+        body: 'The call was ended.'
+      });
       this.stopVideoCall();
     });
   }
@@ -103,7 +112,12 @@ export class CallComponent implements OnInit, OnDestroy {
       this.getPermission();
     } else {
       // Get camera and mic permission
-      const hasConfirmed = await this.dialogService.confirm('Grant permission for your camera and microphone?');
+      const hasConfirmed = await this.dialogService.confirm({
+        title: 'Camera and microphone permission',
+        body: 'Grant permission for your camera and microphone?',
+        confirmButtonText: 'Allow',
+        closeButtonText: 'Deny'
+      });
       if (hasConfirmed) {
         await this.getPermission();
       } else {

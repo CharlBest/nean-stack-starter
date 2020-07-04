@@ -31,11 +31,18 @@ export class FilterComponent implements OnInit {
 
     async filterClick(tag: string) {
         if (this.tagsToFilter.indexOf(tag) > -1) {
-            this.dialogService.alert(`You are already filtering on ${tag}`);
+            this.dialogService.alert({
+                title: 'Notice',
+                body: `You are already filtering on ${tag}`
+            });
             return;
         }
 
-        const hasConfirmed = await this.dialogService.confirm(`Filter on ${tag}`);
+        const hasConfirmed = await this.dialogService.confirm({
+            title: 'Filter',
+            body: `Are you sure you want to filter on ${tag}`,
+            confirmButtonText: 'Proceed'
+        });
         if (hasConfirmed) {
             // Add tag to filter
             this.tagsToFilter.push(tag);

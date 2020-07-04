@@ -40,7 +40,10 @@ export class ActiveTimerService {
 
     private showMessageOnNextClick() {
         // Message
-        this.dialogService.alert('Time to take a break? You\'ve been online for 1 hour.');
+        this.dialogService.alert({
+            title: 'Time for a break?',
+            body: 'You\'ve been online for 1 hour.'
+        });
 
         // Remove showing message on click
         this.clearClickListener();

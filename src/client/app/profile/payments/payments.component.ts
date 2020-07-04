@@ -32,7 +32,11 @@ export class PaymentsComponent implements OnChanges {
   }
 
   async deleteCard(id: string) {
-    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this payment method?');
+    const hasConfirmed = await this.dialogService.confirm({
+      title: 'Delete payment method',
+      body: 'Are you sure you want to delete this payment method?',
+      confirmButtonText: 'Delete'
+    });
     if (hasConfirmed) {
 
       try {

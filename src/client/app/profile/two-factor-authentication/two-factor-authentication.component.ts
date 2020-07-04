@@ -53,7 +53,10 @@ export class TwoFactorAuthenticationComponent implements OnInit {
 
       // Instructions
       if (viewModel.isEnabled) {
-        this.dialogService.alert('Remember to scan your QR Code or store your secret code somewhere safe');
+        this.dialogService.alert({
+          title: 'Remember',
+          body: 'Scan your QR Code or store your secret code somewhere safe'
+        });
       }
 
       this.generateQRCode(response.qrCodeKeyUri, viewModel.isEnabled);

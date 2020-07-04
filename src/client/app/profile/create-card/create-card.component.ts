@@ -60,7 +60,10 @@ export class CreateCardComponent implements OnInit {
                     this.isProcessing = false;
                 }
             } else {
-                this.dialogService.alert('Invalid card details');
+                this.dialogService.alert({
+                    title: 'Problem',
+                    body: 'Invalid card details'
+                });
                 this.isProcessing = false;
             }
         }

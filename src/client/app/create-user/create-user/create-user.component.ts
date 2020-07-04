@@ -95,7 +95,10 @@ export class CreateUserComponent implements OnInit {
           this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.AVATAR_UPLOAD }, queryParamsHandling: 'merge' });
         }
       } else {
-        this.dialogService.alert('Authentication failed');
+        this.dialogService.alert({
+          title: 'Problem',
+          body: 'Authentication failed'
+        });
         this.isProcessing = false;
       }
     } catch (error) {

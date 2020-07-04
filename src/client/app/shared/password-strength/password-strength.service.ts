@@ -11,7 +11,12 @@ export class PasswordStrengthService {
 
   passCommonlyUsedTest(password: string): Promise<boolean> {
     if (passwordList.includes(password)) {
-      return this.dialogService.confirm('It seems your password is weak. Would you like to proceed?', 'Yes', 'No');
+      return this.dialogService.confirm({
+        title: 'Weak password',
+        body: 'It seems your password is weak. Would you like to proceed?',
+        confirmButtonText: 'Yes',
+        closeButtonText: 'No'
+      });
     } else {
       return Promise.resolve(true);
     }

@@ -59,7 +59,11 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
   }
 
   async delete() {
-    const hasConfirmed = await this.dialogService.confirm('Are you sure you want to delete this item?');
+    const hasConfirmed = await this.dialogService.confirm({
+      title: 'Delete item',
+      body: 'Are you sure you want to delete this item?',
+      confirmButtonText: 'Delete'
+    });
     if (hasConfirmed) {
       this.contextMenu.close();
 
@@ -82,7 +86,11 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
 
   async report() {
     const hasConfirmed = await this.dialogService
-      .confirm('This item is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+      .confirm({
+        title: 'Report',
+        body: 'This item is either spam, abusive, harmful or you think it doesn\'t belong on here.',
+        confirmButtonText: 'Report'
+      });
     if (hasConfirmed) {
       this.contextMenu.close();
 

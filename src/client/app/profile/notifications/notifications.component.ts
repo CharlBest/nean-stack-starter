@@ -67,7 +67,11 @@ export class NotificationsComponent implements OnInit {
 
   async togglePushNotification(checked: boolean) {
     if (checked) {
-      const hasConfirmed = await this.dialogService.confirm('Are you sure you would like to receive push notifications?');
+      const hasConfirmed = await this.dialogService.confirm({
+        title: 'Are you sure?',
+        body: 'Would like to receive push notifications?',
+        confirmButtonText: 'Proceed'
+      });
       if (hasConfirmed) {
         this.pushNotificationService.subscribeToNotifications((pushSubscription: PushSubscriptionViewModel) => {
           this.update(pushSubscription);

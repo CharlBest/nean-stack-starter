@@ -66,7 +66,11 @@ export class CommentComponent implements OnInit {
   }
 
   async delete() {
-    const hasConfirmed = await this.dialogService.confirm('Delete your comment and all of its replies permanently?', 'Delete', 'Cancel', 'Delete comment');
+    const hasConfirmed = await this.dialogService.confirm({
+      title: 'Delete comment',
+      body: 'Delete your comment and all of its replies permanently?',
+      confirmButtonText: 'Delete'
+    });
     if (hasConfirmed) {
       this.contextMenu.close();
 
@@ -90,7 +94,11 @@ export class CommentComponent implements OnInit {
 
   async report() {
     const hasConfirmed = await this.dialogService
-      .confirm('This comment is either spam, abusive, harmful or you think it doesn\'t belong on here.');
+      .confirm({
+        title: 'Report',
+        body: 'This comment is either spam, abusive, harmful or you think it doesn\'t belong on here.',
+        confirmButtonText: 'Report'
+      });
     if (hasConfirmed) {
       this.contextMenu.close();
 
@@ -139,7 +147,11 @@ export class CommentComponent implements OnInit {
       this.showReplies = true;
       this.showCreateReply = true;
     } else {
-      const hasConfirmed = await this.dialogService.confirm('Please log in to reply', 'Sign In');
+      const hasConfirmed = await this.dialogService.confirm({
+        title: 'Log in',
+        body: 'Please log in to reply',
+        confirmButtonText: 'Proceed'
+      });
       if (hasConfirmed) {
         this.authService.removeTokenAndNavigateToLogin();
       }
