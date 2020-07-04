@@ -49,7 +49,7 @@ jobs:
       run: npm run build
 
     - name: Save production artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       if: matrix.node-version == '12.x' && matrix.os == 'ubuntu-latest'
       with:
         name: dist
@@ -70,7 +70,7 @@ jobs:
         export_default_credentials: true
 
     - name: Download dist
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: dist
 
