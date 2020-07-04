@@ -17,6 +17,10 @@ export class AuthService implements CanActivate {
         return this.localStorageService.userData.userId;
     }
 
+    get isAuthenticated(): boolean {
+        return this.hasToken();
+    }
+
     private preventLogoutOnNextRequestFlag: boolean;
     get shouldPreventLogoutOnNextRequest() {
         if (this.preventLogoutOnNextRequestFlag) {

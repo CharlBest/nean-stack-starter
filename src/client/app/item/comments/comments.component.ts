@@ -16,7 +16,6 @@ import { ItemService } from '../item.service';
 export class CommentsComponent implements OnInit {
 
   itemUId: string | null;
-  isAuthenticated: boolean = this.authService.hasToken();
   isProcessing = false;
   isProcessingComment = false;
   item: ItemViewModel;
@@ -28,7 +27,7 @@ export class CommentsComponent implements OnInit {
     private commentService: CommentService,
     public formErrorsService: FormErrorsService,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private navigationService: NavigationService) { }
 

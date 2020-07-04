@@ -7,7 +7,7 @@
     <mat-card-content>
 
         <!-- Login to comment -->
-        <div *ngIf="!isAuthenticated">
+        <div *ngIf="!authService.isAuthenticated">
             <button mat-stroked-button
                 type="button"
                 (click)="goToSignUp()">Sign Up</button> or
@@ -18,7 +18,7 @@
         </div>
 
         <!-- Create comment -->
-        <app-create-comment [hidden]="!isAuthenticated"
+        <app-create-comment [hidden]="!authService.isAuthenticated"
             [itemUId]="item?.uId"
             (createSuccess)="insertComment($event)"></app-create-comment>
 

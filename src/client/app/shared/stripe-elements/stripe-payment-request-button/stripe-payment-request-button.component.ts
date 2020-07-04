@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CanMakePaymentResult, PaymentIntent, PaymentRequest, PaymentRequestOptions, PaymentRequestPaymentMethodEvent, StripeError, StripePaymentRequestButtonElement } from '@stripe/stripe-js';
+import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
 import { StripeElementsService } from '../stripe-elements.service';
 
@@ -11,7 +12,6 @@ import { StripeElementsService } from '../stripe-elements.service';
 export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() amount: number;
-    @Input() isAuthenticated: boolean;
     @Input() showButton = false;
     @Output() readonly paymentMethod: EventEmitter<PaymentRequestPaymentMethodEvent> = new EventEmitter<PaymentRequestPaymentMethodEvent>();
     @ViewChild('paymentRequestButton', { static: true }) paymentRequestButton: ElementRef<HTMLDivElement>;
@@ -29,10 +29,11 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         },
         requestPayerName: false,
         // Convert to boolean and then get the opposite
-        requestPayerEmail: !!!this.isAuthenticated,
+        requestPayerEmail: !!!this.authService.isAuthenticated,
     };
 
     constructor(private stripeElementsService: StripeElementsService,
+        private authService: AuthService,
         public themeService: ThemeService) { }
 
     async ngOnInit() {
@@ -41,7 +42,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if ((changes.amount || changes.isAuthenticated) && this.paymentRequestButtonInstance) {
+        if (changes.amount && this.paymentRequestButtonInstance) {
             this.setDynamicOptions();
 
             const newOptions = {

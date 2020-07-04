@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { CommentViewModel } from '@shared/view-models/comment/comment.view-model';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
-import { AuthService } from '../../shared/services/auth.service';
 import { CommentService } from '../comment.service';
 
 @Component({
@@ -13,15 +12,13 @@ import { CommentService } from '../comment.service';
 export class RepliesComponent implements OnInit {
 
   @Input() comment: CommentViewModel;
-  isAuthenticated: boolean = this.authService.hasToken();
   isProcessing = false;
   comments: CommentViewModel[] = [];
   pageIndex = 0;
   listEnd = false;
 
   constructor(private commentService: CommentService,
-    public formErrorsService: FormErrorsService,
-    private authService: AuthService) { }
+    public formErrorsService: FormErrorsService) { }
 
   ngOnInit() {
     this.getReplies();

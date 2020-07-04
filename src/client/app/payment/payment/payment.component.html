@@ -45,7 +45,7 @@
                 <br>
 
                 <mat-form-field appearance="fill"
-                    *ngIf="isAuthenticated && paymentCards?.length > 0">
+                    *ngIf="authService.isAuthenticated && paymentCards?.length > 0">
                     <mat-label>Cards</mat-label>
                     <mat-select formControlName="cardId"
                         [value]="paymentCards[0]?.id">
@@ -61,8 +61,7 @@
 
                 <app-stripe-payment-request-button #stripePaymentRequestButton
                     (paymentMethod)="paymentRequestButtonComplete($event)"
-                    [amount]="formGroup.controls['amount'].value"
-                    [isAuthenticated]="isAuthenticated"></app-stripe-payment-request-button>
+                    [amount]="formGroup.controls['amount'].value"></app-stripe-payment-request-button>
 
                 <app-stripe-elements [hidden]="formGroup.controls['cardId'].value !== 'new'"
                     #stripeElements
@@ -70,7 +69,7 @@
 
                 <br>
 
-                <ng-container *ngIf="!isAuthenticated">
+                <ng-container *ngIf="!authService.isAuthenticated">
                     <mat-form-field appearance="fill">
                         <input matInput
                             formControlName="email"
@@ -83,7 +82,7 @@
                     </mat-form-field>
                 </ng-container>
 
-                <ng-container *ngIf="isAuthenticated && formGroup.controls['cardId'].value === 'new'">
+                <ng-container *ngIf="authService.isAuthenticated && formGroup.controls['cardId'].value === 'new'">
                     <mat-checkbox formControlName="saveCard">Save card</mat-checkbox>
 
                     <br>

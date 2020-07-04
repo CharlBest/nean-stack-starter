@@ -41,7 +41,6 @@ export class PaymentComponent implements OnInit {
     @ViewChild('stripePaymentRequestButton', { static: true }) stripePaymentRequestButton: StripePaymentRequestButtonComponent;
     @ViewChild('stripeElements', { static: true }) stripeElementsComponent: StripeElementsComponent;
 
-    isAuthenticated: boolean = this.authService.hasToken();
     isProcessing = true;
     isProcessingStripeElements = true;
     formGroup: FormGroup;
@@ -54,7 +53,7 @@ export class PaymentComponent implements OnInit {
     constructor(private fb: FormBuilder,
         private paymentService: PaymentService,
         public formErrorsService: FormErrorsService,
-        private authService: AuthService,
+        public authService: AuthService,
         public dialogService: DialogService) { }
 
     ngOnInit() {
@@ -70,7 +69,7 @@ export class PaymentComponent implements OnInit {
     }
 
     checkAuthenticationAndGetCards() {
-        if (this.isAuthenticated) {
+        if (this.authService.isAuthenticated) {
             this.authService.preventLogoutOnNextRequest();
             this.getPaymentCards()
                 .catch(error => {
@@ -153,14 +152,14 @@ export class PaymentComponent implements OnInit {
         // Card payment
         if (this.activeSection === Section.CARD) {
             // Not authenticated AND stripe elements is valid and email is required
-            if (!this.isAuthenticated && (!this.stripeElementsComponent.isValid ||
+            if (!this.authService.isAuthenticated && (!this.stripeElementsComponent.isValid ||
                 this.formGroup.controls.email.value === null || this.formGroup.controls.email.value === '')) {
                 this.isFormValid = false;
                 return;
             }
 
             // Authenticated AND new card and stipe elements is valid
-            if (this.isAuthenticated
+            if (this.authService.isAuthenticated
                 && this.formGroup.controls.cardId.value === 'new'
                 && !this.stripeElementsComponent.isValid) {
                 this.isFormValid = false;
@@ -181,7 +180,7 @@ export class PaymentComponent implements OnInit {
         const viewModel = await this.paymentService.paymentIntent({
             amount: +this.formGroup.controls.amount.value,
             currency: 'eur',
-            email: event.payerEmail && !this.isAuthenticated ? event.payerEmail : undefined,
+            email: event.payerEmail && !this.authService.isAuthenticated ? event.payerEmail : undefined,
         });
 
         if (viewModel.clientSecret) {
