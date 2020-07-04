@@ -4,6 +4,9 @@
         <mat-card-subtitle>{{t.everythingOnThisDemoSite}}</mat-card-subtitle>
     </mat-card>
 
+    <app-overscroll (overscrolled)="onOverscrolled()"
+        [isProcessing]="isProcessing"></app-overscroll>
+
     <app-github-readme></app-github-readme>
 
     <app-filter #filters

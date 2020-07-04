@@ -69,6 +69,12 @@ export class HomeComponent implements AfterViewInit {
     this.getItems(true);
   }
 
+  onOverscrolled() {
+    if (!this.isProcessing) {
+      this.getItems(true);
+    }
+  }
+
   trackByFn(index: number, item: ItemViewModel) {
     return item.id;
   }

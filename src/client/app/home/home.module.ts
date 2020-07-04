@@ -9,6 +9,7 @@ import { FilterModule } from '../shared/filter/filter.module';
 import { GitHubModule } from '../shared/github/github.module';
 import { InfiniteScrollModule } from '../shared/infinite-scroll/infinite-scroll.module';
 import { NetworkStatusModule } from '../shared/network-status/network-status.module';
+import { OverscrollModule } from '../shared/overscroll/overscroll.module';
 import { PreloaderModule } from '../shared/preloader/preloader.module';
 import { TranslateModule } from '../shared/translate/translate.module';
 import { GitHubReadMeComponent } from './github-readme/github-readme.component';
@@ -33,6 +34,7 @@ const materialModules = [
     PreloaderModule,
     TranslateModule,
     FilterModule,
+    OverscrollModule,
     ...materialModules
   ],
   declarations: [
