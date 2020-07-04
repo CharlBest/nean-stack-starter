@@ -1,7 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../dialog/dialog.service';
-import { PWAInstallBannerComponent } from './pwa-install-banner/pwa-install-banner.component';
 
 @Injectable({
     providedIn: 'root',
@@ -16,8 +14,7 @@ export class PWAService {
     readonly isWithinPWA: boolean = window.matchMedia('(display-mode: standalone)').matches ||
         (window.navigator as any).standalone === true; // Safari workaround
 
-    constructor(private dialogService: DialogService,
-        private snackBar: MatSnackBar) { }
+    constructor(private dialogService: DialogService) { }
 
     init() {
         this.addEventForBeforeInstallPrompt();
@@ -27,14 +24,6 @@ export class PWAService {
     openInstallPrompt() {
         if (this.beforeInstallPromptEvent) {
             (this.beforeInstallPromptEvent as any /*BeforeInstallPromptEvent*/).prompt();
-        }
-    }
-
-    openPWAInstallSnackBar() {
-        if (this.canInstallAndNotInPWA) {
-            this.snackBar.openFromComponent(PWAInstallBannerComponent, {
-                duration: undefined
-            });
         }
     }
 

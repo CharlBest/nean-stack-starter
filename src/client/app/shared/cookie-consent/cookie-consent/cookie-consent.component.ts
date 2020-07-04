@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
-import { PWAService } from '../../pwa-helper/pwa.service';
+import { PWAInstallBannerService } from '../../pwa-helper/pwa-install-banner.service';
 import { LocalStorageService } from '../../services/storage.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { LocalStorageService } from '../../services/storage.service';
 })
 export class CookieConsentComponent {
 
-  constructor(private pwaService: PWAService,
+  constructor(private pwaInstallBannerService: PWAInstallBannerService,
     private localStorageService: LocalStorageService,
     private snackBarRef: MatSnackBarRef<CookieConsentComponent>) { }
 
@@ -21,6 +21,6 @@ export class CookieConsentComponent {
     this.localStorageService.setUserStorageData({ consent: true });
 
     // Show PWA Install snackbar
-    this.pwaService.openPWAInstallSnackBar();
+    this.pwaInstallBannerService.openPWAInstallSnackBar();
   }
 }
