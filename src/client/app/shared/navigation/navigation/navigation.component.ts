@@ -5,7 +5,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { PWAService } from '../../pwa-helper/pwa.service';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { NotificationService } from '../../services/notification.service';
 import { WebSocketService } from '../../services/websocket.service';
@@ -56,7 +55,6 @@ export class NavigationComponent implements OnInit {
     public bpService: BreakpointService,
     public notificationService: NotificationService,
     public navigationService: NavigationService,
-    public pwaService: PWAService,
     private webSocketService: WebSocketService) { }
 
   ngOnInit() {
@@ -132,12 +130,10 @@ export class NavigationComponent implements OnInit {
     // Set toolbar height
     this.bpService.isDesktop$.subscribe(data => {
       if (data) {
-        this.toolbarHeight = this.desktopTopToolbarHeight;
+        this.totalToolbarHeight = this.desktopTopToolbarHeight;
       } else {
-        this.toolbarHeight = this.mobileTopToolbarHeight;
+        this.totalToolbarHeight = this.mobileTopToolbarHeight;
       }
-
-      this.totalToolbarHeight = this.pwaService.canInstallAndNotInPWA ? this.toolbarHeight * 2 : this.toolbarHeight;
     });
 
     this.addEventListenerOnScroll();
@@ -187,14 +183,6 @@ export class NavigationComponent implements OnInit {
           this.navItems[key].active = false;
         }
       }
-    }
-  }
-
-  showInstallBanner(showInstallBanner: boolean) {
-    if (showInstallBanner) {
-      this.totalToolbarHeight = this.toolbarHeight * 2;
-    } else {
-      this.totalToolbarHeight = this.toolbarHeight;
     }
   }
 

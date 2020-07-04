@@ -34,6 +34,16 @@
 			::ng-deep .mat-tab-body-content {
 				overflow-y: hidden;
 			}
+
+			.app-icon {
+				width: 100px;
+				height: 100px;
+
+				::ng-deep svg {
+					width: 100px;
+					height: 100px;
+				}
+			}
 		}
 
 		.bottom-bar {

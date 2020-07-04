@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { CookieConsentModule } from '../cookie-consent/cookie-consent.module';
 import { IconsModule } from '../icons/icons.module';
-import { InstallBannerComponent } from './install-banner/install-banner.component';
 import { NavRightPlaceholderDirective } from './nav-right-placeholder.directive';
 import { NavigationComponent } from './navigation/navigation.component';
 
@@ -28,7 +27,6 @@ const materialModules = [
   ],
   declarations: [
     NavigationComponent,
-    InstallBannerComponent,
     NavRightPlaceholderDirective
   ]
 })

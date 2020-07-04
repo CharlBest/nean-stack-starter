@@ -19,6 +19,12 @@ export class IconHomeComponent extends BaseIconComponent { }
 export class IconLockComponent extends BaseIconComponent { }
 
 @Component({
+  selector: 'app-icon-get-app',
+  templateUrl: materialIconPath('get_app', Category.ACTION)
+})
+export class IconGetAppComponent extends BaseIconComponent { }
+
+@Component({
   selector: 'app-icon-fiber-manual-record',
   templateUrl: materialIconPath('fiber_manual_record', Category.AV)
 })

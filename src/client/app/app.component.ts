@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
 import { OnboardingService } from './onboarding/onboarding.service';
-import { CookieConsentSnackbarService } from './shared/cookie-consent/cookie-consent-snackbar.service';
+import { CookieConsentService } from './shared/cookie-consent/cookie-consent.service';
 import { NetworkStatusService } from './shared/network-status/network-status.service';
 import { PWAService } from './shared/pwa-helper/pwa.service';
 import { ActiveTimerService } from './shared/services/active-timer.service';
@@ -24,7 +24,7 @@ export class AppComponent {
     private themeService: ThemeService,
     private notificationService: NotificationService,
     private asciiArtService: ASCIIArtService,
-    private cookieConsentSnackbarService: CookieConsentSnackbarService,
+    private cookieConsentService: CookieConsentService,
     private networkStatusService: NetworkStatusService,
     private pwaService: PWAService,
     private onboardingService: OnboardingService,
@@ -51,7 +51,7 @@ export class AppComponent {
     // Show onboarding
     if (!this.onboardingService.openOnboarding()) {
       // Show cookie consent
-      this.cookieConsentSnackbarService.openCookieConsentSnackBar();
+      this.cookieConsentService.openCookieConsentSnackBar();
     }
 
     // ASCII Art

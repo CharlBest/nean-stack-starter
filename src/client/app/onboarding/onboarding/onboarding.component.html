@@ -8,41 +8,17 @@
             animationDuration="600ms">
             <mat-tab>
                 <ng-template matTabContent>
+                    <app-icon-info></app-icon-info>
+
                     <h2>Welcome</h2>
 
                     <p>Use this project as a base for any new software project</p>
                 </ng-template>
             </mat-tab>
-            <mat-tab *ngIf="!hasAcceptedCookieConsentOnLoad">
-                <ng-template matTabContent>
-                    <h2>Cookies</h2>
-
-                    <p>By using NEAN's services you agree to our Cookies Use. We and our partners operate globally
-                        and use cookies, including for analytics, personalisation, and ads.</p>
-
-                    <button mat-stroked-button
-                        type="button"
-                        (click)="acceptCookieConsent()"
-                        [disabled]="hasAcceptedCookieConsent">
-                        {{hasAcceptedCookieConsent ? 'Accepted' : 'Accept'}}
-                    </button>
-                </ng-template>
-            </mat-tab>
-            <mat-tab *ngIf="pwaService?.canInstallAndNotInPWA">
-                <ng-template matTabContent>
-                    <h2>Install</h2>
-
-                    <p>Use this application frequently? Why not install it.</p>
-
-                    <button mat-stroked-button
-                        type="button"
-                        (click)="pwaService.openInstallPrompt()">
-                        Install
-                    </button>
-                </ng-template>
-            </mat-tab>
             <mat-tab *ngIf="themeService.isPreferColorSchemeDark && !isDarkThemeOnLoad">
                 <ng-template matTabContent>
+                    <app-icon-brightness-2></app-icon-brightness-2>
+
                     <h2>Dark Mode</h2>
 
                     <p>We notice you have dark mode enabled on your device. Do you also want to get the dark theme for
@@ -57,19 +33,8 @@
             </mat-tab>
             <mat-tab>
                 <ng-template matTabContent>
-                    <h2>Tour</h2>
+                    <app-icon-person></app-icon-person>
 
-                    <p>Take a tour to see what you can do.</p>
-
-                    <button mat-stroked-button
-                        type="button"
-                        (click)="takeTour()">
-                        Go
-                    </button>
-                </ng-template>
-            </mat-tab>
-            <mat-tab>
-                <ng-template matTabContent>
                     <h2>Account</h2>
 
                     <p>Want to stick around and join the community?</p>
@@ -91,6 +56,8 @@
             </mat-tab>
             <mat-tab>
                 <ng-template matTabContent>
+                    <app-icon-search></app-icon-search>
+
                     <h2>Explore</h2>
 
                     <p>See what this app has to offer.</p>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IconApplePayComponent, IconBloggerComponent, IconFacebookComponent, IconGooglePayComponent, IconLinkedInComponent, IconMessengerComponent, IconMixComponent, IconPayPalComponent, IconPinterestComponent, IconRedditComponent, IconTumblrComponent, IconTwitterComponent, IconWeChatComponent, IconWhatsAppComponent } from './icons/custom-icons.component';
-import { AlarmComponent, GroupWorkComponent, IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowBackComponent, IconArrowDropDownComponent, IconArrowDropUpComponent, IconArrowUpwardComponent, IconBeachAccessComponent, IconBrightness2Component, IconBrightness5Component, IconCallComponent, IconCallEndComponent, IconCancelComponent, IconChangeHistoryComponent, IconCheckCircleComponent, IconCloseComponent, IconCodeComponent, IconCreditCardComponent, IconDeleteComponent, IconDirectionsCarComponent, IconDoneComponent, IconEditComponent, IconEmailComponent, IconErrorOutlineComponent, IconExitToAppComponent, IconFeedbackComponent, IconFiberManualRecordComponent, IconFilterListComponent, IconFlagComponent, IconFreeBreakfastComponent, IconGraphicEqComponent, IconGroupAddComponent, IconHelpComponent, IconHomeComponent, IconInfoComponent, IconKeyboardArrowDownComponent, IconKeyboardArrowLeftComponent, IconKeyboardArrowRightComponent, IconKeyboardArrowUpComponent, IconLightbulbOutlineComponent, IconLinkComponent, IconLiveHelpComponent, IconLockComponent, IconMailComponent, IconMicComponent, IconMicOffComponent, IconModeCommentComponent, IconMoreVertComponent, IconNotificationActiveComponent, IconNotificationsComponent, IconPersonComponent, IconPetsComponent, IconPriorityHighComponent, IconReplyComponent, IconReportComponent, IconRingVolumeComponent, IconRotateRightComponent, IconSearchComponent, IconShareComponent, IconStarComponent, IconSwitchCameraComponent, IconTagFaceComponent, IconTranslateComponent, IconVerifiedUserComponent, IconVideocamComponent, IconVideocamOffComponent, IconVisibilityComponent, IconVisibilityOffComponent } from './icons/material-icons.component';
+import { AlarmComponent, GroupWorkComponent, IconAccountCircleComponent, IconAirplaneModeActiveComponent, IconArrowBackComponent, IconArrowDropDownComponent, IconArrowDropUpComponent, IconArrowUpwardComponent, IconBeachAccessComponent, IconBrightness2Component, IconBrightness5Component, IconCallComponent, IconCallEndComponent, IconCancelComponent, IconChangeHistoryComponent, IconCheckCircleComponent, IconCloseComponent, IconCodeComponent, IconCreditCardComponent, IconDeleteComponent, IconDirectionsCarComponent, IconDoneComponent, IconEditComponent, IconEmailComponent, IconErrorOutlineComponent, IconExitToAppComponent, IconFeedbackComponent, IconFiberManualRecordComponent, IconFilterListComponent, IconFlagComponent, IconFreeBreakfastComponent, IconGetAppComponent, IconGraphicEqComponent, IconGroupAddComponent, IconHelpComponent, IconHomeComponent, IconInfoComponent, IconKeyboardArrowDownComponent, IconKeyboardArrowLeftComponent, IconKeyboardArrowRightComponent, IconKeyboardArrowUpComponent, IconLightbulbOutlineComponent, IconLinkComponent, IconLiveHelpComponent, IconLockComponent, IconMailComponent, IconMicComponent, IconMicOffComponent, IconModeCommentComponent, IconMoreVertComponent, IconNotificationActiveComponent, IconNotificationsComponent, IconPersonComponent, IconPetsComponent, IconPriorityHighComponent, IconReplyComponent, IconReportComponent, IconRingVolumeComponent, IconRotateRightComponent, IconSearchComponent, IconShareComponent, IconStarComponent, IconSwitchCameraComponent, IconTagFaceComponent, IconTranslateComponent, IconVerifiedUserComponent, IconVideocamComponent, IconVideocamOffComponent, IconVisibilityComponent, IconVisibilityOffComponent } from './icons/material-icons.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +87,7 @@ import { AlarmComponent, GroupWorkComponent, IconAccountCircleComponent, IconAir
     IconKeyboardArrowUpComponent,
     IconKeyboardArrowDownComponent,
     IconFilterListComponent,
+    IconGetAppComponent,
   ],
   exports: [
     IconHomeComponent,
@@ -172,6 +173,7 @@ import { AlarmComponent, GroupWorkComponent, IconAccountCircleComponent, IconAir
     IconKeyboardArrowUpComponent,
     IconKeyboardArrowDownComponent,
     IconFilterListComponent,
+    IconGetAppComponent,
   ]
 })
 export class IconsModule { }

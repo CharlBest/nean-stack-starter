@@ -1,0 +1,16 @@
+<div class="container mat-typography">
+	<div>
+		<app-icon-get-app></app-icon-get-app>
+		Install the app
+	</div>
+	<div>
+		<button mat-button
+			(click)="pwaService.openInstallPrompt()"
+			color="primary"
+			type="button">INSTALL</button>
+		<button mat-button
+			(click)="dismiss()"
+			color="accent"
+			type="button">DISMISS</button>
+	</div>
+</div>

@@ -1,10 +1,6 @@
 <header #navbar
   [style.height.px]="activeNavigation ? totalToolbarHeight : 0">
 
-  <!-- Install banner -->
-  <app-install-banner [toolbarHeight]="toolbarHeight"
-    (showInstallBanner)="showInstallBanner($event)"></app-install-banner>
-
   <!-- Main nav -->
   <div *ngIf="navigationType.PRIMARY === activeNavigation"
     [style.height.px]="toolbarHeight"
