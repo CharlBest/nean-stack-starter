@@ -150,19 +150,18 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  onSwipeLeft(event: HammerInput): void {
-    if (this.selectedIndex < 8) {
-      this.selectedIndex = this.selectedIndex + 1;
-    }
-  }
-
-  onSwipeRight(event: HammerInput): void {
-    const searchTab = this.emojiCategories.find(emoji => emoji.category === EmojiCategoryName.SEARCH);
-
-    if (this.selectedIndex > 1 || (this.selectedIndex === 1 && searchTab && searchTab.emojiData.length > 0)) {
-      this.selectedIndex = this.selectedIndex - 1;
-    }
-  }
+  // TODO: reimplement swipe features
+  // onSwipeLeft(event: HammerInput): void {
+  //   if (this.selectedIndex < 8) {
+  //     this.selectedIndex = this.selectedIndex + 1;
+  //   }
+  // }
+  // onSwipeRight(event: HammerInput): void {
+  //   const searchTab = this.emojiCategories.find(emoji => emoji.category === EmojiCategoryName.SEARCH);
+  //   if (this.selectedIndex > 1 || (this.selectedIndex === 1 && searchTab && searchTab.emojiData.length > 0)) {
+  //     this.selectedIndex = this.selectedIndex - 1;
+  //   }
+  // }
 
   trackByFnForCategory(index: number, item: EmojiCategory): number {
     return index;
@@ -172,7 +171,7 @@ export class EmojiPanelComponent implements OnInit {
     return index;
   }
 
-  trackByFnForEmojiDiversity(index: number, item: unknown): number {
+  trackByFnForEmojiDiversity(index: number, emojiDiversity: string): number {
     return index;
   }
 }

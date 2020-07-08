@@ -11,7 +11,7 @@ import { WebSocketService } from './websocket.service';
 })
 export class NotificationService {
 
-    messages: Array<{ message: string, type: WebSocketType, action?: unknown }> = [];
+    messages: Array<Message> = [];
 
     constructor(private webSocketService: WebSocketService,
         private snackBar: MatSnackBar,
@@ -47,4 +47,10 @@ export class NotificationService {
     removeMessage(index: number): void {
         this.messages.splice(index, 1);
     }
+}
+
+export interface Message {
+    message: string;
+    type: WebSocketType;
+    action?: unknown;
 }

@@ -61,7 +61,7 @@
 
     <div *ngIf="!is24Hour">
       <button mat-stroked-button
-        [color]="isAM ? 'primary' : ''"
+        [color]="isAM ? 'primary' : undefined"
         (click)="isAM = true"
         type="button"
         matTooltip="AM"
@@ -72,7 +72,7 @@
       <br>
       <br>
       <button mat-stroked-button
-        [color]="!isAM ? 'primary' : ''"
+        [color]="!isAM ? 'primary' : undefined"
         (click)="isAM = false"
         type="button"
         matTooltip="PM"

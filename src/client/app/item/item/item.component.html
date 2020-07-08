@@ -9,7 +9,7 @@
                 type="button">
                 <div>
                     <!-- Avatar -->
-                    <img *ngIf="item.user?.avatar?.url && item.user?.avatar?.url !== ''; else defaultAvatar"
+                    <img *ngIf="item.user && item.user.avatar && item.user.avatar.url !== ''; else defaultAvatar"
                         alt="avatar"
                         mat-card-avatar
                         [src]="item?.user?.avatar?.url"
@@ -28,7 +28,7 @@
                     <!-- Name -->
                     <div class="header-text-container">
                         <mat-card-title>{{item?.user?.username}}</mat-card-title>
-                        <mat-card-subtitle [matTooltip]="item.dateCreated | date: 'HH:mm MMM d, y'">
+                        <mat-card-subtitle [matTooltip]="(item.dateCreated | date: 'HH:mm MMM d, y') || ''">
                             {{item.dateCreated | formatRelativeTime}}
                         </mat-card-subtitle>
                     </div>
@@ -48,7 +48,7 @@
                             color="accent"
                             class="animation-spin"></app-icon-notifications-active>
                         <span mat-line>Subscribe
-                            {{item?.subscriptionCount > 0 ? '(' + item?.subscriptionCount + ')' : '' }}</span>
+                            {{item.subscriptionCount && item.subscriptionCount > 0 ? '(' + item.subscriptionCount + ')' : '' }}</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="authService.loggedInUserId"
                         (click)="favouriteItem($event)">
@@ -87,9 +87,9 @@
         <div routerLink="/item/comments/{{item.uId}}"
             [class.cursor-pointer]="!isViewingComments"
             class="content">
-            <div *ngIf="item?.files && item?.files?.length > 0"
+            <div *ngIf="item.files && item.files.length > 0"
                 class="media">
-                <div *ngIf="item?.files?.length > 1">
+                <div *ngIf="item.files.length > 1">
                     <!-- TODO: put some padding on to make the clickable area bigger. Better UX -->
                     <button mat-icon-button
                         (click)="mediaPrevious($event)"
@@ -108,7 +108,7 @@
                 </div>
 
                 <img mat-card-image
-                    [src]="item?.files[activeMediaIndex].url"
+                    [src]="item.files[activeMediaIndex].url"
                     alt="item image"
                     loading="lazy"
                     height="100%">
@@ -139,7 +139,7 @@
             *ngIf="!isViewingComments"
             type="button">
             <app-icon-mode-comment></app-icon-mode-comment>
-            Comment {{item?.commentCount > 0 ? '(' + item?.commentCount + ')' : '' }}
+            Comment {{item.commentCount && item.commentCount > 0 ? '(' + item.commentCount + ')' : '' }}
         </button>
         <button mat-button
             (click)="openShareDialog()"

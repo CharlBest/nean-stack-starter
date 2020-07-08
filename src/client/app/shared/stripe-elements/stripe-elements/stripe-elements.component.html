@@ -5,7 +5,7 @@
         <div class="stripe-element"
             (click)="elementsWrapper?.cardNumber?.element?.focus()"
             (keypress)="elementsWrapper?.cardNumber?.element?.focus()">
-            <app-card-brand [cardBrandEnum]="elementsWrapper?.cardNumber?.cardBrand"></app-card-brand>
+            <app-card-brand [cardBrandEnum]="elementsWrapper.cardNumber.cardBrand"></app-card-brand>
 
             <div #cardNumber
                 class="card-number"></div>

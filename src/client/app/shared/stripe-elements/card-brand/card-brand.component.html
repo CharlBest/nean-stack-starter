@@ -1,5 +1,5 @@
 <img *ngIf="cardBrandString || cardBrandEnum"
     alt="card"
-    src="assets/card-brand-icons/{{cardBrandString || cardBrandType[cardBrandEnum]}}.svg"
+    src="assets/card-brand-icons/{{cardBrandString ? cardBrandString : (cardBrandEnum ? cardBrandType[cardBrandEnum] : '')}}.svg"
     class="card-brand-image"
     height="17px" />

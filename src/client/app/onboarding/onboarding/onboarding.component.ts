@@ -45,7 +45,7 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    trackByFn(index: number, item: string): number {
+    trackByFn(index: number, tab: number): number {
         return index;
     }
 

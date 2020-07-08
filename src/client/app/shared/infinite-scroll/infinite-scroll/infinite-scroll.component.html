@@ -2,7 +2,7 @@
     <ng-content></ng-content>
 </div>
 
-<app-preloader *ngIf="isProcessing || wrapper?.childElementCount > 0"
+<app-preloader *ngIf="isProcessing || (wrapper && wrapper.childElementCount > 0)"
     [style.visibility]="isProcessing ? 'visible' : 'hidden'"></app-preloader>
 
 <ng-container *ngIf="isProcessing">

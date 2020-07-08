@@ -25,7 +25,7 @@
                         *ngIf="comment?.isItemOwner"></app-icon-done>
                     &nbsp;&middot;&nbsp;
                     <span class="date"
-                        [matTooltip]="comment.dateCreated | date: 'HH:mm MMM d, y'">
+                        [matTooltip]="(comment.dateCreated | date: 'HH:mm MMM d, y') || ''">
                         {{comment.dateCreated | formatRelativeTime}}
                     </span>
                 </div>
@@ -92,7 +92,7 @@
 
         <!-- Replies -->
         <button mat-button
-            *ngIf="comment?.commentCount > 0"
+            *ngIf="comment.commentCount && comment.commentCount > 0"
             (click)="showReplies = !showReplies"
             color="primary"
             type="button">

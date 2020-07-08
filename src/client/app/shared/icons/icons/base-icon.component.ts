@@ -2,7 +2,7 @@ import { Directive, HostBinding, Input } from '@angular/core';
 
 @Directive()
 export abstract class BaseIconDirective {
-    @Input() color: 'primary' | 'accent' | 'warn';
+    @Input() color?: 'primary' | 'accent' | 'warn';
     @Input() inline = false;
 
     @HostBinding('class.app-icon') appIcon = true;

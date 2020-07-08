@@ -1,8 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app",
-    "esModuleInterop": true
+    "outDir": "../../out-tsc/app"
   },
   "files": [
     "main.ts",

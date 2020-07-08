@@ -7,8 +7,8 @@ import { CardBrandType } from '../card-brand.enum';
     styleUrls: ['./card-brand.component.scss']
 })
 export class CardBrandComponent implements OnInit {
-    @Input() cardBrandString: string;
-    @Input() cardBrandEnum: CardBrandType;
+    @Input() cardBrandString?: string;
+    @Input() cardBrandEnum?: CardBrandType;
     cardBrandType = CardBrandType;
 
     ngOnInit(): void {

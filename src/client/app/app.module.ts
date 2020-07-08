@@ -5,7 +5,7 @@ import { MatBottomSheetConfig, MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular
 import { MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatSnackBarConfig, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS, MAT_TOOLTIP_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/tooltip';
-import { BrowserModule, HammerModule, Title } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -33,7 +33,6 @@ import { TutorialModule } from './shared/tutorial/tutorial.module';
     DialogModule,
     ClipboardModule,
     ParticleEffectModule,
-    HammerModule,
     ServiceWorkerModule.register('/custom-service-worker.js', { enabled: environment.production, registrationStrategy: 'registerWithDelay:3000' })
   ],
   providers: [

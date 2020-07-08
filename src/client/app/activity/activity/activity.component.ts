@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-web-socket.model';
 import { translateService } from '@shared/translate/translate.service';
-import { NotificationService } from '../../shared/services/notification.service';
+import { Message, NotificationService } from '../../shared/services/notification.service';
 import { WebSocketService } from '../../shared/services/websocket.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class ActivityComponent {
     this.snackBar.open(translateService.t('sent'));
   }
 
-  trackByFn(index: number, item: string): number {
+  trackByFn(index: number, message: Message): number {
     return index;
   }
 }

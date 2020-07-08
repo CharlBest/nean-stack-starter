@@ -33,7 +33,7 @@
     <button mat-stroked-button
       color="primary"
       type="submit"
-      [disabled]="emailsInput?.value?.length < 5 && emails?.length === 0"
+      [disabled]="emailsInput.value.length < 5 && emails.length === 0"
       (click)="onSubmit(emailsInput)">Send Invites</button>
   </mat-card-actions>
 </mat-card>

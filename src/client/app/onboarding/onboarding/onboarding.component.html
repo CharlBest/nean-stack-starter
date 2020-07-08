@@ -98,7 +98,7 @@
                     type="button"
                     matTooltip="Next"
                     aria-label="Next"
-                    [disabled]="selectedIndex === tabs?.length - 1"
+                    [disabled]="tabs && selectedIndex === tabs.length - 1"
                     class="animation-slide-left">
                     <app-icon-keyboard-arrow-right></app-icon-keyboard-arrow-right>
                 </button>

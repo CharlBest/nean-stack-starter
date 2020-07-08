@@ -6,7 +6,7 @@ import { DialogService } from '../../shared/dialog/dialog.service';
 import { FormErrorsService } from '../../shared/form-errors/form-errors.service';
 
 interface ExtendedCardViewModel extends CardViewModel {
-  hasExpired: boolean;
+  hasExpired?: boolean;
 }
 
 @Component({

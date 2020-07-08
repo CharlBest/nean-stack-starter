@@ -45,12 +45,10 @@
 
     <!-- Tabs -->
     <mat-tab-group mat-stretch-tabs
-      [(selectedIndex)]="selectedIndex"
-      (swipeleft)="onSwipeLeft($event)"
-      (swiperight)="onSwipeRight($event)">
+      [(selectedIndex)]="selectedIndex">
 
       <ng-container *ngFor="let category of emojiCategories; trackBy: trackByFnForCategory">
-        <mat-tab [disabled]="category.category === emojiCategoryName.SEARCH && category?.emojiData.length === 0">
+        <mat-tab [disabled]="category.category === emojiCategoryName.SEARCH && category.emojiData.length === 0">
           <ng-template mat-tab-label>
             <ng-container [ngSwitch]="category.category">
               <app-icon-search *ngSwitchCase="emojiCategoryName.SEARCH"
@@ -86,7 +84,7 @@
             </ng-container>
 
             <ng-container *ngIf="!isProcessing">
-              <div *ngIf="category?.emojiData.length === 0">No emoji found</div>
+              <div *ngIf="category.emojiData.length === 0">No emoji found</div>
               <div>powered by JoyPixels</div>
             </ng-container>
             <app-preloader *ngIf="isProcessing"></app-preloader>

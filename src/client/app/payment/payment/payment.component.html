@@ -28,10 +28,10 @@
 
             <mat-chip-list class="payment-options-list">
                 <mat-chip [selected]="activeSection === sections.CARD"
-                    [color]="activeSection === sections.CARD ? 'primary' : ''"
+                    [color]="activeSection === sections.CARD ? 'primary' : undefined"
                     (click)="selectSection(sections.CARD)">Card</mat-chip>
                 <mat-chip [selected]="activeSection === sections.MOBILE"
-                    [color]="activeSection === sections.MOBILE ? 'primary' : ''"
+                    [color]="activeSection === sections.MOBILE ? 'primary' : undefined"
                     (click)="selectSection(sections.MOBILE)"
                     [disabled]="stripePaymentRequestButton.canMakePayment === null || !stripePaymentRequestButton.canMakePayment">
                     Mobile
@@ -45,7 +45,7 @@
                 <br>
 
                 <mat-form-field appearance="fill"
-                    *ngIf="authService.isAuthenticated && paymentCards?.length > 0">
+                    *ngIf="authService.isAuthenticated && paymentCards && paymentCards.length > 0">
                     <mat-label>Cards</mat-label>
                     <mat-select formControlName="cardId"
                         [value]="paymentCards[0]?.id">

@@ -26,7 +26,14 @@ const config = {
             {
                 test: /\.ts?$/,
                 exclude: /node_modules/,
-                use: 'ts-loader?configFile=src/server/tsconfig.app.json'
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: 'tsconfig.app.json'
+                        }
+                    }
+                ]
             },
             {
                 test: /\.html$/,
@@ -47,7 +54,9 @@ const config = {
     resolve: {
         extensions: ['.ts', '.js'],
         // Needed for the @shared path in tsconfig to resolve
-        plugins: [new TsConfigPathsPlugin()]
+        plugins: [new TsConfigPathsPlugin(
+            { configFile: './src/server/tsconfig.app.json' }
+        )]
     },
     plugins: [
         // new webpack.DefinePlugin({

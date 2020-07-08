@@ -55,15 +55,15 @@
       routerLink="/profile/create-card"
       type="button">Add Payment Method</button>
     <button mat-stroked-button
-      *ngIf="!isChangingDefault && paymentCards?.length > 1"
+      *ngIf="!isChangingDefault && paymentCards && paymentCards.length > 1"
       (click)="isChangingDefault = true"
       type="button">Change Default Method</button>
     <button mat-stroked-button
-      *ngIf="isChangingDefault && paymentCards?.length > 0"
+      *ngIf="isChangingDefault && paymentCards && paymentCards.length > 0"
       (click)="changeDefaultCard()"
       type="button">Save Default Method</button>
     <button mat-stroked-button
-      *ngIf="isChangingDefault && paymentCards?.length > 0"
+      *ngIf="isChangingDefault && paymentCards && paymentCards.length > 0"
       (click)="this.isChangingDefault = false; newDefaultCardIdControl.setValue(null)"
       type="button">Cancel</button>
     <span class="flex-spacer"></span>

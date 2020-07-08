@@ -22,7 +22,7 @@ export class LanguageComponent {
     window.location.reload();
   }
 
-  trackByFn(index: number, item: string): number {
+  trackByFn(index: number, language: LanguageItem): number {
     return index;
   }
 }
