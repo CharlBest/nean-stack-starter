@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserRoutes } from '@shared/routes/user.routes';
 import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutorial.view-model';
 import { TutorialType } from '@shared/view-models/tutorial/tutorial-type.enum';
-import { environment } from '../../../environments/environment';
 import { NavigationType } from '../navigation/navigation-type.enum';
 
 @Injectable({
@@ -73,7 +72,7 @@ export class TutorialService {
     }
 
     completedTutorial(viewModel: CompletedTutorial): Promise<boolean> {
-        return this.http.post<boolean>(`${environment.serverEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
+        return this.http.post<boolean>(UserRoutes.completedTutorial().client(), viewModel).toPromise();
     }
 
     showTakeATour(): void {

@@ -1,3 +1,5 @@
+import { environment } from '../../client/environments/environment';
+
 export class BaseRoute {
     constructor(public rootRoute: string, public route: string,
         public params?: { [key: string]: QueryParam }, public version = 1) { }
@@ -7,7 +9,7 @@ export class BaseRoute {
     }
 
     client(queryParams?: { [key: string]: QueryParam }): string {
-        let url = `/api/v${this.version}/${this.rootRoute}/${this.route}`;
+        let url = `${environment.serverEndpoint}/api/v${this.version}/${this.rootRoute}/${this.route}`;
 
         // Url params
         url = this.clientUrlParams(url);
