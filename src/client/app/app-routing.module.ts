@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { PreloadingStrategy, Route, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from './shared/services/auth.service';
 
 // Preload defined module routes
-export class CustomPreloading implements PreloadingStrategy {
-  preload(route: Route, preload: () => Observable<any>): Observable<any> {
+@Injectable({
+  providedIn: 'root'
+})
+class CustomPreloading implements PreloadingStrategy {
+  preload(route: Route, preload: () => Observable<unknown>): Observable<unknown> {
     return route.data && route.data.preload ? preload() : of(null);
   }
 }

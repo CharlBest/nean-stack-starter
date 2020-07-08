@@ -1,5 +1,7 @@
-import { HostBinding, Input } from '@angular/core';
-export class BaseIconComponent {
+import { Directive, HostBinding, Input } from '@angular/core';
+
+@Directive()
+export abstract class BaseIconDirective {
     @Input() color: 'primary' | 'accent' | 'warn';
     @Input() inline = false;
 
