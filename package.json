@@ -1,6 +1,6 @@
 {
   "name": "nean-stack-starter",
-  "version": "0.0.1346",
+  "version": "0.0.1347",
   "description": "A sample Angular, Node.js and Neo4j demo app",
   "license": "MIT",
   "repository": {
@@ -35,18 +35,18 @@
     }
   },
   "dependencies": {
-    "@angular/animations": "^9.1.11",
+    "@angular/animations": "^10.0.2",
     "@angular/cdk": "^9.2.4",
-    "@angular/common": "^9.1.11",
-    "@angular/compiler": "^9.1.11",
-    "@angular/core": "^9.1.11",
-    "@angular/forms": "^9.1.11",
+    "@angular/common": "^10.0.2",
+    "@angular/compiler": "^10.0.2",
+    "@angular/core": "^10.0.2",
+    "@angular/forms": "^10.0.2",
     "@angular/material": "^9.2.4",
-    "@angular/platform-browser": "^9.1.11",
-    "@angular/platform-browser-dynamic": "^9.1.11",
+    "@angular/platform-browser": "^10.0.2",
+    "@angular/platform-browser-dynamic": "^10.0.2",
     "@angular/pwa": "^0.901.8",
-    "@angular/router": "^9.1.11",
-    "@angular/service-worker": "^9.1.11",
+    "@angular/router": "^10.0.2",
+    "@angular/service-worker": "^10.0.2",
     "@github/webauthn-json": "0.4.2",
     "@stripe/stripe-js": "^1.7.0",
     "amqplib": "^0.5.6",
@@ -82,10 +82,10 @@
     "zone.js": "^0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.901.8",
-    "@angular/cli": "^9.1.8",
-    "@angular/compiler-cli": "^9.1.11",
-    "@angular/language-service": "^9.1.11",
+    "@angular-devkit/build-angular": "^0.1000.1",
+    "@angular/cli": "^10.0.1",
+    "@angular/compiler-cli": "^10.0.2",
+    "@angular/language-service": "^10.0.2",
     "@types/amqplib": "^0.5.13",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",
@@ -119,9 +119,9 @@
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "tslint": "~6.1.2",
+    "tslint": "~6.1.0",
     "tslint-sonarts": "^1.9.0",
-    "typescript": "~3.8.3",
+    "typescript": "~3.9.6",
     "wait-on": "^5.0.1",
     "webpack-cli": "^3.3.12"
   }
