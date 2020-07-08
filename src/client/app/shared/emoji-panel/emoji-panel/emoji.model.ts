@@ -35,11 +35,11 @@ export interface EmojiData {
         gender_parent: string;
     };
     display: number;
-    diversity: Array<string>;
-    diversities: Array<string>;
+    diversity: Array<string> | null;
+    diversity_children: Array<string>;
     diversity_base: number;
     gender: Array<string>;
-    genders: Array<string>;
+    gender_children: Array<string>;
     keywords: Array<string>;
     name: string;
     order: number;

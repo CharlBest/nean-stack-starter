@@ -142,7 +142,7 @@ export class EmojiPanelComponent implements OnInit {
   }
 
   openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger): void {
-    if (emojiValue.diversities.length > 0) {
+    if (emojiValue.diversity_children.length > 0) {
       menuTrigger.openMenu();
     } else {
       menuTrigger.closeMenu();
