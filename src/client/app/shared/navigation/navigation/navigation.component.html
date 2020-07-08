@@ -1,9 +1,8 @@
 <header #navbar
-  [style.height.px]="activeNavigation ? totalToolbarHeight : 0">
+  [style.height.px]="activeNavigation ? toolbarHeight : 0">
 
   <!-- Main nav -->
   <div *ngIf="navigationType.PRIMARY === activeNavigation"
-    [style.height.px]="toolbarHeight"
     class="toolbar">
     <a mat-button
       routerLink="/">
@@ -23,7 +22,6 @@
 
   <!-- Back nav -->
   <div *ngIf="navigationType.BACK === activeNavigation"
-    [style.height.px]="toolbarHeight"
     class="toolbar">
     <!-- Back -->
     <div (click)="back()"
@@ -57,7 +55,7 @@
   </div>
 </header>
 <div *ngIf="activeNavigation"
-  [style.height.px]="totalToolbarHeight"
+  [style.height.px]="toolbarHeight"
   class="header-push"></div>
 
 <!-- Bottom Nav -->

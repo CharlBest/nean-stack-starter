@@ -26,7 +26,6 @@ export class NavigationComponent implements OnInit {
   readonly desktopTopToolbarHeight = 64;
   readonly mobileTopToolbarHeight = 56;
   toolbarHeight: number;
-  totalToolbarHeight: number;
   navItems: NavItem = {
     home: {
       paths: [
@@ -130,9 +129,9 @@ export class NavigationComponent implements OnInit {
     // Set toolbar height
     this.bpService.isDesktop$.subscribe(data => {
       if (data) {
-        this.totalToolbarHeight = this.desktopTopToolbarHeight;
+        this.toolbarHeight = this.desktopTopToolbarHeight;
       } else {
-        this.totalToolbarHeight = this.mobileTopToolbarHeight;
+        this.toolbarHeight = this.mobileTopToolbarHeight;
       }
     });
 
@@ -153,8 +152,8 @@ export class NavigationComponent implements OnInit {
             this.navbar.nativeElement.style.top = '0';
           }
         } else {
-          if (this.navbar.nativeElement.style.top !== `-${this.totalToolbarHeight}px`) {
-            this.navbar.nativeElement.style.top = `-${this.totalToolbarHeight}px`;
+          if (this.navbar.nativeElement.style.top !== `-${this.toolbarHeight}px`) {
+            this.navbar.nativeElement.style.top = `-${this.toolbarHeight}px`;
           }
         }
         prevScrollpos = currentScrollPos;
