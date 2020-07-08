@@ -12,7 +12,7 @@ export class EmojiComponent implements OnChanges {
   @Input() size = 2;
   emoji: string;
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     emojiToolkit.sprites = true;
     const emojiSpan = emojiToolkit.shortnameToImage(this.shortName);
     emojiSpan.startsWith('<span') ? this.emoji = emojiSpan : this.emoji = '';

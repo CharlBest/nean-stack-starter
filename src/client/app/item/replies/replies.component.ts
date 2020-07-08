@@ -20,11 +20,11 @@ export class RepliesComponent implements OnInit {
   constructor(private commentService: CommentService,
     public formErrorsService: FormErrorsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getReplies();
   }
 
-  async getReplies() {
+  async getReplies(): Promise<void> {
     this.isProcessing = true;
 
     try {
@@ -46,14 +46,14 @@ export class RepliesComponent implements OnInit {
     }
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getReplies();
     }
   }
 
-  trackByFn(index: number, comment: CommentViewModel) {
+  trackByFn(index: number, comment: CommentViewModel): number {
     return comment.id;
   }
 }

@@ -26,21 +26,21 @@ export class EditItemComponent implements OnInit {
     private firebaseStorageService: FirebaseStorageService,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // TODO: not sure if there is a maximum stack size for state on browser history. Investigate?
     this.item = history.state.item;
 
     this.getParams();
   }
 
-  getParams() {
+  getParams(): void {
     const itemUId = this.route.snapshot.params.uId;
     if (!this.item) {
       this.getItem(itemUId);
     }
   }
 
-  async getItem(itemUId: string | null) {
+  async getItem(itemUId: string | null): Promise<void> {
     if (itemUId) {
       this.isProcessing = true;
 
@@ -57,7 +57,7 @@ export class EditItemComponent implements OnInit {
     }
   }
 
-  async onSubmit(viewModel: CreateOrUpdateItemViewModel) {
+  async onSubmit(viewModel: CreateOrUpdateItemViewModel): Promise<void> {
     this.isProcessing = true;
 
     try {
@@ -76,7 +76,7 @@ export class EditItemComponent implements OnInit {
     }
   }
 
-  async deleteRemovedImagesFromStorage(files: Array<FileModel>) {
+  async deleteRemovedImagesFromStorage(files: Array<FileModel>): Promise<void> {
     // Delete old images from storage
     for (const file of this.item.files) {
       const exist = files.some(x => x.url === file.url);

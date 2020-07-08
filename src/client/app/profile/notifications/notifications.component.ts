@@ -28,11 +28,11 @@ export class NotificationsComponent implements OnInit {
     private formErrorsService: FormErrorsService,
     private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getNotificationPreferences();
   }
 
-  async getNotificationPreferences() {
+  async getNotificationPreferences(): Promise<void> {
     try {
       const response = await this.profileService.getNotificationPreferences();
       if (response) {
@@ -46,7 +46,7 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.updateNotificationPreferences(
       !!(this.notificationPreferences.pushNotificationEnabled && this.pushNotificationService.isPushNotificationPermissionGrandted()),
       !!this.notificationPreferences.emailEnabled,
@@ -65,7 +65,7 @@ export class NotificationsComponent implements OnInit {
     this.formGroup.controls.emailEnabled.valueChanges.subscribe(() => this.update());
   }
 
-  async togglePushNotification(checked: boolean) {
+  async togglePushNotification(checked: boolean): Promise<void> {
     if (checked) {
       const hasConfirmed = await this.dialogService.confirm({
         title: 'Are you sure?',
@@ -85,11 +85,11 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.update();
   }
 
-  async update(pushSubscription: PushSubscriptionViewModel | null = null) {
+  async update(pushSubscription: PushSubscriptionViewModel | null = null): Promise<void> {
     this.isProcessing = true;
 
     const viewModel: UpdateNotificationPreferencesViewModel = {

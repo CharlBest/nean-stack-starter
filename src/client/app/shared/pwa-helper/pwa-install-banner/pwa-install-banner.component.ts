@@ -11,7 +11,7 @@ export class PWAInstallBannerComponent {
   constructor(public pwaService: PWAService,
     private snackBarRef: MatSnackBarRef<PWAInstallBannerComponent>) { }
 
-  dismiss() {
+  dismiss(): void {
     if (this.snackBarRef) {
       this.snackBarRef.dismiss();
     }

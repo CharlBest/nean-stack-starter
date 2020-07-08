@@ -17,7 +17,7 @@ export class EmojiPanelComponent implements OnInit {
   file: EmojiJsonFile;
   @Input() closeOnInsert = false;
   @Output() readonly selected: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<any>;
+  @ViewChild('bottomSheet', { static: true }) bottomSheetRef: TemplateRef<unknown>;
   searchControl = new FormControl();
   isPanelForWebOpen = false;
   emojiCategoryName = EmojiCategoryName;
@@ -40,11 +40,11 @@ export class EmojiPanelComponent implements OnInit {
     public bpService: BreakpointService,
     private preventBackNavigationService: PreventBackNavigationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.onSearch();
   }
 
-  async render() {
+  async render(): Promise<void> {
     emojiToolkit.sprites = true;
     emojiToolkit.imagePathSVGSprites = '.';
 
@@ -74,7 +74,7 @@ export class EmojiPanelComponent implements OnInit {
     this.isProcessing = false;
   }
 
-  onSearch() {
+  onSearch(): void {
     this.searchControl.valueChanges.pipe(
       debounceTime(400)
     ).subscribe(value => {
@@ -105,7 +105,7 @@ export class EmojiPanelComponent implements OnInit {
     });
   }
 
-  clearSearch() {
+  clearSearch(): void {
     const searchTab = this.emojiCategories.find(emoji => emoji.category === EmojiCategoryName.SEARCH);
     if (searchTab) {
       this.selectedIndex = 1;
@@ -114,7 +114,7 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  onClick(shortname: string) {
+  onClick(shortname: string): void {
     this.selected.emit(shortname);
 
     if (this.closeOnInsert) {
@@ -122,7 +122,7 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  async openPanel() {
+  async openPanel(): Promise<void> {
     if (!this.file) {
       this.render();
     }
@@ -141,7 +141,7 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger) {
+  openDiversitiesElseInsert(emojiValue: EmojiData, menuTrigger: MatMenuTrigger): void {
     if (emojiValue.diversities.length > 0) {
       menuTrigger.openMenu();
     } else {
@@ -150,13 +150,13 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  onSwipeLeft(event: HammerInput) {
+  onSwipeLeft(event: HammerInput): void {
     if (this.selectedIndex < 8) {
       this.selectedIndex = this.selectedIndex + 1;
     }
   }
 
-  onSwipeRight(event: HammerInput) {
+  onSwipeRight(event: HammerInput): void {
     const searchTab = this.emojiCategories.find(emoji => emoji.category === EmojiCategoryName.SEARCH);
 
     if (this.selectedIndex > 1 || (this.selectedIndex === 1 && searchTab && searchTab.emojiData.length > 0)) {
@@ -164,15 +164,15 @@ export class EmojiPanelComponent implements OnInit {
     }
   }
 
-  trackByFnForCategory(index: number, item: EmojiCategory) {
+  trackByFnForCategory(index: number, item: EmojiCategory): number {
     return index;
   }
 
-  trackByFnForEmoji(index: number, item: any) {
+  trackByFnForEmoji(index: number, item: unknown): number {
     return index;
   }
 
-  trackByFnForEmojiDiversity(index: number, item: any) {
+  trackByFnForEmojiDiversity(index: number, item: unknown): number {
     return index;
   }
 }

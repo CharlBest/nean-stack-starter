@@ -11,7 +11,7 @@ class ItemsRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() {
+    initAnonymousRoutes(): void {
         this.router.get(ItemRoutes.get().server(),
             async (req, res, next) => itemsController.get(req, res, next).catch(next));
 
@@ -22,7 +22,7 @@ class ItemsRoutes extends BaseRoute {
             async (req, res, next) => itemsController.search(req, res, next).catch(next));
     }
 
-    initAuthenticatedRoutes() {
+    initAuthenticatedRoutes(): void {
         this.router.post(ItemRoutes.create().server(), Authentication.loginRequired,
             async (req, res, next) => itemsController.create(req, res, next).catch(next));
 

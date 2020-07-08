@@ -7,16 +7,16 @@ export abstract class BaseIconDirective {
 
     @HostBinding('class.app-icon') appIcon = true;
 
-    @HostBinding('class.inline') get isInline() {
+    @HostBinding('class.inline') get isInline(): boolean {
         return this.inline;
     }
-    @HostBinding('class.primary') get isPrimary() {
+    @HostBinding('class.primary') get isPrimary(): boolean {
         return this.color === 'primary';
     }
-    @HostBinding('class.accent') get isAccent() {
+    @HostBinding('class.accent') get isAccent(): boolean {
         return this.color === 'accent';
     }
-    @HostBinding('class.warn') get isWarning() {
+    @HostBinding('class.warn') get isWarning(): boolean {
         return this.color === 'warn';
     }
 }

@@ -10,7 +10,7 @@ export class LanguageInterceptor implements HttpInterceptor {
 
     constructor(private translateService: TranslateService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         // Clone the request to add the new header.
         const languageRequest = request.clone({
             headers: request.headers.set('Accept-Language', `${this.translateService.activeLanguage}`)

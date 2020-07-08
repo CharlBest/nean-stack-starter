@@ -18,14 +18,14 @@ class DataFetcher {
 
     constructor() { }
 
-    init(app: Application) {
+    init(app: Application): void {
         // Use this to test site via puppeteer
         // import * as puppeteer from 'puppeteer';
         // setTimeout(() => this.app = app, 1000);
         // this.interval = setTimeout(() => this.execution(), 0);
     }
 
-    async execution() {
+    async execution(): Promise<void> {
         // TODO: Check null and undefined thouroughout especially with query selectors
 
         // TODO: Remove window in front of puppeteer
@@ -85,7 +85,7 @@ class DataFetcher {
         return 3600000 - new Date().getTime() % 3600000;
     }
 
-    clearInterval() {
+    clearInterval(): void {
         clearInterval(this.interval);
     }
 }

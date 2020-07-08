@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     private dialogService: DialogService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.authService.hasToken() && !this.route.snapshot.queryParams.tut) {
       this.router.navigate(['/']);
     }
@@ -39,18 +39,18 @@ export class LoginComponent implements OnInit {
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.login());
   }
 
-  getQueryParams() {
+  getQueryParams(): void {
     const returnUrl = this.route.snapshot.queryParams.returnUrl;
     if (returnUrl) {
       this.returnUrl = returnUrl;
     }
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new LoginViewModel();

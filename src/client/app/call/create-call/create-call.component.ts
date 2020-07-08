@@ -17,7 +17,7 @@ export class CreateCallComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.updateCode();
 
     // Watch for changes
@@ -31,11 +31,11 @@ export class CreateCallComponent implements OnInit {
       });
   }
 
-  updateCode() {
+  updateCode(): void {
     this.router.navigate([], { queryParams: { code: this.codeControl.value }, queryParamsHandling: 'merge' });
   }
 
-  share() {
+  share(): void {
     const url = ['/call'];
     const queryParams = { queryParams: { code: this.codeControl.value } };
     const title = 'Call Invite';
@@ -44,7 +44,7 @@ export class CreateCallComponent implements OnInit {
     }
   }
 
-  start() {
+  start(): void {
     this.router.navigate(['call'], { queryParams: { code: this.codeControl.value, host: true }, queryParamsHandling: 'merge' });
   }
 }

@@ -12,7 +12,7 @@ class TranslateService {
     }
 
     // Client
-    t(key: TranslateKey, params?: TranslateParams) {
+    t(key: TranslateKey, params?: TranslateParams): string {
         if (params) {
             return this.replacePlaceholders(this.activeLanguage[key], params) || this.keyNotFound(key);
         } else {
@@ -21,7 +21,7 @@ class TranslateService {
     }
 
     // Server - prevent using this. Rather send key to client and render text there.
-    ts(res: Response, key: TranslateKey, params?: TranslateParams) {
+    ts(res: Response, key: TranslateKey, params?: TranslateParams): string {
         const pack = this.getLanguagePack(res.locals.language);
         if (!pack) {
             console.error('Language could not be found');
@@ -35,7 +35,7 @@ class TranslateService {
         }
     }
 
-    getLanguagePack(language: Language | null) {
+    getLanguagePack(language: Language | null): TranslateTerm | null {
         switch (language) {
             case Language.ENGLISH:
                 return english;
@@ -59,7 +59,7 @@ class TranslateService {
         }
     }
 
-    replacePlaceholders(value: string, params?: TranslateParams) {
+    replacePlaceholders(value: string, params?: TranslateParams): string | null {
         if (value) {
             for (const param in params) {
                 if (params.hasOwnProperty(param) && params[param]) {
@@ -72,11 +72,11 @@ class TranslateService {
         }
     }
 
-    doesLanguageKeyExist(key: Language) {
+    doesLanguageKeyExist(key: Language): boolean {
         return Object.values(Language).includes(key);
     }
 
-    private keyNotFound(key: string) {
+    private keyNotFound(key: string): string {
         console.error('Language key could not be found');
         return `***${key}***`;
     }

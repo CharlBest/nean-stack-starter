@@ -22,7 +22,7 @@ export class AuthService implements CanActivate {
     }
 
     private preventLogoutOnNextRequestFlag: boolean;
-    get shouldPreventLogoutOnNextRequest() {
+    get shouldPreventLogoutOnNextRequest(): boolean {
         if (this.preventLogoutOnNextRequestFlag) {
             this.preventLogoutOnNextRequestFlag = false;
             return true;
@@ -36,7 +36,7 @@ export class AuthService implements CanActivate {
         private localStorageService: LocalStorageService,
         private analyticsService: AnalyticsService) { }
 
-    init() {
+    init(): void {
         const accountKeys: Array<string> = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -91,11 +91,11 @@ export class AuthService implements CanActivate {
         }
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
         return this.hasToken() || this.router.navigate(['login'], { queryParams: { returnUrl: state.url }, queryParamsHandling: 'merge' });
     }
 
-    setToken(model: TokenViewModel) {
+    setToken(model: TokenViewModel): void {
         // Get token data
         const { id, expireDate } = this.getDataFromJWT(model.token);
 
@@ -118,7 +118,7 @@ export class AuthService implements CanActivate {
         this.analyticsService.setUser(id, model);
     }
 
-    removeToken() {
+    removeToken(): void {
         this.localStorageService.setUserStorageData({ token: null });
 
         this.localStorageService.updateUserData(null, null);
@@ -128,7 +128,7 @@ export class AuthService implements CanActivate {
         this.userLoggedInOrLoggedOut.emit();
     }
 
-    removeTokenAndNavigateToLogin() {
+    removeTokenAndNavigateToLogin(): void {
         this.removeToken();
         this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }, queryParamsHandling: 'merge' });
         this.dialog.closeAll();
@@ -139,11 +139,11 @@ export class AuthService implements CanActivate {
         return !!this.localStorageService.storageData.token;
     }
 
-    preventLogoutOnNextRequest() {
+    preventLogoutOnNextRequest(): void {
         this.preventLogoutOnNextRequestFlag = true;
     }
 
-    hasTokenExpired(token?: string | null) {
+    hasTokenExpired(token?: string | null): boolean {
         const { id, expireDate } = this.getDataFromJWT(token);
         if (!id || !expireDate) {
             return true;
@@ -156,7 +156,7 @@ export class AuthService implements CanActivate {
         }
     }
 
-    hasStoredTokenExpired() {
+    hasStoredTokenExpired(): boolean {
         if (this.localStorageService.userData.tokenExpiry &&
             Math.floor(Date.now() / 1000) >= this.localStorageService.userData.tokenExpiry) {
             return true;
@@ -178,13 +178,13 @@ export class AuthService implements CanActivate {
         return { id: null, expireDate: null };
     }
 
-    private parseJwt(token: string) {
+    private parseJwt(token: string): object | null {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         return this.parseJSON(window.atob(base64));
     }
 
-    private parseJSON(jsonString: string): any {
+    private parseJSON(jsonString: string): object | null {
         try {
             return JSON.parse(jsonString);
         } catch {

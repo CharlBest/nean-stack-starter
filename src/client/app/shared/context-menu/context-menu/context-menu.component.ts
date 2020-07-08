@@ -19,7 +19,7 @@ export class ContextMenuComponent {
         private preventBackNavigationService: PreventBackNavigationService,
         private rightClickContextMenuService: RightClickContextMenuService) { }
 
-    async open(event: Event) {
+    async open(event: Event): Promise<void> {
         event.preventDefault();
         event.stopPropagation();
         this.rightClickContextMenuService.close();
@@ -39,7 +39,7 @@ export class ContextMenuComponent {
         }
     }
 
-    close() {
+    close(): void {
         this.contextMenuTrigger.closeMenu();
         this.bottomSheet.dismiss();
     }

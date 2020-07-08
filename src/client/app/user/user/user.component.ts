@@ -41,17 +41,17 @@ export class UserComponent implements AfterViewInit {
     private dialogService: DialogService,
     private snackBar: MatSnackBar) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getParams();
   }
 
-  getParams() {
+  getParams(): void {
     const userId = this.route.snapshot.params.id;
     this.userId = userId ? +userId : null;
     this.getUser();
   }
 
-  async getUser() {
+  async getUser(): Promise<void> {
     if (this.userId) {
       try {
         const response = await this.userService.getUserPublic(this.userId);
@@ -71,7 +71,7 @@ export class UserComponent implements AfterViewInit {
     }
   }
 
-  async getItems(refresh: boolean = false) {
+  async getItems(refresh: boolean = false): Promise<void> {
     if (this.userId) {
       this.isProcessingItems = true;
 
@@ -107,7 +107,7 @@ export class UserComponent implements AfterViewInit {
     }
   }
 
-  openShareDialog() {
+  openShareDialog(): void {
     if (this.userId) {
       this.contextMenu.close();
 
@@ -118,14 +118,14 @@ export class UserComponent implements AfterViewInit {
     }
   }
 
-  copyLink() {
+  copyLink(): void {
     if (this.userId) {
       this.shareService.copyWithUrl(['/user', this.userId]);
       this.contextMenu.close();
     }
   }
 
-  async report() {
+  async report(): Promise<void> {
     const hasConfirmed = await this.dialogService
       .confirm({
         title: 'Report',
@@ -152,18 +152,18 @@ export class UserComponent implements AfterViewInit {
     }
   }
 
-  filtersUpdated() {
+  filtersUpdated(): void {
     this.getItems(true);
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getItems();
     }
   }
 
-  trackByFn(index: number, item: ItemViewModel) {
+  trackByFn(index: number, item: ItemViewModel): number {
     return item.id;
   }
 }

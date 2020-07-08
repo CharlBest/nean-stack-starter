@@ -22,7 +22,7 @@ export class WebSocketService implements OnDestroy {
         this.init();
     }
 
-    init() {
+    init(): void {
         this.webSocketSubject = new WebSocketSubject({
             url: environment.webSocketEndpoint
         });
@@ -53,11 +53,11 @@ export class WebSocketService implements OnDestroy {
         );
     }
 
-    send(data: BaseWebSocketModel) {
+    send(data: BaseWebSocketModel): void {
         this.webSocketSubject.next(data);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.webSocketSubject) {
             this.webSocketSubject.unsubscribe();
         }

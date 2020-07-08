@@ -25,7 +25,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
     private discoverService: DiscoverService,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getItems(true);
 
     this.searchedSubscription = this.navigationService.searched.subscribe((value: string) => {
@@ -34,7 +34,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
     });
   }
 
-  async getItems(refresh: boolean = false) {
+  async getItems(refresh: boolean = false): Promise<void> {
     this.isProcessing = true;
 
     if (refresh) {
@@ -68,18 +68,18 @@ export class DiscoverComponent implements OnInit, OnDestroy {
     }
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getItems();
     }
   }
 
-  trackByFn(index: number, item: ItemViewModel) {
+  trackByFn(index: number, item: ItemViewModel): number {
     return item.id;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.searchedSubscription) {
       this.searchedSubscription.unsubscribe();
     }

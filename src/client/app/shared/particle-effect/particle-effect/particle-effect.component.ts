@@ -16,7 +16,7 @@ export class ParticleEffectComponent implements OnInit {
 
   @ViewChild('container', { static: true }) container: ElementRef<HTMLDivElement>;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.generate();
 
     const clientWidth = document.documentElement.clientWidth;
@@ -34,7 +34,7 @@ export class ParticleEffectComponent implements OnInit {
       .subscribe(() => this.generate());
   }
 
-  generate() {
+  generate(): void {
     const particleCount = document.documentElement.clientHeight / 27;
 
     this.container.nativeElement.innerHTML = '';

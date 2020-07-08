@@ -17,12 +17,12 @@ export class LanguageComponent {
 
   constructor(public translateService: TranslateService) { }
 
-  chooseLanguage(language: Language) {
+  chooseLanguage(language: Language): void {
     this.translateService.saveLanguagePreference(language);
     window.location.reload();
   }
 
-  trackByFn(index: number, item: string) {
+  trackByFn(index: number, item: string): number {
     return index;
   }
 }

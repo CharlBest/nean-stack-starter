@@ -11,7 +11,7 @@ export class CookieConsentService {
   constructor(private snackBar: MatSnackBar,
     private localStorageService: LocalStorageService) { }
 
-  openCookieConsentSnackBar() {
+  openCookieConsentSnackBar(): void {
     if (!this.localStorageService.storageData.consent) {
       this.snackBar.openFromComponent(CookieConsentComponent, {
         duration: undefined

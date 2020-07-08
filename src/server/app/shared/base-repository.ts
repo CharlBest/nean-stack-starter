@@ -39,7 +39,7 @@ export abstract class BaseRepository {
     }
 
     // tslint:disable-next-line: cognitive-complexity
-    private convertDateTimeObjectsToStrings(records: Record[]) {
+    private convertDateTimeObjectsToStrings(records: Record[]): void {
         for (const record of records) {
             for (const recordKey of record.keys) {
                 const object = record.get(recordKey);

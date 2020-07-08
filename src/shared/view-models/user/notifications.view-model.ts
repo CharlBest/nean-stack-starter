@@ -24,12 +24,12 @@ export class NotificationsViewModel {
     emailNewComment: NotificationType;
     emailHot: NotificationType;
 
-    static createPushNotificationArray(pushNewComment: NotificationType, pushHot: NotificationType) {
+    static createPushNotificationArray(pushNewComment: NotificationType, pushHot: NotificationType): Array<NotificationType> {
         // NOTE: The order of this tuple is very important and should not be changed
         return [pushNewComment, pushHot];
     }
 
-    static createEmailNotificationArray(emailNewComment: NotificationType, emailHot: NotificationType) {
+    static createEmailNotificationArray(emailNewComment: NotificationType, emailHot: NotificationType): Array<NotificationType> {
         // NOTE: The order of this tuple is very important and should not be changed
         return [emailNewComment, emailHot];
     }

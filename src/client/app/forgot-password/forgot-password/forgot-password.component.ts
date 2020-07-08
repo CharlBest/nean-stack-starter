@@ -22,15 +22,15 @@ export class ForgotPasswordComponent implements OnInit {
     public bpService: BreakpointService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.forgotPassword());
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new ForgotPasswordViewModel();

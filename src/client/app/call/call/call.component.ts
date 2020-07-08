@@ -32,11 +32,11 @@ export class CallComponent implements OnInit, OnDestroy {
   webRTCCloseSubscription: Subscription;
   offerData: SimplePeer.SignalData;
   answerReceived = false;
-  timerInstance: any;
+  timerInstance: number;
   minutesDuration = 0;
   mirrorVideo = true;
   isFullscreen = false;
-  callingInverval: any;
+  callingInverval: number;
   isRinging = false;
   readonly totalNumberOfRings = 20;
   readonly ringInterval = 3000;
@@ -57,7 +57,7 @@ export class CallComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location) { }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     if (!this.webRTCService.isSupported) {
       await this.dialogService.alert({
         title: 'Feature not supported',
@@ -107,7 +107,7 @@ export class CallComponent implements OnInit, OnDestroy {
     });
   }
 
-  async getStream() {
+  async getStream(): Promise<void> {
     if (await this.hasPermission()) {
       this.getPermission();
     } else {
@@ -126,13 +126,13 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
-  async hasPermission() {
+  async hasPermission(): Promise<boolean> {
     const devices = await navigator.mediaDevices.enumerateDevices();
     return devices.some(device => device.deviceId !== '' && 'audioinput' === device.kind) &&
       devices.some(device => device.deviceId !== '' && 'videoinput' === device.kind);
   }
 
-  async getPermission() {
+  async getPermission(): Promise<void> {
     try {
       // Get video/voice stream
       this.stream = await navigator.mediaDevices.getUserMedia({
@@ -147,24 +147,24 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
-  activateCall() {
+  activateCall(): void {
     this.hasCallStarted = true;
     this.outgoingVideoPosition = OutgoingVideoPosition.BOTTOM_RIGHT;
     this.startTimer();
   }
 
-  deactivateCall() {
+  deactivateCall(): void {
     this.hasCallStarted = false;
     this.outgoingVideoPosition = OutgoingVideoPosition.FULLSCREEN;
     this.stopTimer();
   }
 
-  startVideoCall() {
+  startVideoCall(): void {
     this.activateCall();
     this.webRTCService.startVideoCall(this.stream, this.outgoingVideo.nativeElement, this.incomingVideo.nativeElement);
 
     let rings = 0;
-    this.callingInverval = setInterval(() => {
+    this.callingInverval = window.setInterval(() => {
       this.webRTCService.sendSignal();
       rings++;
       if (rings > this.totalNumberOfRings) {
@@ -174,13 +174,13 @@ export class CallComponent implements OnInit, OnDestroy {
     }, this.ringInterval);
   }
 
-  acceptVideoCall() {
+  acceptVideoCall(): void {
     this.stopRing();
     this.activateCall();
     this.webRTCService.acceptVideoCall(this.stream, this.offerData, this.outgoingVideo.nativeElement, this.incomingVideo.nativeElement);
   }
 
-  stopVideoCall() {
+  stopVideoCall(): void {
     if (this.stream) {
       this.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
     }
@@ -192,44 +192,44 @@ export class CallComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  rotateCamera() {
+  rotateCamera(): void {
     // TODO
   }
 
-  record() {
+  record(): void {
     // TODO
   }
 
-  setMicState(enabled: boolean) {
+  setMicState(enabled: boolean): void {
     if (this.stream) {
       this.stream.getAudioTracks()[0].enabled = enabled;
       this.isMicOn = enabled;
     }
   }
 
-  setCameraState(enabled: boolean) {
+  setCameraState(enabled: boolean): void {
     if (this.stream) {
       this.stream.getVideoTracks()[0].enabled = enabled;
       this.isCameraOn = enabled;
     }
   }
 
-  startTimer() {
-    this.timerInstance = setTimeout(() => {
+  startTimer(): void {
+    this.timerInstance = window.setTimeout(() => {
       this.minutesDuration++;
     }, 60000);
   }
 
-  stopTimer() {
+  stopTimer(): void {
     clearTimeout(this.timerInstance);
     this.minutesDuration = 0;
   }
 
-  becomeHost() {
+  becomeHost(): void {
     this.router.navigate([], { queryParams: { host: true }, queryParamsHandling: 'merge' });
   }
 
-  share() {
+  share(): void {
     const url = ['/call'];
     const queryParams = { queryParams: { code: this.code } };
     const title = 'Call Invite';
@@ -238,7 +238,7 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFullscreen() {
+  openFullscreen(): void {
     const element = document.documentElement;
     if (element.requestFullscreen) {
       element.requestFullscreen();
@@ -246,14 +246,14 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeFullscreen() {
+  closeFullscreen(): void {
     if (document.exitFullscreen) {
       document.exitFullscreen();
       this.isFullscreen = false;
     }
   }
 
-  startRing() {
+  startRing(): void {
     if (!this.isRinging) {
       this.isRinging = true;
 
@@ -268,7 +268,7 @@ export class CallComponent implements OnInit, OnDestroy {
     }
   }
 
-  stopRing() {
+  stopRing(): void {
     this.isRinging = false;
 
     if (this.hasVibrate) {
@@ -278,7 +278,7 @@ export class CallComponent implements OnInit, OnDestroy {
     this.ringAudio.nativeElement.pause();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.webRTCSignalSubscription) {
       this.webRTCSignalSubscription.unsubscribe();
     }

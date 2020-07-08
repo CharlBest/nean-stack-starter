@@ -16,23 +16,23 @@ export class LocalStorageService {
     darkTheme: false,
     hasUserVisited: false
   };
-  get storageData() {
+  get storageData(): StorageData {
     return this.localStorageData;
   }
 
   private localUserData: UserData = {};
-  get userData() {
+  get userData(): UserData {
     return this.localUserData;
   }
 
-  setUserStorageData(data?: Partial<StorageData> | null) {
+  setUserStorageData(data?: Partial<StorageData> | null): void {
     const updatedData = Object.assign(this.storageData, data);
 
     localStorage.setItem(`${this.storagePrefix}${this.userData.userId ? this.userData.userId : '_'}`,
       data ? JSON.stringify(updatedData) : '');
   }
 
-  updateStoredData() {
+  updateStoredData(): void {
     const data = localStorage.getItem(`${this.storagePrefix}${this.userData.userId ? this.userData.userId : '_'}`);
     if (data) {
       try {
@@ -41,7 +41,7 @@ export class LocalStorageService {
     }
   }
 
-  updateUserData(userId: number | null, tokenExpiry: number | null) {
+  updateUserData(userId: number | null, tokenExpiry: number | null): void {
     this.localUserData.userId = userId;
     this.localUserData.tokenExpiry = tokenExpiry;
   }

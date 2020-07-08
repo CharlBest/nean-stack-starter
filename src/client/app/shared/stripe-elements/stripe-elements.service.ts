@@ -25,7 +25,7 @@ export class StripeElementsService {
         return this.stripeInstance;
     }
 
-    async initializeElements() {
+    async initializeElements(): Promise<void> {
         this.elementsInstance = (await this.stripe()).elements({
             locale: this.translateService.defaultLanguage,
             fonts: [

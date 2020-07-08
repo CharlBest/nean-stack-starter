@@ -10,7 +10,7 @@ export class ImageFileDirective implements OnInit {
 
   constructor(private element: ElementRef<HTMLImageElement>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.element.nativeElement.src = this.appImageFile.url;
 
     if (this.appImageFile.width) {

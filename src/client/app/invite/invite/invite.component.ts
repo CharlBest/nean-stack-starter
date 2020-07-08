@@ -47,7 +47,7 @@ export class InviteComponent {
     }
   }
 
-  async onSubmit(emailsInput: HTMLInputElement) {
+  async onSubmit(emailsInput: HTMLInputElement): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new InviteViewModel();
@@ -72,7 +72,7 @@ export class InviteComponent {
     }
   }
 
-  trackByFn(index: number, item: string) {
+  trackByFn(index: number, item: string): number {
     return index;
   }
 }

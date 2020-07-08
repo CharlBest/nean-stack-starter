@@ -7,7 +7,7 @@ export class ExtractTimePipe implements PipeTransform {
 
     constructor() { }
 
-    transform(date: string | null) {
+    transform(date: string | null): string | null {
         if (!date) {
             return null;
         }

@@ -17,7 +17,7 @@ export class RefreshSameUrlService implements OnDestroy {
     private routerEventsSubscription: Subscription;
     constructor(private router: Router) { }
 
-    init(onNavigationEnd: () => void) {
+    init(onNavigationEnd: () => void): void {
         this.router.onSameUrlNavigation = 'reload';
 
         this.routerEventsSubscription = this.router.events
@@ -27,7 +27,7 @@ export class RefreshSameUrlService implements OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.router.onSameUrlNavigation = 'ignore';
         if (this.routerEventsSubscription) {
             this.routerEventsSubscription.unsubscribe();

@@ -13,7 +13,7 @@ export class CookieConsentComponent {
     private localStorageService: LocalStorageService,
     private snackBarRef: MatSnackBarRef<CookieConsentComponent>) { }
 
-  dismiss() {
+  dismiss(): void {
     if (this.snackBarRef) {
       this.snackBarRef.dismiss();
     }

@@ -11,7 +11,7 @@ class UsersRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() {
+    initAnonymousRoutes(): void {
         this.router.post(UserRoutes.createUser().server(),
             async (req, res, next) => usersController.createUser(req, res, next).catch(next));
 
@@ -34,7 +34,7 @@ class UsersRoutes extends BaseRoute {
             async (req, res, next) => usersController.getUserPublicItems(req, res, next).catch(next));
     }
 
-    initAuthenticatedRoutes() {
+    initAuthenticatedRoutes(): void {
         this.router.get(UserRoutes.getUserProfile().server(), Authentication.loginRequired,
             async (req, res, next) => usersController.getUserProfile(req, res, next).catch(next));
 

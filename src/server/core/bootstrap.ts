@@ -24,7 +24,7 @@ const root = './';
 
 class Bootstrap {
 
-    defineExpressApp(app: Application) {
+    defineExpressApp(app: Application): void {
         app.set('port', Server.normalizePort(environment.port));
     }
 
@@ -61,7 +61,7 @@ class Bootstrap {
         app.use('/api', notificationsRoutes);
     }
 
-    setupStaticFiles() {
+    setupStaticFiles(): void {
         // Uncomment to serve static files from Nodejs (bad idea)
         // app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 

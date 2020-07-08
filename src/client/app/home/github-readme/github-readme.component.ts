@@ -12,7 +12,7 @@ export class GitHubReadMeComponent {
 
   constructor(public themeService: ThemeService) { }
 
-  doneLoading() {
+  doneLoading(): void {
     // Remove DEMO link in text
     window.setTimeout(() => {
       const container = document.getElementsByClassName('github-readme-container');

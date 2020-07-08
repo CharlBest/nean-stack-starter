@@ -15,11 +15,11 @@ export class PaymentHistoryComponent implements OnInit {
   constructor(private paymentService: PaymentService,
     private formErrorsService: FormErrorsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getPaymentHistory();
   }
 
-  async getPaymentHistory() {
+  async getPaymentHistory(): Promise<void> {
     try {
       const response = await this.paymentService.paymentHistory();
       if (response) {

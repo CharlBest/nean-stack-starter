@@ -36,12 +36,12 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         private authService: AuthService,
         public themeService: ThemeService) { }
 
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
         await this.stripeElementsService.stripe();
         await this.initialize();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.amount && this.paymentRequestButtonInstance) {
             this.setDynamicOptions();
 
@@ -57,15 +57,15 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         }
     }
 
-    activatePaymentRequestButton() {
+    activatePaymentRequestButton(): void {
         this.paymentRequestButtonInstance.show();
     }
 
-    private setDynamicOptions() {
+    private setDynamicOptions(): void {
         this.paymentRequestButtonOptions.total.amount = this.amount ? this.amount * 100 : 0;
     }
 
-    private async initialize() {
+    private async initialize(): Promise<void> {
         // Update amount in case new value was assigned during initialization
         this.setDynamicOptions();
 
@@ -83,7 +83,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         this.paymentRequestButtonInstance.on('paymentmethod', event => this.paymentMethod.emit(event));
     }
 
-    private createAndMountButton() {
+    private createAndMountButton(): void {
         this.paymentRequestElement = this.stripeElementsService.elementsInstance.create('paymentRequestButton', {
             paymentRequest: this.paymentRequestButtonInstance,
             style: {
@@ -127,7 +127,7 @@ export class StripePaymentRequestButtonComponent implements OnInit, OnChanges, O
         return null;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.paymentRequestElement) {
             this.paymentRequestElement.destroy();
         }

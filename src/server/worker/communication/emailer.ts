@@ -27,7 +27,7 @@ class Emailer implements Email {
         system: require('../email-templates/system.html'),
     };
 
-    initEmailer() {
+    initEmailer(): void {
         this.transporter = createTransport({
             host: 'smtp.zoho.com', // 300 free daily emails limit
             port: 465,

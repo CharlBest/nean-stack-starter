@@ -20,15 +20,15 @@ export class DeleteUserComponent implements OnInit {
         private authService: AuthService,
         public bpService: BreakpointService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getParams();
     }
 
-    getParams() {
+    getParams(): void {
         this.email = this.route.snapshot.queryParams.email;
     }
 
-    async delete(email: string) {
+    async delete(email: string): Promise<void> {
         if (this.email && email === this.email) {
             this.isProcessing = true;
 

@@ -36,22 +36,22 @@ export class FileUploaderComponent {
         public bpService: BreakpointService,
         private dialogService: DialogService) { }
 
-    @HostListener('dragenter', ['$event']) onDragEnter(event: DragEvent) {
+    @HostListener('dragenter', ['$event']) onDragEnter(event: DragEvent): void {
         this.preventDefaults(event);
         this.highlightDragDropArea = true;
     }
 
-    @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
+    @HostListener('dragover', ['$event']) onDragOver(event: DragEvent): void {
         this.preventDefaults(event);
         this.highlightDragDropArea = true;
     }
 
-    @HostListener('dragleave', ['$event']) onDragLeave(event: DragEvent) {
+    @HostListener('dragleave', ['$event']) onDragLeave(event: DragEvent): void {
         this.preventDefaults(event);
         this.highlightDragDropArea = false;
     }
 
-    @HostListener('drop', ['$event']) onDrop(event: DragEvent) {
+    @HostListener('drop', ['$event']) onDrop(event: DragEvent): void {
         this.preventDefaults(event);
         this.highlightDragDropArea = false;
 
@@ -61,7 +61,7 @@ export class FileUploaderComponent {
         }
     }
 
-    async handleChange(event: Event) {
+    async handleChange(event: Event): Promise<void> {
         const target = event.target as HTMLInputElement;
 
         // User cancelled
@@ -72,7 +72,7 @@ export class FileUploaderComponent {
         this.handleFiles(target.files);
     }
 
-    rotate(index: number) {
+    rotate(index: number): void {
         switch (this.previewImages[index].rotation) {
             case undefined:
             case null:
@@ -93,7 +93,7 @@ export class FileUploaderComponent {
         }
     }
 
-    async remove(index: number) {
+    async remove(index: number): Promise<void> {
         const hasConfirmed = await this.dialogService.confirm({
             title: 'Remove',
             body: 'Are you sure?',
@@ -105,11 +105,11 @@ export class FileUploaderComponent {
         }
     }
 
-    openFileUpload() {
+    openFileUpload(): void {
         this.fileInput.nativeElement.click();
     }
 
-    trackByFn(index: number, item: Metadata) {
+    trackByFn(index: number, item: Metadata): number {
         return index;
     }
 
@@ -139,7 +139,7 @@ export class FileUploaderComponent {
         return uploadedFiles;
     }
 
-    setImages(files?: FileModel | Array<FileModel> | null) {
+    setImages(files?: FileModel | Array<FileModel> | null): void {
         if (files) {
             if (Array.isArray(files) && files.length > 0) {
                 const clonedFiles = JSON.parse(JSON.stringify(files));
@@ -151,7 +151,7 @@ export class FileUploaderComponent {
         }
     }
 
-    private async handleFiles(files: FileList) {
+    private async handleFiles(files: FileList): Promise<void> {
         for (const file of Array.from(files)) {
             let error = '';
 
@@ -213,13 +213,13 @@ export class FileUploaderComponent {
                 img.src = reader.result as string;
             };
 
-            reader.onerror = (event: any) => {
+            reader.onerror = event => {
                 reject(event);
             };
         });
     }
 
-    private preventDefaults(event: Event) {
+    private preventDefaults(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
     }

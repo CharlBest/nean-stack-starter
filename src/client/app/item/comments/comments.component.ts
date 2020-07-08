@@ -31,17 +31,17 @@ export class CommentsComponent implements OnInit {
     private router: Router,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getParams();
   }
 
-  getParams() {
+  getParams(): void {
     this.itemUId = this.route.snapshot.params.uId;
     this.getItem();
     this.getComments();
   }
 
-  async getItem() {
+  async getItem(): Promise<void> {
     if (this.itemUId) {
       this.isProcessing = true;
 
@@ -61,7 +61,7 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  async getComments() {
+  async getComments(): Promise<void> {
     if (this.itemUId) {
       this.isProcessingComment = true;
 
@@ -85,7 +85,7 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  insertComment(comment: CommentViewModel) {
+  insertComment(comment: CommentViewModel): void {
     if (this.comments && this.comments.length > 0) {
       this.comments.unshift(comment);
     } else {
@@ -95,22 +95,22 @@ export class CommentsComponent implements OnInit {
     this.item.commentCount ? this.item.commentCount++ : this.item.commentCount = 1;
   }
 
-  goToSignUp() {
+  goToSignUp(): void {
     this.router.navigate(['sign-up'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
   }
 
-  goToLogIn() {
+  goToLogIn(): void {
     this.router.navigate(['login'], { queryParams: { returnUrl: `/item/comments/${this.itemUId}` }, queryParamsHandling: 'merge' });
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getComments();
     }
   }
 
-  trackByFn(index: number, comment: CommentViewModel) {
+  trackByFn(index: number, comment: CommentViewModel): number {
     return comment.id;
   }
 }

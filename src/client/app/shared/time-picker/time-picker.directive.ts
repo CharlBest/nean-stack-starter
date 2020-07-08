@@ -13,7 +13,7 @@ export class TimePickerDirective {
 
     constructor(private dialog: MatDialog) { }
 
-    @HostListener('click') onClick() {
+    @HostListener('click') onClick(): void {
         const dialogRef = this.dialog.open(TimePickerComponent);
         dialogRef.componentInstance.time = this.time;
         dialogRef.componentInstance.timePicked.subscribe((time: TimePickerModel) => {

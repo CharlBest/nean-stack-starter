@@ -25,11 +25,11 @@ export class FilterComponent implements OnInit {
         private route: ActivatedRoute,
         private snackBar: MatSnackBar) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.tagsToFilter = this.route.snapshot.queryParams.tags ? this.route.snapshot.queryParams.tags.split(',') : [];
     }
 
-    async filterClick(tag: string) {
+    async filterClick(tag: string): Promise<void> {
         if (this.tagsToFilter.indexOf(tag) > -1) {
             this.dialogService.alert({
                 title: 'Notice',
@@ -61,7 +61,7 @@ export class FilterComponent implements OnInit {
         }
     }
 
-    removeFilter(index: number) {
+    removeFilter(index: number): void {
         // Remove tag to filter
         this.tagsToFilter.splice(index, 1);
         this.router.navigate([], { queryParams: { tags: this.tags }, queryParamsHandling: 'merge' });
@@ -69,7 +69,7 @@ export class FilterComponent implements OnInit {
         this.filtersUpdated.emit();
     }
 
-    trackByFn(index: number, tag: string) {
+    trackByFn(index: number, tag: string): number {
         return index;
     }
 }

@@ -24,11 +24,11 @@ export class CreateCardComponent implements OnInit {
         private dialogService: DialogService,
         private router: Router) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.formOnInit();
     }
 
-    formOnInit() {
+    formOnInit(): void {
         this.formGroup = this.fb.group(FormGroupBuilder.createCard());
     }
 
@@ -44,7 +44,7 @@ export class CreateCardComponent implements OnInit {
         }
     }
 
-    async onSubmit() {
+    async onSubmit(): Promise<void> {
         this.isProcessing = true;
         const viewModel = await this.getCardIntent();
 

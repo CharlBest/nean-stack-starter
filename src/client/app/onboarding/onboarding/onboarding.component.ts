@@ -17,11 +17,11 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
         private cookieConsentService: CookieConsentService,
         public themeService: ThemeService) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.generateBubbles();
     }
 
-    generateBubbles() {
+    generateBubbles(): void {
         const matTabs = document.getElementsByTagName('mat-tab-body');
 
         const tabs = [];
@@ -33,23 +33,23 @@ export class OnboardingComponent implements AfterViewInit, OnDestroy {
         this.changeDetectorRef.detectChanges();
     }
 
-    previous() {
+    previous(): void {
         if (this.selectedIndex > 0) {
             this.selectedIndex = this.selectedIndex - 1;
         }
     }
 
-    next() {
+    next(): void {
         if (this.selectedIndex < this.tabs.length - 1) {
             this.selectedIndex = this.selectedIndex + 1;
         }
     }
 
-    trackByFn(index: number, item: string) {
+    trackByFn(index: number, item: string): number {
         return index;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.cookieConsentService.openCookieConsentSnackBar();
     }
 }

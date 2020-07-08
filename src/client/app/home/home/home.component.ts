@@ -24,7 +24,7 @@ export class HomeComponent implements AfterViewInit {
     public formErrorsService: FormErrorsService,
     private navigationService: NavigationService) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // TODO: add back in refereshing the feed when clicking
     // this.refreshSameUrlService.init(() => {
     //   this.refresh();
@@ -33,7 +33,7 @@ export class HomeComponent implements AfterViewInit {
     this.getItems(true);
   }
 
-  async getItems(refresh: boolean = false) {
+  async getItems(refresh: boolean = false): Promise<void> {
     this.isProcessing = true;
 
     if (refresh) {
@@ -58,28 +58,28 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getItems();
     }
   }
 
-  filtersUpdated() {
+  filtersUpdated(): void {
     this.getItems(true);
   }
 
-  onOverscrolled() {
+  onOverscrolled(): void {
     if (!this.isProcessing) {
       this.getItems(true);
     }
   }
 
-  trackByFn(index: number, item: ItemViewModel) {
+  trackByFn(index: number, item: ItemViewModel): number {
     return item.id;
   }
 
-  refresh() {
+  refresh(): void {
     // Scroll to the top
     window.scrollTo(0, 0);
 

@@ -21,7 +21,7 @@ class WebSocketServer {
     }
 
     // TODO: implement includeUserMakingRequest
-    send(model: BaseWebSocketModel, includeUserMakingRequest = false) {
+    send(model: BaseWebSocketModel, includeUserMakingRequest = false): void {
         const wss = this.getSocketServer();
         const payload = JSON.stringify(model);
 

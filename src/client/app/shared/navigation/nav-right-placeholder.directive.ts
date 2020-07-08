@@ -13,7 +13,7 @@ export class NavRightPlaceholderDirective implements OnInit, OnDestroy {
     this.navigationService.navigationPlaceholderTemplate = this.templateRef;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.navigationService.navigationPlaceholderTemplate = null;
   }
 }

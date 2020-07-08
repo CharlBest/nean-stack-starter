@@ -31,7 +31,7 @@ export class Server {
 
         this.httpServer.on('error', (error: NodeJS.ErrnoException) => {
             if (error.syscall !== 'listen') {
-                throw error
+                throw error;
             }
 
             const port = app.get('port');
@@ -71,13 +71,13 @@ export class Server {
             process.exit(1);
         });
 
-        process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+        process.on('unhandledRejection', (reason: any, promise: Promise<unknown>) => {
             logger.error('Internal: UnhandledPromiseRejectionWarning', [reason.messsage || reason.stack, reason]);
             process.exit(1);
         });
     }
 
-    destroy() {
+    destroy(): void {
         Database.clearDriver();
         broker.close();
     }

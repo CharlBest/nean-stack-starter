@@ -11,7 +11,7 @@ export class CardBrandComponent implements OnInit {
     @Input() cardBrandEnum: CardBrandType;
     cardBrandType = CardBrandType;
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.cardBrandString) {
             this.cardBrandString = this.cardBrandString.toUpperCase();
         }

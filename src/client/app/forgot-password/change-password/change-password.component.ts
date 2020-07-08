@@ -28,12 +28,12 @@ export class ChangePasswordComponent implements OnInit {
     public bpService: BreakpointService,
     private passwordStrengthService: PasswordStrengthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getParams();
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.changeForgottenPassword());
 
     // Show individually which characters are required (only for UI)
@@ -41,19 +41,19 @@ export class ChangePasswordComponent implements OnInit {
       [this.formGroup.controls.password.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
   }
 
-  getParams() {
+  getParams(): void {
     this.code = this.route.snapshot.queryParams.code;
     this.email = this.route.snapshot.queryParams.email;
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     const passedCommonlyUsedTest = await this.passwordStrengthService.passCommonlyUsedTest(this.formGroup.controls.password.value);
     if (passedCommonlyUsedTest) {
       this.changeForgottenPassword();
     }
   }
 
-  async changeForgottenPassword() {
+  async changeForgottenPassword(): Promise<void> {
     if (this.email && this.code) {
       this.isProcessing = true;
 

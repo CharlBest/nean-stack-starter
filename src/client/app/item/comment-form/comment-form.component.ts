@@ -23,7 +23,7 @@ export class CommentFormComponent implements OnInit {
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
 
     // Show action buttons when updating
@@ -32,13 +32,13 @@ export class CommentFormComponent implements OnInit {
     }
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.createOrUpdateComment(
       this.comment ? this.comment.description : null
     ));
   }
 
-  cancelForm() {
+  cancelForm(): void {
     this.showButtons = false;
     this.cancel.emit();
   }

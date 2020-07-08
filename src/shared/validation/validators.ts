@@ -172,7 +172,7 @@ export class Validators {
 
 export class ServerValidator {
 
-    private static executeFormControlValidator(formGroup: FormValidator, formField: string) {
+    private static executeFormControlValidator(formGroup: FormValidator, formField: string): { field: string, errors: {} } | null {
         const errors = {};
         const formFieldValue = formGroup[formField][0];
         const formFieldValidators = formGroup[formField][1];

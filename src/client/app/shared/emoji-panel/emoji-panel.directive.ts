@@ -10,25 +10,25 @@ export class EmojiPanelDirective implements OnInit {
     @Input() placeholder = 'Type here...';
     @Input() appEmojiPanel: EmojiPanelComponent;
 
-    @HostListener('keyup') onKeypress() {
+    @HostListener('keyup') onKeypress(): void {
         // sanitize
     }
 
     constructor(private el: ElementRef<HTMLElement>,
         private renderer: Renderer2) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.renderElement();
         this.emojiPanel();
     }
 
-    renderElement() {
+    renderElement(): void {
         this.renderer.setAttribute(this.el.nativeElement, 'contentEditable', 'true');
         this.renderer.setAttribute(this.el.nativeElement, 'data-text', this.placeholder);
         this.renderer.addClass(this.el.nativeElement, 'emoji-input');
     }
 
-    emojiPanel() {
+    emojiPanel(): void {
         this.appEmojiPanel.selected
             .subscribe((data: string) => {
                 emojiToolkit.ascii = true;

@@ -11,13 +11,13 @@ import { WebSocketService } from './websocket.service';
 })
 export class NotificationService {
 
-    messages: Array<{ message: string, type: WebSocketType, action?: any }> = [];
+    messages: Array<{ message: string, type: WebSocketType, action?: unknown }> = [];
 
     constructor(private webSocketService: WebSocketService,
         private snackBar: MatSnackBar,
         private bpService: BreakpointService) { }
 
-    init() {
+    init(): void {
         // New Sign Up
         this.webSocketService.newSignUp$
             .subscribe(data => {
@@ -44,7 +44,7 @@ export class NotificationService {
             });
     }
 
-    removeMessage(index: number) {
+    removeMessage(index: number): void {
         this.messages.splice(index, 1);
     }
 }

@@ -26,7 +26,7 @@ export class CreateItemComponent implements OnInit {
     private route: ActivatedRoute,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const itemViewModel = new ItemViewModel();
     itemViewModel.title = this.route.snapshot.queryParams.title;
     itemViewModel.description = this.route.snapshot.queryParams.text;
@@ -39,7 +39,7 @@ export class CreateItemComponent implements OnInit {
     }
   }
 
-  async onSubmit(viewModel: CreateOrUpdateItemViewModel) {
+  async onSubmit(viewModel: CreateOrUpdateItemViewModel): Promise<void> {
     this.isProcessing = true;
 
     try {
@@ -61,7 +61,7 @@ export class CreateItemComponent implements OnInit {
     }
   }
 
-  async askForNotificationPermission(item: ItemViewModel) {
+  async askForNotificationPermission(item: ItemViewModel): Promise<void> {
     const hasConfirmed = await this.dialogService.confirm({
       title: 'Notification Permission',
       body: 'Grant permission to get notifications for comments?',

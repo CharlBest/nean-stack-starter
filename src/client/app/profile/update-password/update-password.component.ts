@@ -25,11 +25,11 @@ export class UpdatePasswordComponent implements OnInit {
     private snackBar: MatSnackBar,
     private passwordStrengthService: PasswordStrengthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.updatePassword());
 
     // Show individually which characters are required (only for UI)
@@ -44,7 +44,7 @@ export class UpdatePasswordComponent implements OnInit {
     });
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.formGroup.controls.newPassword.value !== this.formGroup.controls.confirmPassword.value) {
       return;
     }
@@ -55,7 +55,7 @@ export class UpdatePasswordComponent implements OnInit {
     }
   }
 
-  async updatePassword() {
+  async updatePassword(): Promise<void> {
     this.isProcessing = true;
 
     this.snackBar.open('Updating password...');

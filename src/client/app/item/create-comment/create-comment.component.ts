@@ -22,7 +22,7 @@ export class CreateCommentComponent {
   constructor(public formErrorsService: FormErrorsService,
     private commentService: CommentService) { }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
@@ -43,7 +43,7 @@ export class CreateCommentComponent {
     }
   }
 
-  cancelForm() {
+  cancelForm(): void {
     this.cancel.emit();
   }
 }

@@ -11,13 +11,13 @@ class NotificationsController extends BaseController {
         super();
     }
 
-    async getNotificationPreferences(req: Request, res: Response, next: NextFunction) {
+    async getNotificationPreferences(req: Request, res: Response, next: NextFunction): Promise<void> {
         res.status(200).json(
             await notificationsService.getNotificationPreferences(res)
         );
     }
 
-    async updateNotificationPreferences(req: Request, res: Response, next: NextFunction) {
+    async updateNotificationPreferences(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdateNotificationPreferencesViewModel;
 
         // TODO: this will break if body is empty because access properties on empty preferences object
@@ -41,7 +41,7 @@ class NotificationsController extends BaseController {
         );
     }
 
-    async createSubscription(req: Request, res: Response, next: NextFunction) {
+    async createSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -55,7 +55,7 @@ class NotificationsController extends BaseController {
         );
     }
 
-    async deleteSubscription(req: Request, res: Response, next: NextFunction) {
+    async deleteSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -69,7 +69,7 @@ class NotificationsController extends BaseController {
         );
     }
 
-    async getSubscriptions(req: Request, res: Response, next: NextFunction) {
+    async getSubscriptions(req: Request, res: Response, next: NextFunction): Promise<void> {
         const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;

@@ -49,7 +49,7 @@ export class Database {
         adminDriver.close();
     }
 
-    private static createDriver() {
+    private static createDriver(): Driver {
         return driver(
             environment.database.uri,
             auth.basic(environment.database.username, environment.database.password),
@@ -83,7 +83,7 @@ export class Database {
         }
     }
 
-    static async getQueries() {
+    static async getQueries(): Promise<void> {
         this.queries = {
             startup: {
                 createDatabase: (await import(`../database/startup/createDatabase.${Database.fileExtension}`)).data,

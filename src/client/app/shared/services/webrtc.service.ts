@@ -44,7 +44,8 @@ export class WebRTCService {
         });
     }
 
-    async startVideoCall(stream: MediaStream, outgoingVideoElement: HTMLVideoElement, incomingVideoElement: HTMLVideoElement) {
+    async startVideoCall(stream: MediaStream, outgoingVideoElement: HTMLVideoElement, incomingVideoElement: HTMLVideoElement)
+        : Promise<void> {
         try {
             await this.initPeer(stream, {
                 initiator: true,
@@ -59,7 +60,7 @@ export class WebRTCService {
     }
 
     async acceptVideoCall(stream: MediaStream, signalData: SimplePeer.SignalData, outgoingVideoElement: HTMLVideoElement,
-        incomingVideoElement: HTMLVideoElement) {
+        incomingVideoElement: HTMLVideoElement): Promise<void> {
         if (signalData.type === 'offer') {
             try {
                 await this.initPeer(stream, {
@@ -79,7 +80,7 @@ export class WebRTCService {
     }
 
     async initPeer(stream: MediaStream, simplePeerOptions: SimplePeer.Options | any,
-        outgoingVideoElement: HTMLVideoElement, incomingVideoElement: HTMLVideoElement) {
+        outgoingVideoElement: HTMLVideoElement, incomingVideoElement: HTMLVideoElement): Promise<void> {
         this.isProcessing = true;
 
         try {
@@ -98,7 +99,7 @@ export class WebRTCService {
         }
     }
 
-    setupPeerEvents(videoElement: HTMLVideoElement) {
+    setupPeerEvents(videoElement: HTMLVideoElement): void {
         this.peer.on('error', (err: Error) => console.log('Peer error', err));
 
         this.peer.on('signal', (data: SimplePeer.SignalData) => {
@@ -120,7 +121,7 @@ export class WebRTCService {
         });
     }
 
-    sendSignal() {
+    sendSignal(): void {
         if (this.signalData) {
             const model = new WebRTCSignalWebSocketModel();
             model.data = this.signalData;
@@ -130,7 +131,7 @@ export class WebRTCService {
         }
     }
 
-    setVideoElement(videoElement: HTMLVideoElement, stream: MediaStream | null) {
+    setVideoElement(videoElement: HTMLVideoElement, stream: MediaStream | null): void {
         if (videoElement) {
             if ('srcObject' in videoElement) {
                 videoElement.srcObject = stream;
@@ -142,7 +143,7 @@ export class WebRTCService {
         }
     }
 
-    destroy() {
+    destroy(): void {
         if (this.peer) {
             this.peer.destroy();
         }

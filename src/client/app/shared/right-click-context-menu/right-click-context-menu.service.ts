@@ -21,7 +21,7 @@ export class RightClickContextMenuService implements OnDestroy {
         this.closeOnNavigate();
     }
 
-    open(event: MouseEvent, contextMenu: ContextMenuComponent) {
+    open(event: MouseEvent, contextMenu: ContextMenuComponent): void {
         this.close();
 
         const positionStrategy = this.overlay.position()
@@ -53,7 +53,7 @@ export class RightClickContextMenuService implements OnDestroy {
             ).subscribe(() => this.close());
     }
 
-    close() {
+    close(): void {
         if (this.documentClickSubscription) {
             this.documentClickSubscription.unsubscribe();
         }
@@ -64,7 +64,7 @@ export class RightClickContextMenuService implements OnDestroy {
         }
     }
 
-    private closeOnNavigate() {
+    private closeOnNavigate(): void {
         // Close on navigate
         this.routerEventsSubscription = this.router.events.pipe(
             filter(routerEvent => routerEvent instanceof NavigationStart),
@@ -73,7 +73,7 @@ export class RightClickContextMenuService implements OnDestroy {
         ).subscribe();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.documentClickSubscription) {
             this.documentClickSubscription.unsubscribe();
         }

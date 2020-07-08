@@ -16,17 +16,17 @@ export class TutorialDirective implements OnInit {
     constructor(private elementRef: ElementRef<HTMLElement>,
         private route: ActivatedRoute) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.initialize();
         this.getParams();
     }
 
-    initialize() {
+    initialize(): void {
         this.zIndex = this.elementRef.nativeElement.style.zIndex;
         this.backgroundColor = this.elementRef.nativeElement.style.backgroundColor;
     }
 
-    getParams() {
+    getParams(): void {
         this.route.queryParamMap
             .subscribe(params => {
                 if (params.has('tut')) {
@@ -41,7 +41,7 @@ export class TutorialDirective implements OnInit {
             });
     }
 
-    process() {
+    process(): void {
         // Hidden tutorial item
         if (this.tutorialInUrl !== TutorialType[this.appTutorial]) {
             this.reset();
@@ -55,7 +55,7 @@ export class TutorialDirective implements OnInit {
         }
     }
 
-    reset() {
+    reset(): void {
         if (this.zIndex) {
             this.elementRef.nativeElement.style.zIndex = this.zIndex;
         }

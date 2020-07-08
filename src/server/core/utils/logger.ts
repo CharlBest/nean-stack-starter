@@ -1,7 +1,7 @@
 import { createLogger, format, Logger, transports } from 'winston';
 import { environment } from '../../environments/environment';
 
-export function initLogger() {
+export function initLogger(): void {
     logger = createLogger({
         format: format.combine(
             format.timestamp(),
@@ -24,8 +24,8 @@ export function initLogger() {
                         // padStr(temp.getHours()) +
                         // padStr(temp.getMinutes()) +
                         // padStr(temp.getSeconds());
-                    }
-                    function padStr(i: number) {
+                    };
+                    function padStr(i: number): string {
                         return (i < 10) ? '0' + i : '' + i;
                     }
                 }

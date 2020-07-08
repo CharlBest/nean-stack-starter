@@ -14,12 +14,12 @@ export class ActiveTimerService {
 
     constructor(public dialogService: DialogService) { }
 
-    init() {
+    init(): void {
         this.setTimer();
         this.addVisibilityChangeListener();
     }
 
-    private addVisibilityChangeListener() {
+    private addVisibilityChangeListener(): void {
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.clearTimeout();
@@ -30,7 +30,7 @@ export class ActiveTimerService {
         });
     }
 
-    private setTimer() {
+    private setTimer(): void {
         this.clearTimeout();
         this.setTimeoutId = window.setTimeout(() => {
             this.showMessageOnNextClick = this.showMessageOnNextClick.bind(this);
@@ -38,7 +38,7 @@ export class ActiveTimerService {
         }, this.timeToWait);
     }
 
-    private showMessageOnNextClick() {
+    private showMessageOnNextClick(): void {
         // Message
         this.dialogService.alert({
             title: 'Time for a break?',
@@ -52,11 +52,11 @@ export class ActiveTimerService {
         this.setTimer();
     }
 
-    private clearClickListener() {
+    private clearClickListener(): void {
         document.removeEventListener('click', this.showMessageOnNextClick);
     }
 
-    private clearTimeout() {
+    private clearTimeout(): void {
         if (this.setTimeoutId) {
             clearTimeout(this.setTimeoutId);
             this.setTimeoutId = null;

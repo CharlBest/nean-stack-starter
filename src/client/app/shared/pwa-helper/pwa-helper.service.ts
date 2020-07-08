@@ -16,7 +16,7 @@ export class PWAHelperService implements OnDestroy {
     constructor(private overlay: Overlay,
         private router: Router) { }
 
-    open() {
+    open(): void {
         const config = new OverlayConfig({
             hasBackdrop: true,
             // backdropClass: 'cdk-overlay-transparent-backdrop',
@@ -40,7 +40,7 @@ export class PWAHelperService implements OnDestroy {
         overlayRef.attach(userProfilePortal);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.routerEventsSubscription) {
             this.routerEventsSubscription.unsubscribe();
         }

@@ -57,7 +57,7 @@ export class NavigationComponent implements OnInit {
     public navigationService: NavigationService,
     private webSocketService: WebSocketService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initPrimaryNavWathcer();
     this.navigationEnd();
     this.configureTopToolbarOnScrollUp();
@@ -66,7 +66,7 @@ export class NavigationComponent implements OnInit {
   }
 
 
-  navigationEnd() {
+  navigationEnd(): void {
     // Set title, navigation and back route
     this.router.events
       .pipe(
@@ -101,7 +101,7 @@ export class NavigationComponent implements OnInit {
       });
   }
 
-  initPrimaryNavWathcer() {
+  initPrimaryNavWathcer(): void {
     // Check if user has gone to primary nav page
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
@@ -113,7 +113,7 @@ export class NavigationComponent implements OnInit {
       });
   }
 
-  back() {
+  back(): void {
     if (this.backRouterPath) {
       this.router.navigate([this.backRouterPath]);
       this.navigationService.backRouterPath = null;
@@ -126,7 +126,7 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  configureTopToolbarOnScrollUp() {
+  configureTopToolbarOnScrollUp(): void {
     // Set toolbar height
     this.bpService.isDesktop$.subscribe(data => {
       if (data) {
@@ -139,7 +139,7 @@ export class NavigationComponent implements OnInit {
     this.addEventListenerOnScroll();
   }
 
-  addEventListenerOnScroll() {
+  addEventListenerOnScroll(): void {
     let prevScrollpos = window.pageYOffset;
 
     fromEvent(window, 'scroll')
@@ -161,7 +161,7 @@ export class NavigationComponent implements OnInit {
       });
   }
 
-  checkAllNavItemAssociations() {
+  checkAllNavItemAssociations(): void {
     if (!environment.production) {
       const allNavItems = ([] as Array<string>)
         .concat(...Object.keys(this.navItems).map(key => this.navItems[key].paths.map(path => path.path)));
@@ -174,7 +174,7 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  updateActiveNavItem() {
+  updateActiveNavItem(): void {
     for (const key in this.navItems) {
       if (this.navItems.hasOwnProperty(key)) {
         if (this.navItems[key].paths.some(path => this.router.isActive(path.path, path.exact !== undefined ? path.exact : true))) {
@@ -186,7 +186,7 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  listenForNewItemsViaWebSocket() {
+  listenForNewItemsViaWebSocket(): void {
     this.webSocketService.newItem$
       .subscribe(() => {
         this.navigationService.showHomeNavigationBadge = true;

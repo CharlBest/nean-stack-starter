@@ -18,7 +18,7 @@ export class BaseRoute {
         return url;
     }
 
-    private serverUrlParams() {
+    private serverUrlParams(): string {
         if (this.params) {
             return `/:${Object.keys(this.params).join('/:')}`;
         } else {
@@ -26,7 +26,7 @@ export class BaseRoute {
         }
     }
 
-    private clientUrlParams(url: string) {
+    private clientUrlParams(url: string): string {
         if (this.params) {
             for (const key in this.params) {
                 if (this.params.hasOwnProperty(key)) {
@@ -38,7 +38,7 @@ export class BaseRoute {
         return url;
     }
 
-    private clientQueryParams(url: string, queryParams?: { [key: string]: QueryParam }) {
+    private clientQueryParams(url: string, queryParams?: { [key: string]: QueryParam }): string {
         if (queryParams) {
             let isFirstQueryParam = true;
             for (const key in queryParams) {

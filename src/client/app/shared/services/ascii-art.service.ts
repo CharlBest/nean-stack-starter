@@ -13,7 +13,7 @@ export class ASCIIArtService {
 
   constructor(private themeService: ThemeService) { }
 
-  banner() {
+  banner(): void {
     console.log(`%c
 #     # #######    #    #     #
 ##    # #         # #   ##    #
@@ -25,7 +25,7 @@ export class ASCIIArtService {
     `, this.styles);
   }
 
-  block() {
+  block(): void {
     console.log(`%c
 _|      _|  _|_|_|_|    _|_|    _|      _|
 _|_|    _|  _|        _|    _|  _|_|    _|
@@ -35,7 +35,7 @@ _|      _|  _|_|_|_|  _|    _|  _|      _|
     `, this.styles);
   }
 
-  lean() {
+  lean(): void {
     console.log(`%c
     _/      _/  _/_/_/_/    _/_/    _/      _/
    _/_/    _/  _/        _/    _/  _/_/    _/
@@ -45,7 +45,7 @@ _/      _/  _/_/_/_/  _/    _/  _/      _/
     `, this.styles);
   }
 
-  slant() {
+  slant(): void {
     console.log(`%c
     _   ___________    _   __
    / | / / ____/   |  / | / /

@@ -27,7 +27,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
     constructor(private stripeElementsService: StripeElementsService,
         public themeService: ThemeService) { }
 
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
         await this.stripeElementsService.stripe();
         this.initialize();
     }
@@ -82,7 +82,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         return null;
     }
 
-    private initialize() {
+    private initialize(): void {
         const elementStyles = {
             base: {
                 fontFamily: 'Open Sans, Arial, sans-serif',
@@ -117,7 +117,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         this.initializeElement(this.elementsWrapper.cardCvc);
     }
 
-    private initializeElement(elementWrapper: ElementWrapper) {
+    private initializeElement(elementWrapper: ElementWrapper): void {
         if (!elementWrapper.element) {
             console.error('Failed to create element', elementWrapper);
             return;
@@ -139,7 +139,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         this.addChangeEventListener(elementWrapper);
     }
 
-    private addChangeEventListener(elementWrapper: ElementWrapper) {
+    private addChangeEventListener(elementWrapper: ElementWrapper): void {
         if (!elementWrapper.element) {
             console.error('Failed to add event listener to element', elementWrapper);
             return;
@@ -206,7 +206,7 @@ export class StripeElementsComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.elementsWrapper.cardNumber.element) {
             this.elementsWrapper.cardNumber.element.destroy();
         }

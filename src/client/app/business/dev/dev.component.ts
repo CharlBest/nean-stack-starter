@@ -19,11 +19,11 @@ export class DevComponent implements OnInit {
 
   constructor(private gitHubService: GitHubService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCurrentVersionInGitHubPackageJson();
   }
 
-  async getCurrentVersionInGitHubPackageJson() {
+  async getCurrentVersionInGitHubPackageJson(): Promise<void> {
     try {
       const response = await this.gitHubService.getFile('package.json');
       const startIndex = response.indexOf('"version"');

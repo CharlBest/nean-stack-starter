@@ -14,12 +14,12 @@ export class PreventBackNavigationService {
 
     constructor(private location: Location) { }
 
-    beforeOpen() {
+    beforeOpen(): void {
         history.pushState(null, '', location.href);
         window.onpopstate = () => this.location.forward();
     }
 
-    afterClosed() {
+    afterClosed(): void {
         window.onpopstate = () => { };
     }
 }

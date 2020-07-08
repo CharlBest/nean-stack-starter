@@ -4,8 +4,8 @@ import { environment } from '../environments/environment.prod';
 import { puppeteer } from '../test/global';
 
 describe('App Component', () => {
-    let browser: BrowserContext | any = null;
-    let page: Page | any = null;
+    let browser: BrowserContext | null = null;
+    let page: Page | null = null;
 
     beforeEach(async () => {
         browser = await puppeteer.createBrowserContext();
@@ -13,13 +13,17 @@ describe('App Component', () => {
     });
 
     it('should be home title', async () => {
-        await page.goto(`${environment.serverEndpoint}`);
+        if (page) {
+            await page.goto(`${environment.serverEndpoint}`);
 
-        const title = await page.title();
-        expect(title).toEqual('Onboarding');
+            const title = await page.title();
+            expect(title).toEqual('Onboarding');
+        }
     });
 
     afterEach(() => {
-        browser.close();
+        if (browser) {
+            browser.close();
+        }
     });
 });

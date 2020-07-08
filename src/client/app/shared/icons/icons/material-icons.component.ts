@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Category } from '../material-icon-category.model';
 import { BaseIconDirective } from './base-icon.component';
 
-export function materialIconPath(iconName: string, category: string = Category.ACTION) {
+export function materialIconPath(iconName: string, category: string = Category.ACTION): string {
   return `../../../../../../node_modules/material-design-icons/${category}/svg/production/ic_${iconName}_24px.svg`;
 }
 

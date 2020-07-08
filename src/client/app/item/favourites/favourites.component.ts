@@ -22,11 +22,11 @@ export class FavouritesComponent implements AfterViewInit {
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getFavourites(true);
   }
 
-  async getFavourites(refresh: boolean = false) {
+  async getFavourites(refresh: boolean = false): Promise<void> {
     this.isProcessing = true;
 
     if (refresh) {
@@ -51,29 +51,29 @@ export class FavouritesComponent implements AfterViewInit {
     }
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getFavourites();
     }
   }
 
-  filtersUpdated() {
+  filtersUpdated(): void {
     this.getFavourites(true);
   }
 
-  trackByFn(index: number, item: ItemViewModel) {
+  trackByFn(index: number, item: ItemViewModel): number {
     return item.id;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     if (event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.items, event.previousIndex, event.currentIndex);
       this.orderFavourite(event.item.data, event.previousIndex, event.currentIndex);
     }
   }
 
-  async orderFavourite(item: ItemViewModel, originalOrderVal: number, newOrderVal: number) {
+  async orderFavourite(item: ItemViewModel, originalOrderVal: number, newOrderVal: number): Promise<void> {
     const viewModel = new OrderFavouriteViewModel();
     viewModel.newOrderVal = newOrderVal;
     viewModel.originalOrderVal = originalOrderVal;

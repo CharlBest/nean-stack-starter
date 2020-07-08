@@ -11,9 +11,9 @@ class NotificationsRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() { }
+    initAnonymousRoutes(): void { }
 
-    initAuthenticatedRoutes() {
+    initAuthenticatedRoutes(): void {
         this.router.get(NotificationRoutes.getNotificationPreferences().server(), Authentication.loginRequired,
             async (req, res, next) => notificationsController.getNotificationPreferences(req, res, next).catch(next));
 

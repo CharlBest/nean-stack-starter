@@ -11,7 +11,7 @@ class CommentsController extends BaseController {
         super();
     }
 
-    async create(req: Request, res: Response, next: NextFunction) {
+    async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
@@ -29,7 +29,7 @@ class CommentsController extends BaseController {
         );
     }
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    async update(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateCommentViewModel;
 
@@ -47,7 +47,7 @@ class CommentsController extends BaseController {
         );
     }
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -61,7 +61,7 @@ class CommentsController extends BaseController {
         );
     }
 
-    async get(req: Request, res: Response, next: NextFunction) {
+    async get(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -75,7 +75,7 @@ class CommentsController extends BaseController {
         );
     }
 
-    async getAll(req: Request, res: Response, next: NextFunction) {
+    async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
@@ -91,7 +91,7 @@ class CommentsController extends BaseController {
         );
     }
 
-    async getReplies(req: Request, res: Response, next: NextFunction) {
+    async getReplies(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;

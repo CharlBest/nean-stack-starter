@@ -21,7 +21,7 @@ class BrokerManager {
         }
     }
 
-    private encode(data: string) {
+    private encode(data: string): Buffer {
         return Buffer.from(JSON.stringify(data));
     }
 

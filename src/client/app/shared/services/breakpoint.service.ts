@@ -34,7 +34,7 @@ export class BreakpointService implements OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.isDesktopSubject.complete();
     }
 }

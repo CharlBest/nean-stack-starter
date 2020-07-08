@@ -13,7 +13,7 @@ class ItemsController extends BaseController {
         super();
     }
 
-    async create(req: Request, res: Response, next: NextFunction) {
+    async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
         const formGroup = FormGroupBuilder.createOrUpdateItem(viewModel.title, viewModel.description, viewModel.files, viewModel.tags);
@@ -28,7 +28,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    async update(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as CreateOrUpdateItemViewModel;
 
@@ -46,7 +46,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async get(req: Request, res: Response, next: NextFunction) {
+    async get(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -60,7 +60,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async getAll(req: Request, res: Response, next: NextFunction) {
+    async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
         const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
@@ -70,7 +70,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -84,7 +84,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async createFavourite(req: Request, res: Response, next: NextFunction) {
+    async createFavourite(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -98,7 +98,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async deleteFavourite(req: Request, res: Response, next: NextFunction) {
+    async deleteFavourite(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
 
         const hasErrors = !!Validators.required(uId);
@@ -112,7 +112,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async getFavourites(req: Request, res: Response, next: NextFunction) {
+    async getFavourites(req: Request, res: Response, next: NextFunction): Promise<void> {
         const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
@@ -122,7 +122,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async orderFavourite(req: Request, res: Response, next: NextFunction) {
+    async orderFavourite(req: Request, res: Response, next: NextFunction): Promise<void> {
         const uId = req.params.uId as string | null;
         const viewModel = req.body as OrderFavouriteViewModel;
 
@@ -140,7 +140,7 @@ class ItemsController extends BaseController {
         );
     }
 
-    async search(req: Request, res: Response, next: NextFunction) {
+    async search(req: Request, res: Response, next: NextFunction): Promise<void> {
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
         const pageSize = req.query.pageSize ? +req.query.pageSize : DEFAULT_PAGE_SIZE;
         const viewModel = req.body as SearchViewModel;

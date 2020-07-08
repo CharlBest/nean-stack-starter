@@ -15,13 +15,13 @@ export class OverscrollComponent implements OnInit, OnDestroy {
 
   constructor(private overscrollService: OverscrollService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.overscrollSubscription = this.overscrollService.overscrolled.subscribe(() => {
       this.overscrolled.emit();
-    })
+    });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.overscrollSubscription) {
       this.overscrollSubscription.unsubscribe();
     }

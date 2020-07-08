@@ -9,7 +9,7 @@ export class FormatRelativeTimePipe implements PipeTransform {
 
     constructor(private translateService: TranslateService) { }
 
-    transform(date: string | null) {
+    transform(date: string | null): string | null {
         if (!date) {
             return null;
         }
@@ -26,19 +26,29 @@ export class FormatRelativeTimePipe implements PipeTransform {
             // Mapping from a Intl.RelativeTimeFormat unit string to the equivalent value in milliseconds
 
             const years = Math.ceil(ms / 31_557_600_000); // Approx. 86,400 seconds per day * 365.25 days
-            if (years) return formatter.format(years, 'year');
+            if (years) {
+                return formatter.format(years, 'year');
+            }
 
             const months = Math.ceil(ms / 2_629_800_000); // Approx. 31,557,600 seconds per year / 12 months
-            if (months) return formatter.format(months, 'month');
+            if (months) {
+                return formatter.format(months, 'month');
+            }
 
             const days = Math.ceil(ms / 86_400_000);
-            if (days) return formatter.format(days, 'day');
+            if (days) {
+                return formatter.format(days, 'day');
+            }
 
             const hours = Math.ceil(ms / 3_600_000);
-            if (hours) return formatter.format(hours, 'hour');
+            if (hours) {
+                return formatter.format(hours, 'hour');
+            }
 
             const minutes = Math.ceil(ms / 60_000);
-            if (minutes) return formatter.format(minutes, 'minute');
+            if (minutes) {
+                return formatter.format(minutes, 'minute');
+            }
 
             const seconds = Math.ceil(ms / 1_000);
             return formatter.format(seconds, 'second');
@@ -47,7 +57,7 @@ export class FormatRelativeTimePipe implements PipeTransform {
         }
     }
 
-    angularDatePipe(date: string) {
+    angularDatePipe(date: string): string {
         const locale = this.translateService.activeLanguage || this.translateService.defaultLanguage;
         return formatDate(date, 'HH:mm MMM d, y', locale);
     }

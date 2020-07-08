@@ -14,18 +14,18 @@ export class ActivityComponent {
     private webSocketService: WebSocketService,
     private snackBar: MatSnackBar) { }
 
-  removeMessage(index: number) {
+  removeMessage(index: number): void {
     this.notificationService.removeMessage(index);
   }
 
-  manualWebSocketBroadcast() {
+  manualWebSocketBroadcast(): void {
     const model = new NewSignUpWebSocketModel();
     model.message = translateService.t('helloFromSomewhere');
     this.webSocketService.send(model);
     this.snackBar.open(translateService.t('sent'));
   }
 
-  trackByFn(index: number, item: string) {
+  trackByFn(index: number, item: string): number {
     return index;
   }
 }

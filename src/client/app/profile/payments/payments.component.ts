@@ -25,13 +25,13 @@ export class PaymentsComponent implements OnChanges {
     private formErrorsService: FormErrorsService,
     private dialogService: DialogService) { }
 
-  ngOnChanges(change: SimpleChanges) {
+  ngOnChanges(change: SimpleChanges): void {
     if (change.paymentCards && this.paymentCards) {
       this.paymentCards.forEach(card => card.hasExpired = this.hasCardExpired(card));
     }
   }
 
-  async deleteCard(id: string) {
+  async deleteCard(id: string): Promise<void> {
     const hasConfirmed = await this.dialogService.confirm({
       title: 'Delete payment method',
       body: 'Are you sure you want to delete this payment method?',
@@ -57,7 +57,7 @@ export class PaymentsComponent implements OnChanges {
     }
   }
 
-  async changeDefaultCard() {
+  async changeDefaultCard(): Promise<void> {
     this.isProcessing = true;
     const currentDefaultCard = this.paymentCards.find(card => card.isDefault);
 
@@ -92,7 +92,7 @@ export class PaymentsComponent implements OnChanges {
     }
   }
 
-  hasCardExpired(card: CardViewModel) {
+  hasCardExpired(card: CardViewModel): boolean {
     const expireDate = new Date();
     expireDate.setUTCFullYear(card.expireYear, card.expireMonth - 1, 1);
 
@@ -103,7 +103,7 @@ export class PaymentsComponent implements OnChanges {
     }
   }
 
-  trackByFn(index: number, item: CardViewModel) {
+  trackByFn(index: number, item: CardViewModel): number {
     return index;
   }
 }

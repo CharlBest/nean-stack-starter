@@ -20,13 +20,13 @@ export class MediaComponent implements OnChanges {
   constructor(private sanitizer: DomSanitizer,
     public dialog: MatDialog) { }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.src && this.src) {
       this.processMediaType();
     }
   }
 
-  processMediaType() {
+  processMediaType(): void {
     if (this.src.substr(0, 25).indexOf('youtube.com') > -1) {
       if (this.thumbnail) {
         let token = '';
@@ -59,7 +59,7 @@ export class MediaComponent implements OnChanges {
     }
   }
 
-  openViewMediaDialog() {
+  openViewMediaDialog(): void {
     if (!this.thumbnail) {
       const dialog = this.dialog.open(ViewMediaDialogComponent);
       dialog.componentInstance.src = this.src;

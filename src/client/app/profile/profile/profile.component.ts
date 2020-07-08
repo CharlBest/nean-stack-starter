@@ -37,11 +37,11 @@ export class ProfileComponent implements OnInit {
     public bpService: BreakpointService,
     private changeDetection: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUser();
   }
 
-  async getUser() {
+  async getUser(): Promise<void> {
     try {
       const response = await this.profileService.getUserProfile();
       if (response) {
@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async updateAvatar() {
+  async updateAvatar(): Promise<void> {
     const files = await this.fileUploader.upload();
 
     const viewModel = new UpdateAvatarViewModel();
@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async resendEmailVerificationLink() {
+  async resendEmailVerificationLink(): Promise<void> {
     this.contextMenu.close();
 
     this.snackBar.dismiss();
@@ -104,17 +104,17 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  goToDeleteAccount() {
+  goToDeleteAccount(): void {
     this.contextMenu.close();
     this.router.navigate(['/profile/delete'], { queryParams: { email: this.user.email }, queryParamsHandling: 'merge' });
   }
 
-  profileTour() {
+  profileTour(): void {
     this.contextMenu.close();
     this.tutorialService.activateTutorial(TutorialType.AVATAR_UPLOAD);
   }
 
-  openShareDialog() {
+  openShareDialog(): void {
     this.contextMenu.close();
 
     const url = ['/user', this.user.id];
@@ -123,7 +123,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  copyLink() {
+  copyLink(): void {
     this.shareService.copyWithUrl(['/user', this.user.id]);
     this.contextMenu.close();
   }

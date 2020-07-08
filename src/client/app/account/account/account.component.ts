@@ -14,11 +14,11 @@ export class AccountComponent {
     private tutorialService: TutorialService,
     public authService: AuthService) { }
 
-  takeTour() {
+  takeTour(): void {
     this.tutorialService.activateTutorial(TutorialType.SIGN_UP);
   }
 
-  logout() {
+  logout(): void {
     this.authService.removeTokenAndNavigateToLogin();
   }
 }

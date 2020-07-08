@@ -13,11 +13,11 @@ export class PWAHelperComponent implements OnInit {
 
     constructor(private platform: Platform) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.initScreenSizes();
     }
 
-    initScreenSizes() {
+    initScreenSizes(): void {
         // TODO: work in progress (need to test individually)
 
         if (!this.platform.ANDROID && !this.platform.IOS && this.platform.BLINK) { // Desktop + Chrome

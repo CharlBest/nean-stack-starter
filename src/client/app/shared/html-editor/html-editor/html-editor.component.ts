@@ -41,11 +41,11 @@ export class HTMLEditorComponent implements AfterViewInit {
         private domSanitizer: DomSanitizer,
         private snackBar: MatSnackBar) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.initQuillEditor();
     }
 
-    initQuillEditor() {
+    initQuillEditor(): void {
         // Override toolbar icons
         const icons = Quill.import('ui/icons');
         function buildToolbarIcon(svg: string, title: string): string {
@@ -77,10 +77,10 @@ export class HTMLEditorComponent implements AfterViewInit {
                         ['undo', 'redo']
                     ],
                     handlers: {
-                        undo() {
+                        undo(): void {
                             (this as any).quill.history.undo();
                         },
-                        redo() {
+                        redo(): void {
                             (this as any).quill.history.redo();
                         },
                     }
@@ -126,7 +126,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         });
     }
 
-    selectLocalImage() {
+    selectLocalImage(): void {
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
         input.click();
@@ -146,7 +146,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         };
     }
 
-    async saveFileToServer(file: File) {
+    async saveFileToServer(file: File): Promise<void> {
         try {
             const url = await this.firebaseStorageService.upload(file, (progress) => {
                 this.imageUploadProgressPercentage = progress;
@@ -160,7 +160,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         }
     }
 
-    insertEmbedImage(url: string, blurAfterInsert: boolean = false) {
+    insertEmbedImage(url: string, blurAfterInsert: boolean = false): void {
         // TODO: not sure if setting the default here is a good decision
         const range = this.editor.getSelection() || { index: 0 };
         this.editor.insertEmbed(range.index, 'image', url);
@@ -176,7 +176,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         this.updateFileStorageWithUrls();
     }
 
-    insertText(text: string, blurAfterInsert: boolean = false) {
+    insertText(text: string, blurAfterInsert: boolean = false): void {
         let range = this.editor.getSelection();
         if (range) {
             this.editor.insertText(range.index, text);
@@ -199,7 +199,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         }
     }
 
-    renderHTMLWithEmoji(html: string) {
+    renderHTMLWithEmoji(html: string): string {
         // Maybe allow ascii emoji as well
         // emojiToolkit.ascii = true;
         emojiToolkit.sprites = true;
@@ -207,7 +207,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         return emojiToolkit.shortnameToImage(html);
     }
 
-    getInnerHTML() {
+    getInnerHTML(): string {
         return (this.editorDomElement.nativeElement.firstChild as HTMLDivElement).innerHTML;
     }
 
@@ -215,7 +215,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         const regex = new RegExp('src="(https:\/\/firebasestorage\.googleapis\.com.*?)"', 'ig');
         const urls: Array<string> = [];
 
-        function getUrl() {
+        function getUrl(): RegExpExecArray | null {
             const match = regex.exec(content);
             if (match) {
                 urls.push(match[1]);
@@ -233,7 +233,7 @@ export class HTMLEditorComponent implements AfterViewInit {
         return urls;
     }
 
-    updateFileStorageWithUrls() {
+    updateFileStorageWithUrls(): void {
         const oldUrls = this.getUrls(this.htmlContent);
         const newUrls = this.getUrls(this.getInnerHTML());
 
@@ -247,15 +247,15 @@ export class HTMLEditorComponent implements AfterViewInit {
         }
     }
 
-    @HostListener('keydown.control.z') undoSnackBar() {
+    @HostListener('keydown.control.z') undoSnackBar(): void {
         this.showSnackBar('Undo');
     }
 
-    @HostListener('keydown.control.y') redoSnackBar() {
+    @HostListener('keydown.control.y') redoSnackBar(): void {
         this.showSnackBar('Redo');
     }
 
-    showSnackBar(message: string) {
+    showSnackBar(message: string): void {
         this.snackBar.open(message, undefined, {
             duration: 600
         });

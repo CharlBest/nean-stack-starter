@@ -12,7 +12,7 @@ class PaymentsRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() {
+    initAnonymousRoutes(): void {
         this.router.post(PaymentRoutes.stripeWebhook().server(), express.raw({ type: 'application/json' }),
             async (req, res, next) => paymentsController.stripeWebhook(req, res, next).catch(next));
 
@@ -20,7 +20,7 @@ class PaymentsRoutes extends BaseRoute {
             async (req, res, next) => paymentsController.paymentIntent(req, res, next).catch(next));
     }
 
-    initAuthenticatedRoutes() {
+    initAuthenticatedRoutes(): void {
         this.router.get(PaymentRoutes.paymentCards().server(), Authentication.loginRequired,
             async (req, res, next) => paymentsController.paymentCards(req, res, next).catch(next));
 

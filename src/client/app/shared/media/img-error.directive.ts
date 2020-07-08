@@ -9,7 +9,7 @@ export class ImgErrorDirective {
 
   constructor(private element: ElementRef<HTMLImageElement>) { }
 
-  @HostListener('error') onError() {
+  @HostListener('error') onError(): void {
     this.element.nativeElement.src = this.defaultImage;
   }
 }

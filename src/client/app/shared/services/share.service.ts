@@ -38,13 +38,13 @@ export class ShareService {
         return this.webShare(title, this.fullUrl(url, navigationExtras));
     }
 
-    copy(url: string) {
+    copy(url: string): void {
         if (this.clipboard.copy(url)) {
             this.snackBar.open('Copied');
         }
     }
 
-    copyWithUrl(url: Url) {
+    copyWithUrl(url: Url): void {
         this.copy(this.fullUrl(url));
     }
 }

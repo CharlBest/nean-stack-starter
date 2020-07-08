@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
         private localStorageService: LocalStorageService,
         private dialogService: DialogService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         // Stop request if token has expired
         if (this.authService.hasToken() && this.authService.hasStoredTokenExpired()) {
             this.dialogService.alert({
@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const authRequest = authToken ? request.clone({ headers: request.headers.set('Authorization', `Bearer ${authToken}`) }) : request;
         // Pass on the cloned request instead of the original request.
         return next.handle(authRequest).pipe(
-            tap((event: HttpEvent<any>) => {
+            tap((event: HttpEvent<unknown>) => {
                 // if (event instanceof HttpResponse) do stuff with response if you want
             }, err => {
                 if (err instanceof HttpErrorResponse) {

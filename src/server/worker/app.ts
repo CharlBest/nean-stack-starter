@@ -51,7 +51,7 @@ class App {
         }
     }
 
-    async processMessage(message: ConsumeMessage, queueType: string) {
+    async processMessage(message: ConsumeMessage, queueType: string): Promise<void> {
         try {
             const data = JSON.parse(message.content.toString());
 
@@ -115,7 +115,7 @@ class App {
         }
     }
 
-    onDestroy() {
+    onDestroy(): void {
         process.on('SIGTERM', () => {
             Database.clearDriver();
             broker.close();

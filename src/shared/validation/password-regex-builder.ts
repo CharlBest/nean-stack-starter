@@ -3,22 +3,22 @@ export class PasswordRegexBuilder {
 
     constructor(private minLength?: number, private maxLength = 100) { }
 
-    oneUpperCase() {
+    oneUpperCase(): this {
         this.regex += '(?=.*?[A-Z])';
         return this;
     }
 
-    oneLowerCase() {
+    oneLowerCase(): this {
         this.regex += '(?=.*?[a-z])';
         return this;
     }
 
-    oneDigit() {
+    oneDigit(): this {
         this.regex += '(?=.*?[0-9])';
         return this;
     }
 
-    oneSpecialCharacter() {
+    oneSpecialCharacter(): this {
         this.regex += '(?=.*?[#?!@$%^&*-])';
         return this;
     }

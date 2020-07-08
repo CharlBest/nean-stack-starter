@@ -18,7 +18,7 @@ export class TimePickerComponent implements OnInit {
 
   is24Hour = true;
   isAM = true;
-  timeZoneGroups: Observable<TimeZoneGroup[]>;;
+  timeZoneGroups: Observable<TimeZoneGroup[]>;
   editTimeZone = false;
   // TODO: hours should rather show 00:00 than 24:00
   hoursControl: FormControl;
@@ -29,7 +29,7 @@ export class TimePickerComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<TimePickerComponent>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
 
     // Hours
@@ -42,7 +42,7 @@ export class TimePickerComponent implements OnInit {
     this.setUserTimeZone();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     let hours;
     let minutes;
 
@@ -53,7 +53,7 @@ export class TimePickerComponent implements OnInit {
 
       // Prepend zero to minutes if single digit
       if (minutes.length === 1) {
-        minutes = `0${minutes}`
+        minutes = `0${minutes}`;
       }
     }
 
@@ -85,7 +85,7 @@ export class TimePickerComponent implements OnInit {
       );
   }
 
-  setOnHoursChange() {
+  setOnHoursChange(): void {
     this.hoursControl.valueChanges.subscribe((value: number) => {
       if ((this.is24Hour && value > 24) || (!this.is24Hour && value > 12)) {
         value = this.is24Hour ? 24 : 12;
@@ -97,7 +97,7 @@ export class TimePickerComponent implements OnInit {
     });
   }
 
-  setOnMinutesChange() {
+  setOnMinutesChange(): void {
     this.minutesControl.valueChanges.subscribe((value: string) => {
       let intValue = 0;
 
@@ -135,7 +135,7 @@ export class TimePickerComponent implements OnInit {
     return timeZone && timeZone.name ? timeZone.name : '';
   }
 
-  toggleHours(increment: boolean = true) {
+  toggleHours(increment: boolean = true): void {
     // Up
     if (increment) {
       if ((this.is24Hour && this.hoursControl.value < 24) || (!this.is24Hour && this.hoursControl.value < 12)) {
@@ -155,7 +155,7 @@ export class TimePickerComponent implements OnInit {
     }
   }
 
-  toggleMinutes(increment: boolean = true) {
+  toggleMinutes(increment: boolean = true): void {
     // Up
     if (increment) {
       if (this.minutes < 59) {
@@ -178,7 +178,7 @@ export class TimePickerComponent implements OnInit {
     this.minutesControl.setValue(this.minutes.toString());
   }
 
-  toggle24Hour() {
+  toggle24Hour(): void {
     // This is neccessary for when value change is triggered on form control
     const is24Hour = this.is24Hour;
 
@@ -202,7 +202,7 @@ export class TimePickerComponent implements OnInit {
     }
   }
 
-  setUserTimeZone() {
+  setUserTimeZone(): void {
     if (Intl && (Intl as any).DateTimeFormat) {
       this.userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     } else {
@@ -210,7 +210,7 @@ export class TimePickerComponent implements OnInit {
     }
   }
 
-  getTimeZone() {
+  getTimeZone(): string {
     const offset = new Date().getTimezoneOffset();
     const totalMinutes = Math.abs(offset);
     const hours = Math.floor(totalMinutes / 60);
@@ -218,7 +218,7 @@ export class TimePickerComponent implements OnInit {
     return `${offset < 0 ? '+' : '-'}${hours.toString().length > 1 ? hours : '0' + hours}:${minutes.toString().length > 1 ? minutes : '0' + minutes}`;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     let hours = this.hoursControl.value;
     if (!this.is24Hour && !this.isAM) {
       hours = hours + 12;
@@ -238,7 +238,7 @@ export class TimePickerComponent implements OnInit {
     this.timePicked.emit(model);
   }
 
-  trackByFn(index: number, timeZoneGroup: TimeZoneGroup) {
+  trackByFn(index: number, timeZoneGroup: TimeZoneGroup): number {
     return index;
   }
 }

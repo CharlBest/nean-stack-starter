@@ -21,7 +21,7 @@ class UsersController extends BaseController {
         super();
     }
 
-    async createUser(req: Request, res: Response, next: NextFunction) {
+    async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreateUserViewModel;
 
         if (viewModel.username) {
@@ -43,7 +43,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async login(req: Request, res: Response, next: NextFunction) {
+    async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as LoginViewModel;
 
         if (viewModel.emailOrUsername) {
@@ -62,13 +62,13 @@ class UsersController extends BaseController {
         );
     }
 
-    async getUserProfile(req: Request, res: Response, next: NextFunction) {
+    async getUserProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
         res.status(200).json(
             await usersService.getUserProfile(res)
         );
     }
 
-    async getUserPublic(req: Request, res: Response, next: NextFunction) {
+    async getUserPublic(req: Request, res: Response, next: NextFunction): Promise<void> {
         const id = req.params.id ? +req.params.id : null;
 
         const hasErrors = !!Validators.required(id);
@@ -82,7 +82,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async getUserPublicItems(req: Request, res: Response, next: NextFunction) {
+    async getUserPublicItems(req: Request, res: Response, next: NextFunction): Promise<void> {
         const id = req.params.id ? +req.params.id : null;
         const tags = req.query.tags && req.query.tags !== '' ? (req.query.tags as string).split(',') : null;
         const pageIndex = req.query.pageIndex ? +req.query.pageIndex : null || 0;
@@ -100,7 +100,7 @@ class UsersController extends BaseController {
     }
 
     // TODO: not in use
-    async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction) {
+    async doesUsernameAndEmailExist(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreateUserViewModel;
 
         res.status(200).json(
@@ -108,7 +108,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as ForgotPasswordViewModel;
 
         if (viewModel.email) {
@@ -127,7 +127,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async changeForgottenPassword(req: Request, res: Response, next: NextFunction) {
+    async changeForgottenPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as ChangeForgottenPasswordViewModel;
 
         if (viewModel.email) {
@@ -150,7 +150,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async verifyEmail(req: Request, res: Response, next: NextFunction) {
+    async verifyEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
         const code = req.body.code as string;
 
         const hasErrors = ServerValidator.addGlobalError(res, 'verifyEmailCode', Validators.required(code));
@@ -164,7 +164,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async updateAvatar(req: Request, res: Response, next: NextFunction) {
+    async updateAvatar(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdateAvatarViewModel;
 
         if (viewModel.avatar !== null) {
@@ -180,7 +180,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async updateBio(req: Request, res: Response, next: NextFunction) {
+    async updateBio(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdateBioViewModel;
 
         res.status(200).json(
@@ -188,7 +188,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async updatePassword(req: Request, res: Response, next: NextFunction) {
+    async updatePassword(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdatePasswordViewModel;
 
         const formGroup = FormGroupBuilder.updatePassword(viewModel.password, viewModel.newPassword, viewModel.newPassword);
@@ -203,19 +203,19 @@ class UsersController extends BaseController {
         );
     }
 
-    async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction) {
+    async resendEmailVerificationLink(req: Request, res: Response, next: NextFunction): Promise<void> {
         await usersService.resendEmailVerificationLink(res);
 
         res.status(200).json();
     }
 
-    async deleteUser(req: Request, res: Response, next: NextFunction) {
+    async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         res.status(200).json(
             await usersService.deleteUser(res)
         );
     }
 
-    async completedTutorial(req: Request, res: Response, next: NextFunction) {
+    async completedTutorial(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CompletedTutorial;
 
         // TODO: no UI element for this error
@@ -230,7 +230,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async updateTwoFactorAuthentication(req: Request, res: Response, next: NextFunction) {
+    async updateTwoFactorAuthentication(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdateTwoFactorAuthenticationViewModel;
 
         const formGroup = FormGroupBuilder.updateTwoFactorAuthentication(viewModel.isEnabled);
@@ -245,7 +245,7 @@ class UsersController extends BaseController {
         );
     }
 
-    async updateConfiguration(req: Request, res: Response, next: NextFunction) {
+    async updateConfiguration(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as UpdateConfigurationViewModel;
 
         const formGroup = FormGroupBuilder.updateConfiguration(viewModel.consent, viewModel.darkTheme, viewModel.language);

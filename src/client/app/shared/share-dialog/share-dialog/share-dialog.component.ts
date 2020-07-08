@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { ShareService } from '../../services/share.service';
 
@@ -6,7 +6,7 @@ import { ShareService } from '../../services/share.service';
     templateUrl: './share-dialog.component.html',
     styleUrls: ['./share-dialog.component.scss']
 })
-export class ShareDialogComponent implements OnInit {
+export class ShareDialogComponent {
 
     @Input() url: string;
     @Input() text: string;
@@ -15,22 +15,19 @@ export class ShareDialogComponent implements OnInit {
     constructor(public shareService: ShareService,
         public bpService: BreakpointService) { }
 
-    ngOnInit() {
-    }
-
-    getEncodedUrl(utmSource?: string) {
+    getEncodedUrl(utmSource?: string): string {
         return encodeURIComponent(this.getUrlWithUTMParameters(utmSource));
     }
 
-    getEncodedText() {
+    getEncodedText(): string {
         return encodeURIComponent(this.text);
     }
 
-    getEncodedTextAndUrl(utmSource?: string) {
+    getEncodedTextAndUrl(utmSource?: string): string {
         return encodeURIComponent(`${this.text}\n\n${this.getUrlWithUTMParameters(utmSource)}`);
     }
 
-    getUrlWithUTMParameters(utmSource?: string) {
+    getUrlWithUTMParameters(utmSource?: string): string {
         if (this.url && utmSource) {
             const url = new URL(this.url);
             url.searchParams.set('utm_source', utmSource);
@@ -40,30 +37,30 @@ export class ShareDialogComponent implements OnInit {
         return this.url;
     }
 
-    webShare() {
+    webShare(): void {
         this.shareService.webShare('Link', this.url);
     }
 
-    copy() {
+    copy(): boolean {
         this.shareService.copy(this.url);
         return false;
     }
 
     // Open external sites
 
-    openEmail() {
+    openEmail(): void {
         // TODO: replace body with the actual share text
         const url = `mailto:?body=${this.getEncodedTextAndUrl('email')}`;
         window.open(url, this.target);
     }
 
-    openWhatsApp() {
+    openWhatsApp(): void {
         // TODO: accept share text etc
         const url = `https://wa.me/?text=${this.getEncodedTextAndUrl('whatsapp')}`;
         window.open(url, this.target);
     }
 
-    openFacebook() {
+    openFacebook(): void {
         /*
         Alternative:
         `http://www.facebook.com/dialog/share?app_id=87741124305&href=${this.encodedUrl}
@@ -73,19 +70,19 @@ export class ShareDialogComponent implements OnInit {
         window.open(url, this.target);
     }
 
-    openFacebookMessenger() {
+    openFacebookMessenger(): void {
         // TODO: concat to url: &app_id=123456789
         const url = `fb-messenger://share/?link=${this.getEncodedUrl('facebook-messenger')}`;
         window.open(url, this.target);
     }
 
-    openTwitter() {
+    openTwitter(): void {
         // TODO: concat to url: &via=YouTube&related=YouTube,YouTubeTrends,YTCreators
         const url = `https://twitter.com/intent/tweet?url=${this.getEncodedUrl('twitter')}&text=${this.getEncodedText()}`;
         window.open(url, this.target);
     }
 
-    openBlogger() {
+    openBlogger(): void {
         /*
         TODO: concat to url:
         &source=youtube&b=%3Ciframe%20width%3D%22480%22%20height%3D%22270%22%20src%3D%22https%3A//www.youtube.com
@@ -97,12 +94,12 @@ export class ShareDialogComponent implements OnInit {
         window.open(url, this.target);
     }
 
-    openReddit() {
+    openReddit(): void {
         const url = `http://reddit.com/submit?url=${this.getEncodedUrl('reddit')}&title=${this.getEncodedText()}`;
         window.open(url, this.target);
     }
 
-    openWeChat() {
+    openWeChat(): void {
         // weixin://dl/stickers
         // weixin://dl/settings
         // weixin://dl/posts
@@ -114,33 +111,33 @@ export class ShareDialogComponent implements OnInit {
         window.open(url, this.target);
     }
 
-    openPinterest() {
+    openPinterest(): void {
         // TODO: concat to url: &is_video=true&media=https%3A//i.ytimg.com/vi/QCoQs9NO9q0/maxresdefault.jpg
         const url = `http://pinterest.com/pin/create/button/?url=${this.getEncodedUrl('pinterest')}&description=${this.getEncodedText()}`;
         window.open(url, this.target);
     }
 
-    openLinkedIn() {
+    openLinkedIn(): void {
         // TODO: concat to url: &summary=test&source=test2
         const url = `http://www.linkedin.com/shareArticle?url=${this.getEncodedUrl('linkedin')}&title=${this.getEncodedText()}`;
         window.open(url, this.target);
     }
 
-    openTumblr() {
+    openTumblr(): void {
         const url = `http://www.tumblr.com/share/video?embed=${this.getEncodedUrl('tumblr')}&caption=${this.getEncodedText()}`;
         window.open(url, this.target);
     }
-    openMix() {
+    openMix(): void {
         const url = `https://mix.com/add?url=${this.getEncodedUrl('mix')}`;
         window.open(url, this.target);
     }
 
-    openVkontakte() {
+    openVkontakte(): void {
         const url = `http://vkontakte.ru/share.php?url=${this.getEncodedUrl('vkontakte')}`;
         window.open(url, this.target);
     }
 
-    openOk() {
+    openOk(): void {
         const url = `https://connect.ok.ru/offer?url=${this.getEncodedUrl('ok')}&title=${this.getEncodedText()}`;
         window.open(url, this.target);
     }

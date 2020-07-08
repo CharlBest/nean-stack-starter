@@ -14,13 +14,13 @@ class PaymentsController extends BaseController {
         super();
     }
 
-    async paymentCards(req: Request, res: Response, next: NextFunction) {
+    async paymentCards(req: Request, res: Response, next: NextFunction): Promise<void> {
         res.status(200).json(
             await paymentsService.paymentCards(res)
         );
     }
 
-    async createCardIntent(req: Request, res: Response, next: NextFunction) {
+    async createCardIntent(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreateCardIntentViewModel;
 
         res.status(200).json(
@@ -28,7 +28,7 @@ class PaymentsController extends BaseController {
         );
     }
 
-    async createCard(req: Request, res: Response, next: NextFunction) {
+    async createCard(req: Request, res: Response, next: NextFunction): Promise<void> {
         const paymentMethodId = req.body.paymentMethodId as string;
 
         const hasErrors = !!Validators.required(paymentMethodId);
@@ -42,7 +42,7 @@ class PaymentsController extends BaseController {
         );
     }
 
-    async deleteCard(req: Request, res: Response, next: NextFunction) {
+    async deleteCard(req: Request, res: Response, next: NextFunction): Promise<void> {
         const id = req.params.id as string | null;
 
         const hasErrors = !!Validators.required(id);
@@ -56,7 +56,7 @@ class PaymentsController extends BaseController {
         );
     }
 
-    async updateDefaultCard(req: Request, res: Response, next: NextFunction) {
+    async updateDefaultCard(req: Request, res: Response, next: NextFunction): Promise<void> {
         const id = req.body.id as string;
 
         const hasErrors = !!Validators.required(id);
@@ -70,13 +70,13 @@ class PaymentsController extends BaseController {
         );
     }
 
-    async paymentHistory(req: Request, res: Response, next: NextFunction) {
+    async paymentHistory(req: Request, res: Response, next: NextFunction): Promise<void> {
         res.status(200).json(
             await paymentsService.paymentHistory(res)
         );
     }
 
-    async paymentIntent(req: Request, res: Response, next: NextFunction) {
+    async paymentIntent(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreatePaymentIntentViewModel;
 
         const formGroup = FormGroupBuilder.payment(viewModel.amount);
@@ -96,7 +96,7 @@ class PaymentsController extends BaseController {
 
     // Expose a endpoint as a webhook handler for asynchronous events.
     // Configure your webhook in the stripe developer dashboard: https://dashboard.stripe.com/test/webhooks
-    async stripeWebhook(req: Request, res: Response, next: NextFunction) {
+    async stripeWebhook(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             // Retrieve the event by verifying the signature using the raw body and secret.
             const event = stripe.webhooks.constructEvent(req.body,

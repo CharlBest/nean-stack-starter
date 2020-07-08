@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseIconDirective } from './base-icon.component';
 
-export function customIconPath(iconName: string) {
+export function customIconPath(iconName: string): string {
   return `../../../../assets/icons/${iconName}.svg`;
 }
 

@@ -16,7 +16,7 @@ export class GitHubComponent implements OnInit {
 
   constructor(private gitHubService: GitHubService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (environment.production) {
       this.getMarkdownPage();
     } else {
@@ -25,7 +25,7 @@ export class GitHubComponent implements OnInit {
     }
   }
 
-  async getMarkdownPage() {
+  async getMarkdownPage(): Promise<void> {
     try {
       const response = await this.gitHubService.getFile(this.filePath);
       this.readmeText = parse(response);

@@ -12,7 +12,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
   @Output() readonly scrolled = new EventEmitter<void>();
   @ViewChild('wrapper', { static: true }) wrapper: ElementRef<HTMLDivElement>;
   @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
-  get element() {
+  get element(): HTMLElement {
     return this.host.nativeElement;
   }
   numberOfSkeletonScreens: Array<string>;
@@ -21,7 +21,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
 
   constructor(private host: ElementRef<HTMLElement>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const options = {
       root: this.isHostScrollable() ? this.host.nativeElement : null,
       ...this.options
@@ -38,18 +38,18 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
     this.numberOfSkeletonScreens = new Array(this.skeletonScreens);
   }
 
-  private isHostScrollable() {
+  private isHostScrollable(): boolean {
     const style = window.getComputedStyle(this.element);
 
     return style.getPropertyValue('overflow') === 'auto' ||
       style.getPropertyValue('overflow-y') === 'scroll';
   }
 
-  trackByFn(index: number, tag: string) {
+  trackByFn(index: number, tag: string): number {
     return index;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.observer.disconnect();
   }
 }

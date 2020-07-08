@@ -34,11 +34,11 @@ export class TutorialComponent implements OnInit {
     private authService: AuthService,
     private tutorialService: TutorialService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getParams();
   }
 
-  getParams() {
+  getParams(): void {
     this.route.queryParamMap
       .subscribe(params => {
         if (params.has('tut')) {
@@ -59,19 +59,19 @@ export class TutorialComponent implements OnInit {
       });
   }
 
-  goToTutorial(tutorial: Tutorial) {
+  goToTutorial(tutorial: Tutorial): void {
     this.tutorialService.activateTutorial(tutorial.nextTutorial, this.returnUrl);
 
     this.logTutorial(tutorial);
   }
 
-  skip(tutorial: Tutorial) {
+  skip(tutorial: Tutorial): void {
     this.tutorialService.activateTutorial(TutorialType.NONE, this.returnUrl);
 
     this.logTutorial(tutorial, true);
   }
 
-  async logTutorial(tutorial: Tutorial, didSkip: boolean = false) {
+  async logTutorial(tutorial: Tutorial, didSkip: boolean = false): Promise<void> {
     if (this.authService.loggedInUserId) {
       const viewModel = new CompletedTutorial();
       viewModel.tutorialType = tutorial.tutorialType;
@@ -84,17 +84,17 @@ export class TutorialComponent implements OnInit {
     }
   }
 
-  back() {
+  back(): void {
     this.location.back();
   }
 
-  preventClick(event: Event) {
+  preventClick(event: Event): boolean {
     event.preventDefault();
     event.stopPropagation();
     return false;
   }
 
-  trackByFn(index: number, item: Tutorial) {
+  trackByFn(index: number, item: Tutorial): number {
     return index;
   }
 }

@@ -39,11 +39,11 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     private shareService: ShareService,
     private router: Router) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.processDescription();
   }
 
-  processDescription() {
+  processDescription(): void {
     if (this.description && !this.isViewingComments) {
       this.descriptionTimeoutId = window.setTimeout(() => {
         if (this.description.nativeElement.offsetHeight < this.description.nativeElement.scrollHeight ||
@@ -58,7 +58,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async delete() {
+  async delete(): Promise<void> {
     const hasConfirmed = await this.dialogService.confirm({
       title: 'Delete item',
       body: 'Are you sure you want to delete this item?',
@@ -84,7 +84,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async report() {
+  async report(): Promise<void> {
     const hasConfirmed = await this.dialogService
       .confirm({
         title: 'Report',
@@ -111,12 +111,12 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  showMoreDescription() {
+  showMoreDescription(): void {
     this.description.nativeElement.style.maxHeight = 'none';
     this.showMoreButton = false;
   }
 
-  mediaPrevious(event: Event) {
+  mediaPrevious(event: Event): void {
     event.stopPropagation();
 
     if (this.activeMediaIndex === 0) {
@@ -126,7 +126,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  mediaNext(event: Event) {
+  mediaNext(event: Event): void {
     event.stopPropagation();
 
     // TODO: swithcing out the images to fast (clicking rapidly) freezes it
@@ -137,7 +137,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  openShareDialog() {
+  openShareDialog(): void {
     this.contextMenu.close();
 
     const url = ['/item/comments', this.item.uId];
@@ -146,19 +146,19 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  copyLink() {
+  copyLink(): void {
     this.shareService.copyWithUrl(['/item/comments', this.item.uId]);
     this.contextMenu.close();
   }
 
-  goToComments() {
+  goToComments(): void {
     this.contextMenu.close();
     this.router.navigate(['/item/edit', this.item.uId], { state: { item: this.item } });
   }
 
   // #region Favourties
 
-  favouriteItem(event: Event) {
+  favouriteItem(event: Event): void {
     event.stopPropagation();
 
     if (this.item.favourite) {
@@ -168,7 +168,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async createFavourite() {
+  async createFavourite(): Promise<void> {
     try {
       await this.itemService.createFavourite(this.item.uId);
       this.item.favourite = true;
@@ -177,7 +177,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async deleteFavourite() {
+  async deleteFavourite(): Promise<void> {
     try {
       await this.itemService.deleteFavourite(this.item.uId);
       this.item.favourite = false;
@@ -193,7 +193,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
 
   // #region Subscription
 
-  subscribeToItem(event: Event) {
+  subscribeToItem(event: Event): void {
     event.stopPropagation();
 
     if (this.item.subscribed) {
@@ -203,7 +203,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async createSubscription() {
+  async createSubscription(): Promise<void> {
     try {
       await this.itemService.createSubscription(this.item.uId);
       this.item.subscribed = true;
@@ -213,7 +213,7 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  async deleteSubscription() {
+  async deleteSubscription(): Promise<void> {
     try {
       await this.itemService.deleteSubscription(this.item.uId);
       this.item.subscribed = false;
@@ -225,11 +225,11 @@ export class ItemComponent implements AfterViewInit, OnDestroy {
 
   // #endregion
 
-  trackByFn(index: number, tag: string) {
+  trackByFn(index: number, tag: string): number {
     return index;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.descriptionTimeoutId) {
       clearTimeout(this.descriptionTimeoutId);
     }

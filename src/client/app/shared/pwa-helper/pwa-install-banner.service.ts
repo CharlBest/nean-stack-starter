@@ -11,7 +11,7 @@ export class PWAInstallBannerService {
     constructor(private pwaService: PWAService,
         private snackBar: MatSnackBar) { }
 
-    openPWAInstallSnackBar() {
+    openPWAInstallSnackBar(): void {
         if (this.pwaService.canInstallAndNotInPWA) {
             this.snackBar.openFromComponent(PWAInstallBannerComponent, {
                 duration: undefined

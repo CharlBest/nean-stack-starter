@@ -22,16 +22,16 @@ export class NewsletterComponent implements OnInit {
     public bpService: BreakpointService,
     private fb: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
     this.getParams();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.newsletter());
   }
 
-  getParams() {
+  getParams(): void {
     const email = this.route.snapshot.queryParams.email;
     if (email) {
       this.formGroup.controls.email.setValue(email);
@@ -39,7 +39,7 @@ export class NewsletterComponent implements OnInit {
     }
   }
 
-  async add() {
+  async add(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new NewsletterMemberViewModel();
@@ -55,7 +55,7 @@ export class NewsletterComponent implements OnInit {
     }
   }
 
-  async remove() {
+  async remove(): Promise<void> {
     this.isProcessing = true;
 
     const email = this.formGroup.controls.email.value.trim();

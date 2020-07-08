@@ -22,7 +22,7 @@ export class FormErrorsService implements OnDestroy {
       });
   }
 
-  updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup | null = null) {
+  updateFormValidity(errorResponse: HttpErrorResponse, form: FormGroup | null = null): void {
     if (errorResponse.status === 400) {
       const errors = errorResponse && errorResponse.error && errorResponse.error.error
         ? errorResponse.error.error.validation as ErrorModel
@@ -38,7 +38,7 @@ export class FormErrorsService implements OnDestroy {
     }
   }
 
-  setErrorsOnControls(errors: ErrorModel, form: FormGroup) {
+  setErrorsOnControls(errors: ErrorModel, form: FormGroup): void {
     for (const key in form.controls) {
       if (form.controls.hasOwnProperty(key)) {
         const fieldError = errors.formErrors.find(formError => formError.field === key);
@@ -49,7 +49,7 @@ export class FormErrorsService implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.routerEventsSubscription) {
       this.routerEventsSubscription.unsubscribe();
     }

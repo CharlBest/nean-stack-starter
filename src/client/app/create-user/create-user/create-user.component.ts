@@ -35,12 +35,12 @@ export class CreateUserComponent implements OnInit {
     private passwordStrengthService: PasswordStrengthService,
     private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
     this.getParams();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.createUser());
 
     // Show individually which characters are required (only for UI)
@@ -48,21 +48,21 @@ export class CreateUserComponent implements OnInit {
       [this.formGroup.controls.password.validator, Validators.passwordCharacters] : Validators.passwordCharacters);
   }
 
-  getParams() {
+  getParams(): void {
     const returnUrl = this.route.snapshot.queryParams.returnUrl;
     if (returnUrl) {
       this.returnUrl = returnUrl;
     }
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     const passedCommonlyUsedTest = await this.passwordStrengthService.passCommonlyUsedTest(this.formGroup.controls.password.value);
     if (passedCommonlyUsedTest) {
       this.createUser();
     }
   }
 
-  async createUser() {
+  async createUser(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new CreateUserViewModel();
@@ -79,7 +79,7 @@ export class CreateUserComponent implements OnInit {
     }
   }
 
-  async automaticLogin() {
+  async automaticLogin(): Promise<void> {
     const model = new LoginViewModel();
     model.emailOrUsername = this.formGroup.controls.email.value;
     model.password = this.formGroup.controls.password.value;

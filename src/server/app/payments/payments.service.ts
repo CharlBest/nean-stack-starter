@@ -67,7 +67,7 @@ class PaymentsService extends BaseService {
             const paymentIntent = await stripe.paymentIntents.create(intentCreateParams);
 
             const responseViewModel = new StripeIntentViewModel();
-            responseViewModel.clientSecret = paymentIntent.client_secret
+            responseViewModel.clientSecret = paymentIntent.client_secret;
 
             return responseViewModel;
         } catch (error) {
@@ -138,7 +138,7 @@ class PaymentsService extends BaseService {
             const intent = await stripe.setupIntents.create();
 
             const viewModel = new StripeIntentViewModel();
-            viewModel.clientSecret = intent.client_secret
+            viewModel.clientSecret = intent.client_secret;
 
             return viewModel;
         } catch (error) {
@@ -168,7 +168,7 @@ class PaymentsService extends BaseService {
     async deleteCard(res: Response, id: string): Promise<boolean> {
         try {
             await stripe.paymentMethods.detach(id);
-            return true
+            return true;
         } catch (error) {
             return false;
         }
@@ -181,7 +181,7 @@ class PaymentsService extends BaseService {
                     dateLastUpdatedDefault: new Date().toISOString()
                 }
             });
-            return true
+            return true;
         } catch (error) {
             return false;
         }

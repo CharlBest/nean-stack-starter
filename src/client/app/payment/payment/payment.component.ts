@@ -56,19 +56,19 @@ export class PaymentComponent implements OnInit {
         public authService: AuthService,
         public dialogService: DialogService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.formOnInit();
         this.checkAuthenticationAndGetCards();
 
         this.stripeElementsComponent.inputElementChange.subscribe(() => this.checkForValidity());
     }
 
-    formOnInit() {
+    formOnInit(): void {
         this.formGroup = this.fb.group(FormGroupBuilder.payment(2, 'new'));
         this.formGroup.valueChanges.subscribe(() => this.checkForValidity());
     }
 
-    checkAuthenticationAndGetCards() {
+    checkAuthenticationAndGetCards(): void {
         if (this.authService.isAuthenticated) {
             this.authService.preventLogoutOnNextRequest();
             this.getPaymentCards()
@@ -81,7 +81,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    async getPaymentCards() {
+    async getPaymentCards(): Promise<void> {
         const response = await this.paymentService.paymentCards();
         if (response) {
             this.paymentCards = response;
@@ -95,7 +95,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    async onSubmit() {
+    async onSubmit(): Promise<void> {
         this.isProcessing = true;
 
         if (this.activeSection === Section.CARD) {
@@ -142,7 +142,7 @@ export class PaymentComponent implements OnInit {
     }
 
     // TODO: this is bad practice. This method will be called to many unnecessary times. Fix!
-    checkForValidity() {
+    checkForValidity(): void {
         // Form validity (Amount is required)
         if (!this.formGroup.valid) {
             this.isFormValid = false;
@@ -174,7 +174,7 @@ export class PaymentComponent implements OnInit {
         this.isFormValid = true;
     }
 
-    async paymentRequestButtonComplete(event: PaymentRequestPaymentMethodEvent) {
+    async paymentRequestButtonComplete(event: PaymentRequestPaymentMethodEvent): Promise<void> {
         // First, confirm the PaymentIntent without handling potential
         // next actions to see if there are any payment errors.
         const viewModel = await this.paymentService.paymentIntent({
@@ -208,7 +208,7 @@ export class PaymentComponent implements OnInit {
         }
     }
 
-    selectSection(section: Section) {
+    selectSection(section: Section): void {
         if (section === Section.MOBILE &&
             (this.stripePaymentRequestButton.canMakePayment === null || !this.stripePaymentRequestButton.canMakePayment)) {
             return;
@@ -217,7 +217,7 @@ export class PaymentComponent implements OnInit {
         this.checkForValidity();
     }
 
-    trackByFn(index: number, item: CardViewModel) {
+    trackByFn(index: number, item: CardViewModel): number {
         return index;
     }
 }

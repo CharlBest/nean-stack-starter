@@ -55,7 +55,7 @@ export class ThemeService {
         private localStorageService: LocalStorageService,
         private authService: AuthService) { }
 
-    init() {
+    init(): void {
         this.addRemoveDarkThemeClass();
 
         this.addNativeColorSchemeListener('dark');
@@ -66,7 +66,7 @@ export class ThemeService {
         });
     }
 
-    toggleTheme() {
+    toggleTheme(): void {
         this.updateTheme(!this.isDarkTheme);
     }
 
@@ -74,12 +74,12 @@ export class ThemeService {
         return window.matchMedia(`(prefers-color-scheme: ${value})`).matches;
     }
 
-    private updateTheme(value: boolean) {
+    private updateTheme(value: boolean): void {
         this.localStorageService.setUserStorageData({ darkTheme: value });
         this.addRemoveDarkThemeClass();
     }
 
-    private addRemoveDarkThemeClass() {
+    private addRemoveDarkThemeClass(): void {
         const bodyElement = document.querySelector('body');
         if (bodyElement) {
             if (this.isDarkTheme) {
@@ -92,7 +92,7 @@ export class ThemeService {
         }
     }
 
-    private addNativeColorSchemeListener(colorName: string) {
+    private addNativeColorSchemeListener(colorName: string): void {
         // tslint:disable-next-line: deprecation (Safari does not allow addEventListener although addListener is deprecated)
         window.matchMedia(`(prefers-color-scheme: ${colorName})`).addListener(async (event: MediaQueryListEvent) => {
             if (event.matches) {

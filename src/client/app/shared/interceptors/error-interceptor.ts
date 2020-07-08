@@ -7,9 +7,9 @@ import { tap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ErrorInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         return next.handle(request).pipe(
-            tap((event: HttpEvent<any>) => {
+            tap((event: HttpEvent<unknown>) => {
                 // if (event instanceof HttpResponse) do stuff with response if you want
             }, err => {
                 if (err instanceof Error) {

@@ -9,7 +9,7 @@ import { PublicKeyCredentialDescriptorJSON, PublicKeyCredentialWithAttestationJS
 })
 export class FingerprintComponent {
 
-  get isSupported() {
+  get isSupported(): boolean {
     return supported();
   }
 

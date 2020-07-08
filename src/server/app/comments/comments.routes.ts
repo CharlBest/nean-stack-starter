@@ -11,7 +11,7 @@ class CommentsRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() {
+    initAnonymousRoutes(): void {
         this.router.get(CommentRoutes.get().server(),
             async (req, res, next) => commentsController.get(req, res, next).catch(next));
 
@@ -22,7 +22,7 @@ class CommentsRoutes extends BaseRoute {
             async (req, res, next) => commentsController.getReplies(req, res, next).catch(next));
     }
 
-    initAuthenticatedRoutes() {
+    initAuthenticatedRoutes(): void {
         this.router.post(CommentRoutes.create().server(), Authentication.loginRequired,
             async (req, res, next) => commentsController.create(req, res, next).catch(next));
 

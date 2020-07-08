@@ -34,15 +34,15 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     public bpService: BreakpointService,
     private domSanitizer: DomSanitizer) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.updateTwoFactorAuthentication(this.twoFactorAuthenticationEnabled));
   }
 
-  async getAndUpdateTwoFactorAuthentication() {
+  async getAndUpdateTwoFactorAuthentication(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new UpdateTwoFactorAuthenticationViewModel();
@@ -67,7 +67,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     }
   }
 
-  generateQRCode(qrCodeKeyUri: string, shouldRevealCode: boolean) {
+  generateQRCode(qrCodeKeyUri: string, shouldRevealCode: boolean): void {
     // Show/Hide QR Code
     this.shouldRevealCode = shouldRevealCode;
 
@@ -85,7 +85,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     this.sanitizedQRCodeKeyUri = this.domSanitizer.bypassSecurityTrustUrl(qrCodeKeyUri);
   }
 
-  copy() {
+  copy(): boolean {
     this.shareService.copy(this.secret);
     return false;
   }

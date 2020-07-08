@@ -6,7 +6,7 @@ import { TranslateParams, translateService } from '@shared/translate/translate.s
     name: 'passwordCharacterMessageBuilder'
 })
 export class PasswordCharacterMessageBuilderPipe implements PipeTransform {
-    transform(value: ValidationErrors | null, params?: TranslateParams) {
+    transform(value: ValidationErrors | null, params?: TranslateParams): string | null {
         const errorArray = [];
         if (value) {
             if (value.passwordCharacters.capital) {

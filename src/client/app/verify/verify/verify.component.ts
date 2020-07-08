@@ -17,16 +17,16 @@ export class VerifyComponent implements OnInit {
     private router: Router,
     public formErrorsService: FormErrorsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getParams();
   }
 
-  getParams() {
+  getParams(): void {
     const code = this.route.snapshot.params.code;
     this.verifyEmail(code);
   }
 
-  async verifyEmail(code: string | null) {
+  async verifyEmail(code: string | null): Promise<void> {
     if (code && code !== '') {
       try {
         const response = await this.verifyService.verifyEmail(code);
@@ -44,7 +44,7 @@ export class VerifyComponent implements OnInit {
     }
   }
 
-  goToHome() {
+  goToHome(): void {
     this.router.navigate(['/']);
   }
 }

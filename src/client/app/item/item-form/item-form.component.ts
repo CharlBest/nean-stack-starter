@@ -29,7 +29,7 @@ export class ItemFormComponent implements OnInit {
     public formErrorsService: FormErrorsService,
     public bpService: BreakpointService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
 
     if (this.item) {
@@ -37,7 +37,7 @@ export class ItemFormComponent implements OnInit {
     }
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.createOrUpdateItem(
       this.item ? this.item.title : null,
       this.item ? this.item.description : null,
@@ -68,7 +68,7 @@ export class ItemFormComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     const files = await this.fileUploader.upload();
 
     const viewModel = new CreateOrUpdateItemViewModel();
@@ -80,7 +80,7 @@ export class ItemFormComponent implements OnInit {
     this.submitForm.emit(viewModel);
   }
 
-  trackByFn(index: number, item: string) {
+  trackByFn(index: number, item: string): number {
     return index;
   }
 }

@@ -11,7 +11,7 @@ export class NetworkStatusComponent implements OnInit {
 
     constructor(public networkStatusService: NetworkStatusService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.networkStatusService.isOffline$.subscribe(data => this.isOnline = !data);
     }
 }

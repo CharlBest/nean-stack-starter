@@ -18,13 +18,13 @@ export class AnalyticsService implements OnDestroy {
 
   constructor(private router: Router) { }
 
-  init() {
+  init(): void {
     this.initialize();
     this.setWebVitals();
     this.trackRouterNavigation();
   }
 
-  setWebVitals() {
+  setWebVitals(): void {
     getCLS(metric => this.reportTrace('device', 'cumulative-layout-shift', metric));
     getFCP(metric => this.reportTrace('device', 'first-contentful-paint', metric));
     getFID(metric => this.reportTrace('device', 'first-input-delay', metric));
@@ -38,7 +38,7 @@ export class AnalyticsService implements OnDestroy {
     });
   }
 
-  emitEvent(nameOfEvent: string, eventValues: { [key: string]: string } | null = null) {
+  emitEvent(nameOfEvent: string, eventValues: { [key: string]: string } | null = null): void {
     this.push(['add_event', {
       key: nameOfEvent,
       // count: 1,
@@ -48,7 +48,7 @@ export class AnalyticsService implements OnDestroy {
     }]);
   }
 
-  setUser(id: number | null, model: TokenViewModel) {
+  setUser(id: number | null, model: TokenViewModel): void {
     this.push(['user_details', {
       email: model.email,
       username: model.username,
@@ -59,27 +59,27 @@ export class AnalyticsService implements OnDestroy {
     }]);
   }
 
-  clearUser() {
+  clearUser(): void {
     this.push(['user_details', {}]);
   }
 
   // Place this somehwere global to catch all
-  logError(exception: object) {
+  logError(exception: object): void {
     this.push(['log_error', exception]);
   }
 
   // This is the default
-  enableTracking() {
+  enableTracking(): void {
     this.push(['opt_in']);
   }
 
   // TODO: allow users to toggle this
-  disableTracking() {
+  disableTracking(): void {
     this.push(['opt_out']);
   }
 
   // TODO: Add rating
-  reportFeedback(comment: string, userId?: number | null, rating?: number) {
+  reportFeedback(comment: string, userId?: number | null, rating?: number): void {
     this.push(['report_feedback', {
       widget_id: '1',
       contactMe: false,
@@ -91,7 +91,7 @@ export class AnalyticsService implements OnDestroy {
 
   // These gyrations are necessary to make the service e2e testable
   // and to disable ga tracking during e2e tests.
-  private initialize() {
+  private initialize(): void {
     if (countly) {
       // some default pre init
       countly.q = countly.q || [];
@@ -137,7 +137,7 @@ export class AnalyticsService implements OnDestroy {
     }
   }
 
-  private trackRouterNavigation() {
+  private trackRouterNavigation(): void {
     this.routerEventsSubscription = this.router.events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -151,7 +151,7 @@ export class AnalyticsService implements OnDestroy {
       });
   }
 
-  private push(event: Array<any>, args: object | null = null) {
+  private push(event: Array<unknown>, args: object | null = null): void {
     try {
       countly.q.push(event, args);
     } catch (e) {
@@ -159,7 +159,7 @@ export class AnalyticsService implements OnDestroy {
     }
   }
 
-  private reportTrace(type: 'device' | 'network', name: string, metrics: object) {
+  private reportTrace(type: 'device' | 'network', name: string, metrics: object): void {
     this.push(['report_trace', {
       type, // device or network
       name, // use name to identify trace and group them by
@@ -171,7 +171,7 @@ export class AnalyticsService implements OnDestroy {
     }]);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.routerEventsSubscription) {
       this.routerEventsSubscription.unsubscribe();
     }

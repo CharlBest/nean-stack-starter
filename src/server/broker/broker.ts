@@ -27,7 +27,7 @@ class Broker {
         }
     }
 
-    private async setup() {
+    private async setup(): Promise<void> {
         // Create virtual host
         try {
             await request({
@@ -70,7 +70,7 @@ class Broker {
         logger.info('Broker init success');
     }
 
-    close() {
+    close(): void {
         this.channel.close();
         this.connection.close();
     }

@@ -15,7 +15,7 @@ class GeneralController extends BaseController {
         super();
     }
 
-    async createNewsletterMember(req: Request, res: Response, next: NextFunction) {
+    async createNewsletterMember(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as NewsletterMemberViewModel;
 
         if (viewModel.email) {
@@ -34,7 +34,7 @@ class GeneralController extends BaseController {
         );
     }
 
-    async deleteNewsletterMember(req: Request, res: Response, next: NextFunction) {
+    async deleteNewsletterMember(req: Request, res: Response, next: NextFunction): Promise<void> {
         let email = req.params.email as string | null;
 
         if (email) {
@@ -53,7 +53,7 @@ class GeneralController extends BaseController {
         );
     }
 
-    async sendFeedback(req: Request, res: Response, next: NextFunction) {
+    async sendFeedback(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as FeedbackViewModel;
 
         const formGroup = FormGroupBuilder.feedback(viewModel.content);
@@ -68,7 +68,7 @@ class GeneralController extends BaseController {
         res.status(200).json();
     }
 
-    async invite(req: Request, res: Response, next: NextFunction) {
+    async invite(req: Request, res: Response, next: NextFunction): Promise<void> {
         // TODO: this endpoint can be overloaded with to many emails or requests
         const viewModel = req.body as InviteViewModel;
 
@@ -94,7 +94,7 @@ class GeneralController extends BaseController {
         res.status(200).json();
     }
 
-    async report(req: Request, res: Response, next: NextFunction) {
+    async report(req: Request, res: Response, next: NextFunction): Promise<void> {
         const viewModel = req.body as CreateReportViewModel;
 
         const hasErrors = !!Validators.required(viewModel.type) || !!Validators.required(viewModel.uId);

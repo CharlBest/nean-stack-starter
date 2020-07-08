@@ -41,14 +41,14 @@ export class CommentComponent implements OnInit {
     private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const commentUId = this.route.snapshot.params.uId;
     if (!this.comment && commentUId) {
       this.get(commentUId);
     }
   }
 
-  async get(commentUId: string) {
+  async get(commentUId: string): Promise<void> {
     this.isProcessing = true;
 
     try {
@@ -65,7 +65,7 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  async delete() {
+  async delete(): Promise<void> {
     const hasConfirmed = await this.dialogService.confirm({
       title: 'Delete comment',
       body: 'Delete your comment and all of its replies permanently?',
@@ -92,7 +92,7 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  async report() {
+  async report(): Promise<void> {
     const hasConfirmed = await this.dialogService
       .confirm({
         title: 'Report',
@@ -119,7 +119,7 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  openShareDialog() {
+  openShareDialog(): void {
     if (this.comment.itemUId) {
       this.contextMenu.close();
 
@@ -130,19 +130,19 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  copyLink() {
+  copyLink(): void {
     if (this.comment.itemUId) {
       this.shareService.copyWithUrl(['/item/comment', this.comment.uId]);
       this.contextMenu.close();
     }
   }
 
-  openEdit() {
+  openEdit(): void {
     this.contextMenu.close();
     this.showEditItem = true;
   }
 
-  async openReply() {
+  async openReply(): Promise<void> {
     if (this.authService.loggedInUserId) {
       this.showReplies = true;
       this.showCreateReply = true;
@@ -158,7 +158,7 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.isProcessingCreateOrUpdate = true;
 
     const viewModel = new CreateOrUpdateCommentViewModel();
@@ -177,7 +177,7 @@ export class CommentComponent implements OnInit {
     }
   }
 
-  insertReply() {
+  insertReply(): void {
     this.showCreateReply = false;
     this.comment.commentCount ? this.comment.commentCount++ : this.comment.commentCount = 1;
 

@@ -25,15 +25,15 @@ export class FeedbackComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private authService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formOnInit();
   }
 
-  formOnInit() {
+  formOnInit(): void {
     this.formGroup = this.fb.group(FormGroupBuilder.feedback());
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     this.isProcessing = true;
 
     const viewModel = new FeedbackViewModel();

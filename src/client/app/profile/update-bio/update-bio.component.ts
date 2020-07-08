@@ -20,11 +20,11 @@ export class UpdateBioComponent {
     private profileService: ProfileService,
     private snackBar: MatSnackBar) { }
 
-  emojiInserted(shortname: string) {
+  emojiInserted(shortname: string): void {
     this.htmlEditor.insertText(shortname, true);
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     const viewModel = new UpdateBioViewModel();
     viewModel.content = this.htmlEditor.getInnerHTML();
 

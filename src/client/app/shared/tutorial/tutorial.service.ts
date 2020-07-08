@@ -18,7 +18,7 @@ export class TutorialService {
         private http: HttpClient,
         private snackBar: MatSnackBar) { }
 
-    async activateTutorial(tutorialType: TutorialType, returnUrl: string | null = '/') {
+    async activateTutorial(tutorialType: TutorialType, returnUrl: string | null = '/'): Promise<void> {
         const navigateUrl = [];
         switch (tutorialType) {
             case TutorialType.NONE:
@@ -60,7 +60,7 @@ export class TutorialService {
         }
     }
 
-    checkIfAfterTutPageHasBackNav() {
+    checkIfAfterTutPageHasBackNav(): void {
         let route = this.route;
         while (route.firstChild) {
             route = route.firstChild;
@@ -76,7 +76,7 @@ export class TutorialService {
         return this.http.post<boolean>(`${environment.serverEndpoint}${UserRoutes.completedTutorial().client()}`, viewModel).toPromise();
     }
 
-    showTakeATour() {
+    showTakeATour(): void {
         this.snackBar.open('Take the tour', 'Go', {
             duration: 4000,
         }).onAction().subscribe(() => this.activateTutorial(TutorialType.SIGN_UP));

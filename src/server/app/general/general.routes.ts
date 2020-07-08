@@ -10,7 +10,7 @@ class GeneralRoutes extends BaseRoute {
         this.initAuthenticatedRoutes();
     }
 
-    initAnonymousRoutes() {
+    initAnonymousRoutes(): void {
         this.router.post(GeneralStaticRoutes.createNewsletterMember().server(),
             async (req, res, next) => generalController.createNewsletterMember(req, res, next).catch(next));
 
@@ -27,7 +27,7 @@ class GeneralRoutes extends BaseRoute {
             async (req, res, next) => generalController.report(req, res, next).catch(next));
     }
 
-    initAuthenticatedRoutes() { }
+    initAuthenticatedRoutes(): void { }
 }
 
 export const generalRoutes = new GeneralRoutes().router;

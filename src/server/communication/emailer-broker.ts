@@ -12,39 +12,39 @@ import { WelcomeEmailModel } from './models/email/welcome-email.model';
 
 class EmailBroker implements Email {
 
-    welcome(model: WelcomeEmailModel) {
+    welcome(model: WelcomeEmailModel): void {
         brokerManager.sendToQueue(QueueType.WELCOME_EMAIL, model);
     }
 
-    forgotPassword(model: ForgotPasswordEmailModel) {
+    forgotPassword(model: ForgotPasswordEmailModel): void {
         brokerManager.sendToQueue(QueueType.FORGOT_PASSWORD_EMAIL, model);
     }
 
-    feedback(model: FeedbackEmailModel) {
+    feedback(model: FeedbackEmailModel): void {
         brokerManager.sendToQueue(QueueType.FEEDBACK_EMAIL, model);
     }
 
-    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel) {
+    resendEmailVerificationLink(model: ResendEmailVerificationLinkEmailModel): void {
         brokerManager.sendToQueue(QueueType.RESEND_EMAIL_VERIFICATION_LINK_EMAIL, model);
     }
 
-    paymentSuccessful(model: PaymentSuccessfulEmailModel) {
+    paymentSuccessful(model: PaymentSuccessfulEmailModel): void {
         brokerManager.sendToQueue(QueueType.PAYMENT_SUCCESSFUL_EMAIL, model);
     }
 
-    passwordUpdated(model: PasswordUpdatedEmailModel) {
+    passwordUpdated(model: PasswordUpdatedEmailModel): void {
         brokerManager.sendToQueue(QueueType.PASSWORD_UPDATED_EMAIL, model);
     }
 
-    invite(model: InviteEmailModel) {
+    invite(model: InviteEmailModel): void {
         brokerManager.sendToQueue(QueueType.INVITE_EMAIL, model);
     }
 
-    notification(model: NotificationEmailModel) {
+    notification(model: NotificationEmailModel): void {
         brokerManager.sendToQueue(QueueType.NOTIFICATION_EMAIL, model);
     }
 
-    system(data: any) {
+    system(data: any): void {
         brokerManager.sendToQueue(QueueType.SYSTEM_EMAIL, data);
     }
 }

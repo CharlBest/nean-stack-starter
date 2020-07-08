@@ -16,12 +16,12 @@ export class PWAService {
 
     constructor(private dialogService: DialogService) { }
 
-    init() {
+    init(): void {
         this.addEventForBeforeInstallPrompt();
         this.addListenerForAppInstalled();
     }
 
-    openInstallPrompt() {
+    openInstallPrompt(): void {
         if (this.beforeInstallPromptEvent) {
             (this.beforeInstallPromptEvent as any /*BeforeInstallPromptEvent*/).prompt();
         }
@@ -42,7 +42,7 @@ export class PWAService {
     //     });
     // }
 
-    private addEventForBeforeInstallPrompt() {
+    private addEventForBeforeInstallPrompt(): void {
         window.addEventListener('beforeinstallprompt', (beforeInstallPromptEvent) => {
             // Prevents immediate prompt display
             beforeInstallPromptEvent.preventDefault();
@@ -51,7 +51,7 @@ export class PWAService {
         });
     }
 
-    private addListenerForAppInstalled() {
+    private addListenerForAppInstalled(): void {
         window.addEventListener('appinstalled', (event) => {
             this.dialogService.alert({
                 body: 'Your app was successfully installed'

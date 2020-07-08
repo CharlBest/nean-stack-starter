@@ -12,7 +12,7 @@ export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
 
   constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.visibilityIcon = this.el.nativeElement.querySelector('app-icon-visibility');
     this.visibilityOffIcon = this.el.nativeElement.querySelector('app-icon-visibility-off');
 
@@ -24,14 +24,14 @@ export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
     this.hide();
   }
 
-  setStyles(element: HTMLElement | null) {
+  setStyles(element: HTMLElement | null): void {
     if (element) {
       element.style.userSelect = 'none';
       element.style.cursor = 'pointer';
     }
   }
 
-  addEventListeners() {
+  addEventListeners(): void {
     if (this.visibilityOffIcon) {
       this.show = this.show.bind(this);
       this.visibilityOffIcon.addEventListener('mousedown', this.show);
@@ -43,19 +43,19 @@ export class PasswordExposeDirective implements AfterViewInit, OnDestroy {
     }
   }
 
-  show() {
+  show(): void {
     this.input.nativeElement.type = 'text';
     this.renderer.setStyle(this.visibilityOffIcon, 'display', 'none');
     this.renderer.removeStyle(this.visibilityIcon, 'display');
   }
 
-  hide() {
+  hide(): void {
     this.input.nativeElement.type = 'password';
     this.renderer.setStyle(this.visibilityIcon, 'display', 'none');
     this.renderer.removeStyle(this.visibilityOffIcon, 'display');
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.visibilityOffIcon) {
       this.visibilityOffIcon.removeEventListener('mousedown', this.show);
       this.visibilityOffIcon.removeEventListener('touchstart', this.show);

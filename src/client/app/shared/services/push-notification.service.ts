@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class PushNotificationService {
   constructor(private swPush: SwPush) { }
 
-  subscribeToNotifications(onSuccess: (viewModel: PushSubscriptionViewModel) => void) {
+  subscribeToNotifications(onSuccess: (viewModel: PushSubscriptionViewModel) => void): void {
     if (this.swPush.isEnabled) {
       this.swPush.requestSubscription({
         serverPublicKey: environment.publicVapidKey
@@ -31,7 +31,7 @@ export class PushNotificationService {
     }
   }
 
-  isPushNotificationPermissionGrandted() {
+  isPushNotificationPermissionGrandted(): boolean {
     // TODO: At the moment this only supports 1 device which means the user will
     // receive push notifications on the device the toggle this switch on and it
     // will override any other devices that are registered to receive push notifications

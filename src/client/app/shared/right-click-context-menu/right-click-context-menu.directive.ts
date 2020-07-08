@@ -13,7 +13,7 @@ export class RightClickContextMenuDirective {
     constructor(private rightClickContextMenuService: RightClickContextMenuService,
         private bpService: BreakpointService) { }
 
-    @HostListener('contextmenu', ['$event']) onRightClick(event: MouseEvent) {
+    @HostListener('contextmenu', ['$event']) onRightClick(event: MouseEvent): void {
         if (this.bpService.isDesktop) {
             event.preventDefault();
             this.rightClickContextMenuService.open(event, this.appRightClickContextMenu);

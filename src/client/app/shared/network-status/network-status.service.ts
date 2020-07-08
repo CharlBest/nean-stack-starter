@@ -15,14 +15,14 @@ export class NetworkStatusService {
   constructor(private snackBar: MatSnackBar,
     private bpService: BreakpointService) { }
 
-  init() {
+  init(): void {
     window.onload = () => {
       this.handleOnlineStatus();
       this.handleConnectionSpeed();
     };
   }
 
-  handleOnlineStatus() {
+  handleOnlineStatus(): void {
     const onNetworkChange = () => {
       if (!navigator.onLine) {
         this.snackBar.open('Offline');
@@ -38,7 +38,7 @@ export class NetworkStatusService {
   }
 
   // TODO: use to blur images when connection is slow or lazy load more things
-  handleConnectionSpeed() {
+  handleConnectionSpeed(): void {
     const onConnectionChange = () => {
       const { effectiveType } = (navigator as any).connection;
       let isFast = true;

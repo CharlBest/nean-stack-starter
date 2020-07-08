@@ -20,11 +20,11 @@ export class SubscriptionsComponent implements AfterViewInit {
   constructor(private itemService: ItemService,
     public formErrorsService: FormErrorsService) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getSubscriptions(true);
   }
 
-  async getSubscriptions(refresh: boolean = false) {
+  async getSubscriptions(refresh: boolean = false): Promise<void> {
     this.isProcessing = true;
 
     if (refresh) {
@@ -49,18 +49,18 @@ export class SubscriptionsComponent implements AfterViewInit {
     }
   }
 
-  onScroll() {
+  onScroll(): void {
     if (!this.listEnd && !this.isProcessing) {
       this.pageIndex++;
       this.getSubscriptions();
     }
   }
 
-  filtersUpdated() {
+  filtersUpdated(): void {
     this.getSubscriptions(true);
   }
 
-  trackByFn(index: number, item: ItemViewModel) {
+  trackByFn(index: number, item: ItemViewModel): number {
     return item.id;
   }
 }

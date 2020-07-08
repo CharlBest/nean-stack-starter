@@ -15,7 +15,7 @@ export class TranslateService {
   constructor(private localStorageService: LocalStorageService,
     private authService: AuthService) { }
 
-  init() {
+  init(): void {
     const storedLanguage = this.localStorageService.storageData.language as Language;
     this.activeLanguage = storedLanguage || this.defaultLanguage;
 
@@ -30,11 +30,11 @@ export class TranslateService {
     });
   }
 
-  saveLanguagePreference(language: Language) {
+  saveLanguagePreference(language: Language): void {
     this.localStorageService.setUserStorageData({ language });
   }
 
-  refresh() {
+  refresh(): void {
     const storedLanguage = this.localStorageService.storageData.language as Language | null;
     if (this.activeLanguage !== storedLanguage) {
       this.activeLanguage = storedLanguage || this.defaultLanguage;
