@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DEFAULT_PAGE_SIZE } from '@shared/validation/validators';
 import { ItemViewModel } from '@shared/view-models/item/item.view-model';
 import { Subscription } from 'rxjs';
@@ -23,9 +24,12 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   constructor(public formErrorsService: FormErrorsService,
     public bpService: BreakpointService,
     private discoverService: DiscoverService,
+    private route: ActivatedRoute,
     private navigationService: NavigationService) { }
 
   ngOnInit(): void {
+    this.term = this.route.snapshot.queryParams.q;
+
     this.getItems(true);
 
     this.searchedSubscription = this.navigationService.searched.subscribe((value: string) => {
