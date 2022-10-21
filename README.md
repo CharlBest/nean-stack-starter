@@ -10,92 +10,92 @@ A basic app that has all the features that all platforms have like authenticatio
 
 Similar to the MEAN stack just with Neo4j rather than Mongo.
 
-* Angular (client), Node (API), Neo4j (database)
-* NodeJS in Typescript
-* Webpack build bundle for Node (API)
-* Angular CLI
-* Chrome extension build output
-* JWT (JSON web token) authentication
-* Password hashing + salt
-* SendGrid Email integration
-* Angular Material
-* Neo4j query integration
-* API architecture (route -> controller -> service -> repository)
-* Shared validation between Angular and Node (Error handling, type assertion)
-* Shared strongly typed view models
-* Shared strongly typed API endpoints
-* Countly analytics - automatic page tracking
-* Client share actions
-* Lazy load routes with preloaded parts
-* Image uploader to Firebase storage
-* Tutorial/on-boading/tour framework
-* Emoji picker (Material CDK)
-* WYSIWYG editor (Quill)
-* Media (Image, YouTube, Vimeo) display component
-* Web share API
-* Basic web socket connection
-* Notifications area/panel
-* Payment integration via Stripe (Card, Google/Android Pay, Apple Pay, PayPal)
-* Custom Material theme + font + color palette (Night Mode, Global CSS variable colors)
-* Progressive Web App (PWA) + custom install banner
-* Complete server setup guide via GCP
-* Backend logger (Node + Neo4j)
-* Content Security Policy
-* CORS
-* Notifications via email and/or push notifications (Seperate NodeJS message broker/queue via RabbitMQ)
-* Typescript best practises flags (strictNullChecks, strictFunctionTypes, strictPropertyInitialization, noImplicitAny, noImplicitThis, noImplicitReturns)
-* Predefined dialog components/services
-* Auto package versioning (Husky)
-* Puppeteer scraper script to test infinite scroller
-* Social media meta tags
-* Common password checker
-* GDPR/Cookie prompts
-* Offline network message (PWA)
-* Share API + Share Target API
-* Network Speed service
-* Apache Lucene fulltext search
-* Lazy load icon pack
-* Drag & Drop sorting capability
-* TSLint + SonarQube
-* Two Factor Authentication via Google Authenticator App
-* Right Click context menu
-* Basic CSS animations
-* Global style management
-* Internationalization (i18n)
-* Background Particle Effect
-* Desktop social share options
-* Material Design and custom svg icons module
-* Lazy load all images
-* Complete build script
-* Password Peek
-* Skeleton Screens
-* File Drop uploader
-
+- Angular (client), Node (API), Neo4j (database)
+- NodeJS in Typescript
+- Webpack build bundle for Node (API)
+- Angular CLI
+- Chrome extension build output
+- JWT (JSON web token) authentication
+- Password hashing + salt
+- SendGrid Email integration
+- Angular Material
+- Neo4j query integration
+- API architecture (route -> controller -> service -> repository)
+- Shared validation between Angular and Node (Error handling, type assertion)
+- Shared strongly typed view models
+- Shared strongly typed API endpoints
+- Countly analytics - automatic page tracking
+- Client share actions
+- Lazy load routes with preloaded parts
+- Image uploader to Firebase storage
+- Tutorial/on-boading/tour framework
+- Emoji picker (Material CDK)
+- WYSIWYG editor (Quill)
+- Media (Image, YouTube, Vimeo) display component
+- Web share API
+- Basic web socket connection
+- Notifications area/panel
+- Payment integration via Stripe (Card, Google/Android Pay, Apple Pay, PayPal)
+- Custom Material theme + font + color palette (Night Mode, Global CSS variable colors)
+- Progressive Web App (PWA) + custom install banner
+- Complete server setup guide via GCP
+- Backend logger (Node + Neo4j)
+- Content Security Policy
+- CORS
+- Notifications via email and/or push notifications (Seperate NodeJS message broker/queue via RabbitMQ)
+- Typescript best practises flags (strictNullChecks, strictFunctionTypes, strictPropertyInitialization, noImplicitAny, noImplicitThis, noImplicitReturns)
+- Predefined dialog components/services
+- Auto package versioning (Husky)
+- Puppeteer scraper script to test infinite scroller
+- Social media meta tags
+- Common password checker
+- GDPR/Cookie prompts
+- Offline network message (PWA)
+- Share API + Share Target API
+- Network Speed service
+- Apache Lucene fulltext search
+- Lazy load icon pack
+- Drag & Drop sorting capability
+- TSLint + SonarQube
+- Two Factor Authentication via Google Authenticator App
+- Right Click context menu
+- Basic CSS animations
+- Global style management
+- Internationalization (i18n)
+- Background Particle Effect
+- Desktop social share options
+- Material Design and custom svg icons module
+- Lazy load all images
+- Complete build script
+- Password Peek
+- Skeleton Screens
+- File Drop uploader
 
 Client pages
 
-* sign up
-* login
-* forgot password/reset password
-* header nav for desktop and bottom nav for mobile
-* newsletter sign up
-* email feedback
-* profile
-* tutorials
-* verify email
-* terms and conditions, privacy policy and help
-* invite a friend
-* 404 error page
-* onboarding
-* items
-    * create
-    * edit
-    * comment
-    * favourites
+- sign up
+- login
+- forgot password/reset password
+- header nav for desktop and bottom nav for mobile
+- newsletter sign up
+- email feedback
+- profile
+- tutorials
+- verify email
+- terms and conditions, privacy policy and help
+- invite a friend
+- 404 error page
+- onboarding
+- items
+  - create
+  - edit
+  - comment
+  - favourites
 
 ## Coming Soon
-* GraphQL integration (Apollo)
-* Cordova IOS build output
+
+- GraphQL integration (Apollo)
+- Cordova IOS build output
 
 ## Running locally for development (watch/hot reload)
 
@@ -113,11 +113,13 @@ npm start
 Your app should have automatically opened the browser and be running on [localhost:4200](http://localhost:4200/)
 
 ## Only do this once at the start to complete setup
-* Visit [localhost:32768](http://localhost:32768/) and setup Countly
-* Get app key from Countly and replace client environment analytics keys
-* Setup server environment variables in src/server/environments
+
+- Visit [localhost:32768](http://localhost:32768/) and setup Countly
+- Get app key from Countly and replace client environment analytics keys
+- Setup server environment variables in src/server/environments
 
 ## Make it your own (after clone)
+
 1. Rename all occurances of the word "nean" to your chosen name
 2. Replace logo in client assets folder
 3. Create accounts for services
@@ -133,53 +135,61 @@ Your app should have automatically opened the browser and be running on [localho
    5. Namecheap Domain
 
 ## Environment variables
+
 Change to yours.
+
 ### Client
+
 In the environments folder there are 2 files. one for dev and one for production. The angular CLI switches them at build time.
+
 ### Server
+
 In the environments folder there is 1 file. In development default values are used. In production your hosting service should set process.env with the appropriate variables
 
 Note: firebase storage has authentication on their buckets. Whitelist your url or something
 
-
 ## 3rd Party Cloud Solutions
-* GitHub (source code)
-* Firebase (image/blob storage)
-* Zoho (email service)
-* Stripe (payment service)
-* Cloudflare (CDN)
-* Google Cloud (server)
 
+- GitHub (source code)
+- Firebase (image/blob storage)
+- Zoho (email service)
+- Stripe (payment service)
+- Cloudflare (CDN)
+- Google Cloud (server)
 
 # Server setup
 
 # Google Cloud (VM), Ubuntu server, Xfce4, VNC server, Putty SSH, Git, NGINX, Angular CLI, NodeJS, PM2, Docker, Neo4j, RabbitMQ, Cloudflare, Namecheap
 
 ## File destinations
-* NGINX: /etc/nginx/sites-avialable/
-* Node apps: /var/www/<SITE_NAME>/
-* Neo4j: /home/<USERNAME>/neo4j/<SITE_ENVIRONMENT>/
-* RabbitMQ:
-  * home dir: /var/lib/rabbitmq
-  * config file(s): /etc/rabbitmq/rabbitmq.config
-  * database dir: /var/lib/rabbitmq/<USERNAME>/rabbit@<NODE_NAME>
-* VNC: /home/<USERNAME>/.vnc/ 
-* PM2: /home/<USERNAME>/.pm2/ 
+
+- NGINX: /etc/nginx/sites-avialable/
+- Node apps: /var/www/<SITE_NAME>/
+- Neo4j: /home/<USERNAME>/neo4j/<SITE_ENVIRONMENT>/
+- RabbitMQ:
+  - home dir: /var/lib/rabbitmq
+  - config file(s): /etc/rabbitmq/rabbitmq.config
+  - database dir: /var/lib/rabbitmq/<USERNAME>/rabbit@<NODE_NAME>
+- VNC: /home/<USERNAME>/.vnc/
+- PM2: /home/<USERNAME>/.pm2/
 
 ## Ports:
+
 ### nean.io
-* Node web: 3010
-* Neo4j browser: 7474
-* Neo4j: 7687
-* RabbitMQ: 5672
-* RabbitMQ management: 15672
+
+- Node web: 3010
+- Neo4j browser: 7474
+- Neo4j: 7687
+- RabbitMQ: 5672
+- RabbitMQ management: 15672
 
 ### dev.nean.io
-* Node web: +10 (3020)
-* Neo4j: +1 (7475)
-* Neo4j browser: +1 (7688)
-* RabbitMQ: +1 (5673)
-* RabbitMQ management: +1 (15673)
+
+- Node web: +10 (3020)
+- Neo4j: +1 (7475)
+- Neo4j browser: +1 (7688)
+- RabbitMQ: +1 (5673)
+- RabbitMQ management: +1 (15673)
 
 ## Setup Ubuntu Server
 
@@ -188,17 +198,19 @@ Source: https://www.digitalocean.com/community/tutorials/initial-server-setup-wi
 1. Google Cloud Platfrom
 2. Compute Engine
 3. VM Instance - Create instance
-    1. Machine type - micro (1 shared vCPU)
-    2. Ubuntu 18.04 LTS Minimal - 20GB SSD
-    3. Allow HTTPS traffic
-    4. Advanced
-        1. Management: Enable deletion protection
-        2. Networking: Static external IP (NB: can't assign afterwards)
+   1. Machine type - micro (1 shared vCPU)
+   2. Ubuntu 18.04 LTS Minimal - 20GB SSD
+   3. Allow HTTPS traffic
+   4. Advanced
+      1. Management: Enable deletion protection
+      2. Networking: Static external IP (NB: can't assign afterwards)
 
 ### Why Google CLoud VM:
+
 Heroku charges $7 per instance that doesn't go to sleep after 30 minutes. That means if I want 3 Node instances, 2 for load balancing and zero downtime updates and 1 for the background worker process I have to pay ~$21. The VM is ~$25 and +- 7 instances can be run on it.
 
 ### Why not use the f1-micro or g1-small:
+
 When building the client project with the Angular CLI the server freezes and a possible cause is the shared CPU because it doesn't happen with the standard machine types or it could be an out of memory problem.
 
 ## Ubuntu Desktop Environment
@@ -210,16 +222,20 @@ Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-conf
 ```sh
 sudo apt update
 ```
+
 #### Breakdown:
-* sudo: super user do (admin)
-* apt: package manager command (apt combines apt-get and apt-cache commands and sets nice defaults like progress bar and num of packages installed)
-* update: Refreshes repository index
+
+- sudo: super user do (admin)
+- apt: package manager command (apt combines apt-get and apt-cache commands and sets nice defaults like progress bar and num of packages installed)
+- update: Refreshes repository index
 
 ```sh
 sudo apt upgrade
 ```
+
 #### Breakdown:
-* upgrade: Upgrades all upgradable packages
+
+- upgrade: Upgrades all upgradable packages
 
 ### Install
 
@@ -228,19 +244,22 @@ Packages repo site: https://packages.ubuntu.com/
 ```sh
 sudo apt install xfce4 xfce4-goodies tightvncserver nano firefox
 ```
+
 #### Breakdown:
-* install: all the following packages needs to be intalled
-* xfce4: Meta-package for the Xfce Lightweight Desktop Environment (File Manager, Panel, Session Manager, Settings, etc.)
-* xfce4-goodies: enhancements for the Xfce4 Desktop Environment (clipboard, terminal, etc.)
-* tightvncserver: virtual network computing server software (Remote desktop)
-* text editor
-* firefox browser
+
+- install: all the following packages needs to be intalled
+- xfce4: Meta-package for the Xfce Lightweight Desktop Environment (File Manager, Panel, Session Manager, Settings, etc.)
+- xfce4-goodies: enhancements for the Xfce4 Desktop Environment (clipboard, terminal, etc.)
+- tightvncserver: virtual network computing server software (Remote desktop)
+- text editor
+- firefox browser
 
 Optional: autocopysel (clipboard copy paste library but consumes lots of memory and scared of multiple running instances)
 
 ### VNC server setup
 
 1. Start
+
 ```sh
 vncserver
 ```
@@ -248,21 +267,25 @@ vncserver
 2. Enter password and set view-only password to NO
 
 3. 1 represents the number of vnc server running
+
 ```sh
-vncserver -kill :1 
+vncserver -kill :1
 ```
 
 4. Copy of your existing/default VNC configuration
+
 ```sh
 cp ~/.vnc/xstartup ~/.vnc/xstartup_backup
 ```
 
 5. Edit default config
+
 ```sh
 nano ~/.vnc/xstartup
 ```
 
 6. Edit file
+
 ```sh
 #!/bin/bash
 xsetroot -solid grey
@@ -274,6 +297,7 @@ startxfce4 &
 7. Then hit Ctrl + X, and then Y to save and exit Nano
 
 8. Start server again (higher resolution and color depth can degrade performance)
+
 ```sh
 vncserver -geometry 1280x720 -depth 24
 ```
@@ -285,27 +309,28 @@ vncserver -geometry 1280x720 -depth 24
 2. Download and install PuTTY and puttygen.exe
 
 3. Open puttygen
-   * Click "Generate"
-   * Key comment = <USERNAME> eg. bob
-   * Click "Save private key" and use in PuTTY connection utility
-   * Copy public key and add to Google Compute allowed SSH keys for your instance via the web console
+
+   - Click "Generate"
+   - Key comment = <USERNAME> eg. bob
+   - Click "Save private key" and use in PuTTY connection utility
+   - Copy public key and add to Google Compute allowed SSH keys for your instance via the web console
 
 4. Open PuTTY
-    1. Session
-        * Host Name (or IP address) = <USERNAME>@<SERVER_IP_ADDRESS> eg. bob@35.225.150.147
-        * Port = 22
-    2. Connection > SSH > Auth
-        * Private key file for authentication
-        * Click "Browse" and choose previously generated private key
-    3. Connection > SSH > Tunnels
-        * Source port = 5901
-        * Destination = localhost:5901
-        * Click "Add"
-    4. Session
-        * Saved sessions = vnc
-        * Click "Save"
-    5. Click "Open" at the bottom
-    6. Enter password for instance in console
+   1. Session
+      - Host Name (or IP address) = <USERNAME>@<SERVER_IP_ADDRESS> eg. bob@35.225.150.147
+      - Port = 22
+   2. Connection > SSH > Auth
+      - Private key file for authentication
+      - Click "Browse" and choose previously generated private key
+   3. Connection > SSH > Tunnels
+      - Source port = 5901
+      - Destination = localhost:5901
+      - Click "Add"
+   4. Session
+      - Saved sessions = vnc
+      - Click "Save"
+   5. Click "Open" at the bottom
+   6. Enter password for instance in console
 
 ### VNC viewer
 
@@ -315,32 +340,33 @@ vncserver -geometry 1280x720 -depth 24
 ## Setup domain
 
 ### Namecheap
+
 Buy a domain name and set the name servers to cloudflare
 
 ### Cloudflare
-* Create free account
-* Enable HTTPS certificates
-* Setup DNS
+
+- Create free account
+- Enable HTTPS certificates
+- Setup DNS
   1. Create Cloudflare account
   2. DNS section (Domain name system)
   3. Create A record (root domain) eg. nean.io
-     * Name = @
-     * IPv4 address = 35.225.150.147
+     - Name = @
+     - IPv4 address = 35.225.150.147
   4. Create cname record
-     * name = www
-     * Domain name = nean.io
+     - name = www
+     - Domain name = nean.io
   5. Create A record (sub domain) eg. dev.nean.io
-     * Name = dev
-     * IPv4 address = 35.225.150.147
+     - Name = dev
+     - IPv4 address = 35.225.150.147
   6. Create Page Rule for LetsEncrypt auto renew (first)
-     * URL: http://*nean.io/.well-known/acme-challenge/*
-     * Setting: Cache Level: Standard
+     - URL: http://_nean.io/.well-known/acme-challenge/_
+     - Setting: Cache Level: Standard
   7. Create Page Role for redirecting to HTTPS (second)
-     * URL: http://*nean.io/*
-     * Setting: Always Use HTTPS
+     - URL: http://_nean.io/_
+     - Setting: Always Use HTTPS
   8. Caching
-     * Browser Cache Expiration = 2 days
-
+     - Browser Cache Expiration = 2 days
 
 ## Setup Nginx Web Server
 
@@ -353,15 +379,19 @@ Example: https://github.com/FranciscoKnebel/nginx-reverseproxy
 Proxy summary: https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
 
 1. Install
+
 ```sh
 sudo apt install nginx
 ```
+
 2. Test
+
 ```sh
 sudo nginx -v
 ```
 
 1. Create /etc/nginx/sites-available/nean.io
+
 ```text
 server {
     listen 443 http2;
@@ -393,12 +423,13 @@ server {
 ```
 
 2. Create /etc/nginx/sites-available/dev.nean.io
+
 ```text
 server {
     listen 443 http2;
     # IPv6 addresses
     listen [::]:443 http2;
-    
+
     ssl on;
     ssl_certificate /etc/letsencrypt/live/dev.nean.io/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/dev.nean.io/privkey.pem;
@@ -420,6 +451,7 @@ server {
 ```
 
 3. Create snippets/static-files.conf
+
 ```text
 index index.html;
 
@@ -434,6 +466,7 @@ location / {
 ```
 
 4. Create snippets/api-params.conf
+
 ```text
 proxy_http_version 1.1;
 
@@ -463,26 +496,32 @@ proxy_set_header Authorization $http_authorization;
 ```
 
 5. Create symbolic links in /etc/nginx/sites-enabled
+
 ```sh
 ln -s /etc/nginx/sites-available/nean.io /etc/nginx/sites-enabled/nean.io
 
 ln -s /etc/nginx/sites-available/dev.nean.io /etc/nginx/sites-enabled/dev.nean.io
 ```
+
 #### Breakdown:
+
 ln: make link command
 -s: symbolic link flag
 
 6. Test config
+
 ```sh
 sudo nginx -t
 ```
 
 7. Restart
+
 ```sh
 sudo service nginx restart
 ```
 
 8. Set permissions
+
 ```sh
 sudo chown -R $USER:$USER /var/www/nean.io
 
@@ -495,6 +534,7 @@ sudo chmod -R 755 /var/www/nean.io
 Note:
 
 4 different cache location exist:
+
 1. Browser (Cache-Control header)
 2. Service Worker (ng-config.json)
 3. CloudFlare (browser UI)
@@ -505,47 +545,57 @@ Note:
 Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04
 
 Install & Update NVM (Node version manager: https://github.com/creationix/nvm)
+
 ```sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 ```
 
 Test NVM
+
 ```sh
 nvm --version
 ```
 
 List Node versions
+
 ```sh
 nvm ls-remote
 ```
 
 Install Node
+
 ```sh
 nvm install v10.13.0
 ```
+
 Important: when installing a new Node version you need to reinstall the global packages like pm2
 
 Test Node
+
 ```sh
 node --version
 ```
 
 NPM packages to work (those that require compiling code from source, for example)
+
 ```sh
 sudo apt install build-essential
 ```
 
 Notes:
-* check how to run multiple versions of Node and test on newer ones
+
+- check how to run multiple versions of Node and test on newer ones
 
 ## Setup PM2
 
 Install PM2
+
 ```sh
 npm install pm2 -g
 ```
 
 Test PM2
+
 ```sh
 pm2 -v
 ```
@@ -555,93 +605,109 @@ pm2 -v
 1. Create ecosystem.config.js in /var/www/nean.io/
 
 2. Replace ecosystem.config.js text
+
 ```javascript
 // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
 
 const environmentVariables = {
-    APP_HOST: '',
-    AUTHENTICATION_KEY: '37LvDSm4XvjYOh9Y',
-    NODE_ENV: 'production',
-    SENDGRID_API_KEY: '***',
-    SENDGRID_TEMPLATE_FEEDBACK: '***',
-    SENDGRID_TEMPLATE_FORGOT_PASSWORD: '***',
-    SENDGRID_TEMPLATE_INVITE: '***',
-    SENDGRID_TEMPLATE_NOTIFICATION: '***',
-    SENDGRID_TEMPLATE_PASSWORD_UPDATED: '***',
-    SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL: '***',
-    SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK: '***',
-    SENDGRID_TEMPLATE_SYSTEM: '***',
-    SENDGRID_TEMPLATE_WELCOME: '***',
-    STRIPE_KEY: '***',
-    VAPID_PRIVATE_KEY: '***',
-    VAPID_PUBLIC_KEY: '***',
+  APP_HOST: "",
+  AUTHENTICATION_KEY: "37LvDSm4XvjYOh9Y",
+  NODE_ENV: "production",
+  SENDGRID_API_KEY: "***",
+  SENDGRID_TEMPLATE_FEEDBACK: "***",
+  SENDGRID_TEMPLATE_FORGOT_PASSWORD: "***",
+  SENDGRID_TEMPLATE_INVITE: "***",
+  SENDGRID_TEMPLATE_NOTIFICATION: "***",
+  SENDGRID_TEMPLATE_PASSWORD_UPDATED: "***",
+  SENDGRID_TEMPLATE_PAYMENT_SUCCESSFUL: "***",
+  SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK: "***",
+  SENDGRID_TEMPLATE_SYSTEM: "***",
+  SENDGRID_TEMPLATE_WELCOME: "***",
+  STRIPE_KEY: "***",
+  VAPID_PRIVATE_KEY: "***",
+  VAPID_PUBLIC_KEY: "***",
 };
 
 function generate(environment, server, env, port = 0, instances = 1) {
-    return {
-        name: `${environment}_${server}`,
-        script: `${server}.bundle.js`,
-        cwd: `${environment}/dist/server/${server}`,
-        instances: instances,
-        env: { ...environmentVariables, PORT: port, ...env },
-        // Time in ms to wait before restarting a crashing app
-        restart_delay: 10000,
-        // Number of times a script is restarted when it exits in less than min_uptime
-        max_restarts: 10,
-        // Minimum uptime of the app to be considered started
-        min_uptime: 1000
-    }
+  return {
+    name: `${environment}_${server}`,
+    script: `${server}.bundle.js`,
+    cwd: `${environment}/dist/server/${server}`,
+    instances: instances,
+    env: { ...environmentVariables, PORT: port, ...env },
+    // Time in ms to wait before restarting a crashing app
+    restart_delay: 10000,
+    // Number of times a script is restarted when it exits in less than min_uptime
+    max_restarts: 10,
+    // Minimum uptime of the app to be considered started
+    min_uptime: 1000,
+  };
 }
 
 module.exports = {
-    apps: [
-        generate('prod', 'web', {
-            AMQP_URL: 'amqp://server_api:<PASSWORD>@localhost:5672',
-            DATABASE_PASSWORD: '<PASSWORD>',
-            DATABASE_URI: 'bolt://localhost:7687',
-            DATABASE_USERNAME: 'server_api',
-        }, 3010, 2),
-        generate('prod', 'worker', {
-            AMQP_URL: 'amqp://server_worker:<PASSWORD>@localhost:5672',
-            DATABASE_PASSWORD: '<PASSWORD>',
-            DATABASE_URI: 'bolt://localhost:7687',
-            DATABASE_USERNAME: 'server_worker',
-        }),
-        generate('dev', 'web', {
-            AMQP_URL: 'amqp://server_api:<PASSWORD>@localhost:5673',
-            DATABASE_PASSWORD: '<PASSWORD>',
-            DATABASE_URI: 'bolt://localhost:7688',
-            DATABASE_USERNAME: 'server_api',
-        }, 3020, 2),
-        generate('dev', 'worker', {
-            AMQP_URL: 'amqp://server_worker:<PASSWORD>@localhost:5673',
-            DATABASE_PASSWORD: '<PASSWORD>',
-            DATABASE_URI: 'bolt://localhost:7688',
-            DATABASE_USERNAME: 'server_worker',
-        }),
-    ],
-    deploy: {
-        dev: {
-            host: 'localhost',
-            ref: 'origin/dev',
-            repo: 'https://github.com/heroku/node-js-getting-started.git',
-            path: 'var/www/nean.io/deploy/dev',
-            'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js'
-        },
-        staging: {
-            host: 'localhost',
-            ref: 'origin/staging',
-            repo: 'https://github.com/heroku/node-js-getting-started.git',
-            path: 'var/www/nean.io/deploy/staging',
-            'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js'
-        }
-    }
+  apps: [
+    generate(
+      "prod",
+      "web",
+      {
+        AMQP_URL: "amqp://server_api:<PASSWORD>@localhost:5672",
+        DATABASE_PASSWORD: "<PASSWORD>",
+        DATABASE_URI: "bolt://localhost:7687",
+        DATABASE_USERNAME: "server_api",
+      },
+      3010,
+      2
+    ),
+    generate("prod", "worker", {
+      AMQP_URL: "amqp://server_worker:<PASSWORD>@localhost:5672",
+      DATABASE_PASSWORD: "<PASSWORD>",
+      DATABASE_URI: "bolt://localhost:7687",
+      DATABASE_USERNAME: "server_worker",
+    }),
+    generate(
+      "dev",
+      "web",
+      {
+        AMQP_URL: "amqp://server_api:<PASSWORD>@localhost:5673",
+        DATABASE_PASSWORD: "<PASSWORD>",
+        DATABASE_URI: "bolt://localhost:7688",
+        DATABASE_USERNAME: "server_api",
+      },
+      3020,
+      2
+    ),
+    generate("dev", "worker", {
+      AMQP_URL: "amqp://server_worker:<PASSWORD>@localhost:5673",
+      DATABASE_PASSWORD: "<PASSWORD>",
+      DATABASE_URI: "bolt://localhost:7688",
+      DATABASE_USERNAME: "server_worker",
+    }),
+  ],
+  deploy: {
+    dev: {
+      host: "localhost",
+      ref: "origin/dev",
+      repo: "https://github.com/heroku/node-js-getting-started.git",
+      path: "var/www/nean.io/deploy/dev",
+      "post-deploy":
+        "npm install && npm run build && pm2 reload ecosystem.config.js",
+    },
+    staging: {
+      host: "localhost",
+      ref: "origin/staging",
+      repo: "https://github.com/heroku/node-js-getting-started.git",
+      path: "var/www/nean.io/deploy/staging",
+      "post-deploy":
+        "npm install && npm run build && pm2 reload ecosystem.config.js",
+    },
+  },
 };
 ```
 
 ### Auto start at boot
 
 1. Generate script to run
+
 ```sh
 pm2 startup
 ```
@@ -649,21 +715,25 @@ pm2 startup
 2. Copy paste command to setup
 
 3. Take snapshot of what processes should start on startup
+
 ```sh
 pm2 save
 ```
 
 4. Test
+
 ```sh
 sudo systemctl status pm2-<USERNAME>
 ```
 
 ### Link/connect PM2 to web interface
+
 ```sh
 pm2 link <key> <key> MACHINE_NAME
 ```
 
 ### Detect github commits
+
 https://github.com/adnanh/webhook
 
 ### Automatic build and deploy if pushed to DEV
@@ -675,11 +745,13 @@ Source: https://medium.com/@riyadhalnur/managing-and-deploying-nodejs-apps-with-
 Source: https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04
 
 1. Install
+
 ```sh
 sudo apt install git
 ```
 
 2. Set global git configuration
+
 ```sh
 git config --global user.name "Your Name"
 
@@ -691,6 +763,7 @@ git config --global user.email "youremail@domain.com"
 Source: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
 
 1. Acquire an SSL cert
+
 ```sh
 sudo apt-get install software-properties-common
 
@@ -707,13 +780,14 @@ sudo certbot --nginx certonly
 
 3. Remember to set disable HTTP access to server in Google Cloud firewall settings
 
-4. Remember to set Cloudflare > Crypto > SSL to "Full (strict)" 
+4. Remember to set Cloudflare > Crypto > SSL to "Full (strict)"
 
 ## Setup Nginx with HTTP/2
 
 Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04
 
 Add http2 in NGINX conf after port numbers
+
 ```sh
 listen 443 http2;
 ```
@@ -725,6 +799,7 @@ listen 443 http2;
 Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
 
 1. Get package
+
 ```sh
 sudo apt update
 
@@ -738,16 +813,19 @@ sudo apt update
 ```
 
 2. Install
+
 ```sh
 sudo apt install docker-ce
 ```
 
 3. Test
+
 ```sh
 sudo systemctl status docker
 ```
 
 4. Executing the Docker Command Without Sudo by adding the current user to the docker group
+
 ```sh
 sudo usermod -aG docker ${USER}
 ```
@@ -757,8 +835,9 @@ sudo usermod -aG docker ${USER}
 ### Docker compose
 
 1. Create docker-compose.yml
+
 ```yml
-version: '3'
+version: "3"
 
 services:
   countly:
@@ -774,8 +853,8 @@ services:
     container_name: neo4j.nean.io
     image: neo4j/3.5-enterprise
     ports:
-      - "7474:7474"             ## Browser
-      - "7687:7687"             ## Bolt connection
+      - "7474:7474" ## Browser
+      - "7687:7687" ## Bolt connection
     volumes:
       - $HOME/neo4j/nean.io/data:/data
       - $HOME/neo4j/nean.io/backup:/backup
@@ -800,8 +879,8 @@ services:
     container_name: neo4j.dev.nean.io
     image: neo4j/3.5-enterprise
     ports:
-      - "7475:7474"             ## Browser
-      - "7688:7687"             ## Bolt connection
+      - "7475:7474" ## Browser
+      - "7688:7687" ## Bolt connection
     volumes:
       - $HOME/neo4j/dev.nean.io/data:/data
       - $HOME/neo4j/dev.nean.io/backup:/backup
@@ -821,35 +900,38 @@ services:
     ports:
       - "5673:5672"
     restart: unless-stopped
-
 ```
 
 #### Breakdown:
-* container_name: Unique name for the container
-* image: docker hub image
-* ports: first port is what docker exposes and second one is what it maps to in the container
-    * 7474 for Neo4j Browser
-    * 7474 for Neo4j HTTP connection
-    * 7473 for Neo4j HTTPS connection
-    * 7687 for Neo4j Bolt connection
-    * 15672 for RabbitMQ Management Plugin
-    * 5672 for RabbitMQ AMQP connection
-* volumes: shared filesystems
-* environment: spesify environment config
-  * Neo4j: 512 MB is the default for both variables but should be increased in prod.
-  * RabbitMQ: set username and password for user
-* restart=on-failure: Restart only if the container exits with a non-zero exit status.
+
+- container_name: Unique name for the container
+- image: docker hub image
+- ports: first port is what docker exposes and second one is what it maps to in the container
+  - 7474 for Neo4j Browser
+  - 7474 for Neo4j HTTP connection
+  - 7473 for Neo4j HTTPS connection
+  - 7687 for Neo4j Bolt connection
+  - 15672 for RabbitMQ Management Plugin
+  - 5672 for RabbitMQ AMQP connection
+- volumes: shared filesystems
+- environment: spesify environment config
+  - Neo4j: 512 MB is the default for both variables but should be increased in prod.
+  - RabbitMQ: set username and password for user
+- restart=on-failure: Restart only if the container exits with a non-zero exit status.
 
 2. Run docker compose
+
 ```sh
 docker-compose up -d
 ```
 
 #### Breakdown:
-* up: Download images from docker hub and create container instances
-* -d: detached mode: Container starts up and run in background. Console is not attached to the container's process.
+
+- up: Download images from docker hub and create container instances
+- -d: detached mode: Container starts up and run in background. Console is not attached to the container's process.
 
 #### Optional
+
 ```sh
 # terminal within container
 docker exec -it <container_name> bash
@@ -862,65 +944,73 @@ docker top <container_name>
 ```
 
 3. <a id="createnewusers">Create new users</a>
-    3.2 RabbitMQ
-    ```sh
-    # RabbitMQ
-    ## Create user
-    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_api password
-    docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_worker password
-    ## Set permissions
-    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_api ".*" ".*" ".*"
-    docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p / server_worker ".*" ".*" ".*"
-    ```
-    * Do the same for other instances
+   3.2 RabbitMQ
+   ```sh
+   # RabbitMQ
+   ## Create virtual host
+   docker exec -it rabbitmq.nean.io rabbitmqctl add_vhost nean
+   ## Create user
+   docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_api password
+   docker exec -it rabbitmq.nean.io rabbitmqctl add_user server_worker password
+   ## Set permissions
+   docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p nean server_api ".*" ".*" ".*"
+   docker exec -it rabbitmq.nean.io rabbitmqctl set_permissions -p nean server_worker ".*" ".*" ".*"
+   ```
+   - Do the same for other instances
 
 ### Setup periodic backups via cron
 
-1) Create crontab for user
+1. Create crontab for user
+
 ```sh
 export VISUAL=nano; crontab -e
 ```
 
-2) Set backup commands every 1 hour
+2. Set backup commands every 1 hour
 
 Short codes
-* @reboot – Run once, at startup
-* @yearly – Run once a year, “0 0 1 1 *”.</>
-* @annually – same as @yearly
-* @monthly – Run once a month, “0 0 1 * *”
-* @weekly – Run once a week, “0 0 * * 0”
-* @daily – Run once a day, “0 0 * * *”
-* @midnight – same as @daily
-* @hourly – Run once an hour, “0 * * * *”
+
+- @reboot – Run once, at startup
+- @yearly – Run once a year, “0 0 1 1 \*”.</>
+- @annually – same as @yearly
+- @monthly – Run once a month, “0 0 1 \* \*”
+- @weekly – Run once a week, “0 0 \* \* 0”
+- @daily – Run once a day, “0 0 \* \* \*”
+- @midnight – same as @daily
+- @hourly – Run once an hour, “0 \* \* \* \*”
 
 ```sh
 @hourly docker exec neo4j.nean.io bin/neo4j-admin backup --from=localhost:6362 --backup-dir=/backup --name=graph.db-backup --fallback-to-full=true --check-consistency=true --pagecache=2G
 ```
 
-3) Save file
+3. Save file
 
-4) Repeat for neo4j.dev.nean.io instance
+4. Repeat for neo4j.dev.nean.io instance
 
-5) Optionally send emails after cron job. https://cloud.google.com/compute/docs/tutorials/sending-mail/using-sendgrid
+5. Optionally send emails after cron job. https://cloud.google.com/compute/docs/tutorials/sending-mail/using-sendgrid
 
 ## Setup Neo4j without Docker (single instance)
 
 1. Install Java
+
 ```sh
 sudo apt install openjdk-8-jre
 ```
 
 2. Signing Key
+
 ```sh
 wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
 ```
 
 3. Source List File
+
 ```sh
 echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
 ```
 
 4. Install Neo4j
+
 ```sh
 sudo apt update
 
@@ -928,11 +1018,13 @@ sudo apt-get install neo4j=1:3.4.9
 ```
 
 5. Test
+
 ```sh
 sudo service neo4j status
 ```
 
 6. Start automatically on boot
+
 ```sh
 sudo systemctl enable neo4j
 ```
@@ -942,11 +1034,13 @@ Navigate to localhost:7474 in your browser
 ### Set different user
 
 1. Enter cypher shell
+
 ```sh
 /usr/bin/cypher-shell -u neo4j -p neo4j
 ```
 
 2. Create user and disable password set on first login
+
 ```sh
 CALL dbms.security.createUser('nean_dev', 'nean_dev', false)
 ```
@@ -954,16 +1048,19 @@ CALL dbms.security.createUser('nean_dev', 'nean_dev', false)
 ## Setup RabbitMQ without Docker (single instance)
 
 1. Signing Key
+
 ```sh
 wget -O - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc" | sudo apt-key add -
 ```
 
 2. Source List File (debian bionic main + erlang)
+
 ```sh
 echo "deb https://dl.bintray.com/rabbitmq/debian bionic main erlang" | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list
 ```
 
 3. Install packages
+
 ```sh
 sudo apt update
 
@@ -971,11 +1068,13 @@ sudo apt install rabbitmq-server
 ```
 
 4. Test
+
 ```sh
 sudo service rabbitmq-server status
 ```
 
 5. Install management plugin
+
 ```sh
 sudo rabbitmq-plugins enable rabbitmq_management
 ```
@@ -987,19 +1086,22 @@ Navigate to localhost:15672 in your browser
 ## Setup Reddis
 
 ## Logs retention
-* $HOME/.pm2/logs
-* web + worker logs in dist > server
-* $HOME/neo4j/<app_name>/logs
-* /var/log/rabbitmq
-* nginx logs
-  * /var/log/nginx/access.log
-  * /var/log/nginx/error.log
-  * /var/log/<app_name>
-* $HOME/.vnc
-* /var/lib/docker/containers/<CONTAINER_ID>/<CONTAINER_ID>-json.log
+
+- $HOME/.pm2/logs
+- web + worker logs in dist > server
+- $HOME/neo4j/<app_name>/logs
+- /var/log/rabbitmq
+- nginx logs
+  - /var/log/nginx/access.log
+  - /var/log/nginx/error.log
+  - /var/log/<app_name>
+- $HOME/.vnc
+- /var/lib/docker/containers/<CONTAINER_ID>/<CONTAINER_ID>-json.log
 
 ## Copy file to VM
+
 #### WinSCP
+
 https://winscp.net/eng/download.php
 
 #### OR
@@ -1011,84 +1113,94 @@ gcloud compute scp --recurse <FROM_DIR> <USERNAME>@<VM_INSTANCE_NAME>:/var/www/n
 ```
 
 #### Breakdown:
-* gcloud: Google Cloud SDK
-* compute: Google's term for their VM offering
-* scp: secure copy paste
-* --recurse: recursively copy directory and all inner file/folders
-* <FROM_DIR>: C:\Users\...
-* <USERNAME>: Linux username
-* <VM_INSTANCE_NAME>: VM instance name
+
+- gcloud: Google Cloud SDK
+- compute: Google's term for their VM offering
+- scp: secure copy paste
+- --recurse: recursively copy directory and all inner file/folders
+- <FROM_DIR>: C:\Users\...
+- <USERNAME>: Linux username
+- <VM_INSTANCE_NAME>: VM instance name
 
 ## Top things to check
 
 Source: https://hashnode.com/post/10-things-you-shouldnt-do-while-running-nodejs-in-production-cisab2fyu0s9oth5341faywcw
 
-
 # Steps to creating a new project/instance
 
 ## Create new project
-* GitHub Import repository
-* URL = https://github.com/CharlBest/nean-stack-starter.git
-* git clone <new url>
-* cd repo
-* git remote add upstream https://github.com/CharlBest/nean-stack-starter.git
-* git fetch upstream
-* npm install
-* npm run build
+
+- GitHub Import repository
+- URL = https://github.com/CharlBest/nean-stack-starter.git
+- git clone <new url>
+- cd repo
+- git remote add upstream https://github.com/CharlBest/nean-stack-starter.git
+- git fetch upstream
+- npm install
+- npm run build
 
 ## Update project
-* change services
-  * .env file
-  * docker-compose exposed posts and container names
-  * nginx ports
-  * pm2 environment variables in ecosystem.config.js
-* Rename all NEAN words to new project name
-* Change theme colors in material theme, manifest.json, index.html icons, index.html loading screen bg
-* Change icon/logo
+
+- change services
+  - .env file
+  - docker-compose exposed posts and container names
+  - nginx ports
+  - pm2 environment variables in ecosystem.config.js
+- Rename all NEAN words to new project name
+- Change theme colors in material theme, manifest.json, index.html icons, index.html loading screen bg
+- Change icon/logo
 
 ## Copy to server
-* Note procedure for domain and subdomains are the same, just add the subdomains before the root domain
-* Go to /var/www/
-* Create new directory (sudo mkdir domain.com)
-* copy over dist folder via WinSCP into
-* start services
+
+- Note procedure for domain and subdomains are the same, just add the subdomains before the root domain
+- Go to /var/www/
+- Create new directory (sudo mkdir domain.com)
+- copy over dist folder via WinSCP into
+- start services
+
 ```sh
 cd /var/www/nean.io/
 docker-compose up --detach
 ```
-* [Create new users](#createnewusers)
+
+- [Create new users](#createnewusers)
 
 ## Cloudflare
-* Add A record for subdomain pointing to server IP
+
+- Add A record for subdomain pointing to server IP
 
 ## NGINX
-* Create symlink to enable domain (ln -s /var/www/nean.io/services/nginx.conf /etc/nginx/sites-enabled/domain.com)
-* create log folder (sudo mkdir /var/www/nean.io/nginx)
-* sudo nginx -t
-* sudo service nginx restart
-* comment out certificates (ssl) and listen http2 (443)
-* Add listen 80;
-* sudo service nginx restart
-* Make sure DNS provider (CloudFlare) has a A Record with name domain.com and content = the IP of the server
-* sudo certbot certonly -d domain.com
-* Choose option 3 - Place files in webroot directory (webroot0)
-* Input the webroot of the domain (/var/www/domain.com)
-* Open /etc/nginx/sites-available/domain.com
-* Uncomment certificate links, 443 (SSL) config and remove listen 80
-* Set SSL/TLS encryption mode to Full (strict)
-* Add first CloudFlare page rule
-  * http://*domain.com/.well-known/acme-challenge/*
-  * Cache Level
-  * Standard
-Add second CloudFlare page rule
-  * http://*domain.com/*
-  * Always Use HTTPS
-* sudo service nginx restart
+
+- Create symlink to enable domain (ln -s /var/www/nean.io/services/nginx.conf /etc/nginx/sites-enabled/domain.com)
+- create log folder (sudo mkdir /var/www/nean.io/nginx)
+- sudo nginx -t
+- sudo service nginx restart
+- comment out certificates (ssl) and listen http2 (443)
+- Add listen 80;
+- sudo service nginx restart
+- Make sure DNS provider (CloudFlare) has a A Record with name domain.com and content = the IP of the server
+- sudo certbot certonly -d domain.com
+- Choose option 3 - Place files in webroot directory (webroot0)
+- Input the webroot of the domain (/var/www/domain.com)
+- Open /etc/nginx/sites-available/domain.com
+- Uncomment certificate links, 443 (SSL) config and remove listen 80
+- Set SSL/TLS encryption mode to Full (strict)
+- Add first CloudFlare page rule
+  - http://_domain.com/.well-known/acme-challenge/_
+  - Cache Level
+  - Standard
+    Add second CloudFlare page rule
+  - http://_domain.com/_
+  - Always Use HTTPS
+- sudo service nginx restart
 
 ## PM2
+
 ### Edit ecosystem.config.js
-* add web and worker apps
-* change name, node server port, neo4j port and rabbitmq port
+
+- add web and worker apps
+- change name, node server port, neo4j port and rabbitmq port
+
 ```sh
 cd /var/www/nean.io/
 pm2 reload ecosystem.config.js --update-env
@@ -1097,7 +1209,9 @@ pm2 save
 ```
 
 # Steps to update code on server
+
 Local
+
 ```sh
 # Get latest code from base
 git fetch upstream
@@ -1106,6 +1220,7 @@ npm run build
 ```
 
 Server
-* Open WinSCP
-* copy over newdist to server next to dist
-* mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist
+
+- Open WinSCP
+- copy over newdist to server next to dist
+- mv /var/www/nean.io/dist /var/www/nean.io/olddist && mv /var/www/nean.io/newdist /var/www/nean.io/dist && pm2 reload all && rm -rf /var/www/nean.io/olddist

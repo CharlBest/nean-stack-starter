@@ -5,7 +5,17 @@ WITH nextUser, CASE WHEN nextUser IS NULL THEN 1 ELSE nextUser.id + 1 END as nex
 ORDER BY nextUser.id DESC
 LIMIT 1
 
-CREATE (user:User { id: nextId, uId: $uId, email: $email, username: $username, passwordHash: $passwordHash, dateCreated: datetime(), isVerified: false, views: 0, bio: '', emailCode: $emailCode, emailVerified: false })
+MERGE (user:User { email: $email, username: $username })
+ON CREATE
+    SET user.id = nextId
+    SET user.uId = $uId
+    SET user.passwordHash = $passwordHash
+    SET user.dateCreated = datetime()
+    SET user.isVerified = false
+    SET user.views = 0
+    SET user.bio = ''
+    SET user.emailCode = $emailCode
+    SET user.emailVerified = false
 
 RETURN user
 { 

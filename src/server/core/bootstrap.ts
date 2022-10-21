@@ -2,6 +2,8 @@ import { NewSignUpWebSocketModel } from '@shared/models/web-socket/new-sign-up-w
 import { WebRTCSignalWebSocketModel } from '@shared/models/web-socket/web-rtc-signal-web-socket.model';
 import { Application, NextFunction, Request, Response } from 'express';
 import * as http from 'http';
+import { usersRepository } from 'server/app/users/users.repository';
+import { v4 as nodeUUId } from 'uuid';
 import * as WebSocket from 'ws';
 import { commentsRoutes } from '../app/comments/comments.routes';
 import { generalRoutes } from '../app/general/general.routes';
@@ -10,6 +12,7 @@ import { notificationsRoutes } from '../app/notifications/notifications.routes';
 import { paymentsRoutes } from '../app/payments/payments.routes';
 import { usersRoutes } from '../app/users/users.routes';
 import { broker } from '../broker/broker';
+import { logger } from '../core/utils/logger';
 import { environment } from '../environments/environment';
 import { Database } from './database';
 import { ApiError } from './middleware/api-error';
@@ -19,8 +22,7 @@ import { Neo4j } from './middleware/neo4j';
 import { webSocketServer } from './middleware/web-socket-server';
 import { Server } from './server';
 import { dataFetcher } from './utils/data-fetcher';
-
-const root = './';
+import { hashPassword } from './utils/password';
 
 class Bootstrap {
 
@@ -63,6 +65,7 @@ class Bootstrap {
 
     setupStaticFiles(): void {
         // Uncomment to serve static files from Nodejs (bad idea)
+        // const root = './';
         // app.use(expressStatic(path.join(root, 'dist/nean-stack-starter')));
 
         // Not sure if this is the best way of doing it
@@ -159,14 +162,23 @@ class Bootstrap {
         // TODO: this might fill up the logs quickly as it will log this on every app startup
         const session = Database.createSession();
         try {
+            // Create users
+            await Database.callWithService(async res => {
+                const passwordHash = await hashPassword('password');
+                await usersRepository.createUser(res, nodeUUId(), 'info@nean.io', 'Admin', passwordHash, nodeUUId());
+            })
+            // Index
             await session.run(Database.queries.startup.itemTitleAndDescriptionIndex);
-        } catch (e) { }
-        try {
+            // Index
             await session.run(Database.queries.startup.userEmailAndUsernameIndex);
-        } catch (e) { }
+        } catch (e) {
+            logger.error("Error loading initial data into database", e)
+        }
         session.close();
 
-        app.use(Neo4j.sessionCleanup);
+        app.use(Neo4j.sessionCleanup)
+
+        logger.debug("Database initialized")
     }
 
     setupCors(app: Application): void {

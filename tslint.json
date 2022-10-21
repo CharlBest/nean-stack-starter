@@ -1,13 +1,8 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-sonarts"
-  ],
+  "extends": ["tslint:recommended", "tslint-sonarts"],
   "rules": {
     "align": {
-      "options": [
-        "statements"
-      ]
+      "options": ["statements"]
     },
     "array-type": false,
     "arrow-return-shorthand": true,
@@ -18,28 +13,13 @@
     "component-class-suffix": true,
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
-    "directive-selector": [
-      true,
-      "attribute",
-      "app",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "kebab-case"
-    ],
+    "directive-selector": [true, "attribute", "app", "camelCase"],
+    "component-selector": [true, "element", "app", "kebab-case"],
     "eofline": true,
-    "import-blacklist": [
-      true,
-      "rxjs/Rx"
-    ],
+    "import-blacklist": [true, "rxjs/Rx"],
     "import-spacing": true,
     "indent": {
-      "options": [
-        "spaces"
-      ]
+      "options": ["spaces"]
     },
     "max-classes-per-file": false,
     "max-line-length": [
@@ -61,36 +41,16 @@
       }
     ],
     "no-any": false,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
     "no-empty": false,
-    "no-inferrable-types": [
-      true,
-      "ignore-params"
-    ],
+    "no-inferrable-types": [true, "ignore-params"],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "semicolon": {
-      "options": [
-        "always"
-      ]
-    },
+    "object-literal-key-quotes": [true, "as-needed"],
+    "quotemark": [true, "single"],
+    "semicolon": [true, "never"],
     "space-before-function-paren": {
       "options": {
         "anonymous": "never",
@@ -100,10 +60,7 @@
         "named": "never"
       }
     },
-    "typedef": [
-      true,
-      "call-signature"
-    ],
+    "typedef": [true, "call-signature"],
     "typedef-whitespace": {
       "options": [
         {
@@ -123,11 +80,7 @@
       ]
     },
     "variable-name": {
-      "options": [
-        "ban-keywords",
-        "check-format",
-        "allow-pascal-case"
-      ]
+      "options": ["ban-keywords", "check-format", "allow-pascal-case"]
     },
     "whitespace": {
       "options": [
@@ -183,12 +136,7 @@
     "template-no-autofocus": true,
     "template-no-distracting-elements": true,
     "use-injectable-provided-in": true,
-    "template-cyclomatic-complexity": [
-      false,
-      15
-    ]
+    "template-cyclomatic-complexity": [false, 15]
   },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+  "rulesDirectory": ["codelyzer"]
 }

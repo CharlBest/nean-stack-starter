@@ -22,7 +22,7 @@ export class Server {
 
     init(app: Application): void {
         this.httpServer.on('listening', () => {
-            logger.info(`App port:${app.get('port')}`);
+            logger.debug(`App initialized on port:${app.get('port')}`);
         });
 
         this.httpServer.on('close', () => {

@@ -13,6 +13,8 @@ class App {
         // Initialise logger
         initLogger();
 
+        this.processEventHandlers();
+
         // Initialize Emailer
         emailer.initEmailer();
 
@@ -25,8 +27,6 @@ class App {
 
         // Cron
         cron.init();
-
-        this.onDestroy();
     }
 
     async initMessageBroker(): Promise<void> {
@@ -115,12 +115,33 @@ class App {
         }
     }
 
-    onDestroy(): void {
-        process.on('SIGTERM', () => {
-            Database.clearDriver();
-            broker.close();
-            process.exit(0);
+    processEventHandlers(): void {
+        process.on('SIGINT', (event) => {
+            logger.debug('SIGINT', event);
+            this.onDestroy()
         });
+
+        process.on('SIGTERM', (event) => {
+            logger.debug('SIGTERM', event);
+            this.onDestroy()
+        });
+
+
+        process.on('uncaughtException', (event) => {
+            logger.error('Internal: Uncaught exception', [event.stack]);
+            process.exit(1);
+        });
+
+        process.on('unhandledRejection', (reason: any, promise: Promise<unknown>) => {
+            logger.error('Internal: UnhandledPromiseRejectionWarning', [reason.messsage || reason.stack, reason]);
+            process.exit(1);
+        });
+    }
+
+    onDestroy(): void {
+        Database.clearDriver();
+        broker.close();
+        process.exit(0);
     }
 }
 

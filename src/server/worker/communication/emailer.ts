@@ -42,7 +42,7 @@ class Emailer implements Email {
             if (error) {
                 logger.error('Verify email transport error: ' + error);
             } else {
-                logger.info('Email transport ready');
+                logger.debug('Email transport initialized');
             }
         });
     }

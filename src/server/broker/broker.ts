@@ -1,6 +1,6 @@
 import { Channel, connect, Connection } from 'amqplib';
 import { logger } from '../core/utils/logger';
-import { request } from '../core/utils/request';
+import { request, RequestMethod } from '../core/utils/request';
 import { environment } from '../environments/environment';
 import { QueueType } from './queue-type.enum';
 
@@ -30,44 +30,44 @@ class Broker {
     private async setup(): Promise<void> {
         // Create virtual host
         try {
-            await request({
-                url: `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/vhosts/${environment.rabbitMQ.virtualHost}`,
-                method: 'PUT',
-            });
+            await request(
+                `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/vhosts/${environment.rabbitMQ.virtualHost}`,
+                RequestMethod.PUT
+            );
         } catch (error) {
-            logger.info('Creating virtual host', error);
+            logger.error('Error creating Virtual Host via HTTP', error);
         }
 
         // Create user
         try {
-            await request({
-                url: `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/users/${environment.rabbitMQ.username}`,
-                method: 'PUT',
-                body: {
+            await request(
+                `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/users/${environment.rabbitMQ.username}`,
+                RequestMethod.PUT,
+                {
                     password: environment.rabbitMQ.password,
                     tags: 'none'
                 }
-            });
+            );
         } catch (error) {
-            logger.info('Creating RabbitMQ user', error);
+            logger.error('Error creating RabbitMQ user via HTTP', error);
         }
 
         // Set permissions
         try {
-            await request({
-                url: `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/permissions/${environment.rabbitMQ.virtualHost}/${environment.rabbitMQ.username}`,
-                method: 'PUT',
-                body: {
+            await request(
+                `http://${environment.rabbitMQ.adminUsername}:${environment.rabbitMQ.adminPassword}@localhost:15672/api/permissions/${environment.rabbitMQ.virtualHost}/${environment.rabbitMQ.username}`,
+                RequestMethod.PUT,
+                {
                     configure: '.*',
                     write: '.*',
                     read: '.*'
                 }
-            });
+            );
         } catch (error) {
-            logger.info('Setting RabbitMQ user permissions', error);
+            logger.error('Error creating RabbitMQ user permissions via HTTP', error);
         }
 
-        logger.info('Broker init success');
+        logger.debug('Broker initialized');
     }
 
     close(): void {

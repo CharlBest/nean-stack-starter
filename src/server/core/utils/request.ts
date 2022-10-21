@@ -1,32 +1,54 @@
 import * as http from 'http';
 import { logger } from './logger';
 
-export async function request(options: {
+export enum RequestMethod {
+    GET = 'get',
+    POST = 'post',
+    PUT = 'put',
+    PATCH = 'patch',
+    DELETE = 'delete',
+}
+
+export async function request<T = void>(
     url: string,
-    method: string,
+    method: RequestMethod,
     body?: object,
-    headers?: any
-}): Promise<void> {
+    headers?: object
+): Promise<T> {
     return new Promise((resolve, reject) => {
         const reqOptions = {
-            method: options.method,
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
-                ...options.headers
+                ...headers
             },
             maxRedirects: 20
         };
 
-        const req = http.request(options.url, reqOptions, (res) => {
-            // NodeJS bug! Bellow line has to be present eventhough it's empty.
-            res.on('data', () => { });
-            res.on('end', () => {
-                resolve();
-            });
+        const req = http.request(url, reqOptions, (res) => {
+            let data: any[] = []
+
+            try {
+                res.on('data', (chunk) => {
+                    data.push(chunk)
+                })
+
+                res.on('end', () => {
+                    const resBuffer = Buffer.concat(data)
+                    try {
+                        resolve(JSON.parse(resBuffer.toString()))
+                    } catch {
+                        resolve(resBuffer.toString() as any)
+                    }
+                })
+            }
+            catch (e) {
+                reject(e)
+            }
         });
 
-        if (options.body) {
-            req.write(JSON.stringify(options.body));
+        if (body) {
+            req.write(JSON.stringify(body));
         }
 
         req.on('error', error => {

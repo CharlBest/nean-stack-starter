@@ -10,11 +10,11 @@ import { CompletedTutorial } from '@shared/view-models/tutorial/completed-tutori
 import { TwoFactorAuthenticationViewModel } from '@shared/view-models/user/two-factor-authentication.view-model';
 import { UserProfileViewModel } from '@shared/view-models/user/user-profile.view-model';
 import { UserPublicViewModel } from '@shared/view-models/user/user-public.view-model';
-import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { authenticator } from 'otplib';
 import * as sanitizedHTML from 'sanitize-html';
+import { hashPassword, verifyPassword } from 'server/core/utils/password';
 import { v4 as nodeUUId } from 'uuid';
 import { FileModel } from '../../../shared/models/shared/file.model';
 import { Language } from '../../../shared/translate/language.enum';
@@ -43,7 +43,7 @@ class UsersService extends BaseService {
             throw new Error();
         }
         if (!validation.emailExist && !validation.usernameExist) {
-            const passwordHash = await this.hashPassword(password);
+            const passwordHash = await hashPassword(password);
 
             const user = await usersRepository.createUser(res, nodeUUId(), email, username, passwordHash, nodeUUId());
 
@@ -97,7 +97,7 @@ class UsersService extends BaseService {
         const user = await usersRepository.getUserByEmailOrUsername(res, emailOrUsername);
 
         // Check password
-        if (!user || !(await this.verifyPassword(password, user.passwordHash))) {
+        if (!user || !(await verifyPassword(password, user.passwordHash))) {
             ServerValidator.addGlobalError(res, 'loginInvalidCredentials', true);
             throw new Error();
         }
@@ -222,7 +222,7 @@ class UsersService extends BaseService {
     async changeForgottenPassword(res: Response, email: string, code: string, password: string): Promise<void> {
         email = email.toLowerCase();
 
-        const passwordHash = await this.hashPassword(password);
+        const passwordHash = await hashPassword(password);
 
         const user = await usersRepository.changeForgottenPassword(res, email, code, passwordHash);
 
@@ -239,12 +239,12 @@ class UsersService extends BaseService {
     async updatePassword(res: Response, password: string, newPassword: string): Promise<void> {
         const user = await usersRepository.getLiteUserById(res, this.getUserId(res));
 
-        if (!user || !(await this.verifyPassword(password, user.passwordHash))) {
+        if (!user || !(await verifyPassword(password, user.passwordHash))) {
             ServerValidator.addGlobalError(res, 'updatePasswordInvalid', true);
             throw new Error();
         }
 
-        const passwordHash = await this.hashPassword(newPassword);
+        const passwordHash = await hashPassword(newPassword);
 
         const updatedUser = await usersRepository.updatePassword(res, this.getUserId(res), passwordHash);
 
@@ -322,19 +322,6 @@ class UsersService extends BaseService {
 
         return await usersRepository.updateConfiguration(res, this.getUserId(res), consent, darkTheme, language);
     }
-
-    // #region private
-
-    private async hashPassword(password: string): Promise<string> {
-        const saltRounds = 10;
-        return bcrypt.hash(password, saltRounds);
-    }
-
-    private verifyPassword(password: string, passwordHash: string): Promise<boolean> {
-        return bcrypt.compare(password, passwordHash);
-    }
-
-    // #endregion
 }
 
 export const usersService = new UsersService();

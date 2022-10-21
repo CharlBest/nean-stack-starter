@@ -39,8 +39,6 @@ export class Database {
             let grantUserRoles = Database.queries.startup.grantUserRoles;
             grantUserRoles = grantUserRoles.replace('$username', environment.database.username);
             await adminSession.run(grantUserRoles);
-
-            logger.info('Database init success');
         } catch (e) {
             logger.error(e.message, [e]);
         }
@@ -81,6 +79,20 @@ export class Database {
         if (this.driver) {
             this.driver.close();
         }
+    }
+
+    static async callWithService<T>(service: (res: any) => Promise<T>): Promise<T> {
+        const res = {
+            locals: {
+                neo4jSession: Database.createSession()
+            }
+        };
+
+        const results = await service(res);
+
+        res.locals.neo4jSession.close();
+
+        return results
     }
 
     static async getQueries(): Promise<void> {
